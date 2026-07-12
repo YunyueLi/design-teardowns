@@ -1,0 +1,520 @@
+{
+  "site": "converge",
+  "url": "https://converge.ai",
+  "probe": {
+    "title": "Converge AI — The Gateway to AI-native Business.",
+    "lang": "en",
+    "body": {
+      "background-color": "lab(100 0 0)",
+      "color": "lab(2.75381 0 0)",
+      "font-family": "\"Instrument Sans\", \"Instrument Sans Fallback\", -apple-system, \"system-ui\", sans-serif"
+    },
+    "h1": {
+      "text": "Individual IntelligenceInstitutional Intelligence",
+      "font-family": "\"Instrument Sans\", \"Instrument Sans Fallback\", -apple-system, \"system-ui\", sans-serif",
+      "font-size": "64px",
+      "font-weight": "500",
+      "letter-spacing": "-1.92px",
+      "line-height": "70.4px",
+      "font-style": "normal",
+      "color": "rgb(0, 0, 0)"
+    },
+    "nav": {
+      "background-color": "rgb(255, 255, 255)",
+      "backdrop-filter": "none",
+      "font-family": "\"Instrument Sans\", \"Instrument Sans Fallback\", -apple-system, \"system-ui\", sans-serif"
+    },
+    "btn": {
+      "background-color": "rgba(0, 0, 0, 0)",
+      "color": "rgb(118, 118, 118)",
+      "border-radius": "0px",
+      "transition": "color 0.15s cubic-bezier(0.4, 0, 0.2, 1), background-color 0.15s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.15s cubic-bezier(0.4, 0, 0.2, 1), outline-color 0.15s cubic-bezier(0.4, 0, 0.2, 1), text-decoration-color 0.15s cubic-bezier(0.4, 0, 0.2, 1), fill 0.15s cubic-bezier(0.4, 0, 0.2, 1), stroke 0.15s cubic-bezier(0.4, 0, 0.2, 1), --tw-gradient-from 0.15s cubic-bezier(0.4, 0, 0.2, 1), --tw-gradient-via 0.15s cubic-bezier(0.4, 0, 0.2, 1), --tw-gradient-to 0.15s cubic-bezier(0.4, 0, 0.2, 1)",
+      "font-family": "\"Instrument Sans\", \"Instrument Sans Fallback\", -apple-system, \"system-ui\", sans-serif"
+    },
+    "accentGuess": "lab(96.52% -.0000298023 .0000119209)",
+    "libs": [],
+    "scriptHints": [],
+    "media": {
+      "video": 1,
+      "canvas": 1,
+      "svg": 52,
+      "img": 38,
+      "preloadVideo": 0,
+      "preloadFont": 4
+    },
+    "fontsLoaded": [
+      "Inter",
+      "Inter Fallback",
+      "Instrument Sans",
+      "Instrument Sans Fallback",
+      "Schibsted Grotesk",
+      "Schibsted Grotesk Fallback",
+      "Reddit Sans",
+      "Reddit Sans Fallback",
+      "Bitcount Prop Single Variable",
+      "KaTeX_AMS",
+      "KaTeX_Caligraphic",
+      "KaTeX_Fraktur",
+      "KaTeX_Main",
+      "KaTeX_Math",
+      "KaTeX_SansSerif",
+      "KaTeX_Script",
+      "KaTeX_Size1",
+      "KaTeX_Size2",
+      "KaTeX_Size3",
+      "KaTeX_Size4",
+      "KaTeX_Typewriter"
+    ]
+  },
+  "cssFetched": 3,
+  "tokens": {
+    "customProps": {
+      "--font-inter": "\"Inter\",\"Inter Fallback\"",
+      "--font-instrument-sans": "\"Instrument Sans\",\"Instrument Sans Fallback\"",
+      "--font-schibsted": "\"Schibsted Grotesk\",\"Schibsted Grotesk Fallback\"",
+      "--font-reddit-sans": "\"Reddit Sans\",\"Reddit Sans Fallback\"",
+      "--tw-translate-x": "0",
+      "--tw-translate-y": "0",
+      "--tw-translate-z": "0",
+      "--tw-scale-x": "1",
+      "--tw-scale-y": "1",
+      "--tw-scale-z": "1",
+      "--tw-rotate-x": "initial",
+      "--tw-rotate-y": "initial",
+      "--tw-rotate-z": "initial",
+      "--tw-skew-x": "initial",
+      "--tw-skew-y": "initial",
+      "--tw-space-y-reverse": "0",
+      "--tw-space-x-reverse": "0",
+      "--tw-border-style": "solid",
+      "--tw-gradient-position": "initial",
+      "--tw-gradient-from": "#0000",
+      "--tw-gradient-via": "#0000",
+      "--tw-gradient-to": "#0000",
+      "--tw-gradient-stops": "initial",
+      "--tw-gradient-via-stops": "initial",
+      "--tw-gradient-from-position": "0%",
+      "--tw-gradient-via-position": "50%",
+      "--tw-gradient-to-position": "100%",
+      "--tw-leading": "initial",
+      "--tw-font-weight": "initial",
+      "--tw-tracking": "initial",
+      "--tw-shadow": "0 0 #0000",
+      "--tw-shadow-color": "initial",
+      "--tw-shadow-alpha": "100%",
+      "--tw-inset-shadow": "0 0 #0000",
+      "--tw-inset-shadow-color": "initial",
+      "--tw-inset-shadow-alpha": "100%",
+      "--tw-ring-color": "initial",
+      "--tw-ring-shadow": "0 0 #0000",
+      "--tw-inset-ring-color": "initial",
+      "--tw-inset-ring-shadow": "0 0 #0000",
+      "--tw-ring-inset": "initial",
+      "--tw-ring-offset-width": "0px",
+      "--tw-ring-offset-color": "#fff",
+      "--tw-ring-offset-shadow": "0 0 #0000",
+      "--tw-outline-style": "solid",
+      "--tw-blur": "initial",
+      "--tw-brightness": "initial",
+      "--tw-contrast": "initial",
+      "--tw-grayscale": "initial",
+      "--tw-hue-rotate": "initial",
+      "--tw-invert": "initial",
+      "--tw-opacity": "initial",
+      "--tw-saturate": "initial",
+      "--tw-sepia": "initial",
+      "--tw-drop-shadow": "initial",
+      "--tw-drop-shadow-color": "initial",
+      "--tw-drop-shadow-alpha": "100%",
+      "--tw-drop-shadow-size": "initial",
+      "--tw-backdrop-blur": "initial",
+      "--tw-backdrop-brightness": "initial",
+      "--tw-backdrop-contrast": "initial",
+      "--tw-backdrop-grayscale": "initial",
+      "--tw-backdrop-hue-rotate": "initial",
+      "--tw-backdrop-invert": "initial",
+      "--tw-backdrop-opacity": "initial",
+      "--tw-backdrop-saturate": "initial",
+      "--tw-backdrop-sepia": "initial",
+      "--tw-duration": "initial",
+      "--tw-ease": "initial",
+      "--tw-content": "\"\"",
+      "--tw-animation-delay": "0s",
+      "--tw-animation-direction": "normal",
+      "--tw-animation-duration": "initial",
+      "--tw-animation-fill-mode": "none",
+      "--tw-animation-iteration-count": "1",
+      "--tw-enter-blur": "0",
+      "--tw-enter-opacity": "1",
+      "--tw-enter-rotate": "0",
+      "--tw-enter-scale": "1",
+      "--tw-enter-translate-x": "0",
+      "--tw-enter-translate-y": "0",
+      "--tw-exit-blur": "0",
+      "--tw-exit-opacity": "1",
+      "--tw-exit-rotate": "0",
+      "--tw-exit-scale": "1",
+      "--tw-exit-translate-x": "0",
+      "--tw-exit-translate-y": "0",
+      "--color-red-500": "#fb2c36",
+      "--color-red-600": "#e40014",
+      "--color-orange-500": "#fe6e00",
+      "--color-orange-600": "#f05100",
+      "--color-yellow-200": "#fff085",
+      "--color-yellow-500": "#edb200",
+      "--color-yellow-600": "#cd8900",
+      "--color-green-500": "#00c758",
+      "--color-green-600": "#00a544",
+      "--color-blue-500": "#3080ff",
+      "--color-blue-600": "#155dfc",
+      "--color-purple-500": "#ac4bff",
+      "--color-gray-100": "#f3f4f6",
+      "--color-gray-300": "#d1d5dc",
+      "--color-zinc-500": "#71717b",
+      "--color-zinc-800": "#27272a",
+      "--color-zinc-900": "#18181b",
+      "--color-neutral-100": "#f5f5f5",
+      "--color-neutral-300": "#d4d4d4",
+      "--color-neutral-500": "#737373",
+      "--color-neutral-600": "#525252",
+      "--color-black": "#000",
+      "--color-white": "#fff",
+      "--spacing": ".25rem",
+      "--breakpoint-xl": "80rem",
+      "--breakpoint-2xl": "96rem",
+      "--container-3xs": "16rem",
+      "--container-xs": "20rem",
+      "--container-sm": "24rem",
+      "--container-md": "28rem",
+      "--container-lg": "32rem",
+      "--text-xs": ".75rem",
+      "--text-xs--line-height": "calc(1/.75)"
+    },
+    "topHex": [
+      {
+        "hex": "#fafafa",
+        "n": 44
+      },
+      {
+        "hex": "#fff",
+        "n": 42
+      },
+      {
+        "hex": "#0f0f0f",
+        "n": 34
+      },
+      {
+        "hex": "#0285ff",
+        "n": 32
+      },
+      {
+        "hex": "#f5f5f5",
+        "n": 28
+      },
+      {
+        "hex": "#171717",
+        "n": 26
+      },
+      {
+        "hex": "#f8f8f8",
+        "n": 24
+      },
+      {
+        "hex": "#e5e5e5",
+        "n": 20
+      },
+      {
+        "hex": "#0a0a0a",
+        "n": 20
+      },
+      {
+        "hex": "#18181b",
+        "n": 16
+      },
+      {
+        "hex": "#000",
+        "n": 16
+      },
+      {
+        "hex": "#dc2626",
+        "n": 16
+      },
+      {
+        "hex": "#27272a",
+        "n": 12
+      },
+      {
+        "hex": "#323232",
+        "n": 12
+      },
+      {
+        "hex": "#122d26",
+        "n": 12
+      },
+      {
+        "hex": "#000000",
+        "n": 12
+      },
+      {
+        "hex": "#767676",
+        "n": 12
+      },
+      {
+        "hex": "#040404",
+        "n": 10
+      },
+      {
+        "hex": "#ea580c",
+        "n": 10
+      },
+      {
+        "hex": "#93c5fd",
+        "n": 10
+      },
+      {
+        "hex": "#737373",
+        "n": 8
+      },
+      {
+        "hex": "#525252",
+        "n": 8
+      },
+      {
+        "hex": "#1456f0",
+        "n": 8
+      },
+      {
+        "hex": "#2563eb",
+        "n": 8
+      }
+    ],
+    "cubicBezier": [
+      {
+        "v": "cubic-bezier(.4,0,.2,1)",
+        "n": 8
+      },
+      {
+        "v": "cubic-bezier(0,0,.2,1)",
+        "n": 4
+      },
+      {
+        "v": "cubic-bezier(.4,0,.6,1)",
+        "n": 2
+      }
+    ],
+    "fontFamily": [
+      {
+        "v": "KaTeX_Main",
+        "n": 16
+      },
+      {
+        "v": "Inter",
+        "n": 14
+      },
+      {
+        "v": "KaTeX_SansSerif",
+        "n": 14
+      },
+      {
+        "v": "var(--font-sans)",
+        "n": 8
+      },
+      {
+        "v": "KaTeX_Fraktur",
+        "n": 8
+      },
+      {
+        "v": "KaTeX_Math",
+        "n": 8
+      },
+      {
+        "v": "KaTeX_Size1",
+        "n": 8
+      },
+      {
+        "v": "\"Reddit Sans\"",
+        "n": 6
+      },
+      {
+        "v": "var(--font-mono)",
+        "n": 6
+      },
+      {
+        "v": "KaTeX_Caligraphic",
+        "n": 6
+      },
+      {
+        "v": "KaTeX_Size2",
+        "n": 6
+      },
+      {
+        "v": "KaTeX_Size4",
+        "n": 6
+      },
+      {
+        "v": "KaTeX_Typewriter",
+        "n": 6
+      },
+      {
+        "v": "Reddit Sans",
+        "n": 6
+      },
+      {
+        "v": "\"Instrument Sans\"",
+        "n": 4
+      },
+      {
+        "v": "\"Schibsted Grotesk\"",
+        "n": 4
+      }
+    ],
+    "durations": [
+      {
+        "v": "15s",
+        "n": 12
+      },
+      {
+        "v": "2s",
+        "n": 6
+      },
+      {
+        "v": "40s",
+        "n": 4
+      },
+      {
+        "v": "0s",
+        "n": 3
+      },
+      {
+        "v": "1.2s",
+        "n": 2
+      },
+      {
+        "v": "0.15s",
+        "n": 2
+      },
+      {
+        "v": "0.2s",
+        "n": 2
+      },
+      {
+        "v": "0.3s",
+        "n": 2
+      },
+      {
+        "v": "0.5s",
+        "n": 2
+      },
+      {
+        "v": "1.55s",
+        "n": 2
+      },
+      {
+        "v": "3s",
+        "n": 2
+      },
+      {
+        "v": "5s",
+        "n": 2
+      }
+    ],
+    "radii": [
+      {
+        "v": "0px",
+        "n": 8
+      },
+      {
+        "v": "14px",
+        "n": 8
+      },
+      {
+        "v": "0",
+        "n": 8
+      },
+      {
+        "v": "calc(var(--radius) - 2px)",
+        "n": 6
+      },
+      {
+        "v": "9.625px",
+        "n": 4
+      },
+      {
+        "v": "10px",
+        "n": 4
+      },
+      {
+        "v": "12px",
+        "n": 4
+      },
+      {
+        "v": "20px",
+        "n": 4
+      },
+      {
+        "v": "26px",
+        "n": 4
+      },
+      {
+        "v": "30px",
+        "n": 4
+      },
+      {
+        "v": "62px",
+        "n": 4
+      },
+      {
+        "v": "calc(var(--radius) - 5px)",
+        "n": 4
+      },
+      {
+        "v": "var(--radius)",
+        "n": 4
+      },
+      {
+        "v": "23.333px !important",
+        "n": 2
+      }
+    ],
+    "keyframes": [
+      {
+        "v": "spin",
+        "n": 4
+      },
+      {
+        "v": "pulse",
+        "n": 2
+      },
+      {
+        "v": "enter",
+        "n": 2
+      },
+      {
+        "v": "exit",
+        "n": 2
+      },
+      {
+        "v": "accordion-down",
+        "n": 2
+      },
+      {
+        "v": "accordion-up",
+        "n": 2
+      },
+      {
+        "v": "loading-icon-rotate",
+        "n": 2
+      },
+      {
+        "v": "brand-spinner-step",
+        "n": 2
+      },
+      {
+        "v": "testimonial-marquee-left",
+        "n": 2
+      }
+    ],
+    "cssBytes": 627126
+  },
+  "ok": true
+}

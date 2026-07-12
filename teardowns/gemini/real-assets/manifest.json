@@ -1,0 +1,46 @@
+{
+  "site": "gemini",
+  "url": "https://gemini.google",
+  "fonts": [],
+  "video": [],
+  "audio": [],
+  "image": [
+    {
+      "url": "https://www.gstatic.com/lamda/images/gemini_aurora_thumbnail_4g_e74822ff0ca4259beb718.png",
+      "file": "gemini/real-assets/image/3847e6_gemini_aurora_thumbnail_4g_e74822ff0ca4259beb718.png",
+      "bytes": 29249,
+      "type": "image/png"
+    },
+    {
+      "url": "https://www.gstatic.com/lamda/images/gemini_sparkle_aurora_33f86dc0c0257da337c63.svg",
+      "file": "gemini/real-assets/image/727237_gemini_sparkle_aurora_33f86dc0c0257da337c63.svg",
+      "bytes": 27794,
+      "type": "image/svg+xml"
+    },
+    {
+      "url": "https://www.gstatic.com/lamda/images/gemini_sparkle_4g_512_lt_f94943af3be039176192d.png",
+      "file": "gemini/real-assets/image/56aa9e_gemini_sparkle_4g_512_lt_f94943af3be039176192d.png",
+      "bytes": 61823,
+      "type": "image/png"
+    },
+    {
+      "url": "https://lh3.googleusercontent.com/a/default-user=s64-c",
+      "file": "gemini/real-assets/image/7591a4_default-user_s64-c",
+      "bytes": 404,
+      "type": "image/png"
+    }
+  ],
+  "lottie": [],
+  "source": [
+    {
+      "url": "https://www.gstatic.com/og/_/ss/k=og.qtm.4-2sMfeebBQ.L.W.O/m=qcwid,d_b_gm3,d_wi_gm3,d_lo_gm3/excm=qaaw,qadd,qaid,qein,qhaw,qhba,qhbr,qhch,qhga,qhid,qhin/d=1/ed=1/ct=zgms/rs=AA2YrTucVjPRnSx4GEbR62IYOhG78T0QIw",
+      "file": "gemini/real-assets/source/26c5fc_rs_AA2YrTucVjPRnSx4GEbR62IYOhG78T0QIw.css",
+      "bytes": 12162
+    },
+    {
+      "url": "https://gemini.google",
+      "file": "gemini/real-assets/source/index.html",
+      "bytes": 0
+    }
+  ]
+}

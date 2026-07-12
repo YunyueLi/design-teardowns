@@ -1,0 +1,117 @@
+{
+  "site": "moonshot",
+  "url": "https://www.moonshot.ai",
+  "fonts": [
+    {
+      "url": "https://statics.moonshot.cn/moonshot-ai/assets/static/MPLUS1-Latin.B4aLHJr2.woff2",
+      "file": "moonshot/real-assets/fonts/78ffc3_MPLUS1-Latin.B4aLHJr2.woff2",
+      "bytes": 29248,
+      "type": "application/octet-stream"
+    },
+    {
+      "url": "https://statics.moonshot.cn/moonshot-ai/assets/static/MiSansVF.CX7RY4lk.woff2",
+      "file": "moonshot/real-assets/fonts/b31219_MiSansVF.CX7RY4lk.woff2",
+      "bytes": 144092,
+      "type": "application/octet-stream"
+    },
+    {
+      "url": "https://statics.moonshot.cn/moonshot-ai/vendor/NotoSans-Latin.woff2",
+      "file": "moonshot/real-assets/fonts/5adcb7_NotoSans-Latin.woff2",
+      "bytes": 3776,
+      "type": "application/octet-stream"
+    }
+  ],
+  "video": [
+    {
+      "url": "https://kimi-file.moonshot.cn/prod-chat-kimi/kfs/4/1/2026-04-20/1d7j1ik2av1fc641atep0",
+      "file": "moonshot/real-assets/video/238d58_1d7j1ik2av1fc641atep0.mp4",
+      "bytes": 163476,
+      "type": "video/webm"
+    },
+    {
+      "url": "https://kimi-file.moonshot.cn/prod-chat-kimi/kfs/4/1/2026-04-08/1d7b2g1t3v89kkehe2i6g",
+      "file": "moonshot/real-assets/video/c81f1d_1d7b2g1t3v89kkehe2i6g.mp4",
+      "bytes": 414316,
+      "type": "video/webm"
+    },
+    {
+      "url": "https://kimi-file.moonshot.cn/prod-chat-kimi/kfs/4/1/2026-04-08/1d7astoqav1fc640it6ug",
+      "file": "moonshot/real-assets/video/85b1d2_1d7astoqav1fc640it6ug.mp4",
+      "bytes": 365351,
+      "type": "video/webm"
+    }
+  ],
+  "audio": [],
+  "image": [
+    {
+      "url": "https://statics.moonshot.cn/moonshot-ai/favicon.ico",
+      "file": "moonshot/real-assets/image/a8a882_favicon.ico",
+      "bytes": 3310,
+      "type": "image/vnd.microsoft.icon"
+    },
+    {
+      "url": "https://statics.moonshot.cn/moonshot-ai/assets/static/wireframe-bg.BAsHc09q.svg",
+      "file": "moonshot/real-assets/image/a6f4e0_wireframe-bg.BAsHc09q.svg",
+      "bytes": 4847,
+      "type": "image/svg+xml"
+    },
+    {
+      "url": "https://kimi-file.moonshot.cn/prod-chat-kimi/kfs/4/2/2026-04-23/1d7kuv6hl51jas5fheqs0?x-tos-process=image%2Fauto-orient%2C1%2Fstrip%2Fignore-error%2C1",
+      "file": "moonshot/real-assets/image/3ad6ca_1d7kuv6hl51jas5fheqs0",
+      "bytes": 45066,
+      "type": "image/webp"
+    },
+    {
+      "url": "https://kimi-file.moonshot.cn/prod-chat-kimi/kfs/4/2/2026-04-23/1d7kuvrpl51jas5fhet20?x-tos-process=image%2Fauto-orient%2C1%2Fstrip%2Fignore-error%2C1",
+      "file": "moonshot/real-assets/image/fa2ddf_1d7kuvrpl51jas5fhet20",
+      "bytes": 21394,
+      "type": "image/webp"
+    },
+    {
+      "url": "https://kimi-file.moonshot.cn/prod-chat-kimi/kfs/4/2/2026-04-23/1d7kv02t3v89kkeiajtl0?x-tos-process=image%2Fauto-orient%2C1%2Fstrip%2Fignore-error%2C1",
+      "file": "moonshot/real-assets/image/d71797_1d7kv02t3v89kkeiajtl0",
+      "bytes": 24650,
+      "type": "image/webp"
+    },
+    {
+      "url": "https://statics.moonshot.cn/moonshot-ai/assets/static/qr-code.CEtPtLiM.webp",
+      "file": "moonshot/real-assets/image/33116a_qr-code.CEtPtLiM.webp",
+      "bytes": 12870,
+      "type": "image/webp"
+    },
+    {
+      "url": "https://statics.moonshot.cn/moonshot-ai/assets/static/kimi-icon.ByIGCGon.webp",
+      "file": "moonshot/real-assets/image/31cf41_kimi-icon.ByIGCGon.webp",
+      "bytes": 6822,
+      "type": "image/webp"
+    }
+  ],
+  "lottie": [],
+  "source": [
+    {
+      "url": "https://statics.moonshot.cn/moonshot-ai/assets/static/Loading.7f26Oc5Y.css",
+      "file": "moonshot/real-assets/source/964aef_Loading.7f26Oc5Y.css",
+      "bytes": 928
+    },
+    {
+      "url": "https://statics.moonshot.cn/moonshot-ai/assets/static/vike-react-1a9d6123.BcWtY8Ol.css",
+      "file": "moonshot/real-assets/source/115d29_vike-react-1a9d6123.BcWtY8Ol.css",
+      "bytes": 61
+    },
+    {
+      "url": "https://statics.moonshot.cn/moonshot-ai/assets/static/qr-code.P4tirAIr.css",
+      "file": "moonshot/real-assets/source/742256_qr-code.P4tirAIr.css",
+      "bytes": 7949
+    },
+    {
+      "url": "https://statics.moonshot.cn/moonshot-ai/assets/static/index.fVkgwoe5.css",
+      "file": "moonshot/real-assets/source/60bc03_index.fVkgwoe5.css",
+      "bytes": 20565
+    },
+    {
+      "url": "https://www.moonshot.ai",
+      "file": "moonshot/real-assets/source/index.html",
+      "bytes": 0
+    }
+  ]
+}

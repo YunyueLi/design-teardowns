@@ -1,0 +1,270 @@
+{
+  "site": "tutti",
+  "url": "https://tutti.sh",
+  "fonts": [
+    {
+      "url": "https://tutti.sh/_static/official/assets/lexend-vietnamese-wght-normal-RvljkFvg.woff2",
+      "file": "tutti/real-assets/fonts/3b6438_lexend-vietnamese-wght-normal-RvljkFvg.woff2",
+      "bytes": 13840,
+      "type": "font/woff2"
+    },
+    {
+      "url": "https://tutti.sh/_static/official/assets/lexend-latin-ext-wght-normal-B6JQhE1e.woff2",
+      "file": "tutti/real-assets/fonts/d50345_lexend-latin-ext-wght-normal-B6JQhE1e.woff2",
+      "bytes": 34476,
+      "type": "font/woff2"
+    },
+    {
+      "url": "https://tutti.sh/_static/official/assets/lexend-latin-wght-normal-ci0D1wrL.woff2",
+      "file": "tutti/real-assets/fonts/65f852_lexend-latin-wght-normal-ci0D1wrL.woff2",
+      "bytes": 39680,
+      "type": "font/woff2"
+    },
+    {
+      "url": "https://tutti.sh/_static/official/fonts/google/archivoblack-HTxqL289NzCGg4MzN6KJ7eW6CYKF_jzx13HOvQ.woff2",
+      "file": "tutti/real-assets/fonts/749a82_archivoblack-HTxqL289NzCGg4MzN6KJ7eW6CYKF_jzx13HOvQ.woff2",
+      "bytes": 6400,
+      "type": "font/woff2"
+    },
+    {
+      "url": "https://tutti.sh/_static/official/fonts/google/archivoblack-HTxqL289NzCGg4MzN6KJ7eW6CYyF_jzx13E.woff2",
+      "file": "tutti/real-assets/fonts/de8add_archivoblack-HTxqL289NzCGg4MzN6KJ7eW6CYyF_jzx13E.woff2",
+      "bytes": 9792,
+      "type": "font/woff2"
+    },
+    {
+      "url": "https://tutti.sh/_static/official/fonts/google/inter-UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa2JL7W0Q5n-wU.woff2",
+      "file": "tutti/real-assets/fonts/d27f06_inter-UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa2JL7W0Q5n-wU.woff2",
+      "bytes": 25844,
+      "type": "font/woff2"
+    },
+    {
+      "url": "https://tutti.sh/_static/official/fonts/google/inter-UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa0ZL7W0Q5n-wU.woff2",
+      "file": "tutti/real-assets/fonts/7cd5f7_inter-UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa0ZL7W0Q5n-wU.woff2",
+      "bytes": 18744,
+      "type": "font/woff2"
+    },
+    {
+      "url": "https://tutti.sh/_static/official/fonts/google/inter-UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa2ZL7W0Q5n-wU.woff2",
+      "file": "tutti/real-assets/fonts/df694f_inter-UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa2ZL7W0Q5n-wU.woff2",
+      "bytes": 11272,
+      "type": "font/woff2"
+    },
+    {
+      "url": "https://tutti.sh/_static/official/fonts/google/inter-UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa1pL7W0Q5n-wU.woff2",
+      "file": "tutti/real-assets/fonts/8ce266_inter-UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa1pL7W0Q5n-wU.woff2",
+      "bytes": 19044,
+      "type": "font/woff2"
+    },
+    {
+      "url": "https://tutti.sh/_static/official/fonts/google/inter-UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa2pL7W0Q5n-wU.woff2",
+      "file": "tutti/real-assets/fonts/683274_inter-UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa2pL7W0Q5n-wU.woff2",
+      "bytes": 10280,
+      "type": "font/woff2"
+    },
+    {
+      "url": "https://tutti.sh/_static/official/fonts/google/inter-UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa25L7W0Q5n-wU.woff2",
+      "file": "tutti/real-assets/fonts/0d831a_inter-UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa25L7W0Q5n-wU.woff2",
+      "bytes": 85272,
+      "type": "font/woff2"
+    },
+    {
+      "url": "https://tutti.sh/_static/official/fonts/google/inter-UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa1ZL7W0Q5nw.woff2",
+      "file": "tutti/real-assets/fonts/6630b6_inter-UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa1ZL7W0Q5nw.woff2",
+      "bytes": 48432,
+      "type": "font/woff2"
+    },
+    {
+      "url": "https://tutti.sh/_static/official/fonts/google/merriweather-u-4B0qyriQwlOrhSvowK_l5-eTxCVx0ZbwLvKH2Gk9hLmp0v5yA-xXPqCzLvPee1XYk_XSf-FmQlV236AvH4ZL_Ean2DTA.woff2",
+      "file": "tutti/real-assets/fonts/7ae44d_merriweather-u-4B0qyriQwlOrhSvowK_l5-eTxCVx0ZbwLvKH2Gk9hLmp0v5yA-xXPqCzLvPee1XYk.woff2",
+      "bytes": 21364,
+      "type": "font/woff2"
+    },
+    {
+      "url": "https://tutti.sh/_static/official/fonts/google/merriweather-u-4B0qyriQwlOrhSvowK_l5-eTxCVx0ZbwLvKH2Gk9hLmp0v5yA-xXPqCzLvPee1XYk_XSf-FmQlV23zAvH4ZL_Ean2DTA.woff2",
+      "file": "tutti/real-assets/fonts/4d6545_merriweather-u-4B0qyriQwlOrhSvowK_l5-eTxCVx0ZbwLvKH2Gk9hLmp0v5yA-xXPqCzLvPee1XYk.woff2",
+      "bytes": 27684,
+      "type": "font/woff2"
+    },
+    {
+      "url": "https://tutti.sh/_static/official/fonts/google/merriweather-u-4B0qyriQwlOrhSvowK_l5-eTxCVx0ZbwLvKH2Gk9hLmp0v5yA-xXPqCzLvPee1XYk_XSf-FmQlV234AvH4ZL_Ean2DTA.woff2",
+      "file": "tutti/real-assets/fonts/986c62_merriweather-u-4B0qyriQwlOrhSvowK_l5-eTxCVx0ZbwLvKH2Gk9hLmp0v5yA-xXPqCzLvPee1XYk.woff2",
+      "bytes": 7340,
+      "type": "font/woff2"
+    },
+    {
+      "url": "https://tutti.sh/_static/official/fonts/google/merriweather-u-4B0qyriQwlOrhSvowK_l5-eTxCVx0ZbwLvKH2Gk9hLmp0v5yA-xXPqCzLvPee1XYk_XSf-FmQlV235AvH4ZL_Ean2DTA.woff2",
+      "file": "tutti/real-assets/fonts/04abcb_merriweather-u-4B0qyriQwlOrhSvowK_l5-eTxCVx0ZbwLvKH2Gk9hLmp0v5yA-xXPqCzLvPee1XYk.woff2",
+      "bytes": 44972,
+      "type": "font/woff2"
+    },
+    {
+      "url": "https://tutti.sh/_static/official/fonts/google/merriweather-u-4B0qyriQwlOrhSvowK_l5-eTxCVx0ZbwLvKH2Gk9hLmp0v5yA-xXPqCzLvPee1XYk_XSf-FmQlV233AvH4ZL_Ean0.woff2",
+      "file": "tutti/real-assets/fonts/83232e_merriweather-u-4B0qyriQwlOrhSvowK_l5-eTxCVx0ZbwLvKH2Gk9hLmp0v5yA-xXPqCzLvPee1XYk.woff2",
+      "bytes": 51336,
+      "type": "font/woff2"
+    },
+    {
+      "url": "https://tutti.sh/_static/official/fonts/google/poppins-pxiByp8kv8JHgFVrLEj6Z11lFd2JQEl8qw.woff2",
+      "file": "tutti/real-assets/fonts/1fe474_poppins-pxiByp8kv8JHgFVrLEj6Z11lFd2JQEl8qw.woff2",
+      "bytes": 39384,
+      "type": "font/woff2"
+    },
+    {
+      "url": "https://tutti.sh/_static/official/fonts/google/poppins-pxiByp8kv8JHgFVrLEj6Z1JlFd2JQEl8qw.woff2",
+      "file": "tutti/real-assets/fonts/e570af_poppins-pxiByp8kv8JHgFVrLEj6Z1JlFd2JQEl8qw.woff2",
+      "bytes": 5552,
+      "type": "font/woff2"
+    },
+    {
+      "url": "https://tutti.sh/_static/official/fonts/google/poppins-pxiByp8kv8JHgFVrLEj6Z1xlFd2JQEk.woff2",
+      "file": "tutti/real-assets/fonts/c9c661_poppins-pxiByp8kv8JHgFVrLEj6Z1xlFd2JQEk.woff2",
+      "bytes": 7992,
+      "type": "font/woff2"
+    },
+    {
+      "url": "https://tutti.sh/_static/official/fonts/DepartureMono-Regular.woff2",
+      "file": "tutti/real-assets/fonts/7e4a86_DepartureMono-Regular.woff2",
+      "bytes": 22496,
+      "type": "font/woff2"
+    },
+    {
+      "url": "https://tutti.sh/_static/official/fonts/DepartureMono-Regular.woff",
+      "file": "tutti/real-assets/fonts/c7854e_DepartureMono-Regular.woff",
+      "bytes": 25256,
+      "type": "font/woff"
+    }
+  ],
+  "video": [
+    {
+      "url": "https://tutti.sh/_static/official/video/official-home-hero-shader.webm",
+      "file": "tutti/real-assets/video/cee704_official-home-hero-shader.webm",
+      "bytes": 980689,
+      "type": "video/webm"
+    }
+  ],
+  "audio": [],
+  "image": [
+    {
+      "url": "https://tutti.sh/cdn-cgi/image/format=auto,quality=85/_static/official/img/official-home-bg.webp",
+      "file": "tutti/real-assets/image/c1d62b_official-home-bg.webp",
+      "bytes": 527183,
+      "type": "image/jpeg"
+    },
+    {
+      "url": "https://tutti.sh/_static/official/img/favicon-64.png",
+      "file": "tutti/real-assets/image/75b700_favicon-64.png",
+      "bytes": 2790,
+      "type": "image/png"
+    },
+    {
+      "url": "https://tutti.sh/_static/official/img/live-workspace-bottom-bg.webp",
+      "file": "tutti/real-assets/image/467a64_live-workspace-bottom-bg.webp",
+      "bytes": 421202,
+      "type": "image/webp"
+    },
+    {
+      "url": "https://tutti.sh/_static/official/img/onboard-remotion/background/space-workspace.png",
+      "file": "tutti/real-assets/image/000bc0_space-workspace.png",
+      "bytes": 52272,
+      "type": "image/png"
+    },
+    {
+      "url": "https://tutti.sh/_static/official/img/home-terminal-free/scene-bg-adjusted.webp",
+      "file": "tutti/real-assets/image/2e1098_scene-bg-adjusted.webp",
+      "bytes": 192554,
+      "type": "image/webp"
+    },
+    {
+      "url": "https://tutti.sh/_static/official/img/official-home-hero-v1.webp",
+      "file": "tutti/real-assets/image/50c797_official-home-hero-v1.webp",
+      "bytes": 101084,
+      "type": "image/webp"
+    },
+    {
+      "url": "https://tutti.sh/_static/official/img/footer/footer-scene.png",
+      "file": "tutti/real-assets/image/18fb59_footer-scene.png",
+      "bytes": 299373,
+      "type": "image/png"
+    },
+    {
+      "url": "https://tutti.sh/_static/official/app-previews/prototype-design.png",
+      "file": "tutti/real-assets/image/5dbad3_prototype-design.png",
+      "bytes": 84468,
+      "type": "image/png"
+    },
+    {
+      "url": "https://tutti.sh/_static/official/app-previews/ai-canvas.webp",
+      "file": "tutti/real-assets/image/db2469_ai-canvas.webp",
+      "bytes": 92610,
+      "type": "image/webp"
+    },
+    {
+      "url": "https://tutti.sh/_static/official/app-previews/ai-docs.png",
+      "file": "tutti/real-assets/image/438572_ai-docs.png",
+      "bytes": 101539,
+      "type": "image/png"
+    },
+    {
+      "url": "https://tutti.sh/_static/official/app-previews/ai-sheets.webp",
+      "file": "tutti/real-assets/image/7035b0_ai-sheets.webp",
+      "bytes": 45322,
+      "type": "image/webp"
+    },
+    {
+      "url": "https://tutti.sh/_static/official/app-previews/ai-ppt.webp",
+      "file": "tutti/real-assets/image/a4421e_ai-ppt.webp",
+      "bytes": 34666,
+      "type": "image/webp"
+    },
+    {
+      "url": "https://tutti.sh/_static/official/img/computer.webp",
+      "file": "tutti/real-assets/image/02a124_computer.webp",
+      "bytes": 25292,
+      "type": "image/webp"
+    },
+    {
+      "url": "https://tutti.sh/_static/official/img/home-terminal-free/code-editor.webp",
+      "file": "tutti/real-assets/image/ae0d04_code-editor.webp",
+      "bytes": 23024,
+      "type": "image/webp"
+    },
+    {
+      "url": "https://tutti.sh/_static/official/img/onboard-remotion/files/last-supper.webp",
+      "file": "tutti/real-assets/image/8732bc_last-supper.webp",
+      "bytes": 21082,
+      "type": "image/webp"
+    },
+    {
+      "url": "https://tutti.sh/_static/official/img/home-terminal-free/terminal-bg.svg",
+      "file": "tutti/real-assets/image/ae41cd_terminal-bg.svg",
+      "bytes": 1703,
+      "type": "image/svg+xml"
+    },
+    {
+      "url": "https://tutti.sh/_static/official/img/home-terminal-free/terminal.svg",
+      "file": "tutti/real-assets/image/492cda_terminal.svg",
+      "bytes": 3596,
+      "type": "image/svg+xml"
+    },
+    {
+      "url": "https://tutti.sh/_static/official/img/bottom-design/pricing-agent-icons.png",
+      "file": "tutti/real-assets/image/cd2670_pricing-agent-icons.png",
+      "bytes": 30316,
+      "type": "image/png"
+    }
+  ],
+  "lottie": [],
+  "source": [
+    {
+      "url": "https://tutti.sh/_static/official/assets/index-8nQf5oOC.css",
+      "file": "tutti/real-assets/source/0b2432_index-8nQf5oOC.css",
+      "bytes": 220842
+    },
+    {
+      "url": "https://tutti.sh",
+      "file": "tutti/real-assets/source/index.html",
+      "bytes": 0
+    }
+  ]
+}

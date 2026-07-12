@@ -1,0 +1,1090 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>tutti 设计解构 — 纯黑电影感,拆到可复刻的每一个数值</title>
+<meta name="description" content="tutti.sh 的完整交互式设计拆解:真实 token、缓动曲线、电影大图视差、macOS 窗口裱框、图像换态。" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />
+<style>
+  /* ============================================================
+     tutti 设计解构 · Design Teardown
+     视觉语言 = tutti 自己的:纯黑电影感、蓝紫强调 #7f90ff、暖橙沙丘、
+     玻璃描边药丸、macOS 窗口裱框。主字 Lexend Variable 与像素等宽
+     Departure Mono 均为从站点提取的真实字体本尊(见下方 @font-face)。
+     运动统一 tutti 真实主曲线 cubic-bezier(.22,1,.36,1)。
+     所有色/曲线/时长/圆角均为线上抽取实锤(见同目录 md)。
+     第二轮:主字与像素等宽已换成从 tutti.sh 提取的真实字体本尊,
+     首屏与签名区已接入真实电影大图、着色器视频与产品截图。
+     ============================================================ */
+
+  /* ===== 真实字体(从 tutti.sh 提取,清单见 real-assets/manifest.json)=====
+     @font-face 规则的字族名、字重轴与 unicode-range 均照抄站点源样式表,
+     仅把远程 URL 换成本地 real-assets/fonts/ 文件;CDN 版降为 fallback。 */
+  /* 主字族 Lexend Variable —— 站点标题与正文本尊,可变字重 100–900 */
+  @font-face{font-family:"Lexend Variable";font-style:normal;font-display:swap;font-weight:100 900;
+    src:url("real-assets/fonts/65f852_lexend-latin-wght-normal-ci0D1wrL.woff2") format("woff2");
+    unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+  @font-face{font-family:"Lexend Variable";font-style:normal;font-display:swap;font-weight:100 900;
+    src:url("real-assets/fonts/d50345_lexend-latin-ext-wght-normal-B6JQhE1e.woff2") format("woff2");
+    unicode-range:U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF}
+  @font-face{font-family:"Lexend Variable";font-style:normal;font-display:swap;font-weight:100 900;
+    src:url("real-assets/fonts/3b6438_lexend-vietnamese-wght-normal-RvljkFvg.woff2") format("woff2");
+    unicode-range:U+0102-0103,U+0110-0111,U+0128-0129,U+0168-0169,U+01A0-01A1,U+01AF-01B0,U+0300-0301,U+0303-0304,U+0308-0309,U+0323,U+0329,U+1EA0-1EF9,U+20AB}
+  /* 像素等宽 Departure Mono —— 徽章标签 / 终端 / 首屏 ASCII 本尊(替换原 Space Mono 替身) */
+  @font-face{font-family:"Departure Mono";font-style:normal;font-display:swap;font-weight:400;
+    src:url("real-assets/fonts/7e4a86_DepartureMono-Regular.woff2") format("woff2"),
+        url("real-assets/fonts/c7854e_DepartureMono-Regular.woff") format("woff")}
+
+  :root{
+    /* 基底与文字(实锤) */
+    --bg:#060608; --bg-planet:#05070d; --bg-blue:#080b1c;
+    --panel:#0b0b10; --panel-2:#16161c; --panel-3:#1c1c24;
+    --ink:#f2f2f6; --ink-96:rgba(255,255,255,.96);
+    --ink-dim:#9c9caa; --ink-faint:#61616b;
+    --line:rgba(255,255,255,.1); --line-2:rgba(255,255,255,.18);
+    /* 冷色:蓝紫星球光谱(实锤) */
+    --accent:#7f90ff; --accent-soft:#aab2ff; --accent-2:#6a78ee;
+    --accent-blue:#5274ff; --accent-deep:#5b69e6; --accent-mid:#6d7ff5;
+    --accent-bg:rgba(127,144,255,.12); --accent-line:rgba(127,144,255,.3);
+    --glow:127,144,255;
+    /* 暖色:沙丘地表(推断,取自 hero 图) */
+    --warm:#e0824a; --warm-2:#b9552a; --warm-lo:#3a1608;
+    /* 暖纸白反转卡(实锤) */
+    --paper:#f3f1ea; --paper-ink:#0a0a0c;
+    /* macOS 交通灯(红实锤,黄绿推断) */
+    --mac-red:#ff5f57; --mac-yellow:#febc2e; --mac-green:#28c840;
+    /* 字体(真实本尊在前,CDN 替身降为 fallback) */
+    --sans:"Lexend Variable","Lexend",system-ui,-apple-system,sans-serif;
+    --pixel:"Departure Mono","Space Mono",ui-monospace,"SFMono-Regular",monospace;
+    /* 尺寸与运动(实锤) */
+    --maxw:1200px; --radius:16px; --pill:999px;
+    --ease:cubic-bezier(.22,1,.36,1);
+    --ease-inout:cubic-bezier(.65,0,.35,1);
+    --ease-soft:cubic-bezier(.2,.84,.24,1);
+    --ease-feature:cubic-bezier(.22,.61,.36,1);
+    --dur:.2s;
+  }
+  @property --sb{syntax:"<angle>";inherits:false;initial-value:0deg}
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{-webkit-font-smoothing:antialiased;scroll-behavior:smooth;scroll-padding-top:84px}
+  body{background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.7;letter-spacing:-.005em;overflow-x:hidden}
+  a{color:inherit;text-decoration:none}
+  svg{display:block}
+  ::selection{background:var(--accent);color:#06060a}
+  code,pre,.mono{font-family:var(--pixel)}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 32px}
+  @media(max-width:640px){.wrap{padding:0 20px}}
+
+  .eyebrow{font-family:var(--pixel);font-size:11px;font-weight:400;letter-spacing:.22em;text-transform:uppercase;color:var(--accent-soft)}
+  h1,h2,h3{font-family:var(--sans);font-weight:600;letter-spacing:-.02em;line-height:1.08}
+  code{font-size:.86em;color:var(--accent-soft);background:var(--accent-bg);border:1px solid var(--accent-line);border-radius:6px;padding:1px 6px}
+
+  /* film grain overlay */
+  .grain{position:fixed;inset:0;z-index:2;pointer-events:none;opacity:.05;mix-blend-mode:overlay;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 140 140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");background-size:200px}
+
+  /* ---------- NAV ---------- */
+  nav{position:fixed;top:0;left:0;right:0;z-index:60;border-bottom:1px solid transparent;transition:background .35s var(--ease),border-color .35s var(--ease)}
+  nav.stuck{background:rgba(6,6,8,.66);backdrop-filter:blur(14px) saturate(140%);-webkit-backdrop-filter:blur(14px) saturate(140%);border-bottom-color:var(--line)}
+  .nav-in{display:flex;align-items:center;height:64px;gap:22px}
+  .brand{display:flex;align-items:center;gap:10px;font-weight:700;font-size:17px;letter-spacing:-.03em}
+  .brand .mark{width:26px;height:26px;border-radius:8px;background:linear-gradient(135deg,#fff,#dfe1ff);display:grid;place-items:center;color:#0a0a0c;flex:none}
+  .brand .mark svg{width:16px;height:16px}
+  .brand .dot{color:var(--accent)}
+  .navlinks{margin-left:auto;display:flex;gap:2px;font-family:var(--pixel);font-size:12px}
+  .navlinks a{color:var(--ink-dim);padding:8px 12px;border-radius:999px;transition:color var(--dur) var(--ease),background var(--dur) var(--ease)}
+  .navlinks a:hover{color:var(--ink);background:rgba(255,255,255,.06)}
+  .nav-cta{margin-left:6px}
+  @media(max-width:860px){.navlinks{display:none}}
+
+  /* glass pill (signature) */
+  .pill{display:inline-flex;align-items:center;gap:10px;height:46px;padding:0 22px;border-radius:var(--pill);
+    font-weight:500;font-size:15px;color:var(--ink);background:rgba(255,255,255,.06);border:1px solid var(--line);
+    backdrop-filter:blur(14px) saturate(140%);-webkit-backdrop-filter:blur(14px) saturate(140%);cursor:pointer;
+    transition:background var(--dur) var(--ease),border-color var(--dur) var(--ease),transform var(--dur) var(--ease)}
+  .pill:hover{background:rgba(255,255,255,.11);border-color:var(--line-2)}
+  .pill.solid{background:var(--paper);color:var(--paper-ink);border-color:transparent}
+  .pill.solid:hover{transform:translateY(-1px)}
+  .pill svg{width:16px;height:16px}
+  .pill .bdot{width:7px;height:7px;border-radius:50%;background:var(--accent);animation:dotbreathe 2s var(--ease) infinite alternate}
+  @keyframes dotbreathe{from{opacity:.4;transform:scale(.8);box-shadow:0 0 0 rgba(var(--glow),0)}to{opacity:1;transform:scale(1.25);box-shadow:0 0 12px rgba(var(--glow),.85)}}
+
+  /* ---------- HERO ---------- */
+  header{position:relative;min-height:100vh;min-height:100svh;display:flex;align-items:center;overflow:hidden;isolation:isolate;padding:120px 0 90px;background:#000}
+  #stars{position:absolute;inset:0;z-index:0;width:100%;height:100%}
+  .scene{position:absolute;inset:0;z-index:0;pointer-events:none;overflow:hidden}
+  .planet{position:absolute;right:-16vw;top:-12vh;width:64vw;max-width:900px;aspect-ratio:1;border-radius:50%;
+    background:radial-gradient(circle at 30% 28%,#3b4bb0 0%,#1c2470 34%,#0b1040 60%,#05070d 78%);
+    box-shadow:inset 48px -24px 140px rgba(var(--glow),.4),inset -30px 20px 120px rgba(0,0,0,.6),0 0 240px rgba(var(--glow),.14);
+    will-change:transform}
+  .planet::after{content:"";position:absolute;inset:0;border-radius:50%;
+    background:radial-gradient(120% 120% at 12% 10%,rgba(var(--glow),.5),transparent 42%);mix-blend-mode:screen}
+  .dune{position:absolute;left:-5%;right:-5%;bottom:-2%;height:46vh;will-change:transform;
+    background:linear-gradient(180deg,transparent 0%,rgba(224,130,74,.28) 26%,var(--warm-2) 64%,var(--warm-lo) 100%);
+    clip-path:polygon(0 60%,38% 42%,72% 56%,100% 46%,100% 100%,0 100%)}
+  .dune::before{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(255,150,90,.18),transparent 40%);mix-blend-mode:screen}
+  .figure{position:absolute;left:52%;bottom:30vh;width:74px;height:74px;z-index:1;will-change:transform;transform:translateX(-50%)}
+  .figure .lamp{position:absolute;inset:-40px -30px;background:radial-gradient(circle at 60% 40%,rgba(255,180,120,.5),transparent 62%);filter:blur(2px)}
+  .figure svg{position:relative;width:100%;height:100%;filter:drop-shadow(0 6px 10px rgba(0,0,0,.6))}
+  /* 真实电影大图 + 着色器视频(第二轮接入);上方 CSS .scene 星球场景保留为加载失败兜底,在其下层 */
+  .hero-media{position:absolute;inset:-4%;z-index:0;overflow:hidden;pointer-events:none;will-change:transform}
+  .hero-media .base,.hero-media .shader{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 64%}
+  .hero-media .base{opacity:1;filter:saturate(1.03) brightness(.92)}
+  .hero-media .shader{opacity:.42;mix-blend-mode:screen;animation:heroShaderBreathe 16s var(--ease-soft) infinite}
+  @keyframes heroShaderBreathe{0%,100%{opacity:.24}50%{opacity:.56}}
+  /* 暗罩:中心与顶/底加重,保证白色大标题在人物大图上清晰 */
+  .hero-scrim{position:absolute;inset:0;z-index:1;pointer-events:none;
+    background:
+      radial-gradient(132% 92% at 50% 42%,rgba(3,4,8,.72) 0%,rgba(3,4,8,.4) 46%,rgba(3,4,8,.74) 100%),
+      linear-gradient(180deg,rgba(3,4,8,.6) 0%,rgba(3,4,8,.22) 40%,rgba(3,4,8,.92) 100%)}
+  header .vign{position:absolute;inset:0;z-index:1;pointer-events:none;
+    background:radial-gradient(120% 90% at 50% 36%,transparent 42%,rgba(3,4,8,.62) 100%)}
+
+  .hero-in{position:relative;z-index:3;width:100%;text-align:center;will-change:transform}
+  .badge{margin:0 auto 26px;width:max-content}
+  .badge.pill{height:44px;padding:0 26px;font-size:14px}
+  /* h1 校准:线上实测 letter-spacing 为 normal、字重 600、色 rgba(255,255,255,.96);本页放大作电影感首屏 */
+  h1{font-size:clamp(42px,7.4vw,90px);line-height:1.08;font-weight:600;color:var(--ink-96);letter-spacing:normal;text-shadow:0 2px 34px rgba(0,0,0,.55)}
+  h1 .hl{color:var(--accent)}
+  .lede{font-size:clamp(15px,1.4vw,18px);color:var(--ink-dim);max-width:62ch;margin:26px auto 0;line-height:1.6}
+  .cta{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-top:36px}
+  .cta .pill{height:52px;padding:0 26px;font-size:16px;font-weight:600}
+  .scrollcue{position:absolute;left:50%;bottom:26px;transform:translateX(-50%);z-index:3;font-family:var(--pixel);font-size:10px;letter-spacing:.24em;text-transform:uppercase;color:var(--ink-faint)}
+  .scrollcue span{display:block;width:1px;height:26px;margin:8px auto 0;background:linear-gradient(var(--ink-faint),transparent);animation:cuepulse 2s var(--ease) infinite}
+  @keyframes cuepulse{0%,100%{opacity:.3;transform:scaleY(.6)}50%{opacity:1;transform:scaleY(1)}}
+
+  /* ---------- MAIN / SECTION ---------- */
+  main{position:relative;z-index:3;background:linear-gradient(180deg,#000,var(--bg) 40%);border-top:1px solid var(--line)}
+  section{padding:96px 0;border-bottom:1px solid var(--line);position:relative}
+  .sec-head{max-width:72ch;margin-bottom:44px}
+  .sec-head h2{font-size:clamp(28px,3.8vw,48px);margin-top:14px;letter-spacing:-.03em}
+  .sec-head p{color:var(--ink-dim);margin-top:16px;font-size:17px}
+  h3{font-size:19px;font-weight:600}
+  .dim{color:var(--ink-dim)}.faint{color:var(--ink-faint)}
+  p+p{margin-top:10px}
+
+  .grid{display:grid;gap:16px}
+  .g2{grid-template-columns:1fr 1fr}.g3{grid-template-columns:repeat(3,1fr)}
+  @media(max-width:860px){.g2,.g3{grid-template-columns:1fr}}
+  .card{border:1px solid var(--line);border-radius:var(--radius);padding:22px;background:linear-gradient(180deg,rgba(255,255,255,.03),transparent);transition:border-color .3s var(--ease),transform .3s var(--ease)}
+  .card:hover{border-color:var(--line-2);transform:translateY(-2px)}
+  .k{font-family:var(--pixel);font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-dim)}
+  .tag{font-family:var(--pixel);font-size:10px;letter-spacing:.08em;text-transform:uppercase;padding:2px 8px;border-radius:999px;border:1px solid var(--accent-line);color:var(--accent-soft);background:var(--accent-bg)}
+  .tag.guess{color:#e7b48a;border-color:rgba(224,130,74,.4);background:rgba(224,130,74,.12)}
+
+  pre{background:#08080c;border:1px solid var(--line);border-radius:12px;padding:16px 18px;overflow-x:auto;font-size:12.5px;line-height:1.8}
+  pre code{background:none;border:none;padding:0;color:var(--ink-dim);font-size:inherit}
+  .tc{color:var(--ink-faint)}.tn{color:var(--accent-soft)}.tp{color:#e7b48a}
+
+  /* THESIS split */
+  .split{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  @media(max-width:860px){.split{grid-template-columns:1fr}}
+  .surface{border:1px solid var(--line);border-radius:var(--radius);padding:26px;position:relative;overflow:hidden}
+  .surface.a{background:radial-gradient(120% 90% at 82% 0,rgba(var(--glow),.16),transparent 56%),radial-gradient(90% 80% at 0 100%,rgba(224,130,74,.12),transparent 60%)}
+  .surface.b{background:linear-gradient(180deg,rgba(255,255,255,.04),transparent)}
+  .surface .tag{margin-bottom:14px;display:inline-block}
+  .surface h3{font-size:20px}
+  .surface ul{list-style:none;margin-top:14px;display:grid;gap:11px}
+  .surface li{position:relative;padding-left:20px;font-size:14.5px;color:var(--ink-dim);line-height:1.55}
+  .surface li b{color:var(--ink);font-weight:600}
+  .surface li::before{content:"";position:absolute;left:2px;top:9px;width:6px;height:6px;border-radius:50%;background:var(--accent)}
+  .surface.a li::before{background:var(--warm)}
+
+  /* COLOR swatches */
+  .swblock{margin-top:26px}
+  .swblock h3{font-size:15px;margin-bottom:14px;color:var(--ink-dim);font-family:var(--pixel);font-weight:400;letter-spacing:.08em;text-transform:uppercase;font-size:11px}
+  .swgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+  @media(max-width:820px){.swgrid{grid-template-columns:repeat(2,1fr)}}
+  .sw{border:1px solid var(--line);border-radius:14px;overflow:hidden;cursor:pointer;background:var(--panel);transition:border-color .25s var(--ease),transform .25s var(--ease);position:relative}
+  .sw:hover,.sw:focus-visible{border-color:var(--line-2);transform:translateY(-2px);outline:none}
+  .chipc{height:66px;position:relative}
+  .sw .meta{padding:11px 13px}
+  .sw .name{font-size:13px;font-weight:600}
+  .sw .hex{font-family:var(--pixel);font-size:11px;color:var(--accent-soft);margin-top:3px}
+  .sw .role{font-size:11px;color:var(--ink-faint);margin-top:4px}
+  .sw .st{position:absolute;top:8px;right:8px;font-family:var(--pixel);font-size:8.5px;letter-spacing:.08em;padding:2px 6px;border-radius:999px;background:rgba(0,0,0,.5);color:#fff}
+  .sw .st.guess{color:#ffcf9a}
+
+  /* TYPE */
+  .specimen{font-family:var(--sans);font-weight:600;font-size:clamp(40px,7vw,84px);line-height:1;letter-spacing:-.03em;margin:6px 0}
+  .weights{display:flex;flex-wrap:wrap;gap:22px;margin-top:6px}
+  .weights span{font-size:26px}
+  .hlrow{font-size:clamp(24px,3.2vw,40px);font-weight:600;letter-spacing:-.02em}
+
+  /* MOTION easing lab */
+  .easelab{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  @media(max-width:860px){.easelab{grid-template-columns:1fr}}
+  .ease{border:1px solid var(--line);border-radius:var(--radius);padding:20px;cursor:pointer;background:linear-gradient(180deg,rgba(255,255,255,.03),transparent);transition:border-color .25s var(--ease)}
+  .ease:hover,.ease:focus-visible{border-color:var(--line-2);outline:none}
+  .ease-top{display:flex;justify-content:space-between;align-items:baseline;gap:12px}
+  .ease-top h3{font-size:16px}
+  .curveval{font-family:var(--pixel);font-size:10.5px;color:var(--accent);white-space:nowrap}
+  .ease .desc{font-size:13.5px;margin-top:9px;line-height:1.55;color:var(--ink-dim)}
+  .ease-viz{display:flex;align-items:center;gap:16px;margin-top:16px}
+  .ease-viz canvas{flex:none;border:1px solid var(--line);border-radius:10px;background:#08080c}
+  .track{flex:1;min-width:0}
+  .runner-wrap{height:34px;border:1px solid var(--line);border-radius:10px;position:relative;overflow:hidden;background:rgba(0,0,0,.3)}
+  .runner{position:absolute;top:6px;left:6px;width:22px;height:22px;border-radius:7px;background:linear-gradient(135deg,var(--accent-soft),var(--accent-2));box-shadow:0 0 18px -2px var(--accent)}
+  .replay{font-family:var(--pixel);font-size:10px;color:var(--ink-faint);margin-top:8px;letter-spacing:.06em}
+
+  .durs{display:grid;gap:11px}
+  .durrow{display:grid;grid-template-columns:132px 1fr 64px;align-items:center;gap:14px}
+  @media(max-width:560px){.durrow{grid-template-columns:100px 1fr 54px}}
+  .durrow .lab{font-family:var(--pixel);font-size:11.5px;color:var(--ink-dim)}
+  .durbar{height:8px;border-radius:999px;background:linear-gradient(90deg,var(--accent-2),var(--accent-soft));box-shadow:0 0 16px -4px var(--accent)}
+  .durbar.warm{background:linear-gradient(90deg,var(--warm-2),var(--warm));box-shadow:0 0 16px -4px var(--warm)}
+  .durrow .val{font-family:var(--pixel);font-size:11.5px;color:var(--accent-soft);text-align:right}
+
+  /* star-border live */
+  .sbstage{display:flex;flex-wrap:wrap;gap:22px;align-items:center;justify-content:center;padding:8px 0}
+  .star-border{position:relative;border-radius:16px;padding:18px 26px;background:var(--panel-2);isolation:isolate}
+  .star-border.round{border-radius:999px;padding:14px 28px}
+  .star-border .lab{font-family:var(--pixel);font-size:12px;color:var(--ink)}
+  .star-border::before{content:"";position:absolute;inset:0;border-radius:inherit;padding:2px;
+    background:conic-gradient(from var(--sb),transparent 0 42%,var(--accent-blue) 50%,transparent 58% 100%);
+    -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;
+    mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);mask-composite:exclude;
+    filter:drop-shadow(0 0 8px color-mix(in srgb,var(--accent-blue) 58%,transparent));
+    animation:sbrun 5.8s linear infinite}
+  @keyframes sbrun{to{--sb:360deg}}
+
+  /* SIGNATURE: image-state toggle */
+  .statewrap{border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;background:#000;position:relative}
+  .statewrap .frame{position:relative;aspect-ratio:16/9;overflow:hidden}
+  .statewrap img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:opacity .9s var(--ease),filter .9s var(--ease)}
+  .statewrap .ov{position:absolute;inset:0;opacity:0;transition:opacity .9s var(--ease);pointer-events:none;mix-blend-mode:screen;
+    background:radial-gradient(60% 44% at 78% 30%,rgba(var(--glow),.34),transparent 62%)}
+  .statewrap[data-state="ascii"] img{filter:grayscale(1) contrast(1.5) brightness(.86);
+    -webkit-mask-image:radial-gradient(#000 42%,transparent 62%);mask-image:radial-gradient(#000 42%,transparent 62%);
+    -webkit-mask-size:3px 3px;mask-size:3px 3px;-webkit-mask-repeat:repeat;mask-repeat:repeat}
+  /* 着色器态:隐藏原图,播放从站点提取的真实 shader 视频本尊 */
+  .statewrap .stateshader{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .9s var(--ease);pointer-events:none}
+  .statewrap[data-state="shader"] .statebase{opacity:0}
+  .statewrap[data-state="shader"] .stateshader{opacity:1}
+  .statewrap[data-state="shader"] .ov{opacity:1}
+  .statewrap .cap{position:absolute;left:14px;bottom:12px;font-family:var(--pixel);font-size:10.5px;letter-spacing:.1em;color:rgba(255,255,255,.8);background:rgba(0,0,0,.45);padding:5px 10px;border-radius:999px;backdrop-filter:blur(6px)}
+  .segbar{display:inline-flex;gap:4px;padding:5px;border-radius:999px;background:var(--panel-2);border:1px solid var(--line);margin-top:16px}
+  .segbar button{font-family:var(--pixel);font-size:11px;letter-spacing:.06em;color:var(--ink-dim);background:none;border:none;cursor:pointer;padding:8px 16px;border-radius:999px;transition:color var(--dur) var(--ease),background var(--dur) var(--ease)}
+  .segbar button[aria-selected="true"]{color:var(--paper-ink);background:var(--paper)}
+
+  /* SIGNATURE: macOS window frame */
+  .win{border-radius:14px;overflow:hidden;border:1px solid var(--line);background:var(--bg-blue);box-shadow:0 50px 130px -40px rgba(0,0,0,.9),inset 0 1px 0 rgba(255,255,255,.05);position:relative}
+  .win .bar{display:flex;align-items:center;gap:8px;height:40px;padding:0 15px;background:rgba(255,255,255,.04);border-bottom:1px solid var(--line)}
+  .win .dot{width:12px;height:12px;border-radius:50%}
+  .win .dot.r{background:var(--mac-red)}.win .dot.y{background:var(--mac-yellow)}.win .dot.g{background:var(--mac-green)}
+  .win .titl{margin-left:12px;font-family:var(--pixel);font-size:11px;color:var(--ink-faint);letter-spacing:.04em}
+  .win .body{position:relative;aspect-ratio:16/8.5;overflow:hidden;background:radial-gradient(120% 120% at 88% 12%,#243,#0a1030 40%,#05070d 78%)}
+  /* 真实产品截图裱进窗口(从 tutti.sh 提取);背景渐变仅作加载失败兜底 */
+  .win .wshot{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:top center}
+  .win .cursor{position:absolute;left:50%;top:50%;width:20px;height:20px;z-index:5;pointer-events:none;transition:left 1.1s var(--ease),top 1.1s var(--ease)}
+  .win .cursor svg{filter:drop-shadow(0 2px 3px rgba(0,0,0,.6))}
+  .win .hot{position:absolute;display:flex;align-items:center;justify-content:center;border-radius:999px;background:rgba(10,12,24,.62);border:1px solid rgba(255,255,255,.22);backdrop-filter:blur(8px);font-family:var(--pixel);font-size:10px;color:#fff;padding:7px 14px;box-shadow:0 6px 20px -6px rgba(0,0,0,.6);transition:background .3s var(--ease),transform .3s var(--ease)}
+  .win .hot.ping{background:rgba(var(--glow),.55);transform:scale(1.08)}
+  .win .hot.h1{left:6%;bottom:12%}.win .hot.h2{right:6%;top:16%}
+
+  /* app orbit */
+  .orbit{position:relative;height:340px;border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;background:radial-gradient(90% 120% at 50% 120%,rgba(var(--glow),.12),transparent 60%)}
+  .orbit .core{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:min(52%,300px);aspect-ratio:16/10;border-radius:12px;border:1px solid var(--line);background:linear-gradient(180deg,var(--panel-2),var(--panel));box-shadow:0 30px 80px -30px rgba(0,0,0,.9);display:grid;place-items:center}
+  .orbit .core .k{font-size:11px}
+  .otile{position:absolute;display:flex;flex-direction:column;align-items:center;gap:7px;width:74px;text-align:center;will-change:transform}
+  .otile .ic{width:46px;height:46px;border-radius:13px;display:grid;place-items:center;background:linear-gradient(160deg,var(--panel-3),var(--panel));border:1px solid var(--line-2);box-shadow:0 12px 30px -12px rgba(0,0,0,.8)}
+  .otile .ic svg{width:22px;height:22px;color:var(--accent-soft)}
+  .otile .ol{font-family:var(--pixel);font-size:9.5px;color:var(--ink-dim);letter-spacing:.02em}
+  @keyframes floaty{from{transform:translateY(-6px)}to{transform:translateY(8px)}}
+  @media(max-width:640px){.orbit{height:300px}.otile{width:60px}.otile .ic{width:40px;height:40px}}
+
+  /* craft chips */
+  .chips{display:flex;flex-wrap:wrap;gap:9px}
+  .chip{font-family:var(--pixel);font-size:11.5px;color:var(--ink-dim);border:1px solid var(--line);border-radius:999px;padding:7px 14px;background:rgba(255,255,255,.02)}
+  .chip b{color:var(--accent-soft);font-weight:400}
+  .radrow{display:flex;flex-wrap:wrap;gap:14px;align-items:flex-end;margin-top:6px}
+  .radbox{display:flex;flex-direction:column;align-items:center;gap:8px}
+  .radbox .b{width:64px;height:64px;background:linear-gradient(160deg,var(--panel-3),var(--panel));border:1px solid var(--line-2)}
+  .radbox .t{font-family:var(--pixel);font-size:10.5px;color:var(--ink-dim)}
+  .mediabars{display:grid;gap:10px}
+  .mrow{display:grid;grid-template-columns:70px 1fr 44px;align-items:center;gap:12px}
+  .mrow .lab{font-family:var(--pixel);font-size:11px;color:var(--ink-dim)}
+  .mbar{height:9px;border-radius:999px;background:linear-gradient(90deg,var(--accent-2),var(--accent-soft))}
+  .mrow .val{font-family:var(--pixel);font-size:11px;color:var(--accent-soft);text-align:right}
+
+  /* paper card demo */
+  .papergrid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  @media(max-width:860px){.papergrid{grid-template-columns:1fr}}
+  .paper-card{background:var(--paper);color:var(--paper-ink);border-radius:8px;padding:24px}
+  .paper-card h3{color:var(--paper-ink)}
+  .paper-card .pk{font-family:var(--pixel);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:#6a6a70}
+  .paper-card .div{border-top:1px dashed rgba(10,10,12,.22);margin:16px 0}
+  .paper-card .price{font-size:26px;font-weight:700;margin-top:4px}
+  .paper-card p{color:#3a3a42;font-size:14px}
+
+  /* as-seen figures */
+  figure{margin:0}
+  .shot{border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;background:var(--panel)}
+  .shot img{display:block;width:100%;height:auto}
+  figcaption{font-size:12.5px;color:var(--ink-faint);padding:12px 16px;line-height:1.55;font-family:var(--pixel);letter-spacing:.01em}
+  .frames{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:16px}
+  @media(max-width:860px){.frames{grid-template-columns:repeat(2,1fr)}}
+  .frames img{width:100%;height:auto;border-radius:10px;border:1px solid var(--line);display:block}
+
+  /* build checklist */
+  .checklist{list-style:none;display:grid;gap:10px;margin-top:6px}
+  .checklist li{position:relative;padding-left:26px;font-size:14.5px;color:var(--ink-dim);line-height:1.5}
+  .checklist li b{color:var(--ink);font-weight:600}
+  .checklist li::before{content:"";position:absolute;left:0;top:3px;width:16px;height:16px;border-radius:5px;border:1px solid var(--accent-line);background:var(--accent-bg)}
+  .checklist li::after{content:"";position:absolute;left:5px;top:7px;width:5px;height:8px;border:solid var(--accent);border-width:0 2px 2px 0;transform:rotate(42deg)}
+
+  /* footer (cinematic) */
+  footer{position:relative;background:linear-gradient(180deg,var(--bg),#000);border-top:1px solid var(--line);overflow:hidden;padding:80px 0 40px}
+  footer .fscene{position:absolute;left:0;right:0;bottom:0;height:180px;pointer-events:none;
+    background:radial-gradient(40% 120% at 50% 100%,rgba(255,170,110,.16),transparent 60%)}
+  footer .ffig{position:absolute;left:50%;bottom:0;transform:translateX(-50%);width:96px;height:96px;opacity:.8}
+  footer .ffig .glow{position:absolute;inset:-30px;background:radial-gradient(circle at 50% 40%,rgba(255,180,120,.4),transparent 60%)}
+  .foot-top{display:flex;flex-wrap:wrap;gap:40px;justify-content:space-between;position:relative;z-index:2}
+  .foot-brand{max-width:340px}
+  .foot-brand .big{font-size:22px;font-weight:700;letter-spacing:-.03em;margin-bottom:6px}
+  .foot-brand .big .dot{color:var(--accent)}
+  .foot-brand p{color:var(--ink-dim);font-size:15px}
+  .socials{display:flex;gap:10px;margin-top:18px}
+  .socials a{width:38px;height:38px;border-radius:50%;border:1px solid var(--line);display:grid;place-items:center;color:var(--ink-dim);transition:color var(--dur) var(--ease),border-color var(--dur) var(--ease),transform var(--dur) var(--ease)}
+  .socials a:hover{color:var(--ink);border-color:var(--line-2);transform:translateY(-2px)}
+  .socials svg{width:16px;height:16px}
+  .foot-cols{display:flex;gap:54px;flex-wrap:wrap}
+  .foot-cols h4{font-size:13px;font-weight:600;margin-bottom:14px}
+  .foot-cols a{display:block;color:var(--ink-dim);font-size:13.5px;margin-bottom:9px;transition:color var(--dur) var(--ease)}
+  .foot-cols a:hover{color:var(--ink)}
+  .foot-bot{position:relative;z-index:2;margin-top:56px;padding-top:20px;border-top:1px solid var(--line);display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;font-family:var(--pixel);font-size:11px;color:var(--ink-faint)}
+  .foot-bot a{color:var(--accent-soft)}
+
+  /* copy toast */
+  .toast{position:fixed;left:50%;bottom:30px;transform:translate(-50%,20px);z-index:90;background:var(--paper);color:var(--paper-ink);font-family:var(--pixel);font-size:12.5px;font-weight:700;padding:10px 20px;border-radius:999px;opacity:0;pointer-events:none;transition:opacity .3s var(--ease),transform .3s var(--ease);box-shadow:0 14px 44px -8px rgba(0,0,0,.6)}
+  .toast.show{opacity:1;transform:translate(-50%,0)}
+
+  @media(prefers-reduced-motion:reduce){
+    *{scroll-behavior:auto!important}
+    .bdot,.sbrun,.star-border::before,.otile,.scrollcue span,.hero-media .shader{animation:none!important}
+    .planet,.dune,.figure,.hero-in,.hero-media{transform:none!important}
+  }
+</style>
+</head>
+<body>
+<div class="grain" aria-hidden="true"></div>
+
+<!-- NAV -->
+<nav id="nav" aria-label="主导航">
+  <div class="wrap nav-in">
+    <a class="brand" href="#top" aria-label="tutti 设计解构">
+      <span class="mark"><svg viewBox="0 0 24 24" fill="none"><circle cx="8.5" cy="10" r="1.6" fill="#0a0a0c"/><circle cx="15.5" cy="10" r="1.6" fill="#0a0a0c"/><path d="M7 15c1.4 1.6 3.1 2.4 5 2.4s3.6-.8 5-2.4" stroke="#0a0a0c" stroke-width="1.8" stroke-linecap="round"/></svg></span>
+      tutti<span class="dot">.</span>&nbsp;<span style="color:var(--ink-faint);font-weight:400;font-size:14px;letter-spacing:0">设计解构</span>
+    </a>
+    <div class="navlinks">
+      <a href="#thesis">定位</a>
+      <a href="#color">色彩</a>
+      <a href="#type">字体</a>
+      <a href="#motion">动效</a>
+      <a href="#signature">签名</a>
+      <a href="#craft">工艺</a>
+      <a href="#build">复刻</a>
+      <a href="#seen">实拍</a>
+    </div>
+    <button class="pill nav-cta" data-copy="https://tutti.sh" aria-label="复制站点地址">
+      <span class="bdot" aria-hidden="true"></span>tutti.sh
+    </button>
+  </div>
+</nav>
+
+<!-- HERO -->
+<header id="top">
+  <canvas id="stars" aria-hidden="true"></canvas>
+  <div class="scene" aria-hidden="true">
+    <div class="planet" data-par="0.16"></div>
+    <div class="dune" data-par="-0.09"></div>
+    <div class="figure" data-par="0.05">
+      <div class="lamp"></div>
+      <svg viewBox="0 0 74 74" fill="#0b0b12">
+        <rect x="30" y="40" width="30" height="6" rx="1"/>
+        <rect x="34" y="46" width="3" height="16"/><rect x="53" y="46" width="3" height="16"/>
+        <path d="M44 26c0-4 3-7 7-7s7 3 7 7v14h-4V26c0-1.7-1.3-3-3-3s-3 1.3-3 3z"/>
+        <circle cx="24" cy="30" r="5"/>
+        <path d="M18 40c0-3.3 2.7-6 6-6s6 2.7 6 6v4h-4v-4c0-1.1-.9-2-2-2s-2 .9-2 2v4h-4z"/>
+        <rect x="16" y="44" width="12" height="3" rx="1"/>
+      </svg>
+    </div>
+  </div>
+  <!-- 真实电影大图 + 着色器视频(从 tutti.sh 提取);上方 CSS .scene 为加载失败时的兜底 -->
+  <div class="hero-media" data-par="0.08" aria-hidden="true">
+    <img class="base" src="real-assets/image/50c797_official-home-hero-v1.webp" alt="" loading="eager" decoding="async" />
+    <video class="shader" autoplay muted loop playsinline preload="metadata"
+           poster="real-assets/image/50c797_official-home-hero-v1.webp">
+      <source src="real-assets/video/cee704_official-home-hero-shader.webm" type="video/webm" />
+    </video>
+  </div>
+  <div class="hero-scrim" aria-hidden="true"></div>
+  <div class="vign" aria-hidden="true"></div>
+
+  <div class="wrap hero-in" id="heroIn">
+    <div class="badge pill" style="cursor:default"><span class="bdot" aria-hidden="true"></span>a real-time shared workspace</div>
+    <h1>Where people and agents<br><span class="hl">build in tune</span></h1>
+    <p class="lede">对 tutti.sh 的完整交互式设计拆解。纯黑电影感、蓝紫强调 <code>#7f90ff</code>、暖橙沙丘、玻璃描边药丸与 macOS 窗口裱框——用它自己的真实字体、真实电影大图与 shader 视频、真实 token 与缓动曲线复现,拆到可复刻的每一个数值。</p>
+    <div class="cta">
+      <a class="pill solid" href="#thesis">开始拆解</a>
+      <a class="pill" href="#signature">看签名效果</a>
+    </div>
+  </div>
+  <div class="scrollcue" aria-hidden="true">向下滚动<span></span></div>
+</header>
+
+<main>
+  <!-- 1 · THESIS -->
+  <section id="thesis">
+    <div class="wrap">
+      <div class="sec-head">
+        <div class="eyebrow">01 — 定位与设计意图</div>
+        <h2>两层设计:电影营销层乘以产品克制层</h2>
+        <p>tutti 把两种气质叠在一起。复刻前先拆开:一层是把抽象主张变成电影画面的宇宙叙事,一层是浸在同一份电影感里、却始终克制冷静的产品界面。复刻目标就是两者相乘。</p>
+      </div>
+      <div class="split">
+        <div class="surface a">
+          <span class="tag guess">电影营销层</span>
+          <h3>把主张拍成一张画面</h3>
+          <ul>
+            <li><b>超现实大图</b>:历史名人形象与黑色人形并排围坐用笔记本电脑,身后蓝色星球、脚下橙色地表。</li>
+            <li><b>冷暖对撞</b>:蓝色星球(冷)压着橙红沙丘(暖),渺小人影坐在广袤地景里。</li>
+            <li><b>慢速氛围</b>:星场漂移、星球呼吸、图标浮动,循环长达 16 到 72 秒。</li>
+            <li><b>图像换态</b>:首屏大图在真实照片与点阵化之间过渡。</li>
+          </ul>
+        </div>
+        <div class="surface b">
+          <span class="tag">产品界面层</span>
+          <h3>浸在电影感里,依旧克制</h3>
+          <ul>
+            <li><b>窗口裱框</b>:产品截图裱进 macOS 窗口,红黄绿圆点加圆角收边。</li>
+            <li><b>玻璃药丸</b>:导航、CTA、徽章全是 999px 玻璃描边,徽章圆点还在呼吸。</li>
+            <li><b>敏捷微交互</b>:悬停、焦点、切换固定在 180 到 900 毫秒。</li>
+            <li><b>唯一强调色</b>:界面只用蓝紫 <code>#7f90ff</code>,暖橙只交给大图。</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2 · COLOR -->
+  <section id="color">
+    <div class="wrap">
+      <div class="sec-head">
+        <div class="eyebrow">02 — 色彩系统</div>
+        <h2>纯黑打底,蓝紫是唯一的界面强调</h2>
+        <p>点任一色块复制其值。带"实锤"标的取自计算样式与样式表统计,带"推断"标的是图像取色或标准值补齐。冷暖分工清楚:蓝紫给界面,暖橙只给大图。</p>
+      </div>
+
+      <div class="swblock">
+        <h3>基底与文字(实锤)</h3>
+        <div class="swgrid" id="sw-base"></div>
+      </div>
+      <div class="swblock">
+        <h3>蓝紫星球光谱(实锤)</h3>
+        <div class="swgrid" id="sw-blue"></div>
+      </div>
+      <div class="swblock">
+        <h3>暖沙丘、暖纸白与窗口交通灯</h3>
+        <div class="swgrid" id="sw-warm"></div>
+      </div>
+
+      <div class="card" style="margin-top:26px">
+        <div class="k">一颗光晕拆成 RGB 分量复用</div>
+        <p class="dim" style="margin-top:8px;font-size:14.5px"><code>--glow:127,144,255</code> 把强调色 <code>#7f90ff</code> 拆成分量存放,配合 <code>color-mix</code> 与 <code>rgba(var(--glow),a)</code>,让同一束蓝光在描边、辉光、底色里反复出现,成本极低。这是很值得学的一手。</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3 · TYPE -->
+  <section id="type">
+    <div class="wrap">
+      <div class="sec-head">
+        <div class="eyebrow">03 — 字体系统</div>
+        <h2>一个字体家族撑起全部标题与正文</h2>
+        <p>线上真实加载六款字体,但主力是 <code>Lexend</code>(<code>--sans</code>,引用 192 次)加像素等宽 <code>Departure Mono</code>(<code>--pixel</code>,引用 42 次)。没有华丽衬线大标题——电影感交给图像和打光,不靠字体。</p>
+      </div>
+      <div class="card" style="margin-bottom:16px">
+        <div class="k">主字 Lexend · h1 实测 58px / 600 / 行高 68px</div>
+        <div class="specimen">build in tune</div>
+        <div class="weights">
+          <span style="font-weight:300">Light 300</span>
+          <span style="font-weight:400">Regular 400</span>
+          <span style="font-weight:500">Medium 500</span>
+          <span style="font-weight:600">Semibold 600</span>
+          <span style="font-weight:700">Bold 700</span>
+        </div>
+      </div>
+      <div class="grid g2">
+        <div class="card">
+          <div class="k">关键词高亮(整站唯一文字彩色)</div>
+          <div class="hlrow" style="margin-top:10px">Where people and agents<br><span style="color:var(--accent)">build in tune</span></div>
+          <p class="dim" style="margin-top:12px;font-size:14px">大标题把动词短语整行换成 <code>#7f90ff</code>,其余白色,克制且精准,呼应星球的冷光。</p>
+        </div>
+        <div class="card">
+          <div class="k">像素等宽 · 标签与 ASCII</div>
+          <div class="mono" style="font-size:22px;color:var(--accent-soft);margin:10px 0 2px">Departure Mono</div>
+          <div class="mono" style="font-size:13px;color:var(--ink-dim)">A REAL-TIME SHARED WORKSPACE&nbsp;&nbsp;#7f90ff&nbsp;&nbsp;5.8s</div>
+          <p class="dim" style="margin-top:12px;font-size:14px">用在徽章标签、终端文本与首屏 ASCII 拼字。本页所有等宽处即此角色——第二轮已接入<b style="color:var(--ink);font-weight:600">从站点提取的真实 Departure Mono 本尊</b>(<code>@font-face</code> 引本地 woff2),<code>Space Mono</code> 仅留作 CDN 兜底。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4 · MOTION -->
+  <section id="motion">
+    <div class="wrap">
+      <div class="sec-head">
+        <div class="eyebrow">04 — 动效系统</div>
+        <h2>双时间尺度:敏捷微交互叠慢速氛围层</h2>
+        <p>点任一卡片重放。曲线与时长均为线上样式表实测值,主曲线 <code>cubic-bezier(.22,1,.36,1)</code> 出现 52 次,是绝对主力,本页所有过渡都用它运动。</p>
+      </div>
+      <div class="easelab" id="easelab"></div>
+
+      <h3 style="margin:36px 0 14px">时长阶梯(真实 token,两个尺度分开看)</h3>
+      <div class="grid g2">
+        <div class="card">
+          <div class="k" style="margin-bottom:14px">敏捷微交互层</div>
+          <div class="durs" id="durs-micro"></div>
+        </div>
+        <div class="card">
+          <div class="k" style="margin-bottom:14px">慢速氛围层</div>
+          <div class="durs" id="durs-ambient"></div>
+        </div>
+      </div>
+
+      <h3 style="margin:36px 0 14px">星形描边扫光(纯 CSS,零图片)· 周期 5.8s</h3>
+      <div class="card">
+        <div class="sbstage">
+          <div class="star-border"><span class="lab">onboard-agent-star-border</span></div>
+          <div class="star-border round"><span class="lab">message-center · 5.8s</span></div>
+        </div>
+        <p class="dim" style="margin-top:14px;font-size:14px;text-align:center">用 <code>conic-gradient</code> 加 <code>mask-composite</code> 沿任意圆角容器边缘跑一圈光,配 <code>color-mix</code> 的 <code>#5274ff</code> 与 <code>drop-shadow</code> 辉光。对应真实变量 <code>--onboard-*-star-border-*</code> 与关键帧 <code>star-border-path</code>。</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5 · SIGNATURE -->
+  <section id="signature">
+    <div class="wrap">
+      <div class="sec-head">
+        <div class="eyebrow">05 — 签名视觉母题</div>
+        <h2>电影大图视差、图像换态、窗口裱框</h2>
+        <p>首屏那块宇宙场景就是签名一:大标题压图加滚动与鼠标视差(移动鼠标或滚动即可感受星球、沙丘、人影分层位移)。下面是另外三个签名效果的可跑复现。</p>
+      </div>
+
+      <div class="grid g2">
+        <div>
+          <h3 style="margin-bottom:6px">签名二 · 首屏图像换态</h3>
+          <p class="dim" style="font-size:14px;margin-bottom:14px">真实关键帧 <code>hero-base-fade-out</code> 到 <code>hero-ascii-fade-in</code> 到 <code>hero-shader-fade-in</code> 证明首屏大图在三种渲染态间过渡。这里直接用<b style="color:var(--ink);font-weight:600">从站点提取的真实素材</b>演示:真实态是原始电影大图,点阵态用 CSS 网点近似,着色器态<b style="color:var(--ink);font-weight:600">直接播放站点的 shader 视频本尊</b>。过渡走 <code>.9s var(--ease)</code>。</p>
+          <div class="statewrap" id="statewrap" data-state="base">
+            <div class="frame">
+              <img class="statebase" src="real-assets/image/50c797_official-home-hero-v1.webp" alt="tutti 首屏电影大图(真实态)" loading="lazy" />
+              <video class="stateshader" muted loop playsinline preload="none" poster="real-assets/image/50c797_official-home-hero-v1.webp">
+                <source src="real-assets/video/cee704_official-home-hero-shader.webm" type="video/webm" />
+              </video>
+              <div class="ov"></div>
+              <div class="cap" id="stateCap">base · 真实态</div>
+            </div>
+          </div>
+          <div class="segbar" role="tablist" aria-label="图像渲染态">
+            <button role="tab" aria-selected="true" data-st="base">真实态</button>
+            <button role="tab" aria-selected="false" data-st="ascii">点阵态</button>
+            <button role="tab" aria-selected="false" data-st="shader">着色器态</button>
+          </div>
+        </div>
+        <div>
+          <h3 style="margin-bottom:6px">签名三 · macOS 窗口裱框</h3>
+          <p class="dim" style="font-size:14px;margin-bottom:14px">窗口里裱的是<b style="color:var(--ink);font-weight:600">从站点提取的真实产品截图</b>(AI canvas):红点 <code>#ff5f57</code> 实锤,黄绿为标准值。窗口入场对应 <code>window-enter</code>,里面一个自动光标在两个热点间移动并点击,对应 <code>auto-cursor-move</code>。</p>
+          <div class="win" id="win">
+            <div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="titl">tutti — AI canvas</span></div>
+            <div class="body">
+              <img class="wshot" src="real-assets/image/db2469_ai-canvas.webp" alt="tutti AI canvas 产品截图(真实,从站点提取)" loading="lazy" decoding="async" />
+              <div class="hot h1">Use Apps</div>
+              <div class="hot h2">Build Apps</div>
+              <div class="cursor"><svg viewBox="0 0 24 24" width="20" height="20"><path d="M4 2l14 8-6 1.5L15 18l-2.5 1-3-6.4L4 16z" fill="#fff" stroke="#0a0a0c" stroke-width="1"/></svg></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <h3 style="margin:40px 0 14px">签名四 · 应用轨道(图标环绕窗口漂浮)</h3>
+      <p class="dim" style="font-size:14px;margin-bottom:16px">"应用活在 tutti 里"一节,产品窗口四周漂浮一圈应用图标,沿轨道缓慢浮动,对应 <code>application-icon-float</code> 与 <code>--orbit-size:58.681cqw</code>。</p>
+      <div class="orbit" id="orbit">
+        <div class="core"><div class="k">Product Window</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 6 · CRAFT -->
+  <section id="craft">
+    <div class="wrap">
+      <div class="sec-head">
+        <div class="eyebrow">06 — 工艺细节</div>
+        <h2>999px 药丸主导,玻璃、暖纸白与媒体选型</h2>
+      </div>
+      <div class="grid g2">
+        <div class="card">
+          <h3>圆角语言</h3>
+          <p class="dim" style="font-size:14px;margin-top:8px">999px 全圆角出现 82 次,是绝对主导;卡片走 16 到 8 一档;而按钮计算圆角是 0px——方角文字按钮加圆角药丸控件,分工明确。</p>
+          <div class="radrow">
+            <div class="radbox"><div class="b" style="border-radius:999px"></div><div class="t">999px 主导</div></div>
+            <div class="radbox"><div class="b" style="border-radius:16px"></div><div class="t">16px</div></div>
+            <div class="radbox"><div class="b" style="border-radius:12px"></div><div class="t">12px</div></div>
+            <div class="radbox"><div class="b" style="border-radius:8px"></div><div class="t">8px</div></div>
+            <div class="radbox"><div class="b" style="border-radius:0"></div><div class="t">0px 按钮</div></div>
+          </div>
+        </div>
+        <div class="card">
+          <h3>玻璃质感(实锤)</h3>
+          <p class="dim" style="font-size:14px;margin-top:8px">导航下拉与药丸控件用 <code>blur(14px) saturate(140%)</code> 加半透明白底 <code>rgba(255,255,255,.08)</code> 加投影 <code>0 18px 44px rgba(0,0,0,.36)</code>。</p>
+          <div style="margin-top:16px;padding:18px;border-radius:12px;background:linear-gradient(120deg,rgba(var(--glow),.3),rgba(224,130,74,.2))">
+            <div class="pill" style="cursor:default;background:rgba(255,255,255,.1)"><span class="bdot"></span>玻璃药丸 · backdrop-filter</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="grid g2" style="margin-top:16px">
+        <div class="card">
+          <h3>媒体选型(实锤计数)</h3>
+          <div class="mediabars" style="margin-top:14px">
+            <div class="mrow"><span class="lab">SVG</span><div class="mbar" style="width:100%"></div><span class="val">76</span></div>
+            <div class="mrow"><span class="lab">图片</span><div class="mbar" style="width:92%"></div><span class="val">70</span></div>
+            <div class="mrow"><span class="lab">视频</span><div class="mbar" style="width:6%"></div><span class="val">2</span></div>
+            <div class="mrow"><span class="lab">画布</span><div class="mbar" style="width:4%"></div><span class="val">1</span></div>
+          </div>
+          <p class="dim" style="font-size:13.5px;margin-top:14px">矢量图标与静态大图是主力,视频只用在少数关键氛围段。未探测到具名动画库,动效以手写 CSS 为主。抓到的 CSS 约 473KB(484,718 字节),自定义变量实测抽取到 120 个。</p>
+        </div>
+        <div class="card">
+          <h3>暖纸白反转卡(明暗节奏)</h3>
+          <p class="dim" style="font-size:14px;margin-top:8px">深色站里插入 <code>#f3f1ea</code> 浅卡,深色字压浅底,制造一处明亮的呼吸点。定价区就是这么做的。</p>
+          <div class="papergrid" style="margin-top:16px">
+            <div class="paper-card">
+              <div class="pk">Tutti</div>
+              <div class="price">Free forever</div>
+              <div class="div"></div>
+              <p>一人多智能体,开源。</p>
+            </div>
+            <div class="paper-card" style="background:linear-gradient(180deg,#f6f4ef,#e9e6dd)">
+              <div class="pk">Tutti · VM</div>
+              <div class="price">Early Access</div>
+              <div class="div"></div>
+              <p>跨人跨设备共享。</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 7 · BUILD -->
+  <section id="build">
+    <div class="wrap">
+      <div class="sec-head">
+        <div class="eyebrow">07 — 如何复刻</div>
+        <h2>把上面的数值直接接进你的产品</h2>
+      </div>
+      <div class="grid g2">
+        <div>
+          <h3 style="margin-bottom:12px">1 · 落地 token(复制即用)</h3>
+          <pre><code><span class="tc">:root</span>{
+  <span class="tc">--bg</span>:<span class="tn">#060608</span>;   <span class="tc">/* body 实绘纯黑 */</span>
+  <span class="tc">--ink</span>:<span class="tn">#f2f2f6</span>; <span class="tc">--ink-dim</span>:<span class="tn">#9c9caa</span>;
+  <span class="tc">--accent</span>:<span class="tn">#7f90ff</span>;      <span class="tc">/* 唯一 UI 强调 */</span>
+  <span class="tc">--glow</span>:127,144,255;   <span class="tc">/* 光晕复用 */</span>
+  <span class="tc">--paper</span>:<span class="tn">#f3f1ea</span>;       <span class="tc">/* 反转浅卡 */</span>
+  <span class="tc">--warm</span>:<span class="tn">#e0824a</span>;        <span class="tc">/* 沙丘,推断 */</span>
+  <span class="tc">--radius</span>:16px; <span class="tc">--pill</span>:999px;
+  <span class="tc">--ease</span>:<span class="tp">cubic-bezier</span>(.22,1,.36,1);
+}</code></pre>
+        </div>
+        <div>
+          <h3 style="margin-bottom:12px">2 · 电影大图视差(核心)</h3>
+          <pre><code><span class="tc">.planet</span>{position:absolute;right:-16vw;
+ border-radius:50%;
+ background:<span class="tp">radial-gradient</span>(circle at 30% 28%,
+  <span class="tn">#3b4bb0</span>,<span class="tn">#1c2470</span> 34%,<span class="tn">#05070d</span> 78%);
+ box-shadow:inset 48px -24px 140px
+  <span class="tp">rgba</span>(var(--glow),.4)}
+<span class="tc">/* JS:每层乘不同系数 */</span>
+el.style.transform=
+ `translate3d(0,${y*k}px,0)`;</code></pre>
+        </div>
+      </div>
+      <div class="grid g2" style="margin-top:16px">
+        <div>
+          <h3 style="margin-bottom:12px">3 · 玻璃药丸加呼吸圆点</h3>
+          <pre><code><span class="tc">.pill</span>{border-radius:999px;
+ background:<span class="tp">rgba</span>(255,255,255,.06);
+ border:1px solid <span class="tp">rgba</span>(255,255,255,.1);
+ backdrop-filter:blur(14px) saturate(140%)}
+<span class="tc">.pill .dot</span>{animation:breathe 2s
+ var(--ease) infinite alternate}</code></pre>
+        </div>
+        <div>
+          <h3 style="margin-bottom:12px">4 · 复刻清单</h3>
+          <ul class="checklist">
+            <li>纯黑底,<b>蓝紫作唯一 UI 强调</b>,暖橙只给大图</li>
+            <li>首屏 CSS 星球加沙丘加星场,<b>大标题压图</b>,关键词高亮,滚动视差</li>
+            <li>首屏图像在<b>真实态与点阵态</b>间交叉淡入</li>
+            <li>产品截图裱进 <b>macOS 窗口框</b>,带入场与自动光标</li>
+            <li>玻璃药丸加呼吸圆点;可选星形扫边光</li>
+            <li>运动统一 <code>var(--ease)</code>;氛围层 16 到 72 秒长循环</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 8 · AS SEEN -->
+  <section id="seen">
+    <div class="wrap">
+      <div class="sec-head">
+        <div class="eyebrow">08 — as-seen 实拍</div>
+        <h2>线上真实渲染截图(证据图)</h2>
+        <p>以下为无头浏览器真实渲染的截图,非小模型转写推断。凡涉及视觉,一律以肉眼看到的渲染为准。</p>
+      </div>
+      <div class="grid g2">
+        <figure class="shot">
+          <img src="assets/actual-hero.jpg" alt="tutti 首屏真实渲染" loading="lazy" />
+          <figcaption>首屏真实渲染 · 恰好抓到大图的点阵化中间态,罩着纱网 / CRT 质感,呼应 hero-ascii 换态。</figcaption>
+        </figure>
+        <figure class="shot">
+          <img src="assets/actual-full.jpg" alt="tutti 整页真实渲染" loading="lazy" />
+          <figcaption>整页真实渲染 · 从超现实大图,到裱框产品截图,到暖纸白定价卡,到聚光剪影页脚,全程纯黑电影感。</figcaption>
+        </figure>
+      </div>
+      <h3 style="margin:30px 0 0">滚动关键帧</h3>
+      <div class="frames">
+        <img src="keyframes/01.jpg" alt="关键帧 · 首屏星球沙丘" loading="lazy" />
+        <img src="keyframes/02.jpg" alt="关键帧 · 窗口裱框 @ 星球" loading="lazy" />
+        <img src="keyframes/04.jpg" alt="关键帧 · 应用轨道与任务卡" loading="lazy" />
+        <img src="keyframes/06.jpg" alt="关键帧 · 暖纸白定价卡" loading="lazy" />
+      </div>
+    </div>
+  </section>
+
+  <!-- 9 · PROVENANCE -->
+  <section id="prov" style="border-bottom:none">
+    <div class="wrap">
+      <div class="sec-head">
+        <div class="eyebrow">09 — 出处与方法</div>
+        <h2>实锤与推断,分得清清楚楚</h2>
+      </div>
+      <div class="grid g2">
+        <div class="card">
+          <h3>实锤(源自抽取)</h3>
+          <p class="dim" style="font-size:14px;margin-top:8px">playwright 计算样式加样式表原文(约 473KB)。基底与文字色、蓝紫全谱、暖纸白、窗口红点 <code>#ff5f57</code>、字体与 h1 规格、四条缓动曲线及出现次数、时长梯度、圆角分布、玻璃参数、全部 <code>@keyframes</code> 名称、媒体计数。第二轮更直接嵌入从站点提取的<b style="color:var(--ink);font-weight:600">真实字体本尊</b>(Lexend Variable、Departure Mono)、真实电影大图、真实 shader 视频与真实产品截图。</p>
+        </div>
+        <div class="card">
+          <h3>推断(观察或标准值补齐)</h3>
+          <p class="dim" style="font-size:14px;margin-top:8px">沙丘暖橙精确色值(取自 hero 图,非具名变量)、窗口黄绿点(标准 macOS 值)、前端技术栈(未探测到具名库)、图像换态的底层实现细节。第二轮起,主字 <code>Lexend Variable</code>、像素等宽 <code>Departure Mono</code> 均已换成从站点提取的真实字体本尊,不再用 Space Mono 替身。</p>
+        </div>
+      </div>
+      <p class="dim" style="font-size:13.5px;margin-top:18px">本页嵌入的真实字体 / 视频 / 图像清单见 <code>real-assets/manifest.json</code>;逐值核对见 <code>事实核查.md</code>,精度评审见 <code>设计评审.md</code>;完整方法与局限见 <code>出处与方法.md</code>,完整解构见 <code>设计解构.md</code>,复刻代码见 <code>复刻指南.md</code> 与 <code>design-tokens.css</code>。</p>
+    </div>
+  </section>
+</main>
+
+<!-- FOOTER -->
+<footer>
+  <div class="fscene" aria-hidden="true"></div>
+  <div class="ffig" aria-hidden="true">
+    <div class="glow"></div>
+    <svg viewBox="0 0 96 96" fill="#0b0b12" style="position:relative"><rect x="34" y="52" width="40" height="7" rx="1"/><rect x="40" y="59" width="4" height="22"/><rect x="66" y="59" width="4" height="22"/><path d="M58 30c0-5 4-9 9-9s9 4 9 9v22h-5V30c0-2.2-1.8-4-4-4s-4 1.8-4 4z"/><circle cx="28" cy="38" r="7"/><path d="M18 54c0-5.5 4.5-10 10-10s10 4.5 10 10v6h-5v-6c0-2.8-2.2-5-5-5s-5 2.2-5 5v6h-5z"/></svg>
+  </div>
+  <div class="wrap">
+    <div class="foot-top">
+      <div class="foot-brand">
+        <div class="big">tutti<span class="dot">.</span></div>
+        <p>where people and agents build in tune</p>
+        <div class="socials">
+          <a href="#top" aria-label="返回顶部"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 4l7 7-1.4 1.4L13 7.8V20h-2V7.8L6.4 12.4 5 11z"/></svg></a>
+          <a href="#signature" aria-label="签名效果"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M8 12l3 3 5-6" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+          <a href="#build" aria-label="复刻"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 9l-4 3 4 3M16 9l4 3-4 3M13 6l-2 12" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+          <a href="#color" aria-label="色彩"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><circle cx="9" cy="9" r="1.4" fill="currentColor" stroke="none"/><circle cx="15" cy="9" r="1.4" fill="currentColor" stroke="none"/><circle cx="9.5" cy="14.5" r="1.4" fill="currentColor" stroke="none"/></svg></a>
+        </div>
+      </div>
+      <div class="foot-cols">
+        <div>
+          <h4>拆解</h4>
+          <a href="#thesis">定位与意图</a>
+          <a href="#color">色彩系统</a>
+          <a href="#type">字体系统</a>
+          <a href="#motion">动效系统</a>
+        </div>
+        <div>
+          <h4>签名</h4>
+          <a href="#signature">电影大图视差</a>
+          <a href="#signature">图像换态</a>
+          <a href="#signature">窗口裱框</a>
+          <a href="#signature">应用轨道</a>
+        </div>
+        <div>
+          <h4>产出</h4>
+          <a href="#build">复刻指南</a>
+          <a href="#seen">实拍证据</a>
+          <a href="#prov">出处与方法</a>
+          <a href="https://tutti.sh" target="_blank" rel="noopener">tutti.sh</a>
+        </div>
+      </div>
+    </div>
+    <div class="foot-bot">
+      <span>设计拆解 · 视觉语言取自 <a href="https://tutti.sh" target="_blank" rel="noopener">tutti.sh</a> 真实抽取</span>
+      <span>色彩、曲线、时长与圆角均为线上实锤;暖橙与窗口黄绿为推断</span>
+    </div>
+  </div>
+</footer>
+
+<div class="toast" id="toast" role="status" aria-live="polite">已复制</div>
+
+<script>
+(function(){
+  var reduce=matchMedia("(prefers-reduced-motion:reduce)").matches;
+
+  /* reduced-motion:暂停首屏 shader 视频,只留真实大图静帧 */
+  if(reduce){var hv=document.querySelector(".hero-media .shader");if(hv){try{hv.pause();hv.removeAttribute("autoplay");}catch(e){}}}
+
+  /* ---------- nav stuck ---------- */
+  var nav=document.getElementById("nav");
+  function onScroll(){nav.classList.toggle("stuck",scrollY>10);}
+  onScroll(); addEventListener("scroll",onScroll,{passive:true});
+
+  /* ---------- starfield ---------- */
+  var cv=document.getElementById("stars"),cx=cv.getContext("2d"),W,H,stars=[];
+  function resize(){
+    W=cv.width=innerWidth*devicePixelRatio; H=cv.height=(innerHeight*1.1)*devicePixelRatio;
+    cv.style.width=innerWidth+"px"; cv.style.height=(innerHeight*1.1)+"px";
+    var n=Math.min(220,Math.round(innerWidth*innerHeight/9000)); stars=[];
+    for(var i=0;i<n;i++)stars.push({x:Math.random()*W,y:Math.random()*H,r:(Math.random()*1.3+0.3)*devicePixelRatio,z:Math.random()});
+  }
+  function draw(){
+    cx.clearRect(0,0,W,H);
+    for(var i=0;i<stars.length;i++){var s=stars[i];
+      var tw=reduce?1:(0.5+0.5*Math.sin(Date.now()/900*(0.4+s.z)+i));
+      cx.globalAlpha=(0.14+0.7*s.z)*tw; cx.fillStyle=s.z>0.82?"#aab2ff":"#eef0ff";
+      cx.beginPath(); cx.arc(s.x,s.y,s.r,0,7); cx.fill();
+    }
+    cx.globalAlpha=1;
+  }
+  resize(); draw(); addEventListener("resize",function(){resize();draw();});
+  if(!reduce){(function loop(){draw();requestAnimationFrame(loop);})();}
+
+  /* ---------- hero parallax (scroll + mouse) ---------- */
+  var pl=document.querySelectorAll("[data-par]"),heroIn=document.getElementById("heroIn"),cvEl=cv;
+  var mx=0,my=0,ty=0;
+  if(!reduce){
+    addEventListener("mousemove",function(e){mx=(e.clientX/innerWidth-0.5);my=(e.clientY/innerHeight-0.5);},{passive:true});
+    addEventListener("scroll",function(){ty=scrollY;},{passive:true});
+    (function ploop(){
+      pl.forEach(function(el){
+        var k=parseFloat(el.getAttribute("data-par"));
+        var tx=mx*k*90;
+        var y=ty*k + my*k*60;
+        el.style.transform=(el.classList.contains("figure")?"translateX(-50%) ":"")+"translate3d("+tx+"px,"+y+"px,0)";
+      });
+      heroIn.style.transform="translate3d("+(mx*-14)+"px,"+(ty*0.12)+"px,0)";
+      heroIn.style.opacity=Math.max(0,1-ty/620);
+      cvEl.style.transform="translate3d("+(mx*-24)+"px,"+(ty*0.05)+"px,0)";
+      requestAnimationFrame(ploop);
+    })();
+  }
+
+  /* ---------- swatches ---------- */
+  function build(list,el){
+    var h="";
+    list.forEach(function(c){
+      var st=c.st==="guess"?'<span class="st guess">推断</span>':'<span class="st">实锤</span>';
+      h+='<div class="sw" data-hex="'+c.hex+'" tabindex="0" role="button" aria-label="复制 '+c.hex+'">'+
+         '<div class="chipc" style="background:'+(c.bg||c.hex)+'">'+st+'</div>'+
+         '<div class="meta"><div class="name">'+c.name+'</div><div class="hex">'+c.hex+'</div><div class="role">'+c.role+'</div></div></div>';
+    });
+    document.getElementById(el).innerHTML=h;
+  }
+  build([
+    {name:"画布纯黑",hex:"#000000",role:"body 实际绘制"},
+    {name:"近黑 --bg",hex:"#060608",role:"设计 token"},
+    {name:"深空蓝黑",hex:"#05070d",role:"星球区块底"},
+    {name:"蓝黑场景",hex:"#080b1c",role:"星球场景背景"},
+    {name:"面板",hex:"#16161c",role:"卡片叠层"},
+    {name:"主文字 --ink",hex:"#f2f2f6",role:"正文与标题"},
+    {name:"次文字",hex:"#9c9caa",role:"--ink-dim"},
+    {name:"弱文字",hex:"#61616b",role:"--ink-faint"}
+  ],"sw-base");
+  build([
+    {name:"主强调 --accent",hex:"#7f90ff",role:"高亮关键词"},
+    {name:"强调亮",hex:"#aab2ff",role:"--accent-soft"},
+    {name:"强调深",hex:"#6a78ee",role:"--accent-2"},
+    {name:"星轨蓝",hex:"#5274ff",role:"星形描边基色"},
+    {name:"深靛蓝",hex:"#5b69e6",role:"高频第 3 位"},
+    {name:"中间蓝",hex:"#6d7ff5",role:"消息中心描边"},
+    {name:"强调底",hex:"rgba(127,144,255,.12)",bg:"rgba(127,144,255,.12)",role:"--accent-bg"},
+    {name:"强调线",hex:"rgba(127,144,255,.3)",bg:"rgba(127,144,255,.3)",role:"--accent-line"}
+  ],"sw-blue");
+  build([
+    {name:"沙丘橙",hex:"#e0824a",role:"落日地表",st:"guess"},
+    {name:"沙丘深",hex:"#b9552a",role:"地表阴影",st:"guess"},
+    {name:"暖纸白 --paper",hex:"#f3f1ea",role:"反转浅卡"},
+    {name:"纸上文字",hex:"#0a0a0c",role:"--t-btn-fg"},
+    {name:"窗口红",hex:"#ff5f57",role:"交通灯(实锤)"},
+    {name:"窗口黄",hex:"#febc2e",role:"标准值",st:"guess"},
+    {name:"窗口绿",hex:"#28c840",role:"标准值",st:"guess"},
+    {name:"按钮白",hex:"#f2f2f6",role:"--t-btn-bg"}
+  ],"sw-warm");
+
+  /* ---------- copy ---------- */
+  var toast=document.getElementById("toast"),tt;
+  function copy(v){
+    try{navigator.clipboard&&navigator.clipboard.writeText(v);}catch(e){}
+    toast.textContent="已复制 "+v; toast.classList.add("show");
+    clearTimeout(tt); tt=setTimeout(function(){toast.classList.remove("show");},1300);
+  }
+  document.addEventListener("click",function(e){
+    var s=e.target.closest("[data-hex]"); if(s){copy(s.getAttribute("data-hex"));return;}
+    var c=e.target.closest("[data-copy]"); if(c){copy(c.getAttribute("data-copy"));}
+  });
+  document.addEventListener("keydown",function(e){
+    if(e.key!=="Enter"&&e.key!==" ")return;
+    var s=e.target.closest("[data-hex]"); if(s){e.preventDefault();copy(s.getAttribute("data-hex"));return;}
+    var ea=e.target.closest(".ease"); if(ea){e.preventDefault();play(+ea.getAttribute("data-i"));}
+  });
+
+  /* ---------- easing lab ---------- */
+  var curves=[
+    {n:"主曲线 · 快出长尾",v:".22, 1, .36, 1",p:[.22,1,.36,1],dur:400,d:"--ease。出现 52 次的绝对主力,冲出快、尾巴长。按钮过渡与几乎所有位移淡入都用它。"},
+    {n:"对称进出",v:".65, 0, .35, 1",p:[.65,0,.35,1],dur:520,d:"匀称加减速,出现 16 次。用于需要平稳往返的过渡。"},
+    {n:"柔出",v:".2, .84, .24, 1",p:[.2,.84,.24,1],dur:720,d:"更轻的收尾,出现 12 次。"},
+    {n:"功能缓动",v:".22, .61, .36, 1",p:[.22,.61,.36,1],dur:520,d:"--feature-motion-ease,功能卡片开合,出现 4 次。"}
+  ];
+  var lab=document.getElementById("easelab"),lh="";
+  curves.forEach(function(c,i){
+    lh+='<div class="ease" data-i="'+i+'" tabindex="0" role="button" aria-label="重放 '+c.n+'">'+
+      '<div class="ease-top"><h3>'+c.n+'</h3><span class="curveval">cubic-bezier('+c.v+')</span></div>'+
+      '<div class="desc">'+c.d+'</div><div class="ease-viz"><canvas id="cvz'+i+'" width="112" height="112"></canvas>'+
+      '<div class="track"><div class="runner-wrap"><div class="runner" id="run'+i+'"></div></div>'+
+      '<div class="replay">点击重放 · transform '+c.dur+'ms</div></div></div></div>';
+  });
+  lab.innerHTML=lh;
+  function drawCurve(i,p){
+    var c=document.getElementById("cvz"+i),g=c.getContext("2d"),S=112,pad=20;
+    var minY=Math.min(0,p[1],p[3]),maxY=Math.max(1,p[1],p[3]);
+    function X(t){return pad+t*(S-2*pad);} function Y(v){return (S-pad)-((v-minY)/(maxY-minY))*(S-2*pad);}
+    g.clearRect(0,0,S,S);
+    g.strokeStyle="rgba(255,255,255,.1)";g.lineWidth=1;
+    g.beginPath();g.moveTo(X(0),Y(0));g.lineTo(X(1),Y(0));g.moveTo(X(0),Y(1));g.lineTo(X(1),Y(1));g.stroke();
+    g.strokeStyle="#7f90ff";g.lineWidth=2;g.beginPath();
+    for(var t=0;t<=1.001;t+=0.02){
+      var s=t,y=3*Math.pow(1-s,2)*s*p[1]+3*(1-s)*s*s*p[3]+s*s*s;
+      var xx=3*Math.pow(1-s,2)*s*p[0]+3*(1-s)*s*s*p[2]+s*s*s;
+      if(t===0)g.moveTo(X(xx),Y(y));else g.lineTo(X(xx),Y(y));
+    }
+    g.stroke();
+    g.fillStyle="#aab2ff";
+    g.beginPath();g.arc(X(0),Y(0),3,0,7);g.fill();
+    g.beginPath();g.arc(X(1),Y(1),3,0,7);g.fill();
+  }
+  function play(i){
+    var r=document.getElementById("run"+i),wrap=r.parentElement,dist=Math.round(wrap.clientWidth-r.clientWidth-12);
+    r.style.transition="none";r.style.transform="translateX(0)";void r.offsetWidth;
+    r.style.transition="transform "+curves[i].dur+"ms cubic-bezier("+curves[i].p.join(",")+")";
+    r.style.transform="translateX("+dist+"px)";
+  }
+  curves.forEach(function(c,i){drawCurve(i,c.p); if(!reduce)setTimeout(function(){play(i);},400+i*170);});
+  lab.addEventListener("click",function(e){var t=e.target.closest(".ease"); if(t)play(+t.getAttribute("data-i"));});
+
+  /* ---------- duration ladders ---------- */
+  function durs(list,el,max,warm){
+    var h="";list.forEach(function(d){
+      h+='<div class="durrow"><span class="lab">'+d[0]+'</span><div class="durbar'+(warm?" warm":"")+'" style="width:'+Math.max(6,d[1]/max*100)+'%"></div><span class="val">'+d[2]+'</span></div>';
+    });document.getElementById(el).innerHTML=h;
+  }
+  durs([["微交互",180,"0.18s"],["按钮过渡",200,"0.2s"],["切换",520,"0.52s"],["收尾",720,"0.72s"],["入场",900,"0.9s"]],"durs-micro",900,false);
+  durs([["星球呼吸",2,"2s"],["中速循环",9,"9s"],["星场漂移",18,"18s"],["长循环",42,"42s"],["最慢层",72,"72s"]],"durs-ambient",72,true);
+
+  /* ---------- image-state toggle ---------- */
+  var sw=document.getElementById("statewrap"),cap=document.getElementById("stateCap"),
+      stateVid=sw?sw.querySelector(".stateshader"):null,
+      capMap={base:"base · 真实态",ascii:"ascii · 点阵态",shader:"shader · 着色器态"};
+  document.querySelectorAll(".segbar button").forEach(function(b){
+    b.addEventListener("click",function(){
+      document.querySelectorAll(".segbar button").forEach(function(x){x.setAttribute("aria-selected","false");});
+      b.setAttribute("aria-selected","true");
+      var st=b.getAttribute("data-st"); sw.setAttribute("data-state",st); cap.textContent=capMap[st];
+      if(stateVid){ if(st==="shader"){stateVid.play().catch(function(){});}else{stateVid.pause();} }
+    });
+  });
+
+  /* ---------- mac window: enter + auto cursor ---------- */
+  var win=document.getElementById("win");
+  if(win){
+    win.style.opacity="0";win.style.transform="translateY(24px) scale(.98)";
+    var io=new IntersectionObserver(function(en){
+      en.forEach(function(e){ if(e.isIntersecting){
+        win.style.transition="opacity .72s var(--ease),transform .72s var(--ease)";
+        win.style.opacity="1";win.style.transform="none"; io.disconnect();
+      }});
+    },{threshold:.3});
+    io.observe(win);
+    if(!reduce){
+      var cur=win.querySelector(".cursor"),h1=win.querySelector(".hot.h1"),h2=win.querySelector(".hot.h2"),body=win.querySelector(".body"),step=0;
+      function moveTo(hot){
+        var br=body.getBoundingClientRect(),hr=hot.getBoundingClientRect();
+        cur.style.left=(hr.left-br.left+hr.width/2)+"px";
+        cur.style.top=(hr.top-br.top+hr.height/2)+"px";
+        setTimeout(function(){hot.classList.add("ping");setTimeout(function(){hot.classList.remove("ping");},420);},1000);
+      }
+      setTimeout(function tick(){
+        moveTo(step%2===0?h1:h2); step++;
+        setTimeout(tick,2600);
+      },1400);
+    }
+  }
+
+  /* ---------- app orbit ---------- */
+  var orbit=document.getElementById("orbit");
+  if(orbit){
+    var apps=[
+      {l:"Document\nSummarizer",p:"M7 3h7l4 4v14H7z M14 3v4h4",fill:0},
+      {l:"AI Docs",p:"M6 3h9l4 4v14H6z M9 12h7 M9 16h7",fill:0},
+      {l:"Group Chat",p:"M4 5h12v8H8l-4 3z M18 9h2v8l-3-2h-5",fill:0},
+      {l:"Automation\nTask",p:"M12 4v4 M12 16v4 M4 12h4 M16 12h4 M7 7l3 3 M14 14l3 3",fill:0},
+      {l:"Slides",p:"M4 5h16v11H4z M9 20h6 M12 16v4",fill:0},
+      {l:"Design",p:"M12 3l2.5 5.5L20 11l-5.5 2.5L12 19l-2.5-5.5L4 11l5.5-2.5z",fill:0}
+    ];
+    var cw=orbit.clientWidth,ch=orbit.clientHeight,cxo=cw/2,cyo=ch/2,rx=cw*0.42,ry=ch*0.40;
+    apps.forEach(function(a,i){
+      var ang=(-90+i*(360/apps.length))*Math.PI/180;
+      var x=cxo+Math.cos(ang)*rx,y=cyo+Math.sin(ang)*ry;
+      var t=document.createElement("div"); t.className="otile";
+      t.style.left=(x-37)+"px"; t.style.top=(y-30)+"px";
+      if(!reduce)t.style.animation="floaty "+(6+i*0.7)+"s var(--ease) "+(i*0.4)+"s infinite alternate";
+      t.innerHTML='<div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="'+a.p+'"/></svg></div><div class="ol">'+a.l.replace(/\n/g,"<br>")+'</div>';
+      orbit.appendChild(t);
+    });
+  }
+})();
+</script>
+
+<style>.dt-omit{display:flex;align-items:center;justify-content:center;min-height:96px;background:repeating-linear-gradient(45deg,transparent,transparent 9px,rgba(128,128,128,.07) 9px,rgba(128,128,128,.07) 18px);border:1px dashed rgba(128,128,128,.32);border-radius:8px;color:#8b8b8b;font:11px/1.5 ui-monospace,SFMono-Regular,Menlo,monospace;text-align:center;padding:14px;box-sizing:border-box}</style>
+<script>/* public build: original site media removed for copyright; layout preserved, real look kept in the as-seen screenshots */
+(function(){
+ var R=/real-assets\/(image|video|audio|fonts|source|lottie)\/|\.(mp4|webm|mov|mp3|wav|woff2?|otf|ttf)(\?|$)/i;
+ function box(w,h){var d=document.createElement('div');d.className='dt-omit';d.textContent='原站素材已按版权移除,见原站';if(w)d.style.width=w;if(h)d.style.minHeight=h;return d;}
+ document.querySelectorAll('video').forEach(function(v){
+   var srcs=[].map.call(v.querySelectorAll('source'),function(s){return s.getAttribute('src')||''});
+   var bad=R.test(v.getAttribute('src')||'')||srcs.some(function(s){return R.test(s)});
+   if(!bad)return;
+   v.removeAttribute('src');v.removeAttribute('autoplay');v.querySelectorAll('source').forEach(function(s){s.remove()});
+   if(!v.getAttribute('poster')){var b=box(v.style.width||'',((v.clientHeight||160))+'px');v.parentNode&&v.parentNode.replaceChild(b,v);}
+ });
+ document.querySelectorAll('img').forEach(function(im){
+   if(R.test(im.getAttribute('src')||'')){var b=box((im.getAttribute('width')||'')+(im.getAttribute('width')?'px':''),((im.getAttribute('height')||im.clientHeight||120))+'px');im.parentNode&&im.parentNode.replaceChild(b,im);}
+ });
+})();
+</script>
+
+</body>
+</html>

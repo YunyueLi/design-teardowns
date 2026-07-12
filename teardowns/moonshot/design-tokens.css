@@ -1,0 +1,33 @@
+/* ============================================================
+   moonshot — 从线上站点真实抽取的设计 token（实锤，非观感推断）
+   源:https://www.moonshot.ai  · 抽取:playwright 计算样式 + 样式表文本
+   ============================================================ */
+:root{
+  /* —— 基底 / 文字（computed）—— */
+  --bg:rgb(0, 0, 0);
+  --ink:rgb(0, 0, 0);
+  /* 高频色值（样式表出现次数 top）:#fff #000 #121212 #1f1f1f #737373 #323232 #45454e #333 #262626 #6d6d6d */
+
+  /* —— 字体（computed / fontsLoaded）—— */
+  --font-sans:"PingFang SC", -apple-system, "system-ui", "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  /* 实际加载字体:M PLUS 1, MiSans, NotoSans-Latin */
+  /* h1:16px/400 字距 0.15008px 行高 24px */
+
+  /* —— 动效（样式表实测）—— */
+  --ease-1:cubic-bezier(.16,1,.3,1);
+  --ease-2:cubic-bezier(.4,0,.2,1);
+  --ease-3:cubic-bezier(.34,1.56,.64,1);
+  --ease-4:cubic-bezier(.22,1,.36,1);
+  /* 按钮过渡:color 0.2s */
+  /* 时长梯:2s 3s 15s 25s 4s 5s 9s 1.05s */
+
+  /* —— 圆角（实测 top）—— */
+  --radius-1:100px;
+  --radius-2:50%;
+  --radius-3:24px;
+  --radius-4:16px;
+  --radius-5:12px;
+  --radius-6:20px;
+  /* 按钮圆角:8px */
+  /* 媒体清单:video 3 · canvas 4 · svg 1 · img 25 */
+}

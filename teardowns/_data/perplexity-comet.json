@@ -1,0 +1,318 @@
+{
+  "site": "perplexity-comet",
+  "url": "https://www.perplexity.ai/comet",
+  "probe": {
+    "title": "Comet Browser: a Personal AI Assistant",
+    "lang": "en",
+    "body": {
+      "background-color": "rgb(251, 250, 244)",
+      "color": "rgb(0, 0, 0)",
+      "font-family": "sans-serif"
+    },
+    "h1": null,
+    "nav": {
+      "background-color": "rgba(0, 0, 0, 0)",
+      "backdrop-filter": "none",
+      "font-family": "sans-serif"
+    },
+    "btn": null,
+    "accentGuess": "",
+    "libs": [
+      "Framer/Motion"
+    ],
+    "scriptHints": [
+      "https://events.framer.com/script?v=2",
+      "https://framerusercontent.com/sites/73hRDKTKSDAsH0AR1j6TrU/script_main.D3wRF8x9.mjs"
+    ],
+    "media": {
+      "video": 1,
+      "canvas": 0,
+      "svg": 19,
+      "img": 28,
+      "preloadVideo": 0,
+      "preloadFont": 0
+    },
+    "fontsLoaded": [
+      "Newsreader",
+      "Spectral",
+      "Newsreader Variable",
+      "GT Standard VF Variable S Black",
+      "GT Canon VF Variable L Black",
+      "GT Standard Mono Regular",
+      "Berkeley Mono Regular",
+      "FK Grotesk Regular",
+      "Berkeley Mono Bold",
+      "FK Display Regular",
+      "FK Grotesk Neue Regular",
+      "FK Grotesk Neue Medium",
+      "Inter",
+      "Newsreader Variable Placeholder",
+      "Newsreader Placeholder",
+      "Spectral Placeholder",
+      "GT Standard Mono Regular Placeholder",
+      "Berkeley Mono Regular Placeholder",
+      "FK Grotesk Regular Placeholder",
+      "Berkeley Mono Bold Placeholder",
+      "FK Display Regular Placeholder",
+      "FK Grotesk Neue Regular Placeholder",
+      "FK Grotesk Neue Medium Placeholder",
+      "Inter Placeholder"
+    ]
+  },
+  "cssFetched": 0,
+  "tokens": {
+    "customProps": {
+      "--token-8740f4aa-bb38-489d-9272-2825d8190d51": "#091717",
+      "--token-9a0f5a59-ec20-487a-8943-4f3bd5f221a2": "#fbfaf4",
+      "--token-8485c9fc-3c94-4c5b-8a47-1228e4929c0d": "#e4e3d4",
+      "--token-ef4bee2a-d325-4125-afb5-b49dc4c1f575": "#60584d1a",
+      "--token-71c8a3d1-1f1d-488b-af60-be22b1e203a8": "#f6f5ee",
+      "--framer-will-change-override": "transform",
+      "--framer-will-change-filter-override": "filter",
+      "--text-decoration-skip-ink": "var(--framer-text-decoration-skip-ink)",
+      "--text-underline-offset": "var(--framer-text-decoration-offset)",
+      "--font-family": "var(--framer-font-family)",
+      "--font-style": "var(--framer-font-style)",
+      "--font-weight": "var(--framer-font-weight)",
+      "--text-color": "var(--framer-text-color)",
+      "--letter-spacing": "var(--framer-letter-spacing)",
+      "--font-size": "var(--framer-font-size)",
+      "--text-transform": "var(--framer-text-transform)",
+      "--line-height": "var(--framer-line-height)",
+      "--overflow-clip-fallback": "hidden",
+      "--one-if-corner-shape-supported": "1",
+      "--framer-aspect-ratio-supported": "auto",
+      "--framer-link-text-color": "#09f",
+      "--framer-link-text-decoration": "underline",
+      "--border-bottom-width": "1px",
+      "--border-color": "#60584d0a",
+      "--border-left-width": "1px",
+      "--border-right-width": "1px",
+      "--border-style": "solid",
+      "--border-top-width": "1px",
+      "--framer-font-family": "Inter,Inter Placeholder,sans-serif",
+      "--framer-font-style": "normal",
+      "--framer-font-weight": "500",
+      "--framer-text-color": "#000",
+      "--framer-font-size": "16px",
+      "--framer-letter-spacing": "0",
+      "--framer-text-transform": "none",
+      "--framer-text-decoration": "none",
+      "--framer-text-decoration-style": "none",
+      "--framer-text-decoration-color": "none",
+      "--framer-text-decoration-thickness": "none",
+      "--framer-text-decoration-skip-ink": "none",
+      "--framer-text-decoration-offset": "none",
+      "--framer-line-height": "1.2em",
+      "--framer-text-alignment": "start",
+      "--framer-font-open-type-features": "normal",
+      "--framer-text-background-color": "initial",
+      "--framer-text-background-radius": "initial",
+      "--framer-text-background-corner-shape": "initial",
+      "--framer-text-background-padding": "initial",
+      "--list-style-type": "decimal",
+      "--font-variation-settings": "normal",
+      "--framer-link-current-text-color": "#091717a3",
+      "--framer-link-current-text-decoration": "underline",
+      "--framer-link-hover-text-color": "var(--token-c5154835-74a6-498d-bd10-d5027fc92dee,#21808d)",
+      "--framer-link-hover-text-decoration": "underline",
+      "--framer-link-text-decoration-color": "#091717a3",
+      "--framer-link-text-decoration-offset": "5px",
+      "--framer-link-text-decoration-skip-ink": "all",
+      "--framer-link-text-decoration-thickness": "1px"
+    },
+    "topHex": [
+      {
+        "hex": "#000",
+        "n": 74
+      },
+      {
+        "hex": "#09f",
+        "n": 22
+      },
+      {
+        "hex": "#fbfaf4",
+        "n": 8
+      },
+      {
+        "hex": "#f6f5ee",
+        "n": 6
+      },
+      {
+        "hex": "#21808d",
+        "n": 6
+      },
+      {
+        "hex": "#091717",
+        "n": 4
+      },
+      {
+        "hex": "#fff",
+        "n": 4
+      },
+      {
+        "hex": "#e4e3d4",
+        "n": 2
+      },
+      {
+        "hex": "#3b4151",
+        "n": 2
+      },
+      {
+        "hex": "#efefef",
+        "n": 2
+      },
+      {
+        "hex": "#e9e9e9",
+        "n": 2
+      },
+      {
+        "hex": "#111",
+        "n": 1
+      }
+    ],
+    "cubicBezier": [],
+    "fontFamily": [
+      {
+        "v": "'Spectral'",
+        "n": 20
+      },
+      {
+        "v": "Spectral",
+        "n": 20
+      },
+      {
+        "v": "\"Inter\"",
+        "n": 14
+      },
+      {
+        "v": "Inter",
+        "n": 14
+      },
+      {
+        "v": "'Newsreader'",
+        "n": 6
+      },
+      {
+        "v": "var(--framer-code-font-family,var(--framer-font-family,Inter,Inter Placeholder,sans-serif))",
+        "n": 6
+      },
+      {
+        "v": "Newsreader",
+        "n": 6
+      },
+      {
+        "v": "var(--font-family)",
+        "n": 4
+      },
+      {
+        "v": "var(--framer-font-family)",
+        "n": 4
+      },
+      {
+        "v": "Inter,Inter Placeholder,sans-serif",
+        "n": 4
+      },
+      {
+        "v": "'Newsreader Variable'",
+        "n": 3
+      },
+      {
+        "v": "\"Newsreader Variable\"",
+        "n": 3
+      },
+      {
+        "v": "\"GT Standard VF Variable S Black\"",
+        "n": 2
+      },
+      {
+        "v": "\"GT Canon VF Variable L Black\"",
+        "n": 2
+      },
+      {
+        "v": "\"GT Standard Mono Regular\"",
+        "n": 2
+      },
+      {
+        "v": "\"Berkeley Mono Regular\"",
+        "n": 2
+      }
+    ],
+    "durations": [
+      {
+        "v": "0.4s",
+        "n": 2
+      },
+      {
+        "v": "800ms",
+        "n": 2
+      }
+    ],
+    "radii": [
+      {
+        "v": "24px",
+        "n": 16
+      },
+      {
+        "v": "16px",
+        "n": 8
+      },
+      {
+        "v": "96px",
+        "n": 8
+      },
+      {
+        "v": "8px",
+        "n": 6
+      },
+      {
+        "v": "inherit",
+        "n": 6
+      },
+      {
+        "v": "50px",
+        "n": 4
+      },
+      {
+        "v": "120px",
+        "n": 4
+      },
+      {
+        "v": "64px",
+        "n": 4
+      },
+      {
+        "v": "1px",
+        "n": 2
+      },
+      {
+        "v": "var(--framer-blockquote-text-background-radius,var(--framer-text-background-radius,initial))",
+        "n": 2
+      },
+      {
+        "v": "var(--framer-link-text-background-radius,initial)",
+        "n": 2
+      },
+      {
+        "v": "var(--framer-link-hover-text-background-radius,var(--framer-link-text-background-radius,var(--framer-text-background-radius,initial)))",
+        "n": 2
+      },
+      {
+        "v": "var(--framer-link-current-text-background-radius,var(--framer-link-text-background-radius,initial))",
+        "n": 2
+      },
+      {
+        "v": "var(--framer-link-hover-text-background-radius,var(--framer-link-current-text-background-radius,var(--framer-link-text-background-radius,initial)))",
+        "n": 2
+      }
+    ],
+    "keyframes": [
+      {
+        "v": "__framer-loading-spin",
+        "n": 2
+      }
+    ],
+    "cssBytes": 331201
+  },
+  "ok": true
+}

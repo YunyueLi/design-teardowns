@@ -1,0 +1,173 @@
+{
+  "site": "ojo",
+  "url": "https://ojo.art",
+  "fonts": [
+    {
+      "url": "https://ojo.art/_static/official/assets/fonts/georama-500-latin.woff2",
+      "file": "ojo/real-assets/fonts/61fb74_georama-500-latin.woff2",
+      "bytes": 19704,
+      "type": "font/woff2"
+    },
+    {
+      "url": "https://ojo.art/_static/official/assets/fonts/lexend-200-500-latin.woff2",
+      "file": "ojo/real-assets/fonts/92687c_lexend-200-500-latin.woff2",
+      "bytes": 39692,
+      "type": "font/woff2"
+    },
+    {
+      "url": "https://ojo.art/_static/official/assets/fonts/faculty-glyphic-400-latin.ttf",
+      "file": "ojo/real-assets/fonts/9f4e1a_faculty-glyphic-400-latin.ttf",
+      "bytes": 64096,
+      "type": "font/ttf"
+    },
+    {
+      "url": "https://ojo.art/_static/official/assets/fonts/miss-fajardose-400-latin.ttf",
+      "file": "ojo/real-assets/fonts/949115_miss-fajardose-400-latin.ttf",
+      "bytes": 56984,
+      "type": "font/ttf"
+    },
+    {
+      "url": "https://ojo.art/_static/official/assets/fonts/dm-serif-text-400-latin.woff2",
+      "file": "ojo/real-assets/fonts/3c4193_dm-serif-text-400-latin.woff2",
+      "bytes": 17424,
+      "type": "font/woff2"
+    }
+  ],
+  "video": [
+    {
+      "url": "https://ojo.art/_static/official/assets/download/%E6%89%8B%E6%9C%BAdemo.mp4",
+      "file": "ojo/real-assets/video/98f223__E6_89_8B_E6_9C_BAdemo.mp4",
+      "bytes": 2226365,
+      "type": "video/mp4"
+    }
+  ],
+  "audio": [],
+  "image": [
+    {
+      "url": "https://ojo.art/_static/official/assets/landingpage/page5_bg_new.png",
+      "file": "ojo/real-assets/image/fcb9dc_page5_bg_new.png",
+      "bytes": 898074,
+      "type": "image/png"
+    },
+    {
+      "url": "https://ojo.art/_static/official/assets/branding/ojo-wordmark.svg",
+      "file": "ojo/real-assets/image/3ccfa8_ojo-wordmark.svg",
+      "bytes": 3960,
+      "type": "image/svg+xml"
+    },
+    {
+      "url": "https://ojo.art/_static/official/assets/landingpage/figma-designer-assets/%E6%89%8B%20(1).png",
+      "file": "ojo/real-assets/image/f33617__E6_89_8B_20_1_.png",
+      "bytes": 333115,
+      "type": "image/png"
+    },
+    {
+      "url": "https://ojo.art/_static/official/assets/landingpage/footer-agent-assets/%E7%B4%A0%E6%9D%90%E5%BA%95%E7%BA%B9a.png",
+      "file": "ojo/real-assets/image/4225b1__E7_B4_A0_E6_9D_90_E5_BA_95_E7_BA_B9a.png",
+      "bytes": 182713,
+      "type": "image/png"
+    },
+    {
+      "url": "https://ojo.art/_static/official/assets/download/%E7%B4%A0%E6%9D%905/ptototype-620.webp",
+      "file": "ojo/real-assets/image/970e0d_ptototype-620.webp",
+      "bytes": 10920,
+      "type": "image/webp"
+    },
+    {
+      "url": "https://ojo.art/_static/official/assets/landingpage/footer-agent-assets/%E7%B4%A0%E6%9D%90%E5%BA%95%E7%BA%B9b.png",
+      "file": "ojo/real-assets/image/bd5c01__E7_B4_A0_E6_9D_90_E5_BA_95_E7_BA_B9b.png",
+      "bytes": 162167,
+      "type": "image/png"
+    },
+    {
+      "url": "https://ojo.art/_static/official/assets/download/%E7%B4%A0%E6%9D%90/%E8%BE%93%E5%85%A5%E6%A1%86.png",
+      "file": "ojo/real-assets/image/d6e649__E8_BE_93_E5_85_A5_E6_A1_86.png",
+      "bytes": 93432,
+      "type": "image/png"
+    },
+    {
+      "url": "https://ojo.art/_static/official/assets/download/%E7%B4%A0%E6%9D%908/%E5%8F%B3%E4%BE%A7%E7%B4%A0%E6%9D%90-360.webp",
+      "file": "ojo/real-assets/image/f4fb9a__E5_8F_B3_E4_BE_A7_E7_B4_A0_E6_9D_90-360.webp",
+      "bytes": 40184,
+      "type": "image/webp"
+    },
+    {
+      "url": "https://ojo.art/_static/official/assets/download/%E7%B4%A0%E6%9D%908/%E5%B7%A6%E4%BE%A7%E7%B4%A0%E6%9D%90-360.webp",
+      "file": "ojo/real-assets/image/490e24__E5_B7_A6_E4_BE_A7_E7_B4_A0_E6_9D_90-360.webp",
+      "bytes": 33942,
+      "type": "image/webp"
+    },
+    {
+      "url": "https://ojo.art/_static/official/assets/landingpage/agent-magic-cards/bottom-texture.png",
+      "file": "ojo/real-assets/image/ebf20b_bottom-texture.png",
+      "bytes": 28706,
+      "type": "image/png"
+    },
+    {
+      "url": "https://ojo.art/_static/official/assets/landingpage/agent-magic-cards/card7-320.webp",
+      "file": "ojo/real-assets/image/f9908d_card7-320.webp",
+      "bytes": 5118,
+      "type": "image/webp"
+    },
+    {
+      "url": "https://ojo.art/_static/official/assets/landingpage/agent-magic-cards/card2-320.webp",
+      "file": "ojo/real-assets/image/c6a2ca_card2-320.webp",
+      "bytes": 9536,
+      "type": "image/webp"
+    },
+    {
+      "url": "https://ojo.art/_static/official/assets/landingpage/agent-magic-cards/card6-320.webp",
+      "file": "ojo/real-assets/image/40380e_card6-320.webp",
+      "bytes": 13300,
+      "type": "image/webp"
+    },
+    {
+      "url": "https://ojo.art/_static/official/assets/landingpage/agent-magic-cards/card8-320.webp",
+      "file": "ojo/real-assets/image/a46219_card8-320.webp",
+      "bytes": 6882,
+      "type": "image/webp"
+    },
+    {
+      "url": "https://ojo.art/_static/official/assets/landingpage/agent-magic-cards/card4-320.webp",
+      "file": "ojo/real-assets/image/0c35a5_card4-320.webp",
+      "bytes": 13160,
+      "type": "image/webp"
+    },
+    {
+      "url": "https://ojo.art/_static/official/assets/landingpage/agent-magic-cards/card3-320.webp",
+      "file": "ojo/real-assets/image/af9d89_card3-320.webp",
+      "bytes": 2032,
+      "type": "image/webp"
+    },
+    {
+      "url": "https://ojo.art/_static/official/assets/landingpage/agent-magic-cards/card1-320.webp",
+      "file": "ojo/real-assets/image/a6ac21_card1-320.webp",
+      "bytes": 4828,
+      "type": "image/webp"
+    },
+    {
+      "url": "https://ojo.art/_static/official/assets/landingpage/agent-magic-cards/card5-320.webp",
+      "file": "ojo/real-assets/image/8f6473_card5-320.webp",
+      "bytes": 6390,
+      "type": "image/webp"
+    }
+  ],
+  "lottie": [],
+  "source": [
+    {
+      "url": "https://ojo.art/_static/official/assets/root-dzFOqqg7.css",
+      "file": "ojo/real-assets/source/64b69f_root-dzFOqqg7.css",
+      "bytes": 64272
+    },
+    {
+      "url": "https://ojo.art/_static/official/assets/home-Bh1swQIj.css",
+      "file": "ojo/real-assets/source/fcc471_home-Bh1swQIj.css",
+      "bytes": 51796
+    },
+    {
+      "url": "https://ojo.art",
+      "file": "ojo/real-assets/source/index.html",
+      "bytes": 0
+    }
+  ]
+}

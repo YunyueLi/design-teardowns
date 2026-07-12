@@ -1,0 +1,205 @@
+{
+  "site": "lovart",
+  "url": "https://www.lovart.ai",
+  "fonts": [
+    {
+      "url": "https://web-static3.lovart.ai/lovart_prd/static/_next/static/media/FeatureDisplay_Medium_Web-s.p.1r1l7yt36wzfm.woff2",
+      "file": "lovart/real-assets/fonts/43cbc6_FeatureDisplay_Medium_Web-s.p.1r1l7yt36wzfm.woff2",
+      "bytes": 38313,
+      "type": "application/octet-stream"
+    },
+    {
+      "url": "https://web-static3.lovart.ai/lovart_prd/static/_next/static/media/FeatureDisplay_RegularItalic_Web-s.p.0s_s3gu3ebr02.woff2",
+      "file": "lovart/real-assets/fonts/a80a0b_FeatureDisplay_RegularItalic_Web-s.p.0s_s3gu3ebr02.woff2",
+      "bytes": 36893,
+      "type": "application/octet-stream"
+    },
+    {
+      "url": "https://web-static3.lovart.ai/lovart_prd/static/_next/static/media/FeatureDisplay_Regular_Web-s.p.15okwp9-8254o.woff2",
+      "file": "lovart/real-assets/fonts/fa80ce_FeatureDisplay_Regular_Web-s.p.15okwp9-8254o.woff2",
+      "bytes": 35837,
+      "type": "application/octet-stream"
+    },
+    {
+      "url": "https://web-static3.lovart.ai/lovart_prd/static/_next/static/media/GT_Standard_L_Standard_Medium-s.p.1788_3rwow92_.woff2",
+      "file": "lovart/real-assets/fonts/b75f4a_GT_Standard_L_Standard_Medium-s.p.1788_3rwow92_.woff2",
+      "bytes": 62772,
+      "type": "application/octet-stream"
+    },
+    {
+      "url": "https://web-static3.lovart.ai/lovart_prd/static/_next/static/media/GT_Standard_L_Standard_Regular-s.p.09tdz1i3kmgj1.woff2",
+      "file": "lovart/real-assets/fonts/da4d97_GT_Standard_L_Standard_Regular-s.p.09tdz1i3kmgj1.woff2",
+      "bytes": 62732,
+      "type": "application/octet-stream"
+    },
+    {
+      "url": "https://web-static3.lovart.ai/lovart_prd/static/_next/static/media/GT_Standard_Mono_Standard_Regular-s.p.2iqqf_4_8fw_b.woff2",
+      "file": "lovart/real-assets/fonts/c3b9df_GT_Standard_Mono_Standard_Regular-s.p.2iqqf_4_8fw_b.woff2",
+      "bytes": 32976,
+      "type": "application/octet-stream"
+    }
+  ],
+  "video": [
+    {
+      "url": "https://assets-persist.lovart.ai/img/d92cfdbbb4c243d8a269dc6d1301540c/afae2ca049b0ca584b2649bb8bf2e583f81f708a.mp4",
+      "file": "lovart/real-assets/video/4b3ac0_afae2ca049b0ca584b2649bb8bf2e583f81f708a.mp4",
+      "bytes": 1230540,
+      "type": "video/mp4"
+    },
+    {
+      "url": "https://assets-persist.lovart.ai/img/d92cfdbbb4c243d8a269dc6d1301540c/e17cf2c533a72923fac6762a96570beb3e04c012.mp4",
+      "file": "lovart/real-assets/video/4d4e33_e17cf2c533a72923fac6762a96570beb3e04c012.mp4",
+      "bytes": 777935,
+      "type": "video/mp4"
+    }
+  ],
+  "audio": [],
+  "image": [
+    {
+      "url": "https://assets-persist.lovart.ai/img/0ec3ec8352e24750bddb7764c24e81e1/d161b5ccddb06a2eb84f154ee56b0d95d75703e5.png",
+      "file": "lovart/real-assets/image/a844e1_d161b5ccddb06a2eb84f154ee56b0d95d75703e5.png",
+      "bytes": 25363,
+      "type": "image/png"
+    },
+    {
+      "url": "https://www.lovart.ai/favicon.ico",
+      "file": "lovart/real-assets/image/8e8d6a_favicon.ico",
+      "bytes": 15086,
+      "type": "image/x-icon"
+    },
+    {
+      "url": "https://assets-persist.lovart.ai/img/d92cfdbbb4c243d8a269dc6d1301540c/5fb2e6c2fcba1e5ba15ab83a91fc0411be54ff06.png",
+      "file": "lovart/real-assets/image/08924c_5fb2e6c2fcba1e5ba15ab83a91fc0411be54ff06.png",
+      "bytes": 678855,
+      "type": "image/png"
+    },
+    {
+      "url": "https://assets-persist.lovart.ai/img/d92cfdbbb4c243d8a269dc6d1301540c/daf2991dcdd9397a5c569b5c326dca87eb562bae.png",
+      "file": "lovart/real-assets/image/453f2c_daf2991dcdd9397a5c569b5c326dca87eb562bae.png",
+      "bytes": 353216,
+      "type": "image/png"
+    },
+    {
+      "url": "https://assets-persist.lovart.ai/img/d92cfdbbb4c243d8a269dc6d1301540c/ffd7023347c0e2b2bc34b285ac2a060f4cfaa9a2.png",
+      "file": "lovart/real-assets/image/e70649_ffd7023347c0e2b2bc34b285ac2a060f4cfaa9a2.png",
+      "bytes": 514929,
+      "type": "image/png"
+    },
+    {
+      "url": "https://assets-persist.lovart.ai/img/d92cfdbbb4c243d8a269dc6d1301540c/0e17f19145c7b336e3646ba0cf5034edf5fe99ac.png",
+      "file": "lovart/real-assets/image/2cf635_0e17f19145c7b336e3646ba0cf5034edf5fe99ac.png",
+      "bytes": 338023,
+      "type": "image/png"
+    },
+    {
+      "url": "https://assets-persist.lovart.ai/img/d92cfdbbb4c243d8a269dc6d1301540c/9df81a2a9a5adf5a0b0fd2e01f92ced65ab63e5a.png",
+      "file": "lovart/real-assets/image/a545cb_9df81a2a9a5adf5a0b0fd2e01f92ced65ab63e5a.png",
+      "bytes": 612645,
+      "type": "image/png"
+    },
+    {
+      "url": "https://assets-persist.lovart.ai/img/d92cfdbbb4c243d8a269dc6d1301540c/5049909fb1610fbc90ed8b25cfecc77ffc14fcee.png",
+      "file": "lovart/real-assets/image/a3b37d_5049909fb1610fbc90ed8b25cfecc77ffc14fcee.png",
+      "bytes": 982604,
+      "type": "image/png"
+    },
+    {
+      "url": "https://assets-persist.lovart.ai/img/d92cfdbbb4c243d8a269dc6d1301540c/79385767155d45c0a8d74c584a479a836b785107.png",
+      "file": "lovart/real-assets/image/9a22b9_79385767155d45c0a8d74c584a479a836b785107.png",
+      "bytes": 1081646,
+      "type": "image/png"
+    },
+    {
+      "url": "https://assets-persist.lovart.ai/img/d92cfdbbb4c243d8a269dc6d1301540c/d0a9be686121d00de898a2d5ce66d9db1b057e97.png",
+      "file": "lovart/real-assets/image/9bdc87_d0a9be686121d00de898a2d5ce66d9db1b057e97.png",
+      "bytes": 1244083,
+      "type": "image/png"
+    },
+    {
+      "url": "https://assets-persist.lovart.ai/img/d92cfdbbb4c243d8a269dc6d1301540c/6b1a28475b0c188f4a858aaf0aa852793de580c3.png",
+      "file": "lovart/real-assets/image/1d8812_6b1a28475b0c188f4a858aaf0aa852793de580c3.png",
+      "bytes": 1276325,
+      "type": "image/png"
+    },
+    {
+      "url": "https://assets-persist.lovart.ai/img/d92cfdbbb4c243d8a269dc6d1301540c/1c93df03632b2dd6cd70ff57c7284ead6330e1a7.png",
+      "file": "lovart/real-assets/image/8d740a_1c93df03632b2dd6cd70ff57c7284ead6330e1a7.png",
+      "bytes": 387793,
+      "type": "image/png"
+    },
+    {
+      "url": "https://assets-persist.lovart.ai/img/d92cfdbbb4c243d8a269dc6d1301540c/7f9784a644c3d537b4707a35671c1169cacf1747.png",
+      "file": "lovart/real-assets/image/13fbed_7f9784a644c3d537b4707a35671c1169cacf1747.png",
+      "bytes": 75009,
+      "type": "image/png"
+    },
+    {
+      "url": "https://assets-persist.lovart.ai/img/d92cfdbbb4c243d8a269dc6d1301540c/da729a1d98de92dd4bb794f724c8ff2229f99765.png",
+      "file": "lovart/real-assets/image/71c226_da729a1d98de92dd4bb794f724c8ff2229f99765.png",
+      "bytes": 388385,
+      "type": "image/png"
+    },
+    {
+      "url": "https://assets-persist.lovart.ai/img/d92cfdbbb4c243d8a269dc6d1301540c/7f9ca7bf5cc8ca8a05a6d28984da6667cdf80dad.png",
+      "file": "lovart/real-assets/image/42ab8c_7f9ca7bf5cc8ca8a05a6d28984da6667cdf80dad.png",
+      "bytes": 303292,
+      "type": "image/png"
+    },
+    {
+      "url": "https://assets-persist.lovart.ai/img/d92cfdbbb4c243d8a269dc6d1301540c/8210180585cc2defa523ec5ff5ed0c9d59111036.png",
+      "file": "lovart/real-assets/image/f2a346_8210180585cc2defa523ec5ff5ed0c9d59111036.png",
+      "bytes": 254566,
+      "type": "image/png"
+    },
+    {
+      "url": "https://assets-persist.lovart.ai/img/d92cfdbbb4c243d8a269dc6d1301540c/a86d8dee9ef289a89f4b13cc4f6b48d13e65e744.png",
+      "file": "lovart/real-assets/image/2da161_a86d8dee9ef289a89f4b13cc4f6b48d13e65e744.png",
+      "bytes": 196327,
+      "type": "image/png"
+    },
+    {
+      "url": "https://assets-persist.lovart.ai/img/d92cfdbbb4c243d8a269dc6d1301540c/78b3accb63a9b719c7d166025c065911555ada32.png",
+      "file": "lovart/real-assets/image/50f212_78b3accb63a9b719c7d166025c065911555ada32.png",
+      "bytes": 474847,
+      "type": "image/png"
+    }
+  ],
+  "lottie": [],
+  "source": [
+    {
+      "url": "https://web-static3.lovart.ai/lovart_prd/static/_next/static/chunks/131g1gxz0sjw3.css",
+      "file": "lovart/real-assets/source/dda197_131g1gxz0sjw3.css",
+      "bytes": 19821
+    },
+    {
+      "url": "https://web-static3.lovart.ai/lovart_prd/static/_next/static/chunks/0r77zahn73t8e.css",
+      "file": "lovart/real-assets/source/b59327_0r77zahn73t8e.css",
+      "bytes": 21188
+    },
+    {
+      "url": "https://web-static3.lovart.ai/lovart_prd/static/_next/static/chunks/0_2angbywymi-.css",
+      "file": "lovart/real-assets/source/feb847_0_2angbywymi-.css",
+      "bytes": 513
+    },
+    {
+      "url": "https://web-static3.lovart.ai/lovart_prd/static/_next/static/chunks/2s_hrfl9n7avk.css",
+      "file": "lovart/real-assets/source/eecac5_2s_hrfl9n7avk.css",
+      "bytes": 407
+    },
+    {
+      "url": "https://web-static3.lovart.ai/lovart_prd/static/_next/static/chunks/0ozm36j-6-_c7.css",
+      "file": "lovart/real-assets/source/ac3e1b_0ozm36j-6-_c7.css",
+      "bytes": 445082
+    },
+    {
+      "url": "https://accounts.google.com/gsi/style",
+      "file": "lovart/real-assets/source/1575cd_style.css",
+      "bytes": 696
+    },
+    {
+      "url": "https://www.lovart.ai",
+      "file": "lovart/real-assets/source/index.html",
+      "bytes": 0
+    }
+  ]
+}

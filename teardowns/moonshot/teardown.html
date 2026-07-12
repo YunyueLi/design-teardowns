@@ -1,0 +1,913 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Moonshot AI 设计解构 — 日食光环与色散故障字，拆到可复刻的每一个数值</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=M+PLUS+1:wght@300;400;500;700;800&family=Noto+Sans+SC:wght@300;400;500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<!-- 预加载真实显示字(镜像站点 preloadFont=3 的行为,加速首屏落字) -->
+<link rel="preload" href="real-assets/fonts/78ffc3_MPLUS1-Latin.B4aLHJr2.woff2" as="font" type="font/woff2" crossorigin />
+<style>
+  /* ============================================================
+     Moonshot AI 设计解构 — Design Teardown
+     house style = 该站自己的语言:纯黑到底、极大留白、居中、无彩灰阶。
+     显示字与 UI 主字 M PLUS 1、中文 MiSans 均接入该站真实字体文件(见下 @font-face),CDN 同名字降为兜底。
+     全站零品牌色——唯一的彩色是故障字的 RGB 色散,与原站同一纪律。
+     页面运动统一用 moonshot 实测主缓动 cubic-bezier(.16,1,.3,1),
+     像它拆解的对象一样运动。
+     ============================================================ */
+
+  /* —— 真实字体:从 statics.moonshot.cn 提取的原始 woff2,先真后 CDN 兜底 ——
+     清单见 real-assets/manifest.json。M PLUS 1 = 拉丁显示与 UI 主字(可变,100–900);
+     MiSans = 中文字(可变,150–700,站点子集);NotoSans-Latin = 站点拉丁兜底(子集)。 */
+  @font-face{font-family:"M PLUS 1";src:url("real-assets/fonts/78ffc3_MPLUS1-Latin.B4aLHJr2.woff2") format("woff2");font-weight:100 900;font-style:normal;font-display:swap}
+  @font-face{font-family:"MiSans";src:url("real-assets/fonts/b31219_MiSansVF.CX7RY4lk.woff2") format("woff2");font-weight:150 700;font-style:normal;font-display:swap;unicode-range:U+2E80-2EFF,U+3000-303F,U+3200-33FF,U+3400-9FFF,U+F900-FAFF,U+FE30-FE4F,U+FF00-FFEF}
+  @font-face{font-family:"NotoSans-Latin";src:url("real-assets/fonts/5adcb7_NotoSans-Latin.woff2") format("woff2");font-weight:400;font-style:normal;font-display:swap}
+  :root{
+    /* 基底与文字(计算样式实锤) */
+    --bg:#000;
+    --ink:#fff;
+    --ink-72:rgba(255,255,255,.72);
+    --ink-56:rgba(255,255,255,.56);   /* ghost 按钮文字,btn 实测 */
+    --ink-38:rgba(255,255,255,.38);
+    --ink-26:rgba(255,255,255,.26);
+    /* 中性灰梯(样式表频次 top) */
+    --g12:#121212; --g14:#141414; --g1f:#1f1f1f; --g26:#262626;
+    --g32:#323232; --g45:#45454e; --g6d:#6d6d6d; --g73:#737373;
+    --line:rgba(255,255,255,.10); --line-2:rgba(255,255,255,.18);
+    --panel:#0b0b0b; --panel-2:#121212; --panel-3:#1a1a1a;
+    /* 色散通道(推断:复现 chromatic aberration 的标准三通道) */
+    --ca-r:#ff2b2b; --ca-g:#2bff2b; --ca-b:#2b2bff;
+    /* 排版 */
+    /* 真实主字体栈(镜像站点样式表出现 7 次的最高频栈:"M PLUS 1",MiSans,PingFang SC,…),真字领衔 */
+    --mplus:"M PLUS 1","MiSans","PingFang SC","Noto Sans SC",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+    --font:"M PLUS 1","MiSans","PingFang SC","Noto Sans SC",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+    --mono:"JetBrains Mono",ui-monospace,"SF Mono",Menlo,monospace;
+    /* 动效 token(样式表实测) */
+    --ease-1:cubic-bezier(.16,1,.3,1);
+    --ease-2:cubic-bezier(.4,0,.2,1);
+    --ease-3:cubic-bezier(.34,1.56,.64,1);
+    --ease-4:cubic-bezier(.22,1,.36,1);
+    --dur:.2s;                       /* 按钮 color 0.2s */
+    /* 圆角(实测梯) */
+    --pill:100px; --r-input:24px; --r-card:16px; --r-card-sm:12px; --r-btn:8px;
+    --maxw:1080px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{-webkit-font-smoothing:antialiased;scroll-behavior:smooth;scroll-padding-top:78px}
+  body{background:var(--bg);color:var(--ink);font-family:var(--font);font-size:16px;line-height:1.72;overflow-x:hidden}
+  a{color:inherit;text-decoration:none}
+  svg{display:block}
+  ::selection{background:#fff;color:#000}
+  code,pre,.mono{font-family:var(--mono)}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 32px}
+  @media(max-width:640px){.wrap{padding:0 20px}}
+
+  .eyebrow{font-family:var(--mono);font-size:11.5px;font-weight:500;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-38)}
+  h1,h2,h3{font-weight:700;letter-spacing:.005em;line-height:1.16}
+  h1{font-weight:800}
+  code{font-size:.9em;color:var(--ink);background:rgba(255,255,255,.06);border:1px solid var(--line);border-radius:6px;padding:1px 6px}
+  b{font-weight:700}
+
+  /* ---------- NAV(实测:rgba(0,0,0,.4) + blur 16.75px)---------- */
+  nav{position:fixed;top:0;left:0;right:0;z-index:60;border-bottom:1px solid transparent;transition:background .35s var(--ease-1),border-color .35s var(--ease-1)}
+  nav.stuck{background:rgba(0,0,0,.4);backdrop-filter:blur(16.75px);-webkit-backdrop-filter:blur(16.75px);border-bottom-color:var(--line)}
+  .nav-in{display:flex;align-items:center;height:64px;gap:20px}
+  .brand{display:flex;align-items:center;gap:11px;font-family:var(--mplus);font-weight:700;font-size:16px;letter-spacing:.01em}
+  .brand svg{flex:none}
+  .navlinks{margin-left:auto;display:flex;gap:1px;font-family:var(--mono);font-size:12px}
+  .navlinks a{color:var(--ink-38);padding:8px 12px;border-radius:var(--pill);transition:color var(--dur) var(--ease-1),background var(--dur) var(--ease-1)}
+  .navlinks a:hover{color:var(--ink);background:rgba(255,255,255,.06)}
+  .navsrc{margin-left:6px;font-family:var(--mono);font-size:11px;color:var(--ink-38);border:1px solid var(--line);border-radius:var(--pill);padding:7px 13px;transition:color var(--dur) var(--ease-1),border-color var(--dur) var(--ease-1)}
+  .navsrc:hover{color:var(--ink);border-color:var(--line-2)}
+  @media(max-width:860px){.navlinks{display:none}}
+  @media(max-width:520px){.navsrc{display:none}}
+
+  /* ---------- HERO(moonshot 首屏忠实复刻 + 拆解框定)---------- */
+  header{position:relative;min-height:100vh;min-height:100svh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:120px 0 70px;overflow:hidden}
+
+  .hero-eyebrow{margin-bottom:38px}
+
+  /* 签名舞台:日食光环 + 色散故障字 + 扫描线 */
+  .hero-stage{position:relative;width:100%;max-width:1000px;height:clamp(300px,44vmin,440px);display:grid;place-items:center}
+  .band{position:absolute;left:-6%;right:-6%;top:50%;transform:translateY(-50%);height:clamp(84px,15vmin,166px);overflow:hidden;z-index:1;-webkit-mask:linear-gradient(90deg,transparent,#000 12%,#000 88%,transparent);mask:linear-gradient(90deg,transparent,#000 12%,#000 88%,transparent)}
+  .glitch{position:absolute;inset:0;filter:url(#hblur)}
+  .layer{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);white-space:nowrap;font-family:var(--mplus);font-weight:800;font-size:clamp(42px,8.2vw,116px);letter-spacing:.01em;line-height:1;mix-blend-mode:screen;will-change:transform}
+  .layer span{display:inline-block;animation:drift 22s linear infinite}
+  .layer.r{color:var(--ca-r);animation:jitR 2s steps(10) infinite}
+  .layer.g{color:var(--ca-g)}
+  .layer.b{color:var(--ca-b);animation:jitB 2.4s steps(10) infinite}
+  @keyframes drift{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+  @keyframes jitR{0%,100%{margin-left:-4px}25%{margin-left:-7px}50%{margin-left:-3px}75%{margin-left:-6px}}
+  @keyframes jitB{0%,100%{margin-left:4px}25%{margin-left:7px}50%{margin-left:3px}75%{margin-left:6px}}
+  .scan{position:absolute;inset:0;z-index:2;pointer-events:none;background:repeating-linear-gradient(0deg,transparent 0 2px,rgba(0,0,0,.55) 2px 4px);mix-blend-mode:multiply;opacity:.7}
+
+  .eclipse{position:relative;z-index:3;width:clamp(220px,31vmin,330px);aspect-ratio:1;border-radius:50%}
+  .eclipse .disc{position:absolute;inset:0;border-radius:50%;z-index:3;background:radial-gradient(circle at 50% 42%,#0c0c0c 54%,#060606 72%,#000 80%);box-shadow:inset 0 12px 34px rgba(255,255,255,.05)}
+  .eclipse .ring{position:absolute;inset:-3px;border-radius:50%;z-index:2;filter:blur(.5px);background:
+    radial-gradient(circle,transparent 68.6%,rgba(255,255,255,.92) 70.1%,rgba(255,255,255,0) 73%),
+    radial-gradient(62% 52% at 50% 96%,rgba(255,255,255,1),rgba(255,255,255,0) 56%)}
+  .eclipse .diamond{position:absolute;left:50%;bottom:-3%;width:9%;aspect-ratio:1;border-radius:50%;transform:translateX(-50%);z-index:4;background:radial-gradient(circle,#fff 18%,rgba(255,255,255,.5) 42%,transparent 68%);animation:spark 5s var(--ease-1) infinite}
+  .eclipse .corona{position:absolute;inset:-58%;border-radius:50%;z-index:1;pointer-events:none;background:radial-gradient(circle,rgba(255,255,255,.15),rgba(255,255,255,.04) 40%,transparent 62%);animation:corona 6s var(--ease-1) infinite alternate}
+  @keyframes corona{from{opacity:.68;transform:scale(.98)}to{opacity:1;transform:scale(1.04)}}
+  @keyframes spark{0%,100%{opacity:.85;transform:translateX(-50%) scale(.9)}50%{opacity:1;transform:translateX(-50%) scale(1.12)}}
+
+  .slogan{font-family:var(--mplus);font-weight:300;font-size:clamp(17px,2.1vw,25px);color:var(--ink-72);letter-spacing:.01em;margin-top:26px;max-width:22ch}
+
+  /* 首屏对话输入框(AI-native 信号,忠实复刻) */
+  .ask{width:min(560px,86vw);margin:34px auto 0;text-align:left;background:#0f0f0f;border:1px solid var(--g1f);border-radius:var(--r-input);padding:18px 20px 16px;position:relative;transition:border-color .3s var(--ease-1)}
+  .ask:hover{border-color:var(--g32)}
+  .ask .ph{color:var(--g73);font-size:15.5px;font-family:var(--mplus);font-weight:300}
+  .ask .send{position:absolute;right:14px;bottom:13px;width:34px;height:34px;border-radius:50%;background:var(--g1f);border:1px solid var(--line);display:grid;place-items:center;color:var(--ink-56)}
+  .ask .send svg{width:15px;height:15px}
+  .hero-cta{display:flex;gap:14px;justify-content:center;margin-top:24px}
+  .pill{font-family:var(--mplus);font-weight:500;font-size:14.5px;background:transparent;color:var(--ink-56);border:1px solid var(--line-2);border-radius:var(--pill);padding:12px 26px;cursor:pointer;transition:color var(--dur) var(--ease-1),border-color var(--dur) var(--ease-1)}
+  .pill:hover{color:var(--ink);border-color:rgba(255,255,255,.55)}
+
+  .madecap{margin-top:52px;font-family:var(--mono);font-size:11.5px;letter-spacing:.06em;color:var(--ink-38);max-width:60ch}
+
+  /* 拆解框定条 */
+  .frame{margin-top:60px;max-width:820px}
+  .frame h1{font-size:clamp(30px,5.2vw,60px);letter-spacing:0;line-height:1.1}
+  .frame .thin{color:var(--ink-56);font-weight:300}
+  .lede{font-size:clamp(15px,1.5vw,18px);color:var(--ink-72);max-width:62ch;margin:22px auto 0;line-height:1.65;font-weight:300}
+  .lede code{font-size:.85em}
+  .metabar{display:flex;flex-wrap:wrap;gap:9px;justify-content:center;margin-top:30px}
+  .chip{font-family:var(--mono);font-size:11.5px;color:var(--ink-56);border:1px solid var(--line);border-radius:var(--pill);padding:7px 14px;background:rgba(255,255,255,.02)}
+  .chip b{color:var(--ink);font-weight:500}
+  .scrollcue{position:absolute;left:50%;bottom:20px;transform:translateX(-50%);font-family:var(--mono);font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--ink-26)}
+
+  /* ---------- SECTIONS ---------- */
+  main{position:relative;z-index:2;border-top:1px solid var(--line)}
+  section{padding:96px 0;border-bottom:1px solid var(--line)}
+  .sec-head{max-width:72ch;margin:0 auto 44px;text-align:center}
+  .sec-head h2{font-size:clamp(26px,3.6vw,44px);margin-top:15px;letter-spacing:0}
+  .sec-head p{color:var(--ink-56);margin-top:16px;font-size:16.5px;font-weight:300}
+  .sec-head p code{font-size:.85em}
+  h3{font-size:18px;font-weight:700}
+
+  .grid{display:grid;gap:16px}
+  .g2{grid-template-columns:1fr 1fr}.g3{grid-template-columns:repeat(3,1fr)}
+  @media(max-width:820px){.g2,.g3{grid-template-columns:1fr}}
+  .card{border:1px solid var(--line);border-radius:var(--r-card);padding:22px;background:linear-gradient(180deg,rgba(255,255,255,.02),transparent);transition:border-color .3s var(--ease-1),transform .3s var(--ease-1)}
+  .card:hover{border-color:var(--line-2);transform:translateY(-2px)}
+  .k{font-family:var(--mono);font-size:10.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--ink-38)}
+  .dim{color:var(--ink-56);font-weight:300}.faint{color:var(--ink-38)}
+  p+p{margin-top:10px}
+
+  pre{background:#080808;border:1px solid var(--line);border-radius:var(--r-card-sm);padding:16px 18px;overflow-x:auto;font-size:12.5px;line-height:1.85;margin-top:6px}
+  pre code{background:none;border:none;padding:0;color:var(--ink-72);font-size:inherit}
+  .tok-c{color:var(--ink-38)}.tok-n{color:#fff}.tok-p{color:var(--ink-56)}
+
+  /* THESIS split */
+  .split{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  @media(max-width:820px){.split{grid-template-columns:1fr}}
+  .surface{border:1px solid var(--line);border-radius:var(--r-card);padding:26px;background:linear-gradient(180deg,rgba(255,255,255,.025),transparent)}
+  .tag{font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-72)}
+  .surface ul{list-style:none;margin-top:16px;display:grid;gap:11px}
+  .surface li{position:relative;padding-left:22px;font-size:14.5px;color:var(--ink-56);line-height:1.55;font-weight:300}
+  .surface li b{color:var(--ink);font-weight:600}
+  .surface li::before{content:"";position:absolute;left:2px;top:8px;width:8px;height:8px;border-radius:50%;border:1.5px solid rgba(255,255,255,.7);box-shadow:0 0 8px rgba(255,255,255,.4)}
+  .callout{border:1px solid var(--line-2);border-radius:var(--r-card);padding:24px 26px;background:radial-gradient(120% 130% at 50% 0,rgba(255,255,255,.05),transparent 60%);position:relative}
+  .callout h3{color:var(--ink)}
+  .callout p{margin-top:8px}
+
+  /* COLOR swatches */
+  .swgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+  @media(max-width:820px){.swgrid{grid-template-columns:repeat(2,1fr)}}
+  .sw{border:1px solid var(--line);border-radius:14px;overflow:hidden;cursor:pointer;background:var(--panel);transition:border-color .25s var(--ease-1),transform .25s var(--ease-1)}
+  .sw:hover,.sw:focus-visible{border-color:var(--line-2);transform:translateY(-2px);outline:none}
+  .chipc{height:66px;border-bottom:1px solid var(--line)}
+  .sw .meta{padding:11px 13px}
+  .sw .name{font-size:13px;font-weight:600}
+  .sw .hex{font-family:var(--mono);font-size:11.5px;color:var(--ink-72);margin-top:2px}
+  .sw .role{font-size:11px;color:var(--ink-38);margin-top:3px;font-weight:300;line-height:1.4}
+
+  /* chromatic finding sample */
+  .cabox{display:flex;align-items:center;gap:22px;flex-wrap:wrap}
+  .casample{font-family:var(--mplus);font-weight:800;font-size:clamp(30px,5vw,54px);position:relative;display:inline-block;color:transparent;filter:url(#hblur3);line-height:1.1}
+  .casample .cl{position:absolute;left:0;top:0;mix-blend-mode:screen}
+  .casample .cl.r{color:var(--ca-r);transform:translateX(-4px)}
+  .casample .cl.g{color:var(--ca-g)}
+  .casample .cl.b{color:var(--ca-b);transform:translateX(4px)}
+
+  /* TYPE specimen */
+  .specimen{font-family:var(--mplus);font-weight:800;font-size:clamp(44px,8vw,96px);line-height:1;letter-spacing:.01em;margin:4px 0}
+  .specimen .sub{font-weight:300}
+  .metrics{display:flex;flex-wrap:wrap;gap:10px;margin-top:14px}
+  .metric{font-family:var(--mono);font-size:11.5px;color:var(--ink-56);border:1px solid var(--line);border-radius:var(--pill);padding:6px 13px}
+  .metric b{color:#fff;font-weight:500}
+
+  /* MOTION easing lab */
+  .easelab{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  @media(max-width:820px){.easelab{grid-template-columns:1fr}}
+  .ease{border:1px solid var(--line);border-radius:var(--r-card);padding:20px;cursor:pointer;background:linear-gradient(180deg,rgba(255,255,255,.02),transparent);transition:border-color .25s var(--ease-1)}
+  .ease:hover,.ease:focus-visible{border-color:var(--line-2);outline:none}
+  .ease-top{display:flex;justify-content:space-between;align-items:baseline;gap:12px}
+  .ease-top h3{font-size:16px}
+  .curveval{font-family:var(--mono);font-size:10.5px;color:var(--ink-72);white-space:nowrap}
+  .freq{font-family:var(--mono);font-size:10px;color:var(--ink-38);margin-top:2px}
+  .ease .desc{font-size:13.5px;margin-top:9px;line-height:1.55;color:var(--ink-56);font-weight:300}
+  .ease-viz{display:flex;align-items:center;gap:16px;margin-top:16px}
+  .ease-viz canvas{flex:none;border:1px solid var(--line);border-radius:10px;background:#080808}
+  .track{flex:1;min-width:0}
+  .runner-wrap{height:34px;border:1px solid var(--line);border-radius:10px;position:relative;overflow:hidden;background:rgba(255,255,255,.02)}
+  .runner{position:absolute;top:6px;left:6px;width:22px;height:22px;border-radius:6px;background:#fff;box-shadow:0 0 18px 1px rgba(255,255,255,.55)}
+  .replay{font-family:var(--mono);font-size:10px;color:var(--ink-38);margin-top:8px;letter-spacing:.05em}
+
+  .durs{display:grid;gap:12px}
+  .durrow{display:grid;grid-template-columns:150px 1fr 62px;align-items:center;gap:14px}
+  @media(max-width:560px){.durrow{grid-template-columns:110px 1fr 52px}}
+  .durrow .lab{font-family:var(--mono);font-size:11.5px;color:var(--ink-56)}
+  .durbar{height:8px;border-radius:var(--pill);background:linear-gradient(90deg,rgba(255,255,255,.3),#fff);box-shadow:0 0 16px -3px rgba(255,255,255,.6)}
+  .durrow .val{font-family:var(--mono);font-size:11.5px;color:#fff;text-align:right}
+
+  /* SIGNATURE lab */
+  .siglab{border:1px solid var(--line);border-radius:var(--r-card);overflow:hidden;background:#000}
+  .sigstage{position:relative;height:clamp(180px,26vmin,240px);display:grid;place-items:center;overflow:hidden}
+  .sigstage .band{left:-4%;right:-4%;height:clamp(64px,12vmin,120px)}
+  .sigstage .glitch{filter:url(#hblur2)}
+  .sigstage .layer{font-size:clamp(30px,6vw,72px)}
+  .sigstage .layer.r{margin-left:calc(var(--ca) * -1);animation:none}
+  .sigstage .layer.b{margin-left:var(--ca);animation:none}
+  .sigstage .layer span{animation:drift 20s linear infinite}
+  .sigstage .eclipse{width:clamp(120px,16vmin,180px)}
+  .sigstage .scan{opacity:var(--scan,.7)}
+  .sigctrl{border-top:1px solid var(--line);padding:20px 22px;display:grid;grid-template-columns:1fr 1fr;gap:18px 26px;align-items:center}
+  @media(max-width:640px){.sigctrl{grid-template-columns:1fr}}
+  .ctrl label{font-family:var(--mono);font-size:11px;color:var(--ink-56);display:flex;justify-content:space-between;letter-spacing:.04em}
+  .ctrl label b{color:#fff;font-weight:500}
+  .ctrl input[type=range]{width:100%;margin-top:9px;-webkit-appearance:none;appearance:none;height:3px;background:var(--g32);border-radius:var(--pill);outline:none}
+  .ctrl input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:16px;height:16px;border-radius:50%;background:#fff;cursor:pointer;box-shadow:0 0 12px rgba(255,255,255,.5)}
+  .ctrl input[type=range]::-moz-range-thumb{width:16px;height:16px;border:none;border-radius:50%;background:#fff;cursor:pointer}
+  .sigbtns{display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+  .toggle{display:flex;align-items:center;gap:8px;font-family:var(--mono);font-size:11px;color:var(--ink-56);cursor:pointer}
+  .toggle input{accent-color:#fff;width:15px;height:15px}
+
+  /* CRAFT */
+  .radii{display:flex;flex-wrap:wrap;gap:16px}
+  .rad{text-align:center}
+  .rad .box{width:78px;height:78px;border:1px solid var(--line-2);background:linear-gradient(180deg,rgba(255,255,255,.05),transparent)}
+  .rad .lab{font-family:var(--mono);font-size:11px;color:var(--ink-56);margin-top:8px}
+  .statgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+  @media(max-width:640px){.statgrid{grid-template-columns:repeat(2,1fr)}}
+  .stat{border:1px solid var(--line);border-radius:var(--r-card-sm);padding:16px 18px}
+  .stat .n{font-family:var(--mplus);font-weight:800;font-size:30px;line-height:1}
+  .stat .t{font-size:12px;color:var(--ink-56);margin-top:6px;font-weight:300}
+  .pillrow{display:flex;gap:14px;flex-wrap:wrap;align-items:center;margin-top:10px}
+  .annot{font-size:13px;color:var(--ink-56);font-weight:300;margin-top:14px;line-height:1.6}
+  .annot b{color:#fff;font-weight:600}
+
+  /* checklist 与 prov */
+  .checklist{list-style:none;display:grid;gap:12px}
+  .checklist li{position:relative;padding-left:26px;font-size:14.5px;color:var(--ink-56);line-height:1.55;font-weight:300}
+  .checklist li b{color:var(--ink);font-weight:600}
+  .checklist li::before{content:"→";position:absolute;left:2px;top:0;color:var(--ink);font-family:var(--mono)}
+  dl.prov dt{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-72);margin-top:20px}
+  dl.prov dt:first-child{margin-top:0}
+  dl.prov dd{margin-top:7px;font-size:14.5px;color:var(--ink-56);line-height:1.6;font-weight:300}
+  dl.prov dd b{color:#fff;font-weight:600}
+
+  figure.shot{border:1px solid var(--line);border-radius:var(--r-card);overflow:hidden;background:var(--panel)}
+  figure.shot img{width:100%;display:block}
+  figure.shot figcaption{padding:13px 18px;font-size:12.5px;color:var(--ink-38);border-top:1px solid var(--line);font-weight:300}
+
+  /* 真实素材(站点提取的真图 / 真视频) */
+  .rmgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+  @media(max-width:820px){.rmgrid{grid-template-columns:1fr}}
+  figure.rm{margin:0;border:1px solid var(--line);border-radius:var(--r-card);overflow:hidden;background:#000;transition:border-color .3s var(--ease-1),transform .3s var(--ease-1)}
+  figure.rm:hover{border-color:var(--line-2);transform:translateY(-2px)}
+  figure.rm video,figure.rm img{width:100%;display:block;aspect-ratio:3/2;object-fit:cover;background:#000}
+  figure.rm figcaption{padding:11px 14px;font-size:12px;color:var(--ink-38);border-top:1px solid var(--line);font-weight:300;line-height:1.5}
+  figure.rm figcaption b{color:var(--ink-72);font-weight:500}
+
+  footer{padding:56px 0 76px;text-align:center;font-size:13px;color:var(--ink-38);line-height:1.8;font-weight:300}
+  footer b{color:var(--ink-56);font-weight:500}
+  footer .glyph{margin:0 auto 22px;width:34px;height:34px}
+
+  .copybar{position:fixed;left:50%;bottom:28px;transform:translate(-50%,20px);z-index:80;background:#fff;color:#000;font-family:var(--mono);font-size:12.5px;font-weight:500;padding:9px 18px;border-radius:var(--pill);opacity:0;pointer-events:none;transition:opacity .3s var(--ease-1),transform .3s var(--ease-1);box-shadow:0 12px 40px -8px rgba(255,255,255,.4)}
+  .copybar.show{opacity:1;transform:translate(-50%,0)}
+
+  @media(prefers-reduced-motion:reduce){
+    .layer,.layer span,.eclipse .corona,.eclipse .diamond{animation:none!important}
+    *{scroll-behavior:auto}
+  }
+</style>
+</head>
+<body>
+
+<!-- 内联 SVG 滤镜:仅 x 方向的高斯模糊,做“横向撕裂与运动模糊”。CSS filter:blur() 是各向同性的,做不出只横向抹开。 -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <filter id="hblur" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur stdDeviation="6 0.5"/></filter>
+  <filter id="hblur2" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur id="hblur2b" stdDeviation="4 0.4"/></filter>
+  <filter id="hblur3" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur stdDeviation="1.4 0.2"/></filter>
+</svg>
+
+<nav id="nav"><div class="wrap nav-in">
+  <span class="brand">
+    <svg width="26" height="26" viewBox="0 0 32 32" aria-hidden="true">
+      <circle cx="16" cy="16" r="13" fill="none" stroke="#fff" stroke-width="1.5"/>
+      <path d="M4 12.5 Q16 8 28 12.5" fill="none" stroke="#fff" stroke-width="1.3" opacity=".85"/>
+      <path d="M3.5 16 H28.5" fill="none" stroke="#fff" stroke-width="1.3" opacity=".7"/>
+      <path d="M4 19.5 Q16 24 28 19.5" fill="none" stroke="#fff" stroke-width="1.3" opacity=".55"/>
+      <ellipse cx="16" cy="16" rx="6.4" ry="13" fill="none" stroke="#fff" stroke-width="1.1" opacity=".4"/>
+    </svg>
+    Moonshot AI 设计解构
+  </span>
+  <span class="navlinks">
+    <a href="#thesis">定位</a><a href="#color">色彩</a><a href="#type">字体</a>
+    <a href="#motion">动效</a><a href="#signature">签名</a><a href="#craft">工艺</a><a href="#build">复刻</a><a href="#prov">出处</a>
+  </span>
+  <a class="navsrc" href="https://www.moonshot.ai" target="_blank" rel="noopener">www.moonshot.ai</a>
+</div></nav>
+
+<header>
+  <div class="hero-eyebrow eyebrow">逆向解析　源自 www.moonshot.ai 线上抽取</div>
+
+  <!-- 签名舞台:纯 CSS 与 JS 复刻首屏 -->
+  <div class="hero-stage" aria-hidden="true">
+    <div class="band">
+      <div class="glitch">
+        <div class="layer r"><span>Moonshot&nbsp;AI&nbsp;&nbsp;&nbsp;Moonshot&nbsp;AI&nbsp;&nbsp;&nbsp;Moonshot&nbsp;AI&nbsp;&nbsp;&nbsp;Moonshot&nbsp;AI&nbsp;&nbsp;&nbsp;Moonshot&nbsp;AI&nbsp;&nbsp;&nbsp;Moonshot&nbsp;AI&nbsp;&nbsp;&nbsp;</span></div>
+        <div class="layer g"><span>Moonshot&nbsp;AI&nbsp;&nbsp;&nbsp;Moonshot&nbsp;AI&nbsp;&nbsp;&nbsp;Moonshot&nbsp;AI&nbsp;&nbsp;&nbsp;Moonshot&nbsp;AI&nbsp;&nbsp;&nbsp;Moonshot&nbsp;AI&nbsp;&nbsp;&nbsp;Moonshot&nbsp;AI&nbsp;&nbsp;&nbsp;</span></div>
+        <div class="layer b"><span>Moonshot&nbsp;AI&nbsp;&nbsp;&nbsp;Moonshot&nbsp;AI&nbsp;&nbsp;&nbsp;Moonshot&nbsp;AI&nbsp;&nbsp;&nbsp;Moonshot&nbsp;AI&nbsp;&nbsp;&nbsp;Moonshot&nbsp;AI&nbsp;&nbsp;&nbsp;Moonshot&nbsp;AI&nbsp;&nbsp;&nbsp;</span></div>
+      </div>
+      <div class="scan"></div>
+    </div>
+    <div class="eclipse">
+      <div class="corona"></div>
+      <div class="ring"></div>
+      <div class="disc"></div>
+      <div class="diamond"></div>
+    </div>
+  </div>
+
+  <p class="slogan">Seeking the optimal conversion from energy to intelligence</p>
+
+  <!-- 首屏对话输入框(AI-native 信号) -->
+  <div class="ask">
+    <span class="ph">Throw me a hard one. I'm ready.</span>
+    <span class="send"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7-7 7 7"/></svg></span>
+  </div>
+  <div class="hero-cta">
+    <button class="pill">Try Kimi</button>
+    <button class="pill">Try API</button>
+  </div>
+
+  <div class="madecap">以上为纯 CSS 与 JS 复刻的 moonshot 首屏签名效果——日食光环加 RGB 色散故障字。原站很可能由 canvas 逐帧渲染(实测 4 个 canvas)。</div>
+
+  <div class="frame">
+    <div class="eyebrow" style="text-align:center">这不是观感描述</div>
+    <h1>把 moonshot 拆到<span class="thin">可复刻的</span>每一个数值</h1>
+    <p class="lede">下面每一个色值、缓动曲线、时长、圆角与字体,都直接来自对线上站点的真实抽取(playwright 计算样式加服务端样式表文本)。连这一页,也在用 moonshot 自己的主缓动 <code>cubic-bezier(.16,1,.3,1)</code> 运动,并守住它零品牌色的纪律。</p>
+    <div class="metabar">
+      <span class="chip">基底 <b>纯黑 #000</b></span>
+      <span class="chip">字体 <b>M PLUS 1 · MiSans</b>(真字)</span>
+      <span class="chip">主缓动 <b>cubic-bezier(.16,1,.3,1)</b></span>
+      <span class="chip">品牌色 <b>无彩灰阶</b></span>
+      <span class="chip">首屏 <b>canvas 驱动</b></span>
+    </div>
+  </div>
+  <div class="scrollcue">向下滚动</div>
+</header>
+
+<main>
+<div class="wrap">
+
+  <!-- 1 THESIS -->
+  <section id="thesis">
+    <div class="sec-head">
+      <div class="eyebrow">01 — 定位与设计意图</div>
+      <h2>极简克制托底，一处强签名点睛</h2>
+      <p>moonshot 不像 Comet 分“营销层与产品层”两套设计。它只有一套:把画面压到极简,再让日食这一处签名承担全部张力。</p>
+    </div>
+    <div class="split">
+      <div class="surface">
+        <span class="tag">底 — 极简克制</span>
+        <ul>
+          <li><b>纯黑到底</b>:<code>body</code> 背景实测 <code>rgb(0,0,0)</code>,不是常见的 #0a0a0a,是真黑</li>
+          <li><b>极大留白</b>:首屏只留一句 slogan、一个输入框、两枚按钮</li>
+          <li><b>居中排版</b>:单栏叙事,信息密度低到极致</li>
+          <li><b>无彩灰阶</b>:全站零品牌 accent,只有黑白与一条中性灰梯</li>
+        </ul>
+      </div>
+      <div class="surface">
+        <span class="tag">签名 — 神秘科技感</span>
+        <ul>
+          <li><b>日食环形白光</b>:月掩日的一道纯白光环居中,收束全部视觉重量</li>
+          <li><b>RGB 色散故障字</b>:“Moonshot AI” 被光环撕出红绿蓝残影与横向扫描</li>
+          <li><b>AI 对话前置</b>:首屏直接嵌对话输入框,把能力信号摆到最前</li>
+          <li><b>ghost pill 按钮</b>:透明描边,只在 hover 提亮文字</li>
+        </ul>
+      </div>
+    </div>
+    <div class="callout" style="margin-top:16px">
+      <h3>设计意图:把“能量到智能的转化”做成一次日食</h3>
+      <p class="dim">信条 “Seeking the optimal conversion from energy to intelligence” 被视觉化成月掩日的瞬间——能量收束为一道光环,品牌字在相变里被色散撕裂。整站零品牌色是刻意的:当唯一的颜色是“光被拆开”的那一刻,日食的形与故障的动就被无限放大。</p>
+    </div>
+  </section>
+
+  <!-- 2 COLOR -->
+  <section id="color">
+    <div class="sec-head">
+      <div class="eyebrow">02 — 色彩系统(真实 token)</div>
+      <h2>纯黑、纯白，加一条中性灰梯</h2>
+      <p>点任意色块复制。除下面这些无彩值外,全站没有第二种颜色——这是 moonshot 最硬的设计取舍。</p>
+    </div>
+    <h3 style="margin-bottom:14px">基底与中性灰梯</h3>
+    <div class="swgrid" id="sw-base"></div>
+    <h3 style="margin:30px 0 14px">语义色(计算样式实测)</h3>
+    <div class="swgrid" id="sw-sem"></div>
+
+    <div class="callout" style="margin-top:26px">
+      <div class="cabox">
+        <div class="casample" aria-hidden="true">Moonshot<span class="cl r">Moonshot</span><span class="cl g">Moonshot</span><span class="cl b">Moonshot</span></div>
+        <div style="flex:1;min-width:240px">
+          <h3>关键发现:唯一的彩色是“色散残影”</h3>
+          <p class="dim">全站唯一出现的彩色,是故障品牌字上红、绿、蓝三通道错位形成的边缘残影(左侧即纯 CSS 复现:三层 <code>mix-blend-mode:screen</code> 在黑底上叠加,对齐处还原为白,错位处露出色散)。<code>#45454e</code> 是灰梯里唯一略偏冷的中性,其余全落在无彩轴上。复刻第一纪律——别给它补 accent 色。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3 TYPE -->
+  <section id="type">
+    <div class="sec-head">
+      <div class="eyebrow">03 — 字体系统</div>
+      <h2>一款几何无衬线，撑起从超大到极细</h2>
+      <p>实测已加载 <code>M PLUS 1</code>、<code>MiSans</code>、<code>NotoSans-Latin</code>;主字体栈以 M PLUS 1 领衔(样式表出现 7 次,最高频)。本页已把这三支<b>真实字体文件</b>(站点原始 woff2)接进来:拉丁显示与 UI 用真 M PLUS 1,中文用真 MiSans,CDN 同名字仅作兜底。</p>
+    </div>
+    <div class="card" style="margin-bottom:16px;text-align:center">
+      <div class="k">M PLUS 1 显示与 UI 主字(该站真实加载)</div>
+      <div class="specimen">Moonshot AI</div>
+      <div class="specimen sub" style="font-size:clamp(22px,4vw,44px);color:var(--ink-56)">energy → intelligence</div>
+      <div class="metrics" style="justify-content:center">
+        <span class="metric">h1 实测 <b>16px</b></span>
+        <span class="metric">字重 <b>400</b></span>
+        <span class="metric">字距 <b>0.15008px</b></span>
+        <span class="metric">行高 <b>24px</b></span>
+      </div>
+    </div>
+    <div class="grid g3">
+      <div class="card">
+        <div class="k">M PLUS 1 拉丁显示(真字)</div>
+        <div style="font-family:var(--mplus);font-size:26px;font-weight:800;margin:10px 0 2px">Aa Gg 0123</div>
+        <p class="dim" style="font-size:13.5px">几何无衬线,字面方正、字腔开阔、笔端收得干净。站点原始文件是<b>可变字体</b>(轴 <code>wght 100–900</code>),一支通吃超大标题到细体 slogan。上面即用站点真实 woff2 渲染;Google Fonts 开源(OFL)。</p>
+      </div>
+      <div class="card">
+        <div class="k">MiSans 中文(真字)</div>
+        <div style="font-family:'MiSans','PingFang SC',sans-serif;font-size:26px;font-weight:500;margin:10px 0 2px">智 能 未 来</div>
+        <p class="dim" style="font-size:13.5px">小米发布、可免费商用的可变字体(轴 <code>wght 150–700</code>)。承担中文态。本页已接入站点真实 MiSans 子集:上面四字即用真字渲染,子集未覆盖的中文回落 PingFang SC 与思源黑体。</p>
+      </div>
+      <div class="card">
+        <div class="k">NotoSans-Latin 兜底(真字)</div>
+        <div style="font-family:'NotoSans-Latin',sans-serif;font-size:26px;font-weight:400;margin:10px 0 2px">Fallback</div>
+        <p class="dim" style="font-size:13.5px">站点自带的拉丁兜底子集(仅 53 字形,只含大小写字母)。上面这行即用真字渲染。<code>preloadFont</code> 实测为 3,首屏字体走预加载。</p>
+      </div>
+    </div>
+    <div class="callout" style="margin-top:16px">
+      <h3>关键发现:排版故意偏小、偏轻</h3>
+      <p class="dim">默认落在字号 16px、字重 400、字距仅 0.15px 的微正值。真正的大字号是刻意的例外——靠尺度对比而非字重堆砌制造重音,与整站极大留白的节奏一致。授权也友好:M PLUS 1 与 MiSans 都能合法直接复刻。</p>
+    </div>
+  </section>
+
+  <!-- 4 MOTION -->
+  <section id="motion">
+    <div class="sec-head">
+      <div class="eyebrow">04 — 动效系统</div>
+      <h2>手感层 0.2s，环境层 15 到 35s</h2>
+      <p>moonshot 把两种极端时间叠在一起:按钮只用 <code>0.2s</code> 过渡颜色,环境漂移慢到 <code>15</code> 至 <code>35s</code> 几乎察觉不到,故障脉冲居中(<code>2s</code> 出现 15 次,是主音)。点任一卡片重放,曲线与时长为真实取值。</p>
+    </div>
+    <div class="easelab" id="easelab"></div>
+
+    <h3 style="margin:34px 0 14px">时长阶梯(真实 token,对数刻度便于对比)</h3>
+    <div class="card"><div class="durs" id="durs"></div></div>
+
+    <div class="grid g2" style="margin-top:16px">
+      <div class="card">
+        <h3>双时间尺度</h3>
+        <p class="dim" style="font-size:14.5px;margin-top:8px">手感层 <code>0.2s</code> 让点击即时;环境层 <code>15s</code>/<code>25s</code>/<code>35s</code> 让故障字漂移与外冕呼吸慢到像没动。快得即时、慢得像凝固,中间那层 <code>1.05s</code>–<code>5s</code> 才是“故障”的心跳。</p>
+      </div>
+      <div class="card">
+        <h3>唯一具名关键帧:vike-react-shine</h3>
+        <p class="dim" style="font-size:14.5px;margin-top:8px">样式表里抽到的唯一具名 <code>@keyframes</code>。前缀 <code>vike-react-</code> 泄露技术栈是 <b>Vike 加 React</b>(推断);<code>shine</code> 即光泽扫过,正对应光环上游走的高光。<code>libs</code> 与 <code>scriptHints</code> 全空,无第三方动效库外露。</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5 SIGNATURE(交互 demo)-->
+  <section id="signature">
+    <div class="sec-head">
+      <div class="eyebrow">05 — 签名视觉母题(可调实验室)</div>
+      <h2>日食光环加色散故障字，拆成三层</h2>
+      <p>拖动滑块调色散位移与横向模糊,或触发一次故障爆发,看这套签名如何由纯 CSS 与 JS 合成。</p>
+    </div>
+
+    <div class="siglab">
+      <div class="sigstage" id="sigstage" style="--ca:4px;--scan:.7" aria-hidden="true">
+        <div class="band">
+          <div class="glitch">
+            <div class="layer r"><span>Moonshot&nbsp;AI&nbsp;&nbsp;&nbsp;Moonshot&nbsp;AI&nbsp;&nbsp;&nbsp;Moonshot&nbsp;AI&nbsp;&nbsp;&nbsp;Moonshot&nbsp;AI&nbsp;&nbsp;&nbsp;Moonshot&nbsp;AI&nbsp;&nbsp;&nbsp;Moonshot&nbsp;AI&nbsp;&nbsp;&nbsp;</span></div>
+            <div class="layer g"><span>Moonshot&nbsp;AI&nbsp;&nbsp;&nbsp;Moonshot&nbsp;AI&nbsp;&nbsp;&nbsp;Moonshot&nbsp;AI&nbsp;&nbsp;&nbsp;Moonshot&nbsp;AI&nbsp;&nbsp;&nbsp;Moonshot&nbsp;AI&nbsp;&nbsp;&nbsp;Moonshot&nbsp;AI&nbsp;&nbsp;&nbsp;</span></div>
+            <div class="layer b"><span>Moonshot&nbsp;AI&nbsp;&nbsp;&nbsp;Moonshot&nbsp;AI&nbsp;&nbsp;&nbsp;Moonshot&nbsp;AI&nbsp;&nbsp;&nbsp;Moonshot&nbsp;AI&nbsp;&nbsp;&nbsp;Moonshot&nbsp;AI&nbsp;&nbsp;&nbsp;Moonshot&nbsp;AI&nbsp;&nbsp;&nbsp;</span></div>
+          </div>
+          <div class="scan"></div>
+        </div>
+        <div class="eclipse">
+          <div class="corona"></div>
+          <div class="ring"></div>
+          <div class="disc"></div>
+          <div class="diamond"></div>
+        </div>
+      </div>
+      <div class="sigctrl">
+        <div class="ctrl">
+          <label>色散位移 chromatic aberration <b><span id="caVal">4</span>px</b></label>
+          <input type="range" id="caRange" min="0" max="16" step="1" value="4" />
+        </div>
+        <div class="ctrl">
+          <label>横向模糊 feGaussianBlur x <b><span id="blurVal">4</span></b></label>
+          <input type="range" id="blurRange" min="0" max="14" step="1" value="4" />
+        </div>
+        <div class="sigbtns">
+          <button class="pill" id="burstBtn">触发故障</button>
+          <label class="toggle"><input type="checkbox" id="scanToggle" checked /> 扫描线</label>
+        </div>
+        <div class="annot" style="margin-top:0">
+          三层原理:红绿蓝三通道 <code>screen</code> 叠加还原白,错位露色散;<code>feGaussianBlur stdDeviation="x 0.4"</code> 只横向抹开;<code>repeating-linear-gradient</code> 叠 CRT 扫描线。
+        </div>
+      </div>
+    </div>
+
+    <div class="grid g3" style="margin-top:16px">
+      <div class="card"><div class="k">层一 日食光环</div><p class="dim" style="font-size:13.5px;margin-top:8px">近黑暗盘压在纯黑底,下缘一道极亮钻石环(<code>radial-gradient</code> 细环加底部高光),外圈低透明外冕 <code>50%</code> 圆缓慢呼吸。</p></div>
+      <div class="card"><div class="k">层二 RGB 色散</div><p class="dim" style="font-size:13.5px;margin-top:8px">同一行文字拆红绿蓝三层,水平错位,<code>mix-blend-mode:screen</code>。错位量随时间抖动,形成信号不稳的故障感。</p></div>
+      <div class="card"><div class="k">层三 撕裂加漂移</div><p class="dim" style="font-size:13.5px;margin-top:8px">横向高斯模糊抹开笔画,扫描线叠 CRT 质感,整条文字带以 <code>15</code>–<code>25s</code> 超慢漂移,永远“活着”。</p></div>
+    </div>
+
+    <div style="margin-top:22px">
+      <div class="k" style="margin-bottom:12px">真实素材参照 · 站点「Latest Research」宇宙意象(同一「能量 → 智能」母题:色散与日食)</div>
+      <div class="rmgrid">
+        <figure class="rm">
+          <img src="real-assets/image/fa2ddf_1d7kuvrpl51jas5fhet20" alt="日食与彩虹色散冕真实图" loading="lazy" />
+          <figcaption><b>日食 · 彩虹色散冕</b>　研究卡「Kimi K2.6」。暗球外缘一圈全光谱色散冕,与首屏 RGB 故障字同源的色散母题。</figcaption>
+        </figure>
+        <figure class="rm">
+          <img src="real-assets/image/3ad6ca_1d7kuv6hl51jas5fheqs0" alt="棱镜色散真实图" loading="lazy" />
+          <figcaption><b>棱镜色散</b>　研究卡「Agent Swarm」。白光过棱镜折射成暖色光带,直白呼应「能量到智能的转化」。</figcaption>
+        </figure>
+        <figure class="rm">
+          <img src="real-assets/image/d71797_1d7kv02t3v89kkeiajtl0" alt="引力透镜光盘真实图" loading="lazy" />
+          <figcaption><b>引力透镜</b>　研究卡「WorldVQA」。被弯折的光盘与水面倒影,黑底上一束拉长的暖光。</figcaption>
+        </figure>
+      </div>
+      <p class="annot">以上为站点<b>真实图片</b>(从 moonshot.ai 提取,相对路径 <code>real-assets/image/</code>),非本页重建。它们印证了色散与日食是全站的视觉母题,不止首屏。</p>
+    </div>
+  </section>
+
+  <!-- 6 CRAFT -->
+  <section id="craft">
+    <div class="sec-head">
+      <div class="eyebrow">06 — 工艺细节</div>
+      <h2>圆角梯、玻璃、ghost 按钮与极简媒体</h2>
+      <p>克制不等于随意。每个圆角、每层玻璃、每次过渡都落在一套清楚的梯度上。</p>
+    </div>
+
+    <h3 style="margin-bottom:16px">圆角语言(实测频次梯)</h3>
+    <div class="card">
+      <div class="radii" id="radii"></div>
+      <p class="annot">一条清晰的梯:药丸(<code>100px</code> 与 <code>999px</code>)托 ghost 按钮与语言切换,大卡与对话框走 <code>24px</code>,卡片 <code>16px</code> 与 <code>12px</code>,小按钮 <code>8px</code>(btn 实测)与极小元素 <code>4px</code>,圆盘与圆点 <code>50%</code>。</p>
+    </div>
+
+    <div class="grid g2" style="margin-top:16px">
+      <div class="card">
+        <div class="k">导航玻璃(nav 实测)</div>
+        <pre style="margin-top:12px"><code><span class="tok-p">background</span>: <span class="tok-n">rgba(0,0,0,.4)</span>;
+<span class="tok-p">backdrop-filter</span>: <span class="tok-n">blur(16.75px)</span>;</code></pre>
+        <p class="annot">blur 半径是精确的 <b>16.75px</b> 而非整数,多半是某个设计变量换算的结果。滚动才显形——静止时导航栏“隐身”在黑里。</p>
+      </div>
+      <div class="card">
+        <div class="k">ghost pill 按钮(btn 实测)</div>
+        <div class="pillrow">
+          <button class="pill">Try Kimi</button>
+          <button class="pill">Try API</button>
+          <span class="faint mono" style="font-size:11px">← 悬停试试</span>
+        </div>
+        <p class="annot">背景 <b>透明</b>,文字 <code>rgba(255,255,255,.56)</code>,<code>transition: color 0.2s</code>。悬停只把文字从 <b>.56 提到 1</b>,不加位移、不加阴影——克制到只动颜色。</p>
+      </div>
+    </div>
+
+    <div class="grid g2" style="margin-top:16px">
+      <div class="card">
+        <div class="k">对话输入框(首屏 AI-native 信号)</div>
+        <div class="ask" style="margin:14px 0 0;width:100%">
+          <span class="ph">Throw me a hard one. I'm ready.</span>
+          <span class="send"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7-7 7 7"/></svg></span>
+        </div>
+        <p class="annot">深色面板 <code>#0f0f0f</code>,描边 <code>#1f1f1f</code>,圆角 <code>24px</code>,占位 <code>#737373</code>,右下角 <code>50%</code> 圆形发送按钮。把能力信号直接摆到首屏。</p>
+      </div>
+      <div class="card">
+        <div class="k">媒体清单(DOM 实测)</div>
+        <div class="statgrid" style="margin-top:12px">
+          <div class="stat"><div class="n">4</div><div class="t">canvas 签名很可能由此驱动</div></div>
+          <div class="stat"><div class="n">3</div><div class="t">video · Kimi 能力演示(下有真片)</div></div>
+          <div class="stat"><div class="n">25</div><div class="t">img 宇宙意象与产品图</div></div>
+          <div class="stat"><div class="n">1</div><div class="t">svg 透视网格 wireframe-bg</div></div>
+          <div class="stat"><div class="n">0</div><div class="t">预加载 video 首屏刻意轻</div></div>
+          <div class="stat"><div class="n">~29.6<span style="font-size:15px">KB</span></div><div class="t">CSS 总量 极精简</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div style="margin-top:16px">
+      <div class="k" style="margin-bottom:12px">真实视频(站点提取 · Kimi K2.6 能力演示 · <code>muted autoplay loop playsinline</code>)</div>
+      <div class="rmgrid">
+        <figure class="rm">
+          <video muted autoplay loop playsinline preload="metadata" poster="real-assets/image/fa2ddf_1d7kuvrpl51jas5fhet20" aria-label="Kimi 模式选择演示"><source src="real-assets/video/238d58_1d7j1ik2av1fc641atep0.mp4" type="video/webm" /></video>
+          <figcaption><b>模式选择</b>　对话框弹出 K2.6 Instant / Thinking / Agent / Agent Swarm 四档,即首屏输入框的真实交互。</figcaption>
+        </figure>
+        <figure class="rm">
+          <video muted autoplay loop playsinline preload="metadata" poster="real-assets/image/3ad6ca_1d7kuv6hl51jas5fheqs0" aria-label="Kimi 文档画布演示"><source src="real-assets/video/85b1d2_1d7astoqav1fc640it6ug.mp4" type="video/webm" /></video>
+          <figcaption><b>文档画布</b>　悬浮面板演示 Kimi 生成长文与画布(Brush and Ink 主题)。</figcaption>
+        </figure>
+        <figure class="rm">
+          <video muted autoplay loop playsinline preload="metadata" poster="real-assets/image/d71797_1d7kv02t3v89kkeiajtl0" aria-label="Kimi 能力卡演示"><source src="real-assets/video/c81f1d_1d7b2g1t3v89kkehe2i6g.mp4" type="video/webm" /></video>
+          <figcaption><b>能力卡</b>　Deep Research / Auto Sheets / Create Websites 三张能力卡浮起。</figcaption>
+        </figure>
+      </div>
+      <p class="annot">这三段是站点<b>真实视频</b>(<code>real-assets/video/</code>,VP9 / webm,各约 <code>2s</code> 循环,黑场淡入)。它们是产品能力演示,<b>不是</b>首屏日食——首屏由 canvas 逐帧渲染(实测 <code>preloadVideo 0</code>、<code>canvas 4</code>),故本页首屏仍以等效 CSS 复现。</p>
+    </div>
+  </section>
+
+  <!-- 7 BUILD -->
+  <section id="build">
+    <div class="sec-head">
+      <div class="eyebrow">07 — 如何复刻</div>
+      <h2>把上面的数值直接接进你的产品</h2>
+    </div>
+    <div class="grid g2">
+      <div>
+        <h3 style="margin-bottom:10px">1 — 落地 token(真实值,复制即用)</h3>
+        <pre><code><span class="tok-c">:root</span>{
+  <span class="tok-c">--bg</span>:<span class="tok-n">#000</span>; <span class="tok-c">--ink</span>:<span class="tok-n">#fff</span>;
+  <span class="tok-c">--ink-56</span>:<span class="tok-n">rgba(255,255,255,.56)</span>; <span class="tok-c">/* 按钮字 */</span>
+  <span class="tok-c">--g12</span>:<span class="tok-n">#121212</span>; <span class="tok-c">--g1f</span>:<span class="tok-n">#1f1f1f</span>;
+  <span class="tok-c">--g32</span>:<span class="tok-n">#323232</span>; <span class="tok-c">--g45</span>:<span class="tok-n">#45454e</span>;
+  <span class="tok-c">--font</span>:<span class="tok-n">"M PLUS 1"</span>,"MiSans",…;
+  <span class="tok-c">--ease-1</span>:<span class="tok-p">cubic-bezier</span>(.16,1,.3,1);
+  <span class="tok-c">--pill</span>:100px; <span class="tok-c">--r-input</span>:24px;
+  <span class="tok-c">--nav-blur</span>:<span class="tok-p">blur</span>(16.75px);
+}</code></pre>
+      </div>
+      <div>
+        <h3 style="margin-bottom:10px">2 — 日食光环(纯 CSS)</h3>
+        <pre><code><span class="tok-c">.eclipse .ring</span>{position:absolute;inset:-3px;
+ border-radius:50%;filter:blur(.5px);background:
+  <span class="tok-p">radial-gradient</span>(circle,transparent 69%,
+    <span class="tok-n">#fff</span> 70%,transparent 73%),
+  <span class="tok-p">radial-gradient</span>(62% 52% at 50% 96%,
+    <span class="tok-n">#fff</span>,transparent 56%)}
+<span class="tok-c">.eclipse .corona</span>{inset:-58%;border-radius:50%;
+ background:<span class="tok-p">radial-gradient</span>(circle,
+  <span class="tok-n">rgba(255,255,255,.15)</span>,transparent 62%);
+ animation:corona 6s var(--ease-1) infinite alternate}</code></pre>
+      </div>
+    </div>
+    <div class="grid g2" style="margin-top:16px">
+      <div>
+        <h3 style="margin-bottom:10px">3 — 色散故障字(三通道 screen 加 SVG 横向模糊)</h3>
+        <pre><code><span class="tok-c">.glitch</span>{filter:<span class="tok-p">url</span>(#hblur)}      <span class="tok-c">/* x 向模糊 */</span>
+<span class="tok-c">.layer</span>{position:absolute;mix-blend-mode:screen;
+ font:800 clamp(42px,8vw,116px) var(--font)}
+<span class="tok-c">.r</span>{color:<span class="tok-n">#f00</span>;margin-left:-4px}
+<span class="tok-c">.g</span>{color:<span class="tok-n">#0f0</span>}
+<span class="tok-c">.b</span>{color:<span class="tok-n">#00f</span>;margin-left:4px}
+<span class="tok-c">/* SVG: */</span> &lt;feGaussianBlur stdDeviation=<span class="tok-n">"6 0.4"</span>/&gt;</code></pre>
+      </div>
+      <div>
+        <h3 style="margin-bottom:10px">工程要点与坑</h3>
+        <ul class="checklist">
+          <li><b>色散必须黑底</b>:screen 叠加还原白靠的就是 <code>#000</code> 底,底不纯黑色散就发灰</li>
+          <li><b>横向模糊用 SVG</b>:CSS <code>filter:blur()</code> 各向同性,只能靠 <code>feGaussianBlur "x y"</code> 分离</li>
+          <li><b>别补品牌色</b>:守住无彩灰阶,彩色只留给色散残影</li>
+          <li><b>backdrop-filter 兜底</b>:不支持时给 nav 更实的 <code>rgba(0,0,0,.7)</code></li>
+          <li>尊重 <code>prefers-reduced-motion</code>:关漂移、抖动、外冕呼吸,日食静态保留</li>
+        </ul>
+      </div>
+    </div>
+    <div class="callout" style="margin-top:16px">
+      <h3>字体授权:对复刻友好</h3>
+      <p class="dim">这套排版可以合法直接复刻:<b>M PLUS 1</b> 是 Google Fonts 开源字体(SIL OFL),<b>MiSans</b> 由小米发布、可免费商用。本页已直接接入从站点提取的真实 woff2:拉丁显示与 UI 用真 M PLUS 1、中文用真 MiSans,子集未覆盖处回落 PingFang SC 与思源黑体。</p>
+    </div>
+  </section>
+
+  <!-- 8 PROVENANCE -->
+  <section id="prov" style="border-bottom:none">
+    <div class="sec-head">
+      <div class="eyebrow">08 — 方法与出处</div>
+      <h2>每个数值从哪来，什么是实锤、什么是推断</h2>
+    </div>
+    <div class="grid g2">
+      <div>
+        <dl class="prov">
+          <dt>抽取方法</dt>
+          <dd>对线上 <code>www.moonshot.ai</code> 走两条链路:playwright 读关键节点的 <b>计算样式</b>(渲染后真实生效的色、字、圆角、过渡、blur);服务端抓 <b>样式表文本</b>(共 4 份、约 29.6KB,不受 CORS 限制),在原文里统计高频 HEX、缓动、时长、圆角与关键帧名。</dd>
+          <dt>真实素材回填(本轮)</dt>
+          <dd>字体、视频、关键图不再用替身:三支<b>真实字体</b>已以 <code>@font-face</code> 接入——<code>M PLUS 1</code>(拉丁显示与 UI,可变 100–900)、<code>MiSans</code>(中文,可变 150–700,站点子集)、<code>NotoSans-Latin</code>(拉丁兜底子集),CDN 同名字降为兜底;<b>三段真实视频</b>(Kimi 能力演示)与<b>三张真实图片</b>(研究页宇宙意象:棱镜 / 日食冕 / 引力透镜)以相对路径 <code>real-assets/</code> 直引。完整清单见 <code>real-assets/manifest.json</code>。</dd>
+          <dt>实锤(抽取所得)</dt>
+          <dd>全部色值(纯黑底、白字、按钮 <code>.56</code>、导航 <code>.4</code>、灰梯 top)、字体(<code>M PLUS 1</code>/<code>MiSans</code>/<code>NotoSans-Latin</code> 与 h1 排版)、4 条缓动、时长梯、圆角梯、<code>backdrop-filter blur(16.75px)</code>、关键帧 <code>vike-react-shine</code>、媒体清单。</dd>
+          <dt>推断(观察、命名与重建)</dt>
+          <dd>技术栈 <b>Vike 加 React</b>(由关键帧前缀推断);<b>首屏 canvas 渲染</b>(由 4 canvas 加 0 预加载 video 推断);<b>日食渐变停靠点与色散通道色</b>(据实拍重建,复现 chromatic aberration 的标准做法,原站静态样式表中并无这三支色值);文案与语义角色映射(<code>customProps</code> 实测为空,token 命名系本拆解归纳)。</dd>
+        </dl>
+      </div>
+      <div>
+        <figure class="shot">
+          <img src="assets/actual-full.jpg" alt="moonshot.ai 整页真实渲染截图" loading="lazy" />
+          <figcaption>as-seen 实拍:www.moonshot.ai 整页真实渲染截图(首屏日食故障字 → Latest Research 宇宙意象研究卡:棱镜 / 日食冕 / 引力透镜 → Kimi K2.6 模式选择 → Kimi doodles → Built for the future 透视网格 → 页脚)。上方交互 demo 为纯 CSS 与 JS 复刻,非此截图。</figcaption>
+        </figure>
+        <div class="callout" style="margin-top:14px">
+          <h3>局限</h3>
+          <p class="dim">动态由 JS 或 canvas 生成的视觉(故障字真实算法、光环实际绘制)未被抽取,本页以纯 CSS 与 JS 做等效复现,忠实于实拍观感与实测 token,但不声称与原站 canvas 逐帧一致。抽取为单次快照,站点更新后数值可能变化。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <svg class="glyph" viewBox="0 0 32 32" aria-hidden="true">
+      <circle cx="16" cy="16" r="13" fill="none" stroke="rgba(255,255,255,.5)" stroke-width="1.4"/>
+      <path d="M4 12.5 Q16 8 28 12.5" fill="none" stroke="rgba(255,255,255,.45)" stroke-width="1.2"/>
+      <path d="M4 19.5 Q16 24 28 19.5" fill="none" stroke="rgba(255,255,255,.35)" stroke-width="1.2"/>
+    </svg>
+    Moonshot AI 设计解构　抽取自 www.moonshot.ai 线上计算样式与样式表文本　供内部研究与复刻参考<br />
+    字体 / 视频 / 关键图为站点<b>真实素材</b>(见 real-assets/manifest.json);数值以线上抽取为准,运行时渲染部分为观察与重建推断　签名效果为纯 CSS 与 JS 等效复现,<b>非逐像素还原</b>。
+  </footer>
+</div>
+</main>
+
+<div class="copybar" id="copybar" role="status" aria-live="polite">已复制</div>
+
+<script>
+(function(){
+  var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* nav stuck */
+  var nav=document.getElementById('nav');
+  function onScroll(){nav.classList.toggle('stuck',scrollY>10);}
+  onScroll(); addEventListener('scroll',onScroll,{passive:true});
+
+  /* ---------- swatches ---------- */
+  function sw(list,el){
+    var h=document.getElementById(el),s='';
+    list.forEach(function(c){
+      s+='<div class="sw" data-hex="'+c.copy+'" tabindex="0" role="button" aria-label="复制 '+c.copy+'">'+
+         '<div class="chipc" style="background:'+c.bg+'"></div>'+
+         '<div class="meta"><div class="name">'+c.name+'</div><div class="hex">'+c.hex+'</div><div class="role">'+c.role+'</div></div></div>';
+    });
+    h.innerHTML=s;
+  }
+  sw([
+    {name:'Pure Black',hex:'#000',copy:'#000000',bg:'#000',role:'页面基底 body 实测'},
+    {name:'White',hex:'#fff',copy:'#ffffff',bg:'#fff',role:'文字与光环 最高频'},
+    {name:'Ink 12',hex:'#121212',copy:'#121212',bg:'#121212',role:'一级抬升面'},
+    {name:'Ink 14',hex:'#141414',copy:'#141414',bg:'#141414',role:'抬升面变体'},
+    {name:'Ink 1f',hex:'#1f1f1f',copy:'#1f1f1f',bg:'#1f1f1f',role:'输入框底 二级面'},
+    {name:'Ink 26',hex:'#262626',copy:'#262626',bg:'#262626',role:'卡片描边内侧'},
+    {name:'Ink 32',hex:'#323232',copy:'#323232',bg:'#323232',role:'三级面 描边'},
+    {name:'Slate 45',hex:'#45454e',copy:'#45454e',bg:'#45454e',role:'冷灰描边 唯一微偏色'},
+    {name:'Grey 6d',hex:'#6d6d6d',copy:'#6d6d6d',bg:'#6d6d6d',role:'次要文字'},
+    {name:'Grey 73',hex:'#737373',copy:'#737373',bg:'#737373',role:'占位弱文字'}
+  ],'sw-base');
+  sw([
+    {name:'文字',hex:'#ffffff',copy:'#ffffff',bg:'#fff',role:'h1 计算值,实锤'},
+    {name:'ghost 按钮文字',hex:'rgba(255,255,255,.56)',copy:'rgba(255,255,255,0.56)',bg:'rgba(255,255,255,.56)',role:'btn 计算值 实锤'},
+    {name:'导航底',hex:'rgba(0,0,0,.4)',copy:'rgba(0,0,0,0.4)',bg:'linear-gradient(90deg,#111,#000)',role:'nav 计算值 加 blur 16.75px'},
+    {name:'占位文字',hex:'#737373',copy:'#737373',bg:'#737373',role:'输入框 placeholder'}
+  ],'sw-sem');
+
+  /* copy */
+  var bar=document.getElementById('copybar'),t;
+  function copy(hex){
+    try{navigator.clipboard&&navigator.clipboard.writeText(hex);}catch(e){}
+    bar.textContent='已复制 '+hex; bar.classList.add('show');
+    clearTimeout(t); t=setTimeout(function(){bar.classList.remove('show');},1200);
+  }
+  document.addEventListener('click',function(e){
+    var s=e.target.closest('.sw'); if(s){copy(s.getAttribute('data-hex'));}
+  });
+  document.addEventListener('keydown',function(e){
+    if(e.key!=='Enter'&&e.key!==' ')return;
+    var s=e.target.closest('.sw'); if(s){e.preventDefault(); copy(s.getAttribute('data-hex')); return;}
+    var ea=e.target.closest('.ease'); if(ea){e.preventDefault(); play(+ea.getAttribute('data-i'));}
+  });
+
+  /* ---------- easing lab ---------- */
+  var curves=[
+    {n:'主曲线 Expo Out',v:'.16, 1, .3, 1',p:[.16,1,.3,1],f:'样式表出现 5 次,最高频',d:'极快冲出、长尾沉降的“高级顺滑”。位移与淡入的主力,是 moonshot 的签名缓动。'},
+    {n:'Material 标准',v:'.4, 0, .2, 1',p:[.4,0,.2,1],f:'样式表出现 2 次',d:'通用进出,对称加速减速。手感层常用。'},
+    {n:'回弹 Back',v:'.34, 1.56, .64, 1',p:[.34,1.56,.64,1],f:'样式表出现 1 次',d:'控制点 y=1.56 越界,元素弹过头再收回的“啵一下”。'},
+    {n:'Expo Out 变体',v:'.22, 1, .36, 1',p:[.22,1,.36,1],f:'样式表出现 1 次',d:'主曲线的更缓版本,起步没那么冲。'}
+  ];
+  var lab=document.getElementById('easelab'),html='';
+  curves.forEach(function(c,i){
+    html+='<div class="ease" data-i="'+i+'" tabindex="0" role="button"><div class="ease-top"><div><h3>'+c.n+'</h3><div class="freq">'+c.f+'</div></div><span class="curveval">cubic-bezier('+c.v+')</span></div>'+
+      '<div class="desc">'+c.d+'</div><div class="ease-viz"><canvas id="cvz'+i+'" width="110" height="110"></canvas>'+
+      '<div class="track"><div class="runner-wrap"><div class="runner" id="run'+i+'"></div></div><div class="replay">点击重放,transform 1200ms</div></div></div></div>';
+  });
+  lab.innerHTML=html;
+
+  function drawCurve(i,p){
+    var c=document.getElementById('cvz'+i); if(!c)return;
+    var g=c.getContext('2d'),S=110,pad=20;
+    var minY=Math.min(0,p[1],p[3]), maxY=Math.max(1,p[1],p[3]);
+    function X(t){return pad+t*(S-2*pad);}
+    function Y(v){return (S-pad)-((v-minY)/(maxY-minY))*(S-2*pad);}
+    g.clearRect(0,0,S,S);
+    g.strokeStyle='rgba(255,255,255,.12)'; g.lineWidth=1;
+    g.beginPath();g.moveTo(X(0),Y(0));g.lineTo(X(1),Y(0));g.moveTo(X(0),Y(1));g.lineTo(X(1),Y(1));g.stroke();
+    g.strokeStyle='#fff'; g.lineWidth=2; g.beginPath();
+    for(var t=0;t<=1.001;t+=0.02){
+      var s=t, y=3*Math.pow(1-s,2)*s*p[1]+3*(1-s)*s*s*p[3]+s*s*s;
+      var xx=3*Math.pow(1-s,2)*s*p[0]+3*(1-s)*s*s*p[2]+s*s*s;
+      if(t===0)g.moveTo(X(xx),Y(y)); else g.lineTo(X(xx),Y(y));
+    }
+    g.stroke();
+    g.fillStyle='rgba(255,255,255,.6)';
+    g.beginPath();g.arc(X(0),Y(0),3,0,7);g.fill();
+    g.beginPath();g.arc(X(1),Y(1),3,0,7);g.fill();
+  }
+  function play(i){
+    var r=document.getElementById('run'+i); if(!r)return;
+    var wrap=r.parentElement,dist=Math.round((wrap.clientWidth-r.clientWidth-12));
+    r.style.transition='none'; r.style.transform='translateX(0)';
+    void r.offsetWidth;
+    r.style.transition='transform 1200ms cubic-bezier('+curves[i].p.join(',')+')';
+    r.style.transform='translateX('+dist+'px)';
+  }
+  curves.forEach(function(c,i){ drawCurve(i,c.p); if(!reduce) setTimeout(function(){play(i);},400+i*170); });
+  lab.addEventListener('click',function(e){var e2=e.target.closest('.ease'); if(e2) play(+e2.getAttribute('data-i'));});
+
+  /* ---------- duration ladder(对数刻度)---------- */
+  var durs=[['按钮 color',200,'0.2s'],['故障脉冲',1050,'1.05s'],['主音 ×15',2000,'2s'],['',3000,'3s'],['',4000,'4s'],['',5000,'5s'],['',6000,'6s'],['',9000,'9s'],['环境漂移',15000,'15s'],['',25000,'25s'],['环境层',35000,'35s']];
+  var dh='';
+  durs.forEach(function(d){
+    var w=Math.max(5,Math.pow(d[1]/35000,0.42)*100);
+    dh+='<div class="durrow"><span class="lab">'+(d[0]||'&nbsp;')+'</span><div class="durbar" style="width:'+w+'%"></div><span class="val">'+d[2]+'</span></div>';
+  });
+  document.getElementById('durs').innerHTML=dh;
+
+  /* ---------- radii ladder ---------- */
+  var radii=[['4px','4px'],['8px','8px'],['12px','12px'],['16px','16px'],['20px','20px'],['24px','24px'],['100px','100px'],['50%','50%']];
+  var rh='';
+  radii.forEach(function(r){ rh+='<div class="rad"><div class="box" style="border-radius:'+r[1]+'"></div><div class="lab">'+r[0]+'</div></div>'; });
+  document.getElementById('radii').innerHTML=rh;
+
+  /* ---------- signature lab ---------- */
+  var stage=document.getElementById('sigstage');
+  var caRange=document.getElementById('caRange'), blurRange=document.getElementById('blurRange');
+  var caVal=document.getElementById('caVal'), blurVal=document.getElementById('blurVal');
+  var blurNode=document.getElementById('hblur2b');
+  var scanToggle=document.getElementById('scanToggle'), burstBtn=document.getElementById('burstBtn');
+  function setCA(v){ stage.style.setProperty('--ca',v+'px'); caVal.textContent=v; }
+  function setBlur(v){ blurNode.setAttribute('stdDeviation',v+' 0.4'); blurVal.textContent=v; }
+  caRange.addEventListener('input',function(){ setCA(+this.value); });
+  blurRange.addEventListener('input',function(){ setBlur(+this.value); });
+  scanToggle.addEventListener('change',function(){ stage.style.setProperty('--scan', this.checked?'.7':'0'); });
+  var busy=false;
+  burstBtn.addEventListener('click',function(){
+    if(busy)return; busy=true;
+    var steps=[16,3,14,5,11,7,4], k=0;
+    (function tick(){
+      if(k>=steps.length){ setCA(+caRange.value); setBlur(+blurRange.value); busy=false; return; }
+      setCA(steps[k]); setBlur(Math.min(14,steps[k])); k++;
+      setTimeout(tick,70);
+    })();
+  });
+
+  /* 真实视频:尊重 prefers-reduced-motion,减少动效时不自动播放 */
+  if(reduce){document.querySelectorAll('.rm video').forEach(function(v){try{v.autoplay=false;v.removeAttribute('autoplay');v.pause();}catch(e){}});}
+})();
+</script>
+
+<style>.dt-omit{display:flex;align-items:center;justify-content:center;min-height:96px;background:repeating-linear-gradient(45deg,transparent,transparent 9px,rgba(128,128,128,.07) 9px,rgba(128,128,128,.07) 18px);border:1px dashed rgba(128,128,128,.32);border-radius:8px;color:#8b8b8b;font:11px/1.5 ui-monospace,SFMono-Regular,Menlo,monospace;text-align:center;padding:14px;box-sizing:border-box}</style>
+<script>/* public build: original site media removed for copyright; layout preserved, real look kept in the as-seen screenshots */
+(function(){
+ var R=/real-assets\/(image|video|audio|fonts|source|lottie)\/|\.(mp4|webm|mov|mp3|wav|woff2?|otf|ttf)(\?|$)/i;
+ function box(w,h){var d=document.createElement('div');d.className='dt-omit';d.textContent='原站素材已按版权移除,见原站';if(w)d.style.width=w;if(h)d.style.minHeight=h;return d;}
+ document.querySelectorAll('video').forEach(function(v){
+   var srcs=[].map.call(v.querySelectorAll('source'),function(s){return s.getAttribute('src')||''});
+   var bad=R.test(v.getAttribute('src')||'')||srcs.some(function(s){return R.test(s)});
+   if(!bad)return;
+   v.removeAttribute('src');v.removeAttribute('autoplay');v.querySelectorAll('source').forEach(function(s){s.remove()});
+   if(!v.getAttribute('poster')){var b=box(v.style.width||'',((v.clientHeight||160))+'px');v.parentNode&&v.parentNode.replaceChild(b,v);}
+ });
+ document.querySelectorAll('img').forEach(function(im){
+   if(R.test(im.getAttribute('src')||'')){var b=box((im.getAttribute('width')||'')+(im.getAttribute('width')?'px':''),((im.getAttribute('height')||im.clientHeight||120))+'px');im.parentNode&&im.parentNode.replaceChild(b,im);}
+ });
+})();
+</script>
+
+</body>
+</html>

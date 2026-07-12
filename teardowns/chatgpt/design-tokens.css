@@ -1,0 +1,79 @@
+/* ============================================================
+   chatgpt — 从线上站点真实抽取的设计 token（实锤，非观感推断）
+   源:https://openai.com/chatgpt/overview/  · 抽取:playwright 计算样式 + 样式表文本
+   ============================================================ */
+:root{
+  /* —— 基底 / 文字（computed）—— */
+  --bg:rgb(252, 252, 252);
+  --ink:rgb(13, 13, 13);
+  /* 高频色值（样式表出现次数 top）:#fff #000 #cecece #0d0d0d #1a73e8 #0285ff #fcfcfc #f3f3f3 #8f8f8f #f9f9f9 */
+
+  /* —— 字体（computed / fontsLoaded）—— */
+  --font-sans:-apple-system-body, ui-sans-serif, -apple-system, "system-ui", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, "sans-serif", "Segoe UI Emoji", "Segoe UI Symbol";
+  /* 实际加载字体:Circle, OpenAI Sans, OpenAI Sans Arabic, OpenAI Sans Variable Scripts, OpenDyslexic, OpenDyslexic Mono, Atkinson Hyperlegible Mono, KaTeX_AMS, KaTeX_Caligraphic, KaTeX_Fraktur, KaTeX_Main, KaTeX_Math, KaTeX_SansSerif, KaTeX_Script, KaTeX_Size1, KaTeX_Size2, KaTeX_Size3, KaTeX_Size4, KaTeX_Typewriter */
+  /* h1:100.08px/700 字距 -4.70376px 行高 100.08px */
+
+  /* —— 动效（样式表实测）—— */
+  --ease-1:cubic-bezier(.23,1,.32,1);
+  --ease-2:cubic-bezier(.19,1,.22,1);
+  --ease-3:cubic-bezier(0, 0, .2, 1);
+  --ease-4:cubic-bezier(.4, 0, .2, 1);
+  --ease-5:cubic-bezier(.22,1,.36,1);
+  --ease-6:cubic-bezier(.4, 0, 1, 1);
+  /* 按钮过渡:all */
+  /* 时长梯:3s 15s 2s 4s 1s 0s 25s 32s */
+
+  /* —— 圆角（实测 top）—— */
+  --radius-1:inherit;
+  --radius-2:0;
+  --radius-3:3.40282e38px;
+  --radius-4:0px;
+  --radius-5:100%;
+  --radius-6:10px;
+  /* 按钮圆角:0px */
+  /* 媒体清单:video 0 · canvas 0 · svg 23 · img 43 */
+}
+
+/* —— 站点原始 CSS 自定义变量(节选，复刻参考) —— */
+:root{
+  --tw-border-style:solid;
+  --tw-font-weight:initial;
+  --tw-leading:initial;
+  --tw-border-spacing-x:0;
+  --tw-border-spacing-y:0;
+  --tw-scale-x:1;
+  --tw-scale-y:1;
+  --tw-scale-z:1;
+  --tw-translate-x:0;
+  --tw-translate-y:0;
+  --tw-translate-z:0;
+  --tw-rotate-x:initial;
+  --tw-rotate-y:initial;
+  --tw-rotate-z:initial;
+  --tw-skew-x:initial;
+  --tw-skew-y:initial;
+  --tw-pan-x:initial;
+  --tw-pan-y:initial;
+  --tw-pinch-zoom:initial;
+  --tw-scroll-snap-strictness:proximity;
+  --tw-space-y-reverse:0;
+  --tw-space-x-reverse:0;
+  --tw-divide-x-reverse:0;
+  --tw-divide-y-reverse:0;
+  --tw-gradient-position:initial;
+  --tw-gradient-from:#0000;
+  --tw-gradient-via:#0000;
+  --tw-gradient-to:#0000;
+  --tw-gradient-stops:initial;
+  --tw-gradient-via-stops:initial;
+  --tw-gradient-from-position:0%;
+  --tw-gradient-via-position:50%;
+  --tw-gradient-to-position:100%;
+  --tw-tracking:initial;
+  --tw-ordinal:initial;
+  --tw-slashed-zero:initial;
+  --tw-numeric-figure:initial;
+  --tw-numeric-spacing:initial;
+  --tw-numeric-fraction:initial;
+  --tw-shadow:0 0 #0000;
+}

@@ -1,0 +1,86 @@
+/* ============================================================
+   Comet v149 —— 从应用包源码提取的真实设计 token（复刻参考）
+   来源：/Applications/Comet.app 内 resources.pak → chrome://perplexity-onboarding
+   数值均为源码实测；商业字体需自行授权。
+   ============================================================ */
+:root{
+  /* —— 基底 —— */
+  --paper:#FBFAF4;              /* 暖纸白（非纯白）*/
+  --paper-alt:#fcfcf9;
+  --ground:#1a1a1a; --ground-2:#141414; --ground-3:#191a1a;
+  --ink:#13343b;               /* Inky Blue / 文字深青 */
+
+  /* —— 品牌青（--perplexity-brand-highlight-rgb 实测）—— */
+  --plex-blue:#1FB8CD;         /* 深色态 rgb(31,184,205) */
+  --true-turquoise:#20808D;    /* 浅色态 rgb(32,128,141) */
+  --sky:#BADEDD;
+  --accent-color:#1977f3;      /* 交互蓝 --accent-color */
+  --accent-light:rgba(25,119,243,.08);
+  --warm-orange:#f56b3d;
+  --glow-color:253,252,249;    /* #FDFCF9，用于 inset glow */
+
+  /* —— 引导氛围径向渐变 --perplexity-onboarding-gradient-color —— */
+  --onboarding-grad-light:#FBFAF4;
+  --onboarding-grad-dark:#000;
+
+  /* —— 行星渐变（8 个 Lottie 提取）—— */
+  --planet-green:#00af57; --planet-green-2:#6acc97; --planet-green-3:#d4e9d7; --rim-blue:#78c9ff;
+  --planet-blue:#3186ff;  --planet-blue-2:#2e69cd;  --periwinkle:#a7a7ff;
+  --planet-gold:#fec700;  --planet-gold-2:#e79d2d;  --rim-pink:#ffb5e8;
+  --welcome-pink:#ff63a0; --welcome-red:#fc413d;
+
+  /* —— 动效 —— */
+  --transition-func:cubic-bezier(.19,1,.22,1);   /* 主曲线 expo-out */
+  --transition-duration:400ms;
+  --minor-animation-time:120ms;
+  --bounce-coefficient:1.75;                      /* 参数化回弹强度 */
+  --ease-back:cubic-bezier(.34,1.29,.64,1);       /* 越界回弹 */
+  --ease-soft:cubic-bezier(.65,.05,.36,1);        /* 柔和进出 */
+
+  /* —— 圆角（真实取值区间）—— */
+  --radius:8px; --radius-sm:6px;
+  --pill:42px; --pill-lg:80px;
+  --card-radius:20px; --overlay-radius:32px;
+
+  /* —— 玻璃 / 阴影 —— */
+  --glass-blur:blur(50px);
+  --popup-shadow:0 5px 30px rgb(0 0 0 / .15);
+  --focus-ring:0 0 0 .125em rgb(25 119 243 / .24);
+
+  /* —— 字体 —— */
+  --font-sans:'FK Grotesk Neue','FK Grotesk',system-ui,-apple-system,sans-serif;
+  --font-mono:'Berkeley Mono',ui-monospace,'SF Mono',monospace;
+}
+
+/* ---- 呼吸行星（纯 CSS 复现 Lottie）---- */
+@keyframes breathe{
+  from{transform:scale(.96);filter:brightness(.94) saturate(.96)}
+  to  {transform:scale(1.04);filter:brightness(1.08) saturate(1.06)}
+}
+.planet-green{
+  background:radial-gradient(circle at 34% 30%,#d4e9d7,#6acc97 46%,#00af57);
+  animation:breathe 6s var(--transition-func) infinite alternate;
+}
+
+/* ---- 头像行星交互（逐字来自 22315.css）---- */
+@keyframes slide-in{ from{transform:translateY(100%)} to{transform:translateY(0)} }
+.b-profile-avatar__avatar{
+  width:73px; will-change:width,transform; opacity:0;
+  transition:
+    width 300ms cubic-bezier(.64, var(--bounce-coefficient,1.75), .61, .77),
+    opacity var(--transition-duration) var(--transition-func),
+    transform var(--transition-duration) var(--transition-func);
+}
+.b-profile-avatar__avatar--loaded{opacity:1}
+.b-profile-avatar__root--hovered .b-profile-avatar__avatar{transform:rotate(-20deg)}
+.b-profile-avatar__number{                 /* Berkeley Mono 编号徽标 */
+  font-family:'Berkeley Mono',monospace; font-size:11px; font-weight:600; color:#fff;
+  width:32px;height:32px;border:1px solid #fff;border-radius:50%;
+  animation:slide-in 300ms var(--transition-func) forwards; transform:translateY(100%);
+}
+.b-profile-avatar__label{                   /* 名称，延迟 100ms 上滑 */
+  font-family:'FK Grotesk Neue',sans-serif; font-size:16px; color:#fff;
+  animation:slide-in 300ms var(--transition-func) forwards; animation-delay:100ms; transform:translateY(100%);
+}
+
+@media (prefers-reduced-motion:reduce){ .planet-green{animation:none} }

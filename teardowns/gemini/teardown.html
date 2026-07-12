@@ -1,0 +1,799 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Gemini 设计解构 — 把柔光对话入口拆到每一个数值</title>
+<meta name="description" content="对 gemini.google 的完整设计拆解:真实色值、Material 3 缓动、圆角语言、Google Sans 变量字体,以及可交互复刻的柔光对话入口。" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Roboto+Flex:opsz,wght@8..144,300..800&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+  /* ============================================================
+     Gemini 设计解构 — Design Teardown
+     视觉语言 = Gemini 自己:暖白底、近黑文字、单支品牌蓝、浅蓝容器、
+     满圆角、柔和多色径向光晕。字体用 Roboto Flex 替 Google Sans(专有)。
+     运动全用 Gemini 真实主缓动 cubic-bezier(.2,0,0,1)——像它拆解的对象一样运动。
+     所有色值/缓动/时长/圆角均来自 _data/gemini.json 的真实抽取。
+     ============================================================ */
+  :root{
+    /* 基底与文字(实锤) */
+    --bg:#fdfcfc; --surface:#ffffff; --surface-2:#f8f9fa; --surface-3:#f0f4f9;
+    --ink:#1f1f1f; --ink-2:#444746; --ink-3:#5f6368; --ink-4:#747775;
+    /* 蓝与交互(实锤) */
+    --blue:#0b57d0; --blue-light:#a8c7fa; --blue-active:#1a73e8; --blue-deep:#004a77;
+    --container:#d3e3fd; --container-bright:#c2e7ff; --sidenav:#e9eef6;
+    /* 中性描边(实锤) */
+    --line:#e3e3e3; --line-2:#c4c7c5;
+    /* 品牌 spark 四色极光(实锤,采样自真实资产 gemini_sparkle_4g_512.png,并经站点截图交叉核对) */
+    --spark-red:#f94442; --spark-yellow:#f9bd13; --spark-green:#0cba63; --spark-blue2:#3186ff;
+    /* 字体(Google Sans 专有,Roboto Flex 替身) */
+    --font:"Google Sans Flex","Google Sans","Roboto Flex","Helvetica Neue",-apple-system,system-ui,sans-serif;
+    --mono:"Google Sans Code","Roboto Mono",ui-monospace,"SF Mono",Menlo,monospace;
+    /* 动效(实锤) */
+    --ease-emph:cubic-bezier(.2,0,0,1);
+    --ease-std:cubic-bezier(.4,0,.2,1);
+    --ease-dec:cubic-bezier(0,0,.2,1);
+    --micro:.2s;
+    /* 圆角(实锤 radii) */
+    --r-full:999px; --r-card:28px; --r-md:16px; --r-sm:8px;
+    --maxw:1080px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;scroll-behavior:smooth;scroll-padding-top:80px}
+  body{background:var(--bg);color:var(--ink);font-family:var(--font);font-weight:400;font-size:16px;line-height:1.65;letter-spacing:.1px;overflow-x:hidden}
+  a{color:inherit;text-decoration:none}
+  svg{display:block}
+  code,pre,.mono{font-family:var(--mono)}
+  ::selection{background:var(--container);color:var(--blue-deep)}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 32px}
+  @media(max-width:640px){.wrap{padding:0 20px}}
+
+  /* 全页顶部极淡柔光,呼应 Gemini 气质 */
+  .page-glow{position:fixed;inset:0;z-index:0;pointer-events:none;
+    background:
+      radial-gradient(60% 42% at 50% -6%, rgba(168,199,250,.28), transparent 70%),
+      radial-gradient(40% 30% at 88% 4%, rgba(49,134,255,.08), transparent 70%);}
+
+  h1,h2,h3{font-weight:700;letter-spacing:-.4px;line-height:1.12;font-variation-settings:"opsz" 40}
+  .eyebrow{font-family:var(--mono);font-size:12px;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--blue)}
+
+  /* ---------- NAV ---------- */
+  nav{position:fixed;top:0;left:0;right:0;z-index:60;transition:background .3s var(--ease-emph),box-shadow .3s var(--ease-emph),border-color .3s var(--ease-emph);border-bottom:1px solid transparent}
+  nav.stuck{background:rgba(253,252,252,.82);backdrop-filter:blur(18px) saturate(1.4);-webkit-backdrop-filter:blur(18px) saturate(1.4);border-bottom-color:var(--line)}
+  .nav-in{display:flex;align-items:center;gap:16px;height:62px;max-width:var(--maxw);margin:0 auto;padding:0 32px}
+  .brand{display:flex;align-items:center;gap:10px;font-weight:600;font-size:15px;letter-spacing:-.2px}
+  .navlinks{margin-left:auto;display:flex;gap:2px}
+  .navlinks a{color:var(--ink-3);font-size:13.5px;padding:8px 12px;border-radius:var(--r-full);transition:color var(--micro) var(--ease-emph),background var(--micro) var(--ease-emph)}
+  .navlinks a:hover{color:var(--ink);background:var(--sidenav)}
+  .nav-cta{margin-left:6px;background:var(--container);color:var(--blue);font-size:13.5px;font-weight:600;padding:8px 16px;border-radius:var(--r-full);transition:background var(--micro) var(--ease-emph),transform var(--micro) var(--ease-emph)}
+  .nav-cta:hover{background:var(--container-bright);transform:translateY(-1px)}
+  @media(max-width:900px){.navlinks{display:none}}
+
+  /* spark 四角星品牌图标 */
+  .spark{flex:none;display:block}
+  img.spark{object-fit:contain}
+
+  /* ---------- HERO ---------- */
+  header.hero{position:relative;z-index:1;padding:120px 0 70px}
+  .hero-in{max-width:var(--maxw);margin:0 auto;padding:0 32px}
+  @media(max-width:640px){.hero-in{padding:0 20px}}
+  .hero-in h1{font-size:clamp(34px,5.6vw,64px);margin:14px 0 0;font-variation-settings:"opsz" 120}
+  .hero-in h1 .grad{background:linear-gradient(100deg,var(--spark-red),var(--spark-yellow) 32%,var(--spark-green) 60%,var(--spark-blue2) 92%);-webkit-background-clip:text;background-clip:text;color:transparent}
+  .lede{font-size:clamp(16px,1.6vw,19px);color:var(--ink-2);max-width:56ch;margin-top:18px;line-height:1.6}
+
+  /* 实时复刻:一个像 Gemini 页面的活的舞台 */
+  .replica{position:relative;margin-top:40px;border-radius:var(--r-card);overflow:hidden;background:var(--bg);
+    border:1px solid var(--line);box-shadow:0 1px 2px rgba(0,0,0,.04),0 30px 80px -40px rgba(11,87,208,.30);isolation:isolate}
+  .replica-bar{position:relative;z-index:3;display:flex;align-items:center;gap:14px;padding:16px 20px}
+  .replica-bar .rb-left{display:flex;align-items:center;gap:14px;color:var(--ink-3)}
+  .replica-bar .rb-nav{margin-left:auto;display:flex;align-items:center;gap:20px;font-size:13.5px;color:var(--ink-2)}
+  .replica-bar .rb-nav span{white-space:nowrap}
+  .replica-bar .rb-signin{background:var(--container);color:var(--blue);font-weight:600;font-size:13.5px;padding:7px 16px;border-radius:var(--r-full)}
+  @media(max-width:760px){.replica-bar .rb-nav span:nth-child(-n+3){display:none}}
+  @media(max-width:520px){.replica-bar .rb-nav span{display:none}}
+
+  .glow-field{position:absolute;inset:0;z-index:0;pointer-events:none;transition:opacity .5s var(--ease-emph)}
+  .glow{position:absolute;border-radius:50%;filter:blur(44px);will-change:transform;mix-blend-mode:multiply}
+  .glow.g1{width:60%;height:74%;left:20%;top:22%;
+    background:radial-gradient(circle,rgba(168,199,250,.95),rgba(194,231,255,.5) 55%,transparent 72%);
+    animation:drift-a 22s var(--ease-emph) infinite alternate}
+  .glow.g2{width:40%;height:56%;left:16%;top:30%;
+    background:radial-gradient(circle,rgba(49,134,255,.5),transparent 66%);
+    animation:drift-b 18s var(--ease-emph) infinite alternate}
+  .glow.g3{width:34%;height:50%;left:50%;top:18%;
+    background:radial-gradient(circle,rgba(12,186,99,.5),transparent 66%);
+    animation:drift-c 25s var(--ease-emph) infinite alternate}
+  .glow.g4{width:30%;height:44%;left:40%;top:46%;
+    background:radial-gradient(circle,rgba(249,68,66,.5),rgba(249,189,19,.5) 60%,transparent 74%);
+    animation:drift-d 16s var(--ease-emph) infinite alternate-reverse}
+  /* 默认浅蓝主调(忠于实测),四色极光则调亮真实 spark 的红/黄/绿/蓝 */
+  .glow-field.pal-blue .g3{opacity:.22}
+  .glow-field.pal-blue .g4{opacity:.12}
+  .glow-field.pal-brand .g3{opacity:.62}
+  .glow-field.pal-brand .g4{opacity:.55}
+  .glow-field.paused .glow{animation-play-state:paused}
+  @keyframes drift-a{from{transform:translate3d(-4%,-3%,0) scale(1)}to{transform:translate3d(4%,5%,0) scale(1.14)}}
+  @keyframes drift-b{from{transform:translate3d(3%,2%,0) scale(1.05)}to{transform:translate3d(-5%,-2%,0) scale(.92)}}
+  @keyframes drift-c{from{transform:translate3d(2%,-2%,0) scale(.96)}to{transform:translate3d(-3%,6%,0) scale(1.18)}}
+  @keyframes drift-d{from{transform:translate3d(-2%,3%,0) scale(1)}to{transform:translate3d(5%,-4%,0) scale(1.1)}}
+
+  .replica-stage{position:relative;z-index:2;min-height:340px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:34px;padding:30px 20px 64px;text-align:center}
+  .greeting{font-size:clamp(24px,3.4vw,38px);font-weight:400;color:var(--ink);letter-spacing:-.3px;font-variation-settings:"opsz" 80}
+  .ask{display:flex;align-items:center;gap:12px;width:min(680px,94%);height:64px;padding:0 12px 0 20px;
+    background:var(--surface);border:1px solid transparent;border-radius:var(--r-full);
+    box-shadow:0 1px 3px rgba(0,0,0,.06),0 10px 34px -16px rgba(11,87,208,.24);
+    transition:box-shadow var(--micro) var(--ease-emph),transform var(--micro) var(--ease-emph),border-color var(--micro) var(--ease-emph)}
+  .ask:focus-within{transform:translateY(-1px);border-color:var(--blue-active);box-shadow:0 2px 6px rgba(0,0,0,.08),0 18px 50px -16px rgba(11,87,208,.34)}
+  .ask .lead{width:40px;height:40px;flex:none;display:grid;place-items:center;border-radius:50%;color:var(--ink-3)}
+  .ask input{flex:1;min-width:0;border:0;outline:0;background:transparent;font-family:var(--font);font-size:16px;color:var(--ink)}
+  .ask input::placeholder{color:var(--ink-4)}
+  .ask .model{display:flex;align-items:center;gap:5px;font-size:14px;color:var(--ink-2);padding:8px 12px;border-radius:var(--r-full);cursor:default}
+  .ask .model:hover{background:var(--sidenav)}
+  .ask .mic{width:40px;height:40px;flex:none;display:grid;place-items:center;border-radius:50%;color:var(--ink-3)}
+
+  /* demo 控件 */
+  .controls{display:flex;flex-wrap:wrap;align-items:center;gap:10px 18px;margin-top:22px;padding:14px 18px;border:1px solid var(--line);border-radius:var(--r-md);background:var(--surface)}
+  .controls .cl{font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3)}
+  .btn{font-family:var(--font);font-size:13.5px;font-weight:500;color:var(--ink-2);background:var(--surface-2);border:1px solid var(--line);border-radius:var(--r-full);padding:7px 14px;cursor:pointer;transition:all var(--micro) var(--ease-emph)}
+  .btn:hover{border-color:var(--line-2);color:var(--ink)}
+  .btn[aria-pressed="true"]{background:var(--container);border-color:transparent;color:var(--blue);font-weight:600}
+  .seg{display:inline-flex;background:var(--surface-2);border:1px solid var(--line);border-radius:var(--r-full);padding:3px}
+  .seg .btn{border:0;background:transparent;border-radius:var(--r-full)}
+  input[type=range]{accent-color:var(--blue);width:140px}
+
+  .metabar{display:flex;flex-wrap:wrap;gap:8px;margin-top:26px}
+  .chip{display:inline-flex;align-items:center;gap:7px;font-size:12.5px;color:var(--ink-2);background:var(--surface);border:1px solid var(--line);border-radius:var(--r-full);padding:7px 14px}
+  .chip b{font-family:var(--mono);font-weight:500;color:var(--blue-deep);font-size:12px}
+
+  /* ---------- SECTION ---------- */
+  main{position:relative;z-index:1}
+  section{padding:72px 0;border-top:1px solid var(--line)}
+  .sec-head{max-width:72ch;margin-bottom:38px}
+  .sec-head h2{font-size:clamp(26px,3.4vw,42px);margin-top:12px;font-variation-settings:"opsz" 72}
+  .sec-head p{color:var(--ink-2);margin-top:14px;font-size:17px}
+
+  .grid{display:grid;gap:16px}
+  .g2{grid-template-columns:1fr 1fr}.g3{grid-template-columns:repeat(3,1fr)}.g4{grid-template-columns:repeat(4,1fr)}
+  @media(max-width:860px){.g2,.g3,.g4{grid-template-columns:1fr}}
+  .card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r-md);padding:22px;transition:border-color .3s var(--ease-emph),box-shadow .3s var(--ease-emph),transform .3s var(--ease-emph)}
+  .card:hover{border-color:var(--line-2);box-shadow:0 16px 40px -30px rgba(0,0,0,.4);transform:translateY(-2px)}
+  .card h3{font-size:18px;font-weight:600}
+  .card p{color:var(--ink-2);margin-top:8px;font-size:14.5px}
+  .k{font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3)}
+  .dim{color:var(--ink-2)}.faint{color:var(--ink-3)}
+  p+p{margin-top:10px}
+  .lead-tag{display:inline-block;font-family:var(--mono);font-size:10px;letter-spacing:.06em;padding:2px 8px;border-radius:var(--r-full);vertical-align:middle}
+  .t-fact{background:#e6f4ea;color:#0b6b33}
+  .t-infer{background:#fef3e0;color:#8a4b00}
+
+  /* 表格 */
+  table{width:100%;border-collapse:collapse;font-size:14px;margin-top:4px}
+  th,td{text-align:left;padding:11px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+  th{font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3);font-weight:500}
+  td.mono,td .mono{font-family:var(--mono);font-size:12.5px;color:var(--blue-deep)}
+  tbody tr:last-child td{border-bottom:0}
+  .tbl-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:var(--r-md);background:var(--surface)}
+  .tbl-wrap table th,.tbl-wrap table td{padding-left:16px;padding-right:16px}
+
+  /* 色板 */
+  .swatches{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px}
+  .sw{border:1px solid var(--line);border-radius:var(--r-md);overflow:hidden;cursor:pointer;background:var(--surface);transition:transform var(--micro) var(--ease-emph),box-shadow var(--micro) var(--ease-emph)}
+  .sw:hover{transform:translateY(-2px);box-shadow:0 14px 34px -24px rgba(0,0,0,.5)}
+  .sw:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
+  .sw .chipc{height:66px;border-bottom:1px solid var(--line)}
+  .sw .meta{padding:10px 12px}
+  .sw .nm{font-size:12.5px;font-weight:500;color:var(--ink)}
+  .sw .hx{font-family:var(--mono);font-size:11.5px;color:var(--ink-3);margin-top:2px}
+  .sw .ct{font-family:var(--mono);font-size:10px;color:var(--ink-4);margin-top:3px}
+
+  /* 字体样张 */
+  .specimen{background:var(--surface);border:1px solid var(--line);border-radius:var(--r-md);padding:26px}
+  .specimen .big{font-size:clamp(30px,5vw,56px);font-weight:500;letter-spacing:-.5px;line-height:1.1;font-variation-settings:"opsz" 120}
+  .specimen .scale{display:flex;flex-wrap:wrap;gap:18px;align-items:baseline;margin-top:22px;color:var(--ink-2)}
+  .specimen .scale span{line-height:1}
+
+  /* 动效实验台 */
+  .lab{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+  @media(max-width:760px){.lab{grid-template-columns:1fr}}
+  .lab .cell{background:var(--surface);border:1px solid var(--line);border-radius:var(--r-md);padding:18px}
+  .lab .cell .top{display:flex;align-items:baseline;justify-content:space-between;gap:10px}
+  .lab .cell .cn{font-size:14px;font-weight:600}
+  .lab .cell .cv{font-family:var(--mono);font-size:11px;color:var(--ink-3)}
+  .lab .cell svg{width:100%;height:76px;margin-top:12px}
+  .curvepath{fill:none;stroke:var(--blue);stroke-width:2}
+  .curvebase{fill:none;stroke:var(--line-2);stroke-width:1;stroke-dasharray:3 4}
+  .track{position:relative;height:8px;border-radius:var(--r-full);background:var(--surface-3);margin-top:14px}
+  .runner{position:absolute;top:50%;left:0;width:16px;height:16px;margin-top:-8px;border-radius:50%;
+    background:radial-gradient(circle at 34% 30%,var(--spark-blue2),var(--spark-green) 70%,var(--spark-red));
+    box-shadow:0 2px 8px -2px rgba(11,87,208,.6)}
+  .ladder{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  @media(max-width:640px){.ladder{grid-template-columns:1fr}}
+  .ladder .col{background:var(--surface);border:1px solid var(--line);border-radius:var(--r-md);padding:18px}
+  .ladder .col h3{font-size:14px}
+  .ladder .row{display:flex;align-items:center;gap:10px;margin-top:10px}
+  .ladder .bar{height:8px;border-radius:var(--r-full);background:linear-gradient(90deg,var(--blue-light),var(--blue))}
+  .ladder .lb{font-family:var(--mono);font-size:12px;color:var(--ink-2);min-width:66px}
+  .kf{display:flex;flex-wrap:wrap;gap:8px;margin-top:6px}
+  .kf code{font-family:var(--mono);font-size:12px;background:var(--surface-3);color:var(--blue-deep);border:1px solid var(--line);border-radius:var(--r-sm);padding:4px 9px}
+
+  /* 代码块 */
+  pre{position:relative;background:#0d1b2a;color:#e9eef6;border-radius:var(--r-md);padding:18px 18px;overflow-x:auto;font-size:12.5px;line-height:1.75;border:1px solid #14304a}
+  pre .cmt{color:#8aa2c0}
+  pre .val{color:#a8c7fa}
+  .copybtn{position:absolute;top:10px;right:10px;font-family:var(--mono);font-size:11px;color:#cde0ff;background:rgba(168,199,250,.14);border:1px solid rgba(168,199,250,.3);border-radius:var(--r-full);padding:5px 12px;cursor:pointer;transition:background var(--micro) var(--ease-emph)}
+  .copybtn:hover{background:rgba(168,199,250,.26)}
+
+  .finds{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  @media(max-width:760px){.finds{grid-template-columns:1fr}}
+  .find{background:var(--surface);border:1px solid var(--line);border-left:3px solid var(--blue);border-radius:var(--r-md);padding:18px 20px}
+  .find .n{font-family:var(--mono);font-size:11px;color:var(--blue);font-weight:500}
+  .find h3{font-size:15.5px;margin-top:6px}
+  .find p{color:var(--ink-2);font-size:14px;margin-top:6px}
+
+  .asseen{border:1px solid var(--line);border-radius:var(--r-card);overflow:hidden;background:var(--surface)}
+  .asseen img{width:100%;height:auto;display:block}
+  .asseen .cap{padding:14px 18px;font-size:13px;color:var(--ink-3);font-family:var(--mono);border-top:1px solid var(--line)}
+
+  footer{border-top:1px solid var(--line);padding:44px 0 60px;color:var(--ink-3);font-size:13.5px}
+  footer .foot-in{display:flex;flex-wrap:wrap;gap:14px;align-items:center;justify-content:space-between}
+  footer a{color:var(--blue)}
+
+  .toast{position:fixed;left:50%;bottom:28px;transform:translateX(-50%) translateY(20px);z-index:200;
+    background:var(--ink);color:#fff;font-size:13px;padding:10px 18px;border-radius:var(--r-full);
+    opacity:0;pointer-events:none;transition:opacity .25s var(--ease-emph),transform .25s var(--ease-emph)}
+  .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+  @media (prefers-reduced-motion:reduce){
+    *{scroll-behavior:auto}
+    .glow{animation:none!important}
+    .runner{animation:none!important}
+  }
+</style>
+</head>
+<body>
+
+<div class="page-glow" aria-hidden="true"></div>
+
+<!-- ============ NAV ============ -->
+<nav id="nav">
+  <div class="nav-in">
+    <a class="brand" href="#top">
+      <img class="spark" src="real-assets/image/56aa9e_gemini_sparkle_4g_512_lt_f94943af3be039176192d.png" width="26" height="26" alt="Gemini 四色 spark(真实站点资源)" />
+      <span>Gemini 设计解构</span>
+    </a>
+    <div class="navlinks">
+      <a href="#intro">定位</a>
+      <a href="#color">色彩</a>
+      <a href="#type">字体</a>
+      <a href="#motion">动效</a>
+      <a href="#signature">签名</a>
+      <a href="#craft">工艺</a>
+      <a href="#build">复刻</a>
+      <a href="#source">出处</a>
+    </div>
+    <a class="nav-cta" href="#asseen">看实拍</a>
+  </div>
+</nav>
+
+<!-- ============ HERO ============ -->
+<header class="hero" id="top">
+  <div class="hero-in">
+    <div class="eyebrow">设计解构 — gemini.google</div>
+    <h1>把 Gemini 的柔光对话入口，<br class="brk"/>拆到<span class="grad">每一个数值</span></h1>
+    <p class="lede">干净、现代、柔光。一片暖白留白里，只留一个居中的圆润对话框，背后浮着缓慢流动的多色径向光晕。下面这块是纯 CSS 的实时复刻，用的都是从线上站点真实抽取的色值与缓动。</p>
+
+    <!-- 实时复刻舞台 -->
+    <div class="replica" id="replica">
+      <div class="glow-field pal-blue" id="glowField" aria-hidden="true">
+        <div class="glow g1"></div>
+        <div class="glow g2"></div>
+        <div class="glow g3"></div>
+        <div class="glow g4"></div>
+      </div>
+      <div class="replica-bar">
+        <div class="rb-left">
+          <img class="spark" src="real-assets/image/56aa9e_gemini_sparkle_4g_512_lt_f94943af3be039176192d.png" width="24" height="24" alt="Gemini 四色 spark(真实站点资源)" />
+        </div>
+        <div class="rb-nav">
+          <span>About Gemini</span>
+          <span>Get Gemini App</span>
+          <span>Subscriptions</span>
+          <span>For Business</span>
+          <span class="rb-signin">Sign in</span>
+        </div>
+      </div>
+      <div class="replica-stage">
+        <div class="greeting">Meet Gemini, your personal AI assistant</div>
+        <label class="ask" aria-label="Ask Gemini 输入框复刻">
+          <span class="lead" aria-hidden="true">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
+          </span>
+          <input type="text" placeholder="Ask Gemini" spellcheck="false" />
+          <span class="model" aria-hidden="true">Flash
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+          </span>
+          <span class="mic" aria-hidden="true">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg>
+          </span>
+        </label>
+      </div>
+    </div>
+
+    <!-- 控件 -->
+    <div class="controls" role="group" aria-label="柔光复刻控制">
+      <span class="cl">调色板</span>
+      <div class="seg" id="palSeg">
+        <button class="btn" data-pal="pal-blue" aria-pressed="true">浅蓝主调（实测）</button>
+        <button class="btn" data-pal="pal-brand" aria-pressed="false">四色极光（品牌延展）</button>
+      </div>
+      <span class="cl">强度</span>
+      <input type="range" id="strength" min="20" max="100" value="90" aria-label="柔光强度" />
+      <button class="btn" id="pauseBtn" aria-pressed="false">暂停流动</button>
+    </div>
+
+    <div class="metabar">
+      <span class="chip">暖白底 <b>#FDFCFC</b></span>
+      <span class="chip">主缓动 <b>cubic-bezier(.2,0,0,1)</b></span>
+      <span class="chip">输入框圆角 <b>corner-full</b></span>
+      <span class="chip">品牌 spark <b>真实资产·四色极光</b></span>
+      <span class="chip">环境时长 <b>15s–25s</b></span>
+      <span class="chip">CSS 体量 <b>1.99 MB</b></span>
+      <span class="chip">媒体 <b>无视频 无 canvas</b></span>
+    </div>
+  </div>
+</header>
+
+<main>
+  <!-- ============ 定位 ============ -->
+  <section id="intro"><div class="wrap">
+    <div class="sec-head">
+      <div class="eyebrow">01 — 定位与设计意图</div>
+      <h2>只讲一件事：把话说给 Gemini</h2>
+      <p>入口页把一个超大的对话输入框放在正中，四周是大面积暖白留白，导航收在右上角。没有卖点罗列，没有客户 logo 墙，没有滚动叙事。它用留白与柔光传达轻松可信，用居中圆框把注意力压到唯一的动作上，用品牌蓝与四角星 spark 建立辨识度。</p>
+    </div>
+    <div class="grid g3">
+      <div class="card">
+        <div class="k">抓到的是哪一态</div>
+        <h3>签出的对话入口</h3>
+        <p>直接访问落在带欢迎语与 Ask Gemini 输入框的入口页，既不是多屏营销页，也不是登录后的会话应用。没有可拆的营销动线，故此类判断一律不做。</p>
+      </div>
+      <div class="card">
+        <div class="k">两个标题</div>
+        <h3>可见语与无障碍语不同</h3>
+        <p>可见欢迎语是「Meet Gemini, your personal AI assistant」；计算样式里的 <span class="mono">h1</span> 却是「Conversation with Gemini」，32px、字重 700 —— 那是读屏用的隐藏语义标题。<span class="lead-tag t-fact">实锤</span></p>
+      </div>
+      <div class="card">
+        <div class="k">气质</div>
+        <h3>亮、柔、圆</h3>
+        <p>暖白不是纯白（<span class="mono">rgb(253,252,252)</span>），近黑文字（<span class="mono">#1f1f1f</span>），单支品牌蓝，满圆角药丸。整页的分寸就在这份克制里。</p>
+      </div>
+    </div>
+  </div></section>
+
+  <!-- ============ 色彩 ============ -->
+  <section id="color"><div class="wrap">
+    <div class="sec-head">
+      <div class="eyebrow">02 — 色彩系统</div>
+      <h2>一片暖白、一支蓝、一组浅蓝容器</h2>
+      <p>底座是 Material 3，色板高度克制：暖白底、近黑文字、一支品牌蓝，加一组浅蓝「容器色」用来做药丸与高亮。多彩只出现在 spark 图标与背景光晕。点任意色块可复制色值；括号内是它在样式表里的出现次数。</p>
+    </div>
+
+    <div class="k" style="margin-bottom:12px">基底与文字、蓝与交互、浅蓝容器、中性描边</div>
+    <div class="swatches" id="swatches"></div>
+
+    <div class="grid g2" style="margin-top:20px">
+      <div class="card">
+        <div class="k">品牌 spark 四色极光（实锤，采样自真实资产）</div>
+        <h3 style="margin-top:6px">红、黄、绿、蓝</h3>
+        <p>四角星 spark 是 Google 四色极光：上尖红 <span class="mono">#f94442</span>、左尖黄 <span class="mono">#f9bd13</span>、下尖绿 <span class="mono">#0cba63</span>、右尖蓝 <span class="mono">#3186ff</span>（蓝为主导）。色值采样自真实资产 <span class="mono">gemini_sparkle_4g_512.png</span>，并与站点截图交叉核对。这是页面里 spark 与「四色极光」延展光晕共用的调色板。</p>
+        <div style="height:14px;border-radius:999px;margin-top:14px;background:linear-gradient(90deg,#f94442,#f9bd13 34%,#0cba63 62%,#3186ff)"></div>
+      </div>
+      <div class="card">
+        <div class="k">多色光晕取色</div>
+        <h3 style="margin-top:6px">实测偏蓝，品牌延展用四色极光</h3>
+        <p>抓到的入口页光晕以浅蓝为主（<span class="mono">#a8c7fa、#c2e7ff、#d3e3fd</span>，实锤，与截图一致，即页面默认调色板）。「四色极光」延展改用真实 spark 的红黄绿蓝（色值实锤；把它铺成背景光晕属推断延展，非站点实测）。<span class="lead-tag t-infer">推断延展</span></p>
+        <div style="height:14px;border-radius:999px;margin-top:14px;background:linear-gradient(90deg,#a8c7fa,#c2e7ff 40%,#d3e3fd 70%,#e9eef6)"></div>
+      </div>
+    </div>
+  </div></section>
+
+  <!-- ============ 字体 ============ -->
+  <section id="type"><div class="wrap">
+    <div class="sec-head">
+      <div class="eyebrow">03 — 字体系统</div>
+      <h2>纯无衬线，Google Sans 家族</h2>
+      <p>全站没有任何衬线体，这与衬线大标题的 Comet、Lovart 正相反，是它「干净现代」的关键。主 UI 字体栈是 <span class="mono">"Google Sans Flex", "Google Sans", "Helvetica Neue", sans-serif</span>，等宽是 <span class="mono">"Google Sans Code"</span>。</p>
+      <p><b>字体局限（如实说明）</b>：本轮下到的真实资产里<b>没有任何可下载的字体文件</b>。抓取落在登录态／受限页，<span class="mono">document.fonts</span> 只能报出字族名（Google Sans 家族），拿不到字体二进制；Google Sans 本身也是专有、未公开发行。因此正文与标题<b>仍用 CDN Roboto Flex 作替身</b>，等宽用 Roboto Mono，只求字形气质接近，并非真字体。下方大字样张是 Roboto Flex 渲染，仅供近似参照。</p>
+    </div>
+    <div class="specimen">
+      <div class="big">Meet Gemini, your personal AI assistant</div>
+      <div class="scale">
+        <span style="font-size:32px;font-weight:700">Aa 32px</span>
+        <span style="font-size:24px;font-weight:500">Aa 24px</span>
+        <span style="font-size:16px;font-weight:400">Aa 16px</span>
+        <span class="mono" style="font-size:14px">Google Sans Code 14</span>
+      </div>
+    </div>
+    <div class="asseen" style="margin-top:16px">
+      <img src="real-assets/image/3847e6_gemini_aurora_thumbnail_4g_e74822ff0ca4259beb718.png" alt="Gemini 官方品牌锁定图:四色 spark 加 Google Sans 字标 Gemini" loading="lazy" />
+      <div class="cap">real-assets/image/…gemini_aurora_thumbnail_4g.png — 官方品牌锁定图（真实站点资源）。这是本拆解里唯一能看到真实 Google Sans 字形的地方；但它是位图，不是可用的字体文件，上方样张仍以 Roboto Flex 近似。</div>
+    </div>
+    <div class="grid g3" style="margin-top:16px">
+      <div class="card">
+        <div class="k">可变字体四轴（实锤）</div>
+        <h3 style="margin-top:6px">带一根圆度轴</h3>
+        <p><span class="mono">wght 400、wdth 100、slnt 0、ROND 0</span>。<span class="mono">ROND</span> 是 Google Sans Flex 的圆度轴，能把字形调得更圆，与整体圆润调性统一。</p>
+      </div>
+      <div class="card">
+        <div class="k">加载清单（实锤）</div>
+        <h3 style="margin-top:6px">还带一套数学字体</h3>
+        <p>Google Sans、Google Sans Flex、Google Sans Code、Google Sans Mono、Luminous Symbols，以及一整套 <span class="mono">KaTeX_*</span> 用于渲染公式。</p>
+      </div>
+      <div class="card">
+        <div class="k">探测陷阱</div>
+        <h3 style="margin-top:6px">computed 里的 Times 是回退</h3>
+        <p>计算样式 <span class="mono">font-family</span> 返回 <span class="mono">Times</span>，几乎确定是 webfont 未生效时的系统衬线兜底。真实字体以加载清单与截图为准。<span class="lead-tag t-fact">已纠正</span></p>
+      </div>
+    </div>
+  </div></section>
+
+  <!-- ============ 动效 ============ -->
+  <section id="motion"><div class="wrap">
+    <div class="sec-head">
+      <div class="eyebrow">04 — 动效系统</div>
+      <h2>Material 3 缓动，被一条曲线统治</h2>
+      <p>时长分两个尺度：微交互层（83ms 到 0.3s）要即时跟手，环境层（2s 到 25s）要缓慢呼吸。缓动是 Material 3 全家，其中 <span class="mono">cubic-bezier(.2,0,0,1)</span> 出现约 106 次，是绝对主曲线。下面每条曲线配一个按真实缓动运动的小球，可以直接感受差异。</p>
+    </div>
+    <div class="lab" id="lab"></div>
+
+    <div class="ladder" style="margin-top:16px">
+      <div class="col">
+        <h3 class="k">微交互层（跟手）</h3>
+        <div id="ladderMicro"></div>
+      </div>
+      <div class="col">
+        <h3 class="k">环境层（呼吸）</h3>
+        <div id="ladderAmbient"></div>
+      </div>
+    </div>
+
+    <div class="card" style="margin-top:16px">
+      <div class="k">真实 keyframe 名（实锤，仅有名无 body）</div>
+      <div class="kf">
+        <code>animateGradient</code><code>gem-shimmer-sweep</code><code>lm-background-grow</code>
+        <code>lm-background-mobile-fade</code><code>on-load-slide-in</code><code>on-load-fade-in</code>
+        <code>apd-ring-fade-in</code><code>fadeOut</code><code>gm3-cpi-rotate</code><code>mdc-circular-progress</code>
+      </div>
+      <p style="margin-top:12px"><span class="mono">animateGradient</span> 是签名光晕的动画本体，<span class="mono">lm-background-grow</span> 的 <span class="mono">lm</span> 应为 landing 前缀。<span class="mono">5332ms</span> 与 <span class="mono">1333ms</span> 两个异常精确的时长，说明这些循环被认真调过。</p>
+    </div>
+  </div></section>
+
+  <!-- ============ 签名 ============ -->
+  <section id="signature"><div class="wrap">
+    <div class="sec-head">
+      <div class="eyebrow">05 — 签名视觉母题</div>
+      <h2>缓慢流动的多色柔光 + 圆润对话入口</h2>
+      <p>这是最该被复刻的一手：几个低透明度的径向渐变叠在暖白底下面，各自用超长时长缓慢漂移与缩放，像光在呼吸；正中一个满圆角白色药丸作为唯一操作焦点。全用纯 CSS，没有视频、没有 canvas。回到顶部可以实时把玩强度与调色板。</p>
+    </div>
+    <div class="grid g2">
+      <div class="card">
+        <h3>母题拆解</h3>
+        <p>第一层是浅蓝主光团，居中偏下缓慢缩放（忠于截图实测的浅蓝主调）；「四色极光」延展态再掺入真实 spark 的红、黄、绿、蓝，用错开的相位与 <span class="mono">alternate-reverse</span> 流动，做出多色而不脏；两层都用主缓动 <span class="mono">cubic-bezier(.2,0,0,1)</span> 与 15s 到 25s 的时长。</p>
+        <p>母题的精神是「克制的柔光仪式感」：把一个搜索框级别的动作，烘托得郑重而轻盈。</p>
+      </div>
+      <div class="card" style="padding:0;overflow:hidden">
+        <pre><button class="copybtn" data-copy="#glowcode">复制</button><code id="glowcode"><span class="cmt">/* 签名柔光:多重径向渐变 + 超长时长漂移 */</span>
+.glow-stage::before{
+  background:
+    radial-gradient(38% 32% at 50% 54%,
+      <span class="val">rgba(168,199,250,.85)</span>, transparent 62%),
+    radial-gradient(30% 26% at 62% 46%,
+      <span class="val">rgba(86,132,209,.55)</span>, transparent 60%);
+  animation: glow-drift <span class="val">22s</span>
+             <span class="val">cubic-bezier(.2,0,0,1)</span> infinite alternate;
+}
+@keyframes glow-drift{
+  from{ transform:translate3d(-3%,-2%,0) scale(1) }
+  to  { transform:translate3d(3%,4%,0) scale(1.12) }
+}</code></pre>
+      </div>
+    </div>
+  </div></section>
+
+  <!-- ============ 工艺 ============ -->
+  <section id="craft"><div class="wrap">
+    <div class="sec-head">
+      <div class="eyebrow">06 — 工艺细节</div>
+      <h2>圆角语言、输入区尺寸、命名地层</h2>
+      <p>Gemini 的圆润是一整套圆角刻度，输入框有专属尺寸变量，而 CSS 变量的命名空间还留着产品改名前的化石。</p>
+    </div>
+    <div class="grid g2">
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th>圆角（实锤）</th><th>次数</th><th>用途</th></tr></thead>
+          <tbody>
+            <tr><td class="mono">50%</td><td class="mono">44</td><td>头像与图标按钮</td></tr>
+            <tr><td class="mono">corner-full</td><td class="mono">36</td><td>输入框、Sign in、提示药丸</td></tr>
+            <tr><td class="mono">corner-medium、8px</td><td class="mono">33</td><td>菜单、小卡片</td></tr>
+            <tr><td class="mono">28px</td><td class="mono">6</td><td>大卡片、对话气泡</td></tr>
+            <tr><td class="mono">100px</td><td class="mono">12</td><td>长药丸</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th>输入区尺寸变量（实锤）</th><th>值</th></tr></thead>
+          <tbody>
+            <tr><td class="mono">--input-area-height</td><td class="mono">42px</td></tr>
+            <tr><td class="mono">--input-area-icon-size</td><td class="mono">40px</td></tr>
+            <tr><td class="mono">--input-area-margin-inline-start</td><td class="mono">72px</td></tr>
+            <tr><td class="mono">--mat-menu-container-shape</td><td class="mono">8px</td></tr>
+            <tr><td class="mono">--mat-focus-indicator-border-radius</td><td class="mono">50%</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="grid g3" style="margin-top:16px">
+      <div class="card">
+        <div class="k">命名地层（实锤）</div>
+        <h3 style="margin-top:6px">代码里的 Bard 化石</h3>
+        <p>变量前缀暴露底座：<span class="mono">--mat-*</span> 是 Angular Material，<span class="mono">--gem-sys-*</span> 是 Gemini 系统层，<span class="mono">--lumi-sys-*</span> 是名为 Luminous 的主题皮肤，而大量 <span class="mono">--bard-color-*</span> 是改名前 Bard 的遗留命名，原样留着没重构。</p>
+      </div>
+      <div class="card">
+        <div class="k">框架（实锤）</div>
+        <h3 style="margin-top:6px">Angular + Material</h3>
+        <p>keyframe 带 <span class="mono">_ngcontent-ng-c…</span> 前缀说明是 Angular；<span class="mono">mdc-circular-progress-*</span> 与 <span class="mono">gm3-cpi-*</span> 说明用的是 Angular Material 与 GM3 组件。</p>
+      </div>
+      <div class="card">
+        <div class="k">体量与媒体（实锤）</div>
+        <h3 style="margin-top:6px">1.99 MB，零视频</h3>
+        <p>CSS 合计约 1.99 MB，符合 Material 3 全家桶的重量。媒体是视频 0、canvas 0、SVG 5、图片 3 —— 签名光晕只能是 CSS 与 SVG，这正是它能被纯 CSS 复刻的底气。</p>
+      </div>
+    </div>
+  </div></section>
+
+  <!-- ============ 关键发现 ============ -->
+  <section id="findings"><div class="wrap">
+    <div class="sec-head">
+      <div class="eyebrow">07 — 关键发现</div>
+      <h2>抽取过程里的七个判断</h2>
+    </div>
+    <div class="finds">
+      <div class="find"><div class="n">01</div><h3>computed 的 Times 是探测陷阱</h3><p>三处计算字体都返回 Times，但真实字体是 Google Sans 家族。抓 computed 时若 webfont 未生效，会拿到系统衬线兜底，不能当设计意图。</p></div>
+      <div class="find"><div class="n">02</div><h3>可见标题与无障碍标题是两个元素</h3><p>「Meet Gemini…」是可见欢迎语，「Conversation with Gemini」是读屏用的隐藏语义标题，不能混为一谈。</p></div>
+      <div class="find"><div class="n">03</div><h3>签名光晕是纯 CSS</h3><p>媒体清单里视频与 canvas 都是 0，柔光靠 CSS 径向渐变加长时长动画完成，成本低、可控、易复刻。</p></div>
+      <div class="find"><div class="n">04</div><h3>底座是 Material 3 加 Luminous</h3><p>运动语言就是 Material 3 缓动集，被 <span class="mono">cubic-bezier(.2,0,0,1)</span> 统治；色板是中性加单支蓝加容器色的经典结构。</p></div>
+      <div class="find"><div class="n">05</div><h3>代码里留着 Bard 的化石</h3><p><span class="mono">--bard-color-*</span> 成规模存在，改名 Gemini 时没重构命名，是产品沿革的直接证据。</p></div>
+      <div class="find"><div class="n">06</div><h3>变量字体带圆度轴</h3><p>Google Sans Flex 的 <span class="mono">ROND</span> 轴让「圆润」不止于圆角，连字形都能调圆。</p></div>
+      <div class="find"><div class="n">07</div><h3>采样帧静止,动态属推断</h3><p>8 张 keyframe 截图字节一致,是不滚动的单屏 SPA 入口。「缓慢流动」由超长时长与 keyframe 名推断,无逐帧实测。</p></div>
+    </div>
+  </div></section>
+
+  <!-- ============ 复刻 ============ -->
+  <section id="build"><div class="wrap">
+    <div class="sec-head">
+      <div class="eyebrow">08 — 复刻</div>
+      <h2>可直接进 :root 的真实 token</h2>
+      <p>下面这段是真实抽取值,复制即用。完整版与签名效果的完整 CSS 见同目录 <span class="mono">复刻指南.md</span> 与 <span class="mono">design-tokens.css</span>。</p>
+    </div>
+    <pre><button class="copybtn" data-copy="#tokencode">复制</button><code id="tokencode"><span class="cmt">/* Gemini 真实 token(实锤) */</span>
+:root{
+  --bg:<span class="val">#fdfcfc</span>;            <span class="cmt">/* 暖白,非纯白 */</span>
+  --ink:<span class="val">#1f1f1f</span>;
+  --ink-2:<span class="val">#444746</span>;   --ink-3:<span class="val">#5f6368</span>;
+  --blue:<span class="val">#0b57d0</span>;          <span class="cmt">/* 品牌蓝 */</span>
+  --blue-light:<span class="val">#a8c7fa</span>;
+  --container:<span class="val">#d3e3fd</span>;      <span class="cmt">/* 浅蓝药丸底 */</span>
+  --line:<span class="val">#e3e3e3</span>;
+  <span class="cmt">/* 品牌 spark 四色极光(采样自真实资产) */</span>
+  --spark:<span class="val">#f94442</span>, <span class="val">#f9bd13</span>, <span class="val">#0cba63</span>, <span class="val">#3186ff</span>;
+  <span class="cmt">/* 动效 */</span>
+  --ease-emph:<span class="val">cubic-bezier(.2,0,0,1)</span>;
+  --ease-std:<span class="val">cubic-bezier(.4,0,.2,1)</span>;
+  --micro:<span class="val">.2s</span>;   --ambient:<span class="val">20s</span>;
+  <span class="cmt">/* 圆角 */</span>
+  --r-full:<span class="val">999px</span>;  --r-card:<span class="val">28px</span>;  --r-md:<span class="val">8px</span>;
+  <span class="cmt">/* 字体:Google Sans 专有,Roboto Flex 替身 */</span>
+  --font:<span class="val">"Google Sans Flex","Roboto Flex",sans-serif</span>;
+}</code></pre>
+  </div></section>
+
+  <!-- ============ 出处 ============ -->
+  <section id="source"><div class="wrap">
+    <div class="sec-head">
+      <div class="eyebrow">09 — 出处与方法</div>
+      <h2>什么是实锤，什么是推断</h2>
+      <p>抽取靠两条链路：playwright 取渲染后的计算样式,以及服务端直接抓样式表文本(不经浏览器,不受 CORS)。前者是浏览器真实渲染结果但受抓取时机影响,后者是样式表写死的值。</p>
+    </div>
+    <div class="grid g3">
+      <div class="card">
+        <div class="k">实锤（源自抽取）</div>
+        <p>全部色值与出现次数、缓动曲线集、时长梯、圆角集、keyframe 名、CSS 变量、加载字体清单、可变轴、媒体数量、CSS 字节数、截图里的布局与文案。</p>
+        <p><b>本轮新增</b>：真实品牌资源——四色 spark（<span class="mono">gemini_sparkle_4g_512.png</span>）、Gemini 字标锁定图、sparkle-aurora SVG，已内嵌本页并登记于 <span class="mono">real-assets/manifest.json</span>；spark 四色色值即从中采样。</p>
+      </div>
+      <div class="card">
+        <div class="k">推断（观察或推理）</div>
+        <p>把四色极光铺成背景光晕的机制、Sign in 药丸具体色值、Material 3 与框架判定、Times 为回退的判断、Roboto Flex 替身选择。</p>
+      </div>
+      <div class="card">
+        <div class="k">局限</div>
+        <p><b>真实资产未含任何字体文件</b>（抓取落在登录态／受限页，只拿到字族名，拿不到字体二进制；Google Sans 亦专有未公开），正文标题仍以 Roboto Flex 近似。此外：仍只抓到入口态，无完整营销页；keyframe 只有名无 body；采样帧静止无法测动态；单次快照未做多视口交叉核对。</p>
+      </div>
+    </div>
+  </div></section>
+
+  <!-- ============ 实拍 ============ -->
+  <section id="asseen"><div class="wrap">
+    <div class="sec-head">
+      <div class="eyebrow">10 — as-seen 实拍</div>
+      <h2>线上站点真实渲染截图</h2>
+      <p>下图是 <span class="mono">gemini.google</span> 的真实整页渲染，本页所有复刻均以它与抽取到的 token 为准。本页顶栏与复刻舞台里的四色 spark、字体节的品牌锁定图都是<b>从站点提取的真实资源</b>（清单见 <span class="mono">real-assets/manifest.json</span>）；受限于抓取态，仍未取到真实字体文件与完整营销页。</p>
+    </div>
+    <div class="asseen">
+      <img src="assets/actual-full.jpg" alt="gemini.google 真实渲染整页截图:暖白底、居中 Ask Gemini 输入框、背后浅蓝径向光晕" loading="lazy" />
+      <div class="cap">assets/actual-full.jpg — 真实渲染截图（整页）</div>
+    </div>
+  </div></section>
+</main>
+
+<footer><div class="wrap"><div class="foot-in">
+  <span>Gemini 设计解构 — 视觉语言取自 <a href="https://gemini.google">gemini.google</a> 的真实抽取；品牌 spark 与字标为真实站点资源。字体用 Roboto Flex 替 Google Sans（专有，本轮未取到真实字体文件）。</span>
+  <span class="mono" style="font-size:12px;color:var(--ink-4)">bg #FDFCFC，ink #1F1F1F，blue #0B57D0，ease cubic-bezier(.2,0,0,1)</span>
+</div></div></footer>
+
+<div class="toast" id="toast" role="status" aria-live="polite">已复制</div>
+
+<script>
+(function(){
+  "use strict";
+
+  /* ---- nav stuck ---- */
+  var nav=document.getElementById("nav");
+  var onScroll=function(){ nav.classList.toggle("stuck", window.scrollY>12); };
+  onScroll(); window.addEventListener("scroll",onScroll,{passive:true});
+
+  /* ---- toast ---- */
+  var toast=document.getElementById("toast"), tHide;
+  function showToast(msg){
+    toast.textContent=msg||"已复制"; toast.classList.add("show");
+    clearTimeout(tHide); tHide=setTimeout(function(){toast.classList.remove("show");},1400);
+  }
+  function copyText(text){
+    if(navigator.clipboard && navigator.clipboard.writeText){
+      navigator.clipboard.writeText(text).then(function(){showToast("已复制 "+text);},function(){fallbackCopy(text);});
+    } else { fallbackCopy(text); }
+  }
+  function fallbackCopy(text){
+    try{
+      var ta=document.createElement("textarea"); ta.value=text; ta.style.position="fixed"; ta.style.opacity="0";
+      document.body.appendChild(ta); ta.select(); document.execCommand("copy"); document.body.removeChild(ta);
+      showToast("已复制 "+text);
+    }catch(e){ showToast("复制失败"); }
+  }
+
+  /* ---- 色板(真实抽取值) ---- */
+  var swatchData=[
+    {nm:"暖白底",hx:"#fdfcfc",ct:"computed body"},
+    {nm:"主文字",hx:"#1f1f1f",ct:"出现 298 次"},
+    {nm:"次级文字",hx:"#444746",ct:"出现 155 次"},
+    {nm:"图标灰",hx:"#5f6368",ct:"computed btn"},
+    {nm:"品牌蓝",hx:"#0b57d0",ct:"出现 155 次"},
+    {nm:"浅蓝强调",hx:"#a8c7fa",ct:"出现 144 次"},
+    {nm:"表单激活",hx:"#1a73e8",ct:"form-active"},
+    {nm:"深蓝",hx:"#004a77",ct:"出现 48 次"},
+    {nm:"主容器色",hx:"#d3e3fd",ct:"出现 48 次"},
+    {nm:"亮浅蓝",hx:"#c2e7ff",ct:"出现 53 次"},
+    {nm:"侧栏底",hx:"#e9eef6",ct:"出现 17 次"},
+    {nm:"分隔线",hx:"#e3e3e3",ct:"出现 292 次"},
+    {nm:"卡片描边",hx:"#c4c7c5",ct:"出现 119 次"},
+    {nm:"spark 红",hx:"#f94442",ct:"真实资产采样"},
+    {nm:"spark 黄",hx:"#f9bd13",ct:"真实资产采样"},
+    {nm:"spark 绿",hx:"#0cba63",ct:"真实资产采样"},
+    {nm:"spark 蓝",hx:"#3186ff",ct:"真实资产采样"},
+    {nm:"错误",hx:"#b3261e",ct:"出现 31 次"}
+  ];
+  var sw=document.getElementById("swatches");
+  swatchData.forEach(function(d){
+    var el=document.createElement("button");
+    el.className="sw"; el.type="button";
+    el.setAttribute("aria-label","复制 "+d.nm+" "+d.hx);
+    el.innerHTML='<div class="chipc" style="background:'+d.hx+'"></div>'+
+      '<div class="meta"><div class="nm">'+d.nm+'</div><div class="hx">'+d.hx.toUpperCase()+'</div><div class="ct">'+d.ct+'</div></div>';
+    el.addEventListener("click",function(){copyText(d.hx.toUpperCase());});
+    sw.appendChild(el);
+  });
+
+  /* ---- 柔光控件 ---- */
+  var glow=document.getElementById("glowField");
+  var palSeg=document.getElementById("palSeg");
+  palSeg.addEventListener("click",function(e){
+    var b=e.target.closest("button[data-pal]"); if(!b) return;
+    glow.classList.remove("pal-blue","pal-brand"); glow.classList.add(b.dataset.pal);
+    [].forEach.call(palSeg.querySelectorAll("button"),function(x){x.setAttribute("aria-pressed", x===b?"true":"false");});
+  });
+  var strength=document.getElementById("strength");
+  function applyStrength(){ glow.style.opacity=(strength.value/100).toFixed(2); }
+  strength.addEventListener("input",applyStrength); applyStrength();
+  var pauseBtn=document.getElementById("pauseBtn");
+  pauseBtn.addEventListener("click",function(){
+    var paused=glow.classList.toggle("paused");
+    pauseBtn.setAttribute("aria-pressed",paused?"true":"false");
+    pauseBtn.textContent=paused?"继续流动":"暂停流动";
+  });
+
+  /* ---- 动效实验台:真实缓动曲线 + 按曲线运动的小球 ---- */
+  var curves=[
+    {cn:"签名主曲线",cv:"cubic-bezier(.2,0,0,1)",cb:[.2,0,0,1],note:"约 106 次"},
+    {cn:"Material 标准",cv:"cubic-bezier(.4,0,.2,1)",cb:[.4,0,.2,1],note:"约 31 次"},
+    {cn:"减速 ease-out",cv:"cubic-bezier(0,0,.2,1)",cb:[0,0,.2,1],note:"约 13 次"},
+    {cn:"M3 强调减速",cv:"cubic-bezier(.05,.7,.1,1)",cb:[.05,.7,.1,1],note:"2 次"}
+  ];
+  var W=260,H=76,PAD=8;
+  var lab=document.getElementById("lab");
+  curves.forEach(function(c){
+    var x1=c.cb[0],y1=c.cb[1],x2=c.cb[2],y2=c.cb[3];
+    var gx=function(t){return PAD + t*(W-2*PAD);};
+    var gy=function(v){return (H-PAD) - v*(H-2*PAD);};
+    var path="M "+gx(0)+" "+gy(0)+" C "+gx(x1)+" "+gy(y1)+" "+gx(x2)+" "+gy(y2)+" "+gx(1)+" "+gy(1);
+    var base="M "+gx(0)+" "+gy(0)+" L "+gx(1)+" "+gy(1);
+    var cell=document.createElement("div");
+    cell.className="cell";
+    cell.innerHTML=
+      '<div class="top"><span class="cn">'+c.cn+'</span><span class="cv">'+c.note+'</span></div>'+
+      '<svg viewBox="0 0 '+W+' '+H+'" preserveAspectRatio="none" aria-hidden="true">'+
+        '<path class="curvebase" d="'+base+'"/><path class="curvepath" d="'+path+'"/></svg>'+
+      '<div class="cv" style="margin-top:6px">'+c.cv+'</div>'+
+      '<div class="track"><span class="runner"></span></div>';
+    lab.appendChild(cell);
+    var runner=cell.querySelector(".runner");
+    runner.style.animation="run 1.8s "+c.cv+" infinite alternate";
+  });
+  /* 注入 runner 关键帧(移动距离用 calc 适配容器) */
+  var st=document.createElement("style");
+  st.textContent="@keyframes run{from{left:0;transform:translateX(0)}to{left:100%;transform:translateX(-100%)}}";
+  document.head.appendChild(st);
+
+  /* ---- 时长梯 ---- */
+  var micro=[["83ms",8],["0.1s",14],["0.2s",30],["0.25s",38],["0.3s",46]];
+  var ambient=[["1s",8],["2s",18],["5s",40],["15s",68],["25s",100]];
+  function fillLadder(el,rows){
+    rows.forEach(function(r){
+      var d=document.createElement("div"); d.className="row";
+      d.innerHTML='<span class="lb">'+r[0]+'</span><span class="bar" style="width:'+r[1]+'%"></span>';
+      el.appendChild(d);
+    });
+  }
+  fillLadder(document.getElementById("ladderMicro"),micro);
+  fillLadder(document.getElementById("ladderAmbient"),ambient);
+
+  /* ---- 代码块复制 ---- */
+  [].forEach.call(document.querySelectorAll(".copybtn"),function(b){
+    b.addEventListener("click",function(){
+      var t=document.querySelector(b.dataset.copy);
+      if(t){ copyText(t.textContent); }
+    });
+  });
+})();
+</script>
+
+<style>.dt-omit{display:flex;align-items:center;justify-content:center;min-height:96px;background:repeating-linear-gradient(45deg,transparent,transparent 9px,rgba(128,128,128,.07) 9px,rgba(128,128,128,.07) 18px);border:1px dashed rgba(128,128,128,.32);border-radius:8px;color:#8b8b8b;font:11px/1.5 ui-monospace,SFMono-Regular,Menlo,monospace;text-align:center;padding:14px;box-sizing:border-box}</style>
+<script>/* public build: original site media removed for copyright; layout preserved, real look kept in the as-seen screenshots */
+(function(){
+ var R=/real-assets\/(image|video|audio|fonts|source|lottie)\/|\.(mp4|webm|mov|mp3|wav|woff2?|otf|ttf)(\?|$)/i;
+ function box(w,h){var d=document.createElement('div');d.className='dt-omit';d.textContent='原站素材已按版权移除,见原站';if(w)d.style.width=w;if(h)d.style.minHeight=h;return d;}
+ document.querySelectorAll('video').forEach(function(v){
+   var srcs=[].map.call(v.querySelectorAll('source'),function(s){return s.getAttribute('src')||''});
+   var bad=R.test(v.getAttribute('src')||'')||srcs.some(function(s){return R.test(s)});
+   if(!bad)return;
+   v.removeAttribute('src');v.removeAttribute('autoplay');v.querySelectorAll('source').forEach(function(s){s.remove()});
+   if(!v.getAttribute('poster')){var b=box(v.style.width||'',((v.clientHeight||160))+'px');v.parentNode&&v.parentNode.replaceChild(b,v);}
+ });
+ document.querySelectorAll('img').forEach(function(im){
+   if(R.test(im.getAttribute('src')||'')){var b=box((im.getAttribute('width')||'')+(im.getAttribute('width')?'px':''),((im.getAttribute('height')||im.clientHeight||120))+'px');im.parentNode&&im.parentNode.replaceChild(b,im);}
+ });
+})();
+</script>
+
+</body>
+</html>

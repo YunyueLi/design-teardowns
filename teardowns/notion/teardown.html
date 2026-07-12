@@ -1,0 +1,940 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Notion 设计解构 — 纯白、高亮胶囊与手绘温度,拆到可复刻</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&family=IBM+Plex+Mono:wght@400;500;600&family=Permanent+Marker&family=Noto+Sans+SC:wght@400;500;700&family=Noto+Serif+SC:wght@500;600&display=swap" rel="stylesheet" />
+<!-- 真实字体预加载(自 notion.com 提取,自托管;见 real-assets/manifest.json)-->
+<link rel="preload" href="real-assets/fonts/147dcc_NotionInter-Regular.woff2" as="font" type="font/woff2" crossorigin />
+<link rel="preload" href="real-assets/fonts/835597_NotionInter-SemiBold.woff2" as="font" type="font/woff2" crossorigin />
+<style>
+  /* ============================================================
+     Notion 设计解构 · Design Teardown
+     house style = Notion 自己的视觉语言:纯白底、近黑粗无衬线巨标题、
+     暖中性灰阶、只一枚蓝的 CTA、彩色高亮胶囊、手绘涂鸦头像、漂浮描边小图标。
+     所有 token 与缓动均取自对 notion.com 的真实抽取(见 ../_data/notion.json);
+     字体已接入真实提取:NotionInter(标题/正文)与 iA Writer Mono(等宽)自 notion.com,
+     以 @font-face 自托管;Inter / IBM Plex Mono 降为兜底,Newsreader 仍替 Lyon Text(衬线未接)。
+     真实资产清单见 real-assets/manifest.json。
+     ============================================================ */
+  /* ---- 真实字体 @font-face(从 notion.com 提取,自托管;先真后 CDN 兜底)---- */
+  @font-face{font-family:'NotionInter';src:url('real-assets/fonts/147dcc_NotionInter-Regular.woff2') format('woff2'),url('real-assets/fonts/b5e0be_NotionInter-Regular.woff') format('woff');font-weight:400;font-style:normal;font-display:swap}
+  @font-face{font-family:'NotionInter';src:url('real-assets/fonts/264df1_NotionInter-Medium.woff2') format('woff2'),url('real-assets/fonts/b06905_NotionInter-Medium.woff') format('woff');font-weight:500;font-style:normal;font-display:swap}
+  @font-face{font-family:'NotionInter';src:url('real-assets/fonts/835597_NotionInter-SemiBold.woff2') format('woff2'),url('real-assets/fonts/ee8939_NotionInter-SemiBold.woff') format('woff');font-weight:600;font-style:normal;font-display:swap}
+  @font-face{font-family:'NotionInter';src:url('real-assets/fonts/050df8_NotionInter-Bold.woff2') format('woff2'),url('real-assets/fonts/68f2a8_NotionInter-Bold.woff') format('woff');font-weight:700;font-style:normal;font-display:swap}
+  @font-face{font-family:'iA Writer Mono';src:url('real-assets/fonts/62a0c7_iAWriterMonoS-Regular.bf09337b.woff2') format('woff2'),url('real-assets/fonts/83ac96_iAWriterMonoS-Regular.7554f0d4.woff') format('woff');font-weight:400;font-style:normal;font-display:swap}
+  @font-face{font-family:'iA Writer Mono';src:url('real-assets/fonts/c2eb93_iAWriterMonoS-Bold.a8b41a99.woff2') format('woff2'),url('real-assets/fonts/388491_iAWriterMonoS-Bold.bbe5a5e6.woff') format('woff');font-weight:700;font-style:normal;font-display:swap}
+  :root{
+    /* 基底 / 文字(实锤 computed)*/
+    --bg:#ffffff; --band:#f9f9f8; --band-2:#f6f5f4;
+    --ink:rgba(0,0,0,.95); --ink-2:rgb(0 0 0/60%); --ink-3:rgb(0 0 0/40%); --ink-4:rgb(0 0 0/22%);
+    --line:rgb(0 0 0/8%); --line-2:rgb(0 0 0/14%);
+    /* 暖中性灰阶(实锤 --color-gray-*)*/
+    --gray-100:#f9f9f8; --gray-200:#f6f5f4; --gray-300:#dfdcd9; --gray-400:#a39e98;
+    --gray-500:#78736f; --gray-600:#615d59; --gray-700:#494744; --gray-800:#31302e; --gray-900:#191918;
+    /* 高亮胶囊糖果色(实锤 topHex;绿改用真实 --color-green 阶)*/
+    --hl-green-fill:#d0f4d8; --hl-green-dot:#1aae39;
+    --hl-teal-fill:#ddfcfa;  --hl-teal-dot:#03c1ba;
+    --hl-amber-fill:#fff4cb; --hl-amber-dot:#ffb600;
+    --hl-orange-fill:#ffe9d3;--hl-orange-dot:#ff6522;
+    --hl-purple-fill:#f7e5ff;--hl-purple-dot:#a361ff;
+    --hl-red-fill:#fef3f1;   --hl-red-dot:#f64932;
+    --hl-blue-fill:#e6f3fe;  --hl-blue-dot:#097fe8;
+    /* 蓝色 CTA — 全部取自真实 --color-blue-* 阶(实锤):400/500/600/700 */
+    --accent:#62aef0; --blue:#097fe8; --blue-hover:#0075de; --blue-soft:#e6f3fe;
+    /* 字体 */
+    --sans:"NotionInter","Inter","Noto Sans SC",-apple-system,system-ui,"Segoe UI",Helvetica,Arial,sans-serif;
+    --serif:"Newsreader","Noto Serif SC",Georgia,"Times New Roman",serif;
+    --mono:"iA Writer Mono","IBM Plex Mono",ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+    --marker:"Permanent Marker","Noto Sans SC",cursive;
+    /* 动效(样式表实测)*/
+    --ease-1:cubic-bezier(.645,.045,.355,1);
+    --ease-io:cubic-bezier(.86,0,.07,1);
+    --ease-pop:cubic-bezier(.175,.885,.32,1.275);
+    --ease-expo:cubic-bezier(.16,1,.3,1);
+    --dur-btn:.15s;
+    /* 圆角(实锤 --border-radius-*)*/
+    --r-200:4px; --r-300:5px; --r-400:6px; --r-500:8px; --r-600:10px;
+    --r-700:12px; --r-800:14px; --r-900:16px; --r-round:9999px;
+    /* 阴影(实锤 --shadow-100/200/300,多层堆叠)*/
+    --shadow-100:0px 0.7px 1.462px 0px rgb(0% 0% 0%/0.015),0px 3px 9px 0px rgb(0% 0% 0%/0.03);
+    --shadow-200:0px 0.175px 1.041px 0px rgb(0% 0% 0%/0.013),0px 0.8px 2.925px 0px rgb(0% 0% 0%/0.02),0px 2.025px 7.847px 0px rgb(0% 0% 0%/0.027),0px 4px 18px 0px rgb(0% 0% 0%/0.04);
+    --shadow-300:0px 0.667px 3.502px 0px rgb(0% 0% 0%/0.0096),0px 2.933px 7.252px 0px rgb(0% 0% 0%/0.0157),0px 7.2px 14.462px 0px rgb(0% 0% 0%/0.02),0px 13.867px 28.348px 0px rgb(0% 0% 0%/0.0243),0px 23.333px 52.123px 0px rgb(0% 0% 0%/0.0304),0px 36px 89px 0px rgb(0% 0% 0%/0.04);
+    /* 代码高亮 */
+    --tok-c:rgb(0 0 0/38%); --tok-p:rgb(0 0 0/64%); --tok-n:#1aae39; --tok-f:#a361ff;
+    --maxw:1120px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{-webkit-font-smoothing:antialiased;scroll-behavior:smooth;scroll-padding-top:80px}
+  body{background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.6;letter-spacing:-.006em;overflow-x:hidden}
+  a{color:inherit;text-decoration:none}
+  svg{display:block}
+  ::selection{background:var(--hl-green-fill);color:var(--ink)}
+  code,pre,.mono{font-family:var(--mono)}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 40px}
+  @media(max-width:640px){.wrap{padding:0 20px}}
+  .eyebrow{font-family:var(--mono);font-size:11.5px;font-weight:500;letter-spacing:.13em;text-transform:uppercase;color:var(--ink-3)}
+  h1,h2,h3{font-weight:700;letter-spacing:-.03em;line-height:1.06}
+  code{font-family:var(--mono);font-size:.86em;color:var(--gray-800);background:var(--band-2);border:1px solid var(--line);border-radius:var(--r-300);padding:1px 6px}
+
+  /* ---------- 高亮胶囊(签名母题)---------- */
+  .hl{display:inline-flex;align-items:center;gap:.3em;padding:.02em .5em .04em .42em;border-radius:var(--r-round);color:var(--ink);white-space:nowrap;vertical-align:baseline}
+  .hl::before{content:"";width:.5em;height:.5em;border-radius:50%;flex:none;background:var(--dot,var(--hl-green-dot))}
+  .hl.g{background:var(--hl-green-fill);--dot:var(--hl-green-dot)}
+  .hl.t{background:var(--hl-teal-fill);--dot:var(--hl-teal-dot)}
+  .hl.a{background:var(--hl-amber-fill);--dot:var(--hl-amber-dot)}
+  .hl.o{background:var(--hl-orange-fill);--dot:var(--hl-orange-dot)}
+  .hl.p{background:var(--hl-purple-fill);--dot:var(--hl-purple-dot)}
+  .hl.r{background:var(--hl-red-fill);--dot:var(--hl-red-dot)}
+  .hl.b{background:var(--hl-blue-fill);--dot:var(--hl-blue-dot)}
+  @keyframes popIn{from{transform:scale(.55);opacity:0}to{transform:scale(1);opacity:1}}
+  .pop{animation:popIn .34s var(--ease-pop) both}
+
+  /* ---------- NAV ---------- */
+  nav{position:fixed;top:0;left:0;right:0;z-index:100;height:64px;background:rgba(255,255,255,.86);backdrop-filter:saturate(1.4) blur(10px);-webkit-backdrop-filter:saturate(1.4) blur(10px);border-bottom:1px solid transparent;transition:box-shadow .25s var(--ease-1),border-color .25s var(--ease-1)}
+  nav.stuck{border-bottom-color:var(--line);box-shadow:0 1px 12px rgb(0 0 0/6%)}
+  .nav-in{display:flex;align-items:center;height:64px;gap:18px}
+  .brand{display:flex;align-items:center;gap:9px;font-weight:700;font-size:16px;letter-spacing:-.02em}
+  .brand .cube{width:22px;height:22px;flex:none}
+  .navlinks{margin-left:auto;display:flex;gap:1px;font-size:13.5px}
+  .navlinks a{color:var(--ink-2);padding:7px 11px;border-radius:var(--r-400);transition:color .15s var(--ease-1),background .15s var(--ease-1)}
+  .navlinks a:hover{color:var(--ink);background:var(--band-2)}
+  .nav-cta{margin-left:6px;background:var(--blue);color:#fff;font-weight:500;font-size:13.5px;padding:8px 13px;border-radius:var(--r-200);transition:background var(--dur-btn) var(--ease-1)}
+  .nav-cta:hover{background:var(--blue-hover)}
+  @media(max-width:860px){.navlinks{display:none}}
+
+  /* ---------- HERO ---------- */
+  header{position:relative;padding:150px 0 70px;overflow:hidden;isolation:isolate}
+  .hero-in{position:relative;z-index:2;max-width:960px;margin:0 auto;text-align:center}
+  .doodle-row{display:flex;justify-content:center;margin-bottom:34px}
+  .doodle{width:clamp(48px,6.4vw,66px);aspect-ratio:1;border-radius:50%;background:#fff;display:grid;place-items:center;margin-left:-8px;box-shadow:0 6px 20px -8px rgb(0 0 0/25%);transition:transform .3s var(--ease-pop);cursor:pointer}
+  .doodle:first-child{margin-left:0}
+  .doodle:hover{transform:translateY(-8px) rotate(-7deg);z-index:3}
+  .doodle svg{width:70%;height:70%}
+  h1.hero{font-size:clamp(38px,7.3vw,96px);font-weight:600;letter-spacing:-.048em;line-height:1.04;color:var(--ink)}
+  h1.hero .hl{font-size:.92em}
+  .lede{font-size:clamp(16px,1.7vw,21px);color:var(--ink-2);max-width:60ch;margin:26px auto 0;line-height:1.5;letter-spacing:-.01em}
+  .lede code{font-size:.82em}
+  .cta-row{display:flex;gap:12px;justify-content:center;margin-top:34px;flex-wrap:wrap}
+  .btn{font-family:var(--sans);font-weight:500;font-size:15px;padding:11px 18px;border-radius:var(--r-200);border:1px solid transparent;cursor:pointer;transition:background var(--dur-btn) var(--ease-1),transform .15s var(--ease-1)}
+  .btn:active{transform:translateY(1px)}
+  .btn-primary{background:var(--blue);color:#fff}
+  .btn-primary:hover{background:var(--blue-hover)}
+  .btn-soft{background:var(--blue-soft);color:var(--blue)}
+  .btn-soft:hover{background:#dcebfb}
+  .metabar{display:flex;flex-wrap:wrap;gap:9px;justify-content:center;margin-top:34px}
+  .chip{font-family:var(--mono);font-size:11.5px;color:var(--ink-2);border:1px solid var(--line);border-radius:var(--r-round);padding:6px 13px;background:#fff}
+  .chip b{color:var(--ink);font-weight:600}
+  .marker-note{font-family:var(--marker);font-size:16px;color:var(--hl-orange-dot);display:inline-block;transform:rotate(-4deg);margin-top:26px;position:relative}
+  .marker-note svg{position:absolute;left:-46px;top:2px;width:40px;height:26px;overflow:visible}
+  /* 漂浮描边小图标 */
+  .floaters{position:absolute;inset:0;z-index:1;pointer-events:none}
+  .float-icon{position:absolute;width:44px;height:44px;border-radius:var(--r-700);background:#fff;border:1px solid var(--line);box-shadow:0 10px 26px -10px rgb(0 0 0/22%);display:grid;place-items:center;animation:drift 18s var(--ease-1) infinite alternate}
+  .float-icon svg{width:24px;height:24px}
+  .float-icon.f1{left:6%;top:34%;animation-duration:19s}
+  .float-icon.f2{left:11%;top:64%;animation-duration:23s;animation-delay:-4s}
+  .float-icon.f3{right:7%;top:30%;animation-duration:21s;animation-delay:-2s}
+  .float-icon.f4{right:12%;top:62%;animation-duration:25s;animation-delay:-6s}
+  @keyframes drift{from{transform:translateY(-9px) rotate(-4deg)}to{transform:translateY(11px) rotate(4deg)}}
+  @media(max-width:860px){.float-icon{display:none}}
+  .scrollcue{text-align:center;margin-top:52px;font-family:var(--mono);font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-4)}
+
+  /* ---------- SECTION ---------- */
+  section{padding:90px 0;border-top:1px solid var(--line)}
+  section.band{background:var(--band)}
+  .sec-head{max-width:74ch;margin-bottom:42px}
+  .sec-head h2{font-size:clamp(28px,4vw,50px);font-weight:600;margin-top:14px;letter-spacing:-.035em}
+  .sec-head p{color:var(--ink-2);margin-top:16px;font-size:17.5px;line-height:1.55}
+  h3{font-size:18px;font-weight:700;letter-spacing:-.02em}
+  .grid{display:grid;gap:16px}
+  .g2{grid-template-columns:1fr 1fr}.g3{grid-template-columns:repeat(3,1fr)}.g4{grid-template-columns:repeat(4,1fr)}
+  @media(max-width:860px){.g2,.g3,.g4{grid-template-columns:1fr}}
+  .card{border:1px solid var(--line);border-radius:var(--r-700);padding:22px;background:#fff;transition:border-color .25s var(--ease-1),transform .25s var(--ease-1),box-shadow .25s var(--ease-1)}
+  .card:hover{border-color:var(--line-2);transform:translateY(-2px);box-shadow:var(--shadow-200)}
+  .k{font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3)}
+  .dim{color:var(--ink-2)}.faint{color:var(--ink-3)}
+  p+p{margin-top:10px}
+
+  pre{background:var(--band);border:1px solid var(--line);border-radius:var(--r-700);padding:16px 18px;overflow-x:auto;font-size:12.5px;line-height:1.8}
+  pre code{background:none;border:none;padding:0;color:var(--tok-p);font-size:inherit}
+  .tok-c{color:var(--tok-c)}.tok-n{color:var(--tok-n)}.tok-f{color:var(--tok-f)}.tok-p{color:var(--tok-p)}
+
+  /* split surfaces */
+  .split{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  @media(max-width:860px){.split{grid-template-columns:1fr}}
+  .surface{border:1px solid var(--line);border-radius:var(--r-800);padding:26px;background:#fff;position:relative;overflow:hidden}
+  .surface.warm{background:linear-gradient(180deg,var(--hl-amber-fill),#fff 70%)}
+  .surface.cool{background:linear-gradient(180deg,var(--hl-blue-fill),#fff 70%)}
+  .tag{font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3)}
+  .surface ul{list-style:none;margin-top:16px;display:grid;gap:11px}
+  .surface li{position:relative;padding-left:22px;font-size:14.5px;color:var(--ink-2);line-height:1.5}
+  .surface li b{color:var(--ink);font-weight:600}
+  .surface li::before{content:"";position:absolute;left:2px;top:8px;width:7px;height:7px;border-radius:50%;background:var(--hl-amber-dot)}
+  .surface.cool li::before{background:var(--hl-blue-dot)}
+  .callout{border:1px solid var(--line);border-radius:var(--r-800);padding:24px 26px;background:var(--hl-green-fill);position:relative}
+  .callout h3{color:var(--ink)}
+  .callout.warn{background:var(--hl-amber-fill)}
+  .callout.blue{background:var(--hl-blue-fill)}
+
+  /* swatches */
+  .swgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+  @media(max-width:860px){.swgrid{grid-template-columns:repeat(2,1fr)}}
+  .sw{border:1px solid var(--line);border-radius:var(--r-700);overflow:hidden;cursor:pointer;background:#fff;transition:border-color .2s var(--ease-1),transform .2s var(--ease-1),box-shadow .2s var(--ease-1)}
+  .sw:hover,.sw:focus-visible{border-color:var(--line-2);transform:translateY(-2px);box-shadow:0 10px 26px -14px rgb(0 0 0/25%);outline:none}
+  .chipc{height:64px}
+  .chipc.two{display:flex}.chipc.two i{flex:1}
+  .sw .meta{padding:11px 13px}
+  .sw .name{font-size:13px;font-weight:600}
+  .sw .hex{font-family:var(--mono);font-size:11.5px;color:var(--ink-2);margin-top:2px}
+  .sw .role{font-size:11px;color:var(--ink-3);margin-top:3px}
+  .badge{font-family:var(--mono);font-size:9.5px;letter-spacing:.06em;text-transform:uppercase;padding:2px 6px;border-radius:var(--r-round);margin-left:6px;vertical-align:middle}
+  .badge.real{background:var(--hl-green-fill);color:#0a5c37}
+  .badge.guess{background:var(--hl-amber-fill);color:#7a5200}
+  .badge.third{background:var(--gray-200);color:var(--gray-600)}
+
+  /* type specimens */
+  .specimen{font-weight:600;font-size:clamp(44px,8vw,96px);letter-spacing:-.048em;line-height:1.04;color:var(--ink);margin:4px 0}
+  .serif-spec{font-family:var(--serif);font-size:clamp(28px,4.4vw,52px);font-style:italic;letter-spacing:-.01em;line-height:1.1;color:var(--ink)}
+
+  /* easing lab */
+  .easelab{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  @media(max-width:860px){.easelab{grid-template-columns:1fr}}
+  .ease{border:1px solid var(--line);border-radius:var(--r-700);padding:18px;cursor:pointer;background:#fff;transition:border-color .2s var(--ease-1),box-shadow .2s var(--ease-1)}
+  .ease:hover,.ease:focus-visible{border-color:var(--line-2);box-shadow:0 10px 26px -16px rgb(0 0 0/22%);outline:none}
+  .ease-top{display:flex;justify-content:space-between;align-items:baseline;gap:12px}
+  .ease-top h3{font-size:15px}
+  .curveval{font-family:var(--mono);font-size:10.5px;color:var(--blue);white-space:nowrap}
+  .ease .desc{font-size:13px;margin-top:8px;line-height:1.5;color:var(--ink-2)}
+  .ease-viz{display:flex;align-items:center;gap:14px;margin-top:15px}
+  .ease-viz canvas{flex:none;border:1px solid var(--line);border-radius:var(--r-600);background:var(--band)}
+  .track{flex:1;min-width:0}
+  .runner-wrap{height:32px;border:1px solid var(--line);border-radius:var(--r-600);position:relative;overflow:hidden;background:var(--band)}
+  .runner{position:absolute;top:5px;left:6px;width:20px;height:20px;border-radius:var(--r-400);background:var(--hl-green-dot)}
+  .replay{font-family:var(--mono);font-size:10px;color:var(--ink-3);margin-top:7px;letter-spacing:.05em}
+  .durs{display:grid;gap:11px}
+  .durrow{display:grid;grid-template-columns:150px 1fr 60px;align-items:center;gap:14px}
+  @media(max-width:560px){.durrow{grid-template-columns:104px 1fr 54px}}
+  .durrow .lab{font-family:var(--mono);font-size:11.5px;color:var(--ink-2)}
+  .durbar{height:9px;border-radius:var(--r-round);background:var(--blue)}
+  .durrow .val{font-family:var(--mono);font-size:11.5px;color:var(--ink-2);text-align:right}
+  .kf{display:flex;flex-wrap:wrap;gap:8px;margin-top:6px}
+  .kf span{font-family:var(--mono);font-size:11px;color:var(--ink-2);border:1px solid var(--line);border-radius:var(--r-round);padding:5px 11px;background:#fff}
+
+  /* pill builder */
+  .builder{border:1px solid var(--line);border-radius:var(--r-800);padding:28px;background:var(--band)}
+  .preview{background:#fff;border:1px solid var(--line);border-radius:var(--r-700);padding:44px 28px;text-align:center;min-height:150px;display:flex;align-items:center;justify-content:center}
+  .preview .demo-h{font-size:clamp(26px,4.4vw,46px);font-weight:600;letter-spacing:-.03em;line-height:1.15;color:var(--ink)}
+  .controls{display:flex;flex-wrap:wrap;gap:16px;align-items:center;margin-top:20px}
+  .field{display:flex;flex-direction:column;gap:6px}
+  .field label{font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3)}
+  .field input{font-family:var(--sans);font-size:15px;color:var(--ink);background:#fff;border:1px solid var(--line-2);border-radius:var(--r-500);padding:9px 12px;width:190px;transition:border-color .15s var(--ease-1),box-shadow .15s var(--ease-1)}
+  .field input:focus{outline:none;border-color:var(--blue);box-shadow:0 0 0 3px var(--hl-blue-fill)}
+  .dots{display:flex;gap:9px}
+  .cdot{width:30px;height:30px;border-radius:50%;cursor:pointer;border:2px solid transparent;position:relative;transition:transform .2s var(--ease-pop)}
+  .cdot:hover{transform:scale(1.12)}
+  .cdot[aria-pressed="true"]{border-color:var(--ink);transform:scale(1.12)}
+  .cdot i{position:absolute;inset:5px;border-radius:50%}
+
+  /* product mock + floaters (signature stage) */
+  .stage{position:relative;border:1px solid var(--line);border-radius:var(--r-900);padding:52px 30px;background:radial-gradient(120% 120% at 50% 0,var(--band-2),#fff 62%);overflow:hidden}
+  .mock{max-width:560px;margin:0 auto;border:1px solid var(--line);border-radius:var(--r-700);background:#fff;box-shadow:var(--shadow-300);overflow:hidden}
+  .mock .bar{display:flex;align-items:center;gap:7px;padding:11px 14px;border-bottom:1px solid var(--line);background:var(--band)}
+  .mock .bar i{width:10px;height:10px;border-radius:50%;background:var(--gray-300)}
+  .mock .bar .t{margin-left:10px;font-size:12px;color:var(--ink-3)}
+  .mock .body{display:grid;grid-template-columns:150px 1fr}
+  @media(max-width:560px){.mock .body{grid-template-columns:1fr}.mock .side{display:none}}
+  .mock .side{border-right:1px solid var(--line);padding:14px 12px;background:#fcfcfb}
+  .mock .side .row{display:flex;align-items:center;gap:8px;font-size:12.5px;color:var(--ink-2);padding:5px 6px;border-radius:var(--r-400)}
+  .mock .side .row.on{background:var(--band-2);color:var(--ink);font-weight:600}
+  .mock .side .row b{width:15px;height:15px;border-radius:var(--r-300);flex:none;display:inline-block}
+  .mock .side .lbl{font-family:var(--mono);font-size:9.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3);margin:12px 6px 5px}
+  .mock .doc{padding:22px 24px}
+  .mock .doc .title{font-size:26px;font-weight:700;letter-spacing:-.03em;display:flex;align-items:center;gap:10px}
+  .mock .doc .avatar{width:30px;height:30px;border-radius:50%;background:var(--hl-purple-fill);display:grid;place-items:center;flex:none}
+  .mock .doc .line{height:9px;border-radius:var(--r-round);background:var(--band-2);margin-top:14px}
+  .mock .doc .checkrow{display:flex;align-items:center;gap:10px;margin-top:14px;font-size:13.5px;color:var(--ink-2)}
+  .mock .doc .checkrow .box{width:16px;height:16px;border-radius:var(--r-300);border:1.5px solid var(--gray-300);flex:none}
+  .mock .doc .checkrow .box.done{background:var(--blue);border-color:var(--blue)}
+  .stage .float-icon{animation:drift 20s var(--ease-1) infinite alternate}
+  .stage .p1{left:4%;top:22%}.stage .p2{left:8%;bottom:16%;top:auto;animation-duration:24s}
+  .stage .p3{right:5%;top:26%;animation-duration:22s}.stage .p4{right:9%;bottom:14%;top:auto;animation-duration:26s}
+  @media(max-width:640px){.stage .float-icon{display:none}}
+
+  /* radius scale */
+  .radscale{display:grid;grid-template-columns:repeat(5,1fr);gap:12px}
+  @media(max-width:860px){.radscale{grid-template-columns:repeat(3,1fr)}}
+  @media(max-width:520px){.radscale{grid-template-columns:repeat(2,1fr)}}
+  .rad{border:1px solid var(--line);border-radius:var(--r-700);padding:14px;text-align:center;background:#fff}
+  .rad .box{height:52px;background:var(--hl-blue-fill);border:1.5px solid var(--blue);margin-bottom:10px}
+  .rad .rn{font-family:var(--mono);font-size:11px;color:var(--ink-2)}
+  .rad .rv{font-family:var(--mono);font-size:11px;color:var(--ink-3);margin-top:2px}
+  .rad.hot{border-color:var(--blue)}
+  .rad.hot .rn{color:var(--blue);font-weight:600}
+
+  /* logo wall */
+  .logowall{display:flex;flex-wrap:wrap;justify-content:center;gap:10px 30px;align-items:center;filter:grayscale(1);opacity:.72}
+  .logowall span{font-weight:700;font-size:19px;letter-spacing:-.02em;color:var(--gray-700)}
+  .logowall .dot{width:5px;height:5px;border-radius:50%;background:var(--gray-300)}
+
+  /* frames */
+  figure.shot{border:1px solid var(--line);border-radius:var(--r-800);overflow:hidden;background:#fff}
+  figure.shot .scrollbox{max-height:560px;overflow-y:auto;background:var(--band)}
+  figure.shot img{width:100%;display:block}
+  figure.shot video{width:100%;display:block;background:var(--band)}
+  figure.shot figcaption{padding:13px 18px;font-size:12.5px;color:var(--ink-3);border-top:1px solid var(--line);background:#fff}
+
+  /* checklist / prov */
+  .checklist{list-style:none;display:grid;gap:11px}
+  .checklist li{position:relative;padding-left:26px;font-size:14.5px;color:var(--ink-2);line-height:1.5}
+  .checklist li b{color:var(--ink);font-weight:600}
+  .checklist li::before{content:"";position:absolute;left:0;top:3px;width:16px;height:16px;border-radius:var(--r-300);background:var(--hl-green-fill);border:1.5px solid var(--hl-green-dot)}
+  dl.prov dt{font-family:var(--mono);font-size:11px;letter-spacing:.07em;text-transform:uppercase;color:var(--ink-3);margin-top:20px}
+  dl.prov dt:first-child{margin-top:0}
+  dl.prov dd{margin-top:7px;font-size:14.5px;color:var(--ink-2);line-height:1.6}
+
+  footer{padding:52px 0 72px;text-align:center;font-size:13px;color:var(--ink-3);line-height:1.75;border-top:1px solid var(--line)}
+  footer b{color:var(--ink-2);font-weight:500}
+
+  .copybar{position:fixed;left:50%;bottom:28px;transform:translate(-50%,20px);z-index:80;background:var(--ink);color:#fff;font-family:var(--mono);font-size:12.5px;font-weight:500;padding:10px 18px;border-radius:var(--r-round);opacity:0;pointer-events:none;transition:opacity .28s var(--ease-1),transform .28s var(--ease-pop);box-shadow:0 16px 40px -12px rgb(0 0 0/40%)}
+  .copybar.show{opacity:1;transform:translate(-50%,0)}
+  .copybar .d{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--hl-green-dot);margin-right:8px;vertical-align:middle}
+
+  @media(prefers-reduced-motion:reduce){
+    .float-icon{animation:none}
+    .pop{animation:none}
+    *{scroll-behavior:auto}
+  }
+</style>
+</head>
+<body>
+
+<nav id="nav"><div class="wrap nav-in">
+  <span class="brand">
+    <svg class="cube" viewBox="0 0 24 24" aria-hidden="true"><rect x="2.5" y="2.5" width="19" height="19" rx="4" fill="#fff" stroke="var(--ink)" stroke-width="1.6"/><path d="M8 7.4v9.2M8 7.4l7.4 9.2M15.6 7.4v9.2" stroke="var(--ink)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>
+    Notion 设计解构
+  </span>
+  <span class="navlinks">
+    <a href="#intent">意图</a><a href="#color">色彩</a><a href="#type">字体</a>
+    <a href="#motion">动效</a><a href="#signature">签名</a><a href="#craft">工艺</a><a href="#seen">实拍</a><a href="#build">复刻</a><a href="#prov">出处</a>
+  </span>
+  <a href="#build" class="nav-cta">看复刻 token</a>
+</div></nav>
+
+<header>
+  <div class="floaters" aria-hidden="true">
+    <div class="float-icon f1"><svg viewBox="0 0 24 24" fill="none"><path d="M4 5.5A1.5 1.5 0 015.5 4H11v15H5.5A1.5 1.5 0 014 17.5v-12z" stroke="var(--hl-amber-dot)" stroke-width="1.7" stroke-linejoin="round"/><path d="M20 5.5A1.5 1.5 0 0018.5 4H13v15h5.5A1.5 1.5 0 0020 17.5v-12z" stroke="var(--hl-amber-dot)" stroke-width="1.7" stroke-linejoin="round"/></svg></div>
+    <div class="float-icon f2"><svg viewBox="0 0 24 24" fill="none"><path d="M6 12.5l3.6 3.6L18 7.5" stroke="var(--hl-purple-dot)" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M19 4.5l1 2.4M21.6 6.2l-2.5.6" stroke="var(--hl-purple-dot)" stroke-width="1.6" stroke-linecap="round"/></svg></div>
+    <div class="float-icon f3"><svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="8" stroke="var(--hl-teal-dot)" stroke-width="1.8"/><path d="M8.5 12.5l2.3 2.3L15.5 9.5" stroke="var(--hl-teal-dot)" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+    <div class="float-icon f4"><svg viewBox="0 0 24 24" fill="none"><path d="M9 18c-4 1-4-2.5-6-3m12 5v-3.2c0-.9-.1-1.3-.5-1.8 2.4-.3 4.5-1.2 4.5-5.2 0-1.1-.4-2-.9-2.7.1-.3.4-1.4-.1-2.8 0 0-.9-.3-3 1a10.4 10.4 0 00-5 0c-2.1-1.3-3-1-3-1-.5 1.4-.2 2.5-.1 2.8-.5.7-.9 1.6-.9 2.7 0 4 2.1 4.9 4.5 5.2-.3.3-.5.7-.5 1.4V21" stroke="var(--hl-orange-dot)" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+  </div>
+  <div class="wrap hero-in">
+    <div class="eyebrow">逆向解析 · 真实抽取自 notion.com</div>
+    <div class="doodle-row" id="doodleRow" aria-hidden="true"></div>
+    <h1 class="hero">把 Notion 拆到 <span class="hl g pop">可复刻</span> 的每一个数值</h1>
+    <p class="lede">这不是观感描述。下面每一个色值、缓动曲线、字距与时长,都来自对 <code>notion.com</code> 的真实抽取(Playwright 计算样式加样式表全文)。连这一页,也用 Notion 自己的纯白、暖灰、高亮胶囊与真实缓动在运动。</p>
+    <div class="cta-row">
+      <a href="#signature" class="btn btn-primary">体验签名效果</a>
+      <a href="#color" class="btn btn-soft">复制真实色板</a>
+    </div>
+    <div class="metabar">
+      <span class="chip">底色 <b>纯白 #fff</b></span>
+      <span class="chip">大标题 <b>96px 字距 -4.6px</b></span>
+      <span class="chip">强调色 <b>只一枚蓝</b></span>
+      <span class="chip">缓动 <b>11 条曲线(16 声明)</b></span>
+      <span class="chip">框架 <b>Next.js</b></span>
+    </div>
+    <div class="marker-note">实锤,不是拍脑袋
+      <svg viewBox="0 0 40 26" fill="none" aria-hidden="true"><path d="M2 4c10 3 22 8 34 17" stroke="var(--hl-orange-dot)" stroke-width="2" stroke-linecap="round"/><path d="M30 19l6 2 -1-6" stroke="var(--hl-orange-dot)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </div>
+    <div class="scrollcue">向下滚动 · 全程可交互</div>
+  </div>
+</header>
+
+<main>
+
+  <!-- 01 · INTENT -->
+  <section id="intent">
+    <div class="wrap">
+      <div class="sec-head">
+        <div class="eyebrow">01 — 定位与设计意图</div>
+        <h2>纯白托住高密度,插画打进温度</h2>
+        <p>这一版主打 “Where teams and agents ship together”。它要同时说服老用户与被 “AI 工作区” 吸引的新访客,于是把两股相反的力捏在一起:极致亲和,极高密度。</p>
+      </div>
+      <div class="split">
+        <div class="surface warm">
+          <span class="tag">一边 — 亲和与温度</span>
+          <ul>
+            <li><b>纯白底</b>统一一切,不冷不端着</li>
+            <li><b>手绘涂鸦圆脸头像</b>一排,像团队合影</li>
+            <li><b>彩色高亮胶囊</b>把关键词 “标重点”</li>
+            <li>产品图四周飘<b>彩色描边小图标</b>,静图也 “活”</li>
+          </ul>
+        </div>
+        <div class="surface cool">
+          <span class="tag">另一边 — 密度与秩序</span>
+          <ul>
+            <li>首屏就放<b>六件事</b>:头像、标题、副题、双 CTA、产品图、logo 墙</li>
+            <li>往下每屏都是<b>标题加真实产品 mock</b>的密排卡片</li>
+            <li><b>卡片化</b>切分,<b>发丝线</b>与浅灰底分块</li>
+            <li>一枚<b>蓝色</b>只留给 CTA,克制不闷</li>
+          </ul>
+        </div>
+      </div>
+      <div class="callout" style="margin-top:16px">
+        <h3>复刻目标 = 纯白与卡片的秩序 × 手绘与高亮的温度</h3>
+        <p class="dim" style="margin-top:8px">它敢把首屏塞这么满,是因为纯白底加充分行距把每块都框得很清楚——密而不乱。温度由插画注入,秩序由留白与卡片维持。这正是 Notion 区别于冷静工具派的选择:第一印象要 “亲和”,不是 “精密”。</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 02 · COLOR -->
+  <section id="color" class="band">
+    <div class="wrap">
+      <div class="sec-head">
+        <div class="eyebrow">02 — 色彩系统(真实 token)</div>
+        <h2>暖中性灰阶,一枚蓝,和一排糖果高亮</h2>
+        <p>点任意色块复制。底色是<b>纯白</b>,灰阶<b>微微偏暖</b>(这是 “亲和” 观感的隐形来源);强调色克制到只给 CTA 一枚蓝;真正的色彩活力全外包给<b>高亮胶囊</b>。带 <span class="badge real">实锤</span> 的取自抽取,<span class="badge guess">推断</span> 为截图观察。</p>
+      </div>
+      <h3 style="margin-bottom:14px">基底与暖中性灰阶 <span class="badge real">实锤</span></h3>
+      <div class="swgrid" id="sw-base"></div>
+      <h3 style="margin:32px 0 14px">高亮胶囊糖果色(填充 + 圆点)</h3>
+      <div class="swgrid" id="sw-hl"></div>
+      <h3 style="margin:32px 0 14px">蓝色 CTA</h3>
+      <div class="swgrid" id="sw-blue"></div>
+      <div class="callout blue" style="margin-top:22px">
+        <h3>一处诚实纠错:真实蓝阶已定,#1a73e8 实为第三方污染</h3>
+        <p class="dim" style="margin-top:8px">第二轮从站点 CSS 拿到了完整的 <code>--color-blue-*</code> 阶(实锤):blue-400 <code>#62aef0</code>(即 <code>--accent</code>)、blue-500 <code>#097fe8</code>、blue-600 <code>#0075de</code>、blue-700 <code>#005bab</code>。Hero 的实心 CTA 落在 500 到 600 之间,本页主蓝据此改用真实的 <code>#097fe8</code>、悬停 <code>#0075de</code>,替下了上一轮的推断值。此前高频榜第二的 <code>#1a73e8</code>(topHex 计 15 次)在 Notion 自有 CSS 里<b>一次都搜不到</b>,它和同榜的 <code>#0052cc</code>、<code>#e8eaed</code>、<code>#5f6368</code> 一样来自页面内嵌的第三方组件(Google 与 Atlassian 系),已确认<b>非 Notion 品牌色</b>。纪律不变:<b>只有一枚蓝,只给 CTA</b>。</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 03 · TYPE -->
+  <section id="type">
+    <div class="wrap">
+      <div class="sec-head">
+        <div class="eyebrow">03 — 字体系统</div>
+        <h2>一款无衬线扛全场,少数处才换脸</h2>
+        <p>首页 32 处 font-family 命中 <b>NotionInter</b>(定制自 Inter)。巨标题的气场不靠加粗——实测字重仅 <b>600</b>,靠的是<b>超大字号加极紧字距加贴合行高</b>。本页标题与正文已直接接入从站点提取的真实 NotionInter。</p>
+      </div>
+      <div class="card" style="margin-bottom:16px">
+        <div class="k">Hero 大标题实测 · 96px,字重 600,字距 -4.6px,行高 100px</div>
+        <div class="specimen">Ship together.</div>
+        <p class="dim" style="font-size:14px;margin-top:4px">力量来自参数不来自字重。想复刻这股气场,别加粗,去放大字号、收紧字距、压低行高。上方这行即真实 <b>NotionInter</b> 的 600 字重、<code>letter-spacing:-.048em</code>(96px 实测 -4.6px),不再靠加粗临摹。</p>
+      </div>
+      <div class="grid g3">
+        <div class="card">
+          <div class="k">品牌、UI 与正文 · 无衬线</div>
+          <div style="font-size:30px;font-weight:700;letter-spacing:-.03em;margin:10px 0 2px">NotionInter</div>
+          <div style="font-size:20px;font-weight:400;color:var(--ink-3)">The AI workspace</div>
+          <p class="dim" style="margin-top:12px;font-size:13.5px">定制自 Inter。亲和的圆度加中性骨架,从 96px 标题到正文一款通吃。本页已直接接入真实 <b>NotionInter</b>(400 / 500 / 600 / 700),Inter 仅作兜底。</p>
+        </div>
+        <div class="card">
+          <div class="k">引用 / 编辑感 · 衬线</div>
+          <div class="serif-spec" style="margin:8px 0 2px">“Your AI everything app.”</div>
+          <p class="dim" style="margin-top:12px;font-size:13.5px">Lyon Text,用于引用与编辑气质(如媒体引语)。商业字体,本轮未接入(不属标题/正文/等宽),本页仍以开源 <b>Newsreader</b> 临摹。</p>
+        </div>
+        <div class="card">
+          <div class="k">代码 / 技术 · 等宽</div>
+          <div class="mono" style="font-size:26px;color:var(--ink);margin:8px 0 2px">iA Writer Mono</div>
+          <div class="mono" style="font-size:13px;color:var(--ink-3)">border-radius: 4px;</div>
+          <p class="dim" style="margin-top:12px;font-size:13.5px">等宽。本页所有等宽处(token、色值、代码块)已直接接入真实 <b>iA Writer Mono</b>(400 / 700),IBM Plex Mono 仅作兜底。</p>
+        </div>
+      </div>
+      <div class="card" style="margin-top:16px">
+        <div class="k">手绘 / 涂鸦标注 · 马克笔</div>
+        <div style="font-family:var(--marker);font-size:34px;color:var(--ink);margin:8px 0 2px">Ship it together</div>
+        <p class="dim" style="font-size:13.5px">Permanent Marker——Notion 实际加载的马克笔体,配合手绘头像与涂鸦的随性感。它在 Google Fonts 上有同名开源版,故本页原样使用(上方 Hero 的手写批注即此字)。</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 04 · MOTION -->
+  <section id="motion" class="band">
+    <div class="wrap">
+      <div class="sec-head">
+        <div class="eyebrow">04 — 动效系统</div>
+        <h2>克制的入场,俏皮的回弹,几乎无感的环境层</h2>
+        <p>抽取到 16 条缓动声明,归一化写法后为 <b>11 条</b>不同的三次贝塞尔曲线,加一梯清晰的时长档。点任一卡片重放,曲线与时长为其真实取值。签名手感藏在那条<b>回弹越界</b>曲线里——它同名 <code>@keyframes popIn</code>,在真实 CSS 里实锤存在。</p>
+      </div>
+      <div class="easelab" id="easelab"></div>
+
+      <div class="grid g2" style="margin-top:26px">
+        <div class="card">
+          <h3 style="margin-bottom:14px">时长阶梯(真实 token · 对数刻度)</h3>
+          <div class="durs" id="durs"></div>
+          <p class="dim" style="font-size:13px;margin-top:14px">双时间尺度:<b>敏捷层</b> 75ms 到 250ms(按钮实测 <code>0.15s</code>)给即时手感;<b>环境层</b> 1s 到 25s(甚至抓到 218s)让背景插画极慢地漂,给纯白页面一点呼吸而不抢戏。</p>
+        </div>
+        <div class="card">
+          <h3 style="margin-bottom:12px">真实 @keyframes(抽取到的命名)</h3>
+          <div class="kf">
+            <span>fadeIn</span><span>fadeOut</span><span>scaleIn</span><span>scaleOut</span><span>popIn</span><span>rotate</span><span>loadingDots_pulse</span><span>popoverSlideDown</span><span>navShadowScrolled</span><span>thinkTogether…HeroExit</span>
+          </div>
+          <p class="dim" style="font-size:13.5px;margin-top:14px">命名直接暴露意图:入场四件套加一个弹入 <code>popIn</code>;<b><code>navShadowScrolled</code></b> 说明<b>滚动时导航加投影</b>是刻意编排的(本页导航同样如此),多条 <code>HeroExit</code> 则是 Hero 退场时导航配色与背景的联动过渡。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 05 · SIGNATURE -->
+  <section id="signature">
+    <div class="wrap">
+      <div class="sec-head">
+        <div class="eyebrow">05 — 签名视觉母题 · 本解构核心</div>
+        <h2>高亮胶囊、手绘头像、漂浮小图标,现场可玩</h2>
+        <p>这三样是 Notion 最认得出的签名。下面全部用 CSS 与内联 SVG 复现,动效用 Notion 抽取到的真实回弹曲线 <code>cubic-bezier(.175,.885,.32,1.275)</code> 驱动。</p>
+      </div>
+
+      <h3 style="margin-bottom:14px">签名一 · 彩色高亮胶囊生成器</h3>
+      <div class="builder">
+        <div class="preview">
+          <div class="demo-h">Where teams and agents <span class="hl g pop" id="pillOut">Ship</span> together.</div>
+        </div>
+        <div class="controls">
+          <div class="field">
+            <label for="pillIn">胶囊里的词</label>
+            <input id="pillIn" value="Ship" maxlength="18" autocomplete="off" />
+          </div>
+          <div class="field">
+            <label>换个糖果色(点选)</label>
+            <div class="dots" id="pillDots"></div>
+          </div>
+        </div>
+        <pre style="margin-top:20px"><code><span class="tok-p">.hl</span>{
+  display:inline-flex;align-items:center;gap:.3em;
+  padding:.02em .5em .04em .42em;
+  background:<span class="tok-n" id="cssFill">#d0f4d8</span>;
+  border-radius:<span class="tok-n">var(--r-round)</span>;   <span class="tok-c">/* 药丸 */</span>
+  animation:<span class="tok-f">popIn</span> .34s <span class="tok-f">var(--ease-pop)</span> both;
+}
+<span class="tok-p">.hl::before</span>{ <span class="tok-c">/* 状态灯圆点 */</span>
+  content:"";width:.5em;height:.5em;border-radius:50%;
+  background:<span class="tok-n" id="cssDot">#1aae39</span>;
+}</code></pre>
+      </div>
+
+      <h3 style="margin:34px 0 14px">签名二 · 手绘涂鸦头像一排(悬停轻弹)</h3>
+      <div class="stage" style="padding:44px 30px">
+        <div class="doodle-row" id="doodleRow2" style="position:relative;z-index:2" aria-hidden="true"></div>
+        <p class="dim" style="text-align:center;font-size:13px;margin-top:22px">悬停任一头像 —— <code>transform: translateY(-8px) rotate(-7deg)</code>,过渡用回弹曲线 <code>var(--ease-pop)</code>。手绘线条全是内联 SVG,外套彩色描边圆环(蓝、黑、橙、黄 交替)。</p>
+      </div>
+
+      <h3 style="margin:34px 0 14px">签名三 · 产品 mock 四周漂浮描边小图标</h3>
+      <div class="stage">
+        <div class="float-icon p1"><svg viewBox="0 0 24 24" fill="none"><path d="M4 5.5A1.5 1.5 0 015.5 4H11v15H5.5A1.5 1.5 0 014 17.5v-12z" stroke="var(--hl-amber-dot)" stroke-width="1.7" stroke-linejoin="round"/><path d="M20 5.5A1.5 1.5 0 0018.5 4H13v15h5.5A1.5 1.5 0 0020 17.5v-12z" stroke="var(--hl-amber-dot)" stroke-width="1.7" stroke-linejoin="round"/></svg></div>
+        <div class="float-icon p2"><svg viewBox="0 0 24 24" fill="none"><path d="M6 12.5l3.6 3.6L18 7.5" stroke="var(--hl-purple-dot)" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M19 4.5l1 2.4M21.6 6.2l-2.5.6" stroke="var(--hl-purple-dot)" stroke-width="1.6" stroke-linecap="round"/></svg></div>
+        <div class="float-icon p3"><svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="8" stroke="var(--hl-teal-dot)" stroke-width="1.8"/><path d="M8.5 12.5l2.3 2.3L15.5 9.5" stroke="var(--hl-teal-dot)" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <div class="float-icon p4"><svg viewBox="0 0 24 24" fill="none"><path d="M12 3l2.5 5.3 5.5.6-4.1 3.9 1.1 5.6L12 21l-5-2.6 1.1-5.6L4 8.9l5.5-.6L12 3z" stroke="var(--hl-orange-dot)" stroke-width="1.6" stroke-linejoin="round"/></svg></div>
+        <div class="mock">
+          <div class="bar"><i></i><i></i><i></i><span class="t">Ship together</span></div>
+          <div class="body">
+            <div class="side">
+              <div class="row on"><b style="background:var(--hl-blue-dot)"></b> Home</div>
+              <div class="row"><b style="background:var(--hl-teal-dot)"></b> Docs</div>
+              <div class="row"><b style="background:var(--hl-orange-dot)"></b> Tasks</div>
+              <div class="lbl">Agents</div>
+              <div class="row"><b style="background:var(--hl-purple-dot)"></b> Task routing</div>
+              <div class="row"><b style="background:var(--hl-amber-dot)"></b> Q&amp;A agent</div>
+            </div>
+            <div class="doc">
+              <div class="title"><span class="avatar"><svg viewBox="0 0 24 24" width="16" height="16" fill="none"><path d="M6 12.5l3.6 3.6L18 7.5" stroke="var(--hl-purple-dot)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span> Launch tracker</div>
+              <div class="line" style="width:82%"></div>
+              <div class="line" style="width:68%"></div>
+              <div class="checkrow"><span class="box done"></span> 定义真实 token,拒绝拍脑袋</div>
+              <div class="checkrow"><span class="box done"></span> 复现高亮胶囊与手绘头像</div>
+              <div class="checkrow"><span class="box"></span> 漂浮小图标接进产品图</div>
+            </div>
+          </div>
+        </div>
+        <p class="dim" style="text-align:center;font-size:13px;margin-top:24px">四枚描边小图标用 20 到 26s 的超长循环上下浮动,几乎察觉不到在动,只给纯白页面一点生气。产品 mock 是纯 HTML/CSS 精画,非截图。</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 06 · CRAFT -->
+  <section id="craft" class="band">
+    <div class="wrap">
+      <div class="sec-head">
+        <div class="eyebrow">06 — 工艺细节</div>
+        <h2>圆角、栅格、纸感,与只用 SVG 的取舍</h2>
+      </div>
+      <h3 style="margin-bottom:14px">圆角阶梯(实锤 <code>--border-radius-*</code>;高亮档为实测最高频)</h3>
+      <div class="radscale" id="radscale"></div>
+      <div class="grid g3" style="margin-top:24px">
+        <div class="card">
+          <h3>栅格与间距</h3>
+          <p class="dim" style="font-size:14px;margin-top:8px">12 列(<code>--grid-columns:12</code>),常规栏距 <code>28px</code>,小屏 <code>12px</code>;导航高 <code>64px</code>,基础内边距 <code>20px</code>。全部为实锤变量。</p>
+        </div>
+        <div class="card">
+          <h3>纸感,不用玻璃</h3>
+          <p class="dim" style="font-size:14px;margin-top:8px">导航 <code>backdrop-filter: none</code>(实锤);滚动时改用 <code>navShadowScrolled</code> 加一道投影分层,比毛玻璃更 “纸”。边框统一 <code>rgb(0 0 0/8%)</code> 极淡发丝线。</p>
+        </div>
+        <div class="card">
+          <h3>几乎只用 SVG</h3>
+          <p class="dim" style="font-size:14px;margin-top:8px">整页 <b>SVG 41 个、图片 73 张、video 仅 1、canvas 0</b>(实锤)。签名插画全是矢量:轻、快、可无限缩放,这也是纯白底上依然轻快不卡的原因。预加载 4 个字体保首屏不闪。</p>
+        </div>
+      </div>
+      <h3 style="margin:30px 0 14px">客户 logo 墙(意象)</h3>
+      <div class="card">
+        <div class="logowall">
+          <span>OpenAI</span><i class="dot"></i><span>Figma</span><i class="dot"></i><span>Ramp</span><i class="dot"></i><span>Cursor</span><i class="dot"></i><span>Vercel</span><i class="dot"></i><span>NVIDIA</span><i class="dot"></i><span>Volvo</span><i class="dot"></i><span>L'Oréal</span><i class="dot"></i><span>Discord</span>
+        </div>
+        <p class="dim" style="font-size:12.5px;text-align:center;margin-top:16px">首屏底部一行灰度品牌名,小圆点分隔,建立信任。此处按 “意象” 用文本 wordmark 呈现,非原始 logo。</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 07 · AS SEEN -->
+  <section id="seen">
+    <div class="wrap">
+      <div class="sec-head">
+        <div class="eyebrow">07 — as-seen 实拍</div>
+        <h2>真实视频与截图,原样为证</h2>
+        <p>以下为 notion.com 的真实素材原样呈现(非重绘):第二轮接入了站点提取的真实 <b>hero 视频</b>与两段 <b>Agent 演示视频</b>,配整页真实渲染截图。文中所有观察值都能回到这里核对;视频与图片一律相对引用 <code>real-assets/</code>。</p>
+      </div>
+      <figure class="shot" style="margin-bottom:18px">
+        <video src="real-assets/video/1dcd55_web-homepage-hero-1920x1200_final.mp4" poster="real-assets/image/6da6d3_image" autoplay muted loop playsinline controls preload="auto"></video>
+        <figcaption>真实 hero 产品演示 · 站点原样视频(非重绘),取自 <code>web-homepage-hero-1920x1200</code>。画面是 Hero 下方那块 “Ramp HQ” 工作区在动:任务在看板列间流转、侧栏 Agent 依次亮起——正是本页 “签名三” 手绘 mock 致敬的原型。</figcaption>
+      </figure>
+      <div class="grid g2" style="margin-bottom:18px">
+        <figure class="shot">
+          <video src="real-assets/video/fbc1e3_web-qa-agent-4x3_final.mp4" autoplay muted loop playsinline controls preload="metadata"></video>
+          <figcaption>真实 Agent 演示 · <code>Q&amp;A agent</code>(站点原样视频)。</figcaption>
+        </figure>
+        <figure class="shot">
+          <video src="real-assets/video/c416a4_web-task-router-1488x1116-coloredBG_final.mp4" autoplay muted loop playsinline controls preload="metadata"></video>
+          <figcaption>真实 Agent 演示 · <code>Task routing agent</code>(站点原样视频,含彩色背景)。</figcaption>
+        </figure>
+      </div>
+      <figure class="shot">
+        <div class="scrollbox"><img src="assets/actual-full.jpg" alt="Notion 首页整页真实渲染截图" loading="lazy" /></div>
+        <figcaption>整页实拍(框内可滚)· 自上而下 “标题加真实产品 mock” 交替:on-demand assistants 的 bento 大色块卡、Less tracking 的棕色卡、“Your AI everything app.” 衬线引语、Trusted by 的三张彩色滤镜人像卡、Get started 收尾。</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- 08 · BUILD -->
+  <section id="build" class="band">
+    <div class="wrap">
+      <div class="sec-head">
+        <div class="eyebrow">08 — 如何复刻</div>
+        <h2>把上面的真实值直接接进你的产品</h2>
+      </div>
+      <div class="grid g2">
+        <div>
+          <h3 style="margin-bottom:12px">1 · 落地 token(复制即用)</h3>
+          <pre><code><span class="tok-p">:root</span>{
+  <span class="tok-c">/* 基底 / 文字 · 实锤 */</span>
+  <span class="tok-p">--bg</span>:<span class="tok-n">#ffffff</span>; <span class="tok-p">--ink</span>:<span class="tok-n">rgba(0,0,0,.95)</span>;
+  <span class="tok-p">--line</span>:<span class="tok-n">rgb(0 0 0/8%)</span>;
+  <span class="tok-c">/* 暖中性灰阶 · 实锤 */</span>
+  <span class="tok-p">--gray-100</span>:<span class="tok-n">#f9f9f8</span>; <span class="tok-p">--gray-500</span>:<span class="tok-n">#78736f</span>;
+  <span class="tok-p">--gray-900</span>:<span class="tok-n">#191918</span>;
+  <span class="tok-c">/* 高亮糖果色 · 实锤(绿为推断)*/</span>
+  <span class="tok-p">--hl-teal</span>:<span class="tok-n">#03c1ba</span>; <span class="tok-p">--hl-amber</span>:<span class="tok-n">#ffb600</span>;
+  <span class="tok-p">--hl-orange</span>:<span class="tok-n">#ff6522</span>; <span class="tok-p">--hl-purple</span>:<span class="tok-n">#a361ff</span>;
+  <span class="tok-c">/* 一枚蓝只给 CTA */</span>
+  <span class="tok-p">--blue</span>:<span class="tok-n">#097fe8</span>; <span class="tok-p">--accent</span>:<span class="tok-n">#62aef0</span>;
+  <span class="tok-c">/* 动效 · 实测 */</span>
+  <span class="tok-p">--ease-1</span>:<span class="tok-f">cubic-bezier</span>(.645,.045,.355,1);
+  <span class="tok-p">--ease-pop</span>:<span class="tok-f">cubic-bezier</span>(.175,.885,.32,1.275);
+  <span class="tok-p">--dur-btn</span>:.15s;
+  <span class="tok-c">/* 圆角 · 实锤(700=12px 最高频)*/</span>
+  <span class="tok-p">--r-200</span>:4px; <span class="tok-p">--r-700</span>:12px; <span class="tok-p">--r-round</span>:9999px;
+}</code></pre>
+        </div>
+        <div>
+          <h3 style="margin-bottom:12px">2 · 高亮胶囊(纯 CSS,零依赖)</h3>
+          <pre><code><span class="tok-p">.hl</span>{display:inline-flex;align-items:center;gap:.3em;
+ padding:.02em .5em .04em .42em;
+ background:<span class="tok-n">#d0f4d8</span>;border-radius:<span class="tok-n">var(--r-round)</span>;
+ animation:<span class="tok-f">popIn</span> .34s <span class="tok-f">var(--ease-pop)</span> both}
+<span class="tok-p">.hl::before</span>{content:"";width:.5em;height:.5em;
+ border-radius:50%;background:<span class="tok-n">#1aae39</span>}
+<span class="tok-f">@keyframes</span> popIn{
+ from{transform:scale(.55);opacity:0}
+ to  {transform:scale(1);opacity:1}}</code></pre>
+          <h3 style="margin:18px 0 12px">3 · 巨标题气场(靠参数不靠字重)</h3>
+          <pre><code><span class="tok-p">.h-display</span>{font-weight:<span class="tok-n">600</span>;
+ font-size:<span class="tok-n">clamp</span>(40px,7vw,96px);
+ letter-spacing:<span class="tok-n">-.048em</span>;  <span class="tok-c">/* 96px 实测 -4.6px */</span>
+ line-height:<span class="tok-n">1.04</span>}          <span class="tok-c">/* 贴合行高 */</span></code></pre>
+        </div>
+      </div>
+      <div class="grid g2" style="margin-top:22px">
+        <div>
+          <h3 style="margin-bottom:12px">选型决策</h3>
+          <ul class="checklist">
+            <li><b>高亮关键词</b> 纯 CSS 胶囊加 <code>::before</code> 圆点加 <code>popIn</code> 回弹;零依赖可无限套</li>
+            <li><b>手绘头像 / 插画</b> 内联 SVG 路径;矢量可缩放上色,体积小</li>
+            <li><b>漂浮小图标</b> SVG 加 15 到 25s 超长 transform 循环,当环境层不抢戏</li>
+            <li><b>分块</b> 纯白底加发丝线加暖灰卡;滚动导航加投影,不用毛玻璃</li>
+            <li><b>强调色</b> 只一枚蓝给 CTA,活力交给高亮糖果色</li>
+          </ul>
+        </div>
+        <div>
+          <h3 style="margin-bottom:12px">工程坑</h3>
+          <ul class="checklist">
+            <li><b>暖灰不是纯灰</b> <code>#f9f9f8</code> 而非 <code>#f9f9f9</code>,这是 “亲和” 的隐形来源</li>
+            <li><b>底是纯白不是暖白</b> Notion 实测 <code>#fff</code>,别照搬别站的暖白</li>
+            <li><b>忍住第二枚强调色</b> 需要色彩时用高亮胶囊,别扩张 CTA 蓝的用途</li>
+            <li><b>尊重</b> <code>prefers-reduced-motion</code> 关掉漂浮、回弹与慢循环</li>
+          </ul>
+        </div>
+      </div>
+      <div class="callout warn" style="margin-top:22px">
+        <h3>字体授权</h3>
+        <p class="dim" style="margin-top:8px">本页已接入从 notion.com 提取的真实字体并自托管(<code>@font-face</code>):<b>NotionInter</b>(标题 / 正文,400 / 500 / 600 / 700)与 <b>iA Writer Mono</b>(等宽,400 / 700);CDN 上的 Inter、IBM Plex Mono 降为兜底。<b>Lyon Text</b>(衬线)本轮未接入,仍以开源 <b>Newsreader</b> 临摹;<b>Permanent Marker</b> 用 Google Fonts 同名开源版。须注意:NotionInter(定制)、Lyon Text、iA Writer Mono 为商业 / 定制字体,此处自托管仅供研究复刻比对,<b>生产落地需自购或自定制授权</b>。文件与出处见 <code>real-assets/manifest.json</code>。</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 09 · PROVENANCE -->
+  <section id="prov">
+    <div class="wrap">
+      <div class="sec-head">
+        <div class="eyebrow">09 — 方法与出处</div>
+        <h2>每个数值从哪来,什么是实锤、什么是推断</h2>
+      </div>
+      <div class="grid g2">
+        <div>
+          <dl class="prov">
+            <dt>提取方法</dt>
+            <dd>用 Playwright 打开真实页面读取关键节点的浏览器计算样式(computed),同时服务端抓取全部 12 个样式表原文(约 1.5MB)做正则统计,汇总高频色、缓动曲线、时长、圆角、字体族、<code>@keyframes</code> 名与 CSS 变量。服务端抓取绕开 CORS,能读跨域样式表全文。</dd>
+            <dt>实锤(源自抽取)</dt>
+            <dd>基底与文字色、大标题参数(96px,600,-4.6px,100px)、暖灰阶与红橙阶、青与琥珀与橙与紫与红等高亮色、完整 <code>--color-blue-*</code> 与 <code>--color-green-*</code> 阶、<code>--accent:#62aef0</code>、缓动曲线(16 条原始声明,归一 11 条)与时长档、圆角与阴影 token 及频次、栅格与导航高、媒体清单与框架、加载字体清单。本轮已把真实 <b>NotionInter</b>、<b>iA Writer Mono</b> 字体与真实 <b>hero / Agent 视频</b>接入本页(见 <code>real-assets/manifest.json</code>)。</dd>
+            <dt>推断 / 观察(非抽取)</dt>
+            <dd>Hero 绿色 “Ship” 胶囊的像素级精确绿值(本页改用真实 <code>--color-green</code> 阶的 <code>#d0f4d8 / #1aae39</code> 近似)、bento 卡的大色块背景色、涂鸦头像与漂浮图标的具体形象(SVG 为致敬性重绘)。CTA 主蓝已由上一轮的推断值更正为真实蓝阶 <code>#097fe8 / #0075de</code>,不再是推断项。</dd>
+          </dl>
+        </div>
+        <div>
+          <div class="callout blue">
+            <h3>高频色的归属要当心</h3>
+            <p class="dim" style="margin-top:8px">样式表高频色混入了第三方内嵌资源的颜色(Google 系 <code>#1a73e8</code>、Atlassian 系 <code>#0052cc</code> 等),不能一律当作 Notion 品牌色。第二轮已逐一在真实 CSS 中验证:<code>#1a73e8</code>、<code>#0052cc</code> 在 Notion 自有样式表里零命中,确系第三方,已从品牌色中剔除。</p>
+          </div>
+          <div class="callout" style="margin-top:14px">
+            <h3>本页动效 = Notion 自己的曲线</h3>
+            <p class="dim" style="margin-top:8px">高亮胶囊生成器用 <code>popIn</code> 回弹曲线,缓动实验台逐条重放六条主曲线,漂浮图标用 18 到 26s 超长循环,按钮反馈用 <code>0.15s</code>。签名效果全以 CSS 与内联 SVG 复现,不引外部依赖、不烧文字进图片。全部原始值见 <code>../_data/notion.json</code>。</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="wrap">
+      Notion 设计解构 —— 真实抽取自 <b>notion.com</b>(Playwright 计算样式加样式表全文),供内部研究与复刻参考<br />
+      第二轮已接入真实字体(NotionInter / iA Writer Mono)与真实视频(hero / Agent),清单见 <b>real-assets/manifest.json</b>;商业 / 定制字体与品牌 logo 仅作研究比对,数值以抽取为准。
+    </div>
+  </footer>
+</main>
+
+<div class="copybar" id="copybar" role="status" aria-live="polite"><span class="d"></span>已复制</div>
+
+<script>
+(function(){
+  var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  /* 尊重 prefers-reduced-motion:关掉真实视频的自动播放 */
+  if(reduce){[].forEach.call(document.querySelectorAll('video[autoplay]'),function(v){try{v.removeAttribute('autoplay');v.pause();}catch(e){}});}
+
+  /* nav shadow on scroll (真实 navShadowScrolled 行为) */
+  var nav=document.getElementById('nav');
+  function onScroll(){nav.classList.toggle('stuck',scrollY>8);}
+  onScroll(); addEventListener('scroll',onScroll,{passive:true});
+
+  /* ---------- 手绘涂鸦头像(内联 SVG)---------- */
+  var faces=[
+    // 短发女生 · 蓝环
+    {ring:'#097fe8',svg:'<path d="M13 21c-3-1-5-4-5-8 0-1 0-2 .4-3M35 21c3-1 5-4 5-8 0-4-1-6-3-6"/><path d="M14 12c1-4 5-7 10-7s9 3 10 7"/><circle cx="19" cy="24" r="1.6" style="fill:#111;stroke:none"/><circle cx="29" cy="24" r="1.6" style="fill:#111;stroke:none"/><path d="M20 31c2 1.6 6 1.6 8 0"/>'},
+    // 卷毛 · 黑环
+    {ring:'#111111',svg:'<path d="M16 14c-3-3-1-7 2-7 1-3 6-3 7 0 4-1 6 2 4 5"/><path d="M15 15c-1 4-1 9 2 13 3 3 9 3 12 0 3-3 3-8 2-12"/><circle cx="20" cy="25" r="1.6" style="fill:#111;stroke:none"/><circle cx="29" cy="25" r="1.6" style="fill:#111;stroke:none"/><path d="M21 31c2 1.4 5 1.4 7 0"/>'},
+    // 路标 · 橙环
+    {ring:'#ff6522',svg:'<path d="M24 8v30"/><path d="M14 13h16l4 4-4 4H14z" style="fill:#ffe9d3"/><path d="M34 24H18l-4 4 4 4h16z" style="fill:#ffe9d3"/>'},
+    // 扎发带 · 黄环
+    {ring:'#ffb600',svg:'<path d="M14 18c1-6 5-9 10-9s9 3 10 9"/><path d="M13 17h22" stroke-width="3"/><circle cx="20" cy="26" r="1.6" style="fill:#111;stroke:none"/><circle cx="29" cy="26" r="1.6" style="fill:#111;stroke:none"/><path d="M22 32c1.6 1 3.4 1 5 0"/>'},
+    // 简笔脸 · 黑环
+    {ring:'#111111',svg:'<path d="M14 20c0-6 4-10 10-10s10 4 10 10"/><path d="M17 27c.6 1.2 2 1.2 2.6 0"/><path d="M28.4 27c.6 1.2 2 1.2 2.6 0"/><path d="M19 33c3 2 7 2 10 0"/>'},
+    // 文件夹机器人 · 蓝环
+    {ring:'#097fe8',svg:'<path d="M11 17l2-3h8l2 3h13v16a2 2 0 01-2 2H13a2 2 0 01-2-2z" style="fill:#e6f3fe"/><circle cx="21" cy="26" r="1.7" style="fill:#111;stroke:none"/><circle cx="30" cy="26" r="1.7" style="fill:#111;stroke:none"/><path d="M22 30h6"/>'},
+    // 戴眼镜 · 红环
+    {ring:'#f64932',svg:'<path d="M15 16c2-4 6-6 9-6s7 2 9 6"/><circle cx="19" cy="25" r="4"/><circle cx="30" cy="25" r="4"/><path d="M23 25h4"/><path d="M20 33c2.6 1.6 5.4 1.6 8 0"/>'}
+  ];
+  function drawFaces(id){
+    var el=document.getElementById(id); if(!el)return; var h='';
+    faces.forEach(function(f){
+      h+='<div class="doodle" style="border:3px solid '+f.ring+'"><svg viewBox="0 0 48 48" fill="none" stroke="#111" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">'+f.svg+'</svg></div>';
+    });
+    el.innerHTML=h;
+  }
+  drawFaces('doodleRow'); drawFaces('doodleRow2');
+
+  /* ---------- swatches ---------- */
+  function sw(list,el){
+    var h=document.getElementById(el),s='';
+    list.forEach(function(c){
+      var chip = c.two
+        ? '<div class="chipc two"><i style="background:'+c.two[0]+'"></i><i style="background:'+c.two[1]+'"></i></div>'
+        : '<div class="chipc" style="background:'+c.bg+';'+(c.br?'box-shadow:inset 0 0 0 1px var(--line)':'')+'"></div>';
+      var bcls = c.badge==='实锤'?'real':(c.badge==='第三方'?'third':'guess');
+      var badge = c.badge ? '<span class="badge '+bcls+'">'+c.badge+'</span>' : '';
+      s+='<div class="sw" data-hex="'+c.copy+'" tabindex="0" role="button" aria-label="复制 '+c.copy+'">'+chip+
+         '<div class="meta"><div class="name">'+c.name+badge+'</div><div class="hex">'+c.hex+'</div><div class="role">'+c.role+'</div></div></div>';
+    });
+    h.innerHTML=s;
+  }
+  sw([
+    {name:'背景白',hex:'#ffffff',copy:'#ffffff',bg:'#ffffff',br:1,role:'页面底 · 纯白',badge:'实锤'},
+    {name:'主文字',hex:'rgba(0,0,0,.95)',copy:'rgba(0,0,0,.95)',bg:'rgba(0,0,0,.95)',role:'近黑非纯黑',badge:'实锤'},
+    {name:'发丝线',hex:'rgb(0 0 0/8%)',copy:'rgb(0 0 0/8%)',two:['#ffffff','#ececea'],role:'边框 --border-color',badge:'实锤'},
+    {name:'gray-100',hex:'#f9f9f8',copy:'#f9f9f8',bg:'#f9f9f8',br:1,role:'浅底 · 暖',badge:'实锤'},
+    {name:'gray-200',hex:'#f6f5f4',copy:'#f6f5f4',bg:'#f6f5f4',br:1,role:'分隔带 / 卡底',badge:'实锤'},
+    {name:'gray-300',hex:'#dfdcd9',copy:'#dfdcd9',bg:'#dfdcd9',role:'描边灰',badge:'实锤'},
+    {name:'gray-500',hex:'#78736f',copy:'#78736f',bg:'#78736f',role:'中灰',badge:'实锤'},
+    {name:'gray-900',hex:'#191918',copy:'#191918',bg:'#191918',role:'最深暖灰',badge:'实锤'}
+  ],'sw-base');
+  sw([
+    {name:'绿 · Ship',hex:'#d0f4d8 → #1aae39',copy:'#1aae39',two:['#d0f4d8','#1aae39'],role:'Hero 招牌胶囊 · 真实 --color-green 阶',badge:'实锤'},
+    {name:'青 · teal',hex:'#ddfcfa → #03c1ba',copy:'#03c1ba',two:['#ddfcfa','#03c1ba'],role:'高亮 / 图标',badge:'实锤'},
+    {name:'琥珀 · amber',hex:'#fff4cb → #ffb600',copy:'#ffb600',two:['#fff4cb','#ffb600'],role:'高亮 / bento',badge:'实锤'},
+    {name:'橙 · orange',hex:'#ffe9d3 → #ff6522',copy:'#ff6522',two:['#ffe9d3','#ff6522'],role:'高亮 / bento',badge:'实锤'},
+    {name:'紫 · purple',hex:'#f7e5ff → #a361ff',copy:'#a361ff',two:['#f7e5ff','#a361ff'],role:'高亮 / agent',badge:'实锤'},
+    {name:'红 · red-500',hex:'#fef3f1 → #f64932',copy:'#f64932',two:['#fef3f1','#f64932'],role:'高亮 / 警示',badge:'实锤'}
+  ],'sw-hl');
+  sw([
+    {name:'blue-400',hex:'#62aef0',copy:'#62aef0',bg:'#62aef0',role:'--accent · 站点变量实测',badge:'实锤'},
+    {name:'blue-500',hex:'#097fe8',copy:'#097fe8',bg:'#097fe8',role:'CTA 主蓝 · 本页采用',badge:'实锤'},
+    {name:'blue-600',hex:'#0075de',copy:'#0075de',bg:'#0075de',role:'CTA 悬停 · 更深',badge:'实锤'},
+    {name:'blue-700',hex:'#005bab',copy:'#005bab',bg:'#005bab',role:'按下 · 最深蓝',badge:'实锤'},
+    {name:'blue-200',hex:'#e6f3fe',copy:'#e6f3fe',bg:'#e6f3fe',br:1,role:'次级软蓝底 · Request a demo',badge:'实锤'},
+    {name:'#1a73e8(非品牌)',hex:'#1a73e8',copy:'#1a73e8',bg:'#1a73e8',role:'topHex 15 次 · Google 系第三方,已剔除',badge:'第三方'}
+  ],'sw-blue');
+
+  /* copy on click / keyboard */
+  var bar=document.getElementById('copybar'),t;
+  function copy(txt){
+    try{navigator.clipboard&&navigator.clipboard.writeText(txt);}catch(e){}
+    bar.innerHTML='<span class="d"></span>已复制 '+txt; bar.classList.add('show');
+    clearTimeout(t); t=setTimeout(function(){bar.classList.remove('show');},1300);
+  }
+  document.addEventListener('click',function(e){
+    var s=e.target.closest('.sw'); if(s){copy(s.getAttribute('data-hex'));}
+  });
+  document.addEventListener('keydown',function(e){
+    if(e.key!=='Enter'&&e.key!==' ')return;
+    var s=e.target.closest('.sw'); if(s){e.preventDefault(); copy(s.getAttribute('data-hex')); return;}
+    var ea=e.target.closest('.ease'); if(ea){e.preventDefault(); play(+ea.getAttribute('data-i'));}
+  });
+
+  /* ---------- easing lab ---------- */
+  var curves=[
+    {n:'工作马 · 柔顺进出',v:'.645, .045, .355, 1',p:[.645,.045,.355,1],d:'样式表出现最多(5 次)。位移与淡入淡出的默认曲线,顺而不飘。'},
+    {n:'强进出',v:'.86, 0, .07, 1',p:[.86,0,.07,1],d:'起步慢、中段猛、收尾稳,用于大幅度有力度的切换。'},
+    {n:'对称进出',v:'.76, 0, .24, 1',p:[.76,0,.24,1],d:'两端对称的加减速,用于面板展开与收起。'},
+    {n:'回弹越界 · popIn',v:'.175, .885, .32, 1.275',p:[.175,.885,.32,1.275],d:'第四控制点 1.275>1,元素先弹过头再收回。签名俏皮手感——高亮胶囊与头像都用它。'},
+    {n:'平滑收尾',v:'.16, 1, .3, 1',p:[.16,1,.3,1],d:'Expo-out 感,极快冲出后长尾沉降,最 “顺” 的那种。'},
+    {n:'正弦进出',v:'.45, 0, .55, 1',p:[.45,0,.55,1],d:'轻柔对称往复,用于细微的呼吸式动画。'}
+  ];
+  var lab=document.getElementById('easelab'),html='';
+  curves.forEach(function(c,i){
+    html+='<div class="ease" data-i="'+i+'" tabindex="0" role="button"><div class="ease-top"><h3>'+c.n+'</h3><span class="curveval">cubic-bezier('+c.v+')</span></div>'+
+      '<div class="desc">'+c.d+'</div><div class="ease-viz"><canvas id="cvz'+i+'" width="96" height="96"></canvas>'+
+      '<div class="track"><div class="runner-wrap"><div class="runner" id="run'+i+'"></div></div>'+
+      '<div class="replay">点击重放 · transform '+(i===3?'340ms':'420ms')+'</div></div></div></div>';
+  });
+  lab.innerHTML=html;
+  function drawCurve(i,p){
+    var c=document.getElementById('cvz'+i); if(!c)return; var g=c.getContext('2d'),S=96,pad=16;
+    var minY=Math.min(0,p[1],p[3]), maxY=Math.max(1,p[1],p[3]);
+    function X(t){return pad+t*(S-2*pad);}
+    function Y(v){return (S-pad)-((v-minY)/(maxY-minY))*(S-2*pad);}
+    g.clearRect(0,0,S,S);
+    g.strokeStyle='rgba(0,0,0,.10)'; g.lineWidth=1;
+    g.beginPath();g.moveTo(X(0),Y(0));g.lineTo(X(1),Y(0));g.moveTo(X(0),Y(1));g.lineTo(X(1),Y(1));g.stroke();
+    g.strokeStyle='#097fe8'; g.lineWidth=2; g.beginPath();
+    for(var t=0;t<=1.001;t+=0.02){
+      var s=t, y=3*Math.pow(1-s,2)*s*p[1]+3*(1-s)*s*s*p[3]+s*s*s;
+      var xx=3*Math.pow(1-s,2)*s*p[0]+3*(1-s)*s*s*p[2]+s*s*s;
+      if(t===0)g.moveTo(X(xx),Y(y)); else g.lineTo(X(xx),Y(y));
+    }
+    g.stroke();
+    g.fillStyle='#1aae39'; g.beginPath();g.arc(X(0),Y(0),2.6,0,7);g.fill();
+    g.beginPath();g.arc(X(1),Y(1),2.6,0,7);g.fill();
+  }
+  function play(i){
+    var r=document.getElementById('run'+i),wrap=r.parentElement,dist=Math.round((wrap.clientWidth-r.clientWidth-12));
+    var dur=(i===3?340:420);
+    r.style.transition='none'; r.style.transform='translateX(0)';
+    void r.offsetWidth;
+    r.style.transition='transform '+dur+'ms cubic-bezier('+curves[i].p.join(',')+')';
+    r.style.transform='translateX('+dist+'px)';
+  }
+  curves.forEach(function(c,i){ drawCurve(i,c.p); if(!reduce) setTimeout(function(){play(i);},420+i*140); });
+  lab.addEventListener('click',function(e){var e2=e.target.closest('.ease'); if(e2) play(+e2.getAttribute('data-i'));});
+
+  /* ---------- duration ladder(对数刻度)---------- */
+  var durs=[['75ms',75,'最短微反馈'],['--dur-btn · 150ms',150,'按钮 background'],['200ms',200,'悬停 / 焦点'],['250ms',250,'小位移'],['1s',1000,'入场淡入'],['2s',2000,'较慢过渡'],['15s',15000,'环境漂浮'],['25s',25000,'背景慢循环']];
+  var lo=Math.log(60),hi=Math.log(25000),dh='';
+  durs.forEach(function(d){
+    var w=Math.max(7,(Math.log(d[1])-lo)/(hi-lo)*100);
+    var val=d[1]>=1000?(d[1]/1000)+'s':d[1]+'ms';
+    dh+='<div class="durrow"><span class="lab">'+d[0]+'</span><div class="durbar" style="width:'+w+'%"></div><span class="val">'+val+'</span></div>';
+  });
+  document.getElementById('durs').innerHTML=dh;
+
+  /* ---------- radius scale ---------- */
+  var rads=[['--r-200','4px',4,'按钮实测'],['--r-300','5px',5,'次高频'],['--r-500','8px',8,''],['--r-600','10px',10,'高频'],['--r-700','12px',12,'最高频 · 卡片'],['--r-800','14px',14,''],['--r-900','16px',16,'大卡'],['round','9999px',24,'药丸 / 胶囊'],['3px','3px',3,''],['50%','50%',26,'圆形头像']];
+  var rh='';
+  rads.forEach(function(r){
+    var hot = (r[0]==='--r-700');
+    var br = r[1]==='50%'?'50%':(r[1]==='9999px'?'26px':r[2]+'px');
+    rh+='<div class="rad'+(hot?' hot':'')+'"><div class="box" style="border-radius:'+br+'"></div><div class="rn">'+r[0]+'</div><div class="rv">'+r[1]+(r[3]?' · '+r[3]:'')+'</div></div>';
+  });
+  document.getElementById('radscale').innerHTML=rh;
+
+  /* ---------- pill builder(签名交互)---------- */
+  var pillMap={
+    g:['#d0f4d8','#1aae39'],t:['#ddfcfa','#03c1ba'],a:['#fff4cb','#ffb600'],
+    o:['#ffe9d3','#ff6522'],p:['#f7e5ff','#a361ff'],r:['#fef3f1','#f64932'],b:['#e6f3fe','#097fe8']
+  };
+  var order=['g','t','a','o','p','r','b'], cur='g';
+  var dotsEl=document.getElementById('pillDots');
+  order.forEach(function(k,idx){
+    var d=document.createElement('button');
+    d.className='cdot'; d.setAttribute('aria-pressed',k===cur?'true':'false');
+    d.setAttribute('aria-label','糖果色 '+k);
+    d.style.background=pillMap[k][0];
+    d.innerHTML='<i style="background:'+pillMap[k][1]+'"></i>';
+    d.addEventListener('click',function(){ cur=k; setColor(k); [].forEach.call(dotsEl.children,function(c){c.setAttribute('aria-pressed','false');}); d.setAttribute('aria-pressed','true'); repop(); });
+    dotsEl.appendChild(d);
+  });
+  var pillOut=document.getElementById('pillOut'), pillIn=document.getElementById('pillIn'),
+      cssFill=document.getElementById('cssFill'), cssDot=document.getElementById('cssDot');
+  function setColor(k){ pillOut.className='hl '+k+' pop'; cssFill.textContent=pillMap[k][0]; cssDot.textContent=pillMap[k][1]; }
+  function repop(){ if(reduce)return; pillOut.classList.remove('pop'); void pillOut.offsetWidth; pillOut.classList.add('pop'); }
+  pillIn.addEventListener('input',function(){ pillOut.textContent=pillIn.value||'Ship'; repop(); });
+  setColor('g');
+})();
+</script>
+
+<style>.dt-omit{display:flex;align-items:center;justify-content:center;min-height:96px;background:repeating-linear-gradient(45deg,transparent,transparent 9px,rgba(128,128,128,.07) 9px,rgba(128,128,128,.07) 18px);border:1px dashed rgba(128,128,128,.32);border-radius:8px;color:#8b8b8b;font:11px/1.5 ui-monospace,SFMono-Regular,Menlo,monospace;text-align:center;padding:14px;box-sizing:border-box}</style>
+<script>/* public build: original site media removed for copyright; layout preserved, real look kept in the as-seen screenshots */
+(function(){
+ var R=/real-assets\/(image|video|audio|fonts|source|lottie)\/|\.(mp4|webm|mov|mp3|wav|woff2?|otf|ttf)(\?|$)/i;
+ function box(w,h){var d=document.createElement('div');d.className='dt-omit';d.textContent='原站素材已按版权移除,见原站';if(w)d.style.width=w;if(h)d.style.minHeight=h;return d;}
+ document.querySelectorAll('video').forEach(function(v){
+   var srcs=[].map.call(v.querySelectorAll('source'),function(s){return s.getAttribute('src')||''});
+   var bad=R.test(v.getAttribute('src')||'')||srcs.some(function(s){return R.test(s)});
+   if(!bad)return;
+   v.removeAttribute('src');v.removeAttribute('autoplay');v.querySelectorAll('source').forEach(function(s){s.remove()});
+   if(!v.getAttribute('poster')){var b=box(v.style.width||'',((v.clientHeight||160))+'px');v.parentNode&&v.parentNode.replaceChild(b,v);}
+ });
+ document.querySelectorAll('img').forEach(function(im){
+   if(R.test(im.getAttribute('src')||'')){var b=box((im.getAttribute('width')||'')+(im.getAttribute('width')?'px':''),((im.getAttribute('height')||im.clientHeight||120))+'px');im.parentNode&&im.parentNode.replaceChild(b,im);}
+ });
+})();
+</script>
+
+</body>
+</html>

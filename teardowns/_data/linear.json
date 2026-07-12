@@ -1,0 +1,367 @@
+{
+  "site": "linear",
+  "url": "https://linear.app",
+  "probe": {
+    "title": "Linear – The system for product development",
+    "lang": "en",
+    "body": {
+      "background-color": "rgb(8, 9, 10)",
+      "color": "rgb(247, 248, 248)",
+      "font-family": "\"Inter Variable\", \"SF Pro Display\", -apple-system, \"system-ui\", \"Segoe UI\", Roboto, Oxygen, Ubuntu, Cantarell, \"Open Sans\", \"Helvetica Neue\", sans-serif"
+    },
+    "h1": {
+      "text": "The product development system for teams and agentsThe product developmentsystem for teams and agentsThe product develop",
+      "font-family": "\"Inter Variable\", \"SF Pro Display\", -apple-system, \"system-ui\", \"Segoe UI\", Roboto, Oxygen, Ubuntu, Cantarell, \"Open Sans\", \"Helvetica Neue\", sans-serif",
+      "font-size": "64px",
+      "font-weight": "510",
+      "letter-spacing": "-1.408px",
+      "line-height": "64px",
+      "font-style": "normal",
+      "color": "rgb(247, 248, 248)"
+    },
+    "nav": {
+      "background-color": "rgba(0, 0, 0, 0)",
+      "backdrop-filter": "blur(20px)",
+      "font-family": "\"Inter Variable\", \"SF Pro Display\", -apple-system, \"system-ui\", \"Segoe UI\", Roboto, Oxygen, Ubuntu, Cantarell, \"Open Sans\", \"Helvetica Neue\", sans-serif"
+    },
+    "btn": {
+      "background-color": "rgba(0, 0, 0, 0)",
+      "color": "rgb(138, 143, 152)",
+      "border-radius": "9999px",
+      "transition": "color 0.1s cubic-bezier(0.25, 0.46, 0.45, 0.94), background 0.1s cubic-bezier(0.25, 0.46, 0.45, 0.94)",
+      "font-family": "\"Inter Variable\", \"SF Pro Display\", -apple-system, \"system-ui\", \"Segoe UI\", Roboto, Oxygen, Ubuntu, Cantarell, \"Open Sans\", \"Helvetica Neue\", sans-serif"
+    },
+    "accentGuess": "#7170ff",
+    "libs": [],
+    "scriptHints": [],
+    "media": {
+      "video": 0,
+      "canvas": 0,
+      "svg": 180,
+      "img": 32,
+      "preloadVideo": 0,
+      "preloadFont": 1
+    },
+    "fontsLoaded": [
+      "Inter Variable",
+      "Berkeley Mono"
+    ]
+  },
+  "cssFetched": 12,
+  "tokens": {
+    "customProps": {
+      "--toast-icon-margin-start": "-3px",
+      "--toast-icon-margin-end": "4px",
+      "--toast-svg-margin-start": "-1px",
+      "--toast-svg-margin-end": "0px",
+      "--toast-button-margin-start": "auto",
+      "--toast-button-margin-end": "0",
+      "--toast-close-button-start": "0",
+      "--toast-close-button-end": "unset",
+      "--toast-close-button-transform": "translate(-35%, -35%)",
+      "--gray1": "hsl(0, 0%, 99%)",
+      "--gray2": "hsl(0, 0%, 97.3%)",
+      "--gray3": "hsl(0, 0%, 95.1%)",
+      "--gray4": "hsl(0, 0%, 93%)",
+      "--gray5": "hsl(0, 0%, 90.9%)",
+      "--gray6": "hsl(0, 0%, 88.7%)",
+      "--gray7": "hsl(0, 0%, 85.8%)",
+      "--gray8": "hsl(0, 0%, 78%)",
+      "--gray9": "hsl(0, 0%, 56.1%)",
+      "--gray10": "hsl(0, 0%, 52.3%)",
+      "--gray11": "hsl(0, 0%, 43.5%)",
+      "--gray12": "hsl(0, 0%, 9%)",
+      "--border-radius": "8px",
+      "--y": "translateY(100%)",
+      "--lift-amount": "calc(var(--lift) * var(--gap))",
+      "--lift": "1",
+      "--scale": "var(--toasts-before) * 0.05 + 1",
+      "--normal-bg": "#fff",
+      "--normal-border": "var(--gray4)",
+      "--normal-text": "var(--gray12)",
+      "--success-bg": "hsl(143, 85%, 96%)",
+      "--success-border": "hsl(145, 92%, 87%)",
+      "--success-text": "hsl(140, 100%, 27%)",
+      "--info-bg": "hsl(208, 100%, 97%)",
+      "--info-border": "hsl(221, 91%, 93%)",
+      "--info-text": "hsl(210, 92%, 45%)",
+      "--warning-bg": "hsl(49, 100%, 97%)",
+      "--warning-border": "hsl(49, 91%, 84%)",
+      "--warning-text": "hsl(31, 92%, 45%)",
+      "--error-bg": "hsl(359, 100%, 97%)",
+      "--error-border": "hsl(359, 100%, 94%)",
+      "--error-text": "hsl(360, 100%, 45%)",
+      "--normal-bg-hover": "hsl(0, 0%, 12%)",
+      "--normal-border-hover": "hsl(0, 0%, 25%)",
+      "--size": "16px",
+      "--color": "var(--color-brand-bg)",
+      "--grid-gap": "0",
+      "--offset": "16px",
+      "--grid-columns": "12",
+      "--button-corner-radius": "var(--radius-rounded)",
+      "--icon-replacement-color": "currentColor",
+      "--button-height": "24px",
+      "--button-icon-size": "12px",
+      "--button-font-size": "12px",
+      "--button-padding": "0 10px",
+      "--button-gap": "4px",
+      "--kbd-size": "16px",
+      "--kbd-offset": "-6px",
+      "--kbd-gap": "6px",
+      "--kbd-bg": "var(--color-bg-tertiary)",
+      "--kbd-text": "var(--color-bg-primary)",
+      "--header-border": "transparent",
+      "--header-bg": "transparent",
+      "--anchor-glass-bg": "#ffffff14",
+      "--duration": ".18s",
+      "--anim-amount": "48px",
+      "--description": "var(--color-text-tertiary)",
+      "--inner-card-border": "1px"
+    },
+    "topHex": [
+      {
+        "hex": "#000",
+        "n": 24
+      },
+      {
+        "hex": "#fff",
+        "n": 4
+      },
+      {
+        "hex": "#3f3f3f",
+        "n": 1
+      },
+      {
+        "hex": "#e8e8e8",
+        "n": 1
+      },
+      {
+        "hex": "#3b3d45",
+        "n": 1
+      },
+      {
+        "hex": "#08090a",
+        "n": 1
+      }
+    ],
+    "cubicBezier": [],
+    "fontFamily": [
+      {
+        "v": "var(--font-monospace)",
+        "n": 65
+      },
+      {
+        "v": "ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica Neue,Arial,Noto Sans,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol,Noto Color Emoji",
+        "n": 1
+      },
+      {
+        "v": "ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, \"Noto Sans\", sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+        "n": 1
+      }
+    ],
+    "durations": [
+      {
+        "v": "3200ms",
+        "n": 75
+      },
+      {
+        "v": "2800ms",
+        "n": 50
+      },
+      {
+        "v": "1600ms",
+        "n": 50
+      },
+      {
+        "v": "18s",
+        "n": 5
+      },
+      {
+        "v": "4s",
+        "n": 4
+      },
+      {
+        "v": "2s",
+        "n": 4
+      },
+      {
+        "v": "0.4s",
+        "n": 4
+      },
+      {
+        "v": "0.2s",
+        "n": 3
+      },
+      {
+        "v": "1.2s",
+        "n": 2
+      },
+      {
+        "v": "22s",
+        "n": 2
+      },
+      {
+        "v": "3s",
+        "n": 1
+      },
+      {
+        "v": "1s",
+        "n": 1
+      },
+      {
+        "v": "5s",
+        "n": 1
+      },
+      {
+        "v": "0.3s",
+        "n": 1
+      },
+      {
+        "v": "0.1s",
+        "n": 1
+      },
+      {
+        "v": "0.5s",
+        "n": 1
+      }
+    ],
+    "radii": [
+      {
+        "v": "6px",
+        "n": 7
+      },
+      {
+        "v": "8px",
+        "n": 5
+      },
+      {
+        "v": "4px",
+        "n": 4
+      },
+      {
+        "v": "5px",
+        "n": 3
+      },
+      {
+        "v": "var(--border-radius)",
+        "n": 2
+      },
+      {
+        "v": "50%",
+        "n": 2
+      },
+      {
+        "v": "inherit",
+        "n": 2
+      },
+      {
+        "v": "var(--edge-highlight-radius,inherit)",
+        "n": 2
+      },
+      {
+        "v": "var(--rounded-full)",
+        "n": 1
+      },
+      {
+        "v": "var(--button-corner-radius)",
+        "n": 1
+      },
+      {
+        "v": "var(--radius-rounded)",
+        "n": 1
+      },
+      {
+        "v": "10px",
+        "n": 1
+      },
+      {
+        "v": "14px",
+        "n": 1
+      }
+    ],
+    "keyframes": [
+      {
+        "v": "grid-dot-0-0-agent",
+        "n": 3
+      },
+      {
+        "v": "grid-dot-0-1-agent",
+        "n": 3
+      },
+      {
+        "v": "grid-dot-0-2-agent",
+        "n": 3
+      },
+      {
+        "v": "grid-dot-0-3-agent",
+        "n": 3
+      },
+      {
+        "v": "grid-dot-0-4-agent",
+        "n": 3
+      },
+      {
+        "v": "grid-dot-1-0-agent",
+        "n": 3
+      },
+      {
+        "v": "grid-dot-1-1-agent",
+        "n": 3
+      },
+      {
+        "v": "grid-dot-1-2-agent",
+        "n": 3
+      },
+      {
+        "v": "grid-dot-1-3-agent",
+        "n": 3
+      },
+      {
+        "v": "grid-dot-1-4-agent",
+        "n": 3
+      },
+      {
+        "v": "grid-dot-2-0-agent",
+        "n": 3
+      },
+      {
+        "v": "grid-dot-2-1-agent",
+        "n": 3
+      },
+      {
+        "v": "grid-dot-2-2-agent",
+        "n": 3
+      },
+      {
+        "v": "grid-dot-2-3-agent",
+        "n": 3
+      },
+      {
+        "v": "grid-dot-2-4-agent",
+        "n": 3
+      },
+      {
+        "v": "grid-dot-3-0-agent",
+        "n": 3
+      },
+      {
+        "v": "grid-dot-3-1-agent",
+        "n": 3
+      },
+      {
+        "v": "grid-dot-3-2-agent",
+        "n": 3
+      },
+      {
+        "v": "grid-dot-3-3-agent",
+        "n": 3
+      },
+      {
+        "v": "grid-dot-3-4-agent",
+        "n": 3
+      }
+    ],
+    "cssBytes": 256591
+  },
+  "ok": true
+}

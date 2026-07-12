@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Questions and discussion
+    url: https://github.com/YunyueLi/design-teardowns/discussions
+    about: Ask questions, share ideas, or discuss the project in Discussions.
+  - name: Project README
+    url: https://github.com/YunyueLi/design-teardowns#readme
+    about: Read the project overview and learn how the gallery works before opening an issue.

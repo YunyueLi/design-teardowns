@@ -1,0 +1,1013 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>ojo 设计解构 — 把星夜叙事拆到可复刻的每一个数值</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<!-- CDN 字体:作真字加载失败时的同名兜底,并提供本地未自托管的 Geist / Geist Mono / 思源黑体宋体 -->
+<link href="https://fonts.googleapis.com/css2?family=Faculty+Glyphic&family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500&family=DM+Serif+Text:ital@0;1&family=Lexend:wght@400;500&family=Georama:wght@500&family=Miss+Fajardose&family=Noto+Serif+SC:wght@500;600;700&family=Noto+Sans+SC:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+  /* ============================================================
+     真实字体 —— 从 ojo.art 提取的自托管字体文件(见 real-assets/manifest.json)。
+     真字优先,同名 Google Fonts 族作 CDN 兜底(排在字体栈其后)。
+     ojo 正文 / UI 的计算字体为 "Geist Sans",站点未在本次抓取中暴露该字体文件,
+     故 Geist / Geist Mono 仍走 Google Fonts —— 用的是真实字体本身,并非近似替身。
+     字重按抽取到的真实 @font-face 对应:Faculty Glyphic 400、Miss Fajardose 400、
+     DM Serif Text 400、Georama 500、Lexend 200–500(可变)。
+     ============================================================ */
+  @font-face{font-family:"Faculty Glyphic Local";src:url('real-assets/fonts/9f4e1a_faculty-glyphic-400-latin.ttf') format('truetype');font-weight:400;font-style:normal;font-display:swap}
+  @font-face{font-family:"Miss Fajardose Local";src:url('real-assets/fonts/949115_miss-fajardose-400-latin.ttf') format('truetype');font-weight:400;font-style:normal;font-display:swap}
+  @font-face{font-family:"DM Serif Text Local";src:url('real-assets/fonts/3c4193_dm-serif-text-400-latin.woff2') format('woff2');font-weight:400;font-style:normal;font-display:swap}
+  @font-face{font-family:"Georama Local";src:url('real-assets/fonts/61fb74_georama-500-latin.woff2') format('woff2');font-weight:500;font-style:normal;font-display:swap}
+  @font-face{font-family:"Lexend Local";src:url('real-assets/fonts/92687c_lexend-200-500-latin.woff2') format('woff2');font-weight:200 500;font-style:normal;font-display:swap}
+  /* ============================================================
+     ojo 设计解构 · Design Teardown
+     视觉语言 = ojo 自己的:深黑加点阵底、暖白奶油标题、明黄强调、
+     星夜蓝油画氛围。标题英文用真字 Faculty Glyphic,中文用思源宋体;
+     UI 正文用 Geist,代码用 Geist Mono。运动全用 ojo 样式表实测的
+     真实缓动 cubic-bezier(.4,0,.2,1) 与 (.16,1,.3,1)。
+     ============================================================ */
+  :root{
+    --black:#000; --bg:#050505; --bg-2:#0a0a0a; --panel:#0d0d0d; --panel-2:#111; --panel-3:#161616;
+    --cream:#fff8eb; --ink:#fff8eb;
+    --ink-2:rgba(255,248,235,.60); --ink-3:rgba(255,248,235,.40); --ink-4:rgba(255,248,235,.24);
+    --yellow:#ffc000; --starry:#5f86a8; --paper:#f4f3f0;
+    --blue:#2d6cdf; --green:#34c759; --lime:#d6ff41; --coral:#ff6b54; --orange:#f97316; --red:#ef4444;
+    --line:rgba(255,248,235,.10); --line-2:rgba(255,248,235,.18);
+    /* 排版 —— 真字优先,同名 CDN 族兜底 */
+    --serif:"Faculty Glyphic Local","Faculty Glyphic","Noto Serif SC",Georgia,serif;
+    --serif-cjk:"Noto Serif SC","Faculty Glyphic Local","Faculty Glyphic",Georgia,serif;
+    --sans:"Geist","Noto Sans SC",-apple-system,system-ui,sans-serif;
+    --mono:"Geist Mono",ui-monospace,"SF Mono",Menlo,monospace;
+    --script:"Miss Fajardose Local","Miss Fajardose",cursive;
+    /* ojo 真实缓动(样式表实测) */
+    --ease-std:cubic-bezier(0.4, 0, 0.2, 1);
+    --ease-out:cubic-bezier(0.16, 1, 0.3, 1);
+    --ease-dec:cubic-bezier(0, 0, 0.2, 1);
+    --ease-quart:cubic-bezier(0.22, 1, 0.36, 1);
+    --ease-std2:cubic-bezier(0.4, 0, 0.15, 1);
+    --micro:.18s; --micro-fast:.12s;
+    /* ojo 真实圆角 */
+    --pill:999px; --r-lg:28px; --r-md:24px; --r-base:8px;
+    --maxw:1080px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{-webkit-font-smoothing:antialiased;scroll-behavior:smooth;scroll-padding-top:80px}
+  body{background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.7;letter-spacing:0;overflow-x:hidden}
+  a{color:inherit;text-decoration:none}
+  ::selection{background:var(--yellow);color:#1a1300}
+  svg{display:block}
+  code,pre,.mono{font-family:var(--mono)}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 32px}
+  @media(max-width:640px){.wrap{padding:0 20px}}
+
+  /* 点阵底纹 —— ojo 空间底纹母题 */
+  .dots{position:fixed;inset:0;z-index:0;pointer-events:none;
+    background-image:radial-gradient(rgba(255,248,235,.05) 1px, transparent 1px);
+    background-size:22px 22px;background-position:-1px -1px}
+
+  .eyebrow{font-family:var(--mono);font-size:11.5px;font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:var(--yellow)}
+  h1,h2,h3{font-family:var(--serif-cjk);font-weight:600;letter-spacing:.005em;line-height:1.18}
+  code{font-size:.9em;color:var(--yellow);background:rgba(255,192,0,.08);border:1px solid rgba(255,192,0,.18);border-radius:5px;padding:1px 6px}
+
+  /* ---------- NAV ---------- */
+  nav{position:fixed;top:0;left:0;right:0;z-index:60;border-bottom:1px solid transparent;transition:background .3s var(--ease-std),border-color .3s var(--ease-std)}
+  nav.stuck{background:rgba(5,5,5,.72);backdrop-filter:blur(18px) saturate(1.2);-webkit-backdrop-filter:blur(18px) saturate(1.2);border-bottom-color:var(--line)}
+  .nav-in{display:flex;align-items:center;height:62px;gap:20px}
+  .brand{display:flex;align-items:center;gap:10px;font-family:var(--sans);font-weight:600;font-size:15px;letter-spacing:.01em;color:var(--cream)}
+  .brand .mark{width:26px;height:26px;flex:none}
+  .navlinks{margin-left:auto;display:flex;gap:2px;font-family:var(--mono);font-size:12px}
+  .navlinks a{color:var(--ink-3);padding:7px 11px;border-radius:var(--r-base);transition:color .2s var(--ease-std),background .2s var(--ease-std)}
+  .navlinks a:hover{color:var(--cream);background:rgba(255,248,235,.06)}
+  .signin{margin-left:12px;font-family:var(--sans);font-weight:600;font-size:13px;color:#1a1300;background:var(--yellow);border:none;border-radius:var(--pill);padding:8px 18px;cursor:pointer;transition:background-color .18s var(--ease-std),transform .12s var(--ease-std)}
+  .signin:hover{background:#ffcf33}.signin:active{transform:scale(.96)}
+  @media(max-width:820px){.navlinks{display:none}}
+
+  /* ---------- HERO ---------- */
+  header{position:relative;min-height:98vh;min-height:98svh;display:flex;align-items:center;overflow:hidden;isolation:isolate;padding:120px 0 90px}
+  .sky{position:absolute;inset:0;z-index:0;overflow:hidden;pointer-events:none}
+  .sky .swirl{position:absolute;inset:-45%;filter:blur(46px) saturate(1.18);opacity:.9;
+    background:
+      radial-gradient(28% 22% at 20% 24%, rgba(255,206,84,.55), transparent 60%),
+      radial-gradient(22% 17% at 60% 16%, rgba(255,206,84,.35), transparent 60%),
+      radial-gradient(20% 15% at 82% 40%, rgba(255,206,84,.28), transparent 60%),
+      radial-gradient(55% 46% at 74% 34%, rgba(43,74,140,.6), transparent 66%),
+      conic-gradient(from 205deg at 33% 36%, #0b1734, #2b4a8c, #12294f, #1a356b, #0b1734);
+    animation:swirl 26s linear infinite}
+  .sky .swirl.b{inset:-55%;filter:blur(70px) saturate(1.1);opacity:.5;animation-duration:38s;animation-direction:reverse;
+    background:radial-gradient(40% 34% at 30% 70%, rgba(95,134,168,.55), transparent 64%),
+      conic-gradient(from 20deg at 66% 64%, #0b1734, #24407c, #0e2247, #0b1734)}
+  @keyframes swirl{to{transform:rotate(360deg)}}
+  .sky .vign{position:absolute;inset:0;background:
+    radial-gradient(120% 90% at 50% 34%, transparent 40%, rgba(5,5,5,.72) 100%),
+    linear-gradient(180deg, rgba(5,5,5,.35), transparent 30%, rgba(5,5,5,.6) 100%)}
+  .stars{position:absolute;inset:0;z-index:0;pointer-events:none}
+  .stars i{position:absolute;width:3px;height:3px;border-radius:50%;background:#fff3cf;
+    box-shadow:0 0 8px 2px rgba(255,224,150,.7);animation:twinkle 4s var(--ease-std) infinite}
+  @keyframes twinkle{0%,100%{opacity:.35;transform:scale(.8)}50%{opacity:1;transform:scale(1.25)}}
+
+  .hero-grid{position:relative;z-index:2;display:grid;grid-template-columns:1.15fr .85fr;gap:40px;align-items:center;width:100%}
+  @media(max-width:900px){.hero-grid{grid-template-columns:1fr;gap:30px}}
+  .hero-in{max-width:640px}
+  h1{font-size:clamp(34px,5.4vw,62px);line-height:1.16;margin-top:18px;font-weight:600;color:var(--cream);letter-spacing:.01em}
+  h1 .hl{color:var(--yellow)}
+  .lede{font-size:clamp(15px,1.5vw,19px);color:var(--ink-2);max-width:56ch;margin-top:22px;line-height:1.65;font-family:var(--sans)}
+  .metabar{display:flex;flex-wrap:wrap;gap:9px;margin-top:28px}
+  .chip{font-family:var(--mono);font-size:11.5px;color:var(--ink-2);border:1px solid var(--line);border-radius:var(--pill);padding:6px 13px;background:rgba(255,248,235,.03)}
+  .chip b{color:var(--yellow);font-weight:500}
+
+  /* 代码叙事(打字机) */
+  .codecard{position:relative;background:linear-gradient(180deg,#080808,#040404);border:1px solid var(--line);border-radius:var(--r-md);overflow:hidden;box-shadow:0 30px 80px -30px rgba(0,0,0,.9)}
+  .codecard .bar{display:flex;align-items:center;gap:7px;padding:12px 15px;border-bottom:1px solid var(--line)}
+  .codecard .bar i{width:10px;height:10px;border-radius:50%;background:#2a2a2a;display:block}
+  .codecard .bar .t{margin-left:8px;font-family:var(--mono);font-size:11px;color:var(--ink-3)}
+  .codecard pre{padding:18px 18px 22px;font-size:12.5px;line-height:1.85;min-height:250px;white-space:pre-wrap;color:#f0c98a;text-shadow:0 0 16px rgba(240,201,138,.28)}
+  .codecard .caret{display:inline-block;width:.55ch;height:1.02em;background:var(--yellow);vertical-align:-2px;margin-left:1px;box-shadow:0 0 10px var(--yellow)}
+  .codecard .cap{padding:11px 16px;border-top:1px solid var(--line);font-size:11.5px;color:var(--ink-3);font-family:var(--sans)}
+  .blink-off .caret{animation:none;opacity:1}
+  .tok-k{color:#c99bff}.tok-s{color:#ffd88a}.tok-f{color:#7fd4ff}.tok-c{color:#7a6a52}
+
+  .scrollcue{position:absolute;left:50%;bottom:22px;transform:translateX(-50%);z-index:2;font-family:var(--mono);font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-4)}
+
+  /* ---------- SECTION ---------- */
+  main{position:relative;z-index:2;background:linear-gradient(180deg,var(--bg),var(--bg-2))}
+  section{padding:92px 0;border-top:1px solid var(--line)}
+  .sec-head{max-width:72ch;margin-bottom:40px}
+  .sec-head h2{font-size:clamp(26px,3.5vw,44px);margin-top:14px;letter-spacing:.01em}
+  .sec-head p{color:var(--ink-2);margin-top:16px;font-size:16.5px;font-family:var(--sans)}
+  h3{font-size:19px;font-weight:600;color:var(--cream)}
+
+  .grid{display:grid;gap:18px}
+  .g2{grid-template-columns:1fr 1fr}.g3{grid-template-columns:repeat(3,1fr)}
+  @media(max-width:820px){.g2,.g3{grid-template-columns:1fr}}
+  .card{border:1px solid var(--line);border-radius:var(--r-lg);padding:22px;background:linear-gradient(180deg,rgba(255,248,235,.025),transparent);transition:border-color .3s var(--ease-std),transform .3s var(--ease-out)}
+  .card:hover{border-color:var(--line-2);transform:translateY(-2px)}
+  .k{font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-3)}
+  .dim{color:var(--ink-2);font-family:var(--sans)}.faint{color:var(--ink-3);font-family:var(--sans)}
+  p+p{margin-top:10px}
+
+  pre.code{background:#080808;border:1px solid var(--line);border-radius:12px;padding:16px 18px;overflow-x:auto;font-size:12.5px;line-height:1.85;color:var(--ink-2)}
+  pre.code b{color:var(--yellow);font-weight:400}
+  pre.code .g{color:var(--starry)}pre.code .c{color:var(--ink-4)}
+
+  /* THESIS split */
+  .split{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+  @media(max-width:820px){.split{grid-template-columns:1fr}}
+  .surface{border:1px solid var(--line);border-radius:var(--r-lg);padding:26px;position:relative;overflow:hidden}
+  .surface.a{background:radial-gradient(120% 90% at 20% 0,rgba(43,74,140,.28),transparent 55%),radial-gradient(80% 80% at 100% 100%,rgba(255,192,0,.06),transparent 60%)}
+  .surface.b{background:radial-gradient(120% 90% at 80% 0,rgba(244,243,240,.06),transparent 55%)}
+  .tag{font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--starry)}
+  .surface.b .tag{color:var(--ink-3)}
+  .surface ul{list-style:none;margin-top:16px;display:grid;gap:11px}
+  .surface li{position:relative;padding-left:20px;font-size:14.5px;color:var(--ink-2);line-height:1.55;font-family:var(--sans)}
+  .surface li b{color:var(--cream);font-weight:600}
+  .surface li::before{content:"";position:absolute;left:2px;top:9px;width:6px;height:6px;border-radius:50%;background:var(--starry)}
+  .surface.b li::before{background:var(--ink-3)}
+  .callout{border:1px solid var(--line-2);border-radius:var(--r-lg);padding:24px 26px;background:linear-gradient(100deg,rgba(255,192,0,.10),rgba(255,192,0,.02));position:relative}
+  .callout.warn{background:linear-gradient(100deg,rgba(45,108,223,.14),transparent)}
+  .callout p{font-family:var(--sans)}
+
+  /* COLOR swatches */
+  .swgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+  @media(max-width:820px){.swgrid{grid-template-columns:repeat(2,1fr)}}
+  .sw{border:1px solid var(--line);border-radius:14px;overflow:hidden;cursor:pointer;background:var(--panel);transition:border-color .25s var(--ease-std),transform .25s var(--ease-out)}
+  .sw:hover,.sw:focus-visible{border-color:var(--line-2);transform:translateY(-2px);outline:none}
+  .chipc{height:66px}
+  .sw .meta{padding:11px 13px}
+  .sw .name{font-size:13px;font-weight:600;color:var(--cream);font-family:var(--sans)}
+  .sw .hex{font-family:var(--mono);font-size:11.5px;color:var(--yellow);margin-top:2px}
+  .sw .role{font-size:11px;color:var(--ink-3);margin-top:3px;font-family:var(--sans)}
+  .ramp{display:flex;height:44px;border-radius:12px;overflow:hidden;border:1px solid var(--line);margin-top:6px}
+  .ramp span{flex:1;cursor:pointer;position:relative;transition:flex .2s var(--ease-std)}
+  .ramp span:hover{flex:1.6}
+  .rampcap{display:flex;justify-content:space-between;font-family:var(--mono);font-size:10.5px;color:var(--ink-3);margin-top:7px}
+
+  /* TYPE */
+  .specimen{font-family:var(--serif);font-weight:400;font-size:clamp(34px,5.6vw,72px);line-height:1.1;color:var(--cream);margin:4px 0}
+  .dropcap{float:left;font-family:var(--serif);font-weight:400;font-size:118px;line-height:.78;color:var(--cream);padding:8px 14px 0 0}
+  @media(max-width:640px){.dropcap{font-size:76px}}
+
+  /* MOTION easing lab */
+  .easelab{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  @media(max-width:820px){.easelab{grid-template-columns:1fr}}
+  .ease{border:1px solid var(--line);border-radius:var(--r-lg);padding:20px;cursor:pointer;background:linear-gradient(180deg,rgba(255,248,235,.02),transparent);transition:border-color .25s var(--ease-std)}
+  .ease:hover,.ease:focus-visible{border-color:var(--line-2);outline:none}
+  .ease-top{display:flex;justify-content:space-between;align-items:baseline;gap:12px}
+  .ease-top h3{font-size:15.5px}
+  .curveval{font-family:var(--mono);font-size:10.5px;color:var(--yellow);white-space:nowrap}
+  .ease .desc{font-size:13px;margin-top:9px;line-height:1.55;color:var(--ink-2);font-family:var(--sans)}
+  .ease-viz{display:flex;align-items:center;gap:16px;margin-top:16px}
+  .ease-viz canvas{flex:none;border:1px solid var(--line);border-radius:10px;background:#080808}
+  .track{flex:1;min-width:0}
+  .runner-wrap{height:32px;border:1px solid var(--line);border-radius:10px;position:relative;overflow:hidden;background:rgba(0,0,0,.3)}
+  .runner{position:absolute;top:5px;left:6px;width:20px;height:20px;border-radius:6px;background:linear-gradient(135deg,var(--yellow),#ff9d00);box-shadow:0 0 16px -2px var(--yellow)}
+  .replay{font-family:var(--mono);font-size:10px;color:var(--ink-4);margin-top:8px;letter-spacing:.05em}
+
+  .durwrap{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+  @media(max-width:820px){.durwrap{grid-template-columns:1fr}}
+  .durs{display:grid;gap:11px}
+  .durrow{display:grid;grid-template-columns:118px 1fr 56px;align-items:center;gap:12px}
+  @media(max-width:560px){.durrow{grid-template-columns:92px 1fr 50px}}
+  .durrow .lab{font-family:var(--mono);font-size:11px;color:var(--ink-2)}
+  .durbar{height:8px;border-radius:999px}
+  .durbar.warm{background:linear-gradient(90deg,#ff9d00,var(--yellow));box-shadow:0 0 14px -4px var(--yellow)}
+  .durbar.cool{background:linear-gradient(90deg,#2b4a8c,var(--starry));box-shadow:0 0 14px -4px var(--starry)}
+  .durrow .val{font-family:var(--mono);font-size:11px;color:var(--ink-3);text-align:right}
+
+  .kfgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+  @media(max-width:640px){.kfgrid{grid-template-columns:1fr}}
+  .kf{border:1px solid var(--line);border-radius:14px;padding:14px 16px;background:rgba(255,248,235,.02)}
+  .kf .n{font-family:var(--mono);font-size:12px;color:var(--yellow)}
+  .kf .d{font-size:12.5px;color:var(--ink-2);margin-top:5px;font-family:var(--sans);line-height:1.5}
+
+  /* ---------- SIGNATURE DEMO ---------- */
+  .stage{position:relative;border:1px solid var(--line);border-radius:var(--r-lg);overflow:hidden;
+    background:radial-gradient(90% 120% at 50% -10%, rgba(43,74,140,.22), transparent 60%), #060606;
+    padding:44px 26px 34px}
+  .stage .stagedots{position:absolute;inset:0;pointer-events:none;background-image:radial-gradient(rgba(255,248,235,.05) 1px,transparent 1px);background-size:22px 22px}
+  .stage-title{position:relative;text-align:center;font-family:var(--serif);font-size:clamp(22px,3.2vw,34px);color:var(--cream);margin-bottom:6px}
+  .stage-sub{position:relative;text-align:center;color:var(--ink-3);font-size:13px;font-family:var(--sans);margin-bottom:30px}
+  .agents{position:relative;max-width:760px;margin:0 auto}
+  .team-cards{position:relative;height:0}
+  .tc{position:absolute;width:210px;border-radius:20px;padding:13px 15px;border:1px solid var(--line-2);
+    background:var(--panel-2);box-shadow:0 20px 50px -24px rgba(0,0,0,.9);overflow:hidden}
+  .tc .tct{display:flex;align-items:center;gap:8px;font-size:12.5px;font-weight:600;color:var(--cream);font-family:var(--sans)}
+  .tc .tcd{font-size:11px;color:var(--ink-3);margin-top:5px;line-height:1.4;font-family:var(--sans)}
+  .tc .badge{margin-top:9px;display:inline-block;font-size:10.5px;font-family:var(--mono);color:var(--ink-2);border:1px solid var(--line);border-radius:var(--pill);padding:2px 9px}
+  .tc .dot{width:16px;height:16px;border-radius:5px;flex:none}
+  .tc::after{content:"";position:absolute;inset:0;pointer-events:none}
+  .tc.blue::after{background:radial-gradient(80% 100% at 85% 100%, rgba(45,108,223,.42), transparent 60%)}
+  .tc.green::after{background:radial-gradient(80% 100% at 15% 100%, rgba(52,199,89,.36), transparent 60%)}
+  .tc.mag::after{background:radial-gradient(90% 110% at 85% 100%, rgba(215,66,190,.5), transparent 60%)}
+  .tc.plain::after{background:radial-gradient(80% 100% at 15% 0, rgba(255,248,235,.05), transparent 60%)}
+  .tc.p1{top:-6px;left:0}
+  .tc.p2{top:-14px;right:0}
+  .tc.p3{top:150px;left:16px}
+  .tc.p4{top:158px;right:0}
+  @media(max-width:760px){.team-cards{display:none}}
+  .float{animation:float 8s var(--ease-std) infinite alternate}
+  .float.f2{animation-duration:6.4s;animation-delay:.5s}
+  .float.f3{animation-duration:7.2s;animation-delay:1s}
+  .float.f4{animation-duration:6.8s;animation-delay:1.4s}
+  @keyframes float{from{transform:translateY(0)}to{transform:translateY(-11px)}}
+
+  /* 深黑玻璃输入框 + 流动边框 */
+  .chatbox{position:relative;max-width:540px;margin:96px auto 0;border-radius:var(--r-md);
+    background:linear-gradient(180deg,rgba(22,22,22,.92),rgba(11,11,11,.92));backdrop-filter:blur(20px);
+    -webkit-backdrop-filter:blur(20px);padding:16px 18px 14px;isolation:isolate;
+    box-shadow:0 30px 70px -30px rgba(0,0,0,.95)}
+  @media(max-width:760px){.chatbox{margin-top:34px}}
+  .chatbox::before{content:"";position:absolute;inset:0;border-radius:inherit;padding:1.4px;
+    background:conic-gradient(from var(--a,0deg), rgba(255,192,0,0), rgba(255,192,0,.85), rgba(95,134,168,.85), rgba(255,192,0,0));
+    -webkit-mask:linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite:xor; mask-composite:exclude;
+    animation:borderflow 4s linear infinite}
+  @keyframes borderflow{to{--a:360deg}}
+  .chiprow{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin-bottom:12px}
+  .agentchip{display:inline-flex;align-items:center;gap:6px;font-size:12px;color:var(--cream);font-family:var(--sans);
+    border:1px solid var(--line-2);border-radius:var(--pill);padding:5px 8px 5px 11px;background:rgba(255,248,235,.05)}
+  .agentchip .x{cursor:pointer;color:var(--ink-3);font-family:var(--mono);transition:color .18s var(--ease-std)}
+  .agentchip .x:hover{color:var(--yellow)}
+  .agentchip.enter{animation:cardenter .4s var(--ease-out)}
+  @keyframes cardenter{from{opacity:0;transform:translateY(8px) scale(.94)}to{opacity:1;transform:none}}
+  .addbtn{width:26px;height:26px;border-radius:50%;border:1px dashed var(--line-2);background:none;color:var(--ink-2);cursor:pointer;font-size:15px;line-height:1;transition:border-color .18s var(--ease-std),color .18s var(--ease-std)}
+  .addbtn:hover{border-color:var(--yellow);color:var(--yellow)}
+  .chatbox .placeholder{color:var(--ink-3);font-size:14.5px;font-family:var(--sans);padding:2px 2px 16px;min-height:24px}
+  .chatfoot{display:flex;align-items:center;justify-content:space-between;gap:12px}
+  .modelsel{display:inline-flex;align-items:center;gap:6px;font-family:var(--mono);font-size:12px;color:var(--ink-2);background:rgba(255,248,235,.05);border:1px solid var(--line);border-radius:var(--pill);padding:6px 12px;cursor:pointer;transition:color .18s var(--ease-std),border-color .18s var(--ease-std)}
+  .modelsel:hover{color:var(--cream);border-color:var(--line-2)}
+  .modelsel .cv{color:var(--yellow)}
+  .foot-right{display:flex;align-items:center;gap:10px}
+  .send{width:38px;height:38px;border-radius:50%;border:none;background:var(--cream);color:#0b0b0b;cursor:pointer;display:grid;place-items:center;transition:transform .12s var(--ease-std),background-color .18s var(--ease-std)}
+  .send:hover{background:var(--yellow)}.send:active{transform:scale(.9)}
+  .send.sent{animation:sentpulse .5s var(--ease-out)}
+  @keyframes sentpulse{0%{box-shadow:0 0 0 0 rgba(255,192,0,.55)}100%{box-shadow:0 0 0 22px rgba(255,192,0,0)}}
+
+  .skilllead{text-align:center;color:var(--ink-2);font-size:14px;font-family:var(--sans);margin:34px 0 16px}
+  .marquee{position:relative;overflow:hidden;-webkit-mask:linear-gradient(90deg,transparent,#000 7%,#000 93%,transparent);mask:linear-gradient(90deg,transparent,#000 7%,#000 93%,transparent)}
+  .mtrack{display:flex;gap:12px;width:max-content;animation:marquee 18s linear infinite}
+  .marquee:hover .mtrack{animation-play-state:paused}
+  @keyframes marquee{to{transform:translateX(-50%)}}
+  .skill{display:inline-flex;align-items:center;gap:8px;white-space:nowrap;padding:9px 15px;border-radius:var(--pill);
+    border:1px solid var(--line);background:rgba(255,248,235,.04);color:var(--ink-2);font-size:13px;cursor:pointer;font-family:var(--sans);
+    transition:border-color .18s var(--ease-std),color .18s var(--ease-std),background .18s var(--ease-std)}
+  .skill:hover{border-color:var(--yellow);color:var(--cream);background:rgba(255,192,0,.08)}
+  .skill .si{width:16px;height:16px;border-radius:5px;background:linear-gradient(135deg,var(--starry),#2b4a8c);flex:none}
+  .demo-hint{text-align:center;font-size:12px;color:var(--ink-4);margin-top:18px;font-family:var(--sans)}
+
+  /* CRAFT */
+  .radii{display:flex;flex-wrap:wrap;gap:14px}
+  .rad{border:1px solid var(--line-2);background:rgba(255,248,235,.03);display:grid;place-items:center;font-family:var(--mono);font-size:11px;color:var(--ink-2);width:96px;height:66px}
+  .mediarow{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;text-align:center}
+  @media(max-width:640px){.mediarow{grid-template-columns:repeat(2,1fr)}}
+  .media b{display:block;font-family:var(--mono);font-size:26px;color:var(--yellow);font-weight:500}
+  .media span{font-size:11.5px;color:var(--ink-3);font-family:var(--sans)}
+
+  /* FRAMES */
+  figure.shot{border:1px solid var(--line);border-radius:var(--r-lg);overflow:hidden;background:var(--panel)}
+  figure.shot img{width:100%;display:block}
+  figure.shot figcaption{padding:13px 18px;font-size:12.5px;color:var(--ink-3);border-top:1px solid var(--line);font-family:var(--sans)}
+  .kfstrip{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:14px}
+  @media(max-width:640px){.kfstrip{grid-template-columns:1fr}}
+  .fullshot{max-height:640px;overflow-y:auto;border-radius:var(--r-lg);border:1px solid var(--line)}
+  .fullshot img{width:100%;display:block}
+
+  /* checklist / prov */
+  .checklist{list-style:none;display:grid;gap:11px}
+  .checklist li{position:relative;padding-left:26px;font-size:14.5px;color:var(--ink-2);line-height:1.55;font-family:var(--sans)}
+  .checklist li b{color:var(--cream);font-weight:600}
+  .checklist li::before{content:"\2192";position:absolute;left:2px;top:0;color:var(--yellow);font-family:var(--mono)}
+  table.dec{width:100%;border-collapse:collapse;font-size:13.5px;font-family:var(--sans)}
+  table.dec th,table.dec td{text-align:left;padding:11px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+  table.dec th{font-family:var(--mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-3);font-weight:500}
+  table.dec td{color:var(--ink-2)}table.dec td b{color:var(--cream);font-weight:600}
+  table.dec code{white-space:nowrap}
+  dl.prov dt{font-family:var(--mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--yellow);margin-top:20px}
+  dl.prov dt:first-child{margin-top:0}
+  dl.prov dd{margin-top:7px;font-size:14.5px;color:var(--ink-2);line-height:1.6;font-family:var(--sans)}
+
+  footer{padding:52px 0 72px;text-align:center;font-size:13px;color:var(--ink-3);line-height:1.8;font-family:var(--sans);border-top:1px solid var(--line)}
+  footer b{color:var(--ink-2);font-weight:500}
+
+  .copybar{position:fixed;left:50%;bottom:28px;transform:translate(-50%,20px);z-index:80;background:var(--yellow);color:#1a1300;font-family:var(--mono);font-size:12.5px;font-weight:600;padding:9px 18px;border-radius:var(--pill);opacity:0;pointer-events:none;transition:opacity .3s var(--ease-std),transform .3s var(--ease-out);box-shadow:0 12px 40px -8px rgba(255,192,0,.5)}
+  .copybar.show{opacity:1;transform:translate(-50%,0)}
+
+  /* —— 第二轮回填:真实媒体(真字见文件顶部 @font-face)—— */
+  figure.shot video{width:100%;display:block;background:#000}
+  .videowrap{max-width:412px;margin:0 auto 18px}
+  .realgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:14px}
+  @media(max-width:820px){.realgrid{grid-template-columns:repeat(2,1fr)}}
+  .realcard{border:1px solid var(--line);border-radius:16px;overflow:hidden;background:var(--panel);transition:border-color .25s var(--ease-std),transform .25s var(--ease-out)}
+  .realcard:hover{border-color:var(--line-2);transform:translateY(-3px)}
+  .realcard img{width:100%;aspect-ratio:1/1;object-fit:cover;display:block;background:#0a0a0a}
+  .realcard .cap{padding:9px 11px;font-family:var(--mono);font-size:10.5px;color:var(--ink-3);border-top:1px solid var(--line)}
+  .realcard .cap b{color:var(--yellow);font-weight:500}
+  .refrow{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:16px}
+  @media(max-width:640px){.refrow{grid-template-columns:1fr}}
+  .refrow figure.shot img{background:#0a0a0a}
+  .stage .stagehands{position:absolute;inset:0;pointer-events:none;
+    background:url('real-assets/image/f33617__E6_89_8B_20_1_.png') center 42%/min(560px,86%) no-repeat;opacity:.05}
+  .provmark{display:flex;align-items:center;gap:12px;margin-top:6px}
+  .provmark svg{width:64px;height:auto;flex:none}
+  .provmark .pm-t{font-size:13px;color:var(--ink-2);font-family:var(--sans);line-height:1.5}
+
+  @media(prefers-reduced-motion:reduce){
+    .sky .swirl,.stars i,.float,.mtrack,.chatbox::before{animation:none!important}
+    *{scroll-behavior:auto}
+  }
+</style>
+</head>
+<body>
+<div class="dots" aria-hidden="true"></div>
+
+<nav id="nav"><div class="wrap nav-in">
+  <span class="brand">
+    <svg class="mark" viewBox="0 0 28 28" aria-hidden="true">
+      <ellipse cx="14" cy="14" rx="12.5" ry="8" fill="none" stroke="var(--cream)" stroke-width="1.6"/>
+      <circle cx="14" cy="14" r="4.4" fill="none" stroke="var(--cream)" stroke-width="1.6"/>
+      <circle cx="14" cy="14" r="2" fill="var(--yellow)"/>
+    </svg>
+    ojo 设计解构
+  </span>
+  <span class="navlinks">
+    <a href="#thesis">定位</a><a href="#color">色彩</a><a href="#type">字体</a>
+    <a href="#motion">动效</a><a href="#signature">签名</a><a href="#craft">工艺</a><a href="#build">复刻</a><a href="#prov">出处</a>
+  </span>
+  <button class="signin" onclick="document.getElementById('signature').scrollIntoView()">Sign in</button>
+</div></nav>
+
+<header>
+  <div class="sky" aria-hidden="true">
+    <div class="swirl"></div>
+    <div class="swirl b"></div>
+    <div class="stars" id="stars"></div>
+    <div class="vign"></div>
+  </div>
+  <div class="wrap hero-grid">
+    <div class="hero-in">
+      <div class="eyebrow">逆向解析 —— 源自 ojo.art 线上真实抽取</div>
+      <h1>把 ojo 的<span class="hl">星夜叙事</span>,拆到可复刻的每一个数值</h1>
+      <p class="lede">这不是观感描述。下面每一个色值、缓动曲线、时长与关键帧,都来自对线上站点 <code>ojo.art</code> 的真实抽取(共 278292 字节 CSS)。连这一页,也用 ojo 自己的主缓动在运动,铺着它的点阵底,亮着它的星夜,写着它真实的字体(<code>@font-face</code> 直接接入),放着它真实的产品演示视频。</p>
+      <div class="metabar">
+        <span class="chip">强调黄 <b>#ffc000</b></span>
+        <span class="chip">主缓动 <b>cubic-bezier(.4,0,.2,1)</b></span>
+        <span class="chip">标题字 <b>Faculty Glyphic</b></span>
+        <span class="chip">UI 字 <b>Geist</b></span>
+        <span class="chip">氛围时长 <b>4 到 18 秒</b></span>
+      </div>
+    </div>
+    <div class="codecard" id="codecard">
+      <div class="bar"><i></i><i></i><i></i><span class="t">ojo.py — 把智能体塑造成一位画家</span></div>
+      <pre><code id="typed"></code><span class="caret" id="caret"></span></pre>
+      <div class="cap">首屏的代码叙事,逐字浮现(复刻 <code>landingpage-code-flicker</code>)。</div>
+    </div>
+  </div>
+  <div class="scrollcue">向下滚动</div>
+</header>
+
+<main>
+<div class="wrap">
+
+  <!-- 1 · THESIS -->
+  <section id="thesis" style="border-top:none">
+    <div class="sec-head">
+      <div class="eyebrow">01 — 先分清两个层</div>
+      <h2>ojo 有两套设计,别把它们混为一谈</h2>
+      <p>几乎所有"ojo 好美"的印象,来自叙事营销层。真正要复刻进产品的"好用",在产品 UI 层。它们的底色、字体、强调色与运动都不同,抽取数据里两套语言的证据清晰可辨。</p>
+    </div>
+    <div class="split">
+      <div class="surface a">
+        <span class="tag">叙事营销层 — Landing</span>
+        <p class="dim" style="margin-top:10px">首屏与滚动叙事。所有"艺术感"都在这里。</p>
+        <ul>
+          <li><b>梵高《星夜》</b>油画场景:画家背影、漩涡星空、向日葵,把智能体拟人成艺术家</li>
+          <li>深黑打底 <b>#000</b>(样式表出现 25 次,居首),暖白奶油标题 <b>#fff8eb</b></li>
+          <li>强调用明黄 <b>#ffc000</b>;标题用 <b>Faculty Glyphic</b> 衬线</li>
+          <li>氛围层长循环运动(4 到 18 秒):星夜呼吸、卡片漂浮、技能走马灯</li>
+        </ul>
+      </div>
+      <div class="surface b">
+        <span class="tag">产品 UI 层 — App</span>
+        <p class="dim" style="margin-top:10px">登录后的工作台。刻意干净、近乎无彩、功能优先。</p>
+        <ul>
+          <li>白底 <b>#fff</b>(<code>--color-background</code> 为 <code>0 0% 98%</code>),纯黑文字</li>
+          <li>中性色是完整的 <b>Radix 灰阶</b> <code>--gray1</code> 到 <code>--gray12</code></li>
+          <li>强调换成橙 <b>#f97316</b>(<code>--color-commercial-accent</code>),UI 字用 <b>Geist</b></li>
+          <li>运动收敛到 120 到 400 毫秒的悬停与焦点微交互</li>
+        </ul>
+      </div>
+    </div>
+    <div class="callout" style="margin-top:18px">
+      <h3>要复刻的目标:营销层的叙事氛围,叠加产品层的克制手感</h3>
+      <p class="dim" style="margin-top:8px">首页正是两层的交汇处:它用产品级的干净对话组件(深黑玻璃输入框、模型选择、技能标签),去承载一个艺术化的叙事母题。把抽象的多智能体编排,讲成"一支会画画的团队"。</p>
+    </div>
+  </section>
+
+  <!-- 2 · COLOR -->
+  <section id="color">
+    <div class="sec-head">
+      <div class="eyebrow">02 — 色彩系统(真实 token)</div>
+      <h2>深黑、奶油白、一点明黄,和星夜的蓝</h2>
+      <p>点任意色块复制 HEX。所有色值取自样式表高频统计与计算样式,是实锤;HSL 到 HEX 为忠实换算。</p>
+    </div>
+    <h3 style="margin-bottom:14px">叙事营销层</h3>
+    <div class="swgrid" id="sw-brand"></div>
+    <h3 style="margin:30px 0 14px">智能体卡片光谱 —— 全站唯一的高饱和用色</h3>
+    <div class="swgrid" id="sw-card"></div>
+    <h3 style="margin:34px 0 12px">产品 UI 层 · Radix 灰阶(点色块复制)</h3>
+    <div class="ramp" id="ramp"></div>
+    <div class="rampcap"><span>--gray1 · hsl(0 0% 99%)</span><span>--gray12 · hsl(0 0% 9%)</span></div>
+    <p class="faint" style="margin-top:12px;font-size:13px">产品主色 <code>--color-primary</code> 为 <code>hsl(210 52.5% 35.5%)</code>(约 <code>#2b5b8a</code>,去饱和的蓝);文字分三级透明度(主、次 .5、三级 .3)。这套灰阶与语义色是产品的设计系统底座,与首页的艺术叙事完全分层。</p>
+  </section>
+
+  <!-- 3 · TYPE -->
+  <section id="type">
+    <div class="sec-head">
+      <div class="eyebrow">03 — 字体系统</div>
+      <h2>衬线讲叙事,无衬线做产品</h2>
+      <p>抽取时 <code>document.fonts</code> 实测报告五款自托管拉丁字体:Georama、Lexend、DM Serif Text、Faculty Glyphic、Miss Fajardose;正文与 UI 的计算字体是 Geist Sans(经 <code>--font-ui-default</code> 引用)。本页把这五款真字直接以 <code>@font-face</code> 接进来(文件见 <code>real-assets/fonts/</code>):标题英文用真实 Faculty Glyphic,中文用思源宋体,UI 与正文用 Geist(站点未自托管该文件,走 Google Fonts 真实字体)。</p>
+    </div>
+    <div class="card" style="margin-bottom:18px">
+      <div class="k">叙事大标题 · Faculty Glyphic(真字)</div>
+      <div class="specimen"><span class="dropcap">T</span>he world's first Design Agent Team Workspace</div>
+      <p class="dim" style="font-size:14px;clear:both;margin-top:10px">首屏原文与首字下沉的真实排印。大标题实测 <code>60.48px</code>,行高 <code>86.4px</code>(约 1.43 倍字号),字重 <code>400</code>,颜色 <code>#fff8eb</code>。衬线雕刻风压在油画上有手作感。</p>
+    </div>
+    <div class="grid g2">
+      <div class="card">
+        <div class="k">产品 UI 与正文 · 无衬线</div>
+        <div style="font-family:var(--sans);font-size:34px;font-weight:600;margin:8px 0 2px;color:var(--cream)">Geist</div>
+        <div style="font-family:var(--sans);font-size:16px;font-weight:400;color:var(--ink-2)">The quick brown fox — 0123456789</div>
+        <p class="dim" style="margin-top:12px;font-size:14px">Vercel 出品的现代无衬线。站点 <code>--font-ui-default</code> 与 <code>--font-numeric</code> 都是它,承担界面与数字。</p>
+      </div>
+      <div class="card">
+        <div class="k">手写签名点缀 · Miss Fajardose</div>
+        <div style="font-family:var(--script);font-size:52px;line-height:1;color:var(--yellow);margin:2px 0">Vincent</div>
+        <p class="dim" style="margin-top:12px;font-size:14px">极细的花体草书,呼应"艺术家签名"的意象。是五款自托管字体里最具叙事性的一支,本页以真实字体文件呈现。</p>
+      </div>
+    </div>
+    <div class="grid g3" style="margin-top:18px">
+      <div class="card"><div class="k">产品内衬线展示 · DM Serif Text(真字)</div><div style="font-family:'DM Serif Text Local','DM Serif Text',serif;font-size:30px;margin-top:8px;color:var(--cream)">Aurelle</div><p class="faint" style="font-size:13px;margin-top:8px">原型里的展示标题(见下方真实原型「Aurelle」)</p></div>
+      <div class="card"><div class="k">辅助无衬线 · Lexend(真字)</div><div style="font-family:'Lexend Local','Lexend',sans-serif;font-size:26px;margin-top:8px;color:var(--cream);font-weight:500">Readable UI</div><p class="faint" style="font-size:13px;margin-top:8px">副文与标签</p></div>
+      <div class="card"><div class="k">辅助无衬线 · Georama(真字)</div><div style="font-family:'Georama Local','Georama',sans-serif;font-size:26px;margin-top:8px;color:var(--cream);font-weight:500">Georama</div><p class="faint" style="font-size:13px;margin-top:8px">可变字重辅助</p></div>
+    </div>
+  </section>
+
+  <!-- 4 · MOTION -->
+  <section id="motion">
+    <div class="sec-head">
+      <div class="eyebrow">04 — 动效系统 · 本解构核心</div>
+      <h2>双时间尺度:手感与氛围叠在一起</h2>
+      <p>ojo 把两种时间叠在一起——120 到 400 毫秒的微交互保证点击手感,4 到 18 秒的长循环营造星夜与画布的生命感。点任一卡片重放,曲线与时长为其真实取值。</p>
+    </div>
+    <div class="easelab" id="easelab"></div>
+
+    <h3 style="margin:36px 0 14px">时长阶梯(真实 token,分两层)</h3>
+    <div class="card">
+      <div class="durwrap">
+        <div>
+          <div class="k" style="margin-bottom:12px;color:var(--yellow)">微交互层 · 手感(暖色)</div>
+          <div class="durs" id="durs-micro"></div>
+        </div>
+        <div>
+          <div class="k" style="margin-bottom:12px;color:var(--starry)">氛围层 · 叙事(冷色)</div>
+          <div class="durs" id="durs-amb"></div>
+        </div>
+      </div>
+      <p class="faint" style="font-size:13px;margin-top:18px">按钮过渡逐字为 <code>background-color .18s, color .18s, opacity .18s, transform .12s</code>——位移(.12s)比变色(.18s)更快,让按下的形变先到位,手感更脆。</p>
+    </div>
+
+    <h3 style="margin:36px 0 14px">真实关键帧清单 —— 签名母题都写在名字里</h3>
+    <div class="kfgrid" id="kflist"></div>
+  </section>
+
+  <!-- 5 · SIGNATURE -->
+  <section id="signature">
+    <div class="sec-head">
+      <div class="eyebrow">05 — 签名效果 · 可交互复现</div>
+      <h2>设计智能体团队工作台</h2>
+      <p>下面是首页第二屏的实时复现:深黑玻璃对话框带流动边框,四张智能体团队卡在星夜辉光上悬浮漂移,底部技能走马灯无缝滚动。所有运动用 ojo 的真实缓动与时长。可以试着操作它。</p>
+    </div>
+    <div class="stage">
+      <div class="stagedots" aria-hidden="true"></div>
+      <div class="stagehands" aria-hidden="true"></div>
+      <div class="stage-title">Build your agent team and skills</div>
+      <div class="stage-sub">before they design for you</div>
+      <div class="agents">
+        <div class="team-cards" aria-hidden="true">
+          <div class="tc plain p1 float"><div class="tct"><span class="dot" style="background:linear-gradient(135deg,#8a8a8a,#3a3a3a)"></span>Requirement Team</div><div class="tcd">梳理页面层级与信息结构</div><span class="badge">已邀请</span></div>
+          <div class="tc blue p2 float f2"><div class="tct"><span class="dot" style="background:linear-gradient(135deg,#5b8def,#2d6cdf)"></span>Redesign Team</div><div class="tcd">诊断现有产品问题,给出改版方案</div><span class="badge">+ 邀请</span></div>
+          <div class="tc green p3 float f3"><div class="tct"><span class="dot" style="background:linear-gradient(135deg,#5fe08a,#34c759)"></span>Prototype Team</div><div class="tcd">高创意、动态原型即时产出</div><span class="badge">已邀请</span></div>
+          <div class="tc mag p4 float f4"><div class="tct"><span class="dot" style="background:linear-gradient(135deg,#e879c9,#c026a3)"></span>Game Workshop</div><div class="tcd">做上手即玩的轻量游戏体验</div><span class="badge">+ 邀请</span></div>
+        </div>
+        <div class="chatbox">
+          <div class="chiprow" id="chiprow">
+            <span class="agentchip" data-fixed="1">Prototype Design Team <span class="x" role="button" tabindex="0" aria-label="移除">×</span></span>
+            <button class="addbtn" id="addChip" aria-label="添加团队">+</button>
+          </div>
+          <div class="placeholder">Bring in another agent team and skills for different design needs.</div>
+          <div class="chatfoot">
+            <button class="addbtn" aria-label="添加">+</button>
+            <div class="foot-right">
+              <span class="modelsel" id="modelsel" role="button" tabindex="0">模型 <span class="cv" id="modelname">OJO Master</span> ⌄</span>
+              <button class="send" id="sendBtn" aria-label="发送">
+                <svg width="17" height="17" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 12 L20 4 L13 20 L11 13 Z" fill="currentColor"/></svg>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="skilllead">Freely add over 200 different types of skills</div>
+      <div class="marquee" id="marquee"><div class="mtrack" id="mtrack"></div></div>
+      <div class="demo-hint">点走马灯里的技能药丸,它会加进对话框;点模型名在 OJO Master、Fast、Draw 之间切换;点发送键看反馈;悬停走马灯即暂停。舞台底纹是站点真实素材「双手」(取自 landing 的 <code>手 (1).png</code>),以极低透明度叠出"代码即创作"的母题。</div>
+    </div>
+    <div class="refrow">
+      <figure class="shot"><img src="real-assets/image/d6e649__E8_BE_93_E5_85_A5_E6_A1_86.png" alt="ojo 真实对话输入框素材" loading="lazy" /><figcaption>真实参照:上方可交互的深黑玻璃对话框,原件是站点真实素材「输入框」(<code>real-assets/image</code>)。此处并置原件,便于核对复现精度。</figcaption></figure>
+      <figure class="shot"><img src="real-assets/image/970e0d_ptototype-620.webp" alt="ojo 真实原型 Aurelle" loading="lazy" /><figcaption>真实原型「Aurelle」:展示标题正是字体段那款 <b>DM Serif Text</b> 的真实落地,压在暗调山景上。</figcaption></figure>
+    </div>
+  </section>
+
+  <!-- 6 · CRAFT -->
+  <section id="craft">
+    <div class="sec-head">
+      <div class="eyebrow">06 — 工艺细节</div>
+      <h2>圆角、点阵、玻璃、辉光</h2>
+      <p>ojo 的手作感来自一组稳定的工艺选择。数值均取自样式表实测。</p>
+    </div>
+    <div class="grid g2">
+      <div class="card">
+        <h3 style="margin-bottom:14px">圆角语言</h3>
+        <div class="radii">
+          <div class="rad" style="border-radius:999px">999px 药丸</div>
+          <div class="rad" style="border-radius:28px">28px 大卡</div>
+          <div class="rad" style="border-radius:24px">24px 输入框</div>
+          <div class="rad" style="border-radius:8px">8px 基础</div>
+          <div class="rad" style="border-radius:50%;width:66px">50% 圆</div>
+        </div>
+        <p class="dim" style="font-size:13.5px;margin-top:14px">主导是药丸 <code>999px</code>(按钮、标签、CTA,出现 8 次);容器用 <code>24px</code> 到 <code>28px</code> 中大圆角;发送键与头像用 <code>50%</code>。整体"大控件用药丸、容器用中圆角"。</p>
+      </div>
+      <div class="card">
+        <h3 style="margin-bottom:14px">点阵底、玻璃与辉光</h3>
+        <p class="dim" style="font-size:13.5px">深色段普遍铺一层极淡的圆点网格(单元约 22px),让纯黑不死板,也呼应画布的坐标感——本页整页就铺着它。对话框是深色半透明玻璃配 <code>blur(20px)</code> 与细边框;团队卡在卡底叠品牌色径向辉光,做成"发光的能力块"。边框普遍是低透明度暖白,不喧宾夺主。</p>
+      </div>
+    </div>
+    <div class="card" style="margin-top:18px">
+      <h3 style="margin-bottom:16px">媒体选型(实测清单)</h3>
+      <div class="mediarow">
+        <div class="media"><b>58</b><span>图片</span></div>
+        <div class="media"><b>9</b><span>SVG 图标</span></div>
+        <div class="media"><b>2</b><span>Canvas</span></div>
+        <div class="media"><b>1</b><span>视频</span></div>
+        <div class="media"><b>4</b><span>预加载字体</span></div>
+      </div>
+      <p class="faint" style="font-size:13px;margin-top:16px">氛围靠预渲染的油画风插画(图片主导)而非重量级 WebGL,是成本可控的选择。Canvas 推断用于点阵或无限画布上的光标游走(<code>landingpage-cursor-wander-1</code>)。</p>
+    </div>
+    <div class="card" style="margin-top:18px">
+      <h3 style="margin-bottom:6px">真实素材 · 智能体魔法卡组(8 张,从站点提取)</h3>
+      <p class="faint" style="font-size:13px;margin-bottom:2px">这些是 ojo landing 里 <code>agent-magic-cards</code> 的真图(<code>real-assets/image</code>),不是重绘。全站唯一的高饱和用色几乎都收在这一组里;其中「星夜漩涡」正是把梵高星夜母题压进一张卡片。</p>
+      <div class="realgrid">
+        <div class="realcard"><img src="real-assets/image/a6ac21_card1-320.webp" alt="魔法卡:薄荷底同心涟漪" loading="lazy" /><div class="cap">01 · 同心涟漪</div></div>
+        <div class="realcard"><img src="real-assets/image/c6a2ca_card2-320.webp" alt="魔法卡:蓝底星夜漩涡" loading="lazy" /><div class="cap"><b>02 · 星夜漩涡</b></div></div>
+        <div class="realcard"><img src="real-assets/image/af9d89_card3-320.webp" alt="魔法卡:奶油底斜纹扇面" loading="lazy" /><div class="cap">03 · 斜纹扇面</div></div>
+        <div class="realcard"><img src="real-assets/image/0c35a5_card4-320.webp" alt="魔法卡:紫底等高波纹" loading="lazy" /><div class="cap">04 · 等高波纹</div></div>
+        <div class="realcard"><img src="real-assets/image/8f6473_card5-320.webp" alt="魔法卡:绿底像素棋盘" loading="lazy" /><div class="cap">05 · 像素棋盘</div></div>
+        <div class="realcard"><img src="real-assets/image/40380e_card6-320.webp" alt="魔法卡:青底半调网点" loading="lazy" /><div class="cap">06 · 半调网点</div></div>
+        <div class="realcard"><img src="real-assets/image/f9908d_card7-320.webp" alt="魔法卡:浅灰菱形网格" loading="lazy" /><div class="cap">07 · 菱形网格</div></div>
+        <div class="realcard"><img src="real-assets/image/a46219_card8-320.webp" alt="魔法卡:奶油底流动波线" loading="lazy" /><div class="cap">08 · 流动波线</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 7 · AS-SEEN -->
+  <section id="frames">
+    <div class="sec-head">
+      <div class="eyebrow">07 — 所见即所得</div>
+      <h2>线上真实渲染实拍与真实产品演示</h2>
+      <p>下面既有 <code>ojo.art</code> 的真实渲染截图(非拼贴、非重绘,整页可上下滚动),也内嵌了站点唯一的那段真实产品演示视频。</p>
+    </div>
+    <figure class="shot videowrap">
+      <video src="real-assets/video/98f223__E6_89_8B_E6_9C_BAdemo.mp4" poster="assets/ojo-demo-poster.jpg" muted autoplay loop playsinline preload="metadata"></video>
+      <figcaption>真实产品演示视频(媒体清单里的<b>那 1 段视频</b>):ojo 生成的编辑风移动应用「Journey to the Edge of Light」在手机里滚动。此处直接内嵌真实 <code>.mp4</code>,静音自动循环。</figcaption>
+    </figure>
+    <figure class="shot">
+      <div class="fullshot"><img src="assets/actual-full.jpg" alt="ojo.art 整页真实渲染截图" loading="lazy" /></div>
+      <figcaption>ojo.art 整页真实渲染(as-seen)。从星夜首屏,到智能体团队工作台、无限画布、产品原型、摊开的技能卡组、生产级代码集成,直到 OJO Club 收尾。</figcaption>
+    </figure>
+    <div class="kfstrip">
+      <figure class="shot"><img src="keyframes/01.jpg" alt="智能体团队工作台滚动帧" loading="lazy" /><figcaption>滚动帧:深黑玻璃对话框、四张团队卡与技能走马灯。</figcaption></figure>
+      <figure class="shot"><img src="keyframes/02.jpg" alt="重塑产品创造方式滚动帧" loading="lazy" /><figcaption>滚动帧:浮动画布上的字体卡、原型与代码卡。</figcaption></figure>
+    </div>
+  </section>
+
+  <!-- 8 · BUILD -->
+  <section id="build">
+    <div class="sec-head">
+      <div class="eyebrow">08 — 如何复刻</div>
+      <h2>把上面的数值直接接进你的产品</h2>
+    </div>
+    <div class="grid g2">
+      <div>
+        <h3 style="margin-bottom:12px">1 · 落地 token(复制即用)</h3>
+<pre class="code"><span class="c">:root</span>{
+  <span class="c">--black</span>:<b>#000</b>; <span class="c">--panel</span>:<b>#0d0d0d</b>;
+  <span class="c">--cream</span>:<b>#fff8eb</b>; <span class="c">--yellow</span>:<b>#ffc000</b>;
+  <span class="c">--starry</span>:<b>#5f86a8</b>;
+  <span class="c">--serif</span>:<span class="g">"Faculty Glyphic"</span>,serif;
+  <span class="c">--sans</span>:<span class="g">"Geist"</span>,system-ui,sans-serif;
+  <span class="c">--ease-std</span>:cubic-bezier(.4,0,.2,1);
+  <span class="c">--ease-out</span>:cubic-bezier(.16,1,.3,1);
+  <span class="c">--micro</span>:.18s; <span class="c">--micro-fast</span>:.12s;
+  <span class="c">--pill</span>:999px; <span class="c">--r-md</span>:24px;
+}</pre>
+      </div>
+      <div>
+        <h3 style="margin-bottom:12px">2 · 玻璃对话框流动边框</h3>
+<pre class="code"><span class="c">.chatbox::before</span>{content:"";position:absolute;
+ inset:0;border-radius:inherit;padding:1.4px;
+ background:conic-gradient(from <b>var(--a)</b>,
+  <span class="g">#ffc00000,#ffc000,#5f86a8,#ffc00000</span>);
+ -webkit-mask:linear-gradient(#000 0 0) content-box,
+   linear-gradient(#000 0 0);
+ -webkit-mask-composite:xor;mask-composite:exclude;
+ animation:borderflow <b>4s</b> linear infinite}
+<span class="c">@property</span> --a{syntax:"&lt;angle&gt;";
+ inherits:false;initial-value:0deg}
+<span class="c">@keyframes</span> borderflow{to{--a:360deg}}</pre>
+      </div>
+    </div>
+    <div class="grid g2" style="margin-top:20px">
+      <div>
+        <h3 style="margin-bottom:12px">3 · 星夜氛围(纯 CSS,零图片)</h3>
+<pre class="code"><span class="c">.starry::before</span>{position:absolute;inset:-30%;
+ filter:blur(40px) saturate(1.1);
+ background:
+  radial-gradient(38% 30% at 22% 26%,
+    <span class="g">#eac54a55</span>,transparent 60%),
+  conic-gradient(from 210deg at 30% 34%,
+    <span class="g">#14264f,#3a5a9c,#16305f,#14264f</span>);
+ animation:swirl <b>18s</b> linear infinite}
+<span class="c">@keyframes</span> swirl{to{transform:rotate(360deg)}}</pre>
+      </div>
+      <div>
+        <h3 style="margin-bottom:12px">4 · 技能走马灯(无缝)</h3>
+<pre class="code"><span class="c">.mtrack</span>{display:flex;gap:12px;width:max-content;
+ animation:marquee <b>18s</b> linear infinite}
+<span class="c">.marquee:hover .mtrack</span>{
+ animation-play-state:paused}
+<span class="c">@keyframes</span> marquee{
+ to{transform:<b>translateX(-50%)</b>}}
+<span class="c">/* 内容需精确复制一半并平移 -50% */</span>
+<span class="c">/* 两端用 mask 渐隐,避免生硬进出 */</span></pre>
+      </div>
+    </div>
+
+    <h3 style="margin:34px 0 14px">选型决策表</h3>
+    <div class="card" style="padding:8px 22px">
+      <table class="dec">
+        <tr><th>效果</th><th>选型</th><th>理由</th></tr>
+        <tr><td><b>星夜首屏底</b></td><td>预渲染 AI 油画插画</td><td>油画笔触难用 CSS 造真;实测 58 图 1 视频,靠图片承载氛围</td></tr>
+        <tr><td><b>氛围辉光</b></td><td>径向加锥形渐变叠模糊</td><td>叠在底图上做流动光晕,零额外资源</td></tr>
+        <tr><td><b>点阵底</b></td><td><code>radial-gradient</code> 平铺</td><td>一行 CSS,GPU 友好</td></tr>
+        <tr><td><b>代码叙事</b></td><td>JS 逐字加闪烁光标</td><td>轻量,叙事节奏可控</td></tr>
+        <tr><td><b>玻璃流动边框</b></td><td><code>@property</code> 角度动画</td><td>平滑,可降级为静态渐变</td></tr>
+        <tr><td><b>走马灯与漂浮</b></td><td>纯 CSS <code>@keyframes</code></td><td>无缝、无需 JS,错相位避免同步</td></tr>
+        <tr><td><b>悬停与焦点</b></td><td>CSS <code>transition</code></td><td>120 到 400 毫秒,统一 <code>--ease-std</code></td></tr>
+      </table>
+    </div>
+
+    <div class="grid g2" style="margin-top:22px">
+      <div>
+        <h3 style="margin-bottom:12px">工程坑</h3>
+        <ul class="checklist">
+          <li><b>双时间尺度别混用</b>:手感 120 到 400 毫秒,氛围 4 到 18 秒,套错会显得黏或躁</li>
+          <li><b>暖白不是纯白</b>:大标题用 <code>#fff8eb</code> 压油画更耐看,强调用 <code>#ffc000</code></li>
+          <li><b>两套语言别串味</b>:叙事层与产品层各自成体系,混用两头不讨好</li>
+          <li><b>走马灯要偶数复制</b>:精确复制一半宽度并 <code>translateX(-50%)</code>,两端加遮罩</li>
+          <li>尊重 <code>prefers-reduced-motion</code>:关星夜自转、卡片漂浮、走马灯与打字机</li>
+        </ul>
+      </div>
+      <div class="callout warn">
+        <h3>好消息:字体全部免费,且本页已接真字</h3>
+        <p class="dim" style="margin-top:8px">五款自托管字体(Faculty Glyphic、Georama、Lexend、DM Serif Text、Miss Fajardose)已从站点提取为真实文件,经 <code>@font-face</code> 直接接入本页,同名 Google Fonts 仅作 CDN 兜底;正文与 UI 的 Geist 站点未自托管,走 Google Fonts 的真实字体。六款全部免费、无需商业授权——本页用的就是真字,不是替身。</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 9 · PROVENANCE -->
+  <section id="prov">
+    <div class="sec-head">
+      <div class="eyebrow">09 — 方法与出处</div>
+      <h2>每个数值从哪来,什么是实锤、什么是推断</h2>
+    </div>
+    <div class="grid g2">
+      <div>
+        <dl class="prov">
+          <dt>提取方法</dt>
+          <dd>用无头浏览器读线上站点关键元素的计算样式(背景、文字、字体、按钮圆角与过渡),再由服务端抓取样式表原文(共 2 份、278292 字节),正则统计高频色、缓动曲线、时长、圆角、字体族、自定义变量与 <code>@keyframes</code> 名称。服务端抓取不受 CORS 限制。</dd>
+          <dt>实锤(源自抽取)</dt>
+          <dd>底色与文字色、高频色板、完整 Radix 灰阶与产品语义色、五条缓动曲线及次数、时长梯、圆角梯、签名 <code>@keyframes</code> 名称、加载字体清单、媒体清单(58 张图、9 个 SVG、2 处 Canvas、1 段视频)。</dd>
+          <dt>推断(公开资料或观察)</dt>
+          <dd>技术栈据指纹推断为 Next.js 加 Tailwind 加 Radix 加 Sonner、动效含 Framer Motion(探测器 libs 字段为空);星夜底图为 AI 油画插画;Game Workshop 品红辉光为运行时渐变;首屏 <code>agent = ojo.Agent(name="Vincent")</code> 叙事取自实拍观察,是站点自身的艺术手法。</dd>
+          <dt>第二轮 · 真素材回填</dt>
+          <dd>把站点真实资产下载到本地 <code>real-assets/</code>(清单 <code>manifest.json</code>),并直接接入本页:五支自托管字体经 <code>@font-face</code> 上真字(标题 Faculty Glyphic、点缀 Miss Fajardose、辅助 Georama / Lexend / DM Serif Text),同名 CDN 降为兜底;那 1 段产品演示视频内嵌循环;智能体魔法卡组、真实对话框与「Aurelle」原型以原图呈现。星夜首屏底图站点是整幅 AI 油画,本次抓取未拿到可独立复用的整幅油画文件,故首屏氛围仍保留纯 CSS 近似(真实星夜母题以魔法卡「星夜漩涡」与整页实拍呈现)。</dd>
+        </dl>
+      </div>
+      <div>
+        <div class="callout">
+          <h3>一处需要澄清的实锤</h3>
+          <p class="dim" style="margin-top:8px">抽取到的 <code>&lt;body&gt;</code> 计算样式是白底黑字、Geist,这是登录态应用默认底;首屏营销层的暖白标题与明黄按钮才是叙事层取值。两组数据都真实,分属产品层与营销层,勿混淆。</p>
+        </div>
+        <div class="callout" style="margin-top:14px">
+          <h3>可复刻资产清单(含本轮真素材)</h3>
+          <p class="dim" style="margin-top:8px">真实资产在同目录 <code>real-assets/</code>,总清单见 <code>real-assets/manifest.json</code>:五支自托管字体(<code>fonts/</code>)、1 段产品演示视频(<code>video/</code>)、18 张关键图与魔法卡组(<code>image/</code>)。整理后的真实 token 见 <code>design-tokens.css</code>;首屏与整页实拍在 <code>assets/</code>,滚动关键帧在 <code>keyframes/</code>,录屏在 <code>recording/scroll.webm</code>。文字解构见 <code>设计解构.md</code>,复刻步骤见 <code>复刻指南.md</code>,本轮核对见 <code>事实核查.md</code> 与 <code>设计评审.md</code>。</p>
+          <div class="provmark">
+            <svg viewBox="10 37.5 86 32" role="img" aria-label="ojo 真实商标"><path d="M25.1318 37.5687C27.3421 37.5687 29.3544 37.951 31.168 38.7161C33.0097 39.4812 34.6106 40.5582 35.9707 41.9466C37.3592 43.3351 38.4214 44.965 39.1582 46.8353C39.8949 48.7054 40.2637 50.7453 40.2637 52.9554C40.2637 55.1657 39.895 57.2062 39.1582 59.0765C38.4215 60.9465 37.3591 62.5758 35.9707 63.9642C34.6106 65.3526 33.0097 66.4296 31.168 67.1946C29.3544 67.9597 27.3421 68.3421 25.1318 68.3421C22.9499 68.3421 20.9376 67.9597 19.0957 67.1946C17.2541 66.4296 15.6393 65.367 14.251 64.0071C12.8908 62.6186 11.8422 60.9887 11.1055 59.1185C10.3688 57.22 10 55.1656 10 52.9554C10 50.717 10.3688 48.677 11.1055 46.8353C11.8422 44.965 12.8908 43.3351 14.251 41.9466C15.6393 40.5583 17.2541 39.4812 19.0957 38.7161C20.9376 37.951 22.9499 37.5687 25.1318 37.5687ZM60.0811 58.8636C60.0811 60.2804 59.8401 61.57 59.3584 62.7318C58.8767 63.8934 58.1966 64.8993 57.3184 65.7493C56.4399 66.5711 55.405 67.209 54.2148 67.6624C53.0531 68.1158 51.7635 68.3421 50.3467 68.3421C49.2985 68.3421 48.3069 68.2152 47.3721 67.9603C46.4653 67.7052 45.6147 67.3502 44.8213 66.8968C44.0563 66.4434 43.3616 65.8912 42.7383 65.2396C42.1149 64.5595 41.591 63.8083 41.166 62.9866L44.8643 59.1185C45.346 59.7702 45.7849 60.3233 46.1816 60.7767C46.6066 61.2017 47.0037 61.5412 47.3721 61.7962C47.7686 62.0511 48.165 62.2356 48.5615 62.3489C48.9582 62.4339 49.3835 62.4769 49.8369 62.4769C50.6303 62.4769 51.3248 62.2925 51.9199 61.9241C52.5433 61.5558 53.0106 61.0456 53.3223 60.3939C53.6623 59.7421 53.832 58.991 53.832 58.1409V37.8353H60.0811V58.8636ZM80.8682 37.5687C83.0784 37.5687 85.0907 37.951 86.9043 38.7161C88.7461 39.4812 90.3469 40.5582 91.707 41.9466C93.0955 43.3351 94.1578 44.965 94.8945 46.8353C95.6312 48.7054 96 50.7453 96 52.9554C96 55.1657 95.6313 57.2062 94.8945 59.0765C94.1578 60.9465 93.0954 62.5758 91.707 63.9642C90.347 65.3526 88.746 66.4296 86.9043 67.1946C85.0907 67.9597 83.0784 68.3421 80.8682 68.3421C78.6862 68.3421 76.6739 67.9597 74.832 67.1946C72.9905 66.4296 71.3756 65.367 69.9873 64.0071C68.6271 62.6186 67.5786 60.9887 66.8418 59.1185C66.1051 57.22 65.7363 55.1656 65.7363 52.9554C65.7363 50.717 66.1051 48.677 66.8418 46.8353C67.5786 44.965 68.6271 43.3351 69.9873 41.9466C71.3757 40.5583 72.9904 39.4812 74.832 38.7161C76.6739 37.951 78.6862 37.5687 80.8682 37.5687ZM25.1318 43.6048C23.885 43.6048 22.7369 43.8457 21.6885 44.3275C20.6402 44.7808 19.7191 45.4326 18.9258 46.2825C18.1325 47.1042 17.5236 48.0818 17.0986 49.2151C16.7019 50.3486 16.5029 51.5953 16.5029 52.9554C16.5029 54.3154 16.702 55.5622 17.0986 56.6956C17.5236 57.829 18.1325 58.8212 18.9258 59.6712C19.7191 60.5212 20.6402 61.1729 21.6885 61.6263C22.7369 62.0797 23.885 62.3069 25.1318 62.3069C26.3787 62.3069 27.5267 62.0797 28.5752 61.6263C29.6518 61.1729 30.5729 60.5212 31.3379 59.6712C32.1029 58.8212 32.698 57.829 33.123 56.6956C33.5763 55.5623 33.8027 54.3154 33.8027 52.9554C33.8027 51.5953 33.5764 50.3485 33.123 49.2151C32.698 48.0818 32.1029 47.1042 31.3379 46.2825C30.5729 45.4326 29.6518 44.7808 28.5752 44.3275C27.5267 43.8457 26.3787 43.6048 25.1318 43.6048ZM80.8682 43.6048C79.6214 43.6048 78.4733 43.8457 77.4248 44.3275C76.3766 44.7808 75.4554 45.4326 74.6621 46.2825C73.8688 47.1042 73.26 48.0818 72.835 49.2151C72.4383 50.3486 72.2393 51.5953 72.2393 52.9554C72.2393 54.3154 72.4383 55.5622 72.835 56.6956C73.26 57.829 73.8688 58.8212 74.6621 59.6712C75.4554 60.5212 76.3766 61.1729 77.4248 61.6263C78.4733 62.0797 79.6214 62.3069 80.8682 62.3069C82.115 62.3069 83.2631 62.0797 84.3115 61.6263C85.3881 61.1729 86.3092 60.5212 87.0742 59.6712C87.8392 58.8212 88.4344 57.829 88.8594 56.6956C89.3127 55.5623 89.5391 54.3154 89.5391 52.9554C89.539 51.5953 89.3127 50.3485 88.8594 49.2151C88.4344 48.0818 87.8392 47.1042 87.0742 46.2825C86.3092 45.4326 85.3881 44.7808 84.3115 44.3275C83.2631 43.8457 82.115 43.6048 80.8682 43.6048Z" fill="var(--cream)"/></svg>
+            <span class="pm-t">这枚是站点真实商标 <code>ojo-wordmark.svg</code>(从 <code>/branding/</code> 提取,此处填 <code>--cream</code> 呈色)。导航处沿用解构页专用标识,以免与原站混淆。</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    ojo 设计解构,逆向自线上站点 ojo.art(共抓取 278292 字节 CSS),供内部研究与复刻参考。<br />
+    数值以线上抽取为准,技术栈与创作意图为公开观察推断。<b>全程区分实锤与推断,不编造精确数值。</b>
+  </footer>
+</div>
+</main>
+
+<div class="copybar" id="copybar" role="status" aria-live="polite">已复制</div>
+
+<script>
+(function(){
+  var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* nav stuck */
+  var nav=document.getElementById('nav');
+  function onScroll(){nav.classList.toggle('stuck',scrollY>10);}
+  onScroll(); addEventListener('scroll',onScroll,{passive:true});
+
+  /* stars in hero */
+  (function(){
+    var s=document.getElementById('stars'),h='';
+    for(var i=0;i<26;i++){
+      var x=Math.random()*100, y=Math.random()*72, d=(Math.random()*4+2).toFixed(1), del=(Math.random()*4).toFixed(1);
+      h+='<i style="left:'+x.toFixed(1)+'%;top:'+y.toFixed(1)+'%;animation-duration:'+d+'s;animation-delay:'+del+'s"></i>';
+    }
+    s.innerHTML=h;
+  })();
+
+  /* typewriter code narration */
+  (function(){
+    var src=
+'canvas = ojo.Canvas()\n\n'+
+'agent = ojo.Agent(\n'+
+'    name="Vincent",\n'+
+'    goal="evoke emotion through\n'+
+'          color and bold strokes",\n'+
+'    tools=[Search(), Code(), Draw()],\n'+
+')\n\n'+
+'canvas.flow()\n'+
+'    .add(agent)\n'+
+'    .connect("imagination", "coder")\n'+
+'    .connect("coder", "ui_builder")\n'+
+'    .run()';
+    var el=document.getElementById('typed'), card=document.getElementById('codecard'), i=0;
+    if(reduce){ el.textContent=src; card.classList.add('blink-off'); return; }
+    function type(){
+      el.textContent=src.slice(0,i++);
+      if(i<=src.length){ setTimeout(type, src[i-2]==='\n'?60:22); }
+    }
+    setTimeout(type,500);
+  })();
+
+  /* copy toast */
+  var bar=document.getElementById('copybar'),t;
+  function copy(hex){
+    try{navigator.clipboard&&navigator.clipboard.writeText(hex);}catch(e){}
+    bar.textContent='已复制 '+hex; bar.classList.add('show');
+    clearTimeout(t); t=setTimeout(function(){bar.classList.remove('show');},1200);
+  }
+
+  /* swatches */
+  function sw(list,el){
+    var h=document.getElementById(el),s='';
+    list.forEach(function(c){
+      s+='<div class="sw" data-hex="'+c.hex+'" tabindex="0" role="button" aria-label="复制 '+c.hex+'"><div class="chipc" style="background:'+(c.bg||c.hex)+'"></div>'+
+         '<div class="meta"><div class="name">'+c.name+'</div><div class="hex">'+c.hex+'</div><div class="role">'+c.role+'</div></div></div>';
+    });
+    h.innerHTML=s;
+  }
+  sw([
+    {name:'深黑基底',hex:'#000',role:'首屏与深色段底 · 出现 25 次'},
+    {name:'近黑层次',hex:'#0a0a0a',role:'段落分层'},
+    {name:'玻璃卡底',hex:'#0d0d0d',role:'对话框与卡片底'},
+    {name:'奶油暖白',hex:'#fff8eb',role:'大标题文字 · h1 计算色'},
+    {name:'明黄强调',hex:'#ffc000',role:'按钮 · 按钮计算色'},
+    {name:'星夜蓝',hex:'#5f86a8',role:'油画主调 · 出现 10 次'},
+    {name:'暖白纸感',hex:'#f4f3f0',role:'白板与画布纸张'},
+    {name:'近黑面板',hex:'#111',role:'panel-2'}
+  ],'sw-brand');
+  sw([
+    {name:'改版蓝',hex:'#2d6cdf',bg:'linear-gradient(135deg,#5b8def,#2d6cdf)',role:'Redesign Team 辉光'},
+    {name:'原型绿',hex:'#34c759',bg:'linear-gradient(135deg,#5fe08a,#34c759)',role:'Prototype Team 辉光'},
+    {name:'酸性柠檬',hex:'#d6ff41',role:'技能卡高亮'},
+    {name:'珊瑚橙',hex:'#ff6b54',role:'暖色点缀'},
+    {name:'商用橙',hex:'#f97316',role:'产品强调 · hsl(24 95% 53%)'},
+    {name:'警示红',hex:'#ef4444',role:'状态'},
+    {name:'橙调',hex:'#ff6a2a',role:'点缀'},
+    {name:'棕调',hex:'#594e45',role:'纸感阴影'}
+  ],'sw-card');
+
+  /* radix ramp */
+  (function(){
+    var ramp=[['#fcfcfc','--gray1'],['#f8f8f8','--gray2'],['#f2f2f2','--gray3'],['#ededed','--gray4'],['#e8e8e8','--gray5'],['#e2e2e2','--gray6'],['#dbdbdb','--gray7'],['#c7c7c7','--gray8'],['#8f8f8f','--gray9'],['#858585','--gray10'],['#6f6f6f','--gray11'],['#171717','--gray12']];
+    var h='';
+    ramp.forEach(function(g){h+='<span data-hex="'+g[0]+'" title="'+g[1]+' '+g[0]+'" style="background:'+g[0]+'"></span>';});
+    document.getElementById('ramp').innerHTML=h;
+  })();
+
+  /* copy delegation */
+  document.addEventListener('click',function(e){
+    var s=e.target.closest('.sw'); if(s){copy(s.getAttribute('data-hex'));return;}
+    var r=e.target.closest('.ramp span'); if(r){copy(r.getAttribute('data-hex'));return;}
+  });
+  document.addEventListener('keydown',function(e){
+    if(e.key!=='Enter'&&e.key!==' ')return;
+    var s=e.target.closest('.sw'); if(s){e.preventDefault();copy(s.getAttribute('data-hex'));return;}
+    var ea=e.target.closest('.ease'); if(ea){e.preventDefault();play(+ea.getAttribute('data-i'));}
+    var m=e.target.closest('#modelsel'); if(m){e.preventDefault();cycleModel();}
+  });
+
+  /* easing lab */
+  var curves=[
+    {n:'标准缓动 · 主力',v:'.4, 0, .2, 1',p:[.4,0,.2,1],dur:200,d:'样式表出现 24 次,几乎所有过渡的默认。用于悬停、焦点、变色一类微交互。'},
+    {n:'强揭示 · 卡片入场',v:'.16, 1, .3, 1',p:[.16,1,.3,1],dur:600,d:'出现 8 次。极快冲出、长尾沉降——最"高级"的顺滑,用于揭示与团队卡入场。'},
+    {n:'纯减速',v:'0, 0, .2, 1',p:[0,0,.2,1],dur:400,d:'decelerate。元素平滑滑入后停稳,无回弹。'},
+    {n:'ease-out-quart',v:'.22, 1, .36, 1',p:[.22,1,.36,1],dur:500,d:'轻微越界后顺滑收束,给出场一点点弹性。'}
+  ];
+  var lab=document.getElementById('easelab'),html='';
+  curves.forEach(function(c,i){
+    html+='<div class="ease" data-i="'+i+'" tabindex="0" role="button"><div class="ease-top"><h3>'+c.n+'</h3><span class="curveval">cubic-bezier('+c.v+')</span></div>'+
+      '<div class="desc">'+c.d+'</div><div class="ease-viz"><canvas id="cvz'+i+'" width="112" height="112"></canvas>'+
+      '<div class="track"><div class="runner-wrap"><div class="runner" id="run'+i+'"></div></div>'+
+      '<div class="replay">点击重放 · transform '+c.dur+'ms</div></div></div></div>';
+  });
+  lab.innerHTML=html;
+  function drawCurve(i,p){
+    var c=document.getElementById('cvz'+i);if(!c)return;var g=c.getContext('2d'),S=112,pad=20;
+    var minY=Math.min(0,p[1],p[3]),maxY=Math.max(1,p[1],p[3]);
+    function X(t){return pad+t*(S-2*pad);}
+    function Y(v){return (S-pad)-((v-minY)/(maxY-minY))*(S-2*pad);}
+    g.clearRect(0,0,S,S);
+    g.strokeStyle='rgba(255,248,235,.12)';g.lineWidth=1;
+    g.beginPath();g.moveTo(X(0),Y(0));g.lineTo(X(1),Y(0));g.moveTo(X(0),Y(1));g.lineTo(X(1),Y(1));g.stroke();
+    g.strokeStyle='#ffc000';g.lineWidth=2;g.beginPath();
+    for(var t=0;t<=1.001;t+=0.02){
+      var s=t,y=3*Math.pow(1-s,2)*s*p[1]+3*(1-s)*s*s*p[3]+s*s*s;
+      var xx=3*Math.pow(1-s,2)*s*p[0]+3*(1-s)*s*s*p[2]+s*s*s;
+      if(t===0)g.moveTo(X(xx),Y(y));else g.lineTo(X(xx),Y(y));
+    }
+    g.stroke();
+    g.fillStyle='#5f86a8';g.beginPath();g.arc(X(0),Y(0),3,0,7);g.fill();
+    g.beginPath();g.arc(X(1),Y(1),3,0,7);g.fill();
+  }
+  function play(i){
+    var r=document.getElementById('run'+i);if(!r)return;var wrap=r.parentElement,dist=Math.round((wrap.clientWidth-r.clientWidth-12)*0.9);
+    var dur=curves[i].dur;
+    r.style.transition='none';r.style.transform='translateX(0)';
+    void r.offsetWidth;
+    r.style.transition='transform '+dur+'ms cubic-bezier('+curves[i].p.join(',')+')';
+    r.style.transform='translateX('+dist+'px)';
+  }
+  curves.forEach(function(c,i){drawCurve(i,c.p);if(!reduce)setTimeout(function(){play(i);},400+i*170);});
+  lab.addEventListener('click',function(e){var e2=e.target.closest('.ease');if(e2)play(+e2.getAttribute('data-i'));});
+
+  /* duration ladders */
+  function durbars(el,list,max,cls){
+    var h='';
+    list.forEach(function(d){
+      var pct=Math.max(6, Math.sqrt(d[1]/max)*100);
+      h+='<div class="durrow"><span class="lab">'+d[0]+'</span><div class="durbar '+cls+'" style="width:'+pct+'%"></div><span class="val">'+d[2]+'</span></div>';
+    });
+    document.getElementById(el).innerHTML=h;
+  }
+  durbars('durs-micro',[['transform',120,'.12s'],['快过渡',150,'.15s'],['按钮变色',180,'.18s'],['常规',200,'.2s'],['位移淡入',400,'.4s'],['慢过渡',600,'.6s']],600,'warm');
+  durbars('durs-amb',[['循环基',1000,'1s'],['旋转',2000,'2s'],['漂浮',4000,'4s'],['入场辉光',8000,'8s'],['走马灯',15000,'15s'],['星夜',18000,'18s']],18000,'cool');
+
+  /* keyframe list */
+  var kfs=[
+    ['hero-breathe','首屏星夜氛围的缓慢呼吸'],
+    ['hero-headline-reveal','大标题分段揭示入场'],
+    ['landingpage-code-flicker','代码叙事的打字机式闪现'],
+    ['landingpage-cursor-wander-1','无限画布上光标的自主游走'],
+    ['agent-team-input-border-flow','深黑玻璃输入框的流动渐变边框'],
+    ['agent-team-card-float','智能体团队卡的悬浮漂移'],
+    ['agent-team-card-enter','团队卡入场'],
+    ['agent-team-skill-marquee','技能标签的走马灯横向滚动']
+  ];
+  document.getElementById('kflist').innerHTML=kfs.map(function(k){
+    return '<div class="kf"><div class="n">@keyframes '+k[0]+'</div><div class="d">'+k[1]+'</div></div>';
+  }).join('');
+
+  /* ---------- signature demo interactions ---------- */
+  var skills=[
+    'Visual DNA','UI/UX practice','Web Search','Product page structure','Design review',
+    'Product analysis','Structure Analysis','Wireframe generation','Design tokens','Moodboard',
+    'Component library','Interactive prototype','Color system','Typography scale'
+  ];
+  var track=document.getElementById('mtrack');
+  function skillHTML(s){return '<button class="skill" data-s="'+s+'"><span class="si"></span>'+s+'</button>';}
+  track.innerHTML = skills.map(skillHTML).join('') + skills.map(skillHTML).join('');
+
+  var chiprow=document.getElementById('chiprow'), addBtn=document.getElementById('addChip');
+  function addChip(label){
+    var chip=document.createElement('span');
+    chip.className='agentchip enter';
+    chip.innerHTML=label+' <span class="x" role="button" tabindex="0" aria-label="移除">×</span>';
+    chiprow.insertBefore(chip, addBtn);
+  }
+  track.addEventListener('click',function(e){
+    var b=e.target.closest('.skill'); if(!b)return;
+    addChip(b.getAttribute('data-s'));
+  });
+  chiprow.addEventListener('click',function(e){
+    var x=e.target.closest('.x'); if(!x)return;
+    var chip=x.closest('.agentchip'); if(chip&&!chip.getAttribute('data-fixed')) chip.remove();
+  });
+  addBtn.addEventListener('click',function(){ addChip('New Team'); });
+
+  var models=['OJO Master','OJO Fast','OJO Draw'],mi=0;
+  var modelname=document.getElementById('modelname'), modelsel=document.getElementById('modelsel');
+  function cycleModel(){ mi=(mi+1)%models.length; modelname.textContent=models[mi]; }
+  modelsel.addEventListener('click',cycleModel);
+
+  var sendBtn=document.getElementById('sendBtn');
+  sendBtn.addEventListener('click',function(){
+    sendBtn.classList.remove('sent'); void sendBtn.offsetWidth; sendBtn.classList.add('sent');
+    copy('已发送给智能体团队');
+  });
+})();
+</script>
+
+<style>.dt-omit{display:flex;align-items:center;justify-content:center;min-height:96px;background:repeating-linear-gradient(45deg,transparent,transparent 9px,rgba(128,128,128,.07) 9px,rgba(128,128,128,.07) 18px);border:1px dashed rgba(128,128,128,.32);border-radius:8px;color:#8b8b8b;font:11px/1.5 ui-monospace,SFMono-Regular,Menlo,monospace;text-align:center;padding:14px;box-sizing:border-box}</style>
+<script>/* public build: original site media removed for copyright; layout preserved, real look kept in the as-seen screenshots */
+(function(){
+ var R=/real-assets\/(image|video|audio|fonts|source|lottie)\/|\.(mp4|webm|mov|mp3|wav|woff2?|otf|ttf)(\?|$)/i;
+ function box(w,h){var d=document.createElement('div');d.className='dt-omit';d.textContent='原站素材已按版权移除,见原站';if(w)d.style.width=w;if(h)d.style.minHeight=h;return d;}
+ document.querySelectorAll('video').forEach(function(v){
+   var srcs=[].map.call(v.querySelectorAll('source'),function(s){return s.getAttribute('src')||''});
+   var bad=R.test(v.getAttribute('src')||'')||srcs.some(function(s){return R.test(s)});
+   if(!bad)return;
+   v.removeAttribute('src');v.removeAttribute('autoplay');v.querySelectorAll('source').forEach(function(s){s.remove()});
+   if(!v.getAttribute('poster')){var b=box(v.style.width||'',((v.clientHeight||160))+'px');v.parentNode&&v.parentNode.replaceChild(b,v);}
+ });
+ document.querySelectorAll('img').forEach(function(im){
+   if(R.test(im.getAttribute('src')||'')){var b=box((im.getAttribute('width')||'')+(im.getAttribute('width')?'px':''),((im.getAttribute('height')||im.clientHeight||120))+'px');im.parentNode&&im.parentNode.replaceChild(b,im);}
+ });
+})();
+</script>
+
+</body>
+</html>

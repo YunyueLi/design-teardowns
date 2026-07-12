@@ -1,0 +1,389 @@
+{
+  "site": "chatgpt",
+  "url": "https://openai.com/chatgpt/overview/",
+  "fonts": [
+    {
+      "url": "https://cdn.openai.com/common/fonts/openai-sans/v4/OpenAISans-Light.woff2",
+      "file": "chatgpt/real-assets/fonts/e92aee_OpenAISans-Light.woff2",
+      "bytes": 53932,
+      "type": "application/octet-stream"
+    },
+    {
+      "url": "https://cdn.openai.com/common/fonts/openai-sans/v4/OpenAISans-LightItalic.woff2",
+      "file": "chatgpt/real-assets/fonts/f65f5d_OpenAISans-LightItalic.woff2",
+      "bytes": 56456,
+      "type": "application/octet-stream"
+    },
+    {
+      "url": "https://cdn.openai.com/common/fonts/openai-sans/v4/OpenAISans-Regular.woff2",
+      "file": "chatgpt/real-assets/fonts/b2df60_OpenAISans-Regular.woff2",
+      "bytes": 53228,
+      "type": "application/octet-stream"
+    },
+    {
+      "url": "https://cdn.openai.com/common/fonts/openai-sans/v4/OpenAISans-RegularItalic.woff2",
+      "file": "chatgpt/real-assets/fonts/8df38d_OpenAISans-RegularItalic.woff2",
+      "bytes": 56268,
+      "type": "application/octet-stream"
+    },
+    {
+      "url": "https://cdn.openai.com/common/fonts/openai-sans/v4/OpenAISans-Medium.woff2",
+      "file": "chatgpt/real-assets/fonts/2b6d10_OpenAISans-Medium.woff2",
+      "bytes": 56184,
+      "type": "application/octet-stream"
+    },
+    {
+      "url": "https://cdn.openai.com/common/fonts/openai-sans/v4/OpenAISans-MediumItalic.woff2",
+      "file": "chatgpt/real-assets/fonts/b41f39_OpenAISans-MediumItalic.woff2",
+      "bytes": 60360,
+      "type": "application/octet-stream"
+    },
+    {
+      "url": "https://cdn.openai.com/common/fonts/openai-sans/v4/OpenAISans-Semibold.woff2",
+      "file": "chatgpt/real-assets/fonts/497516_OpenAISans-Semibold.woff2",
+      "bytes": 56196,
+      "type": "application/octet-stream"
+    },
+    {
+      "url": "https://cdn.openai.com/common/fonts/openai-sans/v4/OpenAISans-SemiboldItalic.woff2",
+      "file": "chatgpt/real-assets/fonts/e06d99_OpenAISans-SemiboldItalic.woff2",
+      "bytes": 60148,
+      "type": "application/octet-stream"
+    },
+    {
+      "url": "https://cdn.openai.com/common/fonts/openai-sans/v4/OpenAISans-Bold.woff2",
+      "file": "chatgpt/real-assets/fonts/12c667_OpenAISans-Bold.woff2",
+      "bytes": 55624,
+      "type": "application/octet-stream"
+    },
+    {
+      "url": "https://cdn.openai.com/common/fonts/openai-sans/v4/OpenAISans-BoldItalic.woff2",
+      "file": "chatgpt/real-assets/fonts/7a6b83_OpenAISans-BoldItalic.woff2",
+      "bytes": 58848,
+      "type": "application/octet-stream"
+    },
+    {
+      "url": "https://cdn.openai.com/common/fonts/openai-sans/v4/OpenAISansGreek-Light.woff2",
+      "file": "chatgpt/real-assets/fonts/48331e_OpenAISansGreek-Light.woff2",
+      "bytes": 61084,
+      "type": "application/octet-stream"
+    },
+    {
+      "url": "https://cdn.openai.com/common/fonts/openai-sans/v4/OpenAISansGreek-LightItalic.woff2",
+      "file": "chatgpt/real-assets/fonts/9c4215_OpenAISansGreek-LightItalic.woff2",
+      "bytes": 64568,
+      "type": "application/octet-stream"
+    },
+    {
+      "url": "https://cdn.openai.com/common/fonts/openai-sans/v4/OpenAISansGreek-Regular.woff2",
+      "file": "chatgpt/real-assets/fonts/a1cac8_OpenAISansGreek-Regular.woff2",
+      "bytes": 58540,
+      "type": "application/octet-stream"
+    },
+    {
+      "url": "https://cdn.openai.com/common/fonts/openai-sans/v4/OpenAISansGreek-RegularItalic.woff2",
+      "file": "chatgpt/real-assets/fonts/9f6d82_OpenAISansGreek-RegularItalic.woff2",
+      "bytes": 61872,
+      "type": "application/octet-stream"
+    },
+    {
+      "url": "https://cdn.openai.com/common/fonts/openai-sans/v4/OpenAISansGreek-Medium.woff2",
+      "file": "chatgpt/real-assets/fonts/627b43_OpenAISansGreek-Medium.woff2",
+      "bytes": 61388,
+      "type": "application/octet-stream"
+    },
+    {
+      "url": "https://cdn.openai.com/common/fonts/openai-sans/v4/OpenAISansGreek-MediumItalic.woff2",
+      "file": "chatgpt/real-assets/fonts/1c330d_OpenAISansGreek-MediumItalic.woff2",
+      "bytes": 66332,
+      "type": "application/octet-stream"
+    },
+    {
+      "url": "https://cdn.openai.com/common/fonts/openai-sans/v4/OpenAISansGreek-Semibold.woff2",
+      "file": "chatgpt/real-assets/fonts/09719b_OpenAISansGreek-Semibold.woff2",
+      "bytes": 61340,
+      "type": "application/octet-stream"
+    },
+    {
+      "url": "https://cdn.openai.com/common/fonts/openai-sans/v4/OpenAISansGreek-SemiboldItalic.woff2",
+      "file": "chatgpt/real-assets/fonts/45d398_OpenAISansGreek-SemiboldItalic.woff2",
+      "bytes": 66236,
+      "type": "application/octet-stream"
+    },
+    {
+      "url": "https://cdn.openai.com/common/fonts/openai-sans/v4/OpenAISansGreek-Bold.woff2",
+      "file": "chatgpt/real-assets/fonts/075e3b_OpenAISansGreek-Bold.woff2",
+      "bytes": 60508,
+      "type": "application/octet-stream"
+    },
+    {
+      "url": "https://cdn.openai.com/common/fonts/openai-sans/v4/OpenAISansGreek-BoldItalic.woff2",
+      "file": "chatgpt/real-assets/fonts/ded16f_OpenAISansGreek-BoldItalic.woff2",
+      "bytes": 64404,
+      "type": "application/octet-stream"
+    },
+    {
+      "url": "https://cdn.openai.com/common/fonts/openai-sans/v4/OpenAISansCyrillic-Light.woff2",
+      "file": "chatgpt/real-assets/fonts/f5094a_OpenAISansCyrillic-Light.woff2",
+      "bytes": 68864,
+      "type": "application/octet-stream"
+    },
+    {
+      "url": "https://cdn.openai.com/common/fonts/openai-sans/v4/OpenAISansCyrillic-LightItalic.woff2",
+      "file": "chatgpt/real-assets/fonts/576e07_OpenAISansCyrillic-LightItalic.woff2",
+      "bytes": 72584,
+      "type": "application/octet-stream"
+    },
+    {
+      "url": "https://cdn.openai.com/common/fonts/openai-sans/v4/OpenAISansCyrillic-Regular.woff2",
+      "file": "chatgpt/real-assets/fonts/7d1bd4_OpenAISansCyrillic-Regular.woff2",
+      "bytes": 64224,
+      "type": "application/octet-stream"
+    },
+    {
+      "url": "https://cdn.openai.com/common/fonts/openai-sans/v4/OpenAISansCyrillic-RegularItalic.woff2",
+      "file": "chatgpt/real-assets/fonts/908bd0_OpenAISansCyrillic-RegularItalic.woff2",
+      "bytes": 67700,
+      "type": "application/octet-stream"
+    },
+    {
+      "url": "https://cdn.openai.com/common/fonts/openai-sans/v4/OpenAISansCyrillic-Medium.woff2",
+      "file": "chatgpt/real-assets/fonts/eba0b4_OpenAISansCyrillic-Medium.woff2",
+      "bytes": 67176,
+      "type": "application/octet-stream"
+    },
+    {
+      "url": "https://cdn.openai.com/common/fonts/openai-sans/v4/OpenAISansCyrillic-MediumItalic.woff2",
+      "file": "chatgpt/real-assets/fonts/ed65a7_OpenAISansCyrillic-MediumItalic.woff2",
+      "bytes": 72080,
+      "type": "application/octet-stream"
+    },
+    {
+      "url": "https://cdn.openai.com/common/fonts/openai-sans/v4/OpenAISansCyrillic-Semibold.woff2",
+      "file": "chatgpt/real-assets/fonts/d3a65f_OpenAISansCyrillic-Semibold.woff2",
+      "bytes": 66896,
+      "type": "application/octet-stream"
+    },
+    {
+      "url": "https://cdn.openai.com/common/fonts/openai-sans/v4/OpenAISansCyrillic-SemiboldItalic.woff2",
+      "file": "chatgpt/real-assets/fonts/40df85_OpenAISansCyrillic-SemiboldItalic.woff2",
+      "bytes": 72068,
+      "type": "application/octet-stream"
+    },
+    {
+      "url": "https://cdn.openai.com/common/fonts/openai-sans/v4/OpenAISansCyrillic-Bold.woff2",
+      "file": "chatgpt/real-assets/fonts/5f1fa1_OpenAISansCyrillic-Bold.woff2",
+      "bytes": 65948,
+      "type": "application/octet-stream"
+    },
+    {
+      "url": "https://cdn.openai.com/common/fonts/openai-sans/v4/OpenAISansCyrillic-BoldItalic.woff2",
+      "file": "chatgpt/real-assets/fonts/6a50a9_OpenAISansCyrillic-BoldItalic.woff2",
+      "bytes": 69868,
+      "type": "application/octet-stream"
+    },
+    {
+      "url": "https://cdn.openai.com/common/fonts/openai-sans/v4/OpenAISansArabicVariable.woff2",
+      "file": "chatgpt/real-assets/fonts/2f6527_OpenAISansArabicVariable.woff2",
+      "bytes": 129516,
+      "type": "application/octet-stream"
+    },
+    {
+      "url": "https://cdn.openai.com/common/fonts/openai-sans/v4/OpenAISansHebrewVariable.woff2",
+      "file": "chatgpt/real-assets/fonts/b9eb10_OpenAISansHebrewVariable.woff2",
+      "bytes": 98124,
+      "type": "application/octet-stream"
+    },
+    {
+      "url": "https://cdn.openai.com/common/fonts/openai-sans/v4/OpenAISansDevanagariVariable.woff2",
+      "file": "chatgpt/real-assets/fonts/75d1b0_OpenAISansDevanagariVariable.woff2",
+      "bytes": 184748,
+      "type": "application/octet-stream"
+    },
+    {
+      "url": "https://cdn.openai.com/common/fonts/openai-sans/v4/OpenAISansHangulVariable.woff2",
+      "file": "chatgpt/real-assets/fonts/94d2ba_OpenAISansHangulVariable.woff2",
+      "bytes": 989024,
+      "type": "application/octet-stream"
+    },
+    {
+      "url": "https://cdn.openai.com/common/fonts/open-dyslexic/v1/opendyslexic-regular.woff2",
+      "file": "chatgpt/real-assets/fonts/3c7e34_opendyslexic-regular.woff2",
+      "bytes": 76796,
+      "type": "font/woff2"
+    },
+    {
+      "url": "https://cdn.openai.com/common/fonts/open-dyslexic/v1/opendyslexic-bold.woff2",
+      "file": "chatgpt/real-assets/fonts/fc5791_opendyslexic-bold.woff2",
+      "bytes": 78984,
+      "type": "font/woff2"
+    },
+    {
+      "url": "https://cdn.openai.com/common/fonts/mono/opendyslexicmono-regular.woff2",
+      "file": "chatgpt/real-assets/fonts/ee8938_opendyslexicmono-regular.woff2",
+      "bytes": 24120,
+      "type": "font/woff2"
+    },
+    {
+      "url": "https://cdn.openai.com/common/fonts/mono/hyperlegible-mono-latin-ext.woff2",
+      "file": "chatgpt/real-assets/fonts/865b5c_hyperlegible-mono-latin-ext.woff2",
+      "bytes": 10728,
+      "type": "font/woff2"
+    }
+  ],
+  "video": [],
+  "audio": [],
+  "image": [
+    {
+      "url": "https://cdn.openai.com/chatgpt/share-og.png",
+      "file": "chatgpt/real-assets/image/aa1da6_share-og.png",
+      "bytes": 705565,
+      "type": "image/png"
+    },
+    {
+      "url": "https://chatgpt.com/favicon.ico",
+      "file": "chatgpt/real-assets/image/d75c98_favicon.ico",
+      "bytes": 32038,
+      "type": "image/x-icon"
+    },
+    {
+      "url": "https://chatgpt.com/cdn/assets/favicon-eex17e9e.ico",
+      "file": "chatgpt/real-assets/image/894aa2_favicon-eex17e9e.ico",
+      "bytes": 15086,
+      "type": "image/vnd.microsoft.icon"
+    },
+    {
+      "url": "https://chatgpt.com/cdn/assets/favicon-l4nq08hd.svg",
+      "file": "chatgpt/real-assets/image/71b492_favicon-l4nq08hd.svg",
+      "bytes": 4258,
+      "type": "image/svg+xml"
+    },
+    {
+      "url": "https://chatgpt.com/cdn/assets/favicon-48x48-glnpepm0.webp",
+      "file": "chatgpt/real-assets/image/9458f6_favicon-48x48-glnpepm0.webp",
+      "bytes": 1162,
+      "type": "image/webp"
+    },
+    {
+      "url": "https://images.ctfassets.net/8su2tbn87fck/1MchgWlDyoyab3xpJ3J2ZD/7f5fe4fed43af2bf78f2f88089336944/Code.png?q=90&fm=webp",
+      "file": "chatgpt/real-assets/image/8ee750_Code.png",
+      "bytes": 244626,
+      "type": "image/webp"
+    },
+    {
+      "url": "https://images.ctfassets.net/8su2tbn87fck/2GFn68Lj3PCUE87c5oIx0m/a3de41104a526bf19da4eb4063fe29df/Work.png?q=90&fm=webp",
+      "file": "chatgpt/real-assets/image/4e15f2_Work.png",
+      "bytes": 110128,
+      "type": "image/webp"
+    },
+    {
+      "url": "https://images.ctfassets.net/8su2tbn87fck/728fhdV3M06axfUPcnQokG/4046dcc504eff769f98cadaafb1c0460/Card_-_Finance.png?q=90&fm=webp",
+      "file": "chatgpt/real-assets/image/f1c347_Card_-_Finance.png",
+      "bytes": 71268,
+      "type": "image/webp"
+    },
+    {
+      "url": "https://images.ctfassets.net/8su2tbn87fck/23VoabJqNdvqHDMcURWBtG/f00f791a284ddd3806035fcdbddddf17/merge-work-deck.png?q=90&fm=webp",
+      "file": "chatgpt/real-assets/image/ec541e_merge-work-deck.png",
+      "bytes": 85718,
+      "type": "image/webp"
+    },
+    {
+      "url": "https://images.ctfassets.net/8su2tbn87fck/1sBJ42aQ4ofKEnoqpyMApc/7248fda129dab216bcceca8957bd1184/Card_-_Writing.png?q=90&fm=webp",
+      "file": "chatgpt/real-assets/image/9722cf_Card_-_Writing.png",
+      "bytes": 143204,
+      "type": "image/webp"
+    },
+    {
+      "url": "https://images.ctfassets.net/8su2tbn87fck/5lA5vcIG3jm1OS0UjCDGmx/ff63ca6fa6ad13440dc62b2b90c56b37/Card_-_Images.png?q=90&fm=webp",
+      "file": "chatgpt/real-assets/image/22ba20_Card_-_Images.png",
+      "bytes": 133446,
+      "type": "image/webp"
+    },
+    {
+      "url": "https://images.ctfassets.net/8su2tbn87fck/54XCI5FXyq0NqVBKvvlAjp/c671df40e48d3ffa7bee784d3def9b27/Card_-_Work_-_opt_4.png?q=90&fm=webp",
+      "file": "chatgpt/real-assets/image/8d9617_Card_-_Work_-_opt_4.png",
+      "bytes": 75784,
+      "type": "image/webp"
+    },
+    {
+      "url": "https://images.ctfassets.net/8su2tbn87fck/5H92KlZdXjRaOf8eeg1wQu/90c073bfb4f38916a5e12c7f6d441388/Card_-_Coding_-_opt_4.png?q=90&fm=webp",
+      "file": "chatgpt/real-assets/image/506375_Card_-_Coding_-_opt_4.png",
+      "bytes": 96412,
+      "type": "image/webp"
+    },
+    {
+      "url": "https://images.ctfassets.net/8su2tbn87fck/6HgENqZjft6N6WzAeTj4sN/3c5d5722bcab2ae2ebecf49d31e20749/Card_-_Voice_-_opt_2.png?q=90&fm=webp",
+      "file": "chatgpt/real-assets/image/c7bc64_Card_-_Voice_-_opt_2.png",
+      "bytes": 106806,
+      "type": "image/webp"
+    },
+    {
+      "url": "https://images.ctfassets.net/8su2tbn87fck/6eEz4h5QALn71tmTvvhzvL/87f0138cfcb211d673ec062ba200fda0/Card_-_Health_-_opt_5.png?q=90&fm=webp",
+      "file": "chatgpt/real-assets/image/e14df0_Card_-_Health_-_opt_5.png",
+      "bytes": 119120,
+      "type": "image/webp"
+    },
+    {
+      "url": "https://images.ctfassets.net/8su2tbn87fck/4wl78Dke0cglYlNJOaXSyI/49fe1af38fe6b0052b9949ca7b1208d5/merge-work-preso.png?q=90&fm=webp",
+      "file": "chatgpt/real-assets/image/9738c1_merge-work-preso.png",
+      "bytes": 16730,
+      "type": "image/webp"
+    },
+    {
+      "url": "https://images.ctfassets.net/8su2tbn87fck/3jt6fO4enz6k5s9cleuOHG/3d4dc297d3daee5ba1858b48df1bf709/OpenAI_Falcon_1x1.jpg?q=90&fm=webp",
+      "file": "chatgpt/real-assets/image/f27cfd_OpenAI_Falcon_1x1.jpg",
+      "bytes": 522644,
+      "type": "image/webp"
+    },
+    {
+      "url": "https://images.ctfassets.net/8su2tbn87fck/7oYpE4yVhJlkrERxPR9vN7/941636be1a607ce7bb603e2d885b018b/chatgpt-small-business-stories.png?q=90&fm=webp",
+      "file": "chatgpt/real-assets/image/522409_chatgpt-small-business-stories.png",
+      "bytes": 123950,
+      "type": "image/webp"
+    }
+  ],
+  "lottie": [],
+  "source": [
+    {
+      "url": "https://chatgpt.com/cdn/assets/root-d9z98frz.css#",
+      "file": "chatgpt/real-assets/source/3a706a_root-d9z98frz.css",
+      "bytes": 1597359
+    },
+    {
+      "url": "https://chatgpt.com/cdn/assets/global-modals-5n50n0lo.css#",
+      "file": "chatgpt/real-assets/source/54f5a5_global-modals-5n50n0lo.css",
+      "bytes": 9540
+    },
+    {
+      "url": "https://chatgpt.com/cdn/assets/conversation-small-oc29fk65.css#",
+      "file": "chatgpt/real-assets/source/cfa70b_conversation-small-oc29fk65.css",
+      "bytes": 101635
+    },
+    {
+      "url": "https://chatgpt.com/cdn/assets/root-d9z98frz.css",
+      "file": "chatgpt/real-assets/source/198420_root-d9z98frz.css",
+      "bytes": 1597359
+    },
+    {
+      "url": "https://chatgpt.com/cdn/assets/conversation-small-oc29fk65.css",
+      "file": "chatgpt/real-assets/source/8e6926_conversation-small-oc29fk65.css",
+      "bytes": 101635
+    },
+    {
+      "url": "https://chatgpt.com/cdn/assets/global-modals-5n50n0lo.css",
+      "file": "chatgpt/real-assets/source/6fb7d4_global-modals-5n50n0lo.css",
+      "bytes": 9540
+    },
+    {
+      "url": "https://accounts.google.com/gsi/style",
+      "file": "chatgpt/real-assets/source/1575cd_style.css",
+      "bytes": 696
+    },
+    {
+      "url": "https://openai.com/chatgpt/overview/",
+      "file": "chatgpt/real-assets/source/index.html",
+      "bytes": 0
+    }
+  ]
+}

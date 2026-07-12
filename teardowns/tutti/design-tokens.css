@@ -1,0 +1,80 @@
+/* ============================================================
+   tutti — 从线上站点真实抽取的设计 token（实锤，非观感推断）
+   源:https://tutti.sh  · 抽取:playwright 计算样式 + 样式表文本
+   ============================================================ */
+:root{
+  /* —— 基底 / 文字（computed）—— */
+  --bg:rgb(0, 0, 0);
+  --ink:rgb(242, 242, 246);
+  --accent:#7f90ff;   /* --accent/--brand 变量实测 */
+  /* 高频色值（样式表出现次数 top）:#fff #000 #5b69e6 #7f90ff #05070d #f2f2f6 #f3f1ea #0a0a0c #5274ff #aab2ff */
+
+  /* —— 字体（computed / fontsLoaded）—— */
+  --font-sans:"Lexend Variable", Lexend, system-ui, -apple-system, sans-serif;
+  /* 实际加载字体:Lexend Variable, Archivo Black, Inter, Merriweather, Poppins, Departure Mono */
+  /* h1:58px/600 字距 normal 行高 68px */
+
+  /* —— 动效（样式表实测）—— */
+  --ease-1:cubic-bezier(.22,1,.36,1);
+  --ease-2:cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-3:cubic-bezier(0.65, 0, 0.35, 1);
+  --ease-4:cubic-bezier(.65,0,.35,1);
+  --ease-5:cubic-bezier(0.2, 0.84, 0.24, 1);
+  --ease-6:cubic-bezier(.2,.84,.24,1);
+  /* 按钮过渡:color 0.2s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.2s cubic-bezier(0.22, 1, 0.36, 1) */
+  /* 时长梯:2s 18s 72s 3s 4s 25s 16s 0.9s */
+
+  /* —— 圆角（实测 top）—— */
+  --radius-1:999px;
+  --radius-2:12px;
+  --radius-3:8px;
+  --radius-4:16px;
+  --radius-5:14px;
+  --radius-6:50%;
+  /* 按钮圆角:0px */
+  /* 媒体清单:video 2 · canvas 1 · svg 76 · img 70 */
+}
+
+/* —— 站点原始 CSS 自定义变量(节选，复刻参考) —— */
+:root{
+  --onboard-agent-star-border-size:2px;
+  --onboard-agent-star-border-color:color-mix(in srgb, #5274ff 90%, transparent);
+  --onboard-agent-star-border-mid-color:color-mix(in srgb, #5274ff 50%, transparent);
+  --onboard-agent-star-border-core-stop:24%;
+  --onboard-agent-star-border-fade-stop:58%;
+  --onboard-agent-star-border-length:clamp(88px, 18%, 160px);
+  --onboard-agent-star-border-radius:16px;
+  --onboard-agent-star-border-shadow:drop-shadow(0 0 8px color-mix(in srgb, #5274ff 58%, transparent));
+  --onboard-message-center-star-border-size:2px;
+  --onboard-message-center-star-border-duration:5.8s;
+  --onboard-message-center-star-border-color:rgb(109 127 245);
+  --onboard-message-center-star-border-mid-color:color-mix(in srgb, rgb(109 127 245) 48%, transparent);
+  --onboard-message-center-star-border-core-stop:42%;
+  --onboard-message-center-star-border-fade-stop:72%;
+  --onboard-message-center-star-border-length:clamp(88px, 18%, 160px);
+  --onboard-message-center-star-border-radius:8px;
+  --onboard-message-center-star-border-shadow:drop-shadow(0 0 6px color-mix(in srgb, rgb(109 127 245) 58%, transparent));
+  --bg:#060608;
+  --ink:#f2f2f6;
+  --ink-dim:#9c9caa;
+  --ink-faint:#61616b;
+  --line:rgba(255, 255, 255, .1);
+  --accent:#7f90ff;
+  --accent-soft:#aab2ff;
+  --accent-2:#6a78ee;
+  --accent-bg:rgba(127, 144, 255, .12);
+  --accent-line:rgba(127, 144, 255, .3);
+  --glow:127, 144, 255;
+  --paper:#f3f1ea;
+  --display:"Lexend Variable", "Lexend", system-ui, sans-serif;
+  --heavy:"Lexend Variable", "Lexend", system-ui, sans-serif;
+  --pixel:"Departure Mono", ui-monospace, "SFMono-Regular", monospace;
+  --sans:"Lexend Variable", "Lexend", system-ui, -apple-system, sans-serif;
+  --maxw:1200px;
+  --radius:16px;
+  --ease:cubic-bezier(.22, 1, .36, 1);
+  --t-ink:#fafaff;
+  --t-dim:#9c9caa;
+  --t-faint:#62626c;
+  --t-line:rgba(255, 255, 255, .1);
+}

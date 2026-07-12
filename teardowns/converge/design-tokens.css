@@ -1,0 +1,77 @@
+/* ============================================================
+   converge — 从线上站点真实抽取的设计 token（实锤，非观感推断）
+   源:https://converge.ai  · 抽取:playwright 计算样式 + 样式表文本
+   ============================================================ */
+:root{
+  /* —— 基底 / 文字（computed）—— */
+  --bg:lab(100 0 0);
+  --ink:lab(2.75381 0 0);
+  --accent:lab(96.52% -.0000298023 .0000119209);   /* --accent/--brand 变量实测 */
+  /* 高频色值（样式表出现次数 top）:#fafafa #fff #0f0f0f #0285ff #f5f5f5 #171717 #f8f8f8 #e5e5e5 #0a0a0a #18181b */
+
+  /* —— 字体（computed / fontsLoaded）—— */
+  --font-sans:"Instrument Sans", "Instrument Sans Fallback", -apple-system, "system-ui", sans-serif;
+  /* 实际加载字体:Inter, Inter Fallback, Instrument Sans, Instrument Sans Fallback, Schibsted Grotesk, Schibsted Grotesk Fallback, Reddit Sans, Reddit Sans Fallback, Bitcount Prop Single Variable, KaTeX_AMS, KaTeX_Caligraphic, KaTeX_Fraktur, KaTeX_Main, KaTeX_Math, KaTeX_SansSerif, KaTeX_Script, KaTeX_Size1, KaTeX_Size2, KaTeX_Size3, KaTeX_Size4, KaTeX_Typewriter */
+  /* h1:64px/500 字距 -1.92px 行高 70.4px */
+
+  /* —— 动效（样式表实测）—— */
+  --ease-1:cubic-bezier(.4,0,.2,1);
+  --ease-2:cubic-bezier(0,0,.2,1);
+  --ease-3:cubic-bezier(.4,0,.6,1);
+  /* 按钮过渡:color 0.15s cubic-bezier(0.4, 0, 0.2, 1), background-color 0.15s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.15s cubic-bezier(0.4, 0, 0.2, 1), outline-color 0.15s cubic-bezier(0.4, 0, 0.2, 1), text-decoration-color 0.15s cubic-bezier(0.4, 0, 0.2, 1), fill 0.15s cubic-bezier(0.4, 0, 0.2, 1), stroke 0.15s cubic-bezier(0.4, 0, 0.2, 1), --tw-gradient-from 0.15s cubic-bezier(0.4, 0, 0.2, 1), --tw-gradient-via 0.15s cubic-bezier(0.4, 0, 0.2, 1), --tw-gradient-to 0.15s cubic-bezier(0.4, 0, 0.2, 1) */
+  /* 时长梯:15s 2s 40s 0s 1.2s 0.15s 0.2s 0.3s */
+
+  /* —— 圆角（实测 top）—— */
+  --radius-1:0px;
+  --radius-2:14px;
+  --radius-3:0;
+  --radius-4:calc(var(--radius) - 2px);
+  --radius-5:9.625px;
+  --radius-6:10px;
+  /* 按钮圆角:0px */
+  /* 媒体清单:video 1 · canvas 1 · svg 52 · img 38 */
+}
+
+/* —— 站点原始 CSS 自定义变量(节选，复刻参考) —— */
+:root{
+  --font-inter:"Inter","Inter Fallback";
+  --font-instrument-sans:"Instrument Sans","Instrument Sans Fallback";
+  --font-schibsted:"Schibsted Grotesk","Schibsted Grotesk Fallback";
+  --font-reddit-sans:"Reddit Sans","Reddit Sans Fallback";
+  --tw-translate-x:0;
+  --tw-translate-y:0;
+  --tw-translate-z:0;
+  --tw-scale-x:1;
+  --tw-scale-y:1;
+  --tw-scale-z:1;
+  --tw-rotate-x:initial;
+  --tw-rotate-y:initial;
+  --tw-rotate-z:initial;
+  --tw-skew-x:initial;
+  --tw-skew-y:initial;
+  --tw-space-y-reverse:0;
+  --tw-space-x-reverse:0;
+  --tw-border-style:solid;
+  --tw-gradient-position:initial;
+  --tw-gradient-from:#0000;
+  --tw-gradient-via:#0000;
+  --tw-gradient-to:#0000;
+  --tw-gradient-stops:initial;
+  --tw-gradient-via-stops:initial;
+  --tw-gradient-from-position:0%;
+  --tw-gradient-via-position:50%;
+  --tw-gradient-to-position:100%;
+  --tw-leading:initial;
+  --tw-font-weight:initial;
+  --tw-tracking:initial;
+  --tw-shadow:0 0 #0000;
+  --tw-shadow-color:initial;
+  --tw-shadow-alpha:100%;
+  --tw-inset-shadow:0 0 #0000;
+  --tw-inset-shadow-color:initial;
+  --tw-inset-shadow-alpha:100%;
+  --tw-ring-color:initial;
+  --tw-ring-shadow:0 0 #0000;
+  --tw-inset-ring-color:initial;
+  --tw-inset-ring-shadow:0 0 #0000;
+}

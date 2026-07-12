@@ -1,0 +1,521 @@
+{
+  "site": "notion",
+  "url": "https://www.notion.com",
+  "fonts": [
+    {
+      "url": "https://www.notion.com/front-static/fonts/NotionInter-Regular.woff2",
+      "file": "notion/real-assets/fonts/147dcc_NotionInter-Regular.woff2",
+      "bytes": 22444,
+      "type": "font/woff2"
+    },
+    {
+      "url": "https://www.notion.com/front-static/fonts/NotionInter-Medium.woff2",
+      "file": "notion/real-assets/fonts/264df1_NotionInter-Medium.woff2",
+      "bytes": 23292,
+      "type": "font/woff2"
+    },
+    {
+      "url": "https://www.notion.com/front-static/fonts/NotionInter-SemiBold.woff2",
+      "file": "notion/real-assets/fonts/835597_NotionInter-SemiBold.woff2",
+      "bytes": 23624,
+      "type": "font/woff2"
+    },
+    {
+      "url": "https://www.notion.com/front-static/fonts/NotionInter-Bold.woff2",
+      "file": "notion/real-assets/fonts/050df8_NotionInter-Bold.woff2",
+      "bytes": 23436,
+      "type": "font/woff2"
+    },
+    {
+      "url": "https://www.notion.com/front-static/fonts/NotionInter-Regular.woff",
+      "file": "notion/real-assets/fonts/b5e0be_NotionInter-Regular.woff",
+      "bytes": 29416,
+      "type": "font/woff"
+    },
+    {
+      "url": "https://www.notion.com/front-static/fonts/NotionInter-Medium.woff",
+      "file": "notion/real-assets/fonts/b06905_NotionInter-Medium.woff",
+      "bytes": 30640,
+      "type": "font/woff"
+    },
+    {
+      "url": "https://www.notion.com/front-static/fonts/NotionInter-SemiBold.woff",
+      "file": "notion/real-assets/fonts/ee8939_NotionInter-SemiBold.woff",
+      "bytes": 30992,
+      "type": "font/woff"
+    },
+    {
+      "url": "https://www.notion.com/front-static/fonts/NotionInter-Bold.woff",
+      "file": "notion/real-assets/fonts/68f2a8_NotionInter-Bold.woff",
+      "bytes": 30772,
+      "type": "font/woff"
+    },
+    {
+      "url": "https://www.notion.com/front-static/fonts/noto-sans-arabic.woff2",
+      "file": "notion/real-assets/fonts/edcacd_noto-sans-arabic.woff2",
+      "bytes": 166152,
+      "type": "font/woff2"
+    },
+    {
+      "url": "https://www.notion.com/front-static/fonts/noto-sans-hebrew.woff2",
+      "file": "notion/real-assets/fonts/160869_noto-sans-hebrew.woff2",
+      "bytes": 12212,
+      "type": "font/woff2"
+    },
+    {
+      "url": "https://www.notion.com/_next/static/media/NotionInter-Italic.556b6a81.woff2",
+      "file": "notion/real-assets/fonts/8b9483_NotionInter-Italic.556b6a81.woff2",
+      "bytes": 23960,
+      "type": "font/woff2"
+    },
+    {
+      "url": "https://www.notion.com/_next/static/media/NotionInter-Italic.77670713.woff",
+      "file": "notion/real-assets/fonts/a4c220_NotionInter-Italic.77670713.woff",
+      "bytes": 31292,
+      "type": "font/woff"
+    },
+    {
+      "url": "https://www.notion.com/_next/static/media/NotionInter-MediumItalic.bc4c8878.woff2",
+      "file": "notion/real-assets/fonts/83dbb7_NotionInter-MediumItalic.bc4c8878.woff2",
+      "bytes": 24676,
+      "type": "font/woff2"
+    },
+    {
+      "url": "https://www.notion.com/_next/static/media/NotionInter-MediumItalic.43777ed6.woff",
+      "file": "notion/real-assets/fonts/277886_NotionInter-MediumItalic.43777ed6.woff",
+      "bytes": 32364,
+      "type": "font/woff"
+    },
+    {
+      "url": "https://www.notion.com/_next/static/media/NotionInter-SemiBoldItalic.cb46786e.woff2",
+      "file": "notion/real-assets/fonts/0bcaea_NotionInter-SemiBoldItalic.cb46786e.woff2",
+      "bytes": 24676,
+      "type": "font/woff2"
+    },
+    {
+      "url": "https://www.notion.com/_next/static/media/NotionInter-SemiBoldItalic.5ef1a0b4.woff",
+      "file": "notion/real-assets/fonts/9cb28c_NotionInter-SemiBoldItalic.5ef1a0b4.woff",
+      "bytes": 32504,
+      "type": "font/woff"
+    },
+    {
+      "url": "https://www.notion.com/_next/static/media/NotionInter-BoldItalic.e4b84cf2.woff2",
+      "file": "notion/real-assets/fonts/98c464_NotionInter-BoldItalic.e4b84cf2.woff2",
+      "bytes": 24456,
+      "type": "font/woff2"
+    },
+    {
+      "url": "https://www.notion.com/_next/static/media/NotionInter-BoldItalic.3df3bb10.woff",
+      "file": "notion/real-assets/fonts/492235_NotionInter-BoldItalic.3df3bb10.woff",
+      "bytes": 32124,
+      "type": "font/woff"
+    },
+    {
+      "url": "https://www.notion.com/_next/static/media/LyonText-Regular-Web.d7bfb4be.woff2",
+      "file": "notion/real-assets/fonts/c6c056_LyonText-Regular-Web.d7bfb4be.woff2",
+      "bytes": 53528,
+      "type": "font/woff2"
+    },
+    {
+      "url": "https://www.notion.com/_next/static/media/LyonText-Regular-Web.2cefb6ff.woff",
+      "file": "notion/real-assets/fonts/5b9a39_LyonText-Regular-Web.2cefb6ff.woff",
+      "bytes": 72691,
+      "type": "font/woff"
+    },
+    {
+      "url": "https://www.notion.com/_next/static/media/LyonText-RegularItalic-Web.f823179b.woff2",
+      "file": "notion/real-assets/fonts/06a645_LyonText-RegularItalic-Web.f823179b.woff2",
+      "bytes": 61364,
+      "type": "font/woff2"
+    },
+    {
+      "url": "https://www.notion.com/_next/static/media/LyonText-RegularItalic-Web.fa2b7345.woff",
+      "file": "notion/real-assets/fonts/b72ea8_LyonText-RegularItalic-Web.fa2b7345.woff",
+      "bytes": 82251,
+      "type": "font/woff"
+    },
+    {
+      "url": "https://www.notion.com/_next/static/media/LyonText-Bold-Web.98529464.woff2",
+      "file": "notion/real-assets/fonts/c85da1_LyonText-Bold-Web.98529464.woff2",
+      "bytes": 57492,
+      "type": "font/woff2"
+    },
+    {
+      "url": "https://www.notion.com/_next/static/media/LyonText-Bold-Web.63193098.woff",
+      "file": "notion/real-assets/fonts/46838c_LyonText-Bold-Web.63193098.woff",
+      "bytes": 75819,
+      "type": "font/woff"
+    },
+    {
+      "url": "https://www.notion.com/_next/static/media/LyonText-BoldItalic-Web.8907ab5f.woff2",
+      "file": "notion/real-assets/fonts/8de82e_LyonText-BoldItalic-Web.8907ab5f.woff2",
+      "bytes": 64952,
+      "type": "font/woff2"
+    },
+    {
+      "url": "https://www.notion.com/_next/static/media/LyonText-BoldItalic-Web.fa5375df.woff",
+      "file": "notion/real-assets/fonts/f9ea60_LyonText-BoldItalic-Web.fa5375df.woff",
+      "bytes": 86111,
+      "type": "font/woff"
+    },
+    {
+      "url": "https://www.notion.com/_next/static/media/iAWriterMonoS-Regular.bf09337b.woff2",
+      "file": "notion/real-assets/fonts/62a0c7_iAWriterMonoS-Regular.bf09337b.woff2",
+      "bytes": 36952,
+      "type": "font/woff2"
+    },
+    {
+      "url": "https://www.notion.com/_next/static/media/iAWriterMonoS-Regular.7554f0d4.woff",
+      "file": "notion/real-assets/fonts/83ac96_iAWriterMonoS-Regular.7554f0d4.woff",
+      "bytes": 46964,
+      "type": "font/woff"
+    },
+    {
+      "url": "https://www.notion.com/_next/static/media/iAWriterMonoS-Italic.176fc5a8.woff2",
+      "file": "notion/real-assets/fonts/cea055_iAWriterMonoS-Italic.176fc5a8.woff2",
+      "bytes": 40708,
+      "type": "font/woff2"
+    },
+    {
+      "url": "https://www.notion.com/_next/static/media/iAWriterMonoS-Italic.8eb35e9b.woff",
+      "file": "notion/real-assets/fonts/4ee576_iAWriterMonoS-Italic.8eb35e9b.woff",
+      "bytes": 51240,
+      "type": "font/woff"
+    },
+    {
+      "url": "https://www.notion.com/_next/static/media/iAWriterMonoS-Bold.a8b41a99.woff2",
+      "file": "notion/real-assets/fonts/c2eb93_iAWriterMonoS-Bold.a8b41a99.woff2",
+      "bytes": 37540,
+      "type": "font/woff2"
+    },
+    {
+      "url": "https://www.notion.com/_next/static/media/iAWriterMonoS-Bold.bbe5a5e6.woff",
+      "file": "notion/real-assets/fonts/388491_iAWriterMonoS-Bold.bbe5a5e6.woff",
+      "bytes": 47360,
+      "type": "font/woff"
+    },
+    {
+      "url": "https://www.notion.com/_next/static/media/iAWriterMonoS-BoldItalic.12c55f12.woff2",
+      "file": "notion/real-assets/fonts/8fe7ee_iAWriterMonoS-BoldItalic.12c55f12.woff2",
+      "bytes": 41392,
+      "type": "font/woff2"
+    },
+    {
+      "url": "https://www.notion.com/_next/static/media/iAWriterMonoS-BoldItalic.215d7c93.woff",
+      "file": "notion/real-assets/fonts/4dbe12_iAWriterMonoS-BoldItalic.215d7c93.woff",
+      "bytes": 51980,
+      "type": "font/woff"
+    },
+    {
+      "url": "https://www.notion.com/_next/static/media/permanent-marker.18b85f55.woff",
+      "file": "notion/real-assets/fonts/9e2cee_permanent-marker.18b85f55.woff",
+      "bytes": 37400,
+      "type": "font/woff"
+    },
+    {
+      "url": "https://www.notion.com/_next/static/media/NotionInter-Regular-i18n.4c3206e4.woff2",
+      "file": "notion/real-assets/fonts/af10e7_NotionInter-Regular-i18n.4c3206e4.woff2",
+      "bytes": 18304,
+      "type": "font/woff2"
+    },
+    {
+      "url": "https://www.notion.com/_next/static/media/NotionInter-Regular-i18n.7e295069.woff",
+      "file": "notion/real-assets/fonts/a3f704_NotionInter-Regular-i18n.7e295069.woff",
+      "bytes": 25408,
+      "type": "font/woff"
+    },
+    {
+      "url": "https://www.notion.com/_next/static/media/NotionInter-Italic-i18n.44620e58.woff2",
+      "file": "notion/real-assets/fonts/36727b_NotionInter-Italic-i18n.44620e58.woff2",
+      "bytes": 19604,
+      "type": "font/woff2"
+    },
+    {
+      "url": "https://www.notion.com/_next/static/media/NotionInter-Italic-i18n.b1e5fe40.woff",
+      "file": "notion/real-assets/fonts/dee796_NotionInter-Italic-i18n.b1e5fe40.woff",
+      "bytes": 27288,
+      "type": "font/woff"
+    },
+    {
+      "url": "https://www.notion.com/_next/static/media/NotionInter-Medium-i18n.f0b1a5fc.woff2",
+      "file": "notion/real-assets/fonts/f43b18_NotionInter-Medium-i18n.f0b1a5fc.woff2",
+      "bytes": 19268,
+      "type": "font/woff2"
+    },
+    {
+      "url": "https://www.notion.com/_next/static/media/NotionInter-Medium-i18n.5a62ec46.woff",
+      "file": "notion/real-assets/fonts/0df729_NotionInter-Medium-i18n.5a62ec46.woff",
+      "bytes": 26500,
+      "type": "font/woff"
+    },
+    {
+      "url": "https://www.notion.com/_next/static/media/NotionInter-MediumItalic-i18n.2fe0b3fe.woff2",
+      "file": "notion/real-assets/fonts/6b1c6d_NotionInter-MediumItalic-i18n.2fe0b3fe.woff2",
+      "bytes": 20356,
+      "type": "font/woff2"
+    },
+    {
+      "url": "https://www.notion.com/_next/static/media/NotionInter-MediumItalic-i18n.bfcddf65.woff",
+      "file": "notion/real-assets/fonts/413e3a_NotionInter-MediumItalic-i18n.bfcddf65.woff",
+      "bytes": 28124,
+      "type": "font/woff"
+    },
+    {
+      "url": "https://www.notion.com/_next/static/media/NotionInter-SemiBold-i18n.5e5b5908.woff2",
+      "file": "notion/real-assets/fonts/6c4e8d_NotionInter-SemiBold-i18n.5e5b5908.woff2",
+      "bytes": 19204,
+      "type": "font/woff2"
+    },
+    {
+      "url": "https://www.notion.com/_next/static/media/NotionInter-SemiBold-i18n.304cb124.woff",
+      "file": "notion/real-assets/fonts/d8183c_NotionInter-SemiBold-i18n.304cb124.woff",
+      "bytes": 26680,
+      "type": "font/woff"
+    },
+    {
+      "url": "https://www.notion.com/_next/static/media/NotionInter-SemiBoldItalic-i18n.78183d16.woff2",
+      "file": "notion/real-assets/fonts/e9874a_NotionInter-SemiBoldItalic-i18n.78183d16.woff2",
+      "bytes": 20432,
+      "type": "font/woff2"
+    },
+    {
+      "url": "https://www.notion.com/_next/static/media/NotionInter-SemiBoldItalic-i18n.800dd100.woff",
+      "file": "notion/real-assets/fonts/a58db8_NotionInter-SemiBoldItalic-i18n.800dd100.woff",
+      "bytes": 28332,
+      "type": "font/woff"
+    },
+    {
+      "url": "https://www.notion.com/_next/static/media/NotionInter-Bold-i18n.38b709fc.woff2",
+      "file": "notion/real-assets/fonts/86ac65_NotionInter-Bold-i18n.38b709fc.woff2",
+      "bytes": 19464,
+      "type": "font/woff2"
+    },
+    {
+      "url": "https://www.notion.com/_next/static/media/NotionInter-Bold-i18n.2aa1f67c.woff",
+      "file": "notion/real-assets/fonts/400b1f_NotionInter-Bold-i18n.2aa1f67c.woff",
+      "bytes": 26840,
+      "type": "font/woff"
+    },
+    {
+      "url": "https://www.notion.com/_next/static/media/NotionInter-BoldItalic-i18n.7ddacb60.woff2",
+      "file": "notion/real-assets/fonts/01c552_NotionInter-BoldItalic-i18n.7ddacb60.woff2",
+      "bytes": 20404,
+      "type": "font/woff2"
+    },
+    {
+      "url": "https://www.notion.com/_next/static/media/NotionInter-BoldItalic-i18n.4499f285.woff",
+      "file": "notion/real-assets/fonts/fcfe72_NotionInter-BoldItalic-i18n.4499f285.woff",
+      "bytes": 28440,
+      "type": "font/woff"
+    }
+  ],
+  "video": [
+    {
+      "url": "https://videos.ctfassets.net/spoqsaf9291f/1EL7UZIXfcqngxsNSbL8tR/291f61f56f29dd8e788deaec8561d882/web-homepage-hero-1920x1200_final.mp4",
+      "file": "notion/real-assets/video/1dcd55_web-homepage-hero-1920x1200_final.mp4",
+      "bytes": 2185016,
+      "type": "video/mp4"
+    },
+    {
+      "url": "https://videos.ctfassets.net/spoqsaf9291f/NbFul3fpx8iFqd92FdjZb/2a0b3f2e96fdcd6623bf0f97064bfc1c/web-qa-agent-4x3_final.mp4",
+      "file": "notion/real-assets/video/fbc1e3_web-qa-agent-4x3_final.mp4",
+      "bytes": 631492,
+      "type": "video/mp4"
+    },
+    {
+      "url": "https://videos.ctfassets.net/spoqsaf9291f/2BBKdrJqpdkidHvMHvgIk0/0d499deb99b740aec9317472171d72e5/web-task-router-1488x1116-coloredBG_final.mp4",
+      "file": "notion/real-assets/video/c416a4_web-task-router-1488x1116-coloredBG_final.mp4",
+      "bytes": 382751,
+      "type": "video/mp4"
+    }
+  ],
+  "audio": [],
+  "image": [
+    {
+      "url": "https://www.notion.com/front-static/meta/teams-and-agents.jpg",
+      "file": "notion/real-assets/image/19cce2_teams-and-agents.jpg",
+      "bytes": 156099,
+      "type": "image/jpeg"
+    },
+    {
+      "url": "https://www.notion.com/front-static/favicon.ico",
+      "file": "notion/real-assets/image/d35748_favicon.ico",
+      "bytes": 32038,
+      "type": "image/vnd.microsoft.icon"
+    },
+    {
+      "url": "https://www.notion.com/_next/image?url=https%3A%2F%2Fimages.ctfassets.net%2Fspoqsaf9291f%2F3kVtQWll6jUqQepQ0kaYlz%2F382b34f23ecb349129239f0b649aba8c%2Fweb-homepage-hero-1920x1200_final.jpg&w=1080&q=90",
+      "file": "notion/real-assets/image/6da6d3_image",
+      "bytes": 66110,
+      "type": "image/jpeg"
+    },
+    {
+      "url": "https://www.notion.com/_next/image?url=https%3A%2F%2Fimages.ctfassets.net%2Fspoqsaf9291f%2F3ua5rnold552hkMGeZzmMJ%2F5b582ec439b31926f99e3a8ced92b0a6%2Fimage.png&w=1920&q=75",
+      "file": "notion/real-assets/image/88e6aa_image",
+      "bytes": 50641,
+      "type": "image/png"
+    },
+    {
+      "url": "https://www.notion.com/_next/image?url=https%3A%2F%2Fimages.ctfassets.net%2Fspoqsaf9291f%2F3308hQhkyaMytYPerwraT0%2Fb6c01520e214158551f31231caec19ed%2FEN_Notion-Agent_AIMN.png&w=1920&q=75",
+      "file": "notion/real-assets/image/e1cf3f_image",
+      "bytes": 79490,
+      "type": "image/png"
+    },
+    {
+      "url": "https://www.notion.com/_next/image?url=https%3A%2F%2Fimages.ctfassets.net%2Fspoqsaf9291f%2F1f5jqaefgLjXMbtMxszc7Y%2F497af4bb52bef6c5b91cd4e70f953b5b%2Fimage.png&w=1920&q=75",
+      "file": "notion/real-assets/image/974219_image",
+      "bytes": 252832,
+      "type": "image/png"
+    },
+    {
+      "url": "https://www.notion.com/_next/image?url=https%3A%2F%2Fimages.ctfassets.net%2Fspoqsaf9291f%2F3pCHbRV7f5UjIssdK3CDpy%2F7b48cf81bad50d66e31caa5a3b80d5b5%2Ffaire.png&w=1200&q=75",
+      "file": "notion/real-assets/image/63d9b4_image",
+      "bytes": 625709,
+      "type": "image/png"
+    },
+    {
+      "url": "https://www.notion.com/_next/image?url=https%3A%2F%2Fimages.ctfassets.net%2Fspoqsaf9291f%2F3M9ceMRlhgl2rIRgqs6nSq%2F8a641169512d0053ac357d97ba527758%2Fcursor.png&w=1200&q=75",
+      "file": "notion/real-assets/image/e2054b_image",
+      "bytes": 446949,
+      "type": "image/png"
+    },
+    {
+      "url": "https://www.notion.com/_next/image?url=https%3A%2F%2Fimages.ctfassets.net%2Fspoqsaf9291f%2F69ZGgVfnKktXcsoatPFe10%2Fbb284c982b9a95f943eef6bbda821104%2Framp.png&w=1200&q=75",
+      "file": "notion/real-assets/image/ec30ae_image",
+      "bytes": 483105,
+      "type": "image/png"
+    },
+    {
+      "url": "https://www.notion.com/_next/image?url=https%3A%2F%2Fimages.ctfassets.net%2Fspoqsaf9291f%2F017MEoKI00q5dGPqvqUFL4%2F147d765889cc4d15bee13958dd37011d%2Fimage.png&w=1200&q=75",
+      "file": "notion/real-assets/image/748679_image",
+      "bytes": 29999,
+      "type": "image/png"
+    },
+    {
+      "url": "https://www.notion.com/_next/image?url=https%3A%2F%2Fimages.ctfassets.net%2Fspoqsaf9291f%2F3RifPqKRrCHqvrUD2Ww6II%2Fac23ae8f966ece30779474293030479d%2Fimage.png&w=1080&q=75",
+      "file": "notion/real-assets/image/4bc6d0_image",
+      "bytes": 29188,
+      "type": "image/png"
+    },
+    {
+      "url": "https://www.notion.com/_next/image?url=https%3A%2F%2Fimages.ctfassets.net%2Fspoqsaf9291f%2F340iahnaCfbjK7PEIXKfv6%2Fd5e52fcfdb4c8353d792afba1b3c7fbc%2Fimage.png&w=1200&q=75",
+      "file": "notion/real-assets/image/6059a8_image",
+      "bytes": 36514,
+      "type": "image/png"
+    },
+    {
+      "url": "https://www.notion.com/_next/image?url=https%3A%2F%2Fimages.ctfassets.net%2Fspoqsaf9291f%2F2w949TTG6uCdkN1xIW46p%2Fe717baf2f92bad5815ca3d72efd59e16%2Fimage.png&w=1200&q=75",
+      "file": "notion/real-assets/image/fdcb00_image",
+      "bytes": 37791,
+      "type": "image/png"
+    },
+    {
+      "url": "https://www.notion.com/_next/image?url=https%3A%2F%2Fimages.ctfassets.net%2Fspoqsaf9291f%2F5WGLPfc5wefMcpimK5finq%2F0e54872a4f965eb2b4409350c5b2de7e%2Fimage.png&w=1200&q=75",
+      "file": "notion/real-assets/image/cb0cc2_image",
+      "bytes": 10234,
+      "type": "image/png"
+    },
+    {
+      "url": "https://www.notion.com/_next/image?url=https%3A%2F%2Fimages.ctfassets.net%2Fspoqsaf9291f%2F2MlmrYYl4wneqg92BInIwV%2F6a3a889e5a7dc25cfa9920e027cad811%2Fimage.png&w=1200&q=75",
+      "file": "notion/real-assets/image/1e1683_image",
+      "bytes": 19439,
+      "type": "image/png"
+    },
+    {
+      "url": "https://www.notion.com/_next/image?url=https%3A%2F%2Fimages.ctfassets.net%2Fspoqsaf9291f%2F7wlWFl7ohnLvGAwoqVKkRg%2Fa04120db2d35876f2a2d941c660b306d%2Fmeeting-ui_1.png&w=384&q=75",
+      "file": "notion/real-assets/image/4bfe83_image",
+      "bytes": 64601,
+      "type": "image/png"
+    },
+    {
+      "url": "https://www.notion.com/_next/image?url=https%3A%2F%2Fimages.ctfassets.net%2Fspoqsaf9291f%2F3FLYbvpKWCM25zxtAF2cs6%2F336db185f364301751a8bb4dcfbf46a3%2Fimage__9_.png&w=1080&q=75",
+      "file": "notion/real-assets/image/0c2e99_image",
+      "bytes": 19457,
+      "type": "image/png"
+    },
+    {
+      "url": "https://www.notion.com/_next/image?url=%2Ffront-static%2Fnav%2FallFeaturesNav%2Fcapture.png&w=256&q=75",
+      "file": "notion/real-assets/image/f07be2_image",
+      "bytes": 5488,
+      "type": "image/png"
+    }
+  ],
+  "lottie": [],
+  "source": [
+    {
+      "url": "https://www.notion.com/_next/static/css/3ec280a76cbe03ed.css",
+      "file": "notion/real-assets/source/13b0e9_3ec280a76cbe03ed.css",
+      "bytes": 135528
+    },
+    {
+      "url": "https://www.notion.com/_next/static/css/2c876ba628018820.css",
+      "file": "notion/real-assets/source/a9b250_2c876ba628018820.css",
+      "bytes": 95979
+    },
+    {
+      "url": "https://www.notion.com/_next/static/css/8399f67c35e9f990.css",
+      "file": "notion/real-assets/source/3ad400_8399f67c35e9f990.css",
+      "bytes": 162525
+    },
+    {
+      "url": "https://www.notion.com/_next/static/css/56f9cceb5a739243.css",
+      "file": "notion/real-assets/source/9c7617_56f9cceb5a739243.css",
+      "bytes": 83538
+    },
+    {
+      "url": "https://www.notion.com/_next/static/css/fc43ad0698ebb3d4.css",
+      "file": "notion/real-assets/source/f771be_fc43ad0698ebb3d4.css",
+      "bytes": 24500
+    },
+    {
+      "url": "https://www.notion.com/_next/static/css/f22c3a9aee0ecd74.css",
+      "file": "notion/real-assets/source/9defca_f22c3a9aee0ecd74.css",
+      "bytes": 82033
+    },
+    {
+      "url": "https://www.notion.com/_next/static/css/6b322effdead4e88.css",
+      "file": "notion/real-assets/source/e438d2_6b322effdead4e88.css",
+      "bytes": 31062
+    },
+    {
+      "url": "https://www.notion.com/_next/static/css/7122a0f169747a04.css",
+      "file": "notion/real-assets/source/c18960_7122a0f169747a04.css",
+      "bytes": 7135
+    },
+    {
+      "url": "https://www.notion.com/_next/static/css/ecf28241255f9aab.css",
+      "file": "notion/real-assets/source/cfc328_ecf28241255f9aab.css",
+      "bytes": 624
+    },
+    {
+      "url": "https://www.notion.com/_next/static/css/a816fda53d7d9396.css",
+      "file": "notion/real-assets/source/eaed4f_a816fda53d7d9396.css",
+      "bytes": 50445
+    },
+    {
+      "url": "https://www.notion.com/_next/static/css/171de3bd334ba784.css",
+      "file": "notion/real-assets/source/37a0fd_171de3bd334ba784.css",
+      "bytes": 51013
+    },
+    {
+      "url": "https://www.notion.com/_next/static/css/fbbf7d5e9bcdcc70.css",
+      "file": "notion/real-assets/source/59b401_fbbf7d5e9bcdcc70.css",
+      "bytes": 43281
+    },
+    {
+      "url": "https://www.notion.com/_next/static/css/f4f040cd7d6d7da7.css",
+      "file": "notion/real-assets/source/19ab9f_f4f040cd7d6d7da7.css",
+      "bytes": 459
+    },
+    {
+      "url": "https://www.notion.com/_next/static/css/cfb6c39de98b4d1a.css",
+      "file": "notion/real-assets/source/3e9823_cfb6c39de98b4d1a.css",
+      "bytes": 593
+    },
+    {
+      "url": "https://www.notion.com",
+      "file": "notion/real-assets/source/index.html",
+      "bytes": 0
+    }
+  ]
+}

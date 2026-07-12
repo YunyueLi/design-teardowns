@@ -1,0 +1,840 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>ChatGPT 概览页 设计解构 — 把克制拆到每一个数值</title>
+<link rel="icon" type="image/svg+xml" href="real-assets/image/71b492_favicon-l4nq08hd.svg" />
+<!-- CDN 字体仅作兜底:真实 OpenAI Sans 经下方 @font-face 从 real-assets 接入,失败时才回落 Inter / Noto Sans SC -->
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&family=Noto+Sans+SC:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<style>
+  /* ============================================================
+     ChatGPT 概览页 · 设计解构
+     house style = 该站自己的语言:纯白底 #fcfcfc、近黑字 #0d0d0d、
+     发丝边、黑色药丸、居中大标题、大量留白、几乎无装饰。
+     标题与正文已接入从站点提取的真实 OpenAI Sans(Regular / Bold,
+     见 real-assets/manifest.json),Inter 降为 CDN 兜底;
+     全页运动统一用它自己的签名缓动 cubic-bezier(.23,1,.32,1)
+     —— 像它拆解的对象一样运动。数值除标注"推断"外均为线上实测。
+     ============================================================ */
+
+  /* —— 真实字体:站点提取的 OpenAI Sans(先真后兜底,只接标题 700 与正文 400 两支)—— */
+  @font-face{
+    font-family:"OpenAI Sans";
+    src:url("real-assets/fonts/b2df60_OpenAISans-Regular.woff2") format("woff2");
+    font-weight:400;font-style:normal;font-display:swap;
+  }
+  @font-face{
+    font-family:"OpenAI Sans";
+    src:url("real-assets/fonts/12c667_OpenAISans-Bold.woff2") format("woff2");
+    font-weight:700;font-style:normal;font-display:swap;
+  }
+
+  :root{
+    /* 基底与文字(computed 实锤) */
+    --bg:#fcfcfc; --ink:#0d0d0d;
+    --ink-2:#5d5d5d; --ink-3:#8f8f8f; --ink-4:#b9b9b9;
+    --surface:#ffffff; --gray:#f9f9f9; --gray-2:#f3f3f3; --gray-3:#ededed;
+    --hairline:#ededed; --hairline-2:#e5e7eb; --line-mid:#cecece;
+    --accent:#0285ff;
+    /* work 四色描红(蓝为实锤,其余观察推断) */
+    --c-green:#10a37f; --c-blue:#0285ff; --c-gold:#f5a524; --c-orange:#ff6b35;
+    /* 动效 token(样式表实测) */
+    --ease:cubic-bezier(.23,1,.32,1);      /* 签名主曲线,出现最多 */
+    --ease-expo:cubic-bezier(.19,1,.22,1);
+    --micro:.2s; --spring:.667s;
+    /* 排版:真实 OpenAI Sans 打头,Inter / Noto Sans SC 作兜底(后者补中文字形) */
+    --sans:"OpenAI Sans","Inter","Noto Sans SC",-apple-system,ui-sans-serif,system-ui,"Segoe UI",Helvetica,Arial,sans-serif;
+    --mono:"JetBrains Mono",ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+    /* 圆角(实测:药丸 rounded-full、卡片 radius 10px) */
+    --pill:999px; --r-card:10px; --r-panel:22px;
+    --maxw:1120px;
+    /* 产品布局 token(实锤) */
+    --composer-w:768px; --composer-h:52px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;scroll-behavior:smooth;scroll-padding-top:76px}
+  body{background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.65;letter-spacing:-.005em;overflow-x:hidden}
+  a{color:inherit;text-decoration:none}
+  svg{display:block}
+  ::selection{background:var(--ink);color:#fff}
+  code,.mono{font-family:var(--mono)}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 32px}
+  @media(max-width:640px){.wrap{padding:0 20px}}
+
+  h1,h2,h3{font-weight:700;letter-spacing:-.035em;line-height:1.02}
+  .eyebrow{font-family:var(--mono);font-size:11.5px;font-weight:500;letter-spacing:.02em;color:var(--ink-3)}
+  code{font-family:var(--mono);font-size:.86em;color:#0b6bcb;background:#f4f6f8;border:1px solid var(--hairline-2);border-radius:6px;padding:1px 6px}
+
+  /* ---------- NAV ---------- */
+  nav{position:fixed;top:0;left:0;right:0;z-index:60;transition:background .3s var(--ease),border-color .3s var(--ease)}
+  nav{border-bottom:1px solid transparent}
+  nav.stuck{background:rgba(252,252,252,.86);backdrop-filter:blur(14px) saturate(1.4);-webkit-backdrop-filter:blur(14px) saturate(1.4);border-bottom-color:var(--hairline)}
+  .nav-in{display:flex;align-items:center;height:64px;gap:18px}
+  .brand{display:flex;align-items:center;gap:9px;font-weight:700;font-size:16px;letter-spacing:-.02em}
+  .brand svg{color:var(--ink);flex:none}
+  .navlinks{margin-left:auto;display:flex;gap:1px;font-size:13px}
+  .navlinks a{color:var(--ink-2);padding:7px 11px;border-radius:var(--pill);font-weight:500;transition:color .2s var(--ease),background .2s var(--ease)}
+  .navlinks a:hover{color:var(--ink);background:var(--gray-2)}
+  .navcta{margin-left:6px}
+  @media(max-width:900px){.navlinks a{padding:7px 8px}.navlinks{font-size:12px}}
+  @media(max-width:720px){.navlinks{display:none}}
+
+  /* ---------- HERO ---------- */
+  header{position:relative;padding:150px 0 70px;text-align:center;overflow:hidden}
+  .spark{position:absolute;color:var(--ink);opacity:.9;pointer-events:none}
+  .spark.s1{top:150px;left:9%}
+  .spark.s2{top:300px;right:11%}
+  .spark.s3{bottom:70px;left:16%;color:#f6b8cf}
+  @media(max-width:820px){.spark{display:none}}
+  .hero-in{position:relative;z-index:2;max-width:960px;margin:0 auto}
+  h1{font-size:clamp(44px,8.2vw,104px);letter-spacing:-.047em;line-height:1}/* 校准:真实 h1 为 -4.70376px/100.08px≈-.047em、行高 1.0 */
+  .rainbow{position:relative;display:inline-block;padding-bottom:.02em}
+  .rainbow i{font-style:normal}
+  .rainbow .g{color:var(--c-green)} .rainbow .b{color:var(--c-blue)}
+  .rainbow .y{color:var(--c-gold)} .rainbow .o{color:var(--c-orange)}
+  .rainbow::after{content:"";position:absolute;left:2%;right:2%;bottom:0;height:.055em;border-radius:999px;
+    background:linear-gradient(90deg,var(--c-green),var(--c-blue))}
+  .lede{font-size:clamp(16px,1.7vw,20px);color:var(--ink-2);max-width:62ch;margin:26px auto 0;line-height:1.55;letter-spacing:-.01em}
+  .lede code{font-size:.82em}
+  .cta{display:flex;gap:14px;justify-content:center;align-items:center;margin-top:34px;flex-wrap:wrap}
+  .pill{display:inline-flex;align-items:center;gap:8px;background:var(--ink);color:#fff;border:0;border-radius:var(--pill);
+    padding:13px 24px;font-family:inherit;font-weight:600;font-size:15px;cursor:pointer;letter-spacing:-.01em;
+    transition:transform var(--micro) var(--ease),opacity var(--micro) var(--ease)}
+  .pill:hover{transform:translateY(-1px);opacity:.9}
+  .pill.ghost{background:var(--surface);color:var(--ink);border:1px solid var(--hairline-2)}
+  .textlink{font-size:15px;font-weight:600;color:var(--ink);display:inline-flex;align-items:center;gap:5px}
+  .textlink:hover{color:var(--accent)}
+  .metabar{display:flex;flex-wrap:wrap;gap:9px;justify-content:center;margin-top:38px}
+  .chip{font-family:var(--mono);font-size:11.5px;color:var(--ink-2);border:1px solid var(--hairline-2);border-radius:var(--pill);padding:7px 14px;background:var(--surface)}
+  .chip b{color:var(--ink);font-weight:600}
+  .scrollcue{margin-top:44px;font-family:var(--mono);font-size:10.5px;letter-spacing:.16em;color:var(--ink-4);text-transform:uppercase}
+
+  /* ---------- SECTION ---------- */
+  section{padding:92px 0;border-top:1px solid var(--hairline)}
+  .sec-head{max-width:74ch;margin:0 auto 44px;text-align:center}
+  .sec-head.left{margin-left:0;text-align:left}
+  .sec-head h2{font-size:clamp(30px,4.4vw,52px);margin-top:14px;letter-spacing:-.04em}
+  .sec-head p{color:var(--ink-2);margin-top:16px;font-size:17px;line-height:1.55;letter-spacing:-.01em}
+  .sec-head.left p{margin-left:0}
+  h3{font-size:19px;font-weight:700;letter-spacing:-.02em}
+
+  .grid{display:grid;gap:16px}
+  .g2{grid-template-columns:1fr 1fr}.g3{grid-template-columns:repeat(3,1fr)}
+  @media(max-width:860px){.g2,.g3{grid-template-columns:1fr}}
+  .card{background:var(--surface);border:1px solid var(--hairline);border-radius:var(--r-card);padding:24px;
+    transition:border-color .3s var(--ease),transform .3s var(--ease),box-shadow .3s var(--ease)}
+  .card:hover{border-color:var(--line-mid);transform:translateY(-2px);box-shadow:0 14px 40px -20px rgba(0,0,0,.18)}
+  .k{font-family:var(--mono);font-size:10.5px;letter-spacing:.06em;color:var(--ink-3);text-transform:uppercase}
+  .dim{color:var(--ink-2)} .faint{color:var(--ink-3)}
+  p+p{margin-top:10px}
+  .panel{background:var(--gray-2);border-radius:var(--r-panel);padding:40px}
+  @media(max-width:640px){.panel{padding:26px}}
+
+  pre{background:#0d0d0d;border-radius:14px;padding:18px 20px;overflow-x:auto;font-size:12.5px;line-height:1.8}
+  pre code{background:none;border:0;padding:0;color:#e6e6e6;font-size:inherit}
+  .tok-c{color:#8f8f8f}.tok-n{color:#7cc4ff}.tok-p{color:#ffcf70}.tok-s{color:#8fe0b0}
+
+  /* ---------- DEMO 1 · PROMPT 卡海 ---------- */
+  .sea-hint{text-align:center;color:var(--ink-3);font-size:13.5px;margin-bottom:26px}
+  .sea-hint b{color:var(--ink);font-weight:600}
+  .cardsea{display:grid;grid-template-columns:repeat(auto-fill,minmax(224px,1fr));gap:12px}
+  .ps{position:relative;text-align:left;background:var(--gray);border:1px solid var(--hairline);border-radius:14px;
+    padding:15px 15px 14px;cursor:pointer;min-height:104px;display:flex;flex-direction:column;justify-content:space-between;
+    transition:transform var(--micro) var(--ease),background var(--micro) var(--ease),border-color var(--micro) var(--ease),box-shadow var(--micro) var(--ease)}
+  .ps:hover,.ps:focus-visible{transform:translateY(-3px);background:var(--surface);border-color:#dadada;box-shadow:0 12px 30px -14px rgba(0,0,0,.16);outline:none}
+  .ps .ic{width:22px;height:22px;color:var(--ink-3);transition:color var(--micro) var(--ease)}
+  .ps:hover .ic,.ps:focus-visible .ic{color:var(--ink)}
+  .ps .tx{font-size:14px;line-height:1.4;color:var(--ink);letter-spacing:-.01em;margin-top:12px;padding-right:16px}
+  .ps .go{position:absolute;right:13px;bottom:13px;color:var(--ink);opacity:0;transform:translateX(-5px);
+    transition:opacity var(--micro) var(--ease),transform var(--micro) var(--ease)}
+  .ps:hover .go,.ps:focus-visible .go{opacity:1;transform:translateX(0)}
+
+  /* ---------- DEMO 2 · 水彩 blob 托底 ---------- */
+  .blobstage{position:relative;border-radius:var(--r-panel);overflow:hidden;padding:clamp(28px,5vw,64px);isolation:isolate}
+  .blobstage::before{content:"";position:absolute;inset:-24%;z-index:0;filter:blur(46px);
+    background:
+      radial-gradient(38% 44% at 22% 28%, rgba(2,133,255,.34), transparent 62%),
+      radial-gradient(40% 42% at 80% 24%, rgba(16,163,127,.30), transparent 64%),
+      radial-gradient(48% 52% at 64% 84%, rgba(120,180,255,.32), transparent 66%),
+      radial-gradient(42% 40% at 30% 82%, rgba(90,210,180,.22), transparent 64%);
+    background-color:#eef4fb;animation:blob 22s var(--ease) infinite alternate}
+  @keyframes blob{from{transform:scale(1) translate(0,0)}to{transform:scale(1.09) translate(1.6%,-1.6%)}}
+  .stagecap{position:relative;z-index:2;text-align:center;margin-bottom:22px;color:#20303f}
+  .stagecap .k{color:#2b7fb0}
+  /* faux ChatGPT window */
+  .winwrap{position:relative;z-index:2;max-width:860px;margin:0 auto}
+  .win{background:var(--surface);border:1px solid rgba(255,255,255,.7);border-radius:16px;overflow:hidden;
+    box-shadow:0 40px 90px -40px rgba(20,40,70,.5),0 8px 30px -14px rgba(20,40,70,.28)}
+  .win-bar{display:flex;align-items:center;gap:8px;padding:12px 16px;border-bottom:1px solid var(--hairline)}
+  .dot{width:11px;height:11px;border-radius:50%}
+  .dot.r{background:#ff5f57}.dot.y{background:#febc2e}.dot.g{background:#28c840}
+  .win-title{margin-left:8px;font-size:12.5px;color:var(--ink-3);font-weight:500}
+  .win-body{padding:26px 26px 22px;display:flex;flex-direction:column;gap:14px;background:linear-gradient(180deg,#fff,#fcfcfc)}
+  .msg{max-width:78%;font-size:14px;line-height:1.5;letter-spacing:-.01em}
+  .msg.u{align-self:flex-end;background:var(--gray-2);border-radius:16px 16px 4px 16px;padding:11px 15px;color:var(--ink)}
+  .msg.a{align-self:flex-start;color:var(--ink);padding:2px 2px}
+  .msg.a .who{font-size:11px;color:var(--ink-3);font-family:var(--mono);margin-bottom:5px}
+  .think{align-self:flex-start;width:26px;height:26px;border-radius:50%;
+    background:radial-gradient(circle at 32% 30%,#cfe3ff,#7db1ff 55%,#8f7dff);
+    animation:pulse 3s var(--ease) infinite alternate}
+  @keyframes pulse{from{transform:scale(.9);opacity:.75}to{transform:scale(1.05);opacity:1}}
+  .composer{width:min(var(--composer-w),100%);margin:6px auto 0;min-height:var(--composer-h);display:flex;align-items:center;gap:10px;
+    background:#fff;border:1px solid var(--hairline-2);border-radius:var(--pill);padding:0 8px 0 18px;
+    box-shadow:0 10px 30px -16px rgba(0,0,0,.2)}
+  .composer .plus{color:var(--ink-3);font-size:20px;line-height:1}
+  .composer .ph{flex:1;color:var(--ink-3);font-size:14px}
+  .composer .caret{display:inline-block;width:1px;height:15px;background:var(--ink);margin-left:1px;vertical-align:-2px;animation:blink 1.1s steps(1) infinite}
+  @keyframes blink{50%{opacity:0}}
+  .composer .send{width:34px;height:34px;border-radius:50%;background:var(--ink);color:#fff;display:grid;place-items:center;transition:opacity var(--micro) var(--ease)}
+  .composer .send:hover{opacity:.85}
+  .stagenote{position:relative;z-index:2;text-align:center;margin-top:20px;font-size:12.5px;color:#3a5063}
+
+  /* ---------- COLOR ---------- */
+  .swgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+  @media(max-width:860px){.swgrid{grid-template-columns:repeat(2,1fr)}}
+  .sw{border:1px solid var(--hairline-2);border-radius:12px;overflow:hidden;cursor:pointer;background:var(--surface);text-align:left;
+    transition:border-color .25s var(--ease),transform .25s var(--ease),box-shadow .25s var(--ease)}
+  .sw:hover,.sw:focus-visible{border-color:var(--line-mid);transform:translateY(-2px);box-shadow:0 12px 30px -18px rgba(0,0,0,.2);outline:none}
+  .sw .chipc{height:66px;border-bottom:1px solid var(--hairline)}
+  .sw .meta{padding:11px 13px}
+  .sw .name{font-size:13px;font-weight:600}
+  .sw .hex{font-family:var(--mono);font-size:11.5px;color:var(--accent);margin-top:2px}
+  .sw .role{font-size:11px;color:var(--ink-3);margin-top:3px;line-height:1.4}
+  .grays{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
+  .gc{width:60px;cursor:pointer;border-radius:9px;overflow:hidden;border:1px solid var(--hairline-2);background:var(--surface);
+    transition:transform .2s var(--ease)}
+  .gc:hover{transform:translateY(-2px)}
+  .gc .b{height:40px}
+  .gc .h{font-family:var(--mono);font-size:9.5px;color:var(--ink-2);text-align:center;padding:4px 0}
+
+  /* ---------- TYPE ---------- */
+  .specimen{font-weight:700;letter-spacing:-.05em;line-height:.98;font-size:clamp(38px,7vw,92px);color:var(--ink)}
+  .metrics{display:flex;flex-wrap:wrap;gap:10px;margin-top:22px}
+  .metric{border:1px solid var(--hairline-2);border-radius:10px;padding:10px 14px;background:var(--surface)}
+  .metric .v{font-family:var(--mono);font-size:15px;font-weight:600}
+  .metric .l{font-size:11px;color:var(--ink-3);margin-top:2px}
+
+  /* ---------- MOTION ---------- */
+  .easelab{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  @media(max-width:860px){.easelab{grid-template-columns:1fr}}
+  .ease{border:1px solid var(--hairline);border-radius:var(--r-card);padding:20px;cursor:pointer;background:var(--surface);
+    transition:border-color .25s var(--ease),box-shadow .25s var(--ease)}
+  .ease:hover,.ease:focus-visible{border-color:var(--line-mid);box-shadow:0 12px 30px -20px rgba(0,0,0,.2);outline:none}
+  .ease-top{display:flex;justify-content:space-between;align-items:baseline;gap:12px}
+  .ease-top h3{font-size:16px}
+  .curveval{font-family:var(--mono);font-size:10.5px;color:var(--accent);white-space:nowrap}
+  .ease .desc{font-size:13.5px;margin-top:9px;line-height:1.5;color:var(--ink-2)}
+  .ease-viz{display:flex;align-items:center;gap:16px;margin-top:16px}
+  .ease-viz canvas{flex:none;border:1px solid var(--hairline);border-radius:10px;background:#fff}
+  .track{flex:1;min-width:0}
+  .runner-wrap{height:34px;border:1px solid var(--hairline);border-radius:10px;position:relative;overflow:hidden;background:var(--gray)}
+  .runner{position:absolute;top:6px;left:6px;width:22px;height:22px;border-radius:7px;background:var(--ink)}
+  .replay{font-family:var(--mono);font-size:10px;color:var(--ink-4);margin-top:8px}
+  .durs{display:grid;gap:10px}
+  .durrow{display:grid;grid-template-columns:150px 1fr 74px;align-items:center;gap:14px}
+  @media(max-width:560px){.durrow{grid-template-columns:110px 1fr 60px}}
+  .durrow .lab{font-family:var(--mono);font-size:11.5px;color:var(--ink-2)}
+  .durbar{height:8px;border-radius:999px;background:var(--ink)}
+  .durbar.amb{background:linear-gradient(90deg,var(--c-blue),var(--c-green))}
+  .durrow .val{font-family:var(--mono);font-size:11.5px;color:var(--ink);text-align:right}
+  .subhead{font-family:var(--mono);font-size:11px;letter-spacing:.06em;color:var(--ink-3);text-transform:uppercase;margin:22px 0 10px}
+
+  /* ---------- CRAFT ---------- */
+  .radii{display:flex;flex-wrap:wrap;gap:14px;align-items:flex-end}
+  .radi{text-align:center}
+  .radi .box{width:96px;height:66px;background:var(--gray-2);border:1px solid var(--hairline-2)}
+  .radi .lab{font-family:var(--mono);font-size:10.5px;color:var(--ink-2);margin-top:8px}
+  .radi .val{font-family:var(--mono);font-size:10.5px;color:var(--ink-3)}
+
+  /* ---------- FRAMES ---------- */
+  figure.shot{border:1px solid var(--hairline);border-radius:var(--r-card);overflow:hidden;background:var(--surface)}
+  figure.shot img{width:100%;display:block}
+  figure.shot figcaption{padding:13px 18px;font-size:12.5px;color:var(--ink-2);border-top:1px solid var(--hairline);line-height:1.5}
+  .shotnote{font-size:12.5px;color:var(--ink-3);margin-top:16px;line-height:1.6}
+
+  /* ---------- checklist 与 prov ---------- */
+  .checklist{list-style:none;display:grid;gap:11px}
+  .checklist li{position:relative;padding-left:24px;font-size:14.5px;color:var(--ink-2);line-height:1.5}
+  .checklist li b{color:var(--ink);font-weight:600}
+  .checklist li::before{content:"→";position:absolute;left:2px;top:0;color:var(--accent);font-family:var(--mono)}
+  dl.prov dt{font-family:var(--mono);font-size:11px;letter-spacing:.04em;color:var(--accent);text-transform:uppercase;margin-top:20px}
+  dl.prov dt:first-child{margin-top:0}
+  dl.prov dd{margin-top:7px;font-size:14.5px;color:var(--ink-2);line-height:1.6}
+  .callout{border:1px solid var(--hairline-2);border-radius:var(--r-card);padding:22px 24px;background:var(--gray-2)}
+  .callout h3{margin-bottom:8px}
+  .callout.warn{background:#fff8f0;border-color:#f6e0c4}
+
+  footer{padding:56px 0 72px;border-top:1px solid var(--hairline);text-align:center;font-size:13px;color:var(--ink-3);line-height:1.8}
+  footer b{color:var(--ink-2);font-weight:600}
+
+  .copybar{position:fixed;left:50%;bottom:28px;transform:translate(-50%,20px);z-index:80;background:var(--ink);color:#fff;
+    font-family:var(--mono);font-size:12.5px;font-weight:500;padding:10px 18px;border-radius:var(--pill);opacity:0;pointer-events:none;
+    transition:opacity .3s var(--ease),transform .3s var(--ease);box-shadow:0 16px 40px -12px rgba(0,0,0,.4)}
+  .copybar.show{opacity:1;transform:translate(-50%,0)}
+
+  @media(prefers-reduced-motion:reduce){
+    .blobstage::before,.think,.composer .caret{animation:none}
+    *{scroll-behavior:auto}
+  }
+</style>
+</head>
+<body>
+
+<!-- icon symbols -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+  <symbol id="ic-pen" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20l4-1L19 8a2 2 0 0 0-3-3L5 16l-1 4Z"/><path d="M14 7l3 3"/></symbol>
+  <symbol id="ic-code" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9 8l-4 4 4 4"/><path d="M15 8l4 4-4 4"/></symbol>
+  <symbol id="ic-chart" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20V4"/><path d="M4 20h16"/><rect x="7" y="12" width="3" height="5"/><rect x="12" y="8" width="3" height="9"/><rect x="17" y="10" width="3" height="7"/></symbol>
+  <symbol id="ic-cal" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="5" width="16" height="15" rx="2"/><path d="M4 9h16M8 3v4M16 3v4"/></symbol>
+  <symbol id="ic-img" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="5" width="16" height="14" rx="2"/><circle cx="9" cy="10" r="1.6"/><path d="M5 17l4-4 3 3 3-3 4 4"/></symbol>
+  <symbol id="ic-book" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 5a2 2 0 0 1 2-2h5v16H7a2 2 0 0 0-2 2Z"/><path d="M19 5a2 2 0 0 0-2-2h-5v16h5a2 2 0 0 1 2 2Z"/></symbol>
+  <symbol id="ic-mail" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="6" width="16" height="12" rx="2"/><path d="M5 8l7 5 7-5"/></symbol>
+  <symbol id="ic-doc" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M7 3h7l4 4v14H7Z"/><path d="M14 3v4h4M9 12h6M9 16h6"/></symbol>
+  <symbol id="ic-list" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M8 6h11M8 12h11M8 18h11"/><path d="M4 6h.01M4 12h.01M4 18h.01"/></symbol>
+  <symbol id="ic-bulb" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6"/><path d="M10 21h4"/><path d="M12 3a6 6 0 0 0-4 10c.7.7 1 1.4 1 2h6c0-.6.3-1.3 1-2a6 6 0 0 0-4-10Z"/></symbol>
+  <symbol id="ic-globe" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8"/><path d="M4 12h16M12 4c2.5 2 2.5 14 0 16M12 4c-2.5 2-2.5 14 0 16"/></symbol>
+  <symbol id="ic-bug" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="8" width="8" height="10" rx="4"/><path d="M12 8V5M9 6l1.5 2M15 6l-1.5 2M8 11H4M20 11h-4M8 15H4M20 15h-4"/></symbol>
+  <symbol id="ic-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
+  <symbol id="ic-spark" viewBox="0 0 24 24" fill="currentColor"><path d="M12 1.5c.3 4.6 2.4 6.7 7 7-4.6.3-6.7 2.4-7 7-.3-4.6-2.4-6.7-7-7 4.6-.3 6.7-2.4 7-7Z"/></symbol>
+  <symbol id="ic-send" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V6M6 12l6-6 6 6"/></symbol>
+</defs></svg>
+
+<nav id="nav"><div class="wrap nav-in">
+  <span class="brand">
+    <svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true"><use href="#ic-spark"/></svg>
+    ChatGPT 设计解构
+  </span>
+  <span class="navlinks">
+    <a href="#intent">定位</a><a href="#sea">卡海</a><a href="#stage">托底</a>
+    <a href="#color">色彩</a><a href="#type">字体</a><a href="#motion">动效</a>
+    <a href="#craft">工艺</a><a href="#frames">关键帧</a><a href="#build">复刻</a><a href="#prov">出处</a>
+  </span>
+</div></nav>
+
+<header>
+  <svg class="spark s1" width="46" height="46" viewBox="0 0 24 24" aria-hidden="true"><use href="#ic-spark"/></svg>
+  <svg class="spark s2" width="34" height="34" viewBox="0 0 24 24" aria-hidden="true"><use href="#ic-spark"/></svg>
+  <svg class="spark s3" width="40" height="40" viewBox="0 0 24 24" aria-hidden="true"><use href="#ic-spark"/></svg>
+  <div class="wrap hero-in">
+    <div class="eyebrow">逆向解析 — 源自 openai.com/chatgpt/overview 的真实计算样式与样式表</div>
+    <h1 style="margin-top:22px">把这份<span class="rainbow"><i class="g">克</i><i class="b">制</i></span>,<br/>拆到每一个数值</h1>
+    <p class="lede">这不是观感描述。下面每一个色值、缓动曲线、时长与圆角,都来自对 ChatGPT 概览页的真实抽取。连这一页,也在用它自己的签名缓动 <code>cubic-bezier(.23,1,.32,1)</code> 运动。</p>
+    <div class="cta">
+      <button class="pill" data-scroll="#sea">看签名效果 <svg width="17" height="17" viewBox="0 0 24 24"><use href="#ic-arrow"/></svg></button>
+      <a class="textlink" href="#color">直接看色彩系统</a>
+    </div>
+    <div class="metabar">
+      <span class="chip">底色 <b>#fcfcfc</b></span>
+      <span class="chip">墨色 <b>#0d0d0d</b></span>
+      <span class="chip">签名缓动 <b>cubic-bezier(.23,1,.32,1)</b></span>
+      <span class="chip">标题 <b>OpenAI Sans 100px</b></span>
+      <span class="chip">框架 <b>Tailwind v4</b></span>
+      <span class="chip">媒体 <b>零 video 零 canvas</b></span>
+    </div>
+    <div class="scrollcue">向下滚动</div>
+  </div>
+</header>
+
+<!-- 定位 -->
+<section id="intent">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="eyebrow">01 — 定位与设计意图</div>
+      <h2>几乎不做设计,才是它的设计</h2>
+      <p>产品主张是获取答案、寻找灵感、提升效率。首屏那句话实测为 <code>Now you can chat, work &amp; code all in one place.</code> 页面把所有戏剧性让给产品截图本身,框架退到几乎不可见——用极致的克制换取信任感。</p>
+    </div>
+    <div class="grid g3">
+      <div class="card"><div class="k">底色</div><h3 style="margin:8px 0">不是纯白</h3><p class="dim" style="font-size:14px">全站底色 <code>#fcfcfc</code>,比 <code>#fff</code> 压低一档,降眩光、更耐看。纯白只留给需要浮起的卡片面。</p></div>
+      <div class="card"><div class="k">层级</div><h3 style="margin:8px 0">全靠灰度</h3><p class="dim" style="font-size:14px">从 <code>#0d0d0d</code> 到 <code>#fcfcfc</code> 之间铺了近二十档灰,层级不靠颜色,只靠灰度拉开。</p></div>
+      <div class="card"><div class="k">颜色</div><h3 style="margin:8px 0">稀缺资源</h3><p class="dim" style="font-size:14px">颜色只出现在两处:产品截图下的水彩托底,和首屏一个词的四色描红。其余全交给黑白灰。</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- 签名一:prompt 卡海 -->
+<section id="sea">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="eyebrow">02 — 签名效果之一(可交互)</div>
+      <h2>铺满一屏的浅灰能力卡海</h2>
+      <p>ChatGPT 用一张张浅灰圆角卡片罗列"能帮你做什么"。当前概览页把它表达为三张大卡加轮播的疏态,更早的版本与产品空状态则是铺满整屏的密态。下面是复现的铺满态——悬停任意卡片体会它的微交互。</p>
+    </div>
+    <div class="sea-hint">悬停一张卡片:浅灰<b>提白</b>、轻轻<b>上浮</b>、右下<b>露出箭头</b>,用的正是它自己的签名缓动,时长 <b>200ms</b>。</div>
+    <div class="cardsea" id="cardsea"></div>
+  </div>
+</section>
+
+<!-- 签名二:水彩 blob 托底 -->
+<section id="stage">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="eyebrow">03 — 签名效果之二(纯 CSS 复现)</div>
+      <h2>产品截图,裱在柔和的蓝绿水彩上</h2>
+      <p>产品界面不是硬摆在白底上,而是垫一层缓慢呼吸的蓝绿水彩渐变(线上由 <code>pricing-gradient-*</code> 系列 keyframe 加超长时长实现)。下面这层托底是纯 CSS 多重径向渐变加 <code>blur(46px)</code>,上面的对话窗口全由 HTML 与 CSS 搭成,文字没有一处烧进图片。</p>
+    </div>
+    <div class="blobstage">
+      <div class="stagecap"><div class="k">watercolor blob · 22s 慢呼吸</div></div>
+      <div class="winwrap">
+        <div class="win">
+          <div class="win-bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="win-title">ChatGPT</span></div>
+          <div class="win-body">
+            <div class="msg u">帮我把这周的会议纪要整理成一份可执行的待办清单</div>
+            <div class="msg a"><div class="who">ChatGPT</div>好的。我把纪要拆成了负责人明确、带截止日期的六条待办,并按优先级排了序——</div>
+            <div class="think" aria-hidden="true"></div>
+          </div>
+          <div style="padding:0 18px 18px">
+            <div class="composer">
+              <span class="plus">+</span>
+              <span class="ph">Ask anything<span class="caret"></span></span>
+              <span class="send"><svg width="17" height="17" viewBox="0 0 24 24"><use href="#ic-send"/></svg></span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="stagenote">输入条宽 <code style="background:rgba(255,255,255,.6);border-color:rgba(255,255,255,.7)">768px</code>、高 <code style="background:rgba(255,255,255,.6);border-color:rgba(255,255,255,.7)">52px</code>,照抄线上真实 token <code style="background:rgba(255,255,255,.6);border-color:rgba(255,255,255,.7)">--composer-bar_width</code> 与 <code style="background:rgba(255,255,255,.6);border-color:rgba(255,255,255,.7)">--composer-bar_height</code>。</div>
+    </div>
+  </div>
+</section>
+
+<!-- 色彩 -->
+<section id="color">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="eyebrow">04 — 色彩系统(真实 token)</div>
+      <h2>一套几乎没有彩色的灰阶</h2>
+      <p>点任意色块复制 HEX。基底墨色为 computed 实锤,其余取自样式表高频色值统计。</p>
+    </div>
+    <h3 style="margin-bottom:14px">基底与文字</h3>
+    <div class="swgrid" id="sw-base"></div>
+    <h3 style="margin:32px 0 14px">表面与发丝边</h3>
+    <div class="swgrid" id="sw-surface"></div>
+    <h3 style="margin:32px 0 12px">中间灰阶(近二十档,层级全靠它拉开)</h3>
+    <div class="grays" id="grays"></div>
+    <h3 style="margin:32px 0 14px">仅有的两处颜色</h3>
+    <div class="swgrid" id="sw-color"></div>
+    <div class="callout" style="margin-top:18px">
+      <h3>一处观感易错点</h3>
+      <p class="dim" style="font-size:14px"><code>#1a73e8</code> 出现 17 次,乍看像品牌蓝,实为 Google 标准蓝——它和样式表里的 <code>Google Sans</code> 字体一起,来自"Work"卡里 Gmail、Drive、Docs 等第三方集成图标,<b>不是 OpenAI 品牌色</b>。ChatGPT 自身的强调蓝是 <code>#0285ff</code>。</p>
+    </div>
+  </div>
+</section>
+
+<!-- 字体 -->
+<section id="type">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="eyebrow">05 — 字体系统</div>
+      <h2>100px 巨标题,全靠两个负值撑住</h2>
+      <p>标题字为定制商业字体 <code>OpenAI Sans</code>。本页已把从站点提取的真实 <code>OpenAI Sans</code>(标题 700、正文 400 两支)经 <code>@font-face</code> 接入,下面的样张就是真字;<code>Inter</code> 仅在字体加载失败时兜底。</p>
+    </div>
+    <div class="panel" style="background:var(--surface);border:1px solid var(--hairline)">
+      <div class="k">首屏 h1 实测原文</div>
+      <div class="specimen" style="margin-top:12px">Now you can chat, <span class="rainbow" style="letter-spacing:-.04em"><i class="g">w</i><i class="b">o</i><i class="y">r</i><i class="o">k</i></span> &amp; code all in one place.</div>
+      <div class="metrics">
+        <div class="metric"><div class="v">OpenAI Sans</div><div class="l">font-family</div></div>
+        <div class="metric"><div class="v">100.08px</div><div class="l">font-size</div></div>
+        <div class="metric"><div class="v">700</div><div class="l">font-weight</div></div>
+        <div class="metric"><div class="v">-4.70376px</div><div class="l">letter-spacing(负字距)</div></div>
+        <div class="metric"><div class="v">100.08px</div><div class="l">line-height(1.0 倍)</div></div>
+        <div class="metric"><div class="v">#0d0d0d</div><div class="l">color</div></div>
+      </div>
+      <p class="dim" style="font-size:14px;margin-top:16px">要点:大标题的分寸全在负字距 <code>-4.7px</code> 与 1.0 行高上。字越大,字母间与行间越要收紧,否则松散廉价——这是把 100px 巨字做出高级感的关键。</p>
+    </div>
+    <div class="grid g2" style="margin-top:16px">
+      <div class="card">
+        <div class="k">字体家族(出现次数 top)</div>
+        <p class="dim" style="font-size:14px;margin-top:10px"><code>OpenAI Sans</code> 绝对主力,样式表里合计约 90 次;其后依次是无障碍字体 <code>OpenDyslexic</code>、可变多文种版 <code>OpenAI Sans Variable Scripts</code> 与旧字族 <code>Circle</code>。h1、导航、按钮的计算字体都落在 <code>OpenAI Sans</code>,只有 body 的兜底计算值才退回系统无衬线栈。</p>
+      </div>
+      <div class="card">
+        <div class="k">加载清单里的可贵之处</div>
+        <p class="dim" style="font-size:14px;margin-top:10px">实测加载了阅读障碍友好字体 <code>OpenDyslexic</code> 与低视力友好字体 <code>Atkinson Hyperlegible Mono</code>,还有一整套 <code>KaTeX</code> 数学排版字体。无障碍字体做成可切换项,是"面向所有人"意图的实证。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 动效 -->
+<section id="motion">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="eyebrow">06 — 动效系统</div>
+      <h2>200 毫秒的手感,叠上 9 分钟的呼吸</h2>
+      <p>零 video、零 canvas,所有运动都是 CSS,分成两个截然不同的时间尺度。点任一卡片重放,曲线与时长均为线上真实取值。</p>
+    </div>
+    <div class="easelab" id="easelab"></div>
+
+    <div class="subhead">双时间尺度 · 时长梯(样式表实测,对数刻度)</div>
+    <div class="card"><div class="durs" id="durs"></div></div>
+
+    <div class="grid g2" style="margin-top:16px">
+      <div class="card">
+        <h3>签名主曲线 · 出现最多</h3>
+        <p class="dim" style="font-size:14px;margin-top:8px"><code>cubic-bezier(.23,1,.32,1)</code> 在样式表里出现 18 次,是全站默认手感——快出、长尾、缓缓落定,像被"松手放开"而非"拉着走"。它与 Comet 的主曲线同属"快出长尾"家族。</p>
+      </div>
+      <div class="card">
+        <h3>氛围层是纯 CSS 渐变</h3>
+        <p class="dim" style="font-size:14px;margin-top:8px"><code>pricing-gradient-*</code> 系列 keyframe 配合 <code>15s</code> 到 <code>533s</code> 的超长时长,让水彩 blob 极慢地呼吸与迁移。零 canvas、零 video 就是它是纯 CSS 的硬证据。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 工艺 -->
+<section id="craft">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="eyebrow">07 — 工艺细节</div>
+      <h2>无穷大圆角、发丝边、原子化样式</h2>
+      <p>克制不等于随意,每一处都精确,只是精确地"少"。</p>
+    </div>
+    <div class="grid g2">
+      <div class="card">
+        <div class="k">圆角(radii 实测)</div>
+        <div class="radii" style="margin-top:16px">
+          <div class="radi"><div class="box" style="border-radius:999px"></div><div class="lab">药丸</div><div class="val">3.4e38px → 999px</div></div>
+          <div class="radi"><div class="box" style="border-radius:10px"></div><div class="lab">卡片</div><div class="val">10px / radius-3xl</div></div>
+          <div class="radi"><div class="box" style="border-radius:22px"></div><div class="lab">大面板</div><div class="val">约 22px(推断)</div></div>
+        </div>
+        <p class="dim" style="font-size:13.5px;margin-top:16px">药丸圆角线上写成 <code>3.40282e38px</code>(float 上限),保证任何高度都收成半圆;复刻用 <code>999px</code> 等效即可,别照抄那串天文数字。</p>
+      </div>
+      <div class="card">
+        <div class="k">发丝边与样式框架</div>
+        <div style="margin-top:16px;display:grid;gap:10px">
+          <div style="height:44px;border-radius:10px;border:1px solid #ededed;display:flex;align-items:center;padding:0 14px;font-family:var(--mono);font-size:12px;color:var(--ink-2)">border 1px #ededed</div>
+          <div style="height:44px;border-radius:10px;border:1px solid #e5e7eb;display:flex;align-items:center;padding:0 14px;font-family:var(--mono);font-size:12px;color:var(--ink-2)">border 1px #e5e7eb（Tailwind gray-200)</div>
+        </div>
+        <p class="dim" style="font-size:13.5px;margin-top:16px">满屏 <code>--tw-*</code> 自定义属性与 <code>--radius-md,.375rem</code>、<code>--radius-3xl</code> 一起,明确指向 <b>Tailwind CSS v4</b>。前端框架未被探针直接确认(推断为 Next.js)。</p>
+      </div>
+    </div>
+    <div class="grid g3" style="margin-top:16px">
+      <div class="card"><div class="k">产品布局 token</div><p class="dim" style="font-size:14px;margin-top:10px">输入条宽 <code>768</code>、高 <code>52</code>,底栏高 <code>32px</code>,滚动条宽 <code>10px</code>,安全边距 <code>20px</code>,全是可照抄的真实尺寸。</p></div>
+      <div class="card"><div class="k">媒体选型</div><p class="dim" style="font-size:14px;margin-top:10px"><code>video 0</code>、<code>canvas 0</code>、<code>svg 23</code>、<code>img 43</code>。钱花在真实截图与摄影上,视觉框架几乎零成本。</p></div>
+      <div class="card"><div class="k">弹簧时长</div><p class="dim" style="font-size:14px;margin-top:10px">做成变量:<code>--spring-common-duration:.667s</code>、<code>--spring-bounce-duration:.833s</code>,还有精确到 <code>.58171s</code> 的优雅弹簧。</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- 关键帧 -->
+<section id="frames">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="eyebrow">08 — as-seen 实拍(真实渲染关键帧)</div>
+      <h2>它实际长什么样</h2>
+      <p>下面是页面的真实渲染截图。整页探针截图当时命中了 Cloudflare 人机校验页,故这里改用滚动录制抽出的关键帧作为实拍证据。</p>
+    </div>
+    <div class="grid g2">
+      <figure class="shot"><img src="keyframes/00.jpg" alt="ChatGPT 概览页首屏" loading="lazy" /><figcaption>首屏:居中巨号黑标题,"work" 四色描红加渐变下划线;黑色药丸 CTA;产品截图带轻微 3D 倾斜飘入;散落手绘星芒与粉色像素花。</figcaption></figure>
+      <figure class="shot"><img src="keyframes/02.jpg" alt="Chat、Work、Codex 滚动叙事" loading="lazy" /><figcaption>滚动叙事:左侧 Chat、Work、Codex 竖排进度导航,右侧产品截图随滚动切换——大标题到产品 mock 的交替节奏。</figcaption></figure>
+      <figure class="shot"><img src="keyframes/04.jpg" alt="能力卡轮播" loading="lazy" /><figcaption>能力卡的"疏态":Writing、Images、Work 三张大号浅灰卡加横向轮播,每张底部浮着真实产品片段。</figcaption></figure>
+      <figure class="shot"><img src="keyframes/05.jpg" alt="Plans and pricing 与安全" loading="lazy" /><figcaption>浅灰 bento 大面板承载 Plans and pricing,右侧黑色药丸;下方 Designed to keep you safe 居中标题加发丝边卡片。</figcaption></figure>
+      <figure class="shot"><img src="keyframes/06.jpg" alt="Get inspired 摄影卡" loading="lazy" /><figcaption>Get inspired:三张圆角摄影卡,标题加 ↗ 箭头。这里颜色来自照片本身,页面框架依旧纯白克制。</figcaption></figure>
+      <figure class="shot"><img src="keyframes/07.jpg" alt="页脚" loading="lazy" /><figcaption>页脚前又一块浅灰 bento(Try ChatGPT today 加黑药丸),随后是安静的多列链接页脚。</figcaption></figure>
+    </div>
+    <p class="shotnote">说明:同目录 <code>assets/actual-full.jpg</code> 与 <code>actual-hero.jpg</code> 为探针整页截图,当时抓到的是 <code>Verify you are human</code> 校验页,不作视觉依据;上方关键帧取自真实滚动录制 <code>recording/scroll.webm</code>。</p>
+
+    <div class="subhead" style="margin-top:36px">真实素材 · 站点能力卡原图(取自 real-assets,见 manifest.json)</div>
+    <div class="grid g3">
+      <figure class="shot"><img src="real-assets/image/9722cf_Card_-_Writing.png" alt="ChatGPT 写作能力卡原图" loading="lazy" /><figcaption>写作:浅灰卡面上叠一段被润色的文稿,冷暖两色标出改前改后。</figcaption></figure>
+      <figure class="shot"><img src="real-assets/image/22ba20_Card_-_Images.png" alt="ChatGPT 图像能力卡原图" loading="lazy" /><figcaption>图像:卡面托着一张生成的插画,四角留白,不夺主色。</figcaption></figure>
+      <figure class="shot"><img src="real-assets/image/506375_Card_-_Coding_-_opt_4.png" alt="ChatGPT 编程能力卡原图" loading="lazy" /><figcaption>编程:深色代码片段浮在浅灰卡上,是全站少见的深色局部。</figcaption></figure>
+      <figure class="shot"><img src="real-assets/image/c7bc64_Card_-_Voice_-_opt_2.png" alt="ChatGPT 语音能力卡原图" loading="lazy" /><figcaption>语音:一圈柔和光晕表示正在聆听,呼应产品里的语音球。</figcaption></figure>
+      <figure class="shot"><img src="real-assets/image/e14df0_Card_-_Health_-_opt_5.png" alt="ChatGPT 健康能力卡原图" loading="lazy" /><figcaption>健康:卡面是一段问答对话,克制到只有文字与发丝边。</figcaption></figure>
+      <figure class="shot"><img src="real-assets/image/f1c347_Card_-_Finance.png" alt="ChatGPT 财务能力卡原图" loading="lazy" /><figcaption>财务:一张极简折线图,唯一的彩色来自那条趋势线。</figcaption></figure>
+    </div>
+    <p class="shotnote">这六张是概览页能力卡实际使用的产品图(线上为 WebP,本地扩展名沿用 <code>.png</code>),与上文用 HTML 复现的"卡海"互为对照:复现证明结构与手感,原图锁定真实观感。每张卡都遵守同一条纪律——彩色只从内容里长出来,框架永远是纯白与发丝边。</p>
+  </div>
+</section>
+
+<!-- 复刻 -->
+<section id="build">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="eyebrow">09 — 如何复刻</div>
+      <h2>把这些数值直接接进你的产品</h2>
+    </div>
+    <div class="grid g2">
+      <div>
+        <h3 style="margin-bottom:12px">1 · 落地 token(复制即用)</h3>
+        <pre><code><span class="tok-c">:root</span>{
+  <span class="tok-c">--bg</span>:<span class="tok-n">#fcfcfc</span>; <span class="tok-c">--ink</span>:<span class="tok-n">#0d0d0d</span>;
+  <span class="tok-c">--ink-2</span>:<span class="tok-n">#5d5d5d</span>; <span class="tok-c">--ink-3</span>:<span class="tok-n">#8f8f8f</span>;
+  <span class="tok-c">--gray</span>:<span class="tok-n">#f9f9f9</span>; <span class="tok-c">--hairline</span>:<span class="tok-n">#ededed</span>;
+  <span class="tok-c">--accent</span>:<span class="tok-n">#0285ff</span>;
+  <span class="tok-c">--ease</span>:<span class="tok-p">cubic-bezier</span>(.23,1,.32,1);
+  <span class="tok-c">--micro</span>:.2s; <span class="tok-c">--pill</span>:999px;
+}</code></pre>
+      </div>
+      <div>
+        <h3 style="margin-bottom:12px">2 · 水彩 blob 托底(纯 CSS)</h3>
+        <pre><code><span class="tok-c">.stage::before</span>{content:<span class="tok-s">""</span>;position:absolute;
+ inset:-24%;filter:<span class="tok-p">blur</span>(46px);
+ background:<span class="tok-p">radial-gradient</span>(38% 44% at 22% 28%,
+   <span class="tok-n">rgba(2,133,255,.34)</span>,transparent 62%),
+  <span class="tok-p">radial-gradient</span>(40% 42% at 80% 24%,
+   <span class="tok-n">rgba(16,163,127,.3)</span>,transparent 64%);
+ animation:blob 22s var(--ease) infinite alternate}</code></pre>
+      </div>
+    </div>
+    <div class="grid g2" style="margin-top:18px">
+      <div>
+        <h3 style="margin-bottom:12px">3 · prompt 能力卡(悬停提白上浮)</h3>
+        <pre><code><span class="tok-c">.ps</span>{background:<span class="tok-n">#f9f9f9</span>;border:1px solid <span class="tok-n">#ededed</span>;
+ border-radius:14px;
+ transition:transform .2s var(--ease),
+   background .2s var(--ease),
+   box-shadow .2s var(--ease)}
+<span class="tok-c">.ps:hover</span>{transform:translateY(-3px);
+ background:<span class="tok-n">#fff</span>;
+ box-shadow:0 12px 30px -14px rgba(0,0,0,.16)}</code></pre>
+      </div>
+      <div>
+        <h3 style="margin-bottom:12px">工程要点与坑</h3>
+        <ul class="checklist">
+          <li><b>底色不是纯白</b>:用 <code>#fcfcfc</code>;纯白只留给要浮起的卡片面</li>
+          <li><b>药丸别写天文数字</b>:自己写 <code>999px</code>,别照抄 <code>3.4e38px</code></li>
+          <li><b>渐变要揉</b>:水彩感来自 <code>filter:blur()</code>,不 blur 就是生硬色斑</li>
+          <li><b>尊重 reduced-motion</b>:关掉 blob 呼吸与一切氛围漂移</li>
+          <li><b><code>#1a73e8</code> 不是品牌色</b>:那是第三方 Google 图标带进来的</li>
+        </ul>
+      </div>
+    </div>
+    <div class="callout warn" style="margin-top:18px">
+      <h3>字体授权</h3>
+      <p class="dim" style="font-size:14px"><code>OpenAI Sans</code> 是定制商业字体。本页为求还原精度,直接接入了从站点提取的真实字体文件(仅标题 700、正文 400 两支),仅供研究与复刻比对;<b>生产环境需自购或获得授权</b>,不可照搬这份提取件。若无授权,用 <code>Inter</code> 等系统 neo-grotesque 临摹气质并注明替身即可。无障碍字体 <code>OpenDyslexic</code> 与 <code>Atkinson Hyperlegible</code> 有开源版,可直接接入做可切换项。</p>
+    </div>
+  </div>
+</section>
+
+<!-- 出处 -->
+<section id="prov" style="border-bottom:none">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="eyebrow">10 — 方法与出处</div>
+      <h2>每个数值从哪来</h2>
+    </div>
+    <div class="grid g2">
+      <div>
+        <dl class="prov">
+          <dt>抽取方法</dt>
+          <dd>用 playwright 读页面真实元素的计算样式(底色、墨色、h1 排版、导航透明且不做毛玻璃),再服务端抓取 7 个 CSS 文件的原文(约 1.83MB)做词频统计,得到高频色值、14 条缓动曲线、时长梯、圆角与全部 <code>--*</code> 变量。服务端抓文本不经浏览器 CORS,能拿到完整样式表。</dd>
+          <dt>实锤(源自抽取)</dt>
+          <dd>底色墨色、h1 全部指标、导航透明无毛玻璃、高频色值及次数、缓动曲线及次数、时长梯(含 218s 与 533s 超长项)、圆角(含天文数字药丸)、命名 keyframe(含水彩渐变系列)、弹簧时长、产品布局 token、指向 Tailwind v4 的 <code>--tw-*</code>、加载字体清单、零 video 零 canvas。</dd>
+          <dt>推断(观察与公开资料)</dt>
+          <dd>"work" 四色描红的精确色值(仅蓝 <code>#0285ff</code> 为实锤,绿金橙为观察估值)、手绘星芒与像素花、大面板约 22px 圆角、框架为 Next.js、以及 prompt 卡海的"铺满态"是对能力卡母题的复现。</dd>
+          <dt>真实资产回填(第二轮)</dt>
+          <dd>标题与正文已换成从站点下载的真实 <code>OpenAI Sans</code>(<code>Regular 400</code> + <code>Bold 700</code> 两支 woff2),经 <code>@font-face</code> 接入,<code>Inter</code> 退为 CDN 兜底;为守"只接标题+正文"的边界,其余 30 多支权重、多文种与无障碍字体未接。as-seen 区新增六张能力卡产品原图,favicon 换成站点真实 OpenAI 标记。全部真实文件与来源 URL 见 <code>real-assets/manifest.json</code>。</dd>
+        </dl>
+      </div>
+      <div>
+        <div class="callout">
+          <h3>一处数据纠正了观感</h3>
+          <p class="dim" style="font-size:14px"><code>#1a73e8</code> 与 <code>Google Sans</code> 看似品牌资产,实为页面 Google 工作套件集成图标带进来的第三方色与字。凡此类冲突,以"它是谁的资产"为准判断,而非出现次数。</p>
+        </div>
+        <div class="callout" style="margin-top:14px">
+          <h3>局限</h3>
+          <p class="dim" style="font-size:14px">JS 库未被探针识别(代码经打包混淆),Tailwind v4 由变量间接坐实;整页探针截图命中 Cloudflare 校验,实拍改用真实滚动录制的关键帧;可能内联在 SVG 或位图里的颜色抓不全,一律标推断而不编造精确值。</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  ChatGPT 概览页 设计解构 · 逆向自 <b>openai.com/chatgpt/overview</b> 的真实计算样式与样式表<br/>
+  数值除标注"推断"外均为线上实测 · 本页已接入从站点提取的真实 <b>OpenAI Sans</b>(Regular / Bold),Inter 仅作 CDN 兜底 · 真实资产清单见 real-assets/manifest.json · 仅作研究与复刻参考。
+</footer>
+
+<div class="copybar" id="copybar" role="status" aria-live="polite">已复制</div>
+
+<script>
+(function(){
+  var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* nav stuck */
+  var nav=document.getElementById('nav');
+  function onScroll(){nav.classList.toggle('stuck',scrollY>8)} onScroll();
+  addEventListener('scroll',onScroll,{passive:true});
+
+  /* smooth scroll buttons */
+  document.querySelectorAll('[data-scroll]').forEach(function(b){
+    b.addEventListener('click',function(){var t=document.querySelector(b.getAttribute('data-scroll'));if(t)t.scrollIntoView({behavior:reduce?'auto':'smooth'});});
+  });
+
+  /* ---------- copy toast ---------- */
+  var bar=document.getElementById('copybar'),tt;
+  function copy(hex){
+    try{navigator.clipboard&&navigator.clipboard.writeText(hex);}catch(e){}
+    bar.textContent='已复制 '+hex; bar.classList.add('show');
+    clearTimeout(tt); tt=setTimeout(function(){bar.classList.remove('show');},1200);
+  }
+
+  /* ---------- prompt card sea ---------- */
+  var prompts=[
+    ['ic-list','把这周的会议纪要整理成可执行的待办清单'],
+    ['ic-mail','帮我写一封得体的项目延期说明邮件'],
+    ['ic-book','用高中生能懂的方式解释一下量子纠缠'],
+    ['ic-code','review 这段 Python,指出潜在的边界 bug'],
+    ['ic-chart','给这份季度数据做一张趋势图并写出结论'],
+    ['ic-cal','规划一条五天的关西深度游行程'],
+    ['ic-pen','把这段中文润色成更专业的书面表达'],
+    ['ic-list','根据这份 PRD 拆出开发任务与排期'],
+    ['ic-img','生成一张社区农夫市集的活动海报'],
+    ['ic-doc','把这份 PDF 合同的关键条款提炼成要点'],
+    ['ic-bulb','对比三款方案的优劣,给出选型建议'],
+    ['ic-pen','帮我起草一段产品发布的社媒文案'],
+    ['ic-bug','解释这段报错,并给出分步修复方案'],
+    ['ic-book','为这次访谈生成十个有深度的追问'],
+    ['ic-list','把这堆零散想法归类成一份结构化大纲'],
+    ['ic-doc','用一句话概括这篇长文的核心论点'],
+    ['ic-cal','设计一套入门级的八周健身计划'],
+    ['ic-pen','把简历改写得更契合这个岗位的要求'],
+    ['ic-bulb','根据冰箱里的食材推荐今晚的晚餐'],
+    ['ic-chart','把这份表格数据透视成月度对比'],
+    ['ic-code','为这个函数生成覆盖边界情况的单元测试'],
+    ['ic-globe','把这段英文邮件翻译成自然的中文'],
+    ['ic-bulb','给这个新功能想五个更好的命名'],
+    ['ic-list','复盘这次上线事故,写成一份改进清单']
+  ];
+  var seaEl=document.getElementById('cardsea'),sh='';
+  prompts.forEach(function(p){
+    sh+='<button class="ps" type="button">'+
+        '<svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><use href="#'+p[0]+'"/></svg>'+
+        '<span class="tx">'+p[1]+'</span>'+
+        '<svg class="go" width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><use href="#ic-arrow"/></svg>'+
+        '</button>';
+  });
+  seaEl.innerHTML=sh;
+
+  /* ---------- swatches ---------- */
+  function sw(list,el){
+    var h=document.getElementById(el),s='';
+    list.forEach(function(c){
+      s+='<button class="sw" type="button" data-hex="'+c.hex+'" aria-label="复制 '+c.hex+'">'+
+         '<div class="chipc" style="background:'+(c.bg||c.hex)+'"></div>'+
+         '<div class="meta"><div class="name">'+c.name+'</div><div class="hex">'+c.hex+'</div><div class="role">'+c.role+'</div></div></button>';
+    });
+    h.innerHTML=s;
+  }
+  sw([
+    {name:'页面底色',hex:'#fcfcfc',role:'全站底色,不是纯白'},
+    {name:'主墨色',hex:'#0d0d0d',role:'标题正文与黑药丸填充'},
+    {name:'次级文字',hex:'#5d5d5d',role:'导航链接等中灰'},
+    {name:'三级文字',hex:'#8f8f8f',role:'占位符与弱化文字'}
+  ],'sw-base');
+  sw([
+    {name:'卡片纯白',hex:'#ffffff',role:'需要浮起的卡片面'},
+    {name:'浅灰面',hex:'#f9f9f9',role:'能力卡底'},
+    {name:'浅灰面板',hex:'#f3f3f3',role:'bento 大面板底'},
+    {name:'发丝边',hex:'#ededed',role:'卡片边框'},
+    {name:'发丝边',hex:'#e5e7eb',role:'Tailwind gray-200'},
+    {name:'浅灰线',hex:'#cecece',role:'分隔与描边'},
+    {name:'深灰面',hex:'#212121',role:'深色面层次'},
+    {name:'极黑',hex:'#000000',role:'边框与图标纯黑态'}
+  ],'sw-surface');
+  sw([
+    {name:'交互蓝',hex:'#0285ff',role:'链接与可点态(品牌强调蓝)'},
+    {name:'Google 蓝',hex:'#1a73e8',role:'第三方集成图标,非品牌色'}
+  ],'sw-color');
+
+  var grays=['#101010','#181818','#1c1c1c','#212121','#303030','#393939','#414141','#5d5d5d','#767676','#8f8f8f','#afafaf','#b9b9b9','#cdcdcd','#cecece','#e5e7eb','#ededed','#f3f3f3','#f9f9f9'];
+  var gh='';
+  grays.forEach(function(g){gh+='<button class="gc" type="button" data-hex="'+g+'" aria-label="复制 '+g+'"><div class="b" style="background:'+g+'"></div><div class="h">'+g+'</div></button>';});
+  document.getElementById('grays').innerHTML=gh;
+
+  document.addEventListener('click',function(e){
+    var s=e.target.closest('[data-hex]'); if(s) copy(s.getAttribute('data-hex'));
+  });
+
+  /* ---------- easing lab ---------- */
+  var curves=[
+    {n:'签名主曲线',v:'.23, 1, .32, 1',p:[.23,1,.32,1],d:'样式表出现 18 次,全站默认手感。快出、长尾、缓缓落定——最"顺"的减速。'},
+    {n:'Expo Out',v:'.19, 1, .22, 1',p:[.19,1,.22,1],d:'比主曲线更陡的冲出与更长的尾。与 Comet 主曲线同一条。'},
+    {n:'标准减速',v:'0, 0, .2, 1',p:[0,0,.2,1],d:'Material decelerate,元素进场时减速停稳。'},
+    {n:'easeOutExpo',v:'0.16, 1, 0.3, 1',p:[.16,1,.3,1],d:'极"高级"的减速,起步极快、尾巴极长。'}
+  ];
+  var lab=document.getElementById('easelab'),lh='';
+  curves.forEach(function(c,i){
+    lh+='<div class="ease" tabindex="0" role="button" data-i="'+i+'"><div class="ease-top"><h3>'+c.n+'</h3><span class="curveval">cubic-bezier('+c.v+')</span></div>'+
+        '<div class="desc">'+c.d+'</div><div class="ease-viz"><canvas id="cv'+i+'" width="110" height="110"></canvas>'+
+        '<div class="track"><div class="runner-wrap"><div class="runner" id="rn'+i+'"></div></div><div class="replay">点击重放 · 400ms</div></div></div></div>';
+  });
+  lab.innerHTML=lh;
+
+  function drawCurve(i,p){
+    var c=document.getElementById('cv'+i); if(!c)return;
+    var g=c.getContext('2d'),S=110,pad=18;
+    function X(t){return pad+t*(S-2*pad);}
+    function Y(v){return (S-pad)-v*(S-2*pad);}
+    g.clearRect(0,0,S,S);
+    g.strokeStyle='#e8e8e8'; g.lineWidth=1;
+    g.beginPath();g.moveTo(X(0),Y(0));g.lineTo(X(1),Y(0));g.moveTo(X(0),Y(1));g.lineTo(X(1),Y(1));g.stroke();
+    g.strokeStyle='#0285ff'; g.lineWidth=2; g.beginPath();
+    for(var t=0;t<=1.001;t+=0.02){
+      var y=3*Math.pow(1-t,2)*t*p[1]+3*(1-t)*t*t*p[3]+t*t*t;
+      var x=3*Math.pow(1-t,2)*t*p[0]+3*(1-t)*t*t*p[2]+t*t*t;
+      if(t===0)g.moveTo(X(x),Y(y)); else g.lineTo(X(x),Y(y));
+    }
+    g.stroke();
+    g.fillStyle='#0d0d0d';
+    g.beginPath();g.arc(X(0),Y(0),3,0,7);g.fill();
+    g.beginPath();g.arc(X(1),Y(1),3,0,7);g.fill();
+  }
+  function play(i){
+    var r=document.getElementById('rn'+i); if(!r)return;
+    var wrap=r.parentElement,dist=Math.round((wrap.clientWidth-r.clientWidth-12));
+    r.style.transition='none'; r.style.transform='translateX(0)';
+    void r.offsetWidth;
+    r.style.transition='transform 400ms cubic-bezier('+curves[i].p.join(',')+')';
+    r.style.transform='translateX('+dist+'px)';
+  }
+  curves.forEach(function(c,i){drawCurve(i,c.p); if(!reduce) setTimeout(function(){play(i);},400+i*160);});
+  lab.addEventListener('click',function(e){var el=e.target.closest('.ease'); if(el) play(+el.getAttribute('data-i'));});
+  lab.addEventListener('keydown',function(e){
+    if(e.key!=='Enter'&&e.key!==' ')return;
+    var el=e.target.closest('.ease'); if(el){e.preventDefault(); play(+el.getAttribute('data-i'));}
+  });
+
+  /* ---------- duration ladder (log scale) ---------- */
+  var durs=[
+    ['1ms',1,'瞬时与禁用过渡',false],
+    ['200ms',200,'悬停、焦点手感',false],
+    ['2s',2000,'微光呼吸',true],
+    ['3s',3000,'脉动(出现最多)',true],
+    ['4.5s',4500,'文字流光',true],
+    ['15s',15000,'慢速渐变漂移',true],
+    ['32s',32000,'更慢的漂移',true],
+    ['218s',218000,'渐变超慢迁移(约 3.6 分钟)',true],
+    ['533s',533000,'渐变最慢迁移(约 8.9 分钟)',true]
+  ];
+  var maxL=Math.log10(533000),dh='';
+  durs.forEach(function(d){
+    var w=Math.max(4,(Math.log10(d[1])/maxL)*100);
+    dh+='<div class="durrow"><span class="lab">'+d[2]+'</span><div class="durbar'+(d[3]?' amb':'')+'" style="width:'+w+'%"></div><span class="val">'+d[0]+'</span></div>';
+  });
+  document.getElementById('durs').innerHTML=dh;
+})();
+</script>
+
+<style>.dt-omit{display:flex;align-items:center;justify-content:center;min-height:96px;background:repeating-linear-gradient(45deg,transparent,transparent 9px,rgba(128,128,128,.07) 9px,rgba(128,128,128,.07) 18px);border:1px dashed rgba(128,128,128,.32);border-radius:8px;color:#8b8b8b;font:11px/1.5 ui-monospace,SFMono-Regular,Menlo,monospace;text-align:center;padding:14px;box-sizing:border-box}</style>
+<script>/* public build: original site media removed for copyright; layout preserved, real look kept in the as-seen screenshots */
+(function(){
+ var R=/real-assets\/(image|video|audio|fonts|source|lottie)\/|\.(mp4|webm|mov|mp3|wav|woff2?|otf|ttf)(\?|$)/i;
+ function box(w,h){var d=document.createElement('div');d.className='dt-omit';d.textContent='原站素材已按版权移除,见原站';if(w)d.style.width=w;if(h)d.style.minHeight=h;return d;}
+ document.querySelectorAll('video').forEach(function(v){
+   var srcs=[].map.call(v.querySelectorAll('source'),function(s){return s.getAttribute('src')||''});
+   var bad=R.test(v.getAttribute('src')||'')||srcs.some(function(s){return R.test(s)});
+   if(!bad)return;
+   v.removeAttribute('src');v.removeAttribute('autoplay');v.querySelectorAll('source').forEach(function(s){s.remove()});
+   if(!v.getAttribute('poster')){var b=box(v.style.width||'',((v.clientHeight||160))+'px');v.parentNode&&v.parentNode.replaceChild(b,v);}
+ });
+ document.querySelectorAll('img').forEach(function(im){
+   if(R.test(im.getAttribute('src')||'')){var b=box((im.getAttribute('width')||'')+(im.getAttribute('width')?'px':''),((im.getAttribute('height')||im.clientHeight||120))+'px');im.parentNode&&im.parentNode.replaceChild(b,im);}
+ });
+})();
+</script>
+
+</body>
+</html>

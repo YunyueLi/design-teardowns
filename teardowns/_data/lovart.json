@@ -1,0 +1,629 @@
+{
+  "site": "lovart",
+  "url": "https://www.lovart.ai",
+  "probe": {
+    "title": "Lovart – World's First AI Design Agent | Create Pro Designs in Minutes",
+    "lang": "en",
+    "body": {
+      "background-color": "rgb(16, 15, 9)",
+      "color": "rgb(245, 244, 239)",
+      "font-family": "inter, \"inter Fallback\", system-ui, ui-sans-serif, -apple-system, system-ui, \"Segoe UI\", Helvetica, \"Apple Color Emoji\", Arial, sans-serif, \"Segoe UI Emoji\", \"Segoe UI Symbol\""
+    },
+    "h1": {
+      "text": "Design a Promotional Video(2)",
+      "font-family": "featureDisplay, \"featureDisplay Fallback\", notoSerifSC, \"notoSerifSC Fallback\", notoSerifTC, \"notoSerifTC Fallback\", notoSerifJP, \"notoSerifJP Fallback\", ui-serif, Georgia, \"Times New Roman\", serif",
+      "font-size": "48px",
+      "font-weight": "400",
+      "letter-spacing": "0.48px",
+      "line-height": "52.8px",
+      "font-style": "normal",
+      "color": "rgb(245, 244, 239)"
+    },
+    "nav": {
+      "background-color": "rgba(0, 0, 0, 0)",
+      "backdrop-filter": "none",
+      "font-family": "gtStandard, \"gtStandard Fallback\", notoSansSC, \"notoSansSC Fallback\", notoSansTC, \"notoSansTC Fallback\", notoSansJP, \"notoSansJP Fallback\", ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\""
+    },
+    "btn": {
+      "background-color": "rgb(245, 244, 239)",
+      "color": "rgb(16, 15, 9)",
+      "border-radius": "999px",
+      "transition": "0.2s cubic-bezier(0, 0, 0.2, 1)",
+      "font-family": "gtStandard, \"gtStandard Fallback\", notoSansSC, \"notoSansSC Fallback\", notoSansTC, \"notoSansTC Fallback\", notoSansJP, \"notoSansJP Fallback\", ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\""
+    },
+    "accentGuess": "lab(96.52% -.0000298023 .0000119209)",
+    "libs": [],
+    "scriptHints": [],
+    "media": {
+      "video": 2,
+      "canvas": 0,
+      "svg": 50,
+      "img": 38,
+      "preloadVideo": 0,
+      "preloadFont": 6
+    },
+    "fontsLoaded": [
+      "poppins",
+      "poppins Fallback",
+      "barlowCondensed",
+      "barlowCondensed Fallback",
+      "inter",
+      "inter Fallback",
+      "gtStandard",
+      "gtStandard Fallback",
+      "gtStandardMono",
+      "gtStandardMono Fallback",
+      "featureDeck",
+      "featureDeck Fallback",
+      "featureDisplay",
+      "featureDisplay Fallback",
+      "notoSansSC",
+      "notoSansSC Fallback",
+      "notoSansJP",
+      "notoSansJP Fallback",
+      "notoSansTC",
+      "notoSansTC Fallback",
+      "notoSerifSC",
+      "notoSerifSC Fallback",
+      "notoSerifJP",
+      "notoSerifJP Fallback",
+      "notoSerifTC",
+      "notoSerifTC Fallback"
+    ]
+  },
+  "cssFetched": 6,
+  "tokens": {
+    "customProps": {
+      "--mantine-breakpoint-b640": "640px",
+      "--mantine-breakpoint-b768": "768px",
+      "--mantine-breakpoint-b1024": "1024px",
+      "--mantine-breakpoint-b1280": "1280px",
+      "--mantine-breakpoint-b1440": "1440px",
+      "--mantine-breakpoint-b1600": "1600px",
+      "--mantine-breakpoint-b1520": "1520px",
+      "--mantine-breakpoint-b1920": "1920px",
+      "--mantine-breakpoint-b2240": "2240px",
+      "--mantine-color-lovart-black-0": "#000000",
+      "--mantine-color-lovart-black-1": "#000000",
+      "--mantine-color-lovart-black-2": "#000000",
+      "--mantine-color-lovart-black-3": "#000000",
+      "--mantine-color-lovart-black-4": "#000000",
+      "--mantine-color-lovart-black-5": "#000000",
+      "--mantine-color-lovart-black-6": "#000000",
+      "--mantine-color-lovart-black-7": "#000000",
+      "--mantine-color-lovart-black-8": "#000000",
+      "--mantine-color-lovart-black-9": "#000000",
+      "--mantine-color-lovart-green-0": "#F4FFF0",
+      "--mantine-color-lovart-green-1": "#E5FFDE",
+      "--mantine-color-lovart-green-2": "#D1FFC7",
+      "--mantine-color-lovart-green-3": "#A5FF94",
+      "--mantine-color-lovart-green-4": "#85FF75",
+      "--mantine-color-lovart-green-5": "#64D959",
+      "--mantine-color-lovart-green-6": "#57C74A",
+      "--mantine-color-lovart-green-7": "#239C3D",
+      "--mantine-color-lovart-green-8": "#125F23",
+      "--mantine-color-lovart-green-9": "#002E25",
+      "--mantine-color-ocean-blue-0": "#7AD1DD",
+      "--mantine-color-ocean-blue-1": "#5FCCDB",
+      "--mantine-color-ocean-blue-2": "#44CADC",
+      "--mantine-color-ocean-blue-3": "#2AC9DE",
+      "--mantine-color-ocean-blue-4": "#1AC2D9",
+      "--mantine-color-ocean-blue-5": "#11B7CD",
+      "--mantine-color-ocean-blue-6": "#09ADC3",
+      "--mantine-color-ocean-blue-7": "#0E99AC",
+      "--mantine-color-ocean-blue-8": "#128797",
+      "--mantine-color-ocean-blue-9": "#147885",
+      "--mantine-color-bright-pink-0": "#F0BBDD",
+      "--mantine-color-bright-pink-1": "#ED9BCF",
+      "--mantine-color-bright-pink-2": "#EC7CC3",
+      "--mantine-color-bright-pink-3": "#ED5DB8",
+      "--mantine-color-bright-pink-4": "#F13EAF",
+      "--mantine-color-bright-pink-5": "#F71FA7",
+      "--mantine-color-bright-pink-6": "#FF00A1",
+      "--mantine-color-bright-pink-7": "#E00890",
+      "--mantine-color-bright-pink-8": "#C50E82",
+      "--mantine-color-bright-pink-9": "#AD1374",
+      "--mantine-color-lovart-black-text": "var(--mantine-color-lovart-black-4)",
+      "--mantine-color-lovart-black-filled": "var(--mantine-color-lovart-black-8)",
+      "--mantine-color-lovart-black-filled-hover": "var(--mantine-color-lovart-black-9)",
+      "--mantine-color-lovart-black-light": "rgba(0, 0, 0, 0.15)",
+      "--mantine-color-lovart-black-light-hover": "rgba(0, 0, 0, 0.2)",
+      "--mantine-color-lovart-black-light-color": "var(--mantine-color-lovart-black-3)",
+      "--mantine-color-lovart-black-outline": "var(--mantine-color-lovart-black-4)",
+      "--mantine-color-lovart-black-outline-hover": "rgba(0, 0, 0, 0.05)",
+      "--mantine-color-lovart-green-text": "var(--mantine-color-lovart-green-4)",
+      "--mantine-color-lovart-green-filled": "var(--mantine-color-lovart-green-8)",
+      "--mantine-color-lovart-green-filled-hover": "var(--mantine-color-lovart-green-9)",
+      "--mantine-color-lovart-green-light": "rgba(87, 199, 74, 0.15)",
+      "--mantine-color-lovart-green-light-hover": "rgba(87, 199, 74, 0.2)",
+      "--mantine-color-lovart-green-light-color": "var(--mantine-color-lovart-green-3)",
+      "--mantine-color-lovart-green-outline": "var(--mantine-color-lovart-green-4)",
+      "--mantine-color-lovart-green-outline-hover": "rgba(133, 255, 117, 0.05)",
+      "--mantine-color-ocean-blue-text": "var(--mantine-color-ocean-blue-4)",
+      "--mantine-color-ocean-blue-filled": "var(--mantine-color-ocean-blue-8)",
+      "--mantine-color-ocean-blue-filled-hover": "var(--mantine-color-ocean-blue-9)",
+      "--mantine-color-ocean-blue-light": "rgba(9, 173, 195, 0.15)",
+      "--mantine-color-ocean-blue-light-hover": "rgba(9, 173, 195, 0.2)",
+      "--mantine-color-ocean-blue-light-color": "var(--mantine-color-ocean-blue-3)",
+      "--mantine-color-ocean-blue-outline": "var(--mantine-color-ocean-blue-4)",
+      "--mantine-color-ocean-blue-outline-hover": "rgba(26, 194, 217, 0.05)",
+      "--mantine-color-bright-pink-text": "var(--mantine-color-bright-pink-4)",
+      "--mantine-color-bright-pink-filled": "var(--mantine-color-bright-pink-8)",
+      "--mantine-color-bright-pink-filled-hover": "var(--mantine-color-bright-pink-9)",
+      "--mantine-color-bright-pink-light": "rgba(255, 0, 161, 0.15)",
+      "--mantine-color-bright-pink-light-hover": "rgba(255, 0, 161, 0.2)",
+      "--mantine-color-bright-pink-light-color": "var(--mantine-color-bright-pink-3)",
+      "--mantine-color-bright-pink-outline": "var(--mantine-color-bright-pink-4)",
+      "--mantine-color-bright-pink-outline-hover": "rgba(241, 62, 175, 0.05)",
+      "--glare-x": "50%",
+      "--glare-y": "50%",
+      "--edge-x": "50%",
+      "--edge-y": "50%",
+      "--font-Poppins": "\"poppins\", \"poppins Fallback\"",
+      "--font-Barlow-Condensed": "\"barlowCondensed\", \"barlowCondensed Fallback\"",
+      "--font-Inter": "\"inter\", \"inter Fallback\", system-ui",
+      "--font-sans": "\"gtStandard\", \"gtStandard Fallback\"",
+      "--font-sans-Mono": "\"gtStandardMono\", \"gtStandardMono Fallback\"",
+      "--font-Feature-Deck": "\"featureDeck\", \"featureDeck Fallback\"",
+      "--font-Feature-Display": "\"featureDisplay\", \"featureDisplay Fallback\"",
+      "--font-Noto-Sans-SC": "\"notoSansSC\", \"notoSansSC Fallback\"",
+      "--font-Noto-Sans-JP": "\"notoSansJP\", \"notoSansJP Fallback\"",
+      "--font-Noto-Sans-TC": "\"notoSansTC\", \"notoSansTC Fallback\"",
+      "--font-Noto-Serif-SC": "\"notoSerifSC\", \"notoSerifSC Fallback\"",
+      "--font-Noto-Serif-JP": "\"notoSerifJP\", \"notoSerifJP Fallback\"",
+      "--font-Noto-Serif-TC": "\"notoSerifTC\", \"notoSerifTC Fallback\"",
+      "--os-vaw": "0",
+      "--os-vah": "0",
+      "--os-viewport-overflow-x": "hidden",
+      "--os-viewport-overflow-y": "hidden",
+      "--os-viewport-percent": "0",
+      "--os-scroll-percent": "0",
+      "--os-scroll-direction": "0",
+      "--os-size": "0",
+      "--os-padding-perpendicular": "0",
+      "--os-padding-axis": "0",
+      "--os-track-border-radius": "0",
+      "--os-track-bg": "none",
+      "--os-track-bg-hover": "none",
+      "--os-track-bg-active": "none",
+      "--os-track-border": "none",
+      "--os-track-border-hover": "none",
+      "--os-track-border-active": "none",
+      "--os-handle-border-radius": "0",
+      "--os-handle-bg": "none",
+      "--os-handle-bg-hover": "none",
+      "--os-handle-bg-active": "none",
+      "--os-handle-border": "none"
+    },
+    "topHex": [
+      {
+        "hex": "#fff",
+        "n": 81
+      },
+      {
+        "hex": "#3b82f6",
+        "n": 31
+      },
+      {
+        "hex": "#c1c5cc",
+        "n": 27
+      },
+      {
+        "hex": "#000",
+        "n": 26
+      },
+      {
+        "hex": "#141414",
+        "n": 25
+      },
+      {
+        "hex": "#000000",
+        "n": 22
+      },
+      {
+        "hex": "#100f09",
+        "n": 21
+      },
+      {
+        "hex": "#86909c",
+        "n": 20
+      },
+      {
+        "hex": "#2f3640",
+        "n": 20
+      },
+      {
+        "hex": "#f5f5f5",
+        "n": 18
+      },
+      {
+        "hex": "#147dff",
+        "n": 18
+      },
+      {
+        "hex": "#4a535f",
+        "n": 16
+      },
+      {
+        "hex": "#919191",
+        "n": 16
+      },
+      {
+        "hex": "#c4c4c4",
+        "n": 16
+      },
+      {
+        "hex": "#f6f5f1",
+        "n": 16
+      },
+      {
+        "hex": "#1a73e8",
+        "n": 15
+      },
+      {
+        "hex": "#f7f8fa",
+        "n": 15
+      },
+      {
+        "hex": "#0c0c0d",
+        "n": 14
+      },
+      {
+        "hex": "#e3e3e3",
+        "n": 13
+      },
+      {
+        "hex": "#e5e5e5",
+        "n": 13
+      },
+      {
+        "hex": "#f2f3f5",
+        "n": 13
+      },
+      {
+        "hex": "#e5e6ec",
+        "n": 13
+      },
+      {
+        "hex": "#a8a8a8",
+        "n": 13
+      },
+      {
+        "hex": "#2c2c2c",
+        "n": 12
+      }
+    ],
+    "cubicBezier": [
+      {
+        "v": "cubic-bezier(0.33, 1, 0.68, 1)",
+        "n": 5
+      },
+      {
+        "v": "cubic-bezier(.4, 0, .2, 1)",
+        "n": 4
+      },
+      {
+        "v": "cubic-bezier(.34,1.56,.64,1)",
+        "n": 4
+      },
+      {
+        "v": "cubic-bezier(.23,1,.32,1)",
+        "n": 3
+      },
+      {
+        "v": "cubic-bezier(0.4, 0, 0.2, 1)",
+        "n": 2
+      },
+      {
+        "v": "cubic-bezier(.4, 0, 1, 1)",
+        "n": 2
+      },
+      {
+        "v": "cubic-bezier(0, 0, .2, 1)",
+        "n": 2
+      },
+      {
+        "v": "cubic-bezier(.4, 0, .6, 1)",
+        "n": 2
+      },
+      {
+        "v": "cubic-bezier(0.34, 1.56, 0.64, 1)",
+        "n": 2
+      },
+      {
+        "v": "cubic-bezier(.4,0,.2,1)",
+        "n": 2
+      },
+      {
+        "v": "cubic-bezier(0, 0.5, 0.5, 1)",
+        "n": 1
+      },
+      {
+        "v": "cubic-bezier(0.23, 1, 0.32, 1)",
+        "n": 1
+      },
+      {
+        "v": "cubic-bezier(0.4, 0, 0.6, 1)",
+        "n": 1
+      },
+      {
+        "v": "cubic-bezier(0,.5,.5,1)",
+        "n": 1
+      }
+    ],
+    "fontFamily": [
+      {
+        "v": "var(--mantine-font-family-monospace)",
+        "n": 12
+      },
+      {
+        "v": "poppins",
+        "n": 8
+      },
+      {
+        "v": "barlowCondensed",
+        "n": 8
+      },
+      {
+        "v": "featureDisplay",
+        "n": 6
+      },
+      {
+        "v": "var(--mantine-font-family)",
+        "n": 6
+      },
+      {
+        "v": "Inter, sans-serif",
+        "n": 4
+      },
+      {
+        "v": "inter",
+        "n": 4
+      },
+      {
+        "v": "gtStandard",
+        "n": 4
+      },
+      {
+        "v": "featureDeck",
+        "n": 4
+      },
+      {
+        "v": "var(--font-sans), var(--font-Noto-Sans-SC), var(--font-Noto-Sans-TC), var(--font-Noto-Sans-JP), ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+        "n": 4
+      },
+      {
+        "v": "var(--font-sans-Mono), ui-monospace, SFMono-Regular, \"SF Mono\", Menlo, Consolas, \"Liberation Mono\", monospace",
+        "n": 4
+      },
+      {
+        "v": "var(--mantine-font-family-headings)",
+        "n": 4
+      },
+      {
+        "v": "Inter",
+        "n": 4
+      },
+      {
+        "v": "Poppins",
+        "n": 4
+      },
+      {
+        "v": "Inter,sans-serif",
+        "n": 4
+      },
+      {
+        "v": "var(--font-title-latin)",
+        "n": 3
+      }
+    ],
+    "durations": [
+      {
+        "v": "15s",
+        "n": 34
+      },
+      {
+        "v": "1s",
+        "n": 29
+      },
+      {
+        "v": "0.15s",
+        "n": 22
+      },
+      {
+        "v": "2s",
+        "n": 19
+      },
+      {
+        "v": "0.1s",
+        "n": 15
+      },
+      {
+        "v": "0s",
+        "n": 12
+      },
+      {
+        "v": "3s",
+        "n": 11
+      },
+      {
+        "v": "0.3s",
+        "n": 9
+      },
+      {
+        "v": "5000s",
+        "n": 9
+      },
+      {
+        "v": "0.2s",
+        "n": 7
+      },
+      {
+        "v": "0.5s",
+        "n": 6
+      },
+      {
+        "v": "1.2s",
+        "n": 6
+      },
+      {
+        "v": "218s",
+        "n": 4
+      },
+      {
+        "v": "1.5s",
+        "n": 4
+      },
+      {
+        "v": "0.4s",
+        "n": 4
+      },
+      {
+        "v": "75ms",
+        "n": 4
+      }
+    ],
+    "radii": [
+      {
+        "v": "0",
+        "n": 21
+      },
+      {
+        "v": "10px",
+        "n": 18
+      },
+      {
+        "v": "var(--mantine-radius-sm)",
+        "n": 18
+      },
+      {
+        "v": "0px",
+        "n": 17
+      },
+      {
+        "v": "var(--cs-radius)",
+        "n": 10
+      },
+      {
+        "v": "3px",
+        "n": 9
+      },
+      {
+        "v": "8px",
+        "n": 9
+      },
+      {
+        "v": "var(--sc-radius,var(--mantine-radius-default))",
+        "n": 8
+      },
+      {
+        "v": "4px",
+        "n": 7
+      },
+      {
+        "v": "16px",
+        "n": 7
+      },
+      {
+        "v": "2px",
+        "n": 6
+      },
+      {
+        "v": "var(--slider-radius)",
+        "n": 6
+      },
+      {
+        "v": "var(--switch-radius)",
+        "n": 6
+      },
+      {
+        "v": "18px",
+        "n": 5
+      }
+    ],
+    "keyframes": [
+      {
+        "v": "spin",
+        "n": 3
+      },
+      {
+        "v": "gradient",
+        "n": 2
+      },
+      {
+        "v": "agent-shimmer-sweep",
+        "n": 2
+      },
+      {
+        "v": "os-size-observer-appear-animation",
+        "n": 2
+      },
+      {
+        "v": "swipe-out-left",
+        "n": 2
+      },
+      {
+        "v": "swipe-out-right",
+        "n": 2
+      },
+      {
+        "v": "swipe-out-up",
+        "n": 2
+      },
+      {
+        "v": "swipe-out-down",
+        "n": 2
+      },
+      {
+        "v": "m_5d2b3b9d",
+        "n": 2
+      },
+      {
+        "v": "m_aac34a1",
+        "n": 2
+      },
+      {
+        "v": "m_f8e89c4b",
+        "n": 2
+      },
+      {
+        "v": "m_885901b1",
+        "n": 2
+      },
+      {
+        "v": "m_81a374bd",
+        "n": 2
+      },
+      {
+        "v": "m_e0fb7a86",
+        "n": 2
+      },
+      {
+        "v": "m_299c329c",
+        "n": 2
+      },
+      {
+        "v": "collapsible-down",
+        "n": 1
+      },
+      {
+        "v": "collapsible-up",
+        "n": 1
+      },
+      {
+        "v": "scroll-up",
+        "n": 1
+      },
+      {
+        "v": "scroll-down",
+        "n": 1
+      },
+      {
+        "v": "slide-down-fade",
+        "n": 1
+      }
+    ],
+    "cssBytes": 1026786
+  },
+  "ok": true
+}

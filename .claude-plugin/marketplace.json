@@ -1,0 +1,16 @@
+{
+  "name": "design-teardowns",
+  "owner": { "name": "YunyueLi" },
+  "metadata": {
+    "description": "Reverse-engineer real product landing pages into source-level design teardowns.",
+    "version": "1.0.0"
+  },
+  "plugins": [
+    {
+      "name": "design-teardown",
+      "source": "./",
+      "strict": false,
+      "skills": ["./skills/design-teardown"]
+    }
+  ]
+}

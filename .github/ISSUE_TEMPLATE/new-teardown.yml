@@ -1,0 +1,55 @@
+name: New teardown request
+description: Suggest a real product landing page worth reverse-engineering into a design teardown.
+title: "[Teardown]: "
+labels: ["teardown-request"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for suggesting a teardown. Please describe the product and why its
+        landing page is interesting. A good suggestion points at a real, publicly
+        reachable page with design worth learning from.
+  - type: input
+    id: product-name
+    attributes:
+      label: Product name
+      description: The name of the product whose landing page you want torn down.
+      placeholder: For example, Linear
+    validations:
+      required: true
+  - type: input
+    id: url
+    attributes:
+      label: Landing page URL
+      description: The public URL of the landing page to analyze.
+      placeholder: https://example.com
+    validations:
+      required: true
+  - type: textarea
+    id: why
+    attributes:
+      label: Why is it worth tearing down?
+      description: >-
+        What makes the design notable? Mention specific things such as color
+        system, typography, motion, layout, or interaction detail.
+      placeholder: What would a reader learn from this teardown?
+    validations:
+      required: true
+  - type: textarea
+    id: notes
+    attributes:
+      label: Notes
+      description: Anything else that would help, such as specific sections or references.
+      placeholder: Optional.
+    validations:
+      required: false
+  - type: checkboxes
+    id: acknowledgements
+    attributes:
+      label: Acknowledgements
+      options:
+        - label: >-
+            I understand that any resulting teardown will contain only publishable
+            material and will not redistribute proprietary fonts, video, audio, or
+            source code.
+          required: true

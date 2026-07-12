@@ -1,0 +1,27 @@
+cff-version: 1.2.0
+title: "Design Teardowns"
+message: >-
+  If you use this project, please cite it using these metadata. Note the
+  dual license: the code (scaffolding, gallery engine, extraction scripts,
+  and the skill) is under the MIT License, while the original content
+  (teardown documentation, extracted token values as compiled here, and
+  self-authored screenshots) is under Creative Commons Attribution 4.0
+  International (CC BY 4.0). Third-party trademarks and material are excluded
+  from both grants.
+type: software
+authors:
+  - name: "design-teardowns contributors"
+version: 1.0.0
+date-released: "2026-07-10"
+url: "https://github.com/YunyueLi/design-teardowns"
+repository-code: "https://github.com/YunyueLi/design-teardowns"
+license:
+  - MIT
+  - CC-BY-4.0
+keywords:
+  - design
+  - design-tokens
+  - reverse-engineering
+  - front-end
+  - teardown
+  - education

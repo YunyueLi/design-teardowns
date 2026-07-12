@@ -1,0 +1,79 @@
+/* ============================================================
+   gemini — 从线上站点真实抽取的设计 token（实锤，非观感推断）
+   源:https://gemini.google  · 抽取:playwright 计算样式 + 样式表文本
+   ============================================================ */
+:root{
+  /* —— 基底 / 文字（computed）—— */
+  --bg:rgb(253, 252, 252);
+  --ink:rgb(31, 31, 31);
+  /* 高频色值（样式表出现次数 top）:#1f1f1f #e3e3e3 #fff #0b57d0 #444746 #a8c7fa #c4c7c5 #000 #c2e7ff #d3e3fd */
+
+  /* —— 字体（computed / fontsLoaded）—— */
+  --font-sans:Times;
+  /* 实际加载字体:Google Sans, Google Sans Mono, Google Sans Code, Google Sans Flex, Google Symbols, Luminous Symbols, KaTeX_AMS, KaTeX_Caligraphic, KaTeX_Fraktur, KaTeX_Main, KaTeX_Math, KaTeX_SansSerif, KaTeX_Script, KaTeX_Size1, KaTeX_Size2, KaTeX_Size3, KaTeX_Size4, KaTeX_Typewriter */
+  /* h1:32px/700 字距 normal 行高 normal */
+
+  /* —— 动效（样式表实测）—— */
+  --ease-1:cubic-bezier(.2,0,0,1);
+  --ease-2:cubic-bezier(0.2, 0, 0, 1);
+  --ease-3:cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-4:cubic-bezier(.4,0,.2,1);
+  --ease-5:cubic-bezier(0, 0, 0.2, 1);
+  --ease-6:cubic-bezier(0.2,0,0,1);
+  /* 按钮过渡:all */
+  /* 时长梯:2s 1s 3s 25s 5s 15s 0s 0.2s */
+
+  /* —— 圆角（实测 top）—— */
+  --radius-1:50%;
+  --radius-2:2px;
+  --radius-3:8px;
+  --radius-4:inherit;
+  --radius-5:100px;
+  --radius-6:0;
+  /* 按钮圆角:0px */
+  /* 媒体清单:video 0 · canvas 0 · svg 5 · img 3 */
+}
+
+/* —— 站点原始 CSS 自定义变量(节选，复刻参考) —— */
+:root{
+  --gds-type-scale-default-wdth:"wdth" 100;
+  --gds-type-scale-default-slnt:"slnt" 0;
+  --gds-type-scale-default-rond:"ROND" 0;
+  --gds-type-scale-default-wght:"wght" 400;
+  --input-area-margin-inline-start:72px;
+  --input-area-padding-inline:0px;
+  --input-area-outer-height:auto;
+  --input-area-height:42px;
+  --input-area-icon-size:40px;
+  --mat-sys-on-surface:initial;
+  --mat-menu-item-icon-size:var(--gem-sys-typography-icon-scale--icon-s-font-size);
+  --mat-focus-indicator-border-width:1px;
+  --mat-focus-indicator-border-color:var(--mat-sys-secondary,black);
+  --mat-focus-indicator-display:block;
+  --mat-focus-indicator-border-radius:50%;
+  --mat-menu-container-shape:8px;
+  --mat-dialog-container-shape:0px;
+  --mat-list-list-item-container-color:var(--lumi-sys-color--surface-bright);
+  --mat-list-list-item-label-text-color:var(--lumi-sys-color--on-surface);
+  --mat-divider-color:var(--lumi-sys-color--on-surface-low);
+  --mat-menu-item-hover-state-layer-color:var(--lumi-sys-color-states--hover-on-surface);
+  --mat-menu-item-focus-state-layer-color:var(--lumi-sys-color-states--focus-on-surface);
+  --mat-list-list-item-one-line-container-height:36px;
+  --mat-list-list-item-hover-state-layer-color:var(--lumi-sys-color-states--hover-on-surface);
+  --mat-list-list-item-hover-state-layer-opacity:1;
+  --mat-list-list-item-focus-state-layer-opacity:0;
+  --mat-list-list-item-focus-state-layer-color:var(--lumi-sys-color-states--focus-on-surface);
+  --gem-shimmer-color:var(--lumi-sys-color--surface-bright);
+  --gem-shimmer-blend-mode:normal;
+  --bard-color-neutral-90:#e3e3e3;
+  --bard-color-neutral-95:#f2f2f2;
+  --bard-color-neutral-96:#f4f3f2;
+  --bard-color-enterprise-greeting:#c7c7c7;
+  --bard-color-custom-primary-container:#d3e3fd;
+  --bard-color-surface-tint:#6991d6;
+  --bard-color-tertiary-60:#1ea446;
+  --bard-color-surface-3-opacity-11:rgba(105,145,214,0.1098039216);
+  --bard-color-surface-5-opacity-14:rgba(105,145,214,0.1411764706);
+  --bard-color-footer-background:#f8f9fa;
+  --bard-color-draft-chip-background:#e8eaed;
+}

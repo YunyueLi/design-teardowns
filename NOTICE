@@ -1,0 +1,90 @@
+design-teardowns -- NOTICE
+==========================
+
+This repository (the "Project") is an independent educational and research
+project. It analyzes the visual and interaction design of publicly available
+product landing pages and publishes the results as a gallery of design
+teardowns. Everything published here is intended to be publishable material:
+factual design observations, original written analysis and commentary, CSS
+reimplemented by the Project's contributors, and low-resolution screenshots
+used for the purpose of commentary and illustration.
+
+1. Independent project; no affiliation.
+   The Project is not affiliated with, endorsed by, or sponsored by any of the
+   companies, products, or brands it analyzes. All analysis is the independent
+   work of the Project's contributors and represents their own observations and
+   opinions.
+
+2. Trademarks and product names.
+   All product names, company names, logos, and trademarks referenced in this
+   repository are the property of their respective owners. They are used only
+   nominatively, that is, to identify the subject of analysis and for the
+   purposes of commentary, criticism, education, and research. No ownership of
+   any third-party mark is claimed or implied, and their appearance here does
+   not indicate any endorsement, sponsorship, or partnership.
+
+3. No proprietary assets are redistributed.
+   This public repository contains only publishable material: factual design
+   tokens (such as color values, font-family names, easing curves, durations,
+   and corner radii), which are not themselves copyrightable; original
+   transformative analysis and commentary; CSS reimplemented by the Project's
+   contributors; and low-resolution screenshots used for commentary. It does
+   not redistribute any proprietary fonts, video, audio, or source code
+   belonging to the analyzed products. Where such assets were referenced during
+   the underlying analysis, they have been removed from what is published here.
+   Each teardown instead describes those assets by manifest and links to their
+   original source, so that a reader who needs them can obtain them from the
+   rights holder. Any such proprietary assets remain in a separate private
+   repository and are not part of this public distribution.
+
+4. Licensing.
+   The Project's code (the HTML, CSS, and JavaScript scaffolding, the gallery
+   engine, the extraction scripts, and the accompanying skill) is licensed under
+   the MIT License; see the file LICENSE-CODE. The Project's original content
+   (teardown documentation, the extracted token values as compiled and expressed
+   here, and screenshots authored by the Project) is licensed under the Creative
+   Commons Attribution 4.0 International License; see the file LICENSE.
+   Third-party trademarks, logos, and any other third-party material are not
+   covered by, and are expressly excluded from, these grants. Your use of any
+   third-party material remains subject to the rights of its owner and to
+   applicable law.
+
+5. Good-faith takedown.
+   The Project respects the rights of others and aims to stay within the bounds
+   of fair use and nominative use. If you are a rights holder and believe that
+   any material in this repository exceeds those bounds or should be removed,
+   please open an issue that identifies the specific material and describes your
+   concern. We will review it promptly and act in good faith.
+
+-----------------------------------------------------------------------------
+中文说明
+-----------------------------------------------------------------------------
+
+本仓库（下称「本项目」）是一个独立的教育与研究项目，针对公开可访问的产品落地页
+进行视觉与交互设计分析，并以设计拆解画廊的形式发布结果。此处发布的一切均为可公开
+材料：客观的设计观察、原创的文字分析与评论、由项目贡献者重新实现的 CSS，以及用于
+评论与说明的低分辨率截图。
+
+一、独立项目，无隶属关系。本项目与其所分析的任何公司、产品或品牌均无隶属、背书或
+赞助关系。全部分析均为项目贡献者的独立成果，代表其本人的观察与观点。
+
+二、商标与产品名称。本仓库涉及的所有产品名称、公司名称、标识与商标均归各自权利人
+所有，此处仅作指名性使用，即用于标识分析对象，并服务于评论、批评、教育与研究目的；
+不主张也不暗示对任何第三方标识的所有权，其出现不代表任何背书、赞助或合作关系。
+
+三、不再分发任何专有素材。本公开仓库只收录可公开的材料：不受著作权保护的客观设计
+标记（如颜色值、字体名称、缓动曲线、时长、圆角值）、原创的转化性分析与评论、由项目
+贡献者重新实现的 CSS，以及用于评论的低分辨率截图；不再分发任何属于被分析产品的
+专有字体、视频、音频或源代码。凡分析过程中曾引用此类素材者，均已从公开内容中移除，
+每篇拆解改以清单方式描述这些素材并链接至其原始出处，供有需要的读者自行向权利人
+获取。此类专有素材保留在一个独立的私有仓库中，不属于本次公开分发的一部分。
+
+四、许可。本项目的代码（HTML、CSS、JavaScript 脚手架、画廊引擎、提取脚本及配套
+技能）依 MIT 许可证授权，见 LICENSE-CODE 文件；本项目的原创内容（拆解文档、此处
+整理并表达的标记数值，以及由项目自行拍摄或生成的截图）依「知识共享 署名 4.0 国际」
+许可证授权，见 LICENSE 文件。第三方商标、标识及任何其他第三方材料均不在上述授权
+范围内，并被明确排除；对任何第三方材料的使用仍受其权利人权利及适用法律的约束。
+
+五、善意撤下。本项目尊重他人权利，力求不逾越合理使用与指名性使用的边界。若您为
+权利人，认为本仓库中的某项材料逾越了上述边界或应予移除，请提交 issue，指明具体
+材料并说明您的关切；我们将及时审阅并本着善意处理。

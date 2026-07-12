@@ -1,0 +1,75 @@
+/* ============================================================
+   linear — 从线上站点真实抽取的设计 token（实锤，非观感推断）
+   源:https://linear.app  · 抽取:playwright 计算样式 + 样式表文本
+   ============================================================ */
+:root{
+  /* —— 基底 / 文字（computed）—— */
+  --bg:rgb(8, 9, 10);
+  --ink:rgb(247, 248, 248);
+  --accent:#7170ff;   /* 探针 accentGuess(计算样式启发值);注:抓取到的样式表内并无取此值的 --accent/--brand 变量 */
+  /* 品牌紫 #5E6AD2 —— 长期沿用值,确见于页面内联 SVG 描边(第二轮真素材复核) */
+  /* 高频色值（样式表出现次数 top）:#000 #fff #3f3f3f #e8e8e8 #3b3d45 #08090a */
+
+  /* —— 字体（computed / fontsLoaded）—— */
+  --font-sans:"Inter Variable", "SF Pro Display", -apple-system, "system-ui", "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+  /* 实际加载字体:Inter Variable, Berkeley Mono */
+  /* h1:64px/510 字距 -1.408px 行高 64px */
+
+  /* —— 动效（样式表实测）—— */
+  /* 按钮过渡:color 0.1s cubic-bezier(0.25, 0.46, 0.45, 0.94), background 0.1s cubic-bezier(0.25, 0.46, 0.45, 0.94) */
+  /* 时长梯:3200ms 2800ms 1600ms 18s 4s 2s 0.4s 0.2s */
+
+  /* —— 圆角（实测 top）—— */
+  --radius-1:6px;
+  --radius-2:8px;
+  --radius-3:4px;
+  --radius-4:5px;
+  --radius-5:50%;
+  --radius-6:inherit;
+  /* 按钮圆角:9999px */
+  /* 媒体清单:video 0 · canvas 0 · svg 180 · img 32 */
+}
+
+/* —— 站点原始 CSS 自定义变量(节选，复刻参考) —— */
+:root{
+  --toast-icon-margin-start:-3px;
+  --toast-icon-margin-end:4px;
+  --toast-svg-margin-start:-1px;
+  --toast-svg-margin-end:0px;
+  --toast-button-margin-start:auto;
+  --toast-button-margin-end:0;
+  --toast-close-button-start:0;
+  --toast-close-button-end:unset;
+  --toast-close-button-transform:translate(-35%, -35%);
+  --gray1:hsl(0, 0%, 99%);
+  --gray2:hsl(0, 0%, 97.3%);
+  --gray3:hsl(0, 0%, 95.1%);
+  --gray4:hsl(0, 0%, 93%);
+  --gray5:hsl(0, 0%, 90.9%);
+  --gray6:hsl(0, 0%, 88.7%);
+  --gray7:hsl(0, 0%, 85.8%);
+  --gray8:hsl(0, 0%, 78%);
+  --gray9:hsl(0, 0%, 56.1%);
+  --gray10:hsl(0, 0%, 52.3%);
+  --gray11:hsl(0, 0%, 43.5%);
+  --gray12:hsl(0, 0%, 9%);
+  --border-radius:8px;
+  --y:translateY(100%);
+  --lift-amount:calc(var(--lift) * var(--gap));
+  --lift:1;
+  --scale:var(--toasts-before) * 0.05 + 1;
+  --normal-bg:#fff;
+  --normal-border:var(--gray4);
+  --normal-text:var(--gray12);
+  --success-bg:hsl(143, 85%, 96%);
+  --success-border:hsl(145, 92%, 87%);
+  --success-text:hsl(140, 100%, 27%);
+  --info-bg:hsl(208, 100%, 97%);
+  --info-border:hsl(221, 91%, 93%);
+  --info-text:hsl(210, 92%, 45%);
+  --warning-bg:hsl(49, 100%, 97%);
+  --warning-border:hsl(49, 91%, 84%);
+  --warning-text:hsl(31, 92%, 45%);
+  --error-bg:hsl(359, 100%, 97%);
+  --error-border:hsl(359, 100%, 94%);
+}

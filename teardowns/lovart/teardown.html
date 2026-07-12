@@ -1,0 +1,993 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Lovart 设计解构 — 把「AI 设计智能体」拆到可复刻的每个数值</title>
+<meta name="description" content="Lovart 落地页的完整设计解构：真实抽取的暖墨黑与纸白 token、真实衬线字体 featureDisplay、8 条真实缓动、以及裱进真实产出素材的设计工作台演示。" />
+<link rel="icon" href="real-assets/image/8e8d6a_favicon.ico" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&family=Noto+Sans+SC:wght@400;500&family=Noto+Serif+SC:wght@500;600&display=swap" rel="stylesheet" />
+<style>
+  /* ============================================================
+     Lovart 设计解构 · house style = 该站自己的视觉语言
+     暖墨黑 #100F09 底、纸白 #F5F4EF 文字（真实 computed）
+     第二轮已接入从 lovart.ai 提取的真实字体子集（见 real-assets/manifest.json）：
+       标题衬线 featureDisplay（400 / 400 斜体 / 500）
+       正文无衬线 gtStandard（400 / 500）
+       标签等宽 gtStandardMono（400）
+     三者均为站点自带的商业字体，文件名即出处；CDN Fraunces / Inter / JetBrains Mono
+     降级为兜底，CJK 交 Noto。字族名沿用站点原名以保真。
+     运动全用 Lovart 样式表实测缓动 cubic-bezier(0.33,1,0.68,1) 等
+     ============================================================ */
+  /* —— 真实字体（相对路径，站点提取的 woff2 子集；先真后 CDN 兜底）—— */
+  @font-face{font-family:'featureDisplay';font-style:normal;font-weight:400;font-display:swap;
+    src:url('real-assets/fonts/fa80ce_FeatureDisplay_Regular_Web-s.p.15okwp9-8254o.woff2') format('woff2')}
+  @font-face{font-family:'featureDisplay';font-style:italic;font-weight:400;font-display:swap;
+    src:url('real-assets/fonts/a80a0b_FeatureDisplay_RegularItalic_Web-s.p.0s_s3gu3ebr02.woff2') format('woff2')}
+  @font-face{font-family:'featureDisplay';font-style:normal;font-weight:500;font-display:swap;
+    src:url('real-assets/fonts/43cbc6_FeatureDisplay_Medium_Web-s.p.1r1l7yt36wzfm.woff2') format('woff2')}
+  @font-face{font-family:'gtStandard';font-style:normal;font-weight:400;font-display:swap;
+    src:url('real-assets/fonts/da4d97_GT_Standard_L_Standard_Regular-s.p.09tdz1i3kmgj1.woff2') format('woff2')}
+  @font-face{font-family:'gtStandard';font-style:normal;font-weight:500;font-display:swap;
+    src:url('real-assets/fonts/b75f4a_GT_Standard_L_Standard_Medium-s.p.1788_3rwow92_.woff2') format('woff2')}
+  @font-face{font-family:'gtStandardMono';font-style:normal;font-weight:400;font-display:swap;
+    src:url('real-assets/fonts/c3b9df_GT_Standard_Mono_Standard_Regular-s.p.2iqqf_4_8fw_b.woff2') format('woff2')}
+  :root{
+    /* 基底与文字（实测 computed） */
+    --bg:#100F09; --bg-2:#0C0C0D;
+    --ink:#F5F4EF; --paper-2:#F6F5F1;
+    --ink-2:rgba(245,244,239,.62); --ink-3:rgba(245,244,239,.40); --ink-4:rgba(245,244,239,.24);
+    --panel:rgba(245,244,239,.035); --panel-2:rgba(245,244,239,.06);
+    --line:rgba(245,244,239,.10); --line-2:rgba(245,244,239,.18);
+    /* 功能色（实测色值） */
+    --canvas-blue:#147DFF; --blue-2:#3B82F6;
+    --g1:#C1C5CC; --g2:#86909C; --g3:#4A535F; --g4:#2F3640;
+    /* 应用内产品色板（Mantine，落地页不用） */
+    --green:#57C74A; --green-bright:#85FF75; --ocean:#09ADC3; --ocean-bright:#1AC2D9; --pink:#FF00A1; --pink-2:#F13EAF;
+    /* 排版 */
+    --serif:"featureDisplay","Fraunces","Noto Serif SC",Georgia,"Songti SC",serif;
+    --sans:"gtStandard","Inter","Noto Sans SC",-apple-system,system-ui,sans-serif;
+    --mono:"gtStandardMono","JetBrains Mono",ui-monospace,"SF Mono",Menlo,monospace;
+    /* 动效（8 条去重实测取值的常用几条） */
+    --ease-main:cubic-bezier(0.33, 1, 0.68, 1);
+    --ease-std:cubic-bezier(0.4, 0, 0.2, 1);
+    --ease-back:cubic-bezier(0.34, 1.56, 0.64, 1);
+    --ease-quint:cubic-bezier(0.23, 1, 0.32, 1);
+    --ease-btn:cubic-bezier(0, 0, 0.2, 1);
+    --dur-btn:.2s; --dur-micro:.15s;
+    /* 圆角（实测 top） */
+    --r-card:16px; --r-img:10px; --r-sm:8px; --pill:999px;
+    --maxw:1120px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{-webkit-font-smoothing:antialiased;scroll-behavior:smooth;scroll-padding-top:92px}
+  body{background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.7;overflow-x:hidden}
+  a{color:inherit;text-decoration:none}
+  svg{display:block}
+  ::selection{background:var(--ink);color:var(--bg)}
+  code,.mono{font-family:var(--mono)}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 36px}
+  @media(max-width:640px){.wrap{padding:0 20px}}
+
+  h1,h2,h3{font-family:var(--serif);font-weight:400;letter-spacing:.01em;line-height:1.1}
+  .eyebrow{font-family:var(--mono);font-size:11.5px;font-weight:500;letter-spacing:.2em;text-transform:uppercase;color:var(--ink-3)}
+  code{font-size:.88em;color:var(--paper-2);background:rgba(245,244,239,.07);border:1px solid var(--line);border-radius:5px;padding:1px 6px}
+
+  /* 纸质纹理底 + 一块很淡的水彩蓝 */
+  .grain{position:fixed;inset:0;z-index:1;pointer-events:none;opacity:.05;mix-blend-mode:overlay;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 140 140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");background-size:160px}
+
+  /* ---------- 浮动 pill 导航 ---------- */
+  nav{position:fixed;top:14px;left:50%;transform:translateX(-50%);z-index:60;width:calc(100% - 40px);max-width:var(--maxw)}
+  .nav-pill{display:flex;align-items:center;height:56px;gap:22px;padding:0 8px 0 20px;border-radius:var(--pill);
+    background:rgba(20,19,14,.62);backdrop-filter:blur(16px) saturate(1.2);-webkit-backdrop-filter:blur(16px) saturate(1.2);
+    border:1px solid var(--line);transition:border-color .3s var(--ease-main),background .3s var(--ease-main)}
+  nav.stuck .nav-pill{background:rgba(20,19,14,.82);border-color:var(--line-2)}
+  .brand{display:flex;align-items:center;gap:10px;font-family:var(--sans);font-weight:600;font-size:15px;letter-spacing:0}
+  .mark{width:22px;height:22px;flex:none;border-radius:7px;background:var(--ink);position:relative}
+  .mark i{position:absolute;background:var(--bg);border-radius:50%}
+  .mark i:nth-child(1){width:3.4px;height:3.4px;top:6px;left:6px}
+  .mark i:nth-child(2){width:3.4px;height:3.4px;top:6px;right:6px}
+  .mark i:nth-child(3){width:9px;height:4.5px;border-radius:0 0 9px 9px;bottom:5px;left:50%;transform:translateX(-50%)}
+  .navlinks{margin-left:auto;display:flex;gap:2px;font-family:var(--mono);font-size:12px}
+  .navlinks a{color:var(--ink-3);padding:8px 11px;border-radius:var(--pill);transition:color var(--dur-micro) var(--ease-main),background var(--dur-micro) var(--ease-main)}
+  .navlinks a:hover{color:var(--ink);background:rgba(245,244,239,.07)}
+  .nav-cta{font-family:var(--sans);font-size:13px;font-weight:500;background:var(--ink);color:var(--bg);padding:9px 16px;border-radius:var(--pill);white-space:nowrap;transition:transform var(--dur-btn) var(--ease-btn)}
+  .nav-cta:hover{transform:translateY(-1px)}
+  @media(max-width:820px){.navlinks{display:none}}
+
+  /* ---------- HERO ---------- */
+  header{position:relative;padding:150px 0 70px;overflow:hidden;isolation:isolate}
+  .washblue{position:absolute;z-index:0;top:8%;left:50%;transform:translateX(-50%);width:min(1100px,92vw);height:620px;pointer-events:none;
+    background:radial-gradient(55% 60% at 50% 42%,rgba(127,168,200,.34),transparent 70%);filter:blur(30px);opacity:.7}
+  .hero-in{position:relative;z-index:2;text-align:center;max-width:900px;margin:0 auto}
+  .hero-in .eyebrow{display:inline-block;margin-bottom:26px}
+  h1.fill{font-size:clamp(38px,6.6vw,76px);line-height:1.1;letter-spacing:.01em}
+  h1.fill .lead{color:var(--ink)}
+  .blank{border-bottom:2px solid var(--ink);padding:0 .16em .02em;min-width:4.4ch;display:inline-block;text-align:center;color:var(--paper-2)}
+  .blank.caret::after{content:"";display:inline-block;width:2px;height:.86em;background:var(--ink);margin-left:2px;vertical-align:-.06em;animation:caret 1s step-end infinite}
+  @keyframes caret{50%{opacity:0}}
+  .lede{font-size:clamp(15px,1.5vw,18.5px);color:var(--ink-2);max-width:58ch;margin:26px auto 0;line-height:1.6}
+  .cta-row{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:32px}
+  .btn{font-family:var(--sans);font-size:15px;font-weight:500;border:0;cursor:pointer;border-radius:var(--pill);padding:14px 26px;transition:transform var(--dur-btn) var(--ease-btn),opacity var(--dur-btn) var(--ease-btn)}
+  .btn.primary{background:var(--ink);color:var(--bg)}
+  .btn.ghost{background:transparent;color:var(--ink);border:1px solid var(--line-2)}
+  .btn:hover{transform:translateY(-2px)}
+  .btn.ghost:hover{background:rgba(245,244,239,.05)}
+  .chips{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-top:34px}
+  .chip{font-family:var(--mono);font-size:11px;color:var(--ink-2);border:1px solid var(--line);border-radius:var(--pill);padding:6px 13px;background:var(--panel)}
+  .chip b{color:var(--paper-2);font-weight:500}
+
+  /* ---------- 设计工作台 mock（签名效果）---------- */
+  .stage{position:relative;z-index:2;margin:56px auto 0;max-width:1080px}
+  .stage-cap{display:flex;align-items:center;justify-content:space-between;gap:14px;margin-bottom:12px;flex-wrap:wrap}
+  .stage-cap .t{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3)}
+  .replay{font-family:var(--mono);font-size:11.5px;color:var(--ink-2);background:var(--panel);border:1px solid var(--line);border-radius:var(--pill);padding:7px 14px;cursor:pointer;display:inline-flex;gap:7px;align-items:center;transition:border-color var(--dur-micro) var(--ease-main),color var(--dur-micro) var(--ease-main)}
+  .replay:hover{border-color:var(--line-2);color:var(--ink)}
+  .replay svg{width:13px;height:13px}
+  .workbench{border:1px solid var(--line-2);border-radius:20px;overflow:hidden;background:linear-gradient(180deg,#15140d,#0d0c07);box-shadow:0 50px 120px -40px rgba(0,0,0,.85)}
+  .wb-bar{display:flex;align-items:center;gap:12px;padding:12px 16px;border-bottom:1px solid var(--line);background:rgba(245,244,239,.02)}
+  .wb-bar .dots{display:flex;gap:6px}
+  .wb-bar .dots i{width:10px;height:10px;border-radius:50%;background:var(--line-2)}
+  .wb-bar .proj{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--ink-2)}
+  .wb-bar .proj .badge{width:20px;height:20px;border-radius:6px;background:var(--ink);position:relative;flex:none}
+  .wb-bar .proj .badge i{position:absolute;background:var(--bg);border-radius:50%;width:3px;height:3px;top:6px}
+  .wb-bar .proj .badge i:first-child{left:5px}.wb-bar .proj .badge i:last-child{right:5px}
+  .wb-bar .spacer{margin-left:auto;font-family:var(--mono);font-size:10.5px;color:var(--ink-4)}
+  .wb-body{display:grid;grid-template-columns:1.55fr 1fr;min-height:440px}
+  @media(max-width:820px){.wb-body{grid-template-columns:1fr}}
+
+  .wb-canvas{position:relative;padding:22px;border-right:1px solid var(--line);background:
+    radial-gradient(120% 90% at 20% 0,rgba(127,168,200,.06),transparent 55%)}
+  @media(max-width:820px){.wb-canvas{border-right:0;border-bottom:1px solid var(--line)}}
+  .canvas-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
+  .canvas-head .lab{font-family:var(--mono);font-size:10.5px;color:var(--ink-3);display:flex;align-items:center;gap:6px}
+  .canvas-head .lab svg{width:12px;height:12px;opacity:.7}
+  .canvas-head .tools{display:flex;gap:6px}
+  .canvas-head .tools i{width:24px;height:24px;border-radius:6px;border:1px solid var(--line);display:grid;place-items:center}
+  .canvas-head .tools i svg{width:12px;height:12px;color:var(--ink-3)}
+  .vgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+  .tile{position:relative;aspect-ratio:4/3;border-radius:var(--r-img);overflow:hidden;opacity:0;transform:scale(.88);
+    transition:opacity .45s var(--ease-back),transform .45s var(--ease-back)}
+  .tile.in{opacity:1;transform:none}
+  .tile .ph{position:absolute;inset:0}
+  .tile img.ph{width:100%;height:100%;object-fit:cover;object-position:50% 32%;filter:saturate(1.02)}
+  .tile .cap{position:absolute;left:8px;top:7px;font-family:var(--mono);font-size:9px;color:rgba(255,255,255,.82);background:rgba(0,0,0,.35);padding:2px 6px;border-radius:4px;backdrop-filter:blur(3px)}
+  .tile .src{position:absolute;right:7px;top:7px;width:17px;height:17px;border-radius:5px;background:rgba(0,0,0,.55);display:grid;place-items:center;font-family:var(--mono);font-size:8.5px;font-weight:600;color:#fff}
+  .selbox{position:absolute;inset:0;border:1.5px solid var(--canvas-blue);border-radius:var(--r-img);opacity:0;transition:opacity .35s var(--ease-main);box-shadow:0 0 0 3px rgba(20,125,255,.14)}
+  .selbox.on{opacity:1}
+  .selbox b{position:absolute;width:8px;height:8px;background:#fff;border:1.5px solid var(--canvas-blue);border-radius:2px}
+  .selbox b:nth-child(1){top:-5px;left:-5px}.selbox b:nth-child(2){top:-5px;right:-5px}
+  .selbox b:nth-child(3){bottom:-5px;left:-5px}.selbox b:nth-child(4){bottom:-5px;right:-5px}
+  .canvas-foot{margin-top:14px;font-family:var(--mono);font-size:10.5px;color:var(--ink-4);opacity:0;transition:opacity .4s var(--ease-main)}
+  .canvas-foot.on{opacity:1}
+
+  .wb-chat{display:flex;flex-direction:column;padding:18px}
+  .chat-head{font-size:12.5px;color:var(--ink-3);font-family:var(--mono);letter-spacing:.06em;margin-bottom:14px}
+  .bubble{align-self:flex-end;max-width:88%;background:rgba(245,244,239,.07);border:1px solid var(--line);border-radius:14px 14px 4px 14px;padding:11px 13px;font-size:13px;color:var(--ink);line-height:1.5;margin-bottom:16px}
+  .steps{display:flex;flex-direction:column;gap:12px;flex:1}
+  .step{display:flex;gap:10px;align-items:center;font-size:13.5px;color:var(--ink-2);opacity:0;transform:translateY(6px);transition:opacity .5s var(--ease-main),transform .5s var(--ease-main)}
+  .step.show{opacity:1;transform:none}
+  .step .ico{width:19px;height:19px;flex:none;border-radius:50%;border:1px solid var(--line-2);display:grid;place-items:center;color:var(--ink-3);transition:background .3s var(--ease-main),border-color .3s var(--ease-main)}
+  .step .ico svg{width:11px;height:11px}
+  .step.done .ico{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+  .step .ico .tick{opacity:0;transition:opacity .2s}
+  .step.done .ico .tick{opacity:1}
+  .step .ico .dot{opacity:1}.step.done .ico .dot{opacity:0;display:none}
+  .step.active .txt{background:linear-gradient(100deg,var(--ink-3) 30%,var(--ink) 50%,var(--ink-3) 70%);background-size:200% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:agent-shimmer-sweep 1.2s var(--ease-std) infinite}
+  @keyframes agent-shimmer-sweep{from{background-position:200% 0}to{background-position:-200% 0}}
+  .chat-input{margin-top:16px;display:flex;align-items:center;gap:10px;border:1px solid var(--line);border-radius:14px;padding:10px 10px 10px 14px;background:rgba(245,244,239,.02)}
+  .chat-input span{flex:1;font-size:12.5px;color:var(--ink-4)}
+  .chat-input .send{width:30px;height:30px;flex:none;border-radius:50%;background:var(--ink);color:var(--bg);display:grid;place-items:center}
+  .chat-input .send svg{width:14px;height:14px}
+  .scrollcue{text-align:center;margin-top:44px;font-family:var(--mono);font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--ink-4)}
+
+  /* ---------- SECTION ---------- */
+  main{position:relative;z-index:2}
+  section{padding:92px 0;border-top:1px solid var(--line)}
+  .sec-head{max-width:72ch;margin-bottom:44px}
+  .sec-head h2{font-size:clamp(28px,3.9vw,48px);margin-top:14px}
+  .sec-head p{color:var(--ink-2);margin-top:16px;font-size:16.5px}
+  h3{font-size:19px}
+  .grid{display:grid;gap:16px}
+  .g2{grid-template-columns:1fr 1fr}.g3{grid-template-columns:repeat(3,1fr)}
+  @media(max-width:860px){.g2,.g3{grid-template-columns:1fr}}
+  .card{border:1px solid var(--line);border-radius:var(--r-card);padding:22px;background:var(--panel);transition:border-color .3s var(--ease-main),transform .3s var(--ease-main)}
+  .card:hover{border-color:var(--line-2);transform:translateY(-2px)}
+  .k{font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-3)}
+  .dim{color:var(--ink-2)}.faint{color:var(--ink-3)}
+  p+p{margin-top:10px}
+  .lead-serif{font-family:var(--serif);font-size:22px;line-height:1.35;color:var(--ink);font-weight:400}
+
+  /* THESIS split */
+  .split{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  @media(max-width:860px){.split{grid-template-columns:1fr}}
+  .surface{border:1px solid var(--line);border-radius:var(--r-card);padding:26px;position:relative;overflow:hidden;background:var(--panel)}
+  .surface.mono-face{background:linear-gradient(180deg,rgba(245,244,239,.05),transparent)}
+  .surface.color-face{background:linear-gradient(140deg,rgba(87,199,74,.10),rgba(9,173,195,.06) 55%,rgba(255,0,161,.07))}
+  .tag{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3)}
+  .surface ul{list-style:none;margin-top:16px;display:grid;gap:11px}
+  .surface li{position:relative;padding-left:18px;font-size:14px;color:var(--ink-2);line-height:1.55}
+  .surface li b{color:var(--ink);font-weight:600}
+  .surface li::before{content:"";position:absolute;left:0;top:9px;width:6px;height:6px;border-radius:50%;background:var(--ink-3)}
+  .callout{border:1px solid var(--line-2);border-radius:var(--r-card);padding:24px 26px;background:linear-gradient(100deg,rgba(245,244,239,.06),transparent);margin-top:16px}
+  .callout.warn{background:linear-gradient(100deg,rgba(255,0,161,.08),transparent)}
+  .callout h3{color:var(--ink)}
+
+  /* COLOR swatches */
+  .swgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+  @media(max-width:860px){.swgrid{grid-template-columns:repeat(2,1fr)}}
+  .sw{border:1px solid var(--line);border-radius:var(--r-sm);overflow:hidden;cursor:pointer;background:var(--panel);transition:border-color .25s var(--ease-main),transform .25s var(--ease-main)}
+  .sw:hover,.sw:focus-visible{border-color:var(--line-2);transform:translateY(-2px);outline:none}
+  .chipc{height:66px;border-bottom:1px solid var(--line)}
+  .sw .meta{padding:11px 12px}
+  .sw .name{font-size:13px;font-weight:500;font-family:var(--sans)}
+  .sw .hex{font-family:var(--mono);font-size:11px;color:var(--paper-2);margin-top:3px}
+  .sw .role{font-size:11px;color:var(--ink-3);margin-top:3px;line-height:1.4}
+
+  /* TYPE */
+  .specimen{font-family:var(--serif);font-weight:400;letter-spacing:.01em;font-size:clamp(38px,6vw,76px);line-height:1.1;margin:4px 0}
+  .specimen .u{border-bottom:2px solid var(--ink);padding-bottom:.02em}
+  .type-rows{display:grid;gap:14px;margin-top:8px}
+  .type-row{display:grid;grid-template-columns:120px 1fr;gap:18px;align-items:baseline;padding:16px 0;border-top:1px solid var(--line)}
+  @media(max-width:640px){.type-row{grid-template-columns:1fr;gap:6px}}
+  .type-row .role{font-family:var(--mono);font-size:11px;color:var(--ink-3);text-transform:uppercase;letter-spacing:.08em}
+  .type-row .demo{font-size:30px;line-height:1.2}
+
+  /* MOTION easing lab */
+  .easelab{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  @media(max-width:860px){.easelab{grid-template-columns:1fr}}
+  .ease{border:1px solid var(--line);border-radius:var(--r-card);padding:20px;cursor:pointer;background:var(--panel);transition:border-color .25s var(--ease-main)}
+  .ease:hover,.ease:focus-visible{border-color:var(--line-2);outline:none}
+  .ease-top{display:flex;justify-content:space-between;align-items:baseline;gap:12px}
+  .ease-top h3{font-size:16px;font-family:var(--sans);font-weight:600;letter-spacing:0}
+  .curveval{font-family:var(--mono);font-size:10px;color:var(--paper-2);white-space:nowrap}
+  .ease .desc{font-size:13px;margin-top:9px;line-height:1.55;color:var(--ink-2)}
+  .ease-viz{display:flex;align-items:center;gap:16px;margin-top:16px}
+  .ease-viz svg{flex:none;border:1px solid var(--line);border-radius:10px;background:rgba(0,0,0,.25)}
+  .track{flex:1;min-width:0}
+  .runner-wrap{height:32px;border:1px solid var(--line);border-radius:10px;position:relative;overflow:hidden;background:rgba(0,0,0,.25)}
+  .runner{position:absolute;top:6px;left:6px;width:20px;height:20px;border-radius:6px;background:var(--ink)}
+  .replay-note{font-family:var(--mono);font-size:10px;color:var(--ink-4);margin-top:8px}
+  .durlab{margin:34px 0 14px}
+  .durs{display:grid;gap:11px}
+  .durrow{display:grid;grid-template-columns:150px 1fr 70px;align-items:center;gap:14px}
+  @media(max-width:560px){.durrow{grid-template-columns:96px 1fr 56px}}
+  .durrow .lab{font-family:var(--mono);font-size:11.5px;color:var(--ink-2)}
+  .durbar{height:8px;border-radius:var(--pill);background:linear-gradient(90deg,var(--g2),var(--paper-2))}
+  .durrow .val{font-family:var(--mono);font-size:11px;color:var(--paper-2);text-align:right}
+
+  /* MOTIFS mini demos */
+  .motif-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+  @media(max-width:860px){.motif-grid{grid-template-columns:1fr}}
+  .motif{border:1px solid var(--line);border-radius:var(--r-card);padding:20px;background:var(--panel)}
+  .motif h3{font-family:var(--sans);font-weight:600;font-size:16px;letter-spacing:0;margin-bottom:8px}
+  .motif p{font-size:13.5px;color:var(--ink-2);line-height:1.55}
+  .mini{margin-top:16px;height:120px;border-radius:var(--r-sm);border:1px solid var(--line);position:relative;overflow:hidden;background:rgba(0,0,0,.25);display:grid;place-items:center}
+  .mini-sel{width:88px;height:64px;border-radius:6px;background:linear-gradient(135deg,#6a4a32,#241a12);position:relative}
+  .mini-sel .sb{position:absolute;inset:-2px;border:1.5px solid var(--canvas-blue);border-radius:7px}
+  .mini-sel .sb b{position:absolute;width:7px;height:7px;background:#fff;border:1.5px solid var(--canvas-blue);border-radius:2px}
+  .mini-sel .sb b:nth-child(1){top:-4px;left:-4px}.mini-sel .sb b:nth-child(2){top:-4px;right:-4px}
+  .mini-sel .sb b:nth-child(3){bottom:-4px;left:-4px}.mini-sel .sb b:nth-child(4){bottom:-4px;right:-4px}
+  .mini-paste .p{position:absolute;width:64px;height:80px;border-radius:5px;border:4px solid var(--paper-2);box-shadow:0 10px 24px -8px rgba(0,0,0,.7)}
+  .mini-paste .p1{left:calc(50% - 46px);top:22px;transform:rotate(-8deg);background:linear-gradient(135deg,#8fb0c8,#3a5168)}
+  .mini-paste .p2{left:calc(50% - 12px);top:16px;transform:rotate(6deg);background:linear-gradient(135deg,#b5885f,#5a3f28)}
+  .mini-fill{font-family:var(--serif);font-size:20px;color:var(--ink)}
+  .mini-fill .u{border-bottom:2px solid var(--ink);padding:0 .2em}
+  .mini-bubble{background:rgba(245,244,239,.07);border:1px solid var(--line);border-radius:12px 12px 4px 12px;padding:10px 12px;font-size:12px;color:var(--ink);max-width:80%}
+  .mini-wash{width:100%;height:100%;background:radial-gradient(60% 70% at 50% 40%,rgba(127,168,200,.5),transparent 70%)}
+  .mini-shimmer{font-family:var(--sans);font-size:14px;background:linear-gradient(100deg,var(--ink-3) 30%,var(--ink) 50%,var(--ink-3) 70%);background-size:200% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:agent-shimmer-sweep 1.4s var(--ease-std) infinite}
+
+  /* CRAFT */
+  .stat-row{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+  @media(max-width:860px){.stat-row{grid-template-columns:repeat(2,1fr)}}
+  .stat{border:1px solid var(--line);border-radius:var(--r-card);padding:20px;background:var(--panel);text-align:center}
+  .stat .n{font-family:var(--serif);font-size:40px;line-height:1;color:var(--ink)}
+  .stat .l{font-family:var(--mono);font-size:10.5px;color:var(--ink-3);text-transform:uppercase;letter-spacing:.1em;margin-top:8px}
+  .radii-chips{display:flex;flex-wrap:wrap;gap:10px;margin-top:6px}
+  .rc{display:flex;align-items:center;gap:9px;border:1px solid var(--line);padding:8px 12px;background:var(--panel);font-family:var(--mono);font-size:11.5px;color:var(--ink-2)}
+  .rc .box{width:26px;height:26px;border:1.5px solid var(--paper-2);background:rgba(245,244,239,.05)}
+
+  /* AS-SEEN frames */
+  figure.shot{border:1px solid var(--line);border-radius:var(--r-card);overflow:hidden;background:var(--bg-2)}
+  figure.shot img{width:100%;display:block}
+  figure.shot video{width:100%;display:block;background:#000}
+  figure.shot figcaption{padding:13px 18px;font-size:12.5px;color:var(--ink-3);border-top:1px solid var(--line);font-family:var(--mono)}
+  .gal{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:16px}
+  @media(max-width:860px){.gal{grid-template-columns:repeat(2,1fr)}}
+  .gal figure{border:1px solid var(--line);border-radius:var(--r-img);overflow:hidden;background:var(--bg-2);margin:0}
+  .gal img{width:100%;height:190px;object-fit:cover;display:block}
+  .gal figcaption{padding:9px 12px;font-family:var(--mono);font-size:10.5px;color:var(--ink-3);border-top:1px solid var(--line);line-height:1.4}
+
+  /* BUILD code */
+  pre{background:#0A0906;border:1px solid var(--line);border-radius:12px;padding:16px 18px;overflow-x:auto;font-size:12.5px;line-height:1.8}
+  pre code{background:none;border:none;padding:0;color:var(--ink-2);font-size:inherit}
+  .tok-c{color:var(--ink-4)}.tok-n{color:var(--paper-2)}.tok-p{color:var(--ocean-bright)}.tok-k{color:var(--green-bright)}
+  .checklist{list-style:none;display:grid;gap:11px}
+  .checklist li{position:relative;padding-left:24px;font-size:14px;color:var(--ink-2);line-height:1.55}
+  .checklist li b{color:var(--ink);font-weight:600}
+  .checklist li::before{content:"→";position:absolute;left:2px;top:0;color:var(--paper-2);font-family:var(--mono)}
+
+  /* PROV */
+  dl.prov dt{font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--paper-2);margin-top:20px}
+  dl.prov dt:first-child{margin-top:0}
+  dl.prov dd{margin-top:7px;font-size:14px;color:var(--ink-2);line-height:1.6}
+
+  footer{padding:56px 0 80px;border-top:1px solid var(--line);text-align:center;font-size:13px;color:var(--ink-3);line-height:1.8;font-family:var(--mono)}
+  footer b{color:var(--ink-2);font-weight:400}
+
+  .copybar{position:fixed;left:50%;bottom:28px;transform:translate(-50%,20px);z-index:80;background:var(--ink);color:var(--bg);font-family:var(--mono);font-size:12.5px;font-weight:500;padding:9px 18px;border-radius:var(--pill);opacity:0;pointer-events:none;transition:opacity .3s var(--ease-main),transform .3s var(--ease-main);box-shadow:0 12px 40px -8px rgba(0,0,0,.6)}
+  .copybar.show{opacity:1;transform:translate(-50%,0)}
+
+  @media(prefers-reduced-motion:reduce){
+    *{scroll-behavior:auto!important}
+    .step.active .txt,.mini-shimmer{animation:none}
+    .blank.caret::after{animation:none}
+  }
+</style>
+</head>
+<body>
+<div class="grain" aria-hidden="true"></div>
+
+<nav id="nav"><div class="nav-pill">
+  <span class="brand"><span class="mark" aria-hidden="true"><i></i><i></i><i></i></span> Lovart 设计解构</span>
+  <span class="navlinks">
+    <a href="#intent">意图</a><a href="#color">色彩</a><a href="#type">字体</a>
+    <a href="#motion">动效</a><a href="#motifs">母题</a><a href="#craft">工艺</a><a href="#asseen">实拍</a><a href="#build">复刻</a><a href="#prov">出处</a>
+  </span>
+  <a href="#build" class="nav-cta">复刻 token</a>
+</div></nav>
+
+<header>
+  <div class="washblue" aria-hidden="true"></div>
+  <div class="wrap hero-in">
+    <div class="eyebrow">逆向解析 · 源自 lovart.ai 真实抽取</div>
+    <h1 class="fill">
+      <span class="lead">Design a </span><span class="blank caret" id="b1"></span><br>
+      <span class="lead">for a </span><span class="blank" id="b2"></span>
+    </h1>
+    <p class="lede">这不是观感描述。下面每一个色值、字体、缓动曲线与时长，都来自对 Lovart 线上页面的真实抽取。连这个填空标题、下方的设计工作台，也用它自己的暖墨黑、纸白与真实缓动在运动。</p>
+    <div class="cta-row">
+      <button class="btn primary" id="run-demo">播放工作台演示</button>
+      <a class="btn ghost" href="#build">直接看 token</a>
+    </div>
+    <div class="chips">
+      <span class="chip">底色 <b>#100F09</b></span>
+      <span class="chip">文字 <b>#F5F4EF</b></span>
+      <span class="chip">主缓动 <b>cubic-bezier(0.33,1,0.68,1)</b></span>
+      <span class="chip">大标题 <b>Feature Display · 48px/400</b></span>
+      <span class="chip">框架 <b>Mantine · 零 canvas</b></span>
+    </div>
+  </div>
+
+  <!-- 签名效果：设计工作台 mock -->
+  <div class="wrap">
+    <div class="stage">
+      <div class="stage-cap">
+        <span class="t">签名效果 · 设计工作台（智能体思考过程 + 视觉网格；网格已裱入 Lovart 真实产出素材）</span>
+        <button class="replay" id="replay"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 4v6h-6"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>重新播放</button>
+      </div>
+      <div class="workbench" id="workbench">
+        <div class="wb-bar">
+          <span class="dots" aria-hidden="true"><i></i><i></i><i></i></span>
+          <span class="proj"><span class="badge" aria-hidden="true"><i></i><i></i></span> 生活方式眼镜 · 影像战役</span>
+          <span class="spacer">Canvas · 自动布局</span>
+        </div>
+        <div class="wb-body">
+          <div class="wb-canvas">
+            <div class="canvas-head">
+              <span class="lab"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg> 生成的视觉网格</span>
+              <span class="tools" aria-hidden="true">
+                <i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg></i>
+                <i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3h7v7H3zM14 14h7v7h-7z"/></svg></i>
+              </span>
+            </div>
+            <div class="vgrid" id="vgrid"></div>
+            <div class="canvas-foot" id="canvas-foot">已生成 6 张 · 选中一张即可继续「触碰式编辑」</div>
+          </div>
+          <div class="wb-chat">
+            <div class="chat-head">New Chat</div>
+            <div class="bubble">为一个生活方式眼镜品牌做一组影像战役：户外自然光、人物神态与产品细节，统一克制的高级质感。</div>
+            <div class="steps" id="steps"></div>
+            <div class="chat-input">
+              <span>我们一起设计点什么?</span>
+              <span class="send" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7-7 7 7"/></svg></span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="scrollcue">向下滚动 · 拆到每个数值</div>
+</header>
+
+<main>
+<div class="wrap">
+
+  <!-- 1 · INTENT -->
+  <section id="intent" style="border-top:none">
+    <div class="sec-head">
+      <div class="eyebrow">01 — 定位与设计意图</div>
+      <h2>一个「会做设计的智能体」，不是又一个文生图</h2>
+      <p>页面标题实测为 <code>Lovart – World's First AI Design Agent</code>。它整套视觉语言只服务一个论点：AI 的产出只是起点，价值在于像一个设计伙伴那样，把意图、参考、版式、文字一层层做进可继续编辑的成品。所以基调是克制优雅，不是炫技。</p>
+    </div>
+    <div class="split">
+      <div class="surface mono-face">
+        <span class="tag">落地页 — 单色叙事</span>
+        <p class="dim" style="margin-top:10px">对外的官网，故意只用一对暖墨黑与纸白。</p>
+        <ul>
+          <li><b>暖墨黑加纸白</b>：底 <code>#100F09</code>、文字 <code>#F5F4EF</code>，几乎不用鲜艳色</li>
+          <li><b>「强调色」就是纸白</b>：<code>--accent</code> 实测解析为 <code>lab(96.52%)</code> 近白中性</li>
+          <li><b>衬线大标题</b>用常规字重加微正字距承载优雅（见字体节）</li>
+          <li><b>真实工作台 mock</b> 立可信度，不堆功能形容词</li>
+        </ul>
+      </div>
+      <div class="surface color-face">
+        <span class="tag">应用内 — 三色系统</span>
+        <p class="dim" style="margin-top:10px">Mantine 主题里注册的彩色，落地页几乎不出现（推断留给应用内）。</p>
+        <ul>
+          <li><b>lovart-green</b> 主色 <code>#57C74A</code>，亮 <code>#85FF75</code></li>
+          <li><b>ocean-blue</b> 主色 <code>#09ADC3</code></li>
+          <li><b>bright-pink</b> 主色 <code>#FF00A1</code></li>
+          <li><b>画布蓝</b> <code>#147DFF</code> 做设计工具的选框与交互</li>
+        </ul>
+      </div>
+    </div>
+    <div class="callout">
+      <h3>要复刻的目标 = 编辑部级衬线优雅 × 设计工具界面隐喻 × 智能体过程可视化</h3>
+      <p class="dim" style="margin-top:8px">把「一个设计智能体正在工作」直接演给你看——分析意图、检索参考、生成可编辑的视觉网格。这就是首屏那个工作台在做的事，也是本解构的重点，恰好可以直接挪用来展示仿真运行过程。</p>
+    </div>
+  </section>
+
+  <!-- 2 · COLOR -->
+  <section id="color">
+    <div class="sec-head">
+      <div class="eyebrow">02 — 色彩系统（真实 token）</div>
+      <h2>敢于只用一对暖黑与纸白</h2>
+      <p>点任意色块复制其 HEX。上排是落地页真正在用的单色系与功能色，下排是应用内的 Mantine 三色（落地页几乎不出现）。它「高级」的根源不是某个漂亮强调色，而是这份克制。</p>
+    </div>
+    <h3 style="font-family:var(--sans);font-weight:600;font-size:15px;margin-bottom:14px" class="k">落地页主色与功能色</h3>
+    <div class="swgrid" id="sw-base"></div>
+    <h3 style="font-family:var(--sans);font-weight:600;font-size:15px;margin:30px 0 14px" class="k">应用内产品色板 · Mantine（落地页不用）</h3>
+    <div class="swgrid" id="sw-app"></div>
+  </section>
+
+  <!-- 3 · TYPE -->
+  <section id="type">
+    <div class="sec-head">
+      <div class="eyebrow">03 — 字体系统</div>
+      <h2>衬线大标题，用常规字重加微正字距</h2>
+      <p>最关键的一条实测：H1 是 <code>featureDisplay</code>，<code>48px / font-weight 400 / letter-spacing 0.48px / line-height 52.8px</code>。也就是常规字重加微微张开的正字距，而非常见的粗体紧排——这正是它读起来克制优雅、像书籍内文标题的技术根源。本页已接入站点真实的 featureDisplay woff2 子集，下面每一处衬线示例都是原字（Fraunces 仅在字体未加载时兜底）。</p>
+    </div>
+    <div class="card" style="margin-bottom:18px">
+      <div class="k">显示体 · 站点真实 featureDisplay（关键词加下划线是它的招牌）</div>
+      <div class="specimen">Design a <span class="u">Promotional&nbsp;Video</span></div>
+      <div class="specimen" style="font-style:italic;font-size:clamp(28px,4vw,52px);color:var(--ink-2)">An Accessory That <span class="u">Speaks</span></div>
+      <p class="dim" style="font-size:13.5px">本页已接入站点真实的 <code>featureDisplay</code>（商业字体，woff2 子集，含 400 / 400 斜体 / 500 三档）。上排是正体、下排是它的真实斜体（呼应官网眼镜战役标题）；仅在字体未加载时回落到 CDN 的 Fraunces。</p>
+    </div>
+    <div class="type-rows">
+      <div class="type-row">
+        <div class="role">显示 · Serif<br><span style="color:var(--ink-4)">featureDisplay · 真字</span></div>
+        <div><div class="demo" style="font-family:var(--serif);font-weight:400;letter-spacing:.01em">Thinking, in Systems</div><p class="faint" style="font-size:13px;margin-top:6px">已接入真实 featureDisplay（400）。承载大标题与 section 标题，一律常规字重；Fraunces 兜底。</p></div>
+      </div>
+      <div class="type-row">
+        <div class="role">正文 / UI · Sans<br><span style="color:var(--ink-4)">gtStandard · 真字</span></div>
+        <div><div class="demo" style="font-family:var(--sans);font-weight:400;font-size:24px">Design, beyond generation.</div><p class="faint" style="font-size:13px;margin-top:6px">已接入真实 gtStandard（400 / 500）。导航、按钮、正文；站点正文计算样式亦回落 inter，本页 Inter 仅兜底。</p></div>
+      </div>
+      <div class="type-row">
+        <div class="role">标签 / 数字 · Mono<br><span style="color:var(--ink-4)">gtStandardMono · 真字</span></div>
+        <div><div class="demo mono" style="font-size:19px;color:var(--paper-2)">YOUR AI DESIGN PARTNER · 1440 x 800</div><p class="faint" style="font-size:13px;margin-top:6px">已接入真实 gtStandardMono（400）。大写开字距眉标签、画布尺寸标注；JetBrains Mono 兜底。</p></div>
+      </div>
+      <div class="type-row">
+        <div class="role">已加载备用<br><span style="color:var(--ink-4)">poppins · barlowCondensed</span></div>
+        <div><div class="demo" style="font-size:17px;color:var(--ink-2)">两款已加载但落地页少见，推断用于特定组件。</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4 · MOTION -->
+  <section id="motion">
+    <div class="sec-head">
+      <div class="eyebrow">04 — 动效系统</div>
+      <h2>零动画库，全靠 CSS keyframe 加状态</h2>
+      <p>抽取未检出 GSAP、Lenis 等库（<code>libs</code> 为空），动效由 CSS <code>@keyframes</code> 与 React 状态驱动。样式表去重后共 8 条 cubic-bezier；下面是页面最常引用的五条，点任一卡片重放，曲线与时长为其真实取值。</p>
+    </div>
+    <div class="easelab" id="easelab"></div>
+
+    <h3 class="durlab k" style="font-family:var(--sans);font-weight:600;font-size:15px">双时间尺度：环境慢层叠手感微交互（真实时长）</h3>
+    <div class="card"><div class="durs" id="durs"></div>
+      <p class="faint" style="font-size:12.5px;margin-top:14px">最高频时长其实是 <code>0.15s</code>（出现 46 次）的微交互；另有 <code>218s</code>、<code>5000s</code> 这类秒级以上超长值（各 6 / 9 次）——推断用于渐变缓慢流动与走马灯的氛围层。两个尺度拉开：秒级以下保证跟手，秒级以上只做环境氛围。</p>
+    </div>
+
+    <div class="grid g2" style="margin-top:18px">
+      <div class="card">
+        <h3 style="font-family:var(--sans);font-weight:600;font-size:16px">签名 keyframe：<code>agent-shimmer-sweep</code></h3>
+        <p class="dim" style="font-size:14px;margin-top:8px">站点自带的命名 keyframe（实锤）。推断是智能体思考步骤「进行中」时的一道微光扫过——本页工作台与下方即用它复现。</p>
+        <div style="margin-top:14px" class="mini-shimmer">正在探索视觉趋势……</div>
+      </div>
+      <div class="card">
+        <h3 style="font-family:var(--sans);font-weight:600;font-size:16px">鼠标跟随高光 <code>--glare-x/y</code></h3>
+        <p class="dim" style="font-size:14px;margin-top:8px">自定义属性里有 <code>--glare-x</code>、<code>--glare-y</code>、<code>--edge-x</code>、<code>--edge-y</code>（实锤）。这是卡片随指针渲染移动高光并做轻微 3D 倾斜的一套参数，解释了它卡片的实体质感。</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5 · MOTIFS -->
+  <section id="motifs">
+    <div class="sec-head">
+      <div class="eyebrow">05 — 签名视觉母题</div>
+      <h2>把落地页本身做成一块设计画布</h2>
+      <p>六个反复出现的母题，共同构成「这是在拆 Lovart」的识别度。下面每个都配一个可看的迷你演示。</p>
+    </div>
+    <div class="motif-grid">
+      <div class="motif">
+        <h3>设计工具隐喻</h3>
+        <p>画板、<code>Image 宽 x 高</code> 角标、蓝色选框与四角手柄、prompt 气泡、来源徽标。浏览页面像在看别人操作软件。</p>
+        <div class="mini"><div class="mini-sel"><div class="sb"><b></b><b></b><b></b><b></b></div></div></div>
+      </div>
+      <div class="motif">
+        <h3>智能体思考可视化</h3>
+        <p>思考步骤逐条淡入，进行中的一步带 <code>agent-shimmer-sweep</code> 微光扫过，完成打勾。最适合挪用来展示仿真过程。</p>
+        <div class="mini"><div class="mini-shimmer">已收集参考资料</div></div>
+      </div>
+      <div class="motif">
+        <h3>拼贴与剪贴簿</h3>
+        <p>旋转粘贴的照片卡、便利贴、漂浮抠图物，带手作错落与纸感投影，冲淡数字界面的冷感。</p>
+        <div class="mini mini-paste"><div class="p p1"></div><div class="p p2"></div></div>
+      </div>
+      <div class="motif">
+        <h3>填空式衬线标题</h3>
+        <p>把大标题做成一张待填表单，关键词坐在下划线上循环变换。</p>
+        <div class="mini"><div class="mini-fill">for a <span class="u">Hiking&nbsp;Brand</span></div></div>
+      </div>
+      <div class="motif">
+        <h3>纸质水彩底</h3>
+        <p>暖墨黑叠纸纹理，局部一块很淡的水彩蓝，配合大留白与明暗节奏。</p>
+        <div class="mini"><div class="mini-wash"></div></div>
+      </div>
+      <div class="motif">
+        <h3>对话式产出</h3>
+        <p>用一句自然语言指令直接改图（「把帽子换成这顶」），产出以真实感摄影占位，强调「可用」。</p>
+        <div class="mini"><div class="mini-bubble">把男孩的帽子换成这一顶，再让他拿着这本书。</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 6 · CRAFT -->
+  <section id="craft">
+    <div class="sec-head">
+      <div class="eyebrow">06 — 工艺细节</div>
+      <h2>零 canvas，是它复刻门槛低的原因</h2>
+      <p>媒体清单是信息量最大的一条实测：全站没有一个 <code>canvas</code>。工作台、思考步骤、视觉网格全由 DOM 加 CSS 加图片实现，没有 WebGL。</p>
+    </div>
+    <div class="stat-row">
+      <div class="stat"><div class="n">0</div><div class="l">canvas 元素</div></div>
+      <div class="stat"><div class="n">2</div><div class="l">video 段</div></div>
+      <div class="stat"><div class="n">50</div><div class="l">svg 图标</div></div>
+      <div class="stat"><div class="n">38</div><div class="l">img 图片</div></div>
+    </div>
+    <div class="grid g2" style="margin-top:18px">
+      <div class="card">
+        <div class="k" style="margin-bottom:12px">圆角语言（实测 top）</div>
+        <div class="radii-chips">
+          <span class="rc"><span class="box" style="border-radius:3px"></span>3px</span>
+          <span class="rc"><span class="box" style="border-radius:4px"></span>4px</span>
+          <span class="rc"><span class="box" style="border-radius:8px"></span>8px</span>
+          <span class="rc"><span class="box" style="border-radius:10px"></span>10px</span>
+          <span class="rc"><span class="box" style="border-radius:16px"></span>16px</span>
+          <span class="rc"><span class="box" style="border-radius:20px"></span>20px</span>
+          <span class="rc"><span class="box" style="border-radius:999px;width:40px"></span>999px</span>
+        </div>
+        <p class="dim" style="font-size:13.5px;margin-top:14px">卡片与图片多为 3 到 20px 的理性小圆角（<code>10px</code> 出现最多、<code>3px</code> 次之），按钮一律 999px 全圆 pill。二者的对比是它的圆角签名。</p>
+      </div>
+      <div class="card">
+        <div class="k" style="margin-bottom:12px">技术栈（实测自定义属性）</div>
+        <ul class="checklist" style="margin-top:2px">
+          <li><b>Mantine</b>：React UI 框架（<code>--mantine-*</code> 断点与色板）</li>
+          <li><b>OverlayScrollbars</b>：统一深色滚动条（<code>--os-*</code>）</li>
+          <li><b>自研 glare/tilt</b>：鼠标跟随高光（<code>--glare-*</code>、<code>--edge-*</code>）</li>
+          <li><b>浮动 pill 导航</b>：nav 本身透明，胶囊底色与模糊做在内层</li>
+          <li><b>主题与 i18n</b>：footer 带 Auto/深/浅 三档切换与语言切换</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- 7 · AS-SEEN -->
+  <section id="asseen">
+    <div class="sec-head">
+      <div class="eyebrow">07 — as-seen 实拍与真实素材</div>
+      <h2>真实渲染截图 + 站点提取的真实媒体，作证据</h2>
+      <p>上排是对线上页面的真实渲染截图（playwright 抓取），不是本页的复刻。下排的视频与画廊是直接从 lovart.ai 提取的真实媒体（见 <code>real-assets/manifest.json</code>），本页原样嵌入，用来对照它产出内容的真实观感——请勿外发。</p>
+    </div>
+    <div class="grid g1" style="gap:22px;grid-template-columns:1fr">
+      <figure class="shot">
+        <img src="assets/actual-hero.jpg" alt="Lovart 首屏真实渲染截图" loading="lazy" />
+        <figcaption>首屏 · 填空式衬线标题「Design a Promotional Video for a Hiking Brand」加纸白 pill，下方是裱在水彩蓝底上的设计工作台。</figcaption>
+      </figure>
+      <figure class="shot">
+        <img src="assets/actual-full.jpg" alt="Lovart 整页真实渲染截图" loading="lazy" />
+        <figcaption>整页 · 暖墨黑基调贯穿，衬线大标题分节（Thinking in Systems / Design beyond generation / Touch Edit / Style Consistency / Visual Insights），产出用真实感摄影，尾部拼贴散点加 CTA。</figcaption>
+      </figure>
+    </div>
+
+    <h3 style="font-family:var(--sans);font-weight:600;font-size:15px;margin:30px 0 6px" class="k">真实视频产出（站点提取，自动静音循环）</h3>
+    <div class="grid g2" style="margin-top:12px">
+      <figure class="shot">
+        <video src="real-assets/video/4b3ac0_afae2ca049b0ca584b2649bb8bf2e583f81f708a.mp4" muted autoplay loop playsinline preload="metadata" aria-label="Lovart 真实视频产出 · 人物动态"></video>
+        <figcaption>人物动态 · 1244 x 720 · 10s（站点真实 mp4）</figcaption>
+      </figure>
+      <figure class="shot">
+        <video src="real-assets/video/4d4e33_e17cf2c533a72923fac6762a96570beb3e04c012.mp4" muted autoplay loop playsinline preload="metadata" aria-label="Lovart 真实视频产出 · 跑鞋特写"></video>
+        <figcaption>跑鞋特写 · 720 x 480 · 5s（站点真实 mp4）</figcaption>
+      </figure>
+    </div>
+
+    <h3 style="font-family:var(--sans);font-weight:600;font-size:15px;margin:30px 0 6px" class="k">真实产出画廊（站点展示的产出 / 品牌素材）</h3>
+    <div class="gal">
+      <figure><img src="real-assets/image/08924c_5fb2e6c2fcba1e5ba15ab83a91fc0411be54ff06.png" alt="Lovart 品牌拼贴：观众围观飞行的 Lovart 红色小车" loading="lazy" /><figcaption>品牌拼贴 · Lovart 飞车</figcaption></figure>
+      <figure><img src="real-assets/image/e70649_ffd7023347c0e2b2bc34b285ac2a060f4cfaa9a2.png" alt="穿 Made by Lovart T 恤、戴荧光绿帽的人物" loading="lazy" /><figcaption>品牌周边 · Made by Lovart</figcaption></figure>
+      <figure><img src="real-assets/image/71c226_da729a1d98de92dd4bb794f724c8ff2229f99765.png" alt="荧光绿 Rule Breaker 毛线帽产品图" loading="lazy" /><figcaption>品牌周边 · Rule Breaker 帽</figcaption></figure>
+      <figure><img src="real-assets/image/2da161_a86d8dee9ef289a89f4b13cc4f6b48d13e65e744.png" alt="极简室内空间渲染，木质家具与吊灯" loading="lazy" /><figcaption>空间渲染 · 极简室内</figcaption></figure>
+      <figure><img src="real-assets/image/2cf635_0e17f19145c7b336e3646ba0cf5034edf5fe99ac.png" alt="奔跑的显示器拟人吉祥物插画" loading="lazy" /><figcaption>品牌插画 · 显示器吉祥物</figcaption></figure>
+      <figure><img src="real-assets/image/8d740a_1c93df03632b2dd6cd70ff57c7284ead6330e1a7.png" alt="Made by Lovart 书封样式" loading="lazy" /><figcaption>品牌物料 · Made by Lovart 书封</figcaption></figure>
+    </div>
+  </section>
+
+  <!-- 8 · BUILD -->
+  <section id="build">
+    <div class="sec-head">
+      <div class="eyebrow">08 — 如何复刻</div>
+      <h2>把这些数值直接接进你的产品</h2>
+      <p>完整版见同目录 <code>复刻指南.md</code>。这里给出可复制的 token 与两段签名效果代码。</p>
+    </div>
+    <div class="grid g2">
+      <div>
+        <h3 style="font-family:var(--sans);font-weight:600;font-size:15px;margin-bottom:12px">1 · 落地 token（复制即用）</h3>
+        <pre><code><span class="tok-c">:root</span>{
+  <span class="tok-c">--bg</span>:<span class="tok-n">#100F09</span>; <span class="tok-c">--ink</span>:<span class="tok-n">#F5F4EF</span>;
+  <span class="tok-c">--canvas-blue</span>:<span class="tok-n">#147DFF</span>;
+  <span class="tok-c">--serif</span>:<span class="tok-k">"featureDisplay"</span>,<span class="tok-k">"Fraunces"</span>;  <span class="tok-c">/* 站点真字·Fraunces 兜底 */</span>
+  <span class="tok-c">--sans</span>:<span class="tok-k">"gtStandard"</span>,<span class="tok-k">"Inter"</span>;      <span class="tok-c">/* 站点真字·Inter 兜底 */</span>
+  <span class="tok-c">--mono</span>:<span class="tok-k">"gtStandardMono"</span>,<span class="tok-k">"JetBrains Mono"</span>;
+  <span class="tok-c">--ease-main</span>:<span class="tok-p">cubic-bezier</span>(.33,1,.68,1);
+  <span class="tok-c">--ease-back</span>:<span class="tok-p">cubic-bezier</span>(.34,1.56,.64,1);
+  <span class="tok-c">--ease-btn</span>:<span class="tok-p">cubic-bezier</span>(0,0,.2,1);
+  <span class="tok-c">--pill</span>:999px; <span class="tok-c">--r-card</span>:16px;
+}
+<span class="tok-c">/* 铁律：显示体常规字重 + 微正字距 */</span>
+<span class="tok-c">h1</span>{font-family:var(--serif);font-weight:<span class="tok-n">400</span>;
+   letter-spacing:<span class="tok-n">.01em</span>;line-height:<span class="tok-n">1.1</span>}</code></pre>
+      </div>
+      <div>
+        <h3 style="font-family:var(--sans);font-weight:600;font-size:15px;margin-bottom:12px">2 · 思考步骤微光（复现 agent-shimmer-sweep）</h3>
+        <pre><code><span class="tok-c">.step.active .txt</span>{
+  background:<span class="tok-p">linear-gradient</span>(100deg,
+    var(--ink-3) 30%, var(--ink) 50%, var(--ink-3) 70%);
+  background-size:<span class="tok-n">200% 100%</span>;
+  <span class="tok-c">-webkit-</span>background-clip:text;background-clip:text;
+  color:transparent;
+  animation:<span class="tok-k">agent-shimmer-sweep</span> 1.2s var(--ease-std) infinite}
+<span class="tok-p">@keyframes</span> <span class="tok-k">agent-shimmer-sweep</span>{
+  from{background-position:200% 0}
+  to  {background-position:-200% 0}}
+<span class="tok-c">/* 完成态：打勾定格；随后 buildGrid() 触发网格 back 曲线弹入 */</span></code></pre>
+      </div>
+    </div>
+    <div class="grid g2" style="margin-top:22px">
+      <div>
+        <h3 style="font-family:var(--sans);font-weight:600;font-size:15px;margin-bottom:12px">选型决策</h3>
+        <ul class="checklist">
+          <li><b>工作台 / 思考步骤 / 视觉网格</b> → 纯 DOM 加 CSS 加 img（站点 canvas 为 0）</li>
+          <li><b>关键氛围段</b> → 少量 video（站点仅 2 段）</li>
+          <li><b>慢氛围（渐变流动、走马灯）</b> → CSS keyframe 加 218s / 5000s 级超长时长，不引库</li>
+          <li><b>微交互</b> → CSS transition 加 0.15 到 0.2s，配减速曲线</li>
+        </ul>
+      </div>
+      <div>
+        <h3 style="font-family:var(--sans);font-weight:600;font-size:15px;margin-bottom:12px">工程坑</h3>
+        <ul class="checklist">
+          <li><b>单色是策略</b>：只用暖黑与纸白，彩色留给应用内，别急着加强调色</li>
+          <li><b>显示字重压到 400</b>、字距设正，套粗体紧排就毁了优雅</li>
+          <li><b>纸白不是纯白</b>：<code>#F5F4EF</code> 与 <code>#100F09</code> 都偏暖，少眩光</li>
+          <li><b>reduced-motion 兜底</b>：关打字机、微光、逐个弹入，直接显示终态</li>
+        </ul>
+      </div>
+    </div>
+    <div class="callout warn">
+      <h3>字体授权（本轮已接入真字，务必私有）</h3>
+      <p class="dim" style="margin-top:8px">本页已把从 lovart.ai 提取的真实字体子集（<code>featureDisplay</code> 3 档、<code>gtStandard</code> 2 档、<code>gtStandardMono</code> 1 档，见 <code>real-assets/manifest.json</code>）以 <code>@font-face</code> 相对路径接入，用于逐像素比对。文件名显示为 Feature Display 与 GT Standard 系列，均为商业字体：仅限内部研究，<b>不得随页面外发或用于生产</b>，生产需自购授权。CDN 的 Fraunces、Inter、JetBrains Mono 已降级为未加载时的兜底。站点另有 <code>featureDeck</code> 等字族本轮未下载，未接入。</p>
+    </div>
+  </section>
+
+  <!-- 9 · PROV -->
+  <section id="prov">
+    <div class="sec-head">
+      <div class="eyebrow">09 — 方法与出处</div>
+      <h2>每个数值从哪来，什么是实锤、什么是推断</h2>
+    </div>
+    <div class="grid g2">
+      <div>
+        <dl class="prov">
+          <dt>抽取方法</dt>
+          <dd>对公开线上页面做两层抽取：playwright 读关键节点的 <code>getComputedStyle</code>（浏览器实际渲染值），加服务端抓取 6 个样式表全文（约 1.03MB），文本解析统计色值、cubic-bezier、时长、圆角、keyframe 名、自定义变量及频次。不涉及登录态，不逆向安装包。第二轮进一步下载了站点真实资产（6 支字体 woff2、2 段 mp4、18 张关键图，清单见 <code>real-assets/manifest.json</code>），并以相对路径原样接入本页，替换第一轮的近似替身。</dd>
+          <dt>实锤（源自抽取）</dt>
+          <dd>底色 <code>rgb(16,15,9)</code> 与文字 <code>rgb(245,244,239)</code>、按钮配方、H1 排版（48px/400/+0.48px/1.1）、字体家族名与真实字体文件（<code>featureDisplay</code> / <code>gtStandard</code> / <code>gtStandardMono</code> 的 woff2，已内嵌）、8 条去重缓动与频次、时长梯、圆角梯、keyframe 名单（含 <code>agent-shimmer-sweep</code>）、Mantine/OverlayScrollbars/glare 技术信号、媒体清单（canvas 0、video 2、svg 50、img 38）。</dd>
+          <dt>推断（观察 / 公开资料）</dt>
+          <dd>各缓动与时长的具体用途、画布蓝 <code>#147DFF</code> 用作选框、填空标题与思考步骤的精确时序、工作台网格「眼镜战役」的主题编排、「落地页单色 / 应用内彩色」的策略解读。</dd>
+        </dl>
+      </div>
+      <div>
+        <div class="callout">
+          <h3>一处观察被数据校正</h3>
+          <p class="dim" style="margin-top:8px">凭观感容易以为这类「AI 设计」站会重度依赖 WebGL 或动画库。<b>实测相反</b>：<code>canvas</code> 为 0、未检出 GSAP/Lenis，签名效果全是 DOM 加 CSS。凡冲突处，以抽取数据为准。</p>
+        </div>
+        <div class="callout" style="margin-top:14px">
+          <h3>局限与版权</h3>
+          <p class="dim" style="margin-top:8px">抽取是某一时刻的首页快照，改版可能变化；未展开的交互态未必完整。第二轮起，首屏工作台的视觉网格、实拍区的视频与画廊均为从 lovart.ai 提取的<b>真实字体与版权素材</b>（清单见 <code>real-assets/manifest.json</code>），仅供内部逐像素比对，务必私有，不得随页面外发或用于生产。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    Lovart 设计解构，逆向自 <b>lovart.ai</b> 公开页面的真实抽取，供内部研究与复刻参考。<br />
+    数值以抽取数据为准，用途标注均为推断；本页已内嵌站点真实字体与媒体，仅限内部比对，<b>务必私有</b>。
+  </footer>
+</div>
+</main>
+
+<div class="copybar" id="copybar" role="status" aria-live="polite">已复制</div>
+
+<script>
+(function(){
+  var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var wait = function(ms){return new Promise(function(r){setTimeout(r,ms);});};
+
+  /* nav stuck */
+  var nav=document.getElementById('nav');
+  function onScroll(){nav.classList.toggle('stuck',scrollY>12);}onScroll();
+  addEventListener('scroll',onScroll,{passive:true});
+
+  /* ---------- 填空式标题 ---------- */
+  var pairs=[["Promotional Video","Hiking Brand"],["Campaign Poster","Eyewear Label"],["Brand Identity","Coffee Roaster"],["Product Reel","Skincare Line"]];
+  var b1=document.getElementById('b1'), b2=document.getElementById('b2');
+  function setCaret(el,on){el.classList.toggle('caret',on);}
+  async function typeIn(el,txt){setCaret(el,true);for(var i=0;i<=txt.length;i++){el.textContent=txt.slice(0,i);await wait(52);}}
+  async function eraseOut(el){var t=el.textContent;for(var i=t.length;i>=0;i--){el.textContent=t.slice(0,i);await wait(26);}}
+  async function fillLoop(){
+    var p=0;
+    while(true){
+      var a=pairs[p][0], b=pairs[p][1];
+      await typeIn(b1,a); setCaret(b1,false);
+      await typeIn(b2,b);
+      await wait(1700);
+      setCaret(b2,true); await eraseOut(b2); setCaret(b2,false);
+      setCaret(b1,true); await eraseOut(b1);
+      p=(p+1)%pairs.length;
+    }
+  }
+  if(reduce){ b1.textContent=pairs[0][0]; b2.textContent=pairs[0][1]; setCaret(b1,false); }
+  else{ fillLoop(); }
+
+  /* ---------- 设计工作台演示 ---------- */
+  /* 视觉网格 = Lovart 官网真实产出素材（一组眼镜影像战役），见 real-assets/manifest.json */
+  var IMG='real-assets/image/';
+  var tiles=[
+    {cap:'1792 x 2400', img:'1d8812_6b1a28475b0c188f4a858aaf0aa852793de580c3.png', alt:'眼镜品牌影像 · 车窗人物', src:'GEN'},
+    {cap:'1792 x 2400', img:'a3b37d_5049909fb1610fbc90ed8b25cfecc77ffc14fcee.png', alt:'眼镜品牌影像 · 天空人物', src:'GEN'},
+    {cap:'720 x 960',   img:'13fbed_7f9784a644c3d537b4707a35671c1169cacf1747.png', alt:'眼镜产品图 · 太阳镜', src:'REF', sel:true},
+    {cap:'1792 x 2400', img:'9a22b9_79385767155d45c0a8d74c584a479a836b785107.png', alt:'眼镜品牌影像 · 人物特写', src:'GEN'},
+    {cap:'1792 x 2400', img:'9bdc87_d0a9be686121d00de898a2d5ce66d9db1b057e97.png', alt:'眼镜产品细节 · 镜腿铰链', src:'GEN'},
+    {cap:'1065 x 1211', img:'a545cb_9df81a2a9a5adf5a0b0fd2e01f92ced65ab63e5a.png', alt:'眼镜品牌影像 · 人物肖像', src:'GEN'}
+  ];
+  var vgrid=document.getElementById('vgrid');
+  var th='';
+  tiles.forEach(function(t){
+    th+='<div class="tile"><img class="ph" src="'+IMG+t.img+'" alt="'+t.alt+'" loading="lazy" decoding="async">'+
+        '<div class="ph" style="background:radial-gradient(120% 80% at 30% 20%,rgba(255,255,255,.12),transparent 60%);pointer-events:none"></div>'+
+        '<span class="cap">Image '+t.cap+'</span><span class="src">'+t.src+'</span>'+
+        (t.sel?'<div class="selbox"><b></b><b></b><b></b><b></b></div>':'')+'</div>';
+  });
+  vgrid.innerHTML=th;
+  var tileEls=[].slice.call(vgrid.querySelectorAll('.tile'));
+  var selbox=vgrid.querySelector('.selbox');
+  var foot=document.getElementById('canvas-foot');
+
+  var stepData=[
+    {t:'已分析用户意图'},
+    {t:'已探索视觉趋势'},
+    {t:'已收集参考资料'},
+    {t:'正在生成视觉网格'}
+  ];
+  var stepsEl=document.getElementById('steps');
+  var tickSVG='<svg class="tick" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>';
+  var dotSVG='<svg class="dot" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="4"/></svg>';
+  stepsEl.innerHTML=stepData.map(function(s){
+    return '<div class="step"><span class="ico">'+dotSVG+tickSVG+'</span><span class="txt">'+s.t+'</span></div>';
+  }).join('');
+  var stepEls=[].slice.call(stepsEl.querySelectorAll('.step'));
+
+  function resetDemo(){
+    stepEls.forEach(function(s){s.classList.remove('show','active','done');});
+    tileEls.forEach(function(t){t.classList.remove('in');});
+    if(selbox) selbox.classList.remove('on');
+    foot.classList.remove('on');
+  }
+  function showAll(){
+    stepEls.forEach(function(s){s.classList.add('show','done');});
+    tileEls.forEach(function(t){t.classList.add('in');});
+    if(selbox) selbox.classList.add('on');
+    foot.classList.add('on');
+  }
+  var running=false;
+  async function runDemo(){
+    if(running) return; running=true;
+    resetDemo();
+    if(reduce){ showAll(); running=false; return; }
+    for(var i=0;i<stepEls.length;i++){
+      var s=stepEls[i];
+      s.classList.add('show','active');
+      await wait(1150);
+      s.classList.remove('active');
+      if(i<stepEls.length-1){ s.classList.add('done'); await wait(260); }
+    }
+    /* 最后一步「正在生成」→ 网格逐个弹入 */
+    for(var j=0;j<tileEls.length;j++){ tileEls[j].classList.add('in'); await wait(120); }
+    stepEls[stepEls.length-1].classList.remove('active');
+    stepEls[stepEls.length-1].classList.add('done');
+    await wait(240);
+    if(selbox) selbox.classList.add('on');
+    foot.classList.add('on');
+    running=false;
+  }
+
+  document.getElementById('replay').addEventListener('click',runDemo);
+  document.getElementById('run-demo').addEventListener('click',function(){
+    document.getElementById('workbench').scrollIntoView({behavior:reduce?'auto':'smooth',block:'center'});
+    runDemo();
+  });
+
+  /* 首次进入视口自动播放一次 */
+  var played=false;
+  if('IntersectionObserver' in window){
+    var io=new IntersectionObserver(function(es){
+      es.forEach(function(e){ if(e.isIntersecting && !played){ played=true; runDemo(); io.disconnect(); } });
+    },{threshold:.35});
+    io.observe(document.getElementById('workbench'));
+  } else { showAll(); }
+
+  /* ---------- 色板 ---------- */
+  function sw(list,el){
+    var s='';
+    list.forEach(function(c){
+      s+='<div class="sw" data-hex="'+c.hex+'" tabindex="0" role="button" aria-label="复制 '+c.hex+'">'+
+         '<div class="chipc" style="background:'+(c.bg||c.hex)+'"></div>'+
+         '<div class="meta"><div class="name">'+c.name+'</div><div class="hex">'+c.hex+'</div><div class="role">'+c.role+'</div></div></div>';
+    });
+    document.getElementById(el).innerHTML=s;
+  }
+  sw([
+    {name:'暖墨黑',hex:'#100F09',role:'全站底色 · body 实测'},
+    {name:'纸白',hex:'#F5F4EF',role:'主文字 / 按钮填充'},
+    {name:'次级纸白',hex:'#F6F5F1',role:'卡面 · 高频色'},
+    {name:'深板黑',hex:'#141414',role:'深色面板'},
+    {name:'更深黑',hex:'#0C0C0D',role:'深层背景'},
+    {name:'画布蓝',hex:'#147DFF',role:'设计工具选框 / 交互蓝'},
+    {name:'冷灰 · 强',hex:'#C1C5CC',role:'UI 次级文字'},
+    {name:'冷灰 · 弱',hex:'#4A535F',role:'描边 / 弱文字'}
+  ],'sw-base');
+  sw([
+    {name:'green · 亮',hex:'#85FF75',role:'lovart-green 4 档'},
+    {name:'green · 主',hex:'#57C74A',role:'lovart-green 6 档'},
+    {name:'ocean · 亮',hex:'#1AC2D9',role:'ocean-blue 4 档'},
+    {name:'ocean · 主',hex:'#09ADC3',role:'ocean-blue 6 档'},
+    {name:'pink · 亮',hex:'#F13EAF',role:'bright-pink 4 档'},
+    {name:'pink · 主',hex:'#FF00A1',role:'bright-pink 6 档'},
+    {name:'green · 深',hex:'#002E25',role:'lovart-green 9 档'},
+    {name:'lovart-black',hex:'#000000',role:'黑档全为纯黑'}
+  ],'sw-app');
+
+  /* 点击 / 键盘复制 */
+  var bar=document.getElementById('copybar'),tmr;
+  function copy(hex){
+    try{ if(navigator.clipboard) navigator.clipboard.writeText(hex); }catch(e){}
+    bar.textContent='已复制 '+hex; bar.classList.add('show');
+    clearTimeout(tmr); tmr=setTimeout(function(){bar.classList.remove('show');},1200);
+  }
+  document.addEventListener('click',function(e){
+    var s=e.target.closest('.sw'); if(s){ copy(s.getAttribute('data-hex')); }
+  });
+  document.addEventListener('keydown',function(e){
+    if(e.key!=='Enter'&&e.key!==' ')return;
+    var s=e.target.closest('.sw'); if(s){e.preventDefault();copy(s.getAttribute('data-hex'));return;}
+    var ea=e.target.closest('.ease'); if(ea){e.preventDefault();playEase(+ea.getAttribute('data-i'));}
+  });
+
+  /* ---------- 缓动实验台（SVG 曲线 + 跑块）---------- */
+  var curves=[
+    {n:'减速三次 easeOutCubic',v:'0.33, 1, 0.68, 1',p:[.33,1,.68,1],dur:500,d:'样式表里字面出现最多（5 次）。极快冲出、长尾沉降——位移与淡入的主曲线。'},
+    {n:'Material 标准',v:'0.4, 0, 0.2, 1',p:[.4,0,.2,1],dur:400,d:'通用进出。先加速后减速的对称缓动，稳妥不抢戏。'},
+    {n:'回弹 back',v:'0.34, 1.56, 0.64, 1',p:[.34,1.56,.64,1],dur:520,d:'控制点 y>1 造成越界回弹。视觉网格逐个弹入用它。'},
+    {n:'减速五次 easeOutQuint',v:'0.23, 1, 0.32, 1',p:[.23,1,.32,1],dur:560,d:'更长的尾巴。大位移滑入更顺、更「高级」。'},
+    {n:'纯减速 decelerate',v:'0, 0, 0.2, 1',p:[0,0,.2,1],dur:200,d:'按钮过渡实测就是它，配 0.2s。起步即最快、只做减速。'}
+  ];
+  var lab=document.getElementById('easelab'),lh='';
+  curves.forEach(function(c,i){
+    lh+='<div class="ease" data-i="'+i+'" tabindex="0" role="button">'+
+      '<div class="ease-top"><h3>'+c.n+'</h3><span class="curveval">cubic-bezier('+c.v+')</span></div>'+
+      '<div class="desc">'+c.d+'</div>'+
+      '<div class="ease-viz"><svg id="cv'+i+'" width="108" height="108" viewBox="0 0 108 108"></svg>'+
+      '<div class="track"><div class="runner-wrap"><div class="runner" id="rn'+i+'"></div></div>'+
+      '<div class="replay-note">点击重放 · '+c.dur+'ms</div></div></div></div>';
+  });
+  lab.innerHTML=lh;
+
+  function drawCurve(i,p){
+    var S=108,pad=18;
+    var minY=Math.min(0,p[1],p[3]), maxY=Math.max(1,p[1],p[3]);
+    function X(t){return pad+t*(S-2*pad);}
+    function Y(v){return (S-pad)-((v-minY)/(maxY-minY))*(S-2*pad);}
+    var d='';
+    for(var t=0;t<=1.0001;t+=0.02){
+      var s=t;
+      var yy=3*Math.pow(1-s,2)*s*p[1]+3*(1-s)*s*s*p[3]+s*s*s;
+      var xx=3*Math.pow(1-s,2)*s*p[0]+3*(1-s)*s*s*p[2]+s*s*s;
+      d+=(t===0?'M':'L')+X(xx).toFixed(1)+' '+Y(yy).toFixed(1)+' ';
+    }
+    var svg=document.getElementById('cv'+i);
+    svg.innerHTML=
+      '<line x1="'+X(0)+'" y1="'+Y(0)+'" x2="'+X(1)+'" y2="'+Y(0)+'" stroke="rgba(245,244,239,.12)" stroke-width="1"/>'+
+      '<line x1="'+X(0)+'" y1="'+Y(1)+'" x2="'+X(1)+'" y2="'+Y(1)+'" stroke="rgba(245,244,239,.12)" stroke-width="1"/>'+
+      '<path d="'+d+'" fill="none" stroke="#F5F4EF" stroke-width="2" stroke-linecap="round"/>'+
+      '<circle cx="'+X(0)+'" cy="'+Y(0)+'" r="2.6" fill="#86909C"/>'+
+      '<circle cx="'+X(1)+'" cy="'+Y(1)+'" r="2.6" fill="#F5F4EF"/>';
+  }
+  function playEase(i){
+    var r=document.getElementById('rn'+i),wrap=r.parentElement;
+    var dist=Math.round(wrap.clientWidth-r.clientWidth-12);
+    r.style.transition='none'; r.style.transform='translateX(0)';
+    void r.offsetWidth;
+    r.style.transition='transform '+curves[i].dur+'ms cubic-bezier('+curves[i].p.join(',')+')';
+    r.style.transform='translateX('+dist+'px)';
+  }
+  curves.forEach(function(c,i){ drawCurve(i,c.p); if(!reduce) setTimeout(function(){playEase(i);},400+i*150); });
+  lab.addEventListener('click',function(e){var ea=e.target.closest('.ease'); if(ea) playEase(+ea.getAttribute('data-i'));});
+
+  /* ---------- 时长梯 ---------- */
+  var durs=[
+    ['微交互 --micro（最高频）',150,'.15s'],['按钮过渡',200,'.2s'],['淡入主时长',500,'.5s'],
+    ['卡片弹入',1200,'1.2s'],['环境层 · 长',218000,'218s'],['环境层 · 超长',5000000,'5000s']
+  ];
+  var logmax=Math.log(5000000);
+  var dh='';
+  durs.forEach(function(d){
+    var w=Math.max(6, Math.log(d[1])/logmax*100);
+    dh+='<div class="durrow"><span class="lab">'+d[0]+'</span><div class="durbar" style="width:'+w+'%"></div><span class="val">'+d[2]+'</span></div>';
+  });
+  document.getElementById('durs').innerHTML=dh;
+})();
+</script>
+
+<style>.dt-omit{display:flex;align-items:center;justify-content:center;min-height:96px;background:repeating-linear-gradient(45deg,transparent,transparent 9px,rgba(128,128,128,.07) 9px,rgba(128,128,128,.07) 18px);border:1px dashed rgba(128,128,128,.32);border-radius:8px;color:#8b8b8b;font:11px/1.5 ui-monospace,SFMono-Regular,Menlo,monospace;text-align:center;padding:14px;box-sizing:border-box}</style>
+<script>/* public build: original site media removed for copyright; layout preserved, real look kept in the as-seen screenshots */
+(function(){
+ var R=/real-assets\/(image|video|audio|fonts|source|lottie)\/|\.(mp4|webm|mov|mp3|wav|woff2?|otf|ttf)(\?|$)/i;
+ function box(w,h){var d=document.createElement('div');d.className='dt-omit';d.textContent='原站素材已按版权移除,见原站';if(w)d.style.width=w;if(h)d.style.minHeight=h;return d;}
+ document.querySelectorAll('video').forEach(function(v){
+   var srcs=[].map.call(v.querySelectorAll('source'),function(s){return s.getAttribute('src')||''});
+   var bad=R.test(v.getAttribute('src')||'')||srcs.some(function(s){return R.test(s)});
+   if(!bad)return;
+   v.removeAttribute('src');v.removeAttribute('autoplay');v.querySelectorAll('source').forEach(function(s){s.remove()});
+   if(!v.getAttribute('poster')){var b=box(v.style.width||'',((v.clientHeight||160))+'px');v.parentNode&&v.parentNode.replaceChild(b,v);}
+ });
+ document.querySelectorAll('img').forEach(function(im){
+   if(R.test(im.getAttribute('src')||'')){var b=box((im.getAttribute('width')||'')+(im.getAttribute('width')?'px':''),((im.getAttribute('height')||im.clientHeight||120))+'px');im.parentNode&&im.parentNode.replaceChild(b,im);}
+ });
+})();
+</script>
+
+</body>
+</html>

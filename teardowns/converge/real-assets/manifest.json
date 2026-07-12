@@ -1,0 +1,172 @@
+{
+  "site": "converge",
+  "url": "https://converge.ai",
+  "fonts": [
+    {
+      "url": "https://converge.ai/_converge_ai/_next/static/media/31a9145ccb84606d-s.p.fa7e779d.woff2",
+      "file": "converge/real-assets/fonts/a7cbd9_31a9145ccb84606d-s.p.fa7e779d.woff2",
+      "bytes": 46864,
+      "type": "font/woff2"
+    },
+    {
+      "url": "https://converge.ai/_converge_ai/_next/static/media/7c1d6751972ac70b-s.p.891853de.woff2",
+      "file": "converge/real-assets/fonts/f01b3f_7c1d6751972ac70b-s.p.891853de.woff2",
+      "bytes": 41744,
+      "type": "font/woff2"
+    },
+    {
+      "url": "https://converge.ai/_converge_ai/_next/static/media/83afe278b6a6bb3c-s.p.3a6ba036.woff2",
+      "file": "converge/real-assets/fonts/cbf47b_83afe278b6a6bb3c-s.p.3a6ba036.woff2",
+      "bytes": 48432,
+      "type": "font/woff2"
+    },
+    {
+      "url": "https://converge.ai/_converge_ai/_next/static/media/f06bf9da926bae75-s.p.c68a79fb.woff2",
+      "file": "converge/real-assets/fonts/4c5e98_f06bf9da926bae75-s.p.c68a79fb.woff2",
+      "bytes": 29904,
+      "type": "font/woff2"
+    }
+  ],
+  "video": [
+    {
+      "url": "https://converge.ai/converge_video.mp4",
+      "file": "converge/real-assets/video/440eeb_converge_video.mp4",
+      "bytes": 707176,
+      "type": "video/mp4"
+    }
+  ],
+  "audio": [],
+  "image": [
+    {
+      "url": "https://converge.ai/favicon.ico?favicon.841c4985.ico",
+      "file": "converge/real-assets/image/0c42ee_favicon.ico",
+      "bytes": 11477,
+      "type": "image/x-icon"
+    },
+    {
+      "url": "https://converge.ai/images/landing-convergence-orbit.png",
+      "file": "converge/real-assets/image/d744cc_landing-convergence-orbit.png",
+      "bytes": 1036013,
+      "type": "image/png"
+    },
+    {
+      "url": "https://converge.ai/images/landing/enter/enter-site.png",
+      "file": "converge/real-assets/image/ee1485_enter-site.png",
+      "bytes": 3165980,
+      "type": "image/png"
+    },
+    {
+      "url": "https://converge.ai/images/landing/enter/enter-code.png",
+      "file": "converge/real-assets/image/9ee209_enter-code.png",
+      "bytes": 3308632,
+      "type": "image/png"
+    },
+    {
+      "url": "https://converge.ai/images/landing/enter/enter-builder.png",
+      "file": "converge/real-assets/image/d09f27_enter-builder.png",
+      "bytes": 2474606,
+      "type": "image/png"
+    },
+    {
+      "url": "https://converge.ai/images/landing/enter/enter-board.png",
+      "file": "converge/real-assets/image/962eb2_enter-board.png",
+      "bytes": 5497029,
+      "type": "image/png"
+    },
+    {
+      "url": "https://converge.ai/images/landing/framia/framia-video.png",
+      "file": "converge/real-assets/image/557197_framia-video.png",
+      "bytes": 8284893,
+      "type": "image/png"
+    },
+    {
+      "url": "https://converge.ai/images/landing/framia/framia-canvas.png",
+      "file": "converge/real-assets/image/d29f50_framia-canvas.png",
+      "bytes": 523308,
+      "type": "image/png"
+    },
+    {
+      "url": "https://converge.ai/images/landing/framia/framia-prompt.png",
+      "file": "converge/real-assets/image/dd53a9_framia-prompt.png",
+      "bytes": 259543,
+      "type": "image/png"
+    },
+    {
+      "url": "https://converge.ai/images/landing/framia/framia-assets.png",
+      "file": "converge/real-assets/image/1fd5f8_framia-assets.png",
+      "bytes": 144320,
+      "type": "image/png"
+    },
+    {
+      "url": "https://converge.ai/images/landing/footer/footer-vector-9.svg",
+      "file": "converge/real-assets/image/8e8ee9_footer-vector-9.svg",
+      "bytes": 1390,
+      "type": "image/svg+xml"
+    },
+    {
+      "url": "https://converge.ai/images/landing/footer/footer-vector-7.svg",
+      "file": "converge/real-assets/image/9a20d4_footer-vector-7.svg",
+      "bytes": 403,
+      "type": "image/svg+xml"
+    },
+    {
+      "url": "https://converge.ai/images/landing/footer/footer-vector-5.svg",
+      "file": "converge/real-assets/image/9b15b2_footer-vector-5.svg",
+      "bytes": 1900,
+      "type": "image/svg+xml"
+    },
+    {
+      "url": "https://converge.ai/images/landing/footer/carousel/right-logo.svg",
+      "file": "converge/real-assets/image/6e9392_right-logo.svg",
+      "bytes": 2812,
+      "type": "image/svg+xml"
+    },
+    {
+      "url": "https://converge.ai/images/landing/footer/carousel/globe.svg",
+      "file": "converge/real-assets/image/7366dd_globe.svg",
+      "bytes": 3604,
+      "type": "image/svg+xml"
+    },
+    {
+      "url": "https://converge.ai/images/landing/footer/carousel/globe-1.svg",
+      "file": "converge/real-assets/image/275c4f_globe-1.svg",
+      "bytes": 2995,
+      "type": "image/svg+xml"
+    },
+    {
+      "url": "https://converge.ai/images/landing/footer/carousel/acoustic.svg",
+      "file": "converge/real-assets/image/38f863_acoustic.svg",
+      "bytes": 557,
+      "type": "image/svg+xml"
+    },
+    {
+      "url": "https://converge.ai/images/landing/footer/carousel/chart-proportion.svg",
+      "file": "converge/real-assets/image/4e4849_chart-proportion.svg",
+      "bytes": 590,
+      "type": "image/svg+xml"
+    }
+  ],
+  "lottie": [],
+  "source": [
+    {
+      "url": "https://converge.ai/_converge_ai/_next/static/chunks/7eb2827d5556dd27.css",
+      "file": "converge/real-assets/source/b7556a_7eb2827d5556dd27.css",
+      "bytes": 8518
+    },
+    {
+      "url": "https://converge.ai/_converge_ai/_next/static/chunks/72f770f4ac0c61c6.css",
+      "file": "converge/real-assets/source/ec9f94_72f770f4ac0c61c6.css",
+      "bytes": 230016
+    },
+    {
+      "url": "https://converge.ai/_converge_ai/_next/static/chunks/aaec112cdf52a87a.css",
+      "file": "converge/real-assets/source/756fa1_aaec112cdf52a87a.css",
+      "bytes": 58557
+    },
+    {
+      "url": "https://converge.ai",
+      "file": "converge/real-assets/source/index.html",
+      "bytes": 0
+    }
+  ]
+}

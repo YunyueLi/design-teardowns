@@ -1,0 +1,80 @@
+/* ============================================================
+   lovart — 从线上站点真实抽取的设计 token（实锤，非观感推断）
+   源:https://www.lovart.ai  · 抽取:playwright 计算样式 + 样式表文本
+   ============================================================ */
+:root{
+  /* —— 基底 / 文字（computed）—— */
+  --bg:rgb(16, 15, 9);
+  --ink:rgb(245, 244, 239);
+  --accent:lab(96.52% -.0000298023 .0000119209);   /* --accent/--brand 变量实测 */
+  /* 高频色值（样式表出现次数 top）:#fff #3b82f6 #c1c5cc #000 #141414 #000000 #100f09 #86909c #2f3640 #f5f5f5 */
+
+  /* —— 字体（computed / fontsLoaded）—— */
+  --font-sans:inter, "inter Fallback", system-ui, ui-sans-serif, -apple-system, system-ui, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol";
+  /* 实际加载字体:poppins, poppins Fallback, barlowCondensed, barlowCondensed Fallback, inter, inter Fallback, gtStandard, gtStandard Fallback, gtStandardMono, gtStandardMono Fallback, featureDeck, featureDeck Fallback, featureDisplay, featureDisplay Fallback, notoSansSC, notoSansSC Fallback, notoSansJP, notoSansJP Fallback, notoSansTC, notoSansTC Fallback, notoSerifSC, notoSerifSC Fallback, notoSerifJP, notoSerifJP Fallback, notoSerifTC, notoSerifTC Fallback */
+  /* h1:48px/400 字距 0.48px 行高 52.8px */
+
+  /* —— 动效（样式表实测）—— */
+  --ease-1:cubic-bezier(0.33, 1, 0.68, 1);
+  --ease-2:cubic-bezier(.4, 0, .2, 1);
+  --ease-3:cubic-bezier(.34,1.56,.64,1);
+  --ease-4:cubic-bezier(.23,1,.32,1);
+  --ease-5:cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-6:cubic-bezier(.4, 0, 1, 1);
+  /* 按钮过渡:0.2s cubic-bezier(0, 0, 0.2, 1) */
+  /* 时长梯:15s 1s 0.15s 2s 0.1s 0s 3s 0.3s */
+
+  /* —— 圆角（实测 top）—— */
+  --radius-1:0;
+  --radius-2:10px;
+  --radius-3:0px;
+  --radius-4:3px;
+  --radius-5:8px;
+  --radius-6:4px;
+  /* 按钮圆角:999px */
+  /* 媒体清单:video 2 · canvas 0 · svg 50 · img 38 */
+}
+
+/* —— 站点原始 CSS 自定义变量(节选，复刻参考) —— */
+:root{
+  --mantine-breakpoint-b640:640px;
+  --mantine-breakpoint-b768:768px;
+  --mantine-breakpoint-b1024:1024px;
+  --mantine-breakpoint-b1280:1280px;
+  --mantine-breakpoint-b1440:1440px;
+  --mantine-breakpoint-b1600:1600px;
+  --mantine-breakpoint-b1520:1520px;
+  --mantine-breakpoint-b1920:1920px;
+  --mantine-breakpoint-b2240:2240px;
+  --mantine-color-lovart-black-0:#000000;
+  --mantine-color-lovart-black-1:#000000;
+  --mantine-color-lovart-black-2:#000000;
+  --mantine-color-lovart-black-3:#000000;
+  --mantine-color-lovart-black-4:#000000;
+  --mantine-color-lovart-black-5:#000000;
+  --mantine-color-lovart-black-6:#000000;
+  --mantine-color-lovart-black-7:#000000;
+  --mantine-color-lovart-black-8:#000000;
+  --mantine-color-lovart-black-9:#000000;
+  --mantine-color-lovart-green-0:#F4FFF0;
+  --mantine-color-lovart-green-1:#E5FFDE;
+  --mantine-color-lovart-green-2:#D1FFC7;
+  --mantine-color-lovart-green-3:#A5FF94;
+  --mantine-color-lovart-green-4:#85FF75;
+  --mantine-color-lovart-green-5:#64D959;
+  --mantine-color-lovart-green-6:#57C74A;
+  --mantine-color-lovart-green-7:#239C3D;
+  --mantine-color-lovart-green-8:#125F23;
+  --mantine-color-lovart-green-9:#002E25;
+  --mantine-color-ocean-blue-0:#7AD1DD;
+  --mantine-color-ocean-blue-1:#5FCCDB;
+  --mantine-color-ocean-blue-2:#44CADC;
+  --mantine-color-ocean-blue-3:#2AC9DE;
+  --mantine-color-ocean-blue-4:#1AC2D9;
+  --mantine-color-ocean-blue-5:#11B7CD;
+  --mantine-color-ocean-blue-6:#09ADC3;
+  --mantine-color-ocean-blue-7:#0E99AC;
+  --mantine-color-ocean-blue-8:#128797;
+  --mantine-color-ocean-blue-9:#147885;
+  --mantine-color-bright-pink-0:#F0BBDD;
+}
