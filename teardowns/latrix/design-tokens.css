@@ -1,0 +1,58 @@
+/* 从线上站点真实抽取的设计 token(实锤,非观感推断) */
+/* 源:https://latrix.ai/ */
+:root{
+  --bg:rgb(241, 241, 243);
+  --ink:rgb(26, 24, 21);
+  --accent:#1a1815;   /* 探针 accentGuess,复刻前请与 topHex 核对 */
+  /* 高频色值:#f1f1f3 #e07a00 #e8dfd3 #1a1815 #ff8c00 #2d2017 */
+  --font-sans:"Playfair Display", "Noto Serif SC", Georgia, serif;
+  /* 加载字体:Italianno, Noto Serif SC, Playfair Display, Space Mono */
+  /* h1:126.72px/400 字距 normal 行高 116.582px */
+  --ease-1:cubic-bezier(.22,1,.36,1);
+  /* 按钮过渡:background 0.22s, color 0.22s, border-color 0.22s, transform 0.15s */
+  /* 时长梯:2s 16s 22s 4s 001ms 1.008s 76s 42s */
+  --radius-1:8px;
+  --radius-2:999px;
+  --radius-3:50%;
+  --radius-4:16px!important;
+  --radius-5:6px;
+  /* 按钮圆角:0px */
+  /* 媒体:video 0 canvas 1 svg 2 img 7 */
+}
+
+/* 站点原始 CSS 自定义变量(节选,复刻参考) */
+:root{
+  --paper:#f1f1f3;
+  --paper-deep:#f1f1f3;
+  --paper-plate:#e8dfd3;
+  --accent:#1a1815;
+  --warm:#ff8c00;
+  --accent-90:#1a1815e6;
+  --accent-70:#1a1815a6;
+  --accent-60:#1a18158c;
+  --accent-30:#1a181547;
+  --accent-10:#1a18151a;
+  --serif:"Playfair Display", "Noto Serif SC", Georgia, serif;
+  --display:"Playfair Display", "Noto Serif SC", Georgia, serif;
+  --sans:"Space Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+  --sans-ui:"Space Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+  --mono:"Space Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+  --hand:"Italianno", "Playfair Display", cursive;
+  --page-max:1200px;
+  --body-max:660px;
+  --side:clamp(24px, 7vw, 120px);
+  --s-8:8px;
+  --s-16:16px;
+  --s-24:24px;
+  --s-32:32px;
+  --s-48:48px;
+  --s-64:64px;
+  --s-96:96px;
+  --s-144:144px;
+  --invert:hover,.outline-btn--invert:focus-visible;
+  --ext:hover;
+  --paren:before;
+  --snap-visual-height:min(70dvh, calc(100dvh - 112px));
+  --snap-visual-width:min(45vw, calc(var(--snap-visual-height) * .75));
+  --snap-column-inset:max(var(--s-48), calc((50vw - var(--snap-visual-width)) / 2));
+}

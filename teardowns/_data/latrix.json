@@ -1,0 +1,16 @@
+{
+  "site": "Latrix",
+  "url": "https://latrix.ai/",
+  "probe": {
+    "body": { "background-color": "#f1f1f3" },
+    "accentGuess": "#ff8c00",
+    "h1": { "text": "We create digital lives", "font-family": "Playfair Display" }
+  },
+  "tokens": {
+    "topHex": [
+      { "hex": "#1a1815" },
+      { "hex": "#e8dfd3" },
+      { "hex": "#e07a00" }
+    ]
+  }
+}

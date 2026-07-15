@@ -28,6 +28,8 @@ SITES = [
                  "gemini/assets/actual-hero.jpg", "gemini/teardown.html", "gemini"),
     ("lovart",   "Lovart", "全球首款 AI 设计智能体", "深黑纸感、优雅衬线、Agent 思考过程可视化",
                  "lovart/assets/actual-hero.jpg", "lovart/teardown.html", "lovart"),
+    ("latrix",   "Latrix", "be, then know — 数字生命工作室", "米白展墙、Playfair 巨衬线、拧转字母螺旋",
+                 "latrix/screenshots/hero.jpg", "latrix/teardown.html", "latrix"),
 ]
 
 # comet 的真实品牌色(True Turquoise / Plex Blue / 天青),不走 _data。

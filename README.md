@@ -29,6 +29,7 @@ The principle throughout is **facts, not vibes**: every color, font, easing curv
 | Notion | [`teardowns/notion/`](teardowns/notion/teardown.html) | Friendly white, highlight pills, hand-drawn avatars |
 | Gemini | [`teardowns/gemini/`](teardowns/gemini/teardown.html) | Soft glow gradients, rounded chat entry |
 | Lovart | [`teardowns/lovart/`](teardowns/lovart/teardown.html) | Elegant serif, agent thinking-process visualized |
+| Latrix | [`teardowns/latrix/`](teardowns/latrix/teardown.html) | Off-white gallery wall, giant Playfair serif, twisting wordmark helix |
 
 Each folder holds: `teardown.html` (interactive), `设计解构.md` / `复刻指南.md` / `出处与方法.md` (deconstruction, replication guide, provenance), `事实核查.md` / `设计评审.md` (fact-check and design review), `design-tokens.css`, `tokens.json`, and as-seen screenshots. Docs are in Chinese; tokens and code are language-neutral.
 
