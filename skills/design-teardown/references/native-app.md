@@ -13,7 +13,7 @@ HTML、CSS、JS、Lottie JSON、内嵌字体等**源文件级实锤**。
 - 定位:`<App>.app/Contents/Frameworks/<...>Framework.framework/Versions/<ver>/Resources/resources.pak`。
 - 解析:读 pak 头(版本 + 条目数 + 编码),按条目偏移切分,逐条按需 gunzip、brotli 解压,dump 成文件。
 - 从解出的 CSS 里挖真实 token(色值、缓动、时长、圆角、CSS 变量),从 JSON 认 Lottie,从 ttf/woff 认字体。
-- 参考实现:本 skill 起源仓库 `Design-Teardown/tools/unpack_pak.py`(GRIT v5 解包)、`extract_media.py`(切媒体)、`analyze_lottie.py`(读 Lottie 渐变停靠点)。按需移植。
+- 参考实现:本 skill 起源仓库 `design-teardowns-product/tools/unpack_pak.py`(GRIT v5 解包)、`extract_media.py`(切媒体)、`analyze_lottie.py`(读 Lottie 渐变停靠点)。按需移植。
 
 ## 2、CDP 抓真实帧(录真运行,不碰用户会话)
 
@@ -23,7 +23,7 @@ HTML、CSS、JS、Lottie JSON、内嵌字体等**源文件级实锤**。
 - 用 app 自带的 Chromium,以 `--remote-debugging-port` + 独立 `--user-data-dir` 起一个**隔离的一次性实例**;
 - 在这个实例里打开目标内建页(如 `chrome://<app>-onboarding`),经 CDP `Page.startScreencast` 从渲染器**直抓真实帧**,拼成录屏;
 - 全程**不触碰用户真实浏览器会话与数据**,且是「真实运行的像素,不是拼接合成」。
-- 参考实现:`Design-Teardown/tools/cdp_capture.py`。
+- 参考实现:`design-teardowns-product/tools/cdp_capture.py`。
 
 ## 3、拆解产出
 
