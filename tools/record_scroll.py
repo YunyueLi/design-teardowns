@@ -5,7 +5,7 @@
 import sys, pathlib, time
 from playwright.sync_api import sync_playwright
 
-ROOT = pathlib.Path("/Users/admin/Desktop/Github/Design-Teardown/teardowns")
+ROOT = pathlib.Path("/Users/admin/Desktop/Github/design-teardowns-product/teardowns")
 SITES = {
     "linear":"https://linear.app","moonshot":"https://www.moonshot.ai","tutti":"https://tutti.sh",
     "ojo":"https://ojo.art","converge":"https://converge.ai","chatgpt":"https://openai.com/chatgpt/overview/",

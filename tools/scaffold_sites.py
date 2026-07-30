@@ -4,7 +4,7 @@
    每站目录:teardowns/<site>/{design-tokens.css, assets/actual.jpg, keyframes/, recording/}"""
 import json, pathlib, shutil, re
 
-ROOT = pathlib.Path("/Users/admin/Desktop/Github/Design-Teardown")
+ROOT = pathlib.Path("/Users/admin/Desktop/Github/design-teardowns-product")
 DATA = ROOT / "teardowns/_data"
 REF  = pathlib.Path("/Users/admin/Desktop/mirofish/products/eval-studio/design/landing-redesign/research-screenshots")
 

@@ -6,13 +6,13 @@ CSS 自定义变量、真实字体、缓动曲线(cubic-bezier)、色值、时�
 
 用法(仓库根,借 mirofish .venv 的 playwright):
   cd /Users/admin/Desktop/mirofish && uv run python \
-    /Users/admin/Desktop/Github/Design-Teardown/tools/extract_web_tokens.py [site ...]
-输出:Design-Teardown/teardowns/_data/<site>.json
+    /Users/admin/Desktop/Github/design-teardowns-product/tools/extract_web_tokens.py [site ...]
+输出:design-teardowns-product/teardowns/_data/<site>.json
 """
 import json, re, sys, pathlib, collections
 from playwright.sync_api import sync_playwright
 
-OUT = pathlib.Path("/Users/admin/Desktop/Github/Design-Teardown/teardowns/_data")
+OUT = pathlib.Path("/Users/admin/Desktop/Github/design-teardowns-product/teardowns/_data")
 OUT.mkdir(parents=True, exist_ok=True)
 
 SITES = {
