@@ -1,0 +1,1217 @@
+{
+  "site": "Lagom",
+  "url": "https://imlagom.com/",
+  "fonts": [
+    {
+      "url": "https://imlagom.com/_astro/fonts/5288773a5a229461.woff2",
+      "file": "5619e6_5288773a5a229461.woff2",
+      "bytes": 48256,
+      "type": "font/woff2"
+    },
+    {
+      "url": "https://imlagom.com/_astro/fonts/3debe574e6eadcf8.woff2",
+      "file": "049e57_3debe574e6eadcf8.woff2",
+      "bytes": 58084,
+      "type": "font/woff2"
+    },
+    {
+      "url": "https://imlagom.com/_astro/noto-serif-sc-111-400-normal.B4UjboLF.sub-f6df2876.woff2",
+      "file": "a9fd44_noto-serif-sc-111-400-normal.B4UjboLF.sub-f6df2876.woff2",
+      "bytes": 13008,
+      "type": "font/woff2"
+    },
+    {
+      "url": "https://imlagom.com/_astro/noto-serif-sc-113-400-normal.mBNpFg1t.sub-3b96ec78.woff2",
+      "file": "6e941c_noto-serif-sc-113-400-normal.mBNpFg1t.sub-3b96ec78.woff2",
+      "bytes": 18208,
+      "type": "font/woff2"
+    },
+    {
+      "url": "https://imlagom.com/_astro/noto-serif-sc-114-400-normal.BByM65_k.sub-090a411b.woff2",
+      "file": "21ed2e_noto-serif-sc-114-400-normal.BByM65_k.sub-090a411b.woff2",
+      "bytes": 19872,
+      "type": "font/woff2"
+    },
+    {
+      "url": "https://imlagom.com/_astro/noto-serif-sc-116-400-normal.7vFEeE2h.sub-77d023ea.woff2",
+      "file": "2397bb_noto-serif-sc-116-400-normal.7vFEeE2h.sub-77d023ea.woff2",
+      "bytes": 23764,
+      "type": "font/woff2"
+    },
+    {
+      "url": "https://imlagom.com/_astro/noto-serif-sc-117-400-normal.D2dRkkMi.sub-55006e8c.woff2",
+      "file": "243539_noto-serif-sc-117-400-normal.D2dRkkMi.sub-55006e8c.woff2",
+      "bytes": 27908,
+      "type": "font/woff2"
+    },
+    {
+      "url": "https://imlagom.com/_astro/noto-serif-sc-118-400-normal.Bfp6vhGl.sub-44806e5a.woff2",
+      "file": "8c99b8_noto-serif-sc-118-400-normal.Bfp6vhGl.sub-44806e5a.woff2",
+      "bytes": 26788,
+      "type": "font/woff2"
+    },
+    {
+      "url": "https://imlagom.com/_astro/noto-serif-sc-119-400-normal.DAVjKato.sub-c5a0c3ce.woff2",
+      "file": "748c9a_noto-serif-sc-119-400-normal.DAVjKato.sub-c5a0c3ce.woff2",
+      "bytes": 11632,
+      "type": "font/woff2"
+    },
+    {
+      "url": "https://imlagom.com/_astro/lxgw-wenkai-note.tvvrpq11.woff2",
+      "file": "2b2d2f_lxgw-wenkai-note.tvvrpq11.woff2",
+      "bytes": 8900,
+      "type": "font/woff2"
+    },
+    {
+      "url": "https://imlagom.com/_astro/noto-serif-sc-21-400-normal.JNqf8ldM.sub-7f3c8810.woff2",
+      "file": "6bbce9_noto-serif-sc-21-400-normal.JNqf8ldM.sub-7f3c8810.woff2",
+      "bytes": 1056,
+      "type": "font/woff2"
+    },
+    {
+      "url": "https://imlagom.com/_astro/noto-serif-sc-27-400-normal.Y6AvStvM.sub-00897b22.woff2",
+      "file": "e0b148_noto-serif-sc-27-400-normal.Y6AvStvM.sub-00897b22.woff2",
+      "bytes": 1176,
+      "type": "font/woff2"
+    },
+    {
+      "url": "https://imlagom.com/_astro/noto-serif-sc-28-400-normal.CKZqodJm.sub-c4d152bb.woff2",
+      "file": "d7ac79_noto-serif-sc-28-400-normal.CKZqodJm.sub-c4d152bb.woff2",
+      "bytes": 924,
+      "type": "font/woff2"
+    },
+    {
+      "url": "https://imlagom.com/_astro/noto-serif-sc-29-400-normal.lQml1r-l.sub-a4fdd5b9.woff2",
+      "file": "aa6795_noto-serif-sc-29-400-normal.lQml1r-l.sub-a4fdd5b9.woff2",
+      "bytes": 1020,
+      "type": "font/woff2"
+    },
+    {
+      "url": "https://imlagom.com/_astro/noto-serif-sc-41-400-normal.2yGRlUJ3.sub-0c3e54f5.woff2",
+      "file": "31bebc_noto-serif-sc-41-400-normal.2yGRlUJ3.sub-0c3e54f5.woff2",
+      "bytes": 860,
+      "type": "font/woff2"
+    },
+    {
+      "url": "https://imlagom.com/_astro/noto-serif-sc-44-400-normal.KrwQkVb4.sub-ee15e22d.woff2",
+      "file": "e7e963_noto-serif-sc-44-400-normal.KrwQkVb4.sub-ee15e22d.woff2",
+      "bytes": 1068,
+      "type": "font/woff2"
+    },
+    {
+      "url": "https://imlagom.com/_astro/noto-serif-sc-47-400-normal.BImRhQuH.sub-12393475.woff2",
+      "file": "ad61ac_noto-serif-sc-47-400-normal.BImRhQuH.sub-12393475.woff2",
+      "bytes": 1100,
+      "type": "font/woff2"
+    },
+    {
+      "url": "https://imlagom.com/_astro/noto-serif-sc-50-400-normal.CL92OsA_.sub-e3089e19.woff2",
+      "file": "01f590_noto-serif-sc-50-400-normal.CL92OsA_.sub-e3089e19.woff2",
+      "bytes": 996,
+      "type": "font/woff2"
+    },
+    {
+      "url": "https://imlagom.com/_astro/noto-serif-sc-51-400-normal.K2vB_amj.sub-0f995a49.woff2",
+      "file": "57dd25_noto-serif-sc-51-400-normal.K2vB_amj.sub-0f995a49.woff2",
+      "bytes": 988,
+      "type": "font/woff2"
+    },
+    {
+      "url": "https://imlagom.com/_astro/noto-serif-sc-53-400-normal.DdrtXsQA.sub-6f2d50e3.woff2",
+      "file": "0749e5_noto-serif-sc-53-400-normal.DdrtXsQA.sub-6f2d50e3.woff2",
+      "bytes": 860,
+      "type": "font/woff2"
+    },
+    {
+      "url": "https://imlagom.com/_astro/noto-serif-sc-57-400-normal.C6PkFoaO.sub-78a98aa2.woff2",
+      "file": "f9dfa0_noto-serif-sc-57-400-normal.C6PkFoaO.sub-78a98aa2.woff2",
+      "bytes": 916,
+      "type": "font/woff2"
+    },
+    {
+      "url": "https://imlagom.com/_astro/noto-serif-sc-61-400-normal.LGTmzE8I.sub-2c531fa3.woff2",
+      "file": "d0f17c_noto-serif-sc-61-400-normal.LGTmzE8I.sub-2c531fa3.woff2",
+      "bytes": 900,
+      "type": "font/woff2"
+    },
+    {
+      "url": "https://imlagom.com/_astro/noto-serif-sc-62-400-normal.gHAN3JT1.sub-6841f9df.woff2",
+      "file": "3f85f7_noto-serif-sc-62-400-normal.gHAN3JT1.sub-6841f9df.woff2",
+      "bytes": 1036,
+      "type": "font/woff2"
+    },
+    {
+      "url": "https://imlagom.com/_astro/noto-serif-sc-63-400-normal.Cwyt48md.sub-62eff615.woff2",
+      "file": "297686_noto-serif-sc-63-400-normal.Cwyt48md.sub-62eff615.woff2",
+      "bytes": 1004,
+      "type": "font/woff2"
+    },
+    {
+      "url": "https://imlagom.com/_astro/noto-serif-sc-64-400-normal.CD7LrdzK.sub-a4dc872d.woff2",
+      "file": "af516b_noto-serif-sc-64-400-normal.CD7LrdzK.sub-a4dc872d.woff2",
+      "bytes": 1140,
+      "type": "font/woff2"
+    },
+    {
+      "url": "https://imlagom.com/_astro/noto-serif-sc-67-400-normal.C1Oz0pFt.sub-3765abc6.woff2",
+      "file": "0b4808_noto-serif-sc-67-400-normal.C1Oz0pFt.sub-3765abc6.woff2",
+      "bytes": 992,
+      "type": "font/woff2"
+    },
+    {
+      "url": "https://imlagom.com/_astro/noto-serif-sc-72-400-normal.B61Z4Jd8.sub-4153b16c.woff2",
+      "file": "7d6fbe_noto-serif-sc-72-400-normal.B61Z4Jd8.sub-4153b16c.woff2",
+      "bytes": 1088,
+      "type": "font/woff2"
+    },
+    {
+      "url": "https://imlagom.com/_astro/noto-serif-sc-73-400-normal.CzLG5u1x.sub-5dccec3a.woff2",
+      "file": "11fb7f_noto-serif-sc-73-400-normal.CzLG5u1x.sub-5dccec3a.woff2",
+      "bytes": 1152,
+      "type": "font/woff2"
+    },
+    {
+      "url": "https://imlagom.com/_astro/noto-serif-sc-77-400-normal.DXmeg5Qd.sub-6049de35.woff2",
+      "file": "a92cfa_noto-serif-sc-77-400-normal.DXmeg5Qd.sub-6049de35.woff2",
+      "bytes": 880,
+      "type": "font/woff2"
+    },
+    {
+      "url": "https://imlagom.com/_astro/noto-serif-sc-81-400-normal.CtmR2MQs.sub-06424105.woff2",
+      "file": "7878cc_noto-serif-sc-81-400-normal.CtmR2MQs.sub-06424105.woff2",
+      "bytes": 936,
+      "type": "font/woff2"
+    },
+    {
+      "url": "https://imlagom.com/_astro/noto-serif-sc-84-400-normal.Cm-NqSUF.sub-67df708b.woff2",
+      "file": "24f7c6_noto-serif-sc-84-400-normal.Cm-NqSUF.sub-67df708b.woff2",
+      "bytes": 948,
+      "type": "font/woff2"
+    },
+    {
+      "url": "https://imlagom.com/_astro/noto-serif-sc-87-400-normal.Bvr1WGbA.sub-325ab759.woff2",
+      "file": "833567_noto-serif-sc-87-400-normal.Bvr1WGbA.sub-325ab759.woff2",
+      "bytes": 568,
+      "type": "font/woff2"
+    },
+    {
+      "url": "https://imlagom.com/_astro/noto-serif-sc-90-400-normal.B4B7KpSz.sub-aeb5caf6.woff2",
+      "file": "9e6859_noto-serif-sc-90-400-normal.B4B7KpSz.sub-aeb5caf6.woff2",
+      "bytes": 688,
+      "type": "font/woff2"
+    },
+    {
+      "url": "https://imlagom.com/_astro/noto-serif-sc-100-400-normal.B08sJxsw.sub-d71cecdc.woff2",
+      "file": "002937_noto-serif-sc-100-400-normal.B08sJxsw.sub-d71cecdc.woff2",
+      "bytes": 3300,
+      "type": "font/woff2"
+    },
+    {
+      "url": "https://imlagom.com/_astro/noto-serif-sc-101-400-normal.BHVnbrAJ.sub-f7ab57ef.woff2",
+      "file": "008e8f_noto-serif-sc-101-400-normal.BHVnbrAJ.sub-f7ab57ef.woff2",
+      "bytes": 1948,
+      "type": "font/woff2"
+    },
+    {
+      "url": "https://imlagom.com/_astro/noto-serif-sc-102-400-normal.No9wpYJV.sub-97d5180c.woff2",
+      "file": "7c2e77_noto-serif-sc-102-400-normal.No9wpYJV.sub-97d5180c.woff2",
+      "bytes": 2468,
+      "type": "font/woff2"
+    },
+    {
+      "url": "https://imlagom.com/_astro/noto-serif-sc-103-400-normal.b3eASUCI.sub-6f911c00.woff2",
+      "file": "31cbea_noto-serif-sc-103-400-normal.b3eASUCI.sub-6f911c00.woff2",
+      "bytes": 4092,
+      "type": "font/woff2"
+    },
+    {
+      "url": "https://imlagom.com/_astro/noto-serif-sc-104-400-normal.CpyjTWhh.sub-67dc8b97.woff2",
+      "file": "ea8aa4_noto-serif-sc-104-400-normal.CpyjTWhh.sub-67dc8b97.woff2",
+      "bytes": 3396,
+      "type": "font/woff2"
+    },
+    {
+      "url": "https://imlagom.com/_astro/noto-serif-sc-105-400-normal.BHHNimkF.sub-305bfd67.woff2",
+      "file": "6c128d_noto-serif-sc-105-400-normal.BHHNimkF.sub-305bfd67.woff2",
+      "bytes": 4544,
+      "type": "font/woff2"
+    },
+    {
+      "url": "https://imlagom.com/_astro/noto-serif-sc-106-400-normal.Y8T38z4b.sub-4cda35dd.woff2",
+      "file": "7df267_noto-serif-sc-106-400-normal.Y8T38z4b.sub-4cda35dd.woff2",
+      "bytes": 5116,
+      "type": "font/woff2"
+    },
+    {
+      "url": "https://imlagom.com/_astro/noto-serif-sc-107-400-normal.DgdGrCd2.sub-8df8dce7.woff2",
+      "file": "38db7d_noto-serif-sc-107-400-normal.DgdGrCd2.sub-8df8dce7.woff2",
+      "bytes": 5428,
+      "type": "font/woff2"
+    },
+    {
+      "url": "https://imlagom.com/_astro/noto-serif-sc-108-400-normal.DCLtaPv5.sub-1a77b830.woff2",
+      "file": "fd75c6_noto-serif-sc-108-400-normal.DCLtaPv5.sub-1a77b830.woff2",
+      "bytes": 10288,
+      "type": "font/woff2"
+    },
+    {
+      "url": "https://imlagom.com/_astro/noto-serif-sc-109-400-normal.D28QVX73.sub-3a6081f9.woff2",
+      "file": "33d77c_noto-serif-sc-109-400-normal.D28QVX73.sub-3a6081f9.woff2",
+      "bytes": 6720,
+      "type": "font/woff2"
+    },
+    {
+      "url": "https://imlagom.com/_astro/noto-serif-sc-110-400-normal.DjH-orF3.sub-e2dc809b.woff2",
+      "file": "091604_noto-serif-sc-110-400-normal.DjH-orF3.sub-e2dc809b.woff2",
+      "bytes": 12984,
+      "type": "font/woff2"
+    },
+    {
+      "url": "https://imlagom.com/_astro/noto-serif-sc-112-400-normal.Bjzy25E6.sub-1529d039.woff2",
+      "file": "66d212_noto-serif-sc-112-400-normal.Bjzy25E6.sub-1529d039.woff2",
+      "bytes": 15532,
+      "type": "font/woff2"
+    },
+    {
+      "url": "https://imlagom.com/_astro/noto-serif-sc-115-400-normal.CuUHU_AH.sub-11dc0276.woff2",
+      "file": "8c9fc9_noto-serif-sc-115-400-normal.CuUHU_AH.sub-11dc0276.woff2",
+      "bytes": 22484,
+      "type": "font/woff2"
+    },
+    {
+      "url": "https://imlagom.com/_astro/noto-serif-sc-latin-400-normal.bWtu-bD9.sub-ef846b1e.woff2",
+      "file": "7b602d_noto-serif-sc-latin-400-normal.bWtu-bD9.sub-ef846b1e.woff2",
+      "bytes": 11600,
+      "type": "font/woff2"
+    },
+    {
+      "url": "https://imlagom.com/_astro/noto-sans-sc-21-400-normal.Bfz3Xm1a.sub-2a1dd898.woff2",
+      "file": "f46ba0_noto-sans-sc-21-400-normal.Bfz3Xm1a.sub-2a1dd898.woff2",
+      "bytes": 604,
+      "type": "font/woff2"
+    },
+    {
+      "url": "https://imlagom.com/_astro/noto-sans-sc-27-400-normal.LzZF_NqI.sub-5254c8f3.woff2",
+      "file": "f9f6ff_noto-sans-sc-27-400-normal.LzZF_NqI.sub-5254c8f3.woff2",
+      "bytes": 1004,
+      "type": "font/woff2"
+    },
+    {
+      "url": "https://imlagom.com/_astro/noto-sans-sc-28-400-normal.CEc-bbYn.sub-ffebdb36.woff2",
+      "file": "de9dd6_noto-sans-sc-28-400-normal.CEc-bbYn.sub-ffebdb36.woff2",
+      "bytes": 864,
+      "type": "font/woff2"
+    },
+    {
+      "url": "https://imlagom.com/_astro/noto-sans-sc-29-400-normal.CTMIENlc.sub-db6af338.woff2",
+      "file": "06bcb7_noto-sans-sc-29-400-normal.CTMIENlc.sub-db6af338.woff2",
+      "bytes": 1012,
+      "type": "font/woff2"
+    },
+    {
+      "url": "https://imlagom.com/_astro/noto-sans-sc-41-400-normal.CwF0ysup.sub-d4dabe78.woff2",
+      "file": "c5ac38_noto-sans-sc-41-400-normal.CwF0ysup.sub-d4dabe78.woff2",
+      "bytes": 780,
+      "type": "font/woff2"
+    },
+    {
+      "url": "https://imlagom.com/_astro/noto-sans-sc-44-400-normal.wq9JI-iJ.sub-554606cd.woff2",
+      "file": "46ac7f_noto-sans-sc-44-400-normal.wq9JI-iJ.sub-554606cd.woff2",
+      "bytes": 1016,
+      "type": "font/woff2"
+    },
+    {
+      "url": "https://imlagom.com/_astro/noto-sans-sc-47-400-normal.CZbI_HNG.sub-d463afa7.woff2",
+      "file": "4b8880_noto-sans-sc-47-400-normal.CZbI_HNG.sub-d463afa7.woff2",
+      "bytes": 988,
+      "type": "font/woff2"
+    },
+    {
+      "url": "https://imlagom.com/_astro/noto-sans-sc-50-400-normal.BeYaGcbF.sub-865cc078.woff2",
+      "file": "1719a5_noto-sans-sc-50-400-normal.BeYaGcbF.sub-865cc078.woff2",
+      "bytes": 932,
+      "type": "font/woff2"
+    },
+    {
+      "url": "https://imlagom.com/_astro/noto-sans-sc-51-400-normal.BXmprHGd.sub-73ef7162.woff2",
+      "file": "e47f38_noto-sans-sc-51-400-normal.BXmprHGd.sub-73ef7162.woff2",
+      "bytes": 916,
+      "type": "font/woff2"
+    },
+    {
+      "url": "https://imlagom.com/_astro/noto-sans-sc-53-400-normal.DpzojyPN.sub-75103e99.woff2",
+      "file": "4828c5_noto-sans-sc-53-400-normal.DpzojyPN.sub-75103e99.woff2",
+      "bytes": 780,
+      "type": "font/woff2"
+    },
+    {
+      "url": "https://imlagom.com/_astro/noto-sans-sc-57-400-normal.0KJcqtwa.sub-34352014.woff2",
+      "file": "4d86ab_noto-sans-sc-57-400-normal.0KJcqtwa.sub-34352014.woff2",
+      "bytes": 924,
+      "type": "font/woff2"
+    },
+    {
+      "url": "https://imlagom.com/_astro/noto-sans-sc-61-400-normal.ggoUFMmb.sub-e79085b9.woff2",
+      "file": "0a2fc9_noto-sans-sc-61-400-normal.ggoUFMmb.sub-e79085b9.woff2",
+      "bytes": 864,
+      "type": "font/woff2"
+    },
+    {
+      "url": "https://imlagom.com/_astro/noto-sans-sc-62-400-normal.ytbDME29.sub-d4e7e58c.woff2",
+      "file": "04700f_noto-sans-sc-62-400-normal.ytbDME29.sub-d4e7e58c.woff2",
+      "bytes": 988,
+      "type": "font/woff2"
+    },
+    {
+      "url": "https://imlagom.com/_astro/noto-sans-sc-63-400-normal.BYQsjKYd.sub-9d9e788e.woff2",
+      "file": "28b11d_noto-sans-sc-63-400-normal.BYQsjKYd.sub-9d9e788e.woff2",
+      "bytes": 964,
+      "type": "font/woff2"
+    },
+    {
+      "url": "https://imlagom.com/_astro/noto-sans-sc-64-400-normal.9n4RwFjr.sub-d55dafb1.woff2",
+      "file": "ed2967_noto-sans-sc-64-400-normal.9n4RwFjr.sub-d55dafb1.woff2",
+      "bytes": 1072,
+      "type": "font/woff2"
+    },
+    {
+      "url": "https://imlagom.com/_astro/noto-sans-sc-67-400-normal.BS_2ddPd.sub-d562cbcc.woff2",
+      "file": "c96018_noto-sans-sc-67-400-normal.BS_2ddPd.sub-d562cbcc.woff2",
+      "bytes": 964,
+      "type": "font/woff2"
+    },
+    {
+      "url": "https://imlagom.com/_astro/noto-sans-sc-72-400-normal.BLx1zxYv.sub-235aff41.woff2",
+      "file": "3beef0_noto-sans-sc-72-400-normal.BLx1zxYv.sub-235aff41.woff2",
+      "bytes": 960,
+      "type": "font/woff2"
+    },
+    {
+      "url": "https://imlagom.com/_astro/noto-sans-sc-73-400-normal.tzRZHUkU.sub-ea8d2668.woff2",
+      "file": "2f81c1_noto-sans-sc-73-400-normal.tzRZHUkU.sub-ea8d2668.woff2",
+      "bytes": 996,
+      "type": "font/woff2"
+    },
+    {
+      "url": "https://imlagom.com/_astro/noto-sans-sc-77-400-normal.CxYpJvkI.sub-063b3ee6.woff2",
+      "file": "87e51b_noto-sans-sc-77-400-normal.CxYpJvkI.sub-063b3ee6.woff2",
+      "bytes": 832,
+      "type": "font/woff2"
+    },
+    {
+      "url": "https://imlagom.com/_astro/noto-sans-sc-81-400-normal.BImDXGMr.sub-b10f81c4.woff2",
+      "file": "037933_noto-sans-sc-81-400-normal.BImDXGMr.sub-b10f81c4.woff2",
+      "bytes": 840,
+      "type": "font/woff2"
+    },
+    {
+      "url": "https://imlagom.com/_astro/noto-sans-sc-84-400-normal.BtmNIfry.sub-dc18d566.woff2",
+      "file": "c555b2_noto-sans-sc-84-400-normal.BtmNIfry.sub-dc18d566.woff2",
+      "bytes": 956,
+      "type": "font/woff2"
+    },
+    {
+      "url": "https://imlagom.com/_astro/noto-sans-sc-87-400-normal.BGelIZWt.sub-1945227d.woff2",
+      "file": "bc0cf1_noto-sans-sc-87-400-normal.BGelIZWt.sub-1945227d.woff2",
+      "bytes": 600,
+      "type": "font/woff2"
+    },
+    {
+      "url": "https://imlagom.com/_astro/noto-sans-sc-90-400-normal.DRuAc-VY.sub-54e83cb2.woff2",
+      "file": "0f2284_noto-sans-sc-90-400-normal.DRuAc-VY.sub-54e83cb2.woff2",
+      "bytes": 728,
+      "type": "font/woff2"
+    },
+    {
+      "url": "https://imlagom.com/_astro/noto-sans-sc-100-400-normal.CX-7pUk_.sub-bc16718f.woff2",
+      "file": "b19704_noto-sans-sc-100-400-normal.CX-7pUk_.sub-bc16718f.woff2",
+      "bytes": 2664,
+      "type": "font/woff2"
+    },
+    {
+      "url": "https://imlagom.com/_astro/noto-sans-sc-101-400-normal.DYFU5ahq.sub-462325d5.woff2",
+      "file": "384b8c_noto-sans-sc-101-400-normal.DYFU5ahq.sub-462325d5.woff2",
+      "bytes": 1604,
+      "type": "font/woff2"
+    },
+    {
+      "url": "https://imlagom.com/_astro/noto-sans-sc-102-400-normal.lPQNp5DG.sub-0426c710.woff2",
+      "file": "18f77c_noto-sans-sc-102-400-normal.lPQNp5DG.sub-0426c710.woff2",
+      "bytes": 2124,
+      "type": "font/woff2"
+    },
+    {
+      "url": "https://imlagom.com/_astro/noto-sans-sc-103-400-normal.DrxRoDmn.sub-56f4b41e.woff2",
+      "file": "8d1f9a_noto-sans-sc-103-400-normal.DrxRoDmn.sub-56f4b41e.woff2",
+      "bytes": 3308,
+      "type": "font/woff2"
+    },
+    {
+      "url": "https://imlagom.com/_astro/noto-sans-sc-104-400-normal.DbzfdvQ5.sub-10ea5ff0.woff2",
+      "file": "72c5f6_noto-sans-sc-104-400-normal.DbzfdvQ5.sub-10ea5ff0.woff2",
+      "bytes": 2800,
+      "type": "font/woff2"
+    },
+    {
+      "url": "https://imlagom.com/_astro/noto-sans-sc-105-400-normal.BiKizsW3.sub-dddca13c.woff2",
+      "file": "3025b3_noto-sans-sc-105-400-normal.BiKizsW3.sub-dddca13c.woff2",
+      "bytes": 3696,
+      "type": "font/woff2"
+    },
+    {
+      "url": "https://imlagom.com/_astro/noto-sans-sc-106-400-normal.DDMMORp2.sub-65e4bf76.woff2",
+      "file": "1f6f29_noto-sans-sc-106-400-normal.DDMMORp2.sub-65e4bf76.woff2",
+      "bytes": 4060,
+      "type": "font/woff2"
+    },
+    {
+      "url": "https://imlagom.com/_astro/noto-sans-sc-107-400-normal.DUS2YNa3.sub-91cf4887.woff2",
+      "file": "2d543f_noto-sans-sc-107-400-normal.DUS2YNa3.sub-91cf4887.woff2",
+      "bytes": 4340,
+      "type": "font/woff2"
+    },
+    {
+      "url": "https://imlagom.com/_astro/noto-sans-sc-108-400-normal.D80tGT87.sub-42d75528.woff2",
+      "file": "434b25_noto-sans-sc-108-400-normal.D80tGT87.sub-42d75528.woff2",
+      "bytes": 8320,
+      "type": "font/woff2"
+    },
+    {
+      "url": "https://imlagom.com/_astro/noto-sans-sc-109-400-normal.ZEHPyOzB.sub-a2e12d9c.woff2",
+      "file": "7a0069_noto-sans-sc-109-400-normal.ZEHPyOzB.sub-a2e12d9c.woff2",
+      "bytes": 5392,
+      "type": "font/woff2"
+    },
+    {
+      "url": "https://imlagom.com/_astro/noto-sans-sc-110-400-normal.D1IYcvpb.sub-34ff2b9a.woff2",
+      "file": "b43de5_noto-sans-sc-110-400-normal.D1IYcvpb.sub-34ff2b9a.woff2",
+      "bytes": 10208,
+      "type": "font/woff2"
+    },
+    {
+      "url": "https://imlagom.com/_astro/noto-sans-sc-111-400-normal.C5Xi9UGz.sub-35bd9816.woff2",
+      "file": "0d073e_noto-sans-sc-111-400-normal.C5Xi9UGz.sub-35bd9816.woff2",
+      "bytes": 10136,
+      "type": "font/woff2"
+    },
+    {
+      "url": "https://imlagom.com/_astro/noto-sans-sc-112-400-normal.F9zvXQVU.sub-3e48678c.woff2",
+      "file": "610030_noto-sans-sc-112-400-normal.F9zvXQVU.sub-3e48678c.woff2",
+      "bytes": 12004,
+      "type": "font/woff2"
+    },
+    {
+      "url": "https://imlagom.com/_astro/noto-sans-sc-113-400-normal.DZoqVzDv.sub-b4bd3a1c.woff2",
+      "file": "a1cd97_noto-sans-sc-113-400-normal.DZoqVzDv.sub-b4bd3a1c.woff2",
+      "bytes": 14012,
+      "type": "font/woff2"
+    },
+    {
+      "url": "https://imlagom.com/_astro/noto-sans-sc-114-400-normal.CZUMxNv_.sub-f0504f33.woff2",
+      "file": "a4f0a5_noto-sans-sc-114-400-normal.CZUMxNv_.sub-f0504f33.woff2",
+      "bytes": 15876,
+      "type": "font/woff2"
+    },
+    {
+      "url": "https://imlagom.com/_astro/noto-sans-sc-115-400-normal.BQfWDt6M.sub-49be9ceb.woff2",
+      "file": "8e8575_noto-sans-sc-115-400-normal.BQfWDt6M.sub-49be9ceb.woff2",
+      "bytes": 17836,
+      "type": "font/woff2"
+    },
+    {
+      "url": "https://imlagom.com/_astro/noto-sans-sc-116-400-normal.B9rv4EzF.sub-f0832053.woff2",
+      "file": "de640a_noto-sans-sc-116-400-normal.B9rv4EzF.sub-f0832053.woff2",
+      "bytes": 18816,
+      "type": "font/woff2"
+    },
+    {
+      "url": "https://imlagom.com/_astro/noto-sans-sc-117-400-normal.QPrBdlQO.sub-d1e00a32.woff2",
+      "file": "96bf18_noto-sans-sc-117-400-normal.QPrBdlQO.sub-d1e00a32.woff2",
+      "bytes": 22208,
+      "type": "font/woff2"
+    },
+    {
+      "url": "https://imlagom.com/_astro/noto-sans-sc-118-400-normal.CqQ_A8sl.sub-a50ceadf.woff2",
+      "file": "363205_noto-sans-sc-118-400-normal.CqQ_A8sl.sub-a50ceadf.woff2",
+      "bytes": 21620,
+      "type": "font/woff2"
+    },
+    {
+      "url": "https://imlagom.com/_astro/noto-sans-sc-119-400-normal.flOVnW3A.sub-ad171d81.woff2",
+      "file": "3a836f_noto-sans-sc-119-400-normal.flOVnW3A.sub-ad171d81.woff2",
+      "bytes": 8144,
+      "type": "font/woff2"
+    },
+    {
+      "url": "https://imlagom.com/_astro/noto-sans-sc-latin-400-normal.C8q2FS1w.sub-def3bc86.woff2",
+      "file": "24a888_noto-sans-sc-latin-400-normal.C8q2FS1w.sub-def3bc86.woff2",
+      "bytes": 8156,
+      "type": "font/woff2"
+    },
+    {
+      "url": "https://imlagom.com/_astro/noto-sans-sc-21-700-normal.DNuQH_x9.sub-daf89662.woff2",
+      "file": "b9d533_noto-sans-sc-21-700-normal.DNuQH_x9.sub-daf89662.woff2",
+      "bytes": 608,
+      "type": "font/woff2"
+    },
+    {
+      "url": "https://imlagom.com/_astro/noto-sans-sc-27-700-normal.BgbFkYQY.sub-02bdbb73.woff2",
+      "file": "2179a3_noto-sans-sc-27-700-normal.BgbFkYQY.sub-02bdbb73.woff2",
+      "bytes": 1012,
+      "type": "font/woff2"
+    },
+    {
+      "url": "https://imlagom.com/_astro/noto-sans-sc-28-700-normal.CuobRVBH.sub-c0f968e6.woff2",
+      "file": "a3aa1a_noto-sans-sc-28-700-normal.CuobRVBH.sub-c0f968e6.woff2",
+      "bytes": 876,
+      "type": "font/woff2"
+    },
+    {
+      "url": "https://imlagom.com/_astro/noto-sans-sc-29-700-normal.D-3W49Od.sub-f34921ab.woff2",
+      "file": "6cbb3c_noto-sans-sc-29-700-normal.D-3W49Od.sub-f34921ab.woff2",
+      "bytes": 1004,
+      "type": "font/woff2"
+    },
+    {
+      "url": "https://imlagom.com/_astro/noto-sans-sc-41-700-normal.C9Fm98h0.sub-9db41ea5.woff2",
+      "file": "6a5334_noto-sans-sc-41-700-normal.C9Fm98h0.sub-9db41ea5.woff2",
+      "bytes": 784,
+      "type": "font/woff2"
+    },
+    {
+      "url": "https://imlagom.com/_astro/noto-sans-sc-44-700-normal.BFXLL_IX.sub-82edf886.woff2",
+      "file": "1bc208_noto-sans-sc-44-700-normal.BFXLL_IX.sub-82edf886.woff2",
+      "bytes": 1028,
+      "type": "font/woff2"
+    },
+    {
+      "url": "https://imlagom.com/_astro/noto-sans-sc-47-700-normal.BF63qZLo.sub-550cb65e.woff2",
+      "file": "d514d7_noto-sans-sc-47-700-normal.BF63qZLo.sub-550cb65e.woff2",
+      "bytes": 1008,
+      "type": "font/woff2"
+    },
+    {
+      "url": "https://imlagom.com/_astro/noto-sans-sc-50-700-normal.eWm1DQPT.sub-93e45a5c.woff2",
+      "file": "361fba_noto-sans-sc-50-700-normal.eWm1DQPT.sub-93e45a5c.woff2",
+      "bytes": 956,
+      "type": "font/woff2"
+    },
+    {
+      "url": "https://imlagom.com/_astro/noto-sans-sc-51-700-normal.Bon9yel0.sub-4a8cfb08.woff2",
+      "file": "fdedf7_noto-sans-sc-51-700-normal.Bon9yel0.sub-4a8cfb08.woff2",
+      "bytes": 888,
+      "type": "font/woff2"
+    },
+    {
+      "url": "https://imlagom.com/_astro/noto-sans-sc-53-700-normal.Cvcae_Sp.sub-880cbac2.woff2",
+      "file": "f6d8c5_noto-sans-sc-53-700-normal.Cvcae_Sp.sub-880cbac2.woff2",
+      "bytes": 780,
+      "type": "font/woff2"
+    },
+    {
+      "url": "https://imlagom.com/_astro/noto-sans-sc-57-700-normal.BGCjBx-g.sub-d3ac8484.woff2",
+      "file": "e783d3_noto-sans-sc-57-700-normal.BGCjBx-g.sub-d3ac8484.woff2",
+      "bytes": 924,
+      "type": "font/woff2"
+    },
+    {
+      "url": "https://imlagom.com/_astro/noto-sans-sc-61-700-normal.Ckxgx8cS.sub-f34115c0.woff2",
+      "file": "f5fcc0_noto-sans-sc-61-700-normal.Ckxgx8cS.sub-f34115c0.woff2",
+      "bytes": 868,
+      "type": "font/woff2"
+    },
+    {
+      "url": "https://imlagom.com/_astro/noto-sans-sc-62-700-normal.Cj6Ks4qP.sub-af248357.woff2",
+      "file": "56de7a_noto-sans-sc-62-700-normal.Cj6Ks4qP.sub-af248357.woff2",
+      "bytes": 988,
+      "type": "font/woff2"
+    },
+    {
+      "url": "https://imlagom.com/_astro/noto-sans-sc-63-700-normal.CIGqoDcs.sub-6abd74ca.woff2",
+      "file": "5fc1f0_noto-sans-sc-63-700-normal.CIGqoDcs.sub-6abd74ca.woff2",
+      "bytes": 960,
+      "type": "font/woff2"
+    },
+    {
+      "url": "https://imlagom.com/_astro/noto-sans-sc-64-700-normal.D6d3HRSr.sub-543df1a5.woff2",
+      "file": "2574f3_noto-sans-sc-64-700-normal.D6d3HRSr.sub-543df1a5.woff2",
+      "bytes": 1068,
+      "type": "font/woff2"
+    },
+    {
+      "url": "https://imlagom.com/_astro/noto-sans-sc-67-700-normal.CHv8ONeB.sub-692e6e8d.woff2",
+      "file": "3bd785_noto-sans-sc-67-700-normal.CHv8ONeB.sub-692e6e8d.woff2",
+      "bytes": 976,
+      "type": "font/woff2"
+    },
+    {
+      "url": "https://imlagom.com/_astro/noto-sans-sc-72-700-normal.OdQF7L87.sub-6ada7006.woff2",
+      "file": "be8b97_noto-sans-sc-72-700-normal.OdQF7L87.sub-6ada7006.woff2",
+      "bytes": 984,
+      "type": "font/woff2"
+    },
+    {
+      "url": "https://imlagom.com/_astro/noto-sans-sc-73-700-normal.I6Weyh5u.sub-e2b85db0.woff2",
+      "file": "80560a_noto-sans-sc-73-700-normal.I6Weyh5u.sub-e2b85db0.woff2",
+      "bytes": 996,
+      "type": "font/woff2"
+    },
+    {
+      "url": "https://imlagom.com/_astro/noto-sans-sc-77-700-normal.a-oEDj-K.sub-b0e12280.woff2",
+      "file": "54a8e2_noto-sans-sc-77-700-normal.a-oEDj-K.sub-b0e12280.woff2",
+      "bytes": 832,
+      "type": "font/woff2"
+    },
+    {
+      "url": "https://imlagom.com/_astro/noto-sans-sc-81-700-normal.B19yzEES.sub-57b5ae91.woff2",
+      "file": "1472cb_noto-sans-sc-81-700-normal.B19yzEES.sub-57b5ae91.woff2",
+      "bytes": 836,
+      "type": "font/woff2"
+    },
+    {
+      "url": "https://imlagom.com/_astro/noto-sans-sc-84-700-normal.O2_u3aEA.sub-09d77051.woff2",
+      "file": "85f776_noto-sans-sc-84-700-normal.O2_u3aEA.sub-09d77051.woff2",
+      "bytes": 988,
+      "type": "font/woff2"
+    },
+    {
+      "url": "https://imlagom.com/_astro/noto-sans-sc-87-700-normal.BtlEwhOv.sub-c389a803.woff2",
+      "file": "fb4059_noto-sans-sc-87-700-normal.BtlEwhOv.sub-c389a803.woff2",
+      "bytes": 608,
+      "type": "font/woff2"
+    },
+    {
+      "url": "https://imlagom.com/_astro/noto-sans-sc-90-700-normal.D_uM6Dda.sub-b3b9865c.woff2",
+      "file": "62ab8d_noto-sans-sc-90-700-normal.D_uM6Dda.sub-b3b9865c.woff2",
+      "bytes": 704,
+      "type": "font/woff2"
+    },
+    {
+      "url": "https://imlagom.com/_astro/noto-sans-sc-100-700-normal.skvlEtXa.sub-3bb9174d.woff2",
+      "file": "7e336d_noto-sans-sc-100-700-normal.skvlEtXa.sub-3bb9174d.woff2",
+      "bytes": 2680,
+      "type": "font/woff2"
+    },
+    {
+      "url": "https://imlagom.com/_astro/noto-sans-sc-101-700-normal.dFJVjo-b.sub-25a70e34.woff2",
+      "file": "8ebb57_noto-sans-sc-101-700-normal.dFJVjo-b.sub-25a70e34.woff2",
+      "bytes": 1676,
+      "type": "font/woff2"
+    },
+    {
+      "url": "https://imlagom.com/_astro/noto-sans-sc-102-700-normal.DCdJNbqs.sub-c5461c63.woff2",
+      "file": "3c482a_noto-sans-sc-102-700-normal.DCdJNbqs.sub-c5461c63.woff2",
+      "bytes": 2136,
+      "type": "font/woff2"
+    },
+    {
+      "url": "https://imlagom.com/_astro/noto-sans-sc-103-700-normal.NwkDGJ-F.sub-69a66f72.woff2",
+      "file": "af3828_noto-sans-sc-103-700-normal.NwkDGJ-F.sub-69a66f72.woff2",
+      "bytes": 3352,
+      "type": "font/woff2"
+    },
+    {
+      "url": "https://imlagom.com/_astro/noto-sans-sc-104-700-normal.AWqZgZB9.sub-b4f4faa5.woff2",
+      "file": "52c505_noto-sans-sc-104-700-normal.AWqZgZB9.sub-b4f4faa5.woff2",
+      "bytes": 2824,
+      "type": "font/woff2"
+    },
+    {
+      "url": "https://imlagom.com/_astro/noto-sans-sc-105-700-normal.Dt9qhYJX.sub-813b5120.woff2",
+      "file": "34f559_noto-sans-sc-105-700-normal.Dt9qhYJX.sub-813b5120.woff2",
+      "bytes": 3764,
+      "type": "font/woff2"
+    },
+    {
+      "url": "https://imlagom.com/_astro/noto-sans-sc-106-700-normal.B8W_9tdk.sub-94e9b593.woff2",
+      "file": "4b1f54_noto-sans-sc-106-700-normal.B8W_9tdk.sub-94e9b593.woff2",
+      "bytes": 4132,
+      "type": "font/woff2"
+    },
+    {
+      "url": "https://imlagom.com/_astro/noto-sans-sc-107-700-normal.CyOtrcxZ.sub-fdc7397f.woff2",
+      "file": "64804f_noto-sans-sc-107-700-normal.CyOtrcxZ.sub-fdc7397f.woff2",
+      "bytes": 4428,
+      "type": "font/woff2"
+    },
+    {
+      "url": "https://imlagom.com/_astro/noto-sans-sc-108-700-normal.O3gF6YEN.sub-153989b3.woff2",
+      "file": "fae622_noto-sans-sc-108-700-normal.O3gF6YEN.sub-153989b3.woff2",
+      "bytes": 8480,
+      "type": "font/woff2"
+    },
+    {
+      "url": "https://imlagom.com/_astro/noto-sans-sc-109-700-normal.DVabExlB.sub-ac5d0cc9.woff2",
+      "file": "b9c1a4_noto-sans-sc-109-700-normal.DVabExlB.sub-ac5d0cc9.woff2",
+      "bytes": 5476,
+      "type": "font/woff2"
+    },
+    {
+      "url": "https://imlagom.com/_astro/noto-sans-sc-110-700-normal.CDDEOvGI.sub-8a5f0c91.woff2",
+      "file": "f50ad9_noto-sans-sc-110-700-normal.CDDEOvGI.sub-8a5f0c91.woff2",
+      "bytes": 10364,
+      "type": "font/woff2"
+    },
+    {
+      "url": "https://imlagom.com/_astro/noto-sans-sc-111-700-normal.CCRAUGWF.sub-71e80c88.woff2",
+      "file": "b06956_noto-sans-sc-111-700-normal.CCRAUGWF.sub-71e80c88.woff2",
+      "bytes": 10304,
+      "type": "font/woff2"
+    },
+    {
+      "url": "https://imlagom.com/_astro/noto-sans-sc-112-700-normal.MSnZyhNJ.sub-fa603e2c.woff2",
+      "file": "ef9cbe_noto-sans-sc-112-700-normal.MSnZyhNJ.sub-fa603e2c.woff2",
+      "bytes": 12196,
+      "type": "font/woff2"
+    },
+    {
+      "url": "https://imlagom.com/_astro/noto-sans-sc-113-700-normal.O1EkYODd.sub-09f6cb41.woff2",
+      "file": "a8ba13_noto-sans-sc-113-700-normal.O1EkYODd.sub-09f6cb41.woff2",
+      "bytes": 14260,
+      "type": "font/woff2"
+    },
+    {
+      "url": "https://imlagom.com/_astro/noto-sans-sc-114-700-normal.CjhZr28b.sub-6e56031b.woff2",
+      "file": "c2bb0d_noto-sans-sc-114-700-normal.CjhZr28b.sub-6e56031b.woff2",
+      "bytes": 16112,
+      "type": "font/woff2"
+    },
+    {
+      "url": "https://imlagom.com/_astro/noto-sans-sc-115-700-normal._I8wVcfS.sub-a718e848.woff2",
+      "file": "398ea4_noto-sans-sc-115-700-normal._I8wVcfS.sub-a718e848.woff2",
+      "bytes": 18188,
+      "type": "font/woff2"
+    },
+    {
+      "url": "https://imlagom.com/_astro/noto-sans-sc-116-700-normal.C8Y6fFkh.sub-91625bfe.woff2",
+      "file": "08660e_noto-sans-sc-116-700-normal.C8Y6fFkh.sub-91625bfe.woff2",
+      "bytes": 19036,
+      "type": "font/woff2"
+    },
+    {
+      "url": "https://imlagom.com/_astro/noto-sans-sc-117-700-normal.Lia4tG1S.sub-15aae028.woff2",
+      "file": "8e309d_noto-sans-sc-117-700-normal.Lia4tG1S.sub-15aae028.woff2",
+      "bytes": 22724,
+      "type": "font/woff2"
+    },
+    {
+      "url": "https://imlagom.com/_astro/noto-sans-sc-118-700-normal.BitkqWcz.sub-ce1f90a5.woff2",
+      "file": "7b0198_noto-sans-sc-118-700-normal.BitkqWcz.sub-ce1f90a5.woff2",
+      "bytes": 21856,
+      "type": "font/woff2"
+    },
+    {
+      "url": "https://imlagom.com/_astro/noto-sans-sc-119-700-normal.B05r3al5.sub-95968068.woff2",
+      "file": "4487cb_noto-sans-sc-119-700-normal.B05r3al5.sub-95968068.woff2",
+      "bytes": 8312,
+      "type": "font/woff2"
+    },
+    {
+      "url": "https://imlagom.com/_astro/noto-sans-sc-latin-700-normal.BzR54Sjf.sub-fdbc7c9a.woff2",
+      "file": "e11b38_noto-sans-sc-latin-700-normal.BzR54Sjf.sub-fdbc7c9a.woff2",
+      "bytes": 8256,
+      "type": "font/woff2"
+    },
+    {
+      "url": "https://imlagom.com/_astro/noto-serif-sc-21-600-normal._PQd8BN_.sub-b1533d84.woff2",
+      "file": "f896d9_noto-serif-sc-21-600-normal._PQd8BN_.sub-b1533d84.woff2",
+      "bytes": 1040,
+      "type": "font/woff2"
+    },
+    {
+      "url": "https://imlagom.com/_astro/noto-serif-sc-27-600-normal.DkUFPCZd.sub-9521260a.woff2",
+      "file": "1e301f_noto-serif-sc-27-600-normal.DkUFPCZd.sub-9521260a.woff2",
+      "bytes": 1164,
+      "type": "font/woff2"
+    },
+    {
+      "url": "https://imlagom.com/_astro/noto-serif-sc-28-600-normal.XaL8GGeQ.sub-49b71b0a.woff2",
+      "file": "fbaaf3_noto-serif-sc-28-600-normal.XaL8GGeQ.sub-49b71b0a.woff2",
+      "bytes": 972,
+      "type": "font/woff2"
+    },
+    {
+      "url": "https://imlagom.com/_astro/noto-serif-sc-29-600-normal.8lGnoht7.sub-86a4a8c9.woff2",
+      "file": "0e39e3_noto-serif-sc-29-600-normal.8lGnoht7.sub-86a4a8c9.woff2",
+      "bytes": 1056,
+      "type": "font/woff2"
+    },
+    {
+      "url": "https://imlagom.com/_astro/noto-serif-sc-41-600-normal.YeKaF0XT.sub-4e2f84a8.woff2",
+      "file": "d76bc2_noto-serif-sc-41-600-normal.YeKaF0XT.sub-4e2f84a8.woff2",
+      "bytes": 848,
+      "type": "font/woff2"
+    },
+    {
+      "url": "https://imlagom.com/_astro/noto-serif-sc-44-600-normal.DAMFuI24.sub-7a5d197d.woff2",
+      "file": "704d55_noto-serif-sc-44-600-normal.DAMFuI24.sub-7a5d197d.woff2",
+      "bytes": 1068,
+      "type": "font/woff2"
+    },
+    {
+      "url": "https://imlagom.com/_astro/noto-serif-sc-47-600-normal.Dt6vpqbe.sub-209c5abc.woff2",
+      "file": "51eccb_noto-serif-sc-47-600-normal.Dt6vpqbe.sub-209c5abc.woff2",
+      "bytes": 1148,
+      "type": "font/woff2"
+    },
+    {
+      "url": "https://imlagom.com/_astro/noto-serif-sc-50-600-normal.DKHiFV3R.sub-2a596093.woff2",
+      "file": "a26297_noto-serif-sc-50-600-normal.DKHiFV3R.sub-2a596093.woff2",
+      "bytes": 1008,
+      "type": "font/woff2"
+    },
+    {
+      "url": "https://imlagom.com/_astro/noto-serif-sc-51-600-normal.nHUiYj73.sub-ea59a4bf.woff2",
+      "file": "17b422_noto-serif-sc-51-600-normal.nHUiYj73.sub-ea59a4bf.woff2",
+      "bytes": 956,
+      "type": "font/woff2"
+    },
+    {
+      "url": "https://imlagom.com/_astro/noto-serif-sc-53-600-normal.gS-rjJhY.sub-6ae865b5.woff2",
+      "file": "450deb_noto-serif-sc-53-600-normal.gS-rjJhY.sub-6ae865b5.woff2",
+      "bytes": 852,
+      "type": "font/woff2"
+    },
+    {
+      "url": "https://imlagom.com/_astro/noto-serif-sc-57-600-normal.Cgb0wYNl.sub-fec4a71b.woff2",
+      "file": "4f5774_noto-serif-sc-57-600-normal.Cgb0wYNl.sub-fec4a71b.woff2",
+      "bytes": 916,
+      "type": "font/woff2"
+    },
+    {
+      "url": "https://imlagom.com/_astro/noto-serif-sc-61-600-normal.BqnnDMe4.sub-7c8a126b.woff2",
+      "file": "e8e6da_noto-serif-sc-61-600-normal.BqnnDMe4.sub-7c8a126b.woff2",
+      "bytes": 920,
+      "type": "font/woff2"
+    },
+    {
+      "url": "https://imlagom.com/_astro/noto-serif-sc-62-600-normal.jrKoNELA.sub-184dad92.woff2",
+      "file": "b1f595_noto-serif-sc-62-600-normal.jrKoNELA.sub-184dad92.woff2",
+      "bytes": 1060,
+      "type": "font/woff2"
+    },
+    {
+      "url": "https://imlagom.com/_astro/noto-serif-sc-63-600-normal.DS1bP-c2.sub-7f51f40a.woff2",
+      "file": "302dc7_noto-serif-sc-63-600-normal.DS1bP-c2.sub-7f51f40a.woff2",
+      "bytes": 1024,
+      "type": "font/woff2"
+    },
+    {
+      "url": "https://imlagom.com/_astro/noto-serif-sc-64-600-normal.BQ4G_liA.sub-24724fc5.woff2",
+      "file": "007774_noto-serif-sc-64-600-normal.BQ4G_liA.sub-24724fc5.woff2",
+      "bytes": 1180,
+      "type": "font/woff2"
+    },
+    {
+      "url": "https://imlagom.com/_astro/noto-serif-sc-67-600-normal.DhJqqc0a.sub-22379171.woff2",
+      "file": "8a6f99_noto-serif-sc-67-600-normal.DhJqqc0a.sub-22379171.woff2",
+      "bytes": 988,
+      "type": "font/woff2"
+    },
+    {
+      "url": "https://imlagom.com/_astro/noto-serif-sc-72-600-normal.CFJRieib.sub-8f6f9b28.woff2",
+      "file": "84a659_noto-serif-sc-72-600-normal.CFJRieib.sub-8f6f9b28.woff2",
+      "bytes": 1080,
+      "type": "font/woff2"
+    },
+    {
+      "url": "https://imlagom.com/_astro/noto-serif-sc-73-600-normal.CbYPXTWi.sub-5dac9b85.woff2",
+      "file": "1d9951_noto-serif-sc-73-600-normal.CbYPXTWi.sub-5dac9b85.woff2",
+      "bytes": 1156,
+      "type": "font/woff2"
+    },
+    {
+      "url": "https://imlagom.com/_astro/noto-serif-sc-77-600-normal.DttXU36r.sub-aa6544a6.woff2",
+      "file": "19a7d6_noto-serif-sc-77-600-normal.DttXU36r.sub-aa6544a6.woff2",
+      "bytes": 908,
+      "type": "font/woff2"
+    },
+    {
+      "url": "https://imlagom.com/_astro/noto-serif-sc-81-600-normal.a7j_jqcg.sub-5391611b.woff2",
+      "file": "e24b30_noto-serif-sc-81-600-normal.a7j_jqcg.sub-5391611b.woff2",
+      "bytes": 984,
+      "type": "font/woff2"
+    },
+    {
+      "url": "https://imlagom.com/_astro/noto-serif-sc-84-600-normal.C9alyfXE.sub-9bb017a4.woff2",
+      "file": "ea5fb0_noto-serif-sc-84-600-normal.C9alyfXE.sub-9bb017a4.woff2",
+      "bytes": 980,
+      "type": "font/woff2"
+    },
+    {
+      "url": "https://imlagom.com/_astro/noto-serif-sc-87-600-normal.DV5DGk8Y.sub-cb1b7b8d.woff2",
+      "file": "6a03b3_noto-serif-sc-87-600-normal.DV5DGk8Y.sub-cb1b7b8d.woff2",
+      "bytes": 576,
+      "type": "font/woff2"
+    },
+    {
+      "url": "https://imlagom.com/_astro/noto-serif-sc-90-600-normal.DEC_HMBk.sub-3f83ddd8.woff2",
+      "file": "685eb3_noto-serif-sc-90-600-normal.DEC_HMBk.sub-3f83ddd8.woff2",
+      "bytes": 696,
+      "type": "font/woff2"
+    },
+    {
+      "url": "https://imlagom.com/_astro/noto-serif-sc-100-600-normal.uh_IoJFx.sub-8ec85a2c.woff2",
+      "file": "137ad5_noto-serif-sc-100-600-normal.uh_IoJFx.sub-8ec85a2c.woff2",
+      "bytes": 3276,
+      "type": "font/woff2"
+    },
+    {
+      "url": "https://imlagom.com/_astro/noto-serif-sc-101-600-normal.Ys4oPPtJ.sub-6cb346d5.woff2",
+      "file": "fe984b_noto-serif-sc-101-600-normal.Ys4oPPtJ.sub-6cb346d5.woff2",
+      "bytes": 1968,
+      "type": "font/woff2"
+    },
+    {
+      "url": "https://imlagom.com/_astro/noto-serif-sc-102-600-normal.BmVzeMTm.sub-a7ff3877.woff2",
+      "file": "07a397_noto-serif-sc-102-600-normal.BmVzeMTm.sub-a7ff3877.woff2",
+      "bytes": 2484,
+      "type": "font/woff2"
+    },
+    {
+      "url": "https://imlagom.com/_astro/noto-serif-sc-103-600-normal.DpH6oHB8.sub-8c941249.woff2",
+      "file": "f3d9e9_noto-serif-sc-103-600-normal.DpH6oHB8.sub-8c941249.woff2",
+      "bytes": 4168,
+      "type": "font/woff2"
+    },
+    {
+      "url": "https://imlagom.com/_astro/noto-serif-sc-104-600-normal.3k-EiYVy.sub-06e86df3.woff2",
+      "file": "be866e_noto-serif-sc-104-600-normal.3k-EiYVy.sub-06e86df3.woff2",
+      "bytes": 3476,
+      "type": "font/woff2"
+    },
+    {
+      "url": "https://imlagom.com/_astro/noto-serif-sc-105-600-normal.CCTiQ5qX.sub-02b263ee.woff2",
+      "file": "64e5c9_noto-serif-sc-105-600-normal.CCTiQ5qX.sub-02b263ee.woff2",
+      "bytes": 4556,
+      "type": "font/woff2"
+    },
+    {
+      "url": "https://imlagom.com/_astro/noto-serif-sc-106-600-normal.BJ7RqBay.sub-62c8e306.woff2",
+      "file": "f41232_noto-serif-sc-106-600-normal.BJ7RqBay.sub-62c8e306.woff2",
+      "bytes": 5180,
+      "type": "font/woff2"
+    },
+    {
+      "url": "https://imlagom.com/_astro/noto-serif-sc-107-600-normal.D0j9nGe7.sub-ac12041c.woff2",
+      "file": "d20720_noto-serif-sc-107-600-normal.D0j9nGe7.sub-ac12041c.woff2",
+      "bytes": 5448,
+      "type": "font/woff2"
+    },
+    {
+      "url": "https://imlagom.com/_astro/noto-serif-sc-108-600-normal.CwDLTI0X.sub-b07434bb.woff2",
+      "file": "441346_noto-serif-sc-108-600-normal.CwDLTI0X.sub-b07434bb.woff2",
+      "bytes": 10440,
+      "type": "font/woff2"
+    },
+    {
+      "url": "https://imlagom.com/_astro/noto-serif-sc-109-600-normal.DdK0MDGP.sub-36cbb6e7.woff2",
+      "file": "b71328_noto-serif-sc-109-600-normal.DdK0MDGP.sub-36cbb6e7.woff2",
+      "bytes": 6816,
+      "type": "font/woff2"
+    },
+    {
+      "url": "https://imlagom.com/_astro/noto-serif-sc-110-600-normal.cKCRFN_s.sub-b015b079.woff2",
+      "file": "8b1082_noto-serif-sc-110-600-normal.cKCRFN_s.sub-b015b079.woff2",
+      "bytes": 13204,
+      "type": "font/woff2"
+    },
+    {
+      "url": "https://imlagom.com/_astro/noto-serif-sc-111-600-normal.XLxRoWaL.sub-b3f4a41c.woff2",
+      "file": "d2e729_noto-serif-sc-111-600-normal.XLxRoWaL.sub-b3f4a41c.woff2",
+      "bytes": 13136,
+      "type": "font/woff2"
+    },
+    {
+      "url": "https://imlagom.com/_astro/noto-serif-sc-112-600-normal.Duud2wIz.sub-5734d701.woff2",
+      "file": "83b9ea_noto-serif-sc-112-600-normal.Duud2wIz.sub-5734d701.woff2",
+      "bytes": 15712,
+      "type": "font/woff2"
+    },
+    {
+      "url": "https://imlagom.com/_astro/noto-serif-sc-113-600-normal.YtVfFfTz.sub-ba7c0c0b.woff2",
+      "file": "0e57f2_noto-serif-sc-113-600-normal.YtVfFfTz.sub-ba7c0c0b.woff2",
+      "bytes": 18436,
+      "type": "font/woff2"
+    },
+    {
+      "url": "https://imlagom.com/_astro/noto-serif-sc-114-600-normal.C-hrBGSG.sub-f8d4d293.woff2",
+      "file": "ff49d7_noto-serif-sc-114-600-normal.C-hrBGSG.sub-f8d4d293.woff2",
+      "bytes": 20040,
+      "type": "font/woff2"
+    },
+    {
+      "url": "https://imlagom.com/_astro/noto-serif-sc-115-600-normal.D69YZdgh.sub-57310ccd.woff2",
+      "file": "3a7f79_noto-serif-sc-115-600-normal.D69YZdgh.sub-57310ccd.woff2",
+      "bytes": 22720,
+      "type": "font/woff2"
+    },
+    {
+      "url": "https://imlagom.com/_astro/noto-serif-sc-116-600-normal.49kpVL2K.sub-f9047592.woff2",
+      "file": "a66f8e_noto-serif-sc-116-600-normal.49kpVL2K.sub-f9047592.woff2",
+      "bytes": 24156,
+      "type": "font/woff2"
+    },
+    {
+      "url": "https://imlagom.com/_astro/noto-serif-sc-117-600-normal.C8g97LXR.sub-6c414879.woff2",
+      "file": "5674ee_noto-serif-sc-117-600-normal.C8g97LXR.sub-6c414879.woff2",
+      "bytes": 28212,
+      "type": "font/woff2"
+    },
+    {
+      "url": "https://imlagom.com/_astro/noto-serif-sc-118-600-normal.DwffOh3i.sub-e7ab8b16.woff2",
+      "file": "d46e23_noto-serif-sc-118-600-normal.DwffOh3i.sub-e7ab8b16.woff2",
+      "bytes": 27260,
+      "type": "font/woff2"
+    },
+    {
+      "url": "https://imlagom.com/_astro/noto-serif-sc-119-600-normal.D5qeL6rC.sub-3438d426.woff2",
+      "file": "1b398d_noto-serif-sc-119-600-normal.D5qeL6rC.sub-3438d426.woff2",
+      "bytes": 11676,
+      "type": "font/woff2"
+    },
+    {
+      "url": "https://imlagom.com/_astro/noto-serif-sc-latin-600-normal.B99s59ZT.sub-e1914b90.woff2",
+      "file": "f1e4f9_noto-serif-sc-latin-600-normal.B99s59ZT.sub-e1914b90.woff2",
+      "bytes": 11700,
+      "type": "font/woff2"
+    }
+  ],
+  "video": [
+    {
+      "url": "https://imlagom.com/home/projects/turtle-soup/turtle-desk-loop.mp4",
+      "file": "84c828_turtle-desk-loop.mp4",
+      "bytes": 810072,
+      "type": "video/mp4"
+    }
+  ],
+  "audio": [],
+  "image": [
+    {
+      "url": "https://imlagom.com/og/og-default.jpg",
+      "file": "045ab6_og-default.jpg",
+      "bytes": 112601,
+      "type": "image/jpeg"
+    },
+    {
+      "url": "https://imlagom.com/favicon-32.png",
+      "file": "131a77_favicon-32.png",
+      "bytes": 1468,
+      "type": "image/png"
+    },
+    {
+      "url": "https://imlagom.com/favicon.ico",
+      "file": "75ec2c_favicon.ico",
+      "bytes": 4760,
+      "type": "image/vnd.microsoft.icon"
+    },
+    {
+      "url": "https://imlagom.com/home/projects/turtle-soup/turtle-rain-overlay.webp",
+      "file": "9bec2f_turtle-rain-overlay.webp",
+      "bytes": 333430,
+      "type": "image/webp"
+    },
+    {
+      "url": "https://imlagom.com/photos/2026/IMG_20260624_171106/IMG_20260624_171106-1920.avif",
+      "file": "aacf6b_IMG_20260624_171106-1920.avif",
+      "bytes": 59153,
+      "type": "image/avif"
+    },
+    {
+      "url": "https://imlagom.com/home/projects/turtle-soup/turtle-desk-portrait.avif",
+      "file": "8dfc92_turtle-desk-portrait.avif",
+      "bytes": 94499,
+      "type": "image/avif"
+    },
+    {
+      "url": "https://imlagom.com/home/projects/turtle-soup/turtle-desk-wide.avif",
+      "file": "ec3246_turtle-desk-wide.avif",
+      "bytes": 78270,
+      "type": "image/avif"
+    },
+    {
+      "url": "https://imlagom.com/home/projects/journeypilot/journeypilot-light-glow.webp",
+      "file": "000cb0_journeypilot-light-glow.webp",
+      "bytes": 60218,
+      "type": "image/webp"
+    },
+    {
+      "url": "https://imlagom.com/photos/2025/IMG_20250429_125741/IMG_20250429_125741-960.avif",
+      "file": "3a0245_IMG_20250429_125741-960.avif",
+      "bytes": 21900,
+      "type": "image/avif"
+    },
+    {
+      "url": "https://imlagom.com/photos/2026/IMG_20260624_171123/IMG_20260624_171123-1440.avif",
+      "file": "03d2cc_IMG_20260624_171123-1440.avif",
+      "bytes": 183774,
+      "type": "image/avif"
+    },
+    {
+      "url": "https://imlagom.com/home/projects/easycode/easycode-proof-portrait.avif",
+      "file": "1d58b5_easycode-proof-portrait.avif",
+      "bytes": 209779,
+      "type": "image/avif"
+    },
+    {
+      "url": "https://imlagom.com/home/projects/easycode/easycode-proof-wide.avif",
+      "file": "c98b96_easycode-proof-wide.avif",
+      "bytes": 217597,
+      "type": "image/avif"
+    },
+    {
+      "url": "https://imlagom.com/home/projects/journeypilot/journeypilot-clearance-portrait.avif",
+      "file": "fa8b4e_journeypilot-clearance-portrait.avif",
+      "bytes": 64617,
+      "type": "image/avif"
+    },
+    {
+      "url": "https://imlagom.com/home/projects/journeypilot/journeypilot-clearance-wide.avif",
+      "file": "066fec_journeypilot-clearance-wide.avif",
+      "bytes": 80419,
+      "type": "image/avif"
+    },
+    {
+      "url": "https://imlagom.com/photos/2024/DSC00019/DSC00019-960.avif",
+      "file": "b5fbc8_DSC00019-960.avif",
+      "bytes": 69006,
+      "type": "image/avif"
+    },
+    {
+      "url": "https://imlagom.com/photos/2025/IMG_20250429_131455/IMG_20250429_131455-1440.avif",
+      "file": "c01733_IMG_20250429_131455-1440.avif",
+      "bytes": 151438,
+      "type": "image/avif"
+    },
+    {
+      "url": "https://imlagom.com/photos/2025/IMG_20250501_180135/IMG_20250501_180135-1440.avif",
+      "file": "2fae68_IMG_20250501_180135-1440.avif",
+      "bytes": 48953,
+      "type": "image/avif"
+    },
+    {
+      "url": "https://imlagom.com/photos/2025/IMG_20250429_130831/IMG_20250429_130831-1440.avif",
+      "file": "51e009_IMG_20250429_130831-1440.avif",
+      "bytes": 213571,
+      "type": "image/avif"
+    }
+  ],
+  "lottie": [],
+  "source": [
+    {
+      "url": "https://imlagom.com/_astro/index.CtF2uIdC.css",
+      "file": "a321d2_index.CtF2uIdC.css",
+      "bytes": 42832
+    },
+    {
+      "url": "https://imlagom.com/_astro/700.DsoVlJfy.css",
+      "file": "c8d1b1_700.DsoVlJfy.css",
+      "bytes": 28255
+    },
+    {
+      "url": "https://imlagom.com/_astro/fonts-cjk.b0724eda.css",
+      "file": "6604eb_fonts-cjk.b0724eda.css",
+      "bytes": 195584
+    }
+  ]
+}

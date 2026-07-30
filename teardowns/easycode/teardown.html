@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>EasyCode 设计解构 — 白纸红笔：十六屏逐屏，拆一张被批改过的作业</title>
+<meta name="description" content="对 imlagom.com/projects/easycode/ 的源码级拆解：批改纸世界的 token、判分基调系统、GSAP 与原生滚动驱动动画的混编、十六屏逐屏走查与可跑的红笔仪式。">
+<style>
+/* ============================================================
+   EasyCode 拆解页 — 白纸、红笔、马善政批注(真实 token)
+   ============================================================ */
+@font-face{font-family:"Noto Serif SC EC";src:url("real-assets/fonts/manual_NotoSerifSC-Regular-subset.woff2") format("woff2");font-weight:400;font-display:swap}
+@font-face{font-family:"Noto Serif SC EC";src:url("real-assets/fonts/d06ca0_NotoSerifSC-Bold-subset.woff2") format("woff2");font-weight:700;font-display:swap}
+@font-face{font-family:"Ma Shan Zheng EC";src:url("real-assets/fonts/dbc056_MaShanZheng-subset.woff2") format("woff2");font-weight:400;font-display:swap}
+:root{
+  /* —— 线上 :root 原值(实锤) —— */
+  --bg:#ffffff; --bg-soft:#f4f1ea; --bg-elevated:#ffffff;
+  --ink:#1c1b18; --ink-muted:#6f6b61;
+  --line:#e6e3da; --hairline:rgba(28,27,24,.09);
+  --red:#b3402a; --red-muted:#e5c4ba;
+  --accent:#c04a1a; --accent-muted:#e9c8b6;
+  --ok:#246b31; --warn:#8a5f00; --danger:#a3361a;
+  --serif:"Noto Serif SC EC","Noto Serif SC","Songti SC","STSong",Georgia,serif;
+  --kai:"Ma Shan Zheng EC","Ma Shan Zheng","Kaiti SC","STKaiti","KaiTi",serif;
+  --mono:"JetBrains Mono",Menlo,Consolas,ui-monospace,monospace;
+  --d2:clamp(30px,4.6vw,58px);
+  --body:17px; --small:14px; --tiny:12px;
+  --t-fast:120ms; --t-medium:180ms; --t-slow:240ms;
+  --ease:cubic-bezier(.22,1,.36,1);
+  --shadow-ring:0 0 0 1px rgba(28,27,24,.06);
+}
+*,*:before,*:after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-padding-top:76px;scroll-behavior:smooth}
+body{font-family:-apple-system,"system-ui","Helvetica Neue","PingFang SC","Microsoft YaHei",Roboto,sans-serif;font-size:var(--body);color:var(--ink);background:var(--bg-soft);line-height:1.75;-webkit-font-smoothing:antialiased}
+img{max-width:100%;display:block}
+a{color:inherit;text-decoration:none}
+button{font:inherit;color:inherit;background:none;border:none;cursor:pointer}
+:focus-visible{outline:2px solid var(--red);outline-offset:3px}
+h1,h2,h3{font-family:var(--serif);font-weight:700;letter-spacing:.01em}
+h2{font-size:var(--d2);line-height:1.3}
+.kicker{font-family:var(--mono);font-size:12px;letter-spacing:.3em;color:var(--red);text-transform:uppercase;margin-bottom:14px}
+.sub{color:var(--ink-muted);margin-top:10px;font-size:15px}
+.wrap{max-width:1200px;margin-inline:auto;padding-inline:clamp(20px,5vw,56px)}
+/* 顶栏 */
+#bar{position:sticky;top:0;z-index:50;height:62px;display:flex;align-items:center;justify-content:space-between;gap:12px;padding-inline:clamp(16px,4vw,40px);background:#fffffff2;backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+#bar b{font-family:var(--serif);font-size:16px}
+#bar span{font-family:var(--mono);font-size:10.5px;letter-spacing:.16em;color:var(--ink-muted)}
+#bar nav{display:flex;flex-wrap:wrap;gap:2px}
+#bar nav a{font-family:var(--mono);font-size:12.5px;color:#5a564c;padding:8px 9px;border-radius:6px;transition:color .18s,background .18s}
+#bar nav a:hover{color:var(--ink);background:#1c1b180d}
+/* hero:一张被批改的卷面 */
+.hero{position:relative;padding:clamp(64px,10vh,110px) 0 clamp(48px,7vh,80px);background:var(--bg);border-bottom:1px solid var(--line);overflow:hidden}
+.hero:before{content:"";position:absolute;inset:0;background:linear-gradient(var(--hairline) 1px,transparent 1px) 0 0/100% 44px;opacity:.5;pointer-events:none}
+.hero .wrap{position:relative}
+.hero h1{font-size:clamp(34px,5.6vw,72px);line-height:1.22;max-width:22ch}
+.strike{position:relative;display:inline-block}
+.strike i{position:absolute;left:-2%;right:-2%;top:54%;height:3px;background:var(--red);transform:scaleX(0);transform-origin:left;font-style:normal;rotate:-1.2deg}
+.strike i.re{top:60%;height:2px;opacity:.45;rotate:-.6deg}
+.strike.on i{transition:transform .9s var(--ease)}
+.strike.on i.re{transition:transform .7s var(--ease) .55s}
+.strike.on i{transform:scaleX(1)}
+.hero .note-kai{position:absolute;font-family:var(--kai);color:var(--red);font-size:clamp(18px,2.4vw,28px);rotate:-2.5deg;line-height:1.3}
+.hero-sub{margin-top:18px;max-width:52ch;color:var(--ink-muted)}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:22px}
+.chip{font-family:var(--mono);font-size:11.5px;letter-spacing:.04em;color:var(--ink);padding:7px 11px;background:var(--bg);border:1px solid var(--line);border-radius:999px;box-shadow:var(--shadow-ring)}
+.chip i{font-style:normal;color:var(--red);margin-right:.45em}
+/* 分节 */
+section.blk{padding:clamp(64px,9vh,110px) 0;border-top:1px solid var(--line)}
+section.blk.white{background:var(--bg)}
+.head{margin-bottom:clamp(26px,4vw,40px)}
+.prose{max-width:74ch;font-size:16px}
+.prose p{margin:.8em 0}
+.mk{font-family:var(--kai);color:var(--red);font-size:1.2em}
+/* 色板 */
+.swgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px;margin-top:18px}
+.sw{position:relative;display:grid;gap:2px;padding:10px 11px 50px;text-align:left;background:var(--bg-elevated);border:1px solid var(--line);border-radius:10px;box-shadow:var(--shadow-ring);transition:transform .18s var(--ease),box-shadow .18s}
+.sw:hover{transform:translateY(-2px);box-shadow:0 8px 22px rgba(28,27,24,.1)}
+.sw i{position:absolute;inset:auto 6px 6px;height:38px;font-style:normal;background:var(--c);border-radius:6px;box-shadow:inset 0 0 0 1px rgba(28,27,24,.08)}
+.sw b{font-size:13px}
+.sw code{font-family:var(--mono);font-size:10.5px;color:var(--ink-muted)}
+.swgroup{margin-top:24px}
+.swgroup h3{font-size:16px}
+/* 基调演示 */
+.tonebar{display:flex;flex-wrap:wrap;gap:10px;margin-top:16px}
+.pill{font-family:var(--mono);font-size:15px;display:inline-flex;align-items:center;gap:10px;padding:10px 22px;border-radius:999px;border:1.5px solid var(--tone-border);color:var(--tone-fg);background:var(--tone-surface)}
+.tone-ok{--tone-fg:var(--ok);--tone-mark:var(--ok);--tone-border:color-mix(in srgb,var(--ok) 36%,var(--line));--tone-surface:color-mix(in srgb,var(--ok) 6%,var(--bg-elevated))}
+.tone-warn{--tone-fg:var(--warn);--tone-mark:var(--warn);--tone-border:color-mix(in srgb,var(--warn) 36%,var(--line));--tone-surface:color-mix(in srgb,var(--warn) 6%,var(--bg-elevated))}
+.tone-danger{--tone-fg:var(--danger);--tone-mark:var(--danger);--tone-border:color-mix(in srgb,var(--danger) 36%,var(--line));--tone-surface:color-mix(in srgb,var(--danger) 6%,var(--bg-elevated))}
+.tone-red{--tone-fg:var(--red);--tone-mark:var(--red);--tone-border:color-mix(in srgb,var(--red) 36%,var(--line));--tone-surface:color-mix(in srgb,var(--red) 6%,var(--bg-elevated))}
+/* 字体样张 */
+.typecard{margin-top:14px;padding:22px 26px;background:var(--bg-elevated);border:1px solid var(--line);border-radius:12px;box-shadow:var(--shadow-ring)}
+.typecard .meta{display:flex;flex-wrap:wrap;gap:6px 18px;font-family:var(--mono);font-size:11px;letter-spacing:.06em;color:var(--ink-muted);margin-bottom:8px}
+.spec-h{font-family:var(--serif);font-weight:700;font-size:clamp(28px,4.4vw,52px);line-height:1.25}
+.spec-kai{font-family:var(--kai);font-size:clamp(22px,3vw,32px);color:var(--red);rotate:-1.5deg;display:inline-block}
+.spec-mono{font-family:var(--mono);font-size:14px;letter-spacing:.02em}
+/* 动效卡 */
+.kfgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:10px;margin-top:18px}
+.kfcard{padding:14px 16px;background:var(--bg-elevated);border:1px solid var(--line);border-radius:10px}
+.kfcard b{font-family:var(--mono);font-size:12.5px;letter-spacing:.06em;color:var(--red)}
+.kfcard p{margin-top:6px;font-size:13.5px;color:var(--ink-muted)}
+/* 逐屏走查 */
+.walk{display:grid;gap:clamp(24px,3.5vw,36px);margin-top:6px}
+.screen{display:grid;grid-template-columns:minmax(0,7fr) minmax(280px,5fr);gap:clamp(16px,2.5vw,26px);align-items:start}
+.screen.flip{grid-template-columns:minmax(280px,5fr) minmax(0,7fr)}
+.screen.flip .shot{order:2}
+.shot{padding:8px;background:var(--bg-elevated);border:1px solid var(--line);border-radius:10px;box-shadow:0 10px 30px rgba(28,27,24,.08)}
+.shot img{width:100%;border-radius:4px}
+.shot figcaption{padding:8px 4px 0;font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;color:var(--ink-muted)}
+.shot .more{display:flex;gap:6px;margin-top:6px}
+.shot .more img{width:calc(50% - 3px)}
+.scard h3{font-size:clamp(19px,2.2vw,24px)}
+.scard .no{display:inline-block;font-family:var(--mono);font-size:11px;letter-spacing:.2em;color:var(--bg);background:var(--red);padding:3px 10px;border-radius:999px;margin-bottom:10px}
+.scard blockquote{margin:10px 0;padding:8px 14px;border-left:3px solid var(--red-muted);font-family:var(--serif);font-size:15px;color:var(--ink);background:var(--bg)}
+.scard p{margin:.55em 0;font-size:14.5px;color:#4a463c}
+.scard .vals{display:flex;flex-wrap:wrap;gap:5px;margin-top:10px}
+.scard .vals code{font-family:var(--mono);font-size:10.5px;color:var(--ink);padding:3px 8px;border:1px solid var(--line);border-radius:999px;background:var(--bg)}
+/* 幕间节拍(窄卡) */
+.beatrow{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin:6px 0}
+.beatcard{padding:10px;background:var(--bg-elevated);border:1px solid var(--line);border-radius:10px}
+.beatcard img{width:100%;border-radius:4px}
+.beatcard b{display:block;margin-top:8px;font-family:var(--serif);font-size:14.5px}
+.beatcard p{margin-top:4px;font-size:12.5px;color:var(--ink-muted)}
+/* demo:红绿灯 */
+.demo{margin-top:24px;background:var(--bg-elevated);border:1px solid var(--line);border-radius:14px;overflow:hidden}
+.demo-head{display:flex;flex-wrap:wrap;align-items:baseline;gap:8px 16px;padding:14px 20px;border-bottom:1px solid var(--line)}
+.demo-head h3{font-size:18px}
+.demo-head span{margin-left:auto;font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;color:var(--ink-muted)}
+.demo-body{padding:24px 20px 26px;position:relative}
+.pillstage{display:flex;flex-wrap:wrap;gap:14px;align-items:center}
+.vpill{position:relative;isolation:isolate}
+.vpill .ring{position:absolute;left:50%;top:50%;width:100%;aspect-ratio:2.6/1;border-radius:999px;translate:-50% -50%;border:1.5px solid var(--tone-mark);opacity:0;pointer-events:none;z-index:-1}
+.vpill.run .ring{animation:ripple .78s var(--ease) both}
+.vpill.run .ring:nth-child(2){animation-delay:.13s}
+.vpill.run .ring:nth-child(3){animation-delay:.26s}
+@keyframes ripple{0%{opacity:.55;transform:scale(.6)}to{opacity:0;transform:scale(1.65)}}
+.margin-note{position:relative;font-family:var(--kai);color:var(--red);font-size:clamp(18px,2.2vw,24px);rotate:-2deg;display:inline-block;clip-path:inset(-12% 102% -14% -2%);transition:clip-path .8s var(--ease) .2s}
+.margin-note.in{clip-path:inset(-12% -3% -14% -2%)}
+/* demo:评级章 */
+.gradebar{display:flex;flex-wrap:wrap;gap:12px;align-items:center}
+.grade{font-family:var(--mono);font-weight:700;font-size:20px;display:grid;place-items:center;width:58px;height:58px;border-radius:12px;border:1.5px solid var(--tone-border);color:var(--tone-fg);background:var(--tone-surface)}
+.grade.on{animation:gradeStamp .5s var(--ease) both}
+@keyframes gradeStamp{from{box-shadow:0 0 0 0 color-mix(in srgb,var(--tone-mark,currentColor) 24%,transparent);transform:scale(1.08) rotate(-1deg)}to{box-shadow:0 0 0 3px transparent;transform:none}}
+.runbtn{font-family:var(--mono);font-size:13px;letter-spacing:.06em;padding:10px 22px;border-radius:999px;border:1.5px solid var(--ink);transition:background var(--t-medium) var(--ease),color var(--t-medium) var(--ease)}
+.runbtn:hover{background:var(--ink);color:var(--bg)}
+/* 复刻 */
+pre.code{margin-top:14px;padding:16px 18px;overflow-x:auto;color:#f4f1ea;background:#1c1b18;border-radius:10px;font-family:var(--mono);font-size:12px;line-height:1.8}
+pre.code b{color:#e9c8b6;font-weight:400}
+/* 出处 */
+.provgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:12px;margin-top:18px}
+.provcard{padding:16px 18px;background:var(--bg-elevated);border:1px solid var(--line);border-radius:12px}
+.provcard h4{font-family:var(--serif);font-size:16px}
+.provcard ul{margin:8px 0 0 1.1em;font-size:13.5px;color:#4a463c}
+.provcard li{margin:.35em 0}
+.asseen{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:20px}
+.asseen figure{padding:8px;background:var(--bg-elevated);border:1px solid var(--line);border-radius:10px}
+.asseen .scrollwrap{max-height:420px;overflow-y:auto;overscroll-behavior:contain;border-radius:4px}
+.asseen img{width:100%}
+.asseen figcaption{padding:7px 4px 0;font-family:var(--mono);font-size:10.5px;color:var(--ink-muted)}
+footer.end{padding:40px 0 50px;border-top:1px solid var(--line)}
+footer.end .wrap{display:flex;flex-wrap:wrap;gap:10px;justify-content:space-between;font-size:13px;color:var(--ink-muted)}
+.rv{opacity:0;transform:translateY(22px);transition:opacity .7s ease,transform .7s var(--ease)}
+.rv.in{opacity:1;transform:none}
+.copied{position:fixed;left:50%;bottom:26px;z-index:70;translate:-50%;font-family:var(--mono);font-size:13px;letter-spacing:.1em;color:var(--bg);background:var(--red);padding:10px 18px;border-radius:999px;opacity:0;pointer-events:none;transition:opacity .25s,translate .3s var(--ease)}
+.copied.show{opacity:1;translate:-50% -6px}
+@media (max-width:900px){.screen,.screen.flip{grid-template-columns:1fr}.screen.flip .shot{order:0}.asseen{grid-template-columns:1fr}}
+@media (prefers-reduced-motion:reduce){*,*:before,*:after{animation-duration:.01ms!important;transition-duration:.01ms!important}.rv{opacity:1;transform:none}.strike i{transform:scaleX(1)}.margin-note{clip-path:none}}
+</style>
+</head>
+<body>
+<div class="copied" id="copied" role="status" aria-live="polite">已复制到剪贴板</div>
+
+<header id="bar">
+  <div><b>EasyCode 设计解构</b> <span>GRADED PAPER · 批改纸世界</span></div>
+  <nav aria-label="页内导航">
+    <a href="#thesis">世界观</a><a href="#color">色彩</a><a href="#type">字体</a><a href="#motion">动效法则</a><a href="#walk">逐屏走查</a><a href="#sig">签名效果</a><a href="#build">复刻</a><a href="#prov">出处</a>
+  </nav>
+</header>
+
+<section class="hero">
+  <div class="wrap">
+    <p class="kicker">IMLAGOM.COM/PROJECTS/EASYCODE · 源码级拆解 · 二〇二六年七月</p>
+    <h1>白纸红笔：拆一张<br><span class="strike" id="strike">被批改过<i></i><i class="re"></i></span>的作业。</h1>
+    <span class="note-kai" style="right:6%;top:18%" aria-hidden="true">批注要像现场写上去的</span>
+    <p class="hero-sub">这一页把「刷题产品」讲成一场被老师全程看着的练习。它的动效底座有一份写在源码注释里的契约:双向可重演、运动方向与滚动方向一致、章节标题只揭一次——下面逐条拆到数值。</p>
+    <div class="chips" role="list">
+      <span class="chip" role="listitem"><i>●</i>批改红 #b3402a + 判分三色 ok/warn/danger</span>
+      <span class="chip" role="listitem"><i>●</i>--ease cubic-bezier(.22,1,.36,1) 同源 CSS 与 GSAP</span>
+      <span class="chip" role="listitem"><i>●</i>宋体 + 马善政楷体批注(自托管子集)</span>
+      <span class="chip" role="listitem"><i>●</i>GSAP 全家桶 + 原生 animation-timeline: view()</span>
+      <span class="chip" role="listitem"><i>●</i>16 屏,11 条时间轴,8 个 ScrollTrigger</span>
+    </div>
+  </div>
+</section>
+
+<section class="blk" id="thesis">
+  <div class="wrap">
+    <p class="kicker">01 世界观与叙事</p>
+    <div class="head"><h2>十六屏，讲完一道题的一生</h2>
+    <p class="sub">「红灯，绿灯。通过，或不通过。这几乎是传统刷题网站能告诉你的全部。」(站点开场原文)</p></div>
+    <div class="prose rv">
+      <p>叙事结构是<strong>一次完整的解题过程</strong>:遇题(LeetCode 704 二分查找)→ 写码(每 30 秒快照)→ 验证(浏览器本地判题)→ 卡壳(求助台阶)→ 提交(五维评级)→ 面试追问(分镜墙)→ 间隔复习(SRS 数轴)→ 日常工作台 → 数据主权 → 收尾。屏与屏之间穿插五张全景「节拍」幕(beat),像章节页一样让呼吸慢下来。</p>
+      <p>更罕见的是,<strong>动效哲学直接写在源码注释里</strong>(实锤,未压缩 main.js 1306 行):「全局法则(用户明令):双向可重演——窗口经过即重演,向上向下都演,但运动方向必须与滚动方向一致……章节标题例外:只在首次经过时做一次行级轻揭,回滚不重演。」注释里甚至带着日期与调参史(「水波节拍略收紧(间隔 1.05→0.8……)」)。这一页的源码本身就是一份设计文档。</p>
+      <p>工程底座:手写静态页(无打包器,资产带 ?v= 版本号,推断),GSAP core 加 ScrollTrigger、SplitText、CustomEase 与 Lenis 全部本地 vendored(「零外部请求」,注释原文);GSAP 缺失时有完整静态兜底——六台装置直接呈现已解态(实锤)。</p>
+    </div>
+  </div>
+</section>
+
+<section class="blk white" id="color">
+  <div class="wrap">
+    <p class="kicker">02 色彩系统</p>
+    <div class="head"><h2>纸白、墨黑、批改红，与一套判分基调</h2><p class="sub">全部 :root 原值(实锤)。点击色卡复制。</p></div>
+    <div class="swgroup rv"><h3>纸与墨</h3><div class="swgrid" id="sw1"></div></div>
+    <div class="swgroup rv"><h3>红笔与判分语义</h3><div class="swgrid" id="sw2"></div></div>
+    <div class="swgroup rv">
+      <h3>基调系统 --tone-*:一个类切换整套判分外观(实锤)</h3>
+      <p class="sub" style="margin-top:6px">边框、底色由语义色经 color-mix 派生:border = 36% 语义色混线色,surface = 6% 语义色混纸白。</p>
+      <div class="tonebar">
+        <span class="pill tone-ok">通过 · tone-ok</span>
+        <span class="pill tone-warn">部分通过 · tone-warn</span>
+        <span class="pill tone-danger">未通过 · tone-danger</span>
+        <span class="pill tone-red">批注 · tone-red</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="blk" id="type">
+  <div class="wrap">
+    <p class="kicker">03 字体系统</p>
+    <div class="head"><h2>宋体主张，楷体批注，等宽记录</h2><p class="sub">两族三支自托管子集(实锤);样张即真字体。</p></div>
+    <div class="typecard rv">
+      <div class="meta"><span>标题 · Noto Serif SC 400/700 子集(130,680 + 134,400 B)</span><span>H1 实测 124px / 700 / 字距 −1.488px</span></div>
+      <div class="spec-h">把刷题，变成被指导的练习。</div>
+    </div>
+    <div class="typecard rv">
+      <div class="meta"><span>批注 · Ma Shan Zheng 马善政楷体子集(42,348 B)</span><span>页边批、眉批、导师签收——全站的「老师笔迹」</span></div>
+      <span class="spec-kai">红绿灯只判对错，不教你变强。</span>
+    </div>
+    <div class="typecard rv">
+      <div class="meta"><span>等宽 · JetBrains Mono(系统回落链,未自托管)</span><span>代码、时间码、评级字母</span></div>
+      <p class="spec-mono" style="margin:0">while (lo &lt;= hi) — 04:24 已用 — 评级 A — O(log n) · O(1)</p>
+    </div>
+    <div class="prose rv" style="margin-top:16px"><p>正文交给系统黑体(17px/1.75),宋体只出现在「主张」层——标题与引用;楷体只出现在「批改」层。三副笔迹的分工就是页面的信息层级。</p></div>
+  </div>
+</section>
+
+<section class="blk white" id="motion">
+  <div class="wrap">
+    <p class="kicker">04 动效法则</p>
+    <div class="head"><h2>一条签名曲线，一部成文法</h2><p class="sub">CustomEase "sig" 与 CSS --ease 同源:cubic-bezier(.22,1,.36,1)(注释原文「6.1 收敛」,实锤)。</p></div>
+    <div class="kfgrid rv">
+      <div class="kfcard"><b>双向可重演(成文法)</b><p>「窗口经过即重演,向上向下都演,但运动方向必须与滚动方向一致」——方向感知的双向调度器统一管理;标题是唯一例外(SplitText 行级轻揭,一次性)。</p></div>
+      <div class="kfcard"><b>gradeStamp .5s</b><p>评级章落定:scale 1.08 rotate −1° 归位,同时一圈 3px 语义色 box-shadow 环收拢消散;冲击用 power2.in(「仪式」专用,注释点名例外)。</p></div>
+      <div class="kfcard"><b>判定丸水波</b><p>红绿灯节拍:每丸底部注入三环水波,间隔 .8s、每环 .78s、错开 .13s(注释含调参史);向下滚是未通过到通过,向上滚反演。</p></div>
+      <div class="kfcard"><b>红笔描画</b><p>dashoffset 描线,「长度运行时实测,宁准勿估」(注释原文);hero 的「刷题」二字先稳稳一笔划掉,再补一道更淡的复笔。</p></div>
+      <div class="kfcard"><b>主张句读亮</b><p>scrub 绑定滚动:「滚动的速度就是读它的速度」,start top 78% 到 end top 34%。</p></div>
+      <div class="kfcard"><b>原生滚动驱动动画</b><p>全景图显影不走 GSAP:@supports (animation-timeline: view()) 下用纯 CSS view() 时间线 + animation-range: cover 0% 到 100%(sdaImg 等三条 keyframes,实锤)。</p></div>
+      <div class="kfcard"><b>时长三档</b><p>--t-fast 120ms、--t-medium 180ms、--t-slow 240ms 管界面反馈;GSAP 侧 .24 到 1.05s 管演出;回弹曲线 (.34,1.56,.64,1) 出现 2 处。</p></div>
+      <div class="kfcard"><b>字体就绪再拆字</b><p>SplitText 等 document.fonts.ready(1.2s 兜底)再断行,autoSplit 随视口重排重建——杜绝旧行盒残留的 mask 错位(注释原文)。</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="blk" id="walk">
+  <div class="wrap">
+    <p class="kicker">05 逐屏走查 · 十六屏</p>
+    <div class="head"><h2>题目的一生，一屏一账</h2><p class="sub">截图为 1440×900 真实渲染;引文皆站点原文。</p></div>
+    <div class="walk">
+
+      <article class="screen rv">
+        <figure class="shot"><img src="assets/screens/00-verdict-beat.jpg" alt="第一屏:红灯绿灯开场" loading="lazy"><figcaption>SCREEN 01 · #verdict-beat</figcaption></figure>
+        <div class="scard"><span class="no">第一屏 · 开场节拍</span>
+          <h3>红灯，绿灯</h3>
+          <blockquote>通过，或不通过。这几乎是传统刷题网站能告诉你的全部。〇红绿灯只判对错，不教你变强。</blockquote>
+          <p>两枚判定丸(tone-danger 与 tone-ok)接连「落定」,每枚底部荡开三环水波;波纹将尽,一条楷体页边批才一笔写出(clip-path 从左揭开)。向上回滚时顺序反演:通过先撤,未通过后撤。</p>
+          <div class="vals"><code>水波三环 .78s × 错开 .13s</code><code>页边批 clip-path inset 揭写</code><code>方向感知重演(JS 调度器)</code></div>
+        </div>
+      </article>
+
+      <article class="screen flip rv">
+        <figure class="shot"><img src="assets/screens/01-sec1.jpg" alt="第二屏:其余的一切" loading="lazy"><figcaption>SCREEN 02 · 主张</figcaption></figure>
+        <div class="scard"><span class="no">第二屏 · 主张</span>
+          <h3>「其余的一切」逐行读亮</h3>
+          <blockquote>为什么慢、哪里该优化、思路卡在哪。……把刷题，变成被指导的练习。</blockquote>
+          <p>主张句以 SplitText 断行,scrub 绑定滚动逐行由灰转墨——读到哪亮到哪。标题「刷题」二字上方是红笔双笔划除(先稳笔后淡复笔),眉批楷体从左往右写出。</p>
+          <div class="vals"><code>scrub: top 78% → top 34%</code><code>划除两笔:.9s 主笔 + .7s 复笔(延迟 .55s)</code></div>
+        </div>
+      </article>
+
+      <article class="screen rv">
+        <figure class="shot"><img src="assets/screens/02-meet.jpg" alt="第三屏:遇题" loading="lazy"><figcaption>SCREEN 03 · #meet</figcaption></figure>
+        <div class="scard"><span class="no">第三屏 · 遇题</span>
+          <h3>一张题目卡，一次认真的对局</h3>
+          <blockquote>LeetCode 704 · 数组 · ★ 核心题——二分查找。¶每道题，都值得一次认真的对局。</blockquote>
+          <p>题面用真实题目排版(输入输出样例、mono 标注),右上角楷体眉批。题卡是白纸浮在麻灰底上的「作业纸」母题第一次完整亮相:1px 线框 + shadow-ring + 44px 横线格。</p>
+          <div class="vals"><code>题卡 --shadow-ring 0 0 0 1px 6%</code><code>楷体眉批 rotate −2° 上下</code></div>
+        </div>
+      </article>
+
+      <article class="screen flip rv">
+        <figure class="shot"><img src="assets/screens/03a-code.jpg" alt="第四屏:快照回放上" loading="lazy">
+          <div class="more"><img src="assets/screens/03b-code.jpg" alt="第四屏:快照回放下" loading="lazy"></div>
+          <figcaption>SCREEN 04 · #code(上、下)</figcaption></figure>
+        <div class="scard"><span class="no">第四屏 · 写码</span>
+          <h3>它记得你每一步</h3>
+          <blockquote>EasyCode 每 30 秒自动对代码工作区进行一次快照，并以 diff 形式保存答题全过程。</blockquote>
+          <p>过程回放装置:四帧快照沿时间轴滚动播放(4/4 · 1:30),面板高度按最大帧一次撑住避免跳动(注释原文);窄屏与降级路径换按钮点播。判题评委在提交时看到全过程,给「分钟级指导」。</p>
+          <div class="vals"><code>快照间隔 30s(产品语义)</code><code>回放面板高度预撑</code><code>降级:按钮交互版</code></div>
+        </div>
+      </article>
+
+      <article class="screen rv">
+        <div class="beatrow" style="margin:0">
+          <div class="beatcard"><img src="assets/screens/04-verify-beat.jpg" alt="验证节拍" loading="lazy"><b>SCREEN 05 · 节拍「验证」</b><p>「写完最后一笔，是时候开始验证了。」全景图以原生 view() 时间线显影(scale 1.045 + 30px 上移入场,22% 处到位)。</p></div>
+          <div class="beatcard"><img src="assets/screens/06-stuck-beat.jpg" alt="卡壳节拍" loading="lazy"><b>SCREEN 07 · 节拍「挣扎」</b><p>「在红线与绿灯之间，是思路的挣扎。」暗色全景幕,情绪最低点,也是唯一的深底节拍。</p></div>
+          <div class="beatcard"><img src="assets/screens/08-submit-beat.jpg" alt="提交节拍" loading="lazy"><b>SCREEN 09 · 节拍「提交」</b><p>「改掉一行，测试全绿。提交。」注释:「提交是满屏短过场,区间加宽让它驻留可感知,不再一闪而过(3.6)」。</p></div>
+          <div class="beatcard"><img src="assets/screens/11-consolidate-beat.jpg" alt="巩固节拍" loading="lazy"><b>SCREEN 12 · 节拍「巩固」</b><p>「面试结束，但训练尚未完结。」收束进入复习叙事。</p></div>
+        </div>
+        <div class="scard" style="margin-top:14px"><span class="no">第五、七、九、十二屏 · 节拍幕</span>
+          <h3>五张全景，给叙事换气</h3>
+          <p>节拍幕统一用横幅全景图(pano-*)+ 一句宋体短句;显影不占 GSAP 预算,交给 @supports 门控的原生 CSS 滚动驱动动画——GSAP 负责「装置」,浏览器负责「呼吸」。</p>
+          <div class="vals"><code>animation-timeline: view()</code><code>animation-range: cover 0% cover 100%</code></div>
+        </div>
+      </article>
+
+      <article class="screen flip rv">
+        <figure class="shot"><img src="assets/screens/05-test.jpg" alt="第六屏:判题机" loading="lazy"><figcaption>SCREEN 06 · #test</figcaption></figure>
+        <div class="scard"><span class="no">第六屏 · 验证</span>
+          <h3>那行 bug，你亲手改</h3>
+          <blockquote>判题机就跑在你的浏览器里:不排队、不上传，断网也能验。先跑一次，看它挂在哪;然后把那一行改对的，是你。</blockquote>
+          <p>可以真点的「运行测试」:第一轮红(return lo 的边界 bug),你改对那一行再跑转绿。代码块常驻台面,「改完也不消失」(注释)——装置不是录像,是真状态机。</p>
+          <div class="vals"><code>真实可运行判题装置</code><code>tone-danger → tone-ok 切基调</code></div>
+        </div>
+      </article>
+
+      <article class="screen rv">
+        <figure class="shot"><img src="assets/screens/07-help.jpg" alt="第八屏:求助台阶" loading="lazy"><figcaption>SCREEN 08 · #help</figcaption></figure>
+        <div class="scard"><span class="no">第八屏 · 求助</span>
+          <h3>它不给答案，它给台阶</h3>
+          <blockquote>第 1 层思路方向 → 第 2 层关键观察 → 第 3 层伪代码骨架 → 第 4 层完整代码:参考解——演示到骨架为止，这一层不给。</blockquote>
+          <p>阶梯装置的规则写死:「一次只上一层——只有下一层可点」(注释)。第四层永远按不下去,产品价值观直接做成交互约束。</p>
+          <div class="vals"><code>阶梯互斥状态机</code><code>第 4 层禁用即立场</code></div>
+        </div>
+      </article>
+
+      <article class="screen flip rv">
+        <figure class="shot"><img src="assets/screens/09-review.jpg" alt="第十屏:五维评级" loading="lazy"><figcaption>SCREEN 10 · #review</figcaption></figure>
+        <div class="scard"><span class="no">第十屏 · 复盘</span>
+          <h3>一次提交，五个维度</h3>
+          <blockquote>正确性、复杂度、代码质量、过程、建议。评级不是一个字母，是一份诊断。</blockquote>
+          <p>评分单排成病历式条目(主诊断、代码质量 9/10、复杂度 O(log n) · O(1)、过程复盘、训练处方),评级章 gradeStamp 落定(收环 + 微转);还有一条平行宇宙注:「如果当时没抓住那个 bug?」给出 B 档对照。五维雷达以 radarFill 四连 keyframes 展开。</p>
+          <div class="vals"><code>gradeStamp 收环 3px → 0</code><code>radarFill scale .62 → 1</code><code>平行宇宙对照(A/B 档)</code></div>
+        </div>
+      </article>
+
+      <article class="screen rv">
+        <figure class="shot"><img src="assets/screens/10a-interview.jpg" alt="第十一屏:面试分镜上" loading="lazy">
+          <div class="more"><img src="assets/screens/10b-interview.jpg" alt="面试分镜中" loading="lazy"><img src="assets/screens/10c-interview.jpg" alt="面试分镜下" loading="lazy"></div>
+          <figcaption>SCREEN 11 · #interview(三段)</figcaption></figure>
+        <div class="scard"><span class="no">第十一屏 · 面试</span>
+          <h3>写得出，更要讲得清:一面「分镜到站墙」</h3>
+          <blockquote>答得清楚，面试官会继续深挖;答得含糊，它会追到你答不上来为止。</blockquote>
+          <p>桌面端 GSAP pin + scrub 把对话钉住逐轮推进(「滚动推进对话」),并造了「到站墙」(2026-07-27 重写,注释原文):每轮问答是一站,真实滚动输入被墙夹住,程序化滚动(锚点)不受夹——防止一滚而过。窄屏保持按钮版,两者互斥。语料三问答对「自产品真实对话精炼而来(用户拍板 2026-07-17)」;规则:「面试只能收紧,不能放水。终局评估只在严格低于当前评级时才采纳。」</p>
+          <div class="vals"><code>pin + scrub 分镜</code><code>到站墙只夹真实输入</code><code>三到五轮追问</code></div>
+        </div>
+      </article>
+
+      <article class="screen flip rv">
+        <figure class="shot"><img src="assets/screens/12-srs.jpg" alt="第十三屏:SRS 数轴" loading="lazy"><figcaption>SCREEN 13 · #srs</figcaption></figure>
+        <div class="scard"><span class="no">第十三屏 · 复习</span>
+          <h3>学会的越来越远，薄弱的越来越近</h3>
+          <blockquote>↻ 你的时间，自动流向薄弱题。</blockquote>
+          <p>复利数轴装置用<strong>产品真实算法</strong>:评级间隔 A14、B7、C3、D1 天,连续巩固 ×2.0 与 ×1.3,封顶 180 天,刻度落在对数轴上(注释原文「刻度为真实算法节点」)。评级 A 生成 14 天间隔,列入「可以顺手巩固」。</p>
+          <div class="vals"><code>A14 / B7 / C3 / D1 天</code><code>连续巩固 ×2.0 · ×1.3 · 封顶 180</code><code>对数轴</code></div>
+        </div>
+      </article>
+
+      <article class="screen rv">
+        <figure class="shot"><img src="assets/screens/13a-daily.jpg" alt="第十四屏:工作台上" loading="lazy">
+          <div class="more"><img src="assets/screens/13b-daily.jpg" alt="第十四屏:工作台下" loading="lazy"></div>
+          <figcaption>SCREEN 14 · #daily(上、下)</figcaption></figure>
+        <div class="scard"><span class="no">第十四屏 · 工作台</span>
+          <h3>今日训练处方</h3>
+          <blockquote>该先复习什么、推荐下一题是哪道、近七天练了多少。……队列按优先级排好，低评级和逾期最久的排在最前。</blockquote>
+          <p>三块产品截图卡(待复习队列、本局复盘、历史页)沿滚动错落入场(data-rv-lag 分批,注释「Ch5 高潮屏用」同机制),同题历次提交并排陈列。</p>
+          <div class="vals"><code>data-rv-lag 分批显影</code><code>历史并排对照</code></div>
+        </div>
+      </article>
+
+      <article class="screen flip rv">
+        <figure class="shot"><img src="assets/screens/14-yours.jpg" alt="第十五屏:数据主权" loading="lazy"><figcaption>SCREEN 15 · #yours</figcaption></figure>
+        <div class="scard"><span class="no">第十五屏 · 你的桌子</span>
+          <h3>代码不出你的机器</h3>
+          <blockquote>测试跑在你的浏览器里 — 评委由你任命 — 数据永远是你的。「你的桌子你做主。」</blockquote>
+          <p>三卡横排讲清隐私与本地化立场,与第六屏的本地判题机首尾呼应——主张不是口号,前文已经演示过了。</p>
+          <div class="vals"><code>三卡等距 + 楷体标语</code></div>
+        </div>
+      </article>
+
+      <article class="screen rv">
+        <figure class="shot"><img src="assets/screens/15-closing.jpg" alt="第十六屏:收尾" loading="lazy"><figcaption>SCREEN 16 · #closing</figcaption></figure>
+        <div class="scard"><span class="no">第十六屏 · 收尾</span>
+          <h3>尾花转正，终章落印</h3>
+          <blockquote>你的题库，你的模型。今天开始，志逐算法之巅。</blockquote>
+          <p>尾花装饰「转正」(双向可重演),终章印章「盖上不撤」——注释专门处理了预藏竞态:印章只在仍位于视口下方时预藏,防止刷新恰停底部时它被永久藏住(实锤,注释逐句)。</p>
+          <div class="vals"><code>印章 fromTo autoAlpha 0→1</code><code>预藏条件:仍在视口下方</code></div>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="blk white" id="sig">
+  <div class="wrap">
+    <p class="kicker">06 签名效果 · 可跑复现</p>
+    <div class="head"><h2>判定丸的水波，评级章的收环</h2><p class="sub">真实缓动(.22,1,.36,1)、真实节拍(.78s 环、.13s 错开)、真实基调色。</p></div>
+    <div class="demo rv">
+      <div class="demo-head"><h3>一、红灯绿灯 — 判定丸水波 + 页边批写出</h3><span>复现自 #verdict-beat</span></div>
+      <div class="demo-body">
+        <div class="pillstage">
+          <span class="vpill" id="vp1"><span class="pill tone-danger">未通过</span><i class="ring"></i><i class="ring"></i><i class="ring"></i></span>
+          <span class="vpill" id="vp2"><span class="pill tone-ok">通过</span><i class="ring"></i><i class="ring"></i><i class="ring"></i></span>
+          <button class="runbtn" id="runPills" type="button">按原站节拍跑一遍</button>
+        </div>
+        <p style="margin-top:18px"><span class="margin-note" id="marginNote">红绿灯只判对错，不教你变强。</span></p>
+      </div>
+    </div>
+    <div class="demo rv">
+      <div class="demo-head"><h3>二、评级章 gradeStamp — 语义色收环</h3><span>复现自 #review 评分单</span></div>
+      <div class="demo-body">
+        <div class="gradebar">
+          <span class="grade tone-ok" data-g>A</span>
+          <span class="grade tone-warn" data-g>B</span>
+          <span class="grade tone-danger" data-g>C</span>
+          <span class="grade tone-red" data-g>D</span>
+          <button class="runbtn" id="runGrades" type="button">逐枚落章</button>
+        </div>
+        <p style="margin-top:14px;font-family:var(--mono);font-size:11px;color:var(--ink-muted)">每枚:scale 1.08 rotate −1° 落定,3px 语义色环收拢;环色 = color-mix(语义色 24%, 透明)。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="blk" id="build">
+  <div class="wrap">
+    <p class="kicker">07 复刻要点(页内速览)</p>
+    <div class="head"><h2>把批改纸带走</h2><p class="sub">完整版见同目录《复刻指南》。</p></div>
+    <button class="runbtn" id="copyRoot" type="button">复制 :root token</button>
+    <pre class="code rv" id="rootBlock">:root{
+  <b>/* 纸墨 */</b> --bg:#ffffff; --bg-soft:#f4f1ea; --ink:#1c1b18; --ink-muted:#6f6b61;
+  --line:#e6e3da; --hairline:rgba(28,27,24,.09);
+  <b>/* 红笔 */</b> --red:#b3402a; --red-muted:#e5c4ba; --accent:#c04a1a; --accent-muted:#e9c8b6;
+  <b>/* 判分 */</b> --ok:#246b31; --warn:#8a5f00; --danger:#a3361a;
+  <b>/* 节奏 */</b> --t-fast:120ms; --t-medium:180ms; --t-slow:240ms;
+  --ease:cubic-bezier(.22,1,.36,1);
+  --shadow-ring:0 0 0 1px rgba(28,27,24,.06);
+}
+<b>/* 基调系统:一个类切换整套判分外观 */</b>
+.tone-ok{ --tone-fg:var(--ok); --tone-mark:var(--ok);
+  --tone-border:color-mix(in srgb,var(--ok) 36%,var(--line));
+  --tone-surface:color-mix(in srgb,var(--ok) 6%,var(--bg-elevated)); }
+<b>/* 评级章 */</b>
+@keyframes gradeStamp{
+  from{ box-shadow:0 0 0 0 color-mix(in srgb,var(--tone-mark) 24%,transparent);
+        transform:scale(1.08) rotate(-1deg) }
+  to  { box-shadow:0 0 0 3px transparent; transform:none } }
+<b>/* 全景显影:原生滚动驱动,GSAP 之外零成本 */</b>
+@supports (animation-timeline: view()){
+  .pano img{ animation:sdaImg both; animation-timeline:view(); animation-range:cover 0% cover 100%; } }</pre>
+    <div class="prose rv"><p><strong>工程坑(多数由源码注释自曝,弥足珍贵):</strong>SplitText 必须等 fonts.ready 再拆字;分镜段整体退出通用显影管理避免扰动 pin;终章印章要按「仍在视口下方」预藏防竞态;定高滚动框挂 data-lenis-prevent 且只在真溢出时拦截;GSAP 缺失时六装置全部呈现已解态——降级不是白屏,是答案卷。</p></div>
+  </div>
+</section>
+
+<section class="blk white" id="prov">
+  <div class="wrap">
+    <p class="kicker">08 出处与方法(页内简版)</p>
+    <div class="head"><h2>数值的来路</h2><p class="sub">完整链路见同目录《出处与方法》。</p></div>
+    <div class="provgrid rv">
+      <div class="provcard"><h4>实锤</h4><ul>
+        <li>42 个 :root 变量、4 条贝塞尔、11 个 keyframes:tokens.json 与 main.css(带编号注释)原文</li>
+        <li>动效契约、调参史、装置规则:未压缩 main.js 1306 行注释逐句</li>
+        <li>SRS 算法参数、面试规则、四层台阶语料:JS 数据与 HTML 原文</li>
+        <li>三支字体子集与 18 张图:落盘字节 + manifest</li>
+      </ul></div>
+      <div class="provcard"><h4>推断与未及</h4><ul>
+        <li>「手写静态页(无打包器)」:?v= 版本号与目录形态推断</li>
+        <li>分镜墙的滚动夹持数值(每站区间)未逐一实测</li>
+        <li>判题机的题目沙箱实现(Worker 与否)未深挖</li>
+      </ul></div>
+    </div>
+    <div class="asseen rv">
+      <figure><img src="assets/actual-hero.jpg" alt="首屏真实渲染" loading="lazy"><figcaption>as-seen 首屏 — 2026.07.30 抓取</figcaption></figure>
+      <figure><div class="scrollwrap"><img src="assets/actual-full.jpg" alt="整页真实渲染(可滚动)" loading="lazy"></div><figcaption>as-seen 整页 — 框内可滚动</figcaption></figure>
+    </div>
+  </div>
+</section>
+
+<footer class="end">
+  <div class="wrap"><span>EasyCode 设计解构 — 真实抽取于 2026 年 7 月 30 日,Chromium 148,1440×900。</span><span>逆向素材仅限内部研究比对,勿对外分发。</span></div>
+</footer>
+
+<script>
+const $=(s,r=document)=>r.querySelector(s),$$=(s,r=document)=>[...r.querySelectorAll(s)];
+const reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
+if(!reduced){const io=new IntersectionObserver(es=>{for(const e of es)if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}},{threshold:.12});$$('.rv').forEach(el=>io.observe(el))}else $$('.rv').forEach(el=>el.classList.add('in'));
+/* hero 划除 */
+setTimeout(()=>$('#strike').classList.add('on'), reduced?0:500);
+/* 色板 */
+const G1=[['--bg','#ffffff','纸白(卷面)'],['--bg-soft','#f4f1ea','麻灰(桌面)'],['--ink','#1c1b18','墨黑'],['--ink-muted','#6f6b61','次墨'],['--line','#e6e3da','线'],['--hairline','rgba(28,27,24,.09)','发丝线']];
+const G2=[['--red','#b3402a','批改红(与主站同源)'],['--red-muted','#e5c4ba','红的洇淡'],['--accent','#c04a1a','强调橙红'],['--accent-muted','#e9c8b6','强调洇淡'],['--ok','#246b31','通过绿'],['--warn','#8a5f00','部分通过琥珀'],['--danger','#a3361a','未通过红']];
+function sw([n,v,l]){const b=document.createElement('button');b.className='sw';b.style.setProperty('--c',v);b.innerHTML=`<b>${l}</b><code>${n} ${v}</code><i aria-hidden="true"></i>`;b.addEventListener('click',()=>copy(v));return b}
+[[G1,'sw1'],[G2,'sw2']].forEach(([g,id])=>{const w=$('#'+id);g.forEach(s=>w.append(sw(s)))});
+const copied=$('#copied');let ct=0;
+function copy(t){(navigator.clipboard?navigator.clipboard.writeText(t):Promise.reject()).catch(()=>{const ta=document.createElement('textarea');ta.value=t;document.body.append(ta);ta.select();document.execCommand('copy');ta.remove()}).finally(()=>{copied.classList.add('show');clearTimeout(ct);ct=setTimeout(()=>copied.classList.remove('show'),1600)})}
+$('#copyRoot').addEventListener('click',()=>copy($('#rootBlock').textContent));
+/* demo 1:判定丸节拍(向下顺序:未通过 → 通过;间隔 .8s) */
+function ripple(el){el.classList.remove('run');void el.offsetWidth;el.classList.add('run')}
+$('#runPills').addEventListener('click',()=>{
+  const note=$('#marginNote');note.classList.remove('in');
+  ripple($('#vp1'));
+  setTimeout(()=>ripple($('#vp2')), reduced?0:800);
+  setTimeout(()=>note.classList.add('in'), reduced?0:1450);
+});
+/* demo 2:评级章 */
+$('#runGrades').addEventListener('click',()=>{
+  $$('.grade[data-g]').forEach((g,i)=>{g.classList.remove('on');void g.offsetWidth;
+    setTimeout(()=>g.classList.add('on'), reduced?0:i*180)});
+});
+</script>
+</body>
+</html>

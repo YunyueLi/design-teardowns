@@ -1,134 +1,109 @@
 <!doctype html>
-<html lang="zh-CN"><head>
-<meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Design Teardown — 顶级产品的设计逆向拆解</title>
-<link rel="preconnect" href="https://fonts.googleapis.com" /><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..700;1,9..144,400..600&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&family=Noto+Serif+SC:wght@600;700&family=Noto+Sans+SC:wght@400;500&display=swap" rel="stylesheet" />
+<html lang="zh-CN"><head><meta charset="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Design Teardown</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..700;1,9..144,400..600&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&family=Noto+Serif+SC:wght@600;700&family=Noto+Sans+SC:wght@400;500&display=swap" rel="stylesheet"/>
 <style>
-  :root{--bg:#08090B;--panel:#101318;--ink:#F4F6F5;--ink-2:rgba(244,246,245,.62);--ink-3:rgba(244,246,245,.4);--line:rgba(255,255,255,.1);--line-2:rgba(255,255,255,.18);--cyan:#1FB8CD;
-    --serif:"Fraunces","Noto Serif SC",Georgia,serif;--sans:"Inter","Noto Sans SC",-apple-system,sans-serif;--mono:"JetBrains Mono",ui-monospace,monospace;}
-  *{box-sizing:border-box;margin:0;padding:0}
-  body{background:var(--bg);color:var(--ink);font-family:var(--sans);line-height:1.6;-webkit-font-smoothing:antialiased}
-  .wrap{max-width:1180px;margin:0 auto;padding:0 32px}
-  header{padding:100px 0 40px;position:relative;overflow:hidden}
-  header::before{content:"";position:absolute;inset:0;background:radial-gradient(60% 50% at 80% 0,rgba(31,184,205,.12),transparent 60%),radial-gradient(50% 40% at 10% 100%,rgba(113,112,255,.1),transparent);pointer-events:none}
-  .eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--cyan)}
-  h1{font-family:var(--serif);font-weight:600;font-size:clamp(40px,6vw,84px);line-height:1.05;letter-spacing:-.01em;margin-top:18px}
-  h1 .it{font-style:italic;color:var(--cyan)}
-  .lede{color:var(--ink-2);font-size:clamp(16px,1.4vw,19px);max-width:60ch;margin-top:22px}
-  .meta{font-family:var(--mono);font-size:12px;color:var(--ink-3);margin-top:20px;display:flex;gap:18px;flex-wrap:wrap}
-  .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;padding:30px 0 90px}
-  @media(max-width:900px){.grid{grid-template-columns:repeat(2,1fr)}}
-  @media(max-width:600px){.grid{grid-template-columns:1fr}}
-  .card{border:1px solid var(--line);border-radius:16px;overflow:hidden;background:var(--panel);transition:border-color .3s cubic-bezier(.19,1,.22,1),transform .3s cubic-bezier(.19,1,.22,1);display:block;color:inherit}
-  .card:hover{border-color:var(--line-2);transform:translateY(-3px)}
-  .thumb{aspect-ratio:16/10;overflow:hidden;background:#000;border-bottom:1px solid var(--line)}
-  .thumb img{width:100%;height:100%;object-fit:cover;display:block}
-  .cbody{padding:18px 20px 20px}
-  .ctop{display:flex;align-items:center;justify-content:space-between;gap:10px}
-  .ctop h3{font-family:var(--serif);font-weight:600;font-size:22px}
-  .pal{display:flex;gap:5px}
-  .dot{width:12px;height:12px;border-radius:50%;box-shadow:0 0 0 1px rgba(255,255,255,.14)}
-  .tag{color:var(--ink-2);font-size:14px;margin-top:8px}
-  .look{font-family:var(--mono);font-size:11.5px;color:var(--ink-3);margin-top:10px;letter-spacing:.02em}
-  footer{border-top:1px solid var(--line);padding:40px 0 60px;color:var(--ink-3);font-size:13px}
-</style></head>
-<body>
-<header><div class="wrap">
-  <div class="eyebrow">Design Teardown</div>
-  <h1>把顶级产品,拆到<span class="it">可复刻</span>的每一个数值</h1>
-  <p class="lede">对一批世界级 AI-native 产品落地页的设计逆向拆解。每份都从线上站点真实抽取 token(色值、字体、缓动曲线、时长、圆角、动画库),配真实滚动录屏与关键帧,针对该站自身的设计语言拆解,并给出可复刻的开发思路。</p>
-  <div class="meta"><span>真实抽取,不靠观感</span><span>每站含设计解构、复刻指南、出处方法与交互式拆解页</span><span>供内部研究与复刻参考</span></div>
+ :root{--bg:#08090B;--panel:#101318;--ink:#F4F6F5;--ink2:rgba(244,246,245,.62);--ink3:rgba(244,246,245,.4);--line:rgba(255,255,255,.1);--line2:rgba(255,255,255,.18);--cyan:#1FB8CD;
+   --serif:"Fraunces","Noto Serif SC",Georgia,serif;--sans:"Inter","Noto Sans SC",-apple-system,sans-serif;--mono:"JetBrains Mono",ui-monospace,monospace;}
+ *{box-sizing:border-box;margin:0;padding:0} body{background:var(--bg);color:var(--ink);font-family:var(--sans);line-height:1.6;-webkit-font-smoothing:antialiased}
+ .wrap{max-width:1180px;margin:0 auto;padding:0 32px}
+ header{padding:100px 0 40px;position:relative;overflow:hidden}
+ header::before{content:"";position:absolute;inset:0;background:radial-gradient(60% 50% at 80% 0,rgba(31,184,205,.12),transparent 60%);pointer-events:none}
+ .eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--cyan)}
+ h1{font-family:var(--serif);font-weight:600;font-size:clamp(40px,6vw,80px);line-height:1.05;letter-spacing:-.01em;margin-top:18px}
+ h1 .it{font-style:italic;color:var(--cyan)}
+ .lede{color:var(--ink2);font-size:clamp(16px,1.4vw,19px);max-width:60ch;margin-top:22px}
+ .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;padding:30px 0 90px}
+ @media(max-width:900px){.grid{grid-template-columns:repeat(2,1fr)}} @media(max-width:600px){.grid{grid-template-columns:1fr}}
+ .card{border:1px solid var(--line);border-radius:16px;overflow:hidden;background:var(--panel);transition:border-color .3s cubic-bezier(.19,1,.22,1),transform .3s cubic-bezier(.19,1,.22,1);display:block;color:inherit}
+ .card:hover{border-color:var(--line2);transform:translateY(-3px)}
+ .thumb{aspect-ratio:16/10;overflow:hidden;background:#000;border-bottom:1px solid var(--line)} .thumb img{width:100%;height:100%;object-fit:cover;display:block} .noimg{width:100%;height:100%}
+ .cbody{padding:18px 20px 20px} .ctop{display:flex;align-items:center;justify-content:space-between;gap:10px}
+ .ctop h3{font-family:var(--serif);font-weight:600;font-size:22px} .pal{display:flex;gap:5px} .dot{width:12px;height:12px;border-radius:50%;box-shadow:0 0 0 1px rgba(255,255,255,.14)}
+ .tag{color:var(--ink2);font-size:13.5px;margin-top:8px}
+ footer{border-top:1px solid var(--line);padding:40px 0 60px;color:var(--ink3);font-size:13px}
+</style></head><body>
+<header><div class="wrap"><div class="eyebrow">Design Teardown</div>
+ <h1>把顶级产品,拆到<span class="it">可复刻</span>的每一个数值</h1>
+ <p class="lede">对世界级产品落地页的设计逆向拆解。每份从线上真实抽取 token 与资产,配真实录屏与关键帧,针对该站自身设计语言拆解,给出可复刻的开发思路。</p>
 </div></header>
 <main class="wrap"><div class="grid">
+    <a class="card" href="chatgpt/teardown.html">
+      <div class="thumb"><img src="chatgpt/assets/actual-hero.jpg" alt="chatgpt 真实渲染" loading="lazy"/></div>
+      <div class="cbody"><div class="ctop"><h3>chatgpt</h3><span class="pal"><span class="dot" style="background:#888"></span><span class="dot" style="background:#888"></span><span class="dot" style="background:#888"></span></span></div>
+      <p class="tag"></p></div>
+    </a>
     <a class="card" href="comet/teardown.html">
-      <div class="thumb"><img src="comet/assets/actual-hero.jpg" alt="Comet 真实渲染" loading="lazy" /></div>
-      <div class="cbody">
-        <div class="ctop"><h3>Comet</h3><span class="pal"><span class="dot" style="background:#20808D"></span><span class="dot" style="background:#1FB8CD"></span><span class="dot" style="background:#BADEDD"></span></span></div>
-        <p class="tag">Perplexity 浏览器首启引导</p>
-        <p class="look">宇宙行星母题、源码级 token、真实录屏</p>
-      </div>
-    </a>
-    <a class="card" href="linear/teardown.html">
-      <div class="thumb"><img src="linear/assets/actual-hero.jpg" alt="Linear 真实渲染" loading="lazy" /></div>
-      <div class="cbody">
-        <div class="ctop"><h3>Linear</h3><span class="pal"><span class="dot" style="background:rgb(8, 9, 10)"></span><span class="dot" style="background:#7170ff"></span><span class="dot" style="background:#3f3f3f"></span><span class="dot" style="background:#e8e8e8"></span></span></div>
-        <p class="tag">为团队与 Agent 打造的产品开发系统</p>
-        <p class="look">深色精密、Inter 510、发丝线、Agent 点阵</p>
-      </div>
-    </a>
-    <a class="card" href="moonshot/teardown.html">
-      <div class="thumb"><img src="moonshot/assets/actual-hero.jpg" alt="Moonshot AI 真实渲染" loading="lazy" /></div>
-      <div class="cbody">
-        <div class="ctop"><h3>Moonshot AI</h3><span class="pal"><span class="dot" style="background:rgb(0, 0, 0)"></span><span class="dot" style="background:#121212"></span><span class="dot" style="background:#1f1f1f"></span><span class="dot" style="background:#737373"></span></span></div>
-        <p class="tag">从能量到智能的最优转化</p>
-        <p class="look">极黑到底、日食光环、品牌字色散故障</p>
-      </div>
-    </a>
-    <a class="card" href="tutti/teardown.html">
-      <div class="thumb"><img src="tutti/assets/actual-hero.jpg" alt="tutti 真实渲染" loading="lazy" /></div>
-      <div class="cbody">
-        <div class="ctop"><h3>tutti</h3><span class="pal"><span class="dot" style="background:rgb(0, 0, 0)"></span><span class="dot" style="background:#7f90ff"></span><span class="dot" style="background:#5b69e6"></span><span class="dot" style="background:#05070d"></span></span></div>
-        <p class="tag">人与 Agent 实时同频共建</p>
-        <p class="look">纯黑电影感、超现实大图、冷暖对撞、滚动视差</p>
-      </div>
-    </a>
-    <a class="card" href="ojo/teardown.html">
-      <div class="thumb"><img src="ojo/assets/actual-hero.jpg" alt="OJO 真实渲染" loading="lazy" /></div>
-      <div class="cbody">
-        <div class="ctop"><h3>OJO</h3><span class="pal"><span class="dot" style="background:rgb(255, 255, 255)"></span><span class="dot" style="background:#5f86a8"></span><span class="dot" style="background:#fff8eb"></span><span class="dot" style="background:#111"></span></span></div>
-        <p class="tag">全球首个设计 Agent 团队工作台</p>
-        <p class="look">星夜艺术叙事、点阵底、Agent 拟人为画家</p>
-      </div>
+      <div class="thumb"><img src="comet/assets/actual-hero.jpg" alt="Comet 真实渲染" loading="lazy"/></div>
+      <div class="cbody"><div class="ctop"><h3>Comet</h3><span class="pal"><span class="dot" style="background:#08090B"></span><span class="dot" style="background:#20808D"></span><span class="dot" style="background:#1FB8CD"></span><span class="dot" style="background:#3186ff"></span></span></div>
+      <p class="tag">原生应用逆向,拆到源码级的每一个数值</p></div>
     </a>
     <a class="card" href="converge/teardown.html">
-      <div class="thumb"><img src="converge/assets/actual-hero.jpg" alt="Converge AI 真实渲染" loading="lazy" /></div>
-      <div class="cbody">
-        <div class="ctop"><h3>Converge AI</h3><span class="pal"><span class="dot" style="background:lab(100 0 0)"></span><span class="dot" style="background:lab(96.52% -.0000298023 .0000119209)"></span><span class="dot" style="background:#fafafa"></span><span class="dot" style="background:#0f0f0f"></span></span></div>
-        <p class="tag">通向 AI-native 商业的门户</p>
-        <p class="look">极简黑白、Grotesk 巨字、浮动收敛小球</p>
-      </div>
+      <div class="thumb"><img src="converge/assets/actual-hero.jpg" alt="converge 真实渲染" loading="lazy"/></div>
+      <div class="cbody"><div class="ctop"><h3>converge</h3><span class="pal"><span class="dot" style="background:#888"></span><span class="dot" style="background:#888"></span><span class="dot" style="background:#888"></span></span></div>
+      <p class="tag"></p></div>
     </a>
-    <a class="card" href="chatgpt/teardown.html">
-      <div class="thumb"><img src="chatgpt/keyframes/04.jpg" alt="ChatGPT 真实渲染" loading="lazy" /></div>
-      <div class="cbody">
-        <div class="ctop"><h3>ChatGPT</h3><span class="pal"><span class="dot" style="background:rgb(252, 252, 252)"></span><span class="dot" style="background:#cecece"></span><span class="dot" style="background:#0d0d0d"></span><span class="dot" style="background:#1a73e8"></span></span></div>
-        <p class="tag">帮你获取答案、寻找灵感、提升效率</p>
-        <p class="look">极简纯白、Prompt 卡海、水彩渐变托底</p>
-      </div>
-    </a>
-    <a class="card" href="notion/teardown.html">
-      <div class="thumb"><img src="notion/assets/actual-hero.jpg" alt="Notion 真实渲染" loading="lazy" /></div>
-      <div class="cbody">
-        <div class="ctop"><h3>Notion</h3><span class="pal"><span class="dot" style="background:rgb(255, 255, 255)"></span><span class="dot" style="background:#62aef0"></span><span class="dot" style="background:#1a73e8"></span><span class="dot" style="background:#f6f5f4"></span></span></div>
-        <p class="tag">团队与 Agent 一起交付</p>
-        <p class="look">纯白亲和、彩色高亮胶囊、手绘头像</p>
-      </div>
+    <a class="card" href="easycode/teardown.html">
+      <div class="thumb"><img src="easycode/screenshots/hero.jpg" alt="EasyCode 真实渲染" loading="lazy"/></div>
+      <div class="cbody"><div class="ctop"><h3>EasyCode</h3><span class="pal"><span class="dot" style="background:rgb(255, 255, 255)"></span><span class="dot" style="background:#c04a1a"></span><span class="dot" style="background:#b3402a"></span><span class="dot" style="background:#ffffff"></span></span></div>
+      <p class="tag">把刷题这两个字，该改改了变成被指导的练习</p></div>
     </a>
     <a class="card" href="gemini/teardown.html">
-      <div class="thumb"><img src="gemini/assets/actual-hero.jpg" alt="Gemini 真实渲染" loading="lazy" /></div>
-      <div class="cbody">
-        <div class="ctop"><h3>Gemini</h3><span class="pal"><span class="dot" style="background:rgb(253, 252, 252)"></span><span class="dot" style="background:#1f1f1f"></span><span class="dot" style="background:#e3e3e3"></span><span class="dot" style="background:#0b57d0"></span></span></div>
-        <p class="tag">Google 的 AI 助手</p>
-        <p class="look">浅色柔光、多色径向渐变、圆润居中对话</p>
-      </div>
+      <div class="thumb"><img src="gemini/assets/actual-hero.jpg" alt="gemini 真实渲染" loading="lazy"/></div>
+      <div class="cbody"><div class="ctop"><h3>gemini</h3><span class="pal"><span class="dot" style="background:#888"></span><span class="dot" style="background:#888"></span><span class="dot" style="background:#888"></span></span></div>
+      <p class="tag"></p></div>
     </a>
-    <a class="card" href="lovart/teardown.html">
-      <div class="thumb"><img src="lovart/assets/actual-hero.jpg" alt="Lovart 真实渲染" loading="lazy" /></div>
-      <div class="cbody">
-        <div class="ctop"><h3>Lovart</h3><span class="pal"><span class="dot" style="background:rgb(16, 15, 9)"></span><span class="dot" style="background:lab(96.52% -.0000298023 .0000119209)"></span><span class="dot" style="background:#3b82f6"></span><span class="dot" style="background:#c1c5cc"></span></span></div>
-        <p class="tag">全球首款 AI 设计智能体</p>
-        <p class="look">深黑纸感、优雅衬线、Agent 思考过程可视化</p>
-      </div>
+    <a class="card" href="imlagom/teardown.html">
+      <div class="thumb"><img src="imlagom/screenshots/hero.jpg" alt="Lagom 真实渲染" loading="lazy"/></div>
+      <div class="cbody"><div class="ctop"><h3>Lagom</h3><span class="pal"><span class="dot" style="background:oklch(0.967 0.008 91.5)"></span><span class="dot" style="background:oklch(.58 .155 40)"></span><span class="dot" style="background:#b3402a"></span><span class="dot" style="background:#e4571f"></span></span></div>
+      <p class="tag">所有的偶遇与构建，都是时间的倒影。</p></div>
+    </a>
+    <a class="card" href="journeypilot/teardown.html">
+      <div class="thumb"><img src="journeypilot/screenshots/hero.jpg" alt="JourneyPilot 真实渲染" loading="lazy"/></div>
+      <div class="cbody"><div class="ctop"><h3>JourneyPilot</h3><span class="pal"><span class="dot" style="background:rgb(13, 31, 60)"></span><span class="dot" style="background:#071224"></span><span class="dot" style="background:#0d1f3c"></span><span class="dot" style="background:#12294b"></span></span></div>
+      <p class="tag">你的旅行，背后有一支机组。</p></div>
     </a>
     <a class="card" href="latrix/teardown.html">
-      <div class="thumb"><img src="latrix/screenshots/hero.jpg" alt="Latrix 真实渲染" loading="lazy" /></div>
-      <div class="cbody">
-        <div class="ctop"><h3>Latrix</h3><span class="pal"><span class="dot" style="background:#f1f1f3"></span><span class="dot" style="background:#ff8c00"></span><span class="dot" style="background:#1a1815"></span><span class="dot" style="background:#e8dfd3"></span></span></div>
-        <p class="tag">be, then know — 数字生命工作室</p>
-        <p class="look">米白展墙、Playfair 巨衬线、拧转字母螺旋</p>
-      </div>
+      <div class="thumb"><img src="latrix/screenshots/hero.jpg" alt="Latrix 真实渲染" loading="lazy"/></div>
+      <div class="cbody"><div class="ctop"><h3>Latrix</h3><span class="pal"><span class="dot" style="background:rgb(241, 241, 243)"></span><span class="dot" style="background:#1a1815"></span><span class="dot" style="background:#f1f1f3"></span><span class="dot" style="background:#e07a00"></span></span></div>
+      <p class="tag">We createdigital lives</p></div>
+    </a>
+    <a class="card" href="linear/teardown.html">
+      <div class="thumb"><img src="linear/assets/actual-hero.jpg" alt="linear 真实渲染" loading="lazy"/></div>
+      <div class="cbody"><div class="ctop"><h3>linear</h3><span class="pal"><span class="dot" style="background:#888"></span><span class="dot" style="background:#888"></span><span class="dot" style="background:#888"></span></span></div>
+      <p class="tag"></p></div>
+    </a>
+    <a class="card" href="lovart/teardown.html">
+      <div class="thumb"><img src="lovart/assets/actual-hero.jpg" alt="lovart 真实渲染" loading="lazy"/></div>
+      <div class="cbody"><div class="ctop"><h3>lovart</h3><span class="pal"><span class="dot" style="background:#888"></span><span class="dot" style="background:#888"></span><span class="dot" style="background:#888"></span></span></div>
+      <p class="tag"></p></div>
+    </a>
+    <a class="card" href="moonshot/teardown.html">
+      <div class="thumb"><img src="moonshot/assets/actual-hero.jpg" alt="moonshot 真实渲染" loading="lazy"/></div>
+      <div class="cbody"><div class="ctop"><h3>moonshot</h3><span class="pal"><span class="dot" style="background:#888"></span><span class="dot" style="background:#888"></span><span class="dot" style="background:#888"></span></span></div>
+      <p class="tag"></p></div>
+    </a>
+    <a class="card" href="notion/teardown.html">
+      <div class="thumb"><img src="notion/assets/actual-hero.jpg" alt="notion 真实渲染" loading="lazy"/></div>
+      <div class="cbody"><div class="ctop"><h3>notion</h3><span class="pal"><span class="dot" style="background:#888"></span><span class="dot" style="background:#888"></span><span class="dot" style="background:#888"></span></span></div>
+      <p class="tag"></p></div>
+    </a>
+    <a class="card" href="ojo/teardown.html">
+      <div class="thumb"><img src="ojo/assets/actual-hero.jpg" alt="ojo 真实渲染" loading="lazy"/></div>
+      <div class="cbody"><div class="ctop"><h3>ojo</h3><span class="pal"><span class="dot" style="background:#888"></span><span class="dot" style="background:#888"></span><span class="dot" style="background:#888"></span></span></div>
+      <p class="tag"></p></div>
+    </a>
+    <a class="card" href="turtle-soup/teardown.html">
+      <div class="thumb"><img src="turtle-soup/screenshots/hero.jpg" alt="海龟汤事务所 真实渲染" loading="lazy"/></div>
+      <div class="cbody"><div class="ctop"><h3>海龟汤事务所</h3><span class="pal"><span class="dot" style="background:rgb(10, 8, 6)"></span><span class="dot" style="background:#faf5e8"></span><span class="dot" style="background:#8b7a4e"></span><span class="dot" style="background:#b91c1c"></span></span></div>
+      <p class="tag">海龟汤事务所</p></div>
+    </a>
+    <a class="card" href="tutti/teardown.html">
+      <div class="thumb"><img src="tutti/assets/actual-hero.jpg" alt="tutti 真实渲染" loading="lazy"/></div>
+      <div class="cbody"><div class="ctop"><h3>tutti</h3><span class="pal"><span class="dot" style="background:#888"></span><span class="dot" style="background:#888"></span><span class="dot" style="background:#888"></span></span></div>
+      <p class="tag"></p></div>
     </a>
 </div></main>
-<footer><div class="wrap">Design Teardown。数值以真实抽取为准,营销层技术栈为公开资料推断;受版权素材与商业字体仅限内部研究比对,务必私有。</div></footer>
+<footer><div class="wrap">Design Teardown · 数值以真实抽取为准,营销层技术栈为公开资料推断 · 受版权素材仅限内部研究比对,务必私有。</div></footer>
 </body></html>

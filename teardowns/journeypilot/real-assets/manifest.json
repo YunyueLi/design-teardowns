@@ -1,0 +1,138 @@
+{
+  "site": "JourneyPilot",
+  "url": "https://imlagom.com/projects/journeypilot/",
+  "fonts": [
+    {
+      "url": "https://imlagom.com/projects/journeypilot/assets/fonts/league-gothic.woff2",
+      "file": "7c2eb2_league-gothic.woff2",
+      "bytes": 9064,
+      "type": "font/woff2"
+    },
+    {
+      "url": "https://imlagom.com/projects/journeypilot/assets/fonts/archivo-narrow-600.woff2",
+      "file": "0994bc_archivo-narrow-600.woff2",
+      "bytes": 13920,
+      "type": "font/woff2"
+    }
+  ],
+  "video": [],
+  "audio": [],
+  "image": [
+    {
+      "url": "https://imlagom.com/projects/journeypilot/assets/og-cover.png",
+      "file": "64f54b_og-cover.png",
+      "bytes": 96211,
+      "type": "image/png"
+    },
+    {
+      "url": "https://imlagom.com/projects/journeypilot/assets/favicon-64.png",
+      "file": "817702_favicon-64.png",
+      "bytes": 4333,
+      "type": "image/png"
+    },
+    {
+      "url": "https://imlagom.com/projects/journeypilot/assets/finale-runway.webp",
+      "file": "168925_finale-runway.webp",
+      "bytes": 112258,
+      "type": "image/webp"
+    },
+    {
+      "url": "https://imlagom.com/projects/journeypilot/assets/hero-departure.webp",
+      "file": "15df1e_hero-departure.webp",
+      "bytes": 89108,
+      "type": "image/webp"
+    },
+    {
+      "url": "https://imlagom.com/projects/journeypilot/assets/hero-departure-close.webp",
+      "file": "15d748_hero-departure-close.webp",
+      "bytes": 121364,
+      "type": "image/webp"
+    },
+    {
+      "url": "https://imlagom.com/projects/journeypilot/assets/breather-formation.webp",
+      "file": "3a4768_breather-formation.webp",
+      "bytes": 180112,
+      "type": "image/webp"
+    },
+    {
+      "url": "https://imlagom.com/projects/journeypilot/assets/breather-porthole.webp",
+      "file": "3ee751_breather-porthole.webp",
+      "bytes": 95206,
+      "type": "image/webp"
+    },
+    {
+      "url": "https://imlagom.com/projects/journeypilot/assets/cloud-band-alpha.webp",
+      "file": "382ddf_cloud-band-alpha.webp",
+      "bytes": 250376,
+      "type": "image/webp"
+    },
+    {
+      "url": "https://imlagom.com/projects/journeypilot/assets/spot-ch4-evidence.webp",
+      "file": "3ecfcf_spot-ch4-evidence.webp",
+      "bytes": 121722,
+      "type": "image/webp"
+    },
+    {
+      "url": "https://imlagom.com/projects/journeypilot/assets/spot-ch3-tower.webp",
+      "file": "5868ce_spot-ch3-tower.webp",
+      "bytes": 93524,
+      "type": "image/webp"
+    },
+    {
+      "url": "https://imlagom.com/projects/journeypilot/assets/spot-ch5-suitcase.webp",
+      "file": "8cc1dc_spot-ch5-suitcase.webp",
+      "bytes": 149854,
+      "type": "image/webp"
+    },
+    {
+      "url": "https://imlagom.com/projects/journeypilot/assets/spot-ch1-flightplan.webp",
+      "file": "e4ae91_spot-ch1-flightplan.webp",
+      "bytes": 236506,
+      "type": "image/webp"
+    },
+    {
+      "url": "https://imlagom.com/projects/journeypilot/assets/spot-ch2-engines.webp",
+      "file": "2c42e9_spot-ch2-engines.webp",
+      "bytes": 93952,
+      "type": "image/webp"
+    },
+    {
+      "url": "https://imlagom.com/projects/journeypilot/assets/spot-ch7-cutaway.webp",
+      "file": "2be155_spot-ch7-cutaway.webp",
+      "bytes": 115062,
+      "type": "image/webp"
+    },
+    {
+      "url": "https://imlagom.com/projects/journeypilot/assets/poster-tokyo.webp",
+      "file": "40945b_poster-tokyo.webp",
+      "bytes": 145644,
+      "type": "image/webp"
+    },
+    {
+      "url": "https://imlagom.com/projects/journeypilot/assets/stamps/stamp-arr.webp",
+      "file": "1d9616_stamp-arr.webp",
+      "bytes": 26328,
+      "type": "image/webp"
+    },
+    {
+      "url": "https://imlagom.com/projects/journeypilot/assets/stamp-postmark.webp",
+      "file": "d3b2d9_stamp-postmark.webp",
+      "bytes": 94228,
+      "type": "image/webp"
+    },
+    {
+      "url": "https://imlagom.com/projects/journeypilot/assets/badge-planner.webp",
+      "file": "634dc0_badge-planner.webp",
+      "bytes": 40586,
+      "type": "image/webp"
+    }
+  ],
+  "lottie": [],
+  "source": [
+    {
+      "url": "https://imlagom.com/projects/journeypilot/assets/index-CckCQRv1.css",
+      "file": "b8d2f6_index-CckCQRv1.css",
+      "bytes": 49049
+    }
+  ]
+}

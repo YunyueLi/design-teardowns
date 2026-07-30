@@ -1,0 +1,162 @@
+{
+  "site": "海龟汤事务所",
+  "url": "https://imlagom.com/projects/turtle-soup/",
+  "fonts": [],
+  "video": [
+    {
+      "url": "https://imlagom.com/projects/turtle-soup/assets/video/v1-street-loop.mp4",
+      "file": "a8e0e6_v1-street-loop.mp4",
+      "bytes": 1554100,
+      "type": "video/mp4"
+    },
+    {
+      "url": "https://imlagom.com/projects/turtle-soup/assets/video/rain-overlay.mp4",
+      "file": "dbfc29_rain-overlay.mp4",
+      "bytes": 1224560,
+      "type": "video/mp4"
+    },
+    {
+      "url": "https://imlagom.com/projects/turtle-soup/assets/video/vid-soup.mp4",
+      "file": "a7ad31_vid-soup.mp4",
+      "bytes": 446737,
+      "type": "video/mp4"
+    },
+    {
+      "url": "https://imlagom.com/projects/turtle-soup/assets/video/vid-01.mp4",
+      "file": "f65a8b_vid-01.mp4",
+      "bytes": 301750,
+      "type": "video/mp4"
+    },
+    {
+      "url": "https://imlagom.com/projects/turtle-soup/assets/video/v4-archive-loop.mp4",
+      "file": "f1d454_v4-archive-loop.mp4",
+      "bytes": 783762,
+      "type": "video/mp4"
+    },
+    {
+      "url": "https://imlagom.com/projects/turtle-soup/assets/video/vcta-seal-crack.mp4",
+      "file": "385ab2_vcta-seal-crack.mp4",
+      "bytes": 265691,
+      "type": "video/mp4"
+    }
+  ],
+  "audio": [],
+  "image": [
+    {
+      "url": "https://imlagom.com/projects/turtle-soup/assets/img/og-cover.png",
+      "file": "5362ec_og-cover.png",
+      "bytes": 171258,
+      "type": "image/png"
+    },
+    {
+      "url": "https://imlagom.com/projects/turtle-soup/assets/img/favicon-64.png",
+      "file": "d2b4e2_favicon-64.png",
+      "bytes": 6040,
+      "type": "image/png"
+    },
+    {
+      "url": "https://imlagom.com/projects/turtle-soup/assets/img/why-emptyseat.webp",
+      "file": "e4d6cc_why-emptyseat.webp",
+      "bytes": 68930,
+      "type": "image/webp"
+    },
+    {
+      "url": "https://imlagom.com/projects/turtle-soup/assets/img/stamp-yes.webp",
+      "file": "d99ed1_stamp-yes.webp",
+      "bytes": 152102,
+      "type": "image/webp"
+    },
+    {
+      "url": "https://imlagom.com/projects/turtle-soup/assets/img/s4-dossier.webp",
+      "file": "cc8433_s4-dossier.webp",
+      "bytes": 151408,
+      "type": "image/webp"
+    },
+    {
+      "url": "https://imlagom.com/projects/turtle-soup/assets/img/m3-telegraph.webp",
+      "file": "ad7092_m3-telegraph.webp",
+      "bytes": 143386,
+      "type": "image/webp"
+    },
+    {
+      "url": "https://imlagom.com/projects/turtle-soup/assets/img/s3-workshop.webp",
+      "file": "637edc_s3-workshop.webp",
+      "bytes": 158008,
+      "type": "image/webp"
+    },
+    {
+      "url": "https://imlagom.com/projects/turtle-soup/assets/img/m2a-sealed.webp",
+      "file": "f9626e_m2a-sealed.webp",
+      "bytes": 53228,
+      "type": "image/webp"
+    },
+    {
+      "url": "https://imlagom.com/projects/turtle-soup/assets/img/m2b-cracked.webp",
+      "file": "e01cb9_m2b-cracked.webp",
+      "bytes": 50968,
+      "type": "image/webp"
+    },
+    {
+      "url": "https://imlagom.com/projects/turtle-soup/assets/img/b1-notebook.webp",
+      "file": "ff8872_b1-notebook.webp",
+      "bytes": 104216,
+      "type": "image/webp"
+    },
+    {
+      "url": "https://imlagom.com/projects/turtle-soup/assets/img/b2-carddrawer.webp",
+      "file": "03c5f9_b2-carddrawer.webp",
+      "bytes": 146374,
+      "type": "image/webp"
+    },
+    {
+      "url": "https://imlagom.com/projects/turtle-soup/assets/img/b3-typewriter.webp",
+      "file": "c90d98_b3-typewriter.webp",
+      "bytes": 236908,
+      "type": "image/webp"
+    },
+    {
+      "url": "https://imlagom.com/projects/turtle-soup/assets/img/b4-magnifier.webp",
+      "file": "9fc6d0_b4-magnifier.webp",
+      "bytes": 178528,
+      "type": "image/webp"
+    },
+    {
+      "url": "https://imlagom.com/projects/turtle-soup/assets/img/b5-blindfold.webp",
+      "file": "52af31_b5-blindfold.webp",
+      "bytes": 163610,
+      "type": "image/webp"
+    },
+    {
+      "url": "https://imlagom.com/projects/turtle-soup/assets/img/b6-mended.webp",
+      "file": "f8236f_b6-mended.webp",
+      "bytes": 118614,
+      "type": "image/webp"
+    },
+    {
+      "url": "https://imlagom.com/projects/turtle-soup/assets/img/license.webp",
+      "file": "863286_license.webp",
+      "bytes": 303174,
+      "type": "image/webp"
+    },
+    {
+      "url": "https://imlagom.com/projects/turtle-soup/assets/img/l1-sign.webp",
+      "file": "ca1337_l1-sign.webp",
+      "bytes": 236704,
+      "type": "image/webp"
+    },
+    {
+      "url": "https://imlagom.com/projects/turtle-soup/assets/img/l3-plaque.webp",
+      "file": "bd80c0_l3-plaque.webp",
+      "bytes": 134532,
+      "type": "image/webp"
+    }
+  ],
+  "lottie": [],
+  "source": [
+    {
+      "url": "https://imlagom.com/projects/turtle-soup/assets/index-7s2WFEAx.css",
+      "file": "5d98cc_index-7s2WFEAx.css",
+      "bytes": 53103
+    }
+  ]
+}

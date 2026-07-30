@@ -1,0 +1,70 @@
+/* 从线上站点真实抽取的设计 token(实锤,非观感推断) */
+/* 源:https://imlagom.com/projects/easycode/ */
+:root{
+  --bg:rgb(255, 255, 255);
+  --ink:rgb(28, 27, 24);
+  --accent:#c04a1a;   /* 探针 accentGuess,复刻前请与 topHex 核对 */
+  /* 高频色值:#b3402a #ffffff #fff #f4f1ea #1c1b18 #6f6b61 #e6e3da #e5c4ba #c04a1a #e9c8b6 */
+  --font-sans:-apple-system, "system-ui", "Helvetica Neue", "PingFang SC", "Microsoft YaHei", Roboto, sans-serif;
+  /* 加载字体:Noto Serif SC, Ma Shan Zheng */
+  /* h1:124px/700 字距 -1.488px 行高 138.88px */
+  --ease-1:cubic-bezier(.32,.72,0,1);
+  --ease-2:cubic-bezier(.34,1.56,.64,1);
+  --ease-3:cubic-bezier(.23,1,.32,1);
+  --ease-4:cubic-bezier(.22,1,.36,1);
+  /* 按钮过渡:border-color 0.18s cubic-bezier(0.22, 1, 0.36, 1), background 0.18s cubic-bezier(0.22, 1, 0.36, 1) */
+  /* 时长梯:24s 32s 1s 1200ms 1500ms 720ms 540ms 620ms */
+  --radius-1:8px;
+  --radius-2:999px;
+  --radius-3:6px;
+  --radius-4:50%;
+  --radius-5:2px;
+  --radius-6:13px;
+  /* 按钮圆角:8px */
+  /* 探测到的库:GSAP, Lenis */
+  /* 媒体:video 0 canvas 0 svg 7 img 20 */
+}
+
+/* 站点原始 CSS 自定义变量(节选,复刻参考) */
+:root{
+  --bg:#ffffff;
+  --bg-soft:#f4f1ea;
+  --bg-elevated:#ffffff;
+  --ink:#1c1b18;
+  --ink-muted:#6f6b61;
+  --line:#e6e3da;
+  --hairline:rgba(28,27,24,.09);
+  --red:#b3402a;
+  --red-muted:#e5c4ba;
+  --accent:#c04a1a;
+  --accent-muted:#e9c8b6;
+  --ok:#246b31;
+  --warn:#8a5f00;
+  --danger:#a3361a;
+  --serif:"Noto Serif SC","Songti SC","STSong",Georgia,serif;
+  --kai:"Ma Shan Zheng","Kaiti SC","STKaiti","KaiTi","Noto Serif SC",serif;
+  --mono:"JetBrains Mono",Menlo,Consolas,ui-monospace,monospace;
+  --d1:clamp(48px,8.8vw,124px);
+  --d2:clamp(34px,5.6vw,80px);
+  --dh:clamp(28px,3.8vw,50px);
+  --body:17px;
+  --sub-size:clamp(19px,1.9vw,22px);
+  --small:14px;
+  --tiny:12px;
+  --t-fast:120ms;
+  --t-medium:180ms;
+  --t-slow:240ms;
+  --ease:cubic-bezier(.22,1,.36,1);
+  --story-pad:clamp(72px,10vh,132px);
+  --shadow-ring:0 0 0 1px rgba(28,27,24,.06);
+  --tone-fg:var(--ok);
+  --tone-mark:var(--ok);
+  --tone-border:color-mix(in srgb,var(--ok) 36%,var(--line));
+  --tone-surface:color-mix(in srgb,var(--ok) 6%,var(--bg-elevated));
+  --edge:rgba(28,27,24,.13);
+  --w1:#b3402a;
+  --w2:#8a3020;
+  --w3:#423a31;
+  --wash-blend:screen;
+  --wash-o:.5;
+}

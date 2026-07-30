@@ -1,0 +1,138 @@
+{
+  "site": "EasyCode",
+  "url": "https://imlagom.com/projects/easycode/",
+  "fonts": [
+    {
+      "url": "https://imlagom.com/projects/easycode/assets/fonts/NotoSerifSC-Bold-subset.woff2",
+      "file": "d06ca0_NotoSerifSC-Bold-subset.woff2",
+      "bytes": 134400,
+      "type": "font/woff2"
+    },
+    {
+      "url": "https://imlagom.com/projects/easycode/assets/fonts/MaShanZheng-subset.woff2",
+      "file": "dbc056_MaShanZheng-subset.woff2",
+      "bytes": 42348,
+      "type": "font/woff2"
+    }
+  ],
+  "video": [],
+  "audio": [],
+  "image": [
+    {
+      "url": "https://imlagom.com/projects/easycode/assets/og-cover.png",
+      "file": "f62e9f_og-cover.png",
+      "bytes": 155709,
+      "type": "image/png"
+    },
+    {
+      "url": "https://imlagom.com/projects/easycode/assets/apple-touch-icon.png",
+      "file": "e700a3_apple-touch-icon.png",
+      "bytes": 16132,
+      "type": "image/png"
+    },
+    {
+      "url": "https://imlagom.com/projects/easycode/assets/pano-library.webp",
+      "file": "3877ae_pano-library.webp",
+      "bytes": 47790,
+      "type": "image/webp"
+    },
+    {
+      "url": "https://imlagom.com/projects/easycode/assets/pano-dark.avif",
+      "file": "bb37a0_pano-dark.avif",
+      "bytes": 35572,
+      "type": "image/avif"
+    },
+    {
+      "url": "https://imlagom.com/projects/easycode/assets/art-annotations.avif",
+      "file": "001e3d_art-annotations.avif",
+      "bytes": 52076,
+      "type": "image/avif"
+    },
+    {
+      "url": "https://imlagom.com/projects/easycode/assets/pano-growth.webp",
+      "file": "626541_pano-growth.webp",
+      "bytes": 36984,
+      "type": "image/webp"
+    },
+    {
+      "url": "https://imlagom.com/projects/easycode/assets/pano-queue.webp",
+      "file": "4b75c6_pano-queue.webp",
+      "bytes": 45230,
+      "type": "image/webp"
+    },
+    {
+      "url": "https://imlagom.com/projects/easycode/assets/pano-review.webp",
+      "file": "872681_pano-review.webp",
+      "bytes": 58286,
+      "type": "image/webp"
+    },
+    {
+      "url": "https://imlagom.com/projects/easycode/assets/art-desk.webp",
+      "file": "4ea069_art-desk.webp",
+      "bytes": 71340,
+      "type": "image/webp"
+    },
+    {
+      "url": "https://imlagom.com/projects/easycode/assets/art-chairs.webp",
+      "file": "841488_art-chairs.webp",
+      "bytes": 123500,
+      "type": "image/webp"
+    },
+    {
+      "url": "https://imlagom.com/projects/easycode/assets/art-seal.webp",
+      "file": "5a1700_art-seal.webp",
+      "bytes": 153624,
+      "type": "image/webp"
+    },
+    {
+      "url": "https://imlagom.com/projects/easycode/assets/art-loop.webp",
+      "file": "ae1644_art-loop.webp",
+      "bytes": 125196,
+      "type": "image/webp"
+    },
+    {
+      "url": "https://imlagom.com/projects/easycode/assets/art-axis.webp",
+      "file": "4e6b40_art-axis.webp",
+      "bytes": 8866,
+      "type": "image/webp"
+    },
+    {
+      "url": "https://imlagom.com/projects/easycode/assets/brand-word.webp",
+      "file": "4e4717_brand-word.webp",
+      "bytes": 17926,
+      "type": "image/webp"
+    },
+    {
+      "url": "https://imlagom.com/projects/easycode/assets/ec-top.webp",
+      "file": "9aada4_ec-top.webp",
+      "bytes": 8474,
+      "type": "image/webp"
+    },
+    {
+      "url": "https://imlagom.com/projects/_menu/ec-icon.webp",
+      "file": "5e3f1c_ec-icon.webp",
+      "bytes": 4796,
+      "type": "image/webp"
+    },
+    {
+      "url": "https://imlagom.com/projects/_menu/jp-icon.webp",
+      "file": "ca7443_jp-icon.webp",
+      "bytes": 2732,
+      "type": "image/webp"
+    },
+    {
+      "url": "https://imlagom.com/projects/_menu/ts-icon.webp",
+      "file": "fe20bf_ts-icon.webp",
+      "bytes": 4888,
+      "type": "image/webp"
+    }
+  ],
+  "lottie": [],
+  "source": [
+    {
+      "url": "https://imlagom.com/projects/easycode/assets/css/main.css?v=20260718-1",
+      "file": "fa4f94_main.css",
+      "bytes": 46109
+    }
+  ]
+}

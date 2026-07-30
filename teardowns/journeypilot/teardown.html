@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>JourneyPilot 设计解构 — 复古航空：十一屏逐屏，拆一套机组的仪表盘</title>
+<meta name="description" content="对 imlagom.com/projects/journeypilot/ 的源码级拆解：靛蓝奶油的航空世界、翻牌字与登机口脉冲、可领取的值机登机牌、十一屏逐屏走查与可跑的签名效果。">
+<style>
+/* ============================================================
+   JourneyPilot 拆解页 — 靛蓝、奶油、夜航橙(真实 token)
+   ============================================================ */
+@font-face{font-family:"League Gothic JP";src:url("real-assets/fonts/7c2eb2_league-gothic.woff2") format("woff2");font-weight:400;font-display:swap}
+@font-face{font-family:"Archivo Narrow JP";src:url("real-assets/fonts/0994bc_archivo-narrow-600.woff2") format("woff2");font-weight:600;font-display:swap}
+:root{
+  /* —— 线上 :root 原值(实锤) —— */
+  --navy:#0D1F3C; --navy-2:#12294B; --panel:#0A1830; --panel-deep:#071224;
+  --cream:#F2E9D8; --cream-dim:#C9BFA9; --slate:#8CA3BF;
+  --orange:#E4571F; --orange-soft:rgba(228,87,31,.16);
+  --ink:#071224;
+  --line:rgba(242,233,216,.16); --line-soft:rgba(242,233,216,.09);
+  --r-panel:14px;
+  --font-sans:-apple-system,"SF Pro Display","PingFang SC","Hiragino Sans GB","Source Han Sans SC","Microsoft YaHei",sans-serif;
+  --font-mono:ui-monospace,"SF Mono",Menlo,Consolas,"PingFang SC",monospace;
+  --font-board:"League Gothic JP","League Gothic","Arial Narrow",var(--font-sans);
+  --font-digits:"Archivo Narrow JP","Archivo Narrow","Arial Narrow",var(--font-sans);
+  --pad-x:clamp(20px,5vw,76px);
+  --ease-out:cubic-bezier(.16,1,.3,1);
+  --back:cubic-bezier(.34,1.56,.64,1);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-padding-top:76px;scroll-behavior:smooth}
+body{background:var(--navy);color:var(--cream);font-family:var(--font-sans);line-height:1.65;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+::selection{background:var(--orange);color:var(--navy)}
+img{max-width:100%;display:block}
+a{color:inherit;text-decoration:none}
+button{font-family:inherit;color:inherit;background:none;border:none;cursor:pointer}
+:focus-visible{outline:2px solid var(--cream);outline-offset:3px;border-radius:2px}
+.mono{font-family:var(--font-mono);font-variant-numeric:tabular-nums}
+/* 颗粒:原站内联 SVG 噪点,opacity .05(实锤同源) */
+.grain{position:fixed;inset:0;z-index:60;pointer-events:none;opacity:.05;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)' opacity='.55'/%3E%3C/svg%3E")}
+.wrap{max-width:1200px;margin-inline:auto;padding-inline:var(--pad-x)}
+h1,h2,h3{letter-spacing:-.01em}
+h2{font-size:clamp(30px,4.8vw,56px);line-height:1.16;font-weight:745}
+.kicker{font-family:var(--font-mono);font-size:12px;letter-spacing:.28em;color:var(--orange);text-transform:uppercase;margin-bottom:14px}
+.sub{color:var(--cream-dim);margin-top:12px;font-size:15.5px;max-width:60ch}
+/* 顶栏 */
+#bar{position:sticky;top:0;z-index:50;height:64px;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:0 var(--pad-x);border-bottom:1px solid var(--line-soft);background:#0d1f3ce0;backdrop-filter:blur(10px)}
+#bar b{font-size:16px;font-weight:650}
+#bar span{font-family:var(--font-board);font-size:13px;letter-spacing:.12em;color:var(--cream-dim)}
+#bar nav{display:flex;flex-wrap:wrap;gap:2px}
+#bar nav a{font-size:13.5px;color:var(--cream-dim);padding:8px 9px;transition:color .18s}
+#bar nav a:hover{color:var(--cream)}
+/* hero */
+.hero{position:relative;min-height:86svh;display:flex;align-items:flex-end;overflow:clip}
+.hero .bg{position:absolute;inset:0}
+.hero .bg img{width:100%;height:100%;object-fit:cover;object-position:74% 20%;animation:kburns 2.8s var(--ease-out) both}
+@keyframes kburns{0%{transform:scale(1.07)}to{transform:scale(1)}}
+.hero .scrim{position:absolute;inset:0;background:linear-gradient(90deg,#0d1f3ceb,#0d1f3c8c 30%,#0d1f3c14 58%,#0d1f3c00 74%),linear-gradient(180deg,#0d1f3c2e,#0d1f3c00 28%,#0d1f3c6b 62%,#0d1f3cf2 97%)}
+.hero-copy{position:relative;z-index:1;padding:0 var(--pad-x) clamp(56px,9vh,96px);max-width:920px}
+.hero h1{font-size:clamp(34px,5.8vw,78px);line-height:1.12;font-weight:760}
+.hero h1 em{font-style:normal;color:var(--orange)}
+.hero .deck{margin-top:20px;max-width:48ch;font-size:clamp(15.5px,1.6vw,19px);color:var(--cream-dim)}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:24px}
+.chip{font-family:var(--font-mono);font-size:11.5px;color:var(--cream);padding:7px 12px;background:#07122480;border:1px solid var(--line);border-radius:999px}
+.chip i{font-style:normal;color:var(--orange);margin-right:.45em}
+/* 分节 */
+section.blk{padding:clamp(64px,9vh,110px) 0;border-top:1px solid var(--line-soft)}
+section.blk.alt{background:var(--navy-2)}
+.head{margin-bottom:clamp(26px,4vw,40px)}
+.prose{max-width:74ch;font-size:15.5px;color:var(--cream-dim)}
+.prose p{margin:.8em 0}
+.prose strong{color:var(--cream)}
+/* 色板 */
+.swgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px;margin-top:18px}
+.sw{position:relative;display:grid;gap:2px;padding:10px 11px 50px;text-align:left;background:var(--panel);border:1px solid var(--line-soft);border-radius:10px;transition:transform .18s var(--ease-out),border-color .18s}
+.sw:hover{transform:translateY(-2px);border-color:var(--line)}
+.sw i{position:absolute;inset:auto 6px 6px;height:38px;font-style:normal;background:var(--c);border-radius:6px;box-shadow:inset 0 0 0 1px rgba(242,233,216,.14)}
+.sw b{font-size:13px;color:var(--cream)}
+.sw code{font-family:var(--font-mono);font-size:10.5px;color:var(--slate)}
+/* 字体样张 */
+.typecard{margin-top:14px;padding:22px 26px;background:var(--panel);border:1px solid var(--line-soft);border-radius:var(--r-panel)}
+.typecard .meta{display:flex;flex-wrap:wrap;gap:6px 18px;font-family:var(--font-mono);font-size:11px;color:var(--slate);margin-bottom:10px}
+.spec-h{font-size:clamp(30px,4.8vw,56px);line-height:1.14;font-weight:760}
+.spec-board{font-family:var(--font-board);font-size:clamp(26px,3.6vw,40px);letter-spacing:.08em;color:var(--cream-dim)}
+.spec-digits{font-family:var(--font-digits);font-weight:600;font-size:clamp(30px,4.2vw,48px);letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+.spec-digits sup{font-size:.42em;color:var(--orange)}
+/* 动效卡 */
+.kfgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:10px;margin-top:18px}
+.kfcard{padding:14px 16px;background:var(--panel);border:1px solid var(--line-soft);border-radius:10px}
+.kfcard b{font-family:var(--font-mono);font-size:12.5px;color:var(--orange)}
+.kfcard p{margin-top:6px;font-size:13.5px;color:var(--cream-dim)}
+/* 拨杆微演示 */
+.lever-demo{display:flex;align-items:center;gap:14px;margin-top:14px}
+.lever-slot{position:relative;width:92px;height:32px;cursor:pointer;flex:none}
+.lever-slot:before{content:"";position:absolute;left:4px;right:4px;top:50%;height:8px;margin-top:-4px;border-radius:4px;background:var(--ink);box-shadow:inset 0 1px 3px #00000080,0 1px #f2e9d812}
+.lever-knob{position:absolute;left:4px;top:50%;width:24px;height:24px;margin-top:-12px;border-radius:50%;background:var(--orange);border:2px solid rgba(7,18,36,.6);box-shadow:0 2px 6px #00000073,inset 0 -2px 3px #07122459;transition:transform .18s var(--back)}
+.lever-demo.deep .lever-knob{transform:translate(60px)}
+.lever-demo span{font-size:13.5px;color:var(--cream-dim)}
+/* 逐屏走查 */
+.walk{display:grid;gap:clamp(24px,3.5vw,36px);margin-top:6px}
+.screen{display:grid;grid-template-columns:minmax(0,7fr) minmax(280px,5fr);gap:clamp(16px,2.5vw,26px);align-items:start}
+.screen.flip{grid-template-columns:minmax(280px,5fr) minmax(0,7fr)}
+.screen.flip .shot{order:2}
+.shot{padding:8px;background:var(--panel);border:1px solid var(--line-soft);border-radius:10px}
+.shot img{width:100%;border-radius:5px}
+.shot figcaption{padding:8px 4px 0;font-family:var(--font-mono);font-size:10.5px;letter-spacing:.06em;color:var(--slate)}
+.shot .more{display:flex;gap:6px;margin-top:6px}
+.shot .more img{width:calc(50% - 3px)}
+.scard h3{font-size:clamp(19px,2.2vw,24px);font-weight:720}
+.scard .no{display:inline-block;font-family:var(--font-board);font-size:14px;letter-spacing:.12em;color:var(--ink);background:var(--orange);padding:3px 12px;border-radius:4px;margin-bottom:10px}
+.scard blockquote{margin:10px 0;padding:8px 14px;border-left:3px solid var(--orange);font-size:14.5px;color:var(--cream);background:var(--panel)}
+.scard p{margin:.55em 0;font-size:14.5px;color:var(--cream-dim)}
+.scard .vals{display:flex;flex-wrap:wrap;gap:5px;margin-top:10px}
+.scard .vals code{font-family:var(--font-mono);font-size:10.5px;color:var(--cream-dim);padding:3px 8px;border:1px solid var(--line-soft);border-radius:999px;background:var(--panel)}
+/* demo:翻牌字 */
+.demo{margin-top:24px;background:var(--panel);border:1px solid var(--line-soft);border-radius:var(--r-panel);overflow:hidden}
+.demo-head{display:flex;flex-wrap:wrap;align-items:baseline;gap:8px 16px;padding:14px 20px;border-bottom:1px solid var(--line-soft)}
+.demo-head h3{font-size:18px;font-weight:720}
+.demo-head span{margin-left:auto;font-family:var(--font-mono);font-size:10.5px;color:var(--slate)}
+.demo-body{padding:22px 20px 26px}
+.flapline{display:flex;gap:3px;flex-wrap:wrap}
+.fcell{display:inline-block;width:1.18em;text-align:center;font-family:var(--font-board);font-size:clamp(22px,3.2vw,34px);font-weight:600;color:var(--cream);background:linear-gradient(to bottom,var(--panel-deep) 49.5%,rgba(242,233,216,.1) 49.5%,rgba(242,233,216,.1) 50.5%,var(--panel-deep) 50.5%);border-radius:3px;padding:3px 0;backface-visibility:hidden}
+.fcell.gap{background:none;width:.45em}
+.fcell.tick{animation:flapTick .1s linear}
+@keyframes flapTick{0%{transform:rotateX(0)}49%{transform:rotateX(-86deg)}51%{transform:rotateX(86deg)}to{transform:rotateX(0)}}
+.runbtn{font-family:var(--font-mono);font-size:13px;padding:10px 22px;border-radius:999px;border:1px solid var(--line);color:var(--cream-dim);transition:color .2s,border-color .2s,transform .16s}
+.runbtn:hover{color:var(--cream);border-color:var(--cream-dim)}
+.runbtn:active{transform:scale(.97)}
+/* demo:航线与登机口 */
+.routebox svg{display:block;width:100%;height:auto}
+.seg{fill:none;stroke:var(--cream);stroke-width:2;stroke-dasharray:1;stroke-dashoffset:1;transition:stroke-dashoffset .9s linear}
+.seg.on{stroke-dashoffset:0}
+.stop{fill:var(--navy);stroke:var(--cream);stroke-width:2;opacity:.34;transition:fill .4s ease,opacity .4s ease}
+.stop.on{fill:var(--orange);opacity:1}
+.stop-label{font-family:var(--font-mono);font-size:13px;fill:var(--cream);opacity:.4;transition:opacity .4s ease}
+.stop-label.on{opacity:.94}
+.gate-ring{fill:none;stroke:var(--orange);stroke-width:2;opacity:0;transform-origin:center;transform-box:fill-box}
+.gate-ring.on{animation:gatePulse 1.1s ease-out forwards}
+@keyframes gatePulse{0%{opacity:.9;transform:scale(.6)}70%{opacity:.25;transform:scale(1.5)}to{opacity:0;transform:scale(1.7)}}
+/* demo:终章邮戳 */
+.stamp-rig{position:relative;display:inline-block;margin-top:8px}
+.fin-pad{position:absolute;inset:-13px;border:2px dashed rgba(242,233,216,.32);border-radius:50%;transition:border-color .4s ease,border-style .4s ease}
+.stamp-rig.done .fin-pad{border-style:solid;border-color:#f2e9d88c}
+.fin-stamp{position:relative;display:block;width:clamp(116px,12vw,148px);aspect-ratio:1;border-radius:50%;cursor:pointer;padding:0}
+.fin-stamp img{width:100%;height:100%;border-radius:50%;filter:drop-shadow(0 12px 22px rgba(7,18,36,.5));transition:translate .25s var(--ease-out),transform .25s var(--ease-out)}
+.stamp-rig:not(.done) .fin-stamp:hover img{translate:0 -4px}
+.stamp-rig.done .fin-stamp img{transform:rotate(-8deg)}
+.fin-ink{position:absolute;inset:-13px;border-radius:50%;border:3px solid var(--orange);opacity:0;pointer-events:none}
+.stamp-rig.done .fin-ink{animation:gatePulse 1.1s ease-out both}
+.fin-cap{margin-top:16px;font-family:var(--font-mono);font-size:12.5px;letter-spacing:.14em;color:var(--slate)}
+/* 登机牌样张 */
+.stubline{display:flex;gap:18px;align-items:center;flex-wrap:wrap;margin-top:14px}
+.stubimg{width:284px;max-width:100%;border-radius:10px;box-shadow:0 12px 30px #0712248c}
+/* 复刻 */
+pre.code{margin-top:14px;padding:16px 18px;overflow-x:auto;color:var(--cream);background:var(--panel-deep);border:1px solid var(--line-soft);border-radius:10px;font-family:var(--font-mono);font-size:12px;line-height:1.8}
+pre.code b{color:var(--orange);font-weight:400}
+/* 出处 */
+.provgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:12px;margin-top:18px}
+.provcard{padding:16px 18px;background:var(--panel);border:1px solid var(--line-soft);border-radius:12px}
+.provcard h4{font-size:16px;font-weight:700}
+.provcard ul{margin:8px 0 0 1.1em;font-size:13.5px;color:var(--cream-dim)}
+.provcard li{margin:.35em 0}
+.asseen{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:20px}
+.asseen figure{padding:8px;background:var(--panel);border:1px solid var(--line-soft);border-radius:10px}
+.asseen .scrollwrap{max-height:420px;overflow-y:auto;overscroll-behavior:contain;border-radius:5px}
+.asseen img{width:100%;border-radius:4px}
+.asseen figcaption{padding:7px 4px 0;font-family:var(--font-mono);font-size:10.5px;color:var(--slate)}
+footer.end{padding:40px 0 50px;border-top:1px solid var(--line-soft)}
+footer.end .wrap{display:flex;flex-wrap:wrap;gap:10px;justify-content:space-between;font-size:13px;color:var(--slate)}
+.rv{opacity:0;transform:translateY(22px);transition:opacity .72s var(--ease-out),transform .72s var(--ease-out)}
+.rv.in{opacity:1;transform:none}
+.copied{position:fixed;right:16px;bottom:16px;z-index:70;display:flex;align-items:center;gap:10px;background:var(--cream);color:var(--ink);border-radius:9px;padding:10px 18px;font-size:13px;font-weight:600;box-shadow:0 12px 30px #07122480;opacity:0;translate:0 8px;pointer-events:none;transition:opacity .25s,translate .3s var(--ease-out)}
+.copied.show{opacity:1;translate:0 0}
+@media (max-width:900px){.screen,.screen.flip{grid-template-columns:1fr}.screen.flip .shot{order:0}.asseen{grid-template-columns:1fr}}
+@media (prefers-reduced-motion:reduce){*,*:before,*:after{animation-duration:.01ms!important;transition-duration:.01ms!important}.rv{opacity:1;transform:none}}
+</style>
+</head>
+<body>
+<div class="grain" aria-hidden="true"></div>
+<div class="copied" id="copied" role="status" aria-live="polite">已盖章 · 已复制</div>
+
+<header id="bar">
+  <div><b>JourneyPilot 设计解构</b> <span>FLIGHT OPS · 夜航仪表</span></div>
+  <nav aria-label="页内导航">
+    <a href="#thesis">世界观</a><a href="#color">色彩</a><a href="#type">字体</a><a href="#motion">动效</a><a href="#walk">逐屏走查</a><a href="#sig">签名效果</a><a href="#build">复刻</a><a href="#prov">出处</a>
+  </nav>
+</header>
+
+<section class="hero">
+  <div class="bg" aria-hidden="true"><img src="assets/actual-hero.jpg" alt=""></div>
+  <div class="scrim" aria-hidden="true"></div>
+  <div class="hero-copy">
+    <p class="kicker">IMLAGOM.COM/PROJECTS/JOURNEYPILOT · 源码级拆解 · 二〇二六年七月</p>
+    <h1>复古航空海报下面，<br>是一台<em>真在运转的仪表盘</em>。</h1>
+    <p class="deck">背景为被拆对象首屏真实渲染(Ken Burns 2.8s 收束入场)。十一屏是一次完整航程:起飞、爬升、巡航、降落、盖邮戳;右下角还有一张可以「领取」的登机牌,随阅读逐格盖章。</p>
+    <div class="chips" role="list">
+      <span class="chip" role="listitem"><i>◆</i>靛蓝四档 + 奶油 #F2E9D8 + 夜航橙 #E4571F</span>
+      <span class="chip" role="listitem"><i>◆</i>--ease-out cubic-bezier(.16,1,.3,1) + 回弹 (.34,1.56,.64,1)</span>
+      <span class="chip" role="listitem"><i>◆</i>League Gothic 翻牌板 + Archivo Narrow 数字(共 23KB)</span>
+      <span class="chip" role="listitem"><i>◆</i>正文全系统字:中文黑体 760 字重大标题</span>
+      <span class="chip" role="listitem"><i>◆</i>6 个 keyframes,1 处 canvas,3 段懒加载视频</span>
+    </div>
+  </div>
+</section>
+
+<section class="blk" id="thesis">
+  <div class="wrap">
+    <p class="kicker">01 世界观与叙事</p>
+    <div class="head"><h2>把多智能体系统，讲成一支机组</h2>
+    <p class="sub">「你的旅行，背后有一支机组。」——规划员、调度员、四名研究员、校验员、审查员,八人编组(站点原文)。</p></div>
+    <div class="prose rv">
+      <p><strong>十一屏 = 一次航程</strong>:出发大厅(hero + 出发信息板)→ ch1 编队起飞(任务编排剧场)→ ch2 双引擎(快答与深研)→ ch3 计划门(AI 提案你拍板)→ 幕间「已批准。编队爬升中。」→ ch4 句句有出处 → ch5 越聊越懂你(记忆开关)→ 幕间「巡航高度。目的地临近。」→ ch6 成稿(地图、日程、预算)→ ch7 引擎盖下(放行单)→ 降落(亲手盖终章邮戳)。</p>
+      <p><strong>阅读本身被做成了值机</strong>:第一章旁有一张奶油色登机牌可以「领取」——点击后它飞到右下角驻留,之后每读完一章就盖一格章,弹出「已盖章」小票提示;读完全程,登机牌集满。进度条被换成了收藏欲。</p>
+      <p>视觉基因是<strong>复古航空平面</strong>:靛蓝夜空、奶油纸、橙色徽记、窄体大写字(League Gothic)、圆形邮戳与虚线航迹;但每台装置都是真的仪表——出发板会翻牌、剧场能播放暂停刮擦、拨杆有回弹、放行单有脚注编号。怀旧的皮,工程的骨。</p>
+      <p>技术底盘:Vite 构建(资产命名,推断)、Lenis(探针实锤)、正文与大标题全部系统字(SF Pro 与 PingFang 栈,760 可变字重,实锤)——两支海报字只管「板」与「数」,共 22,984 B。</p>
+    </div>
+  </div>
+</section>
+
+<section class="blk alt" id="color">
+  <div class="wrap">
+    <p class="kicker">02 色彩系统</p>
+    <div class="head"><h2>靛蓝夜空，奶油纸，一点夜航橙</h2><p class="sub">全部 :root 原值(实锤)。点击色卡复制。</p></div>
+    <div class="swgrid rv" id="sw1"></div>
+    <div class="prose rv" style="margin-top:18px"><p>暗界面只用两支「纸色」承载全部文字层级(cream 与 cream-dim),第三级直接交给 slate 蓝灰;线条用奶油的 16% 与 9% 两档透明度,不引入新色。橙是唯一强调,连 selection 都是橙底藏青字。奶油色在 ch7 放行单处整块反转成亮面板——全页唯一的亮区,像仪表盘里抽出的一张纸质工单。</p></div>
+  </div>
+</section>
+
+<section class="blk" id="type">
+  <div class="wrap">
+    <p class="kicker">03 字体系统</p>
+    <div class="head"><h2>系统字当家，两支海报字点睛</h2><p class="sub">League Gothic 9,064 B、Archivo Narrow 600 13,920 B,均已子集化(实锤,样张即真字体)。</p></div>
+    <div class="typecard rv">
+      <div class="meta"><span>大标题 · 系统黑体可变字重(SF Pro 与 PingFang 栈)</span><span>H1 实测 102px / 字重 760 / 字距 −1.02px</span></div>
+      <div class="spec-h">你的旅行，背后有一支机组。</div>
+    </div>
+    <div class="typecard rv">
+      <div class="meta"><span>翻牌板 · League Gothic(--font-board)</span><span>出发信息板、章节编号、登机牌代号</span></div>
+      <div class="spec-board">JOURNEYPILOT — GATE A2 — CHECK-IN 7/8</div>
+    </div>
+    <div class="typecard rv">
+      <div class="meta"><span>仪表数字 · Archivo Narrow 600(--font-digits,tabular-nums + font-kerning:none)</span><span>统计带与放行单的大数</span></div>
+      <div class="spec-digits">+105<span style="color:var(--orange)">%</span> — 13 舱 — 6 层 — ¥19,080<sup>1</sup></div>
+    </div>
+    <div class="prose rv" style="margin-top:16px"><p>正文 17px 系统黑体;等宽走 ui-monospace 栈(未自托管)。整页字体预算 23KB——用「系统字为主、装饰字极小子集」换来了海报气质与近零加载成本(实锤)。数字统一 tabular-nums,统计带与预算条的数值滚动不抖动。</p></div>
+  </div>
+</section>
+
+<section class="blk alt" id="motion">
+  <div class="wrap">
+    <p class="kicker">04 动效系统</p>
+    <div class="head"><h2>六个 keyframes，一屋子仪表</h2><p class="sub">--ease-out cubic-bezier(.16,1,.3,1) 主缓动;回弹 (.34,1.56,.64,1) 只给拨杆(实锤)。</p></div>
+    <div class="kfgrid rv">
+      <div class="kfcard"><b>kburns 2.8s</b><p>首屏 Ken Burns:scale 1.07 收束到 1,一次性,给静态海报「开镜」的呼吸。</p></div>
+      <div class="kfcard"><b>flapTick .1s</b><p>翻牌字:rotateX 0 → −86° → +86° → 0,49% 与 51% 两帧完成换字瞬间——JS 在半程换字符,一格一格「哒哒」翻。</p></div>
+      <div class="kfcard"><b>gatePulse 1.1s</b><p>登机口脉冲:橙环 scale .6 → 1.7,opacity .9 → 0,70% 处 .25——雷达波语义,也复用作邮戳落章的墨圈。</p></div>
+      <div class="kfcard"><b>flIn .45s</b><p>调度日志逐行浮入(10px 上移),feed 框底对齐,像航管终端在吐行。</p></div>
+      <div class="kfcard"><b>rise .8s + reveal</b><p>入场双轨:hero 用 rise 四档延迟(0/.12/.24/.38s),正文用 IO reveal(--rv-y 与 --rv-d 可调)。</p></div>
+      <div class="kfcard"><b>flash 1s</b><p>数据变更闪底:orange-soft 背景一闪即褪,预算行与行程行「新增」时用。</p></div>
+      <div class="kfcard"><b>拨杆回弹(micro)</b><p>双引擎拨杆 translate 60px,.18s 回弹曲线;试一下:</p>
+        <div class="lever-demo" id="leverDemo"><span class="lever-slot" role="switch" aria-checked="false" tabindex="0" aria-label="引擎拨杆演示"><span class="lever-knob"></span></span><span id="leverLabel">快答引擎</span></div>
+      </div>
+      <div class="kfcard"><b>刮擦免动画纪律</b><p>剧场拖拽刮擦时 .scrubbing 全局禁过渡(transition:none!important),日志直接呈现终态——拖多快都不拖泥带水(实锤)。</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="blk" id="walk">
+  <div class="wrap">
+    <p class="kicker">05 逐屏走查 · 十一屏</p>
+    <div class="head"><h2>一次航程，一屏一账</h2><p class="sub">截图为 1440×900 真实渲染;引文皆站点原文。</p></div>
+    <div class="walk">
+
+      <article class="screen rv">
+        <figure class="shot"><img src="assets/screens/00-sec0.jpg" alt="第一屏:出发大厅" loading="lazy"><figcaption>SCREEN 01 · hero + 出发信息板</figcaption></figure>
+        <div class="scard"><span class="no">第一屏 · 出发大厅</span>
+          <h3>海报开镜，信息板起翻</h3>
+          <blockquote>你的旅行，背后有「一支机组」。……一支研究编队为你并行调研、逐条核证、反复打磨，直到一份句句有出处的行程送到你面前。</blockquote>
+          <p>复古喷气机海报做 Ken Burns 收束;右下悬「已盖章 · 值机」提示与登机牌;底部一块出发信息板:League Gothic 航班号、翻牌字目的地、状态列——active 行橙字。双层云带(cloud-band alpha 通道图,一层镜像)贴着地平线漂。</p>
+          <div class="vals"><code>kburns 2.8s scale 1.07 → 1</code><code>信息板栅格 92px / 1fr / 84px / 118px</code><code>fcell 翻牌 .1s rotateX ±86°</code><code>scrim 双向渐变压字区</code></div>
+        </div>
+      </article>
+
+      <article class="screen flip rv">
+        <figure class="shot"><img src="assets/screens/01a-ch1.jpg" alt="第二屏:编队起飞上" loading="lazy">
+          <div class="more"><img src="assets/screens/01b-ch1.jpg" alt="第二屏:编队起飞剧场" loading="lazy"></div>
+          <figcaption>SCREEN 02 · #ch1(上、下)</figcaption></figure>
+        <div class="scard"><span class="no">第二屏 · 编队起飞</span>
+          <h3>一台可播放、可暂停、可刮擦的调度剧场</h3>
+          <blockquote>先思考，再起飞。……你看到的每一步，都是真实的编排。</blockquote>
+          <p>左侧航管日志逐行吐出(flIn),右侧 SVG 航线图逐段描线(seg dashoffset .9s)、站点亮橙、计划门与风险门 gatePulse 扩环;上方一排相位刮擦轨(ph-bar scaleX 填充,hover 增粗),play/pause 按钮加 mono 时钟;拖拽刮擦时全局禁过渡。下挂实时计数(地点落图、工具调用、引用来源、全程用时)与八人机组名册(悬停浮出职责卡 thea-card)。</p>
+          <div class="vals"><code>seg 描线 .9s linear</code><code>gatePulse 1.1s 橙环</code><code>.scrubbing 禁过渡</code><code>机组 8 列头像栅格</code></div>
+        </div>
+      </article>
+
+      <article class="screen rv">
+        <figure class="shot"><img src="assets/screens/02-ch2.jpg" alt="第三屏:双引擎" loading="lazy"><figcaption>SCREEN 03 · #ch2</figcaption></figure>
+        <div class="scard"><span class="no">第三屏 · 双引擎</span>
+          <h3>一根拨杆，两条飞行剖面</h3>
+          <blockquote>一个开关，两种引擎。低空短途，1 次直答;高空长航，4 名研究员。</blockquote>
+          <p>物理拨杆(轨槽内阴影 + 橙色旋钮,回弹曲线 .18s)切换 fast 与 deep:上方 SVG 飞行剖面线重描——快答低平弧线一枚点,深研高空弧线五枚点错峰亮(延迟 .14s 步进);答案面板同步换页,快答带来源行「领事馆签证须知,上周核验」,深研展开编队扇形图(fan-line 描线 + 圆点转橙)。</p>
+          <div class="vals"><code>拨杆 translate 60px 回弹</code><code>剖面 dashoffset .55s</code><code>深研五点 .14s 步进</code></div>
+        </div>
+      </article>
+
+      <article class="screen flip rv">
+        <figure class="shot"><img src="assets/screens/03-ch3.jpg" alt="第四屏:计划门" loading="lazy"><figcaption>SCREEN 04 · #ch3</figcaption></figure>
+        <div class="scard"><span class="no">第四屏 · 计划门</span>
+          <h3>AI 提案，你拍板，「已批准」落章</h3>
+          <blockquote>起飞之前，规划员把整套计划摊在你面前。批准、调整、补充要求，都是一句话的事。</blockquote>
+          <p>企划单卡片(虚线票头,三步计划,每步标注执行角色与并行标记);「调整或补充」弹出偏好 chips(选中转橙),审查注记「本次无高风险建议,免审放行」浮现;点「开始调研」整卡进入 approved 态——橙色描边大章「已批准」从 1.6 倍缩落(与海龟汤的印章同语法,航空化了),按钮组淡出,后记浮入。</p>
+          <div class="vals"><code>章 rotate −9° scale 1.6 → 1</code><code>g-tag 徽标 scale .85 → 1</code><code>approved 态整卡锁定</code></div>
+        </div>
+      </article>
+
+      <article class="screen rv">
+        <figure class="shot"><img src="assets/screens/04-sec4.jpg" alt="第五屏:爬升幕间" loading="lazy"><figcaption>SCREEN 05 · 幕间一</figcaption></figure>
+        <div class="scard"><span class="no">第五屏 · 幕间「爬升」</span>
+          <h3>已批准。编队爬升中。</h3>
+          <p>编队机群图满幅,上下渐隐遮罩;有条件时懒加载同幅循环视频(data-src,muted loop playsinline)。一句 720 字重短句悬在左上,像舷窗外的一瞥。之后的「巡航」幕间同构(porthole 舷窗图)。</p>
+          <div class="vals"><code>幕高 clamp(430px,84vh,780px)</code><code>视频 data-src 懒加载</code><code>mask 上下渐隐</code></div>
+        </div>
+      </article>
+
+      <article class="screen flip rv">
+        <figure class="shot"><img src="assets/screens/05-ch4.jpg" alt="第六屏:句句有出处" loading="lazy"><figcaption>SCREEN 06 · #ch4</figcaption></figure>
+        <div class="scard"><span class="no">第六屏 · 出处</span>
+          <h3>碰一碰行程，来源卡点亮</h3>
+          <blockquote>每一句，都有出处。交付给你的计划，每个重要的选择都基于一个来源。</blockquote>
+          <p>左侧 Day 2 成稿节选里,可点句子用点线下划(claim);点亮后右侧对应来源卡 lit——橙描边、左移 6px,显示来源、新鲜度徽章(「官方核验」「上周核验」)与状态行;降级句(dashed)表示来源缺失的谨慎措辞。行程与证据的双栏对读,是全页信息设计最扎实的一屏。</p>
+          <div class="vals"><code>claim 点线 → 橙实线 + 橙底 16%</code><code>evc.lit 左移 −6px</code><code>新鲜度徽章 mono 胶囊</code></div>
+        </div>
+      </article>
+
+      <article class="screen rv">
+        <figure class="shot"><img src="assets/screens/06-ch5.jpg" alt="第七屏:记忆开关" loading="lazy"><figcaption>SCREEN 07 · #ch5</figcaption></figure>
+        <div class="scard"><span class="no">第七屏 · 记忆</span>
+          <h3>花生过敏，说一次就够</h3>
+          <blockquote>切换下面的开关，看看有记忆和没记忆的差别。……依据:家庭档案「孩子花生过敏」，你在三周前提到过。</blockquote>
+          <p>记忆开关(胶囊双选,选中橙底)切换同一问题的两版答案:开启后含花生的两家餐厅被划除(line-through + 橙「已排除」标),补位推荐带「替补推荐」标并 flash 闪底;右侧「这次回答中包含了六层记忆」面板,六条层级量条(SYSTEM 到 MESSAGES)逐层点亮。</p>
+          <div class="vals"><code>mrow.blocked 划除 + 橙标</code><code>l-bar 宽度 var(--w) 逐层 lit</code><code>flash 1s 橙底闪褪</code></div>
+        </div>
+      </article>
+
+      <article class="screen flip rv">
+        <figure class="shot"><img src="assets/screens/07-sec7.jpg" alt="第八屏:巡航幕间" loading="lazy"><figcaption>SCREEN 08 · 幕间二</figcaption></figure>
+        <div class="scard"><span class="no">第八屏 · 幕间「巡航」</span>
+          <h3>巡航高度。目的地临近。</h3>
+          <p>舷窗视角图,居中短句;与幕间一形成「爬升 → 巡航」的航段推进,也把 ch5 与 ch6 之间的信息密度差垫平。</p>
+          <div class="vals"><code>br-line 居中变体(.mid)</code></div>
+        </div>
+      </article>
+
+      <article class="screen rv">
+        <figure class="shot"><img src="assets/screens/08a-ch6.jpg" alt="第九屏:成稿地图" loading="lazy">
+          <div class="more"><img src="assets/screens/08b-ch6.jpg" alt="第九屏:版本机与预算" loading="lazy"></div>
+          <figcaption>SCREEN 09 · #ch6(上、下)</figcaption></figure>
+        <div class="scard"><span class="no">第九屏 · 成稿</span>
+          <h3>五天二十一站，外加一台版本机</h3>
+          <blockquote>一份直接能用的行程。地图、日程、预算，一次成型。五天二十一站按日成线，每一站都落在图上，落地就能照着走。</blockquote>
+          <p>手绘风东京底图上,五日路线虚线成网;Day chips 切换当日:路线转橙、站点亮起、右侧日卡(晴 24°C,含穿衣提示)与预算卡联动(分类条 scaleX,总额 ¥19,080 flash)。下方「版本机」:带四个刻度的物理滑轨(同拨杆材质),拖或点在 v1 至 v4 间刮擦,行程差异行 flash、白笔批注(mrev 7px 白描边)重画——版本历史做成了老收音机调台。</p>
+          <div class="vals"><code>rt.sel 虚线转橙</code><code>bfill scaleX .7s</code><code>版本机四刻度 + 拖拽 transition:none</code><code>21 站点 SVG 命名布点</code></div>
+        </div>
+      </article>
+
+      <article class="screen flip rv">
+        <figure class="shot"><img src="assets/screens/09-ch7.jpg" alt="第十屏:放行单" loading="lazy"><figcaption>SCREEN 10 · #ch7</figcaption></figure>
+        <div class="scard"><span class="no">第十屏 · 引擎盖下</span>
+          <h3>一张奶油色放行单，五行工程底座</h3>
+          <blockquote>在引擎盖下。一张放行单，五行看懂工程底座。</blockquote>
+          <p>全页唯一亮面板:奶油底、藏青字、虚线行分隔——RAG(+105%,三级检索)、MCP(13 舱工具)、CTX(6 层上下文)、SSE(逐事件直播)、COST(每一步记账),右列 Archivo Narrow 大数,首行数值橙色。技术参数带脚注编号(fnref 上标),页尾 fine 区一条条对应——营销页给自己上了引用规范。</p>
+          <div class="vals"><code>放行单 cream 反转面板</code><code>rel-row 72px / 1fr / auto</code><code>脚注 fn-id 对应</code></div>
+        </div>
+      </article>
+
+      <article class="screen rv">
+        <figure class="shot"><img src="assets/screens/10-arrival.jpg" alt="第十一屏:降落盖戳" loading="lazy"><figcaption>SCREEN 11 · #arrival</figcaption></figure>
+        <div class="scard"><span class="no">第十一屏 · 降落</span>
+          <h3>亲手盖下终章邮戳</h3>
+          <blockquote>下一段旅程，带上机组。……亲手盖下终章邮戳。</blockquote>
+          <p>跑道图缓推进场(fin-zoom),进近虚线掠过;圆形邮戳悬停微升,按下落章:虚线着陆圈转实线、橙墨圈 gatePulse 扩散、邮戳 −8° 落定——「landed」状态才允许盖章(滚动到位前 pointer-events 关闭)。页脚 MMXXVI 罗马数字与脚注小字收尾。本页签名效果区可以亲手盖一次。</p>
+          <div class="vals"><code>邮戳 hover −4px</code><code>落章 rotate −8°</code><code>fin-pad dashed → solid</code><code>墨圈复用 gatePulse</code></div>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="blk alt" id="sig">
+  <div class="wrap">
+    <p class="kicker">06 签名效果 · 可跑复现</p>
+    <div class="head"><h2>翻牌、描线、盖邮戳</h2><p class="sub">真实缓动、真实节拍、真实素材(登机牌纹理与到达邮戳)。</p></div>
+
+    <div class="demo rv">
+      <div class="demo-head"><h3>一、出发信息板 — flapTick 翻牌字</h3><span>复现自 .fcell + JS 半程换字</span></div>
+      <div class="demo-body">
+        <div class="flapline" id="flapline" aria-live="polite"></div>
+        <p style="margin-top:16px"><button class="runbtn" id="flapBtn" type="button">换一班</button></p>
+        <p style="margin-top:12px;font-family:var(--font-mono);font-size:11px;color:var(--slate)">每格 .1s rotateX(0 → −86° → +86° → 0),JS 在 49% 半程换字符;逐格 30ms 错峰,从左往右「哒哒哒」翻过去。字格中缝是一条 1px 奶油线(渐变),翻牌板的轴。</p>
+      </div>
+    </div>
+
+    <div class="demo rv">
+      <div class="demo-head"><h3>二、航线描线与登机口脉冲 — seg + gatePulse</h3><span>复现自 #ch1 剧场的 SVG 语法</span></div>
+      <div class="demo-body">
+        <div class="routebox" id="routebox">
+          <svg viewBox="0 0 920 150" aria-label="航线演示">
+            <path class="seg" id="sg1" d="M60,100 C 200,40 320,40 450,88" pathLength="1"/>
+            <path class="seg" id="sg2" d="M450,88 C 580,130 720,110 850,60" pathLength="1"/>
+            <circle class="stop" id="st1" cx="60" cy="100" r="7"/>
+            <circle class="stop" id="st2" cx="450" cy="88" r="7"/>
+            <circle class="stop" id="st3" cx="850" cy="60" r="7"/>
+            <circle class="gate-ring" id="gr1" cx="450" cy="88" r="16" pathLength="1"/>
+            <circle class="gate-ring" id="gr2" cx="850" cy="60" r="16" pathLength="1"/>
+            <text class="stop-label" id="lb1" x="60" y="132" text-anchor="middle">问清需求</text>
+            <text class="stop-label" id="lb2" x="450" y="120" text-anchor="middle">计划门</text>
+            <text class="stop-label" id="lb3" x="850" y="92" text-anchor="middle">综合成稿</text>
+          </svg>
+        </div>
+        <p><button class="runbtn" id="routeBtn" type="button">重演一遍</button></p>
+      </div>
+    </div>
+
+    <div class="demo rv">
+      <div class="demo-head"><h3>三、终章邮戳 — 亲手盖章</h3><span>复现自 #arrival 的 fin-rig,邮戳为真实素材</span></div>
+      <div class="demo-body" style="text-align:center">
+        <div class="stamp-rig" id="stampRig">
+          <span class="fin-pad" aria-hidden="true"></span>
+          <button class="fin-stamp" id="finStamp" aria-label="盖下终章邮戳"><img src="real-assets/image/1d9616_stamp-arr.webp" alt=""></button>
+          <span class="fin-ink" aria-hidden="true"></span>
+        </div>
+        <p class="fin-cap" id="finCap">悬停微升;按下:虚线着陆圈转实线,橙墨圈扩散,邮戳 −8° 落定</p>
+        <div class="stubline" style="justify-content:center">
+          <img class="stubimg" src="real-assets/image/extra_pass-card.webp" alt="值机登机牌卡面(真实素材)">
+        </div>
+        <p style="margin-top:10px;font-family:var(--font-mono);font-size:11px;color:var(--slate)">上图为值机系统的登机牌卡面真实素材;原站中它被「领取」后飞到右下角驻留,随章节阅读逐格盖章。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="blk" id="build">
+  <div class="wrap">
+    <p class="kicker">07 复刻要点(页内速览)</p>
+    <div class="head"><h2>把仪表盘带走</h2><p class="sub">完整版见同目录《复刻指南》。</p></div>
+    <button class="runbtn" id="copyRoot" type="button">复制 :root token</button>
+    <pre class="code rv" id="rootBlock">:root{
+  <b>/* 夜空四档 */</b> --navy:#0D1F3C; --navy-2:#12294B; --panel:#0A1830; --panel-deep:#071224;
+  <b>/* 纸与字 */</b> --cream:#F2E9D8; --cream-dim:#C9BFA9; --slate:#8CA3BF; --ink:#071224;
+  <b>/* 夜航橙 */</b> --orange:#E4571F; --orange-soft:rgba(228,87,31,.16);
+  <b>/* 线与圆角 */</b> --line:rgba(242,233,216,.16); --line-soft:rgba(242,233,216,.09); --r-panel:14px;
+  <b>/* 缓动 */</b> --ease-out:cubic-bezier(.16,1,.3,1);   /* 回弹只给拨杆:(.34,1.56,.64,1) */
+}
+<b>/* 翻牌字:一格 */</b>
+.fcell{ width:1.18em; text-align:center; backface-visibility:hidden;
+  background:linear-gradient(to bottom, var(--panel-deep) 49.5%,
+    rgba(242,233,216,.1) 49.5%, rgba(242,233,216,.1) 50.5%, var(--panel-deep) 50.5%); }
+@keyframes flapTick{ 0%{transform:rotateX(0)} 49%{transform:rotateX(-86deg)}
+  51%{transform:rotateX(86deg)} to{transform:rotateX(0)} }
+<b>/* JS:半程换字 */</b>
+cell.classList.add('tick');
+setTimeout(() => cell.textContent = next, 50);          // .1s 的 49% 处
+cell.addEventListener('animationend', () => cell.classList.remove('tick'), {once:true});
+
+<b>/* 登机口脉冲(也当邮戳墨圈用) */</b>
+@keyframes gatePulse{ 0%{opacity:.9;transform:scale(.6)}
+  70%{opacity:.25;transform:scale(1.5)} to{opacity:0;transform:scale(1.7)} }
+
+<b>/* 刮擦免动画纪律 */</b>
+.scrubbing .seg, .scrubbing .stop, .scrubbing .stop-label{ transition:none !important; }</pre>
+    <div class="prose rv"><p><strong>工程坑:</strong>翻牌换字必须卡在动画半程(49% 帧),早了穿帮晚了闪烁;SVG 描线用 pathLength="1" 归一,dasharray 与 dashoffset 都写 1,免量真实长度;刮擦模式要一并停掉日志入场动画(直接终态);拨杆与版本机的拖拽期间关闭 knob 过渡,松手才恢复;懒加载视频用 data-src,入视口再赋值,失败静默保留底图。</p></div>
+  </div>
+</section>
+
+<section class="blk alt" id="prov">
+  <div class="wrap">
+    <p class="kicker">08 出处与方法(页内简版)</p>
+    <div class="head"><h2>数值的来路</h2><p class="sub">完整链路与局限见同目录《出处与方法》。</p></div>
+    <div class="provgrid rv">
+      <div class="provcard"><h4>实锤</h4><ul>
+        <li>19 个 :root 变量、2 条贝塞尔、6 个 keyframes:tokens.json 与 647 行样式原文</li>
+        <li>十一屏结构、全部引文、放行单五行、21 站点名:HTML 原文与分节抽取</li>
+        <li>翻牌、剧场、拨杆、版本机、值机牌的类名与状态机:样式原文 + 打包 JS 字符串</li>
+        <li>两支海报字(9,064 + 13,920 B)、18 张图、登机牌纹理:落盘 + manifest</li>
+      </ul></div>
+      <div class="provcard"><h4>推断与未及</h4><ul>
+        <li>Vite 构建:资产命名特征</li>
+        <li>canvas 用途:JS 有一处 getContext("2d") 与多个 star 字符串,推断为星空或帧序列绘制;未逐帧还原</li>
+        <li>三段幕间视频为懒加载(data-src),未触发下载,以底图为准</li>
+        <li>值机牌「飞行」动画(pass-fly)的轨迹参数未实测</li>
+      </ul></div>
+    </div>
+    <div class="asseen rv">
+      <figure><img src="assets/actual-hero.jpg" alt="首屏真实渲染" loading="lazy"><figcaption>as-seen 首屏 — 2026.07.30 抓取</figcaption></figure>
+      <figure><div class="scrollwrap"><img src="assets/actual-full.jpg" alt="整页真实渲染(可滚动)" loading="lazy"></div><figcaption>as-seen 整页 — 框内可滚动</figcaption></figure>
+    </div>
+  </div>
+</section>
+
+<footer class="end">
+  <div class="wrap"><span>JourneyPilot 设计解构 — 真实抽取于 2026 年 7 月 30 日,Chromium 148,1440×900。</span><span>逆向素材仅限内部研究比对,勿对外分发。</span></div>
+</footer>
+
+<script>
+const $=(s,r=document)=>r.querySelector(s),$$=(s,r=document)=>[...r.querySelectorAll(s)];
+const reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
+if(!reduced){const io=new IntersectionObserver(es=>{for(const e of es)if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}},{threshold:.12});$$('.rv').forEach(el=>io.observe(el))}else $$('.rv').forEach(el=>el.classList.add('in'));
+/* 色板 */
+const G=[['--navy','#0D1F3C','夜空(页面基底)'],['--navy-2','#12294B','夜空二(隔节)'],['--panel','#0A1830','面板'],['--panel-deep','#071224','深面板(翻牌格)'],['--cream','#F2E9D8','奶油纸(主文字)'],['--cream-dim','#C9BFA9','奶油暗(次文字)'],['--slate','#8CA3BF','蓝灰(标注)'],['--orange','#E4571F','夜航橙(唯一强调)'],['--orange-soft','rgba(228,87,31,.16)','橙的洇底'],['--ink','#071224','藏青墨(亮面板文字)'],['--line','rgba(242,233,216,.16)','线'],['--line-soft','rgba(242,233,216,.09)','弱线']];
+const w=$('#sw1');G.forEach(([n,v,l])=>{const b=document.createElement('button');b.className='sw';b.style.setProperty('--c',v);b.innerHTML=`<b>${l}</b><code>${n} ${v}</code><i aria-hidden="true"></i>`;b.addEventListener('click',()=>copy(v));w.append(b)});
+const copied=$('#copied');let ct=0;
+function copy(t){(navigator.clipboard?navigator.clipboard.writeText(t):Promise.reject()).catch(()=>{const ta=document.createElement('textarea');ta.value=t;document.body.append(ta);ta.select();document.execCommand('copy');ta.remove()}).finally(()=>{copied.classList.add('show');clearTimeout(ct);ct=setTimeout(()=>copied.classList.remove('show'),1600)})}
+$('#copyRoot').addEventListener('click',()=>copy($('#rootBlock').textContent));
+/* 拨杆 */
+const lever=$('#leverDemo'),leverSlot=$('.lever-slot',lever),leverLabel=$('#leverLabel');
+function toggleLever(){const deep=lever.classList.toggle('deep');leverSlot.setAttribute('aria-checked',String(deep));leverLabel.textContent=deep?'深研引擎':'快答引擎'}
+leverSlot.addEventListener('click',toggleLever);
+leverSlot.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();toggleLever()}});
+/* demo 1:翻牌 */
+const FLIGHTS=[' JP204  东京   已放行 ',' JP117  京都   登机中 ',' JP330  札幌   值机 7/8',' JP512  大阪   已批准 '];
+const line=$('#flapline');let cur=FLIGHTS[0];
+function renderFlap(s){line.innerHTML='';[...s].forEach(ch=>{const c=document.createElement('span');c.className='fcell'+(ch===' '?' gap':'');c.textContent=ch===' '?'':ch;line.append(c)})}
+renderFlap(cur);let fi=0;
+$('#flapBtn').addEventListener('click',()=>{
+  fi=(fi+1)%FLIGHTS.length;const next=FLIGHTS[fi];const cells=$$('.fcell',line);
+  [...next].forEach((ch,i)=>{const c=cells[i];if(!c)return;const t=ch===' '?'':ch;
+    if(c.textContent===t){return}
+    setTimeout(()=>{
+      if(reduced){c.textContent=t;c.classList.toggle('gap',ch===' ');return}
+      c.classList.remove('tick');void c.offsetWidth;c.classList.add('tick');
+      setTimeout(()=>{c.textContent=t;c.classList.toggle('gap',ch===' ')},50);
+      c.addEventListener('animationend',()=>c.classList.remove('tick'),{once:true});
+    }, i*30);
+  });
+  cur=next;
+});
+/* demo 2:航线 */
+function runRoute(){
+  const seq=[['sg1',0],['st1',0],['lb1',0],['st2',900],['lb2',900],['gr1',950],['sg2',1400],['st3',2300],['lb3',2300],['gr2',2350]];
+  ['sg1','sg2','st1','st2','st3','gr1','gr2','lb1','lb2','lb3'].forEach(id=>{const el=document.getElementById(id);el.classList.remove('on');void el.getBoundingClientRect()});
+  seq.forEach(([id,d])=>setTimeout(()=>document.getElementById(id).classList.add('on'), reduced?0:d));
+}
+$('#routeBtn').addEventListener('click',runRoute);
+new IntersectionObserver((es,o)=>{if(es.some(x=>x.isIntersecting)){o.disconnect();runRoute()}},{threshold:.5}).observe($('#routebox'));
+/* demo 3:邮戳 */
+$('#finStamp').addEventListener('click',()=>{
+  const rig=$('#stampRig');if(rig.classList.contains('done'))return;
+  rig.classList.add('done');$('#finCap').textContent='已落章 — 航程完成,MMXXVI';
+});
+</script>
+</body>
+</html>

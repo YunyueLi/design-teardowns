@@ -1,0 +1,61 @@
+/* 从线上站点真实抽取的设计 token(实锤,非观感推断) */
+/* 源:https://imlagom.com/projects/turtle-soup/ */
+:root{
+  --bg:rgb(10, 8, 6);
+  --ink:rgb(242, 234, 212);
+  /* 高频色值:#000 #faf5e8 #8b7a4e #b91c1c #b89968 #5a4a35 #2a2016 #b3402a #f2ead4 #e7dcbc */
+  --font-sans:"Noto Serif SC", "Songti SC", STSong, serif;
+  /* 加载字体:Noto Serif SC, Special Elite, Caveat, Long Cang */
+  /* h1:128px/700 字距 5.12px 行高 135.68px */
+  --ease-1:cubic-bezier(.32,.72,0,1);
+  --ease-2:cubic-bezier(.23,1,.32,1);
+  --ease-3:cubic-bezier(.2, .9, .3, 1);
+  --ease-4:cubic-bezier(.16,.62,.42,1);
+  /* 按钮过渡:border-color 0.18s, background 0.18s */
+  /* 时长梯:5s 3s 1s 8s 9s 4s 2s 42s */
+  --radius-1:2px;
+  --radius-2:50%;
+  --radius-3:3px;
+  --radius-4:4px;
+  --radius-5:6px;
+  --radius-6:0;
+  /* 按钮圆角:6px */
+  /* 探测到的库:Lenis */
+  /* 媒体:video 6 canvas 0 svg 3 img 42 */
+}
+
+/* 站点原始 CSS 自定义变量(节选,复刻参考) */
+:root{
+  --paper-100:#faf5e8;
+  --paper-200:#f2ead4;
+  --paper-300:#e7dcbc;
+  --paper-400:#d4c497;
+  --paper-edge:#8b7a4e;
+  --ink-900:#201a12;
+  --ink-700:#3a2f21;
+  --ink-500:#5e4f38;
+  --ink-400:#85755a;
+  --ink-300:#a8957a;
+  --blood:#b91c1c;
+  --blood-d:#8b1410;
+  --brass:#b89968;
+  --brass-d:#8b7440;
+  --brass-ink:#6b5730;
+  --night:#0a0806;
+  --night-2:#16100a;
+  --f-serif:"Noto Serif SC", "Songti SC", "STSong", serif;
+  --f-hand:"Caveat", "Long Cang", cursive;
+  --ease-sig:cubic-bezier(.2, .9, .3, 1);
+  --shadow-1:0 1px 3px rgba(60, 42, 22, .22);
+  --shadow-2:0 4px 14px rgba(60, 42, 22, .26);
+  --shadow-3:0 12px 34px rgba(40, 26, 12, .34);
+  --wrap:1200px;
+  --edge:rgba(28, 27, 24, .13);
+  --w1:#b3402a;
+  --w2:#8a3020;
+  --w3:#423a31;
+  --wash-blend:screen;
+  --wash-o:.5;
+  --cur-ink:#b3402a;
+  --cur-ring:rgba(179, 64, 42, .32);
+}

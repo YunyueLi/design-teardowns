@@ -1,0 +1,70 @@
+/* 从线上站点真实抽取的设计 token(实锤,非观感推断) */
+/* 源:https://imlagom.com/ */
+:root{
+  --bg:oklch(0.967 0.008 91.5);
+  --ink:oklch(0.207 0.008 67);
+  --accent:oklch(.58 .155 40);   /* 探针 accentGuess,复刻前请与 topHex 核对 */
+  /* 高频色值:#b3402a #000 #fff #e4571f #f2e9d8 #0d1f3c #c2451c #f4ecd8 #16283f #d64a1e */
+  --font-sans:Inter-fb232d4c94bf52a0, "Helvetica Neue", Arial, "Noto Sans SC", "PingFang SC", "Microsoft YaHei", ui-sans-serif, system-ui, sans-serif;
+  /* 加载字体:Inter-fb232d4c94bf52a0, JetBrains Mono-7726205a02ce551a, JetBrains Mono-7726205a02ce551a fallback: Courier New, Newsreader-8b30bb7ef6337c7c, LXGW WenKai Note, Noto Serif SC, Noto Sans SC */
+  /* h1:93.6683px/360 字距 -1.87337px 行高 103.035px */
+  --ease-1:cubic-bezier(.32,.72,0,1);
+  --ease-2:cubic-bezier(.23,1,.32,1);
+  --ease-3:cubic-bezier(.22, 1, .36, 1);
+  --ease-4:cubic-bezier(.32, .72, 0, 1);
+  --ease-5:cubic-bezier(.2, .8, .2, 1);
+  /* 按钮过渡:opacity 0.25s */
+  /* 时长梯:42s 9s 62s 3s 7s 22s 64s 52s */
+  --radius-1:9px;
+  --radius-2:999px;
+  --radius-3:50%;
+  --radius-4:11px;
+  --radius-5:4px;
+  --radius-6:18px;
+  /* 按钮圆角:0px */
+  /* 媒体:video 1 canvas 0 svg 6 img 51 */
+}
+
+/* 站点原始 CSS 自定义变量(节选,复刻参考) */
+:root{
+  --bg:oklch(.967 .008 91.5);
+  --surface:oklch(.94 .015 90);
+  --elevated:oklch(.984 .007 97);
+  --border:oklch(.883 .017 88);
+  --border-soft:oklch(.914 .016 86);
+  --fg:oklch(.207 .008 67);
+  --muted:oklch(.438 .014 72);
+  --faint:oklch(.54 .021 83);
+  --accent:oklch(.58 .155 40);
+  --accent-ink:oklch(.46 .13 39);
+  --accent-fg:oklch(.984 .007 97);
+  --mono:var(--font-jetbrains), ui-monospace, "SFMono-Regular", monospace;
+  --serif:var(--font-newsreader), serif;
+  --serif-cjk:"Noto Serif SC", "Songti SC", "STSong", "Source Han Serif SC", serif;
+  --ease-out:cubic-bezier(.22, 1, .36, 1);
+  --ease-heavy:cubic-bezier(.32, .72, 0, 1);
+  --ease-focus:cubic-bezier(.2, .8, .2, 1);
+  --space-2xs:.25rem;
+  --space-xs:.5rem;
+  --space-sm:.75rem;
+  --space-md:1rem;
+  --space-lg:1.5rem;
+  --space-xl:2rem;
+  --space-2xl:3rem;
+  --space-3xl:4rem;
+  --space-4xl:6rem;
+  --line-light:rgb(26 23 20 / 16%);
+  --line-dark:rgb(251 250 245 / 22%);
+  --char-deep:#0d0b09;
+  --page:min(92vw, 1440px);
+  --t-label:.72rem;
+  --t-note:.82rem;
+  --t-body:.92rem;
+  --t-title:clamp(1.9rem, 3vw, 3.3rem);
+  --focus-opacity:1;
+  --focus-size:190px;
+  --header-position:fixed;
+  --col-1:6fr;
+  --col-2:6fr;
+  --col-3:6fr;
+}
