@@ -29,6 +29,7 @@ __pycache__/
 **/real-assets/video/
 **/real-assets/audio/
 **/real-assets/source/
+**/real-assets/model/
 **/recording/*.webm
 **/recording/*.mp4
 **/*.woff2

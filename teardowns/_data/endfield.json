@@ -1,0 +1,385 @@
+{
+  "site": "Arknights Endfield",
+  "url": "https://endfield.hypergryph.com/",
+  "probe": {
+    "title": "《明日方舟：终末地》官方网站-Arknights: Endfield",
+    "lang": "zh-cn",
+    "body": {
+      "background-color": "rgba(0, 0, 0, 0)",
+      "color": "rgb(0, 0, 0)",
+      "font-family": "sans-serif"
+    },
+    "h1": {
+      "text": "核心章节版本向渊行武陵决战篇焕新相见 共赴新章",
+      "font-family": "sans-serif",
+      "font-size": "9px",
+      "font-weight": "400",
+      "letter-spacing": "normal",
+      "line-height": "normal",
+      "font-style": "normal",
+      "color": "rgb(0, 0, 0)"
+    },
+    "nav": null,
+    "btn": {
+      "background-color": "rgb(242, 242, 242)",
+      "color": "rgb(25, 25, 25)",
+      "border-radius": "16.875px",
+      "transition": "transform 0.3s, width 0.3s, height 0.3s, border-radius 0.3s",
+      "font-family": "sans-serif"
+    },
+    "accentGuess": "",
+    "libs": [],
+    "scriptHints": [],
+    "media": {
+      "video": 3,
+      "canvas": 1,
+      "svg": 137,
+      "img": 27,
+      "preloadVideo": 0,
+      "preloadFont": 0
+    },
+    "fontsLoaded": [
+      "ProtestStrike-Regular",
+      "Roboto-Regular",
+      "Roboto-Black",
+      "Gilroy-Light",
+      "Novecentosanswide-Bold",
+      "Novecentosanswide-DemiBold",
+      "Novecentosanswide-Medium",
+      "Gilroy-Medium",
+      "Gilroy-ExtraBold",
+      "SpaceGrotesk",
+      "swiper-icons",
+      "SDK_Sans-Regular",
+      "SDK_Sans-Medium",
+      "SDK_Sans-Bold",
+      "SansMedium",
+      "SansBold",
+      "SansBlack",
+      "SansRegular"
+    ]
+  },
+  "tokens": {
+    "customProps": {
+      "--swiper-theme-color": "#007aff",
+      "--swiper-preloader-color": "#fff"
+    },
+    "topHex": [
+      {
+        "hex": "#191919",
+        "n": 84
+      },
+      {
+        "hex": "#fff",
+        "n": 77
+      },
+      {
+        "hex": "#fffa00",
+        "n": 56
+      },
+      {
+        "hex": "#d9d9d9",
+        "n": 21
+      },
+      {
+        "hex": "#000",
+        "n": 18
+      },
+      {
+        "hex": "#999",
+        "n": 17
+      },
+      {
+        "hex": "#35373c",
+        "n": 15
+      },
+      {
+        "hex": "#e5e5e5",
+        "n": 13
+      },
+      {
+        "hex": "#f2f2f2",
+        "n": 11
+      },
+      {
+        "hex": "#666",
+        "n": 10
+      },
+      {
+        "hex": "#ccc",
+        "n": 10
+      },
+      {
+        "hex": "#e6e6e6",
+        "n": 9
+      },
+      {
+        "hex": "#fafafa",
+        "n": 9
+      },
+      {
+        "hex": "#424242",
+        "n": 9
+      },
+      {
+        "hex": "#00ffa2",
+        "n": 9
+      },
+      {
+        "hex": "#b3b3b3",
+        "n": 8
+      },
+      {
+        "hex": "#ffffff",
+        "n": 8
+      },
+      {
+        "hex": "#f0f0f0",
+        "n": 7
+      },
+      {
+        "hex": "#2e2e2e",
+        "n": 6
+      },
+      {
+        "hex": "#888",
+        "n": 6
+      },
+      {
+        "hex": "#ff1aac",
+        "n": 6
+      },
+      {
+        "hex": "#fff000",
+        "n": 6
+      },
+      {
+        "hex": "#bfbfbf",
+        "n": 6
+      },
+      {
+        "hex": "#333",
+        "n": 6
+      }
+    ],
+    "cubicBezier": [
+      {
+        "v": "cubic-bezier(1,0,.7,1)",
+        "n": 1
+      }
+    ],
+    "fontFamily": [
+      {
+        "v": "SansMedium",
+        "n": 38
+      },
+      {
+        "v": "SansRegular",
+        "n": 23
+      },
+      {
+        "v": "Gilroy-Medium",
+        "n": 20
+      },
+      {
+        "v": "SansBold",
+        "n": 11
+      },
+      {
+        "v": "Novecentosanswide-DemiBold",
+        "n": 7
+      },
+      {
+        "v": "Novecentosanswide-Medium",
+        "n": 6
+      },
+      {
+        "v": "Novecentosanswide-Bold",
+        "n": 6
+      },
+      {
+        "v": "Gilroy-Light",
+        "n": 6
+      },
+      {
+        "v": "Segoe UI,Roboto,Helvetica Neue,Arial,PingFang SC,PingFang TC,Microsoft YaHei,Microsoft JhengHei,Hiragino Sans GB,Hiragino Kaku Gothic Pro,Yu Gothic UI,Meiryo,Apple SD Gothic Neo,Malgun Gothic,Leelawadee UI,Thonburi,Noto Sans,sans-serif",
+        "n": 3
+      },
+      {
+        "v": "sans-serif",
+        "n": 3
+      },
+      {
+        "v": "SpaceGrotesk",
+        "n": 3
+      },
+      {
+        "v": "SansBlack",
+        "n": 2
+      },
+      {
+        "v": "HarmonyOS_Sans_SC_Bold",
+        "n": 1
+      },
+      {
+        "v": "ProtestStrike-Regular",
+        "n": 1
+      },
+      {
+        "v": "Roboto-Regular",
+        "n": 1
+      },
+      {
+        "v": "Roboto-Black",
+        "n": 1
+      }
+    ],
+    "durations": [
+      {
+        "v": "3s",
+        "n": 62
+      },
+      {
+        "v": "2s",
+        "n": 49
+      },
+      {
+        "v": "1s",
+        "n": 6
+      },
+      {
+        "v": "4s",
+        "n": 5
+      },
+      {
+        "v": "1.6s",
+        "n": 3
+      },
+      {
+        "v": "6s",
+        "n": 2
+      },
+      {
+        "v": "5s",
+        "n": 1
+      },
+      {
+        "v": "1.5s",
+        "n": 1
+      }
+    ],
+    "radii": [
+      {
+        "v": "50%",
+        "n": 26
+      },
+      {
+        "v": ".25rem",
+        "n": 18
+      },
+      {
+        "v": "4px",
+        "n": 8
+      },
+      {
+        "v": "2.625rem",
+        "n": 4
+      },
+      {
+        "v": "2px",
+        "n": 4
+      },
+      {
+        "v": ".3125rem",
+        "n": 3
+      },
+      {
+        "v": ".1875rem",
+        "n": 3
+      },
+      {
+        "v": "6px",
+        "n": 3
+      },
+      {
+        "v": ".4375rem",
+        "n": 3
+      },
+      {
+        "v": ".5rem",
+        "n": 3
+      },
+      {
+        "v": "2.25rem",
+        "n": 2
+      },
+      {
+        "v": "2.3125rem",
+        "n": 2
+      },
+      {
+        "v": "2.8125rem",
+        "n": 2
+      },
+      {
+        "v": "3.375rem",
+        "n": 2
+      }
+    ],
+    "keyframes": [
+      {
+        "v": "RollingContent_carousel__Yi3KP",
+        "n": 1
+      },
+      {
+        "v": "__03-gameplay_flashing__wp7NK",
+        "n": 1
+      },
+      {
+        "v": "__04-finalpage_flashing__w5gJk",
+        "n": 1
+      },
+      {
+        "v": "ScrollViewer_scrollTipMove__4X_XG",
+        "n": 1
+      },
+      {
+        "v": "ScrollViewer_scrollBreathing__ijjPq",
+        "n": 1
+      },
+      {
+        "v": "OrigQuery_rotate__o1MMK",
+        "n": 1
+      },
+      {
+        "v": "__00-Loading_fadeIn__CDcQn",
+        "n": 1
+      },
+      {
+        "v": "h5-cn_scrollTipMove__uvZzG",
+        "n": 1
+      },
+      {
+        "v": "h5-oversea_scrollTipMove__ObqWD",
+        "n": 1
+      },
+      {
+        "v": "swiper-preloader-spin",
+        "n": 1
+      },
+      {
+        "v": "__05-Gameplay_flashing__W8_Z1",
+        "n": 1
+      },
+      {
+        "v": "__08-AIC_flashing__pEebW",
+        "n": 1
+      },
+      {
+        "v": "__09-Calendar_downloadBgBreath__9_Ko0",
+        "n": 1
+      }
+    ],
+    "cssBytes": 372886
+  }
+}

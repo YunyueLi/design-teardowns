@@ -1,0 +1,754 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Arknights: Endfield 官网拆解 · 工业点云档案</title>
+<style>
+/* ============ 真字体（本地真文件 + 原站 CDN 兜底；中文字体为 SDK 运行时注入，未能捕获，正文用系统栈并已在文档标注） ============ */
+@font-face{font-family:Novecento;src:url(real-assets/fonts/5eabbb_Novecentosanswide-Bold.7ac6f1.woff2) format("woff2"),url(https://web.hycdn.cn/endfield/official-v4/_next/static/media/Novecentosanswide-Bold.7ac6f1.woff2) format("woff2");font-weight:700;font-display:swap}
+@font-face{font-family:NovecentoMed;src:url(real-assets/fonts/ef170b_Novecentosanswide-Medium.748604.woff2) format("woff2"),url(https://web.hycdn.cn/endfield/official-v4/_next/static/media/Novecentosanswide-Medium.748604.woff2) format("woff2");font-weight:500;font-display:swap}
+@font-face{font-family:GilroyXB;src:url(real-assets/fonts/78d187_Gilroy-ExtraBold.7b2f8c.woff2) format("woff2"),url(https://web.hycdn.cn/endfield/official-v4/_next/static/media/Gilroy-ExtraBold.7b2f8c.woff2) format("woff2");font-weight:800;font-display:swap}
+@font-face{font-family:RobotoBlack;src:url(real-assets/fonts/8c7da7_Roboto-Black.6e4071.woff2) format("woff2"),url(https://web.hycdn.cn/endfield/official-v4/_next/static/media/Roboto-Black.6e4071.woff2) format("woff2");font-weight:900;font-display:swap}
+
+/* ============ 真实 token（tokens.json 词频 + 样式原文 + 着色器常量） ============ */
+:root{
+  --ink:#191919;        /* 实锤：词频第一（84） */
+  --panel:#35373c;      /* 实锤：面板灰 */
+  --paper:#fff;         /* 实锤：词频第二（77） */
+  --yellow:#fffa00;     /* 实锤：签名黄，词频 56 */
+  --grey:#d9d9d9;       /* 实锤 */
+  --grey-2:#999;        /* 实锤 */
+  --magenta:#ff1aac;    /* 实锤：套印品红（CSS 6 处） */
+  --green:#00ffa2;      /* 实锤：套印荧光绿（CSS 9 处） */
+  --scan:#ffff33;       /* 实锤：扫描带 vec3(1,1,.2) */
+  --pt:#cccccc;         /* 实锤：常态点色 vec3(.8,.8,.8) */
+  --ease-hard:cubic-bezier(1,0,.7,1); /* 实锤：全站唯一自定义贝塞尔 */
+  --cn:"PingFang SC","Microsoft YaHei","Hiragino Sans GB","Noto Sans SC",sans-serif; /* 替身：原站 SansMedium 系为 SDK 注入 */
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--ink);color:var(--paper);font-family:var(--cn);font-size:15px;line-height:1.6;-webkit-font-smoothing:antialiased}
+::selection{background:var(--yellow);color:var(--ink)}
+.en{font-family:Novecento,Impact,sans-serif;letter-spacing:.04em;text-transform:uppercase}
+.en-med{font-family:NovecentoMed,Impact,sans-serif;letter-spacing:.05em;text-transform:uppercase}
+.gil{font-family:GilroyXB,Arial,sans-serif}
+.mono{font-family:ui-monospace,SFMono-Regular,Menlo,monospace}
+a{color:var(--grey);text-underline-offset:3px}
+a:hover{color:var(--yellow)}
+
+/* ============ 布局：左侧图标轨 + 主列 ============ */
+.rail{
+  position:fixed;left:0;top:0;bottom:0;width:56px;background:var(--paper);z-index:50;
+  display:flex;flex-direction:column;align-items:center;padding:12px 0;gap:6px;
+}
+.rail .logo{width:38px;height:52px;background:var(--ink);color:var(--paper);display:grid;place-items:center;font-size:9px;line-height:1.15;text-align:center;font-weight:700}
+.rail nav{display:flex;flex-direction:column;gap:2px;margin-top:12px;flex:1}
+.rail nav a{
+  width:44px;height:40px;display:grid;place-items:center;color:#191919;text-decoration:none;
+  font-size:8.5px;font-weight:700;letter-spacing:.02em;text-align:center;position:relative;
+}
+.rail nav a.on,.rail nav a:hover{background:var(--ink);color:var(--paper)}
+.rail nav a.on:before{content:"";position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--yellow)}
+.rail .go{writing-mode:vertical-rl;background:var(--ink);color:var(--paper);padding:14px 8px;font-size:12px;font-weight:700;letter-spacing:.3em;margin-bottom:6px}
+main{margin-left:56px;padding:0 clamp(16px,4vw,64px) 120px;max-width:1480px}
+@media (max-width:760px){.rail{display:none}main{margin-left:0}}
+
+/* ============ 分区骨架 ============ */
+section.blk{padding-top:88px;position:relative}
+.blk-head{display:flex;align-items:center;gap:12px;margin-bottom:24px}
+.blk-head .idx{font-family:RobotoBlack,Arial,sans-serif;font-size:12px;background:var(--yellow);color:var(--ink);padding:3px 8px 2px}
+.blk-head .arrow{color:var(--yellow)}
+.blk-head h2{font-size:clamp(22px,3.4vw,40px)}
+.blk-head .cn-sub{color:var(--grey-2);font-size:13px;margin-left:4px}
+.blk-head .rule{flex:1;height:1px;background:linear-gradient(90deg,#ffffff38,transparent)}
+.tri{display:inline-flex;height:4px;width:120px}
+.tri i{flex:1}
+.tri i:nth-child(1){background:var(--magenta)}
+.tri i:nth-child(2){background:var(--green)}
+.tri i:nth-child(3){background:var(--yellow)}
+
+/* 黄横幅（复刻章节分隔带） */
+.band{background:var(--yellow);color:var(--ink);padding:14px 20px;display:flex;align-items:baseline;gap:16px;margin:26px 0}
+.band .en{font-size:clamp(20px,3vw,34px)}
+.band .sm{font-size:11px;letter-spacing:.14em;font-weight:700}
+
+/* chips 表格 色卡（工业票据风） */
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin:16px 0}
+.chip{border:1px solid #ffffff2e;padding:6px 10px 5px;font-size:11.5px;background:#ffffff08;display:inline-flex;gap:8px;align-items:baseline}
+.chip b{color:var(--yellow);font-weight:700}
+table{border-collapse:collapse;width:100%;font-size:12.5px}
+th{font-size:10px;text-transform:uppercase;letter-spacing:.1em;color:var(--grey-2);text-align:left;padding:6px 10px;border-bottom:1px solid #ffffff30}
+td{border-bottom:1px solid #ffffff14;padding:7px 10px;vertical-align:top}
+tr:hover td{background:#ffffff08}
+.swatches{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px}
+.sw{border:1px solid #ffffff24;cursor:pointer;background:#ffffff06;transition:transform .25s var(--ease-hard)}
+.sw:hover{transform:translateY(-3px)}
+.sw .c{height:58px;position:relative}
+.sw .m{padding:7px 9px}
+.sw .m b{display:block;font-size:11.5px}
+.sw .m span{font-size:10.5px;color:var(--grey-2);font-family:ui-monospace,Menlo,monospace}
+.sw .m i{display:block;font-style:normal;font-size:10px;color:#777;margin-top:2px}
+.sw.copied .c:after{content:"COPIED";position:absolute;right:6px;bottom:4px;font-size:9px;letter-spacing:.1em;color:var(--ink);background:var(--yellow);padding:1px 5px}
+
+.type-card{border:1px solid #ffffff24;background:#ffffff06;padding:16px 18px;margin-bottom:10px}
+.type-meta{font-size:11px;color:var(--grey-2);display:flex;gap:14px;flex-wrap:wrap;margin-bottom:8px}
+pre{background:#0d0d0d;border:1px solid #ffffff1c;color:#e8e8e0;padding:14px 16px;font-size:11.5px;line-height:1.55;overflow-x:auto;font-family:ui-monospace,SFMono-Regular,Menlo,monospace}
+pre em{color:var(--yellow);font-style:normal}
+pre b{color:var(--green);font-weight:400}
+code{font-family:ui-monospace,Menlo,monospace;font-size:.92em;background:#ffffff14;padding:1px 5px}
+pre code{background:none;padding:0}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+@media (max-width:860px){.two-col{grid-template-columns:1fr}}
+.callout{border-left:3px solid var(--yellow);background:#fffa000d;padding:12px 16px;font-size:13px}
+.callout.mag{border-color:var(--magenta);background:#ff1aac0d}
+.muted{color:var(--grey-2)}
+
+/* demo 区块 */
+.demo{border:1px solid #ffffff3d;background:#111;margin:22px 0}
+.demo header{display:flex;align-items:center;gap:10px;padding:10px 14px;border-bottom:1px solid #ffffff1f;background:#161616;flex-wrap:wrap}
+.demo header .t{font-weight:700;font-size:13px}
+.demo header .t:before{content:"▶";color:var(--yellow);margin-right:8px;font-size:10px}
+.demo header .src{margin-left:auto;font-size:10px;color:var(--grey-2);font-family:ui-monospace,Menlo,monospace}
+.demo .note{padding:10px 14px;border-top:1px solid #ffffff1f;font-size:12.5px;color:var(--grey-2)}
+button.btn{
+  font:700 12px/1 var(--cn);letter-spacing:.04em;
+  background:var(--yellow);color:var(--ink);border:0;padding:9px 14px;cursor:pointer;
+  clip-path:polygon(0 0,100% 0,100% calc(100% - 7px),calc(100% - 7px) 100%,0 100%);
+  transition:transform .2s var(--ease-hard);
+}
+button.btn:hover{transform:translateY(-1px)}
+button.btn.ghost{background:#ffffff14;color:var(--paper);clip-path:none;border:1px solid #ffffff38}
+button.btn.ghost[aria-pressed="true"]{background:var(--paper);color:var(--ink)}
+#epsStage{position:relative;height:460px;background:radial-gradient(120% 100% at 30% 50%,#20242e 0%,#14161b 55%,#0c0d10 100%);cursor:grab;overflow:hidden}
+#epsStage:active{cursor:grabbing}
+#epsStage canvas{width:100%;height:100%;display:block}
+#epsHud{position:absolute;left:14px;top:12px;font-size:10px;letter-spacing:.18em;color:#ffffff88;pointer-events:none}
+#epsHud b{color:var(--yellow)}
+#epsCtl{display:flex;gap:8px;padding:10px 14px;border-top:1px solid #ffffff1f;flex-wrap:wrap;align-items:center}
+#epsCtl .mono{font-size:10px;color:var(--grey-2)}
+
+#tvStage{display:grid;grid-template-columns:1fr 1fr 1fr;gap:2px;background:#000;padding:2px}
+#tvStage .cell{position:relative;aspect-ratio:16/10;overflow:hidden;background:#0a0a0a}
+#tvStage canvas{width:100%;height:100%;display:block}
+#tvStage .lbl{position:absolute;left:8px;top:6px;font-size:9px;letter-spacing:.14em;color:#ffffffb0;background:#000000a0;padding:2px 6px}
+@media (max-width:860px){#tvStage{grid-template-columns:1fr}}
+
+#glitchStage{padding:40px 20px;display:grid;place-items:center;background:#101010}
+#glitchWord{font-size:clamp(40px,8vw,92px);position:relative;user-select:none}
+#glitchWord .layer{position:absolute;inset:0}
+#glitchWord .m{color:var(--magenta);mix-blend-mode:screen}
+#glitchWord .g{color:var(--green);mix-blend-mode:screen}
+
+/* 逐屏走查 */
+.walk{border:1px solid #ffffff24;background:#141414;margin-bottom:24px;overflow:hidden}
+.walk .imgs{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:2px;background:#000}
+.walk .imgs img{width:100%;display:block;aspect-ratio:16/10;object-fit:cover}
+.walk .body{padding:15px 18px}
+.walk h4{font-size:16px;margin-bottom:6px}
+.walk h4 .no{font-family:RobotoBlack,Arial,sans-serif;color:var(--yellow);margin-right:10px;font-size:13px}
+.walk .facts{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+.walk .facts span{font-size:10.5px;font-weight:700;border:1px solid #ffffff2b;padding:3.5px 7px;background:#ffffff0a}
+figure.shot{border:1px solid #ffffff24;overflow:hidden;background:#0e0e0e}
+figure.shot img{width:100%;display:block}
+figure.shot figcaption{padding:8px 12px;font-size:11px;color:var(--grey-2)}
+.scroll-tip{position:fixed;right:18px;bottom:16px;font-size:9px;letter-spacing:.22em;color:#ffffff55;writing-mode:vertical-rl;pointer-events:none}
+@keyframes tipMove{0%,100%{transform:translateY(0)}50%{transform:translateY(8px)}}
+.scroll-tip:after{content:"▼";display:block;margin-top:6px;animation:tipMove 1.6s infinite}
+</style>
+</head>
+<body>
+
+<aside class="rail" aria-label="页内导航">
+  <div class="logo">终末地<br>拆解</div>
+  <nav id="railNav">
+    <a href="#b0" class="on">总览</a>
+    <a href="#b1">定位</a>
+    <a href="#b2">色彩</a>
+    <a href="#b3">字体</a>
+    <a href="#b4">布局</a>
+    <a href="#b5">E.P.S</a>
+    <a href="#b6">抠像</a>
+    <a href="#b7">走查</a>
+    <a href="#b8">工艺</a>
+    <a href="#b9">复刻</a>
+    <a href="#b10">出处</a>
+    <a href="#b11">评审</a>
+  </nav>
+  <div class="go">拆解档案</div>
+</aside>
+<div class="scroll-tip">SCROLL</div>
+
+<main>
+
+<!-- 00 总览 -->
+<section class="blk" id="b0">
+  <div style="height:26px"></div>
+  <div class="tri" aria-hidden="true"><i></i><i></i><i></i></div>
+  <h1 class="en" style="font-size:clamp(38px,7vw,86px);line-height:.95;margin:14px 0 6px">Arknights<br>End<span style="color:var(--yellow)">field</span> <span style="font-family:var(--cn);font-size:.35em;letter-spacing:0;color:var(--grey-2);text-transform:none">官网拆解</span></h1>
+  <p style="max-width:60ch;font-size:15px;color:var(--grey)">这不是观感笔记。以下每个色值、着色器公式、时序常数，都来自 endfield.hypergryph.com 的计算样式、九份样式表、二十个 Next.js chunk 与六个点云二进制的直接抽取。着色器里写着中文注释——这是一份能读到作者呼吸的源码。</p>
+  <div class="chips">
+    <span class="chip">Next.js App Router<b>实锤</b></span>
+    <span class="chip">three.js 自封装「E.P.S」点云系统<b>实锤 · 控制台自名</b></span>
+    <span class="chip">六地标点云 21.8 万点 · 裸 Float32<b>实锤</b></span>
+    <span class="chip">自研 @hg-web/trans-video 亮度抠像<b>实锤</b></span>
+    <span class="chip">anime.js 时序<b>实锤</b></span>
+    <span class="chip">签名黄 #fffa00 词频 56<b>实锤</b></span>
+    <span class="chip">设计画布 2560×1440 · rem 全站缩放<b>实锤</b></span>
+  </div>
+  <figure class="shot" style="margin-top:16px">
+    <img src="assets/screens/01-home-hero.jpg" alt="首屏真实渲染：向渊行 核心章节版本 武陵决战篇" loading="eager">
+    <figcaption>as-seen：1440×900 @1.5x 真实渲染。泼墨黑带 + 故障贴片 + 红章「核心章节版本」，左侧图标轨，底部全平台下载矩阵。</figcaption>
+  </figure>
+</section>
+
+<!-- 01 定位 -->
+<section class="blk" id="b1">
+  <div class="blk-head"><span class="idx">01</span><span class="arrow">↘</span><h2 class="en">Positioning</h2><span class="cn-sub">定位与设计意图</span><span class="rule"></span></div>
+  <div class="two-col">
+    <div>
+      <p style="font-size:14px;margin-bottom:12px">《明日方舟：终末地》官网（v4，当前版本主题「向渊行 · 武陵决战篇」）。它是游戏工业美学的门面：<b>白纸黑字的工程制图 + 荧光黄警示 + 点云全息</b>。整站像一份被扫描进终端的纸质技术档案——纸的部分用印刷语言（套印错位、警示条、图例编号），屏的部分用仪器语言（点云、扫描线、故障）。</p>
+      <table>
+        <tr><th>意图</th><th>证据</th></tr>
+        <tr><td>工业制图感</td><td>黄底分隔带里的螺栓爆炸图、图标轨、REC 括号、编号 1/31（实锤：截图与 CSS 模块名）</td></tr>
+        <tr><td>印刷套印错位</td><td>品红 #ff1aac 与荧光绿 #00ffa2 的错位描边与三色条（实锤：CSS 词频 6/9 处）</td></tr>
+        <tr><td>仪器全息</td><td>E.P.S 点云 + 扫描线 + 激光束 + 故障位移（实锤：着色器原文）</td></tr>
+      </table>
+    </div>
+    <div>
+      <div class="callout"><b>命名即宣言：</b>点云系统在控制台自称 <span class="mono">[E.P.S]</span>（打印性能测试与画质分级日志）。六个地标模型 spaceship（帝江号）、anchor、factory、pile、trinity、enemy 以裸 Float32 二进制下发——不是 glTF，不是 Draco，是最朴素的 xyz 流。<b>快、小、无依赖</b>，这是把「工程味」贯彻到传输层的选择。</div>
+      <div class="callout mag" style="margin-top:10px"><b>营销层 vs 产品层：</b>官网只做「世界观陈列 + 预下载转化」；账号、支付、社区走 SDK 与独立系统（hg-account-web-sdk 实锤）。左轨与底部下载矩阵永远在场——所有戏剧性都服务于「前往游戏」。</div>
+    </div>
+  </div>
+</section>
+
+<!-- 02 色彩 -->
+<section class="blk" id="b2">
+  <div class="blk-head"><span class="idx">02</span><span class="arrow">↘</span><h2 class="en">Color</h2><span class="cn-sub">色彩系统</span><span class="rule"></span></div>
+  <p style="font-size:14px;color:var(--grey);max-width:66ch;margin-bottom:14px">近黑 #191919 与纯白的双极对撞，中间只留一支怒吼的荧光黄。点云的颜色写死在着色器里：常态灰 vec3(.8,.8,.8)，扫描带内瞬间变黄 vec3(1,1,.2)。</p>
+  <div class="swatches" id="swatches">
+    <div class="sw" data-hex="#191919"><div class="c" style="background:#191919;border-bottom:1px solid #ffffff22"></div><div class="m"><b>档案黑</b><span>#191919</span><i>实锤 · 词频 84 全站第一</i></div></div>
+    <div class="sw" data-hex="#ffffff"><div class="c" style="background:#fff"></div><div class="m"><b>制图白</b><span>#ffffff</span><i>实锤 · 词频 77</i></div></div>
+    <div class="sw" data-hex="#fffa00"><div class="c" style="background:#fffa00"></div><div class="m"><b>签名黄</b><span>#fffa00</span><i>实锤 · 词频 56，唯一强调</i></div></div>
+    <div class="sw" data-hex="#35373c"><div class="c" style="background:#35373c"></div><div class="m"><b>仪表灰蓝</b><span>#35373c</span><i>实锤 · 词频 15</i></div></div>
+    <div class="sw" data-hex="#d9d9d9"><div class="c" style="background:#d9d9d9"></div><div class="m"><b>银灰</b><span>#d9d9d9</span><i>实锤 · 词频 21</i></div></div>
+    <div class="sw" data-hex="#ff1aac"><div class="c" style="background:#ff1aac"></div><div class="m"><b>套印品红</b><span>#ff1aac</span><i>实锤 · CSS 6 处</i></div></div>
+    <div class="sw" data-hex="#00ffa2"><div class="c" style="background:#00ffa2"></div><div class="m"><b>套印荧光绿</b><span>#00ffa2</span><i>实锤 · CSS 9 处</i></div></div>
+    <div class="sw" data-hex="#ffff33"><div class="c" style="background:#ffff33"></div><div class="m"><b>扫描带黄</b><span>vec3(1,1,.2)</span><i>实锤 · 顶点着色器</i></div></div>
+    <div class="sw" data-hex="#cccccc"><div class="c" style="background:#ccc"></div><div class="m"><b>点云常态灰</b><span>vec3(.8,.8,.8)</span><i>实锤 · 顶点着色器</i></div></div>
+  </div>
+</section>
+
+<!-- 03 字体 -->
+<section class="blk" id="b3">
+  <div class="blk-head"><span class="idx">03</span><span class="arrow">↘</span><h2 class="en">Type</h2><span class="cn-sub">字体系统</span><span class="rule"></span></div>
+  <div class="type-card">
+    <div class="type-meta"><b>Novecento Sans Wide</b><span>Bold / DemiBold / Medium · 真文件已接入</span><span>英文展示：章节题、地标名</span><span>商业字体：仅内部研究</span></div>
+    <div class="en" style="font-size:clamp(28px,5vw,56px)">Dijiang · Lore · Endfield</div>
+  </div>
+  <div class="type-card">
+    <div class="type-meta"><b>Gilroy</b><span>ExtraBold（另有 Light/Medium 声明）· 真文件已接入</span><span>数字与小标</span></div>
+    <div class="gil" style="font-size:clamp(22px,3.4vw,38px)">1 / 31 — 26 COMPANIONSHIP</div>
+  </div>
+  <div class="type-card">
+    <div class="type-meta"><b>中文主字族「SansRegular/Medium/Bold/Black」</b><span>SDK 运行时注入（@font-face 未在九份 CSS 中，捕获不到文件）</span><span>本页以系统中文栈替身，已如实标注</span></div>
+    <div style="font-size:clamp(20px,3vw,32px);font-weight:700">向渊行——武陵决战篇 · 焕新相见 共赴新章</div>
+  </div>
+  <table>
+    <tr><th>字族</th><th>用途</th><th>捕获状态</th></tr>
+    <tr><td class="mono">Novecentosanswide-Bold/DemiBold/Medium</td><td>英文大展示</td><td>Bold/Medium woff2 落盘；DemiBold 声明在册</td></tr>
+    <tr><td class="mono">Gilroy-Light/Medium/ExtraBold</td><td>数字、副标</td><td>ExtraBold 落盘</td></tr>
+    <tr><td class="mono">SpaceGrotesk / ProtestStrike / Roboto-Regular/Black</td><td>局部装饰与备用</td><td>ProtestStrike、Roboto Black 落盘</td></tr>
+    <tr><td class="mono">SansRegular/Medium/Bold/Black + SDK_Sans-*</td><td>中文全域</td><td>fontsLoaded 探针在册；文件由 SDK 注入，未捕获（局限声明）</td></tr>
+  </table>
+</section>
+
+<!-- 04 布局与滚动 -->
+<section class="blk" id="b4">
+  <div class="blk-head"><span class="idx">04</span><span class="arrow">↘</span><h2 class="en">Layout &amp; Scroll</h2><span class="cn-sub">布局与滚动</span><span class="rule"></span></div>
+  <div class="two-col">
+    <div>
+      <h3 style="font-size:15px;margin-bottom:8px">rem 全站缩放（JS 原文实锤）</h3>
+      <pre>base = 16px
+横屏: w/h &gt; 2560/1440 ? base×h/1440 : base×w/2560
+竖屏: w/h &gt; 0.5625    ? base×h/1920 : base×w/1080
+html.style.fontSize = r + "px"
+<em>// 设计画布：桌面 2560×1440 / 移动 1080×1920</em>
+<em>// 鸿蒙系浏览器（HarmonyOS/Huawei/HeyTap…）额外重写</em>
+<em>// viewport meta：width=outerWidth×DPR, scale=1/DPR</em></pre>
+      <p class="muted" style="font-size:12.5px">整站尺寸全用 rem——等比缩放的「图纸」，任何屏幕上比例关系不变。这是国内大厂 H5 的经典手法在桌面端的全站化。</p>
+    </div>
+    <div>
+      <h3 style="font-size:15px;margin-bottom:8px">全屏分区滚动（实测 + CSS 模块名实锤）</h3>
+      <table>
+        <tr><td>分区</td><td class="mono">00-Loading → 01-Home → 02-Operator → 03-Lore → 04-Information → 05-Gameplay → 06-Notice → 08-AIC → 09-Calendar</td></tr>
+        <tr><td>驱动</td><td>滚轮一档切一屏，hash 同步（#home/#operator/#lore/#information/#gameplay/#aic/#calendar/#notice），实测切换动效约 1s 级</td></tr>
+        <tr><td>滚动提示</td><td class="mono">scrollTipMove / scrollBreathing 关键帧（呼吸 + 下移）</td></tr>
+        <tr><td>加载页</td><td class="mono">00-Loading fadeIn + OrigQuery_rotate（源石菱形旋转）+ 进度百分比</td></tr>
+        <tr><td>唯一自定义贝塞尔</td><td class="mono">cubic-bezier(1,0,.7,1)——重进重出的「机械闸门」曲线</td></tr>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- 05 E.P.S -->
+<section class="blk" id="b5">
+  <div class="blk-head"><span class="idx">05</span><span class="arrow">↘</span><h2 class="en">E.P.S Point Cloud</h2><span class="cn-sub">点云系统全解剖 · 签名装置</span><span class="rule"></span></div>
+  <p style="font-size:14px;color:var(--grey);max-width:70ch">Lore 章的六座地标（1/6 帝江号起）是全站的心脏。它不是「图片转粒子」——而是<b>预烘焙的 3D 点云</b>：六个裸 Float32 二进制（合计约 218,441 点、2.6MB），运行时归一化到高 1900 的舞台，由三条扫描线逐层点亮，扫描期间天花板向扫描带附近的点投下激光束。</p>
+
+  <div class="band"><span class="en">Live Specimen</span><span class="sm">真实数据演示 · anchor.bin 降采样 3,000 点（原 7,484）</span></div>
+
+  <div class="demo">
+    <header><span class="t">E.P.S 点云剧场——扫描线点亮 + 故障 + 拖拽自转</span><span class="src">全部时序与公式为原值 · Canvas 2D 投影复现（原站 three.js Points）</span></header>
+    <div id="epsStage">
+      <canvas id="epsCanvas"></canvas>
+      <div id="epsHud">E.P.S // ANCHOR — <b id="epsState">STANDBY</b> · POINTS 3000/7484 · DRAG TO ROTATE</div>
+    </div>
+    <div id="epsCtl">
+      <button class="btn" id="epsIn">点亮（fadeIn）</button>
+      <button class="btn ghost" id="epsOut">熄灭（fadeOut）</button>
+      <button class="btn ghost" id="epsGlitch">故障一阵</button>
+      <span class="mono">三线时长 3000/(i+1) ms · 延迟 2000·ln(i+1) ms · 带宽 ±20 · 衰减 cos(d·π/200) · 掉落 0.05·d²</span>
+    </div>
+    <div class="note">数据为真实 anchor.bin 的 3,000 点降采样样本（float16，研究用途）；归一化数学与原站 setup 相同（AABB → 高度 1900 → 居中）。层级 alpha <code>(−0.25·layer+1.25)×0.6</code>、点径 4–8 随距离衰减、扫描带内变黄 vec3(1,1,.2)、故障 = 8 条屏幕空间水平带 ±(≤5)×20px、每阵 3–6 连发 × 80ms——全部照抄着色器与调度器原文。原站另有 500–2000 条实例化激光束与 75% 像素比降级（renderLevel 2），此处从简。</div>
+  </div>
+
+  <div class="two-col" style="margin-top:18px">
+    <div>
+      <h3 style="font-size:15px;margin-bottom:8px">运行时性能自测（原文实锤）</h3>
+      <pre>离屏 800×600 渲一次 10,000 随机点，计毫秒:
+  &gt;60ms → renderLevel 2（激光 8/批·上限500·pixelRatio .75）
+  &gt;30ms → renderLevel 1（14/批 · 上限 1000）
+  else  → renderLevel 0（20/批 · 上限 2000）
+console: <em>[E.P.S] performance test duration / renderLevel</em></pre>
+      <h3 style="font-size:15px;margin:14px 0 8px">六地标装配表（原文实锤）</h3>
+      <table>
+        <tr><th>模型</th><th class="mono">点数</th><th class="mono">scale</th><th class="mono">laserMode</th></tr>
+        <tr><td>spaceship 帝江号</td><td class="mono">57,682</td><td class="mono">.75</td><td class="mono">ceiling</td></tr>
+        <tr><td>anchor</td><td class="mono">7,484</td><td class="mono">2</td><td class="mono">random</td></tr>
+        <tr><td>factory</td><td class="mono">45,254</td><td class="mono">1.25</td><td class="mono">ceiling</td></tr>
+        <tr><td>pile</td><td class="mono">47,191</td><td class="mono">1.2</td><td class="mono">ceiling</td></tr>
+        <tr><td>trinity</td><td class="mono">27,252</td><td class="mono">1.25</td><td class="mono">random</td></tr>
+        <tr><td>enemy</td><td class="mono">33,578</td><td class="mono">1</td><td class="mono">ceiling</td></tr>
+      </table>
+    </div>
+    <div>
+      <h3 style="font-size:15px;margin-bottom:8px">切换编排（原文实锤）</h3>
+      <pre>switchTo(i):
+  双缓冲 actor 互换（current ⇄ backup）
+  Promise.all([
+    旧体 fadeOut: 三线 −1150→1150 · 2000ms · easeInOutQuad
+      <em>// 线下方的点 y -= 0.05·d²——「碎成沙掉落」</em>
+    新体 fadeIn:  三线 −1150→1350 · 3000/(i+1) ms
+      延迟 2000·ln(i+1) → 0 / 1386 / 2197 ms
+      <em>// 显示值滞后 200：可见带追着数据带跑</em>
+    自转速度 ×20 · 400ms → 回落 800ms（anime.js）
+  ])
+  开启故障循环: 每 4–6s 一阵
+交互: 拖拽 ±0.01/px · 自转 0.005/帧 · 惯性 lerp 0.1
+相机: fov 75 · (0,300,2000) · 横屏看(0,0,0) 竖屏看(−550,0,0)
+渲染: 固定高 1080 · 距离雾 500→3500</pre>
+      <div class="callout" style="margin-top:10px"><b>激光束（原文）：</b>1000 条实例池，起点在 x∈{−3000,400,3000}、y=2000 的「天花板」，终点取扫描带 ±40 内的随机点；生命周期 (0.5+rand)×400ms，1D simplex 噪声调制透明度，加法混合。第二条扫描线的束流强度只有第一条的 0.4——主光与余光。</div>
+    </div>
+  </div>
+</section>
+
+<!-- 06 trans-video -->
+<section class="blk" id="b6">
+  <div class="blk-head"><span class="idx">06</span><span class="arrow">↘</span><h2 class="en">Luminance Keying</h2><span class="cn-sub">自研 @hg-web/trans-video 亮度抠像</span><span class="rule"></span></div>
+  <p style="font-size:14px;color:var(--grey);max-width:70ch">你猜的「黑白分明的图转坐标」在这套系统里应验了一半：Hypergryph 确实把黑白亮度变成透明度——但用途是<b>让特效视频镂空浮在页面上</b>（WebGL 逐帧 keying），而非生成粒子坐标。库名自曝：<code>[@hg-web/trans-video]</code>。三种模式原样复现：</p>
+  <div class="demo">
+    <header><span class="t">亮度抠像三模式（getBrightness = .3R + .59G + .11B）</span><span class="src">着色器原文逐行复现 · 素材为合成示意（原站为 FX 视频帧）</span></header>
+    <div id="tvStage">
+      <div class="cell"><span class="lbl">SOURCE 左右拼装（video 模式）</span><canvas id="tvSrc"></canvas></div>
+      <div class="cell"><span class="lbl">KEYED 合成结果</span><canvas id="tvOut"></canvas></div>
+      <div class="cell"><span class="lbl">LUMINANCE 模式（自身亮度 + uReverse）</span><canvas id="tvLum"></canvas></div>
+    </div>
+    <div class="note">video 模式：一条视频里左半是彩色、右半是黑白遮罩（另有 right-left / top-bottom / bottom-top 四种拼法，实锤），片元同时采样两个半区：<code>gl_FragColor = vec4(color, brightness(mask))</code>。luminance 模式直接用自身亮度当 alpha（uReverse 反相）。渲染循环用 <code>requestVideoFrameCallback</code>（Android 回退 rAF），WebGL 不可用时退 Canvas2D <code>getImageData</code> 逐像素——三条路径全部在源码里。</div>
+  </div>
+  <div class="demo">
+    <header><span class="t">套印故障字（glitch 带位移的 CSS/JS 复现）</span><span class="src">带宽 ±10 · 位移 20px×强度 · 3–6 连发 × 80ms——参数取自 E.P.S 故障调度器</span></header>
+    <div id="glitchStage"><div id="glitchWord" class="en">Endfield<span class="layer m en" aria-hidden="true">Endfield</span><span class="layer g en" aria-hidden="true">Endfield</span></div></div>
+    <div class="note">品红/荧光绿双层错位 = 印刷套印失准的数字化。原站把同一逻辑用于点云（顶点着色器里 8 条水平故障带）与 DOM 装饰（flashing 关键帧）。悬停触发。</div>
+  </div>
+</section>
+
+<!-- 07 逐屏走查 -->
+<section class="blk" id="b7">
+  <div class="blk-head"><span class="idx">07</span><span class="arrow">↘</span><h2 class="en">Walkthrough</h2><span class="cn-sub">逐屏走查 · 九屏全览</span><span class="rule"></span></div>
+
+  <div class="walk">
+    <div class="imgs"><img src="assets/screens/00-loading.jpg" alt="加载页" loading="lazy"><img src="assets/screens/01-home-hero.jpg" alt="首页主视觉" loading="lazy"></div>
+    <div class="body">
+      <h4><span class="no">00–01</span>Loading · Home「向渊行」</h4>
+      <p style="font-size:13px;color:var(--grey)">加载页：源石菱形旋转（OrigQuery_rotate）+ 百分比进度 + fadeIn。主视觉「武陵决战篇」：泼墨黑带压住右上角，红章「核心章节版本」，全平台下载矩阵（App Store、安卓、PS5、PC、TapTap）与云游戏卡常驻底部；「26 相伴庆典」角标。左轨图标导航贯穿全站。</p>
+      <div class="facts"><span>h1 即版本口号（探针实锤）</span><span>12+ CADPA 适龄</span><span>前往游戏 常驻左下</span></div>
+    </div>
+  </div>
+
+  <div class="walk">
+    <div class="imgs"><img src="assets/screens/02-section.jpg" alt="干员档案" loading="lazy"></div>
+    <div class="body">
+      <h4><span class="no">02</span>Operator · 干员档案</h4>
+      <p style="font-size:13px;color:var(--grey)">1/31 干员画廊：左侧头像转轮，中列 REC 括号 + 星级 + 阵营/种族/中日配音字段表 + 引言与小传，右侧立绘叠在巨大的「END」水印与黄色故障贴片上，右下角 2D/3D 切换钮。品红/荧光绿的套印错位线贯穿档案条目——「印刷失准」是本章的装饰母语。</p>
+      <div class="facts"><span>31 位干员（1/31 实锤）</span><span>CMYK 套印色 #ff1aac + #00ffa2</span><span>黄底信息胶囊</span></div>
+    </div>
+  </div>
+
+  <div class="walk">
+    <div class="imgs"><img src="assets/screens/03-section.jpg" alt="世界观资料 点云" loading="lazy"><img src="assets/screens/04-section.jpg" alt="Lore 到 Information 过渡" loading="lazy"></div>
+    <div class="body">
+      <h4><span class="no">03</span>Lore · 世界观资料（E.P.S 主场）</h4>
+      <p style="font-size:13px;color:var(--grey)">六座地标点云轮播（1/6 帝江号——「位于塔卫二人工静止轨道上的飞行器，终末地工业的总部」）。白点云悬浮在 HUD 圆环与刻度带中，扫描线掠过时点变黄；左右箭头切换时旧云碎落、新云自顶点亮、自转骤然加速再回稳。黄色分隔带里是螺栓爆炸图——制图母题的直白陈述。</p>
+      <div class="facts"><span>六模型 218,441 点</span><span>切换 = 双缓冲 + 三扫描线</span><span>拖拽自转 + 惯性</span></div>
+    </div>
+  </div>
+
+  <div class="walk">
+    <div class="imgs"><img src="assets/screens/05-section.jpg" alt="Information 影像资料" loading="lazy"><img src="assets/screens/06-section.jpg" alt="Calendar 内容日历" loading="lazy"></div>
+    <div class="body">
+      <h4><span class="no">04–05</span>Information · Calendar</h4>
+      <p style="font-size:13px;color:var(--grey)">影像资料：PV 档案库（版本 PV、动画短片，带日期戳），黑场大图 + 三色条右缘。内容日历：版本时间线与活动排期（downloadBgBreath 呼吸底、时间轴 timeline 素材）。</p>
+      <div class="facts"><span>三段懒加载视频（probe video 3）</span><span>timeline.png 已落盘</span></div>
+    </div>
+  </div>
+
+  <div class="walk">
+    <div class="imgs"><img src="assets/screens/07-section.jpg" alt="Gameplay 或 AIC" loading="lazy"><img src="assets/screens/08-section.jpg" alt="AIC 或 Notice" loading="lazy"></div>
+    <div class="body">
+      <h4><span class="no">06–08</span>Gameplay · AIC · Notice</h4>
+      <p style="font-size:13px;color:var(--grey)">玩法页（05-Gameplay flashing 闪烁贴片）；AIC 页（08-AIC：codePrinter 打字机代码块 + decoLine 装饰线 + Endfield/AK 双标）；公告终屏（06-Notice：notices.jpg 底图 + 官方社区/支付中心入口收束）。</p>
+      <div class="facts"><span>codePrinter 打字机模块（CSS 模块名实锤）</span><span>flashing 关键帧多章复用</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- 08 工艺 -->
+<section class="blk" id="b8">
+  <div class="blk-head"><span class="idx">08</span><span class="arrow">↘</span><h2 class="en">Craft</h2><span class="cn-sub">工艺细节</span><span class="rule"></span></div>
+  <table>
+    <tr><th>细节</th><th>数值 / 出处（全部实锤）</th></tr>
+    <tr><td>着色器中文注释</td><td class="mono">「=== glitch效果 ===」「亮度压缩插值，防止高密度过曝」「镜头暗角」——生产代码里的作者手迹</td></tr>
+    <tr><td>点精灵反过曝</td><td class="mono">Reinhard 式压缩 c/(c+1) 与原色 mix(compressStrength=.5)——高密度处不糊成白团</td></tr>
+    <tr><td>非对称暗角</td><td class="mono">片元按 gl_FragCoord 计算，中心 x=0.4（点云偏左构图），左右衰减系数 0.8/0.6 不等</td></tr>
+    <tr><td>点尺寸公式</td><td class="mono">gl_PointSize = size(4–8)×scale×distanceAlpha + 4.0（保底 4px）</td></tr>
+    <tr><td>噪声全自产</td><td class="mono">类内实现 Perlin：2D fBm 三倍频（.5/.25/.125）256² 贴图 + 1D 噪声（激光调制）</td></tr>
+    <tr><td>层级明暗</td><td class="mono">alpha ×(−0.25·layer+1.25)——第 1 层最亮，3 层景深感</td></tr>
+    <tr><td>荧幕比固定</td><td class="mono">renderer 固定高 1080，宽随容器——保证点尺寸在任何窗口一致</td></tr>
+    <tr><td>视频逐帧回调</td><td class="mono">requestVideoFrameCallback，Android 强制回退 rAF（UA 判定）</td></tr>
+    <tr><td>抠像三级降级</td><td class="mono">WebGL2 → WebGL → Canvas2D getImageData（同一亮度公式 .3/.59/.11）</td></tr>
+    <tr><td>rem 图纸缩放</td><td class="mono">2560×1440 设计画布；鸿蒙系浏览器 viewport 以 DPR 重写</td></tr>
+    <tr><td>加载中文报错</td><td class="mono">「网络请求失败」「加载二进制文件失败」——面向自己人的错误日志</td></tr>
+    <tr><td>swiper 局部使用</td><td class="mono">干员/资料轮播（swiper-icons 字体与 preloader 关键帧在册）</td></tr>
+  </table>
+</section>
+
+<!-- 09 复刻 -->
+<section class="blk" id="b9">
+  <div class="blk-head"><span class="idx">09</span><span class="arrow">↘</span><h2 class="en">Replicate</h2><span class="cn-sub">复刻要点</span><span class="rule"></span></div>
+  <div class="two-col">
+    <div>
+<pre>:root{
+  --ink:#191919; --paper:#fff;
+  --yellow:#fffa00;           <em>/* 唯一强调 */</em>
+  --panel:#35373c; --grey:#d9d9d9;
+  --magenta:#ff1aac; --green:#00ffa2; <em>/* 套印双色 */</em>
+  --ease-hard:cubic-bezier(1,0,.7,1);
+}
+<em>/* 点云数据管线（原站口径） */</em>
+fetch(bin) → Float32Array(xyz…)
+AABB → scale = 1900/heightY → 居中
+pointMoreData[i] = [1, rand(4,8),
+                    randInt(1,3), rand(−100,100)]
+       <em>// active · size · layer · delay</em></pre>
+    </div>
+    <div>
+<pre><em>// 扫描线点亮（核心 20 行） */</em>
+scanY(i,t) = anime(−1150 → 1350,
+  duration = 3000/(i+1),
+  delay    = 2000·ln(i+1), easeInOutQuad)
+显示带 = scanY − 200
+点着色: |y−带| &lt; 20 → vec3(1,1,.2) 否则 vec3(.8,.8,.8)
+上方未达点: alpha = cos(d·π/200) 截断于 d≥100
+熄灭时下方点: y −= 0.05·d²（碎落）
+<em>// 故障 */</em>
+每 4–6s: 3–6 连发×80ms，每发 6–8 条带
+带内 x += 20px × rand(−5,5)
+<em>// 亮度抠像片元 */</em>
+float b = dot(color, vec3(.3,.59,.11));
+gl_FragColor = vec4(color, uReverse ? 1.−b : b);</pre>
+    </div>
+  </div>
+  <div class="callout" style="margin-top:14px"><b>工程坑（源码里可见的应对）：</b>点数几万时必须 pixelRatio 降级（原站 renderLevel 2 → 0.75）；激光束用实例池复用而非增删对象；WebGL 上下文数量珍贵——抠像视频共用一个离屏管线；点云切换期间用双缓冲 actor，永远不改在播几何；Android 的 requestVideoFrameCallback 兼容性要 UA 兜底。</div>
+</section>
+
+<!-- 10 出处 -->
+<section class="blk" id="b10">
+  <div class="blk-head"><span class="idx">10</span><span class="arrow">↘</span><h2 class="en">Provenance</h2><span class="cn-sub">出处与方法 · 页内简版</span><span class="rule"></span></div>
+  <div class="two-col">
+    <div>
+      <h3 style="font-size:15px;margin-bottom:8px">实锤（直接抽取）</h3>
+      <ul style="font-size:13px;padding-left:18px;line-height:1.8;color:var(--grey)">
+        <li>计算样式探针 + 九份 CSS（372,886 B）</li>
+        <li>20 个 Next.js chunk 全量下载，E.P.S 与 trans-video 逐行精读（含着色器全文与中文注释）</li>
+        <li>六个点云 .bin 全部落盘并复算点数（合计 218,441）</li>
+        <li>15 个字体文件 + 18 张图像资产 + 关键帧 + 录屏</li>
+        <li>14 张逐屏截图（SwiftShader 渲染 WebGL 成功）</li>
+      </ul>
+      <h3 style="font-size:15px;margin:12px 0 8px">推断</h3>
+      <ul style="font-size:13px;padding-left:18px;line-height:1.8;color:var(--grey)">
+        <li>中文字族为 HarmonyOS Sans 系或等价定制（SDK 注入、UA 分支中反复出现鸿蒙关键词；未取到文件，中）</li>
+        <li>点云由游戏模型离线采样烘焙（数据形态 + 场景一致性，高）</li>
+      </ul>
+    </div>
+    <div>
+      <h3 style="font-size:15px;margin-bottom:8px">局限</h3>
+      <ul style="font-size:13px;padding-left:18px;line-height:1.8;color:var(--grey)">
+        <li>中文 webfont 未捕获（SDK 运行时注入）——本页中文为系统栈替身</li>
+        <li>滚轮切换的精确毫秒未从源码定位（行为经实测观察，标「实测」）</li>
+        <li>Spine/视频后处理等次要 chunk（63874443，495KB）未逐行</li>
+        <li>点云 .bin 为游戏衍生数据：完整文件仅存本地研究目录（已加 .gitignore），公共仓只携带 3,000 点降采样研究样本</li>
+      </ul>
+      <div class="callout" style="margin-top:10px"><b>一句话方法：</b>与 Shopify 档一样的链路——捕获 → chunk 图谱 → 逐行 → 复算 → 逐屏截图 → 对抗核查。全文见 <a href="出处与方法.md">出处与方法</a> 与 <a href="事实核查.md">事实核查</a>。</div>
+    </div>
+  </div>
+</section>
+
+<!-- 11 评审 -->
+<section class="blk" id="b11">
+  <div class="blk-head"><span class="idx">11</span><span class="arrow">↘</span><h2 class="en">Verdict</h2><span class="cn-sub">评审结论</span><span class="rule"></span></div>
+  <p style="font-size:16px;max-width:64ch;color:var(--grey)">终末地官网的杀手锏是「把游戏的工业世界观翻译成 Web 的仪器语言」：预烘焙点云 + 扫描线 + 激光 + 故障，全部自研自持（连噪声都不引库）；而印刷层的套印错位与荧光黄警示，让屏幕看起来像一张被扫描进终端的图纸。五份文档：<a href="设计解构.md">设计解构</a> · <a href="复刻指南.md">复刻指南</a> · <a href="出处与方法.md">出处与方法</a> · <a href="事实核查.md">事实核查</a> · <a href="设计评审.md">设计评审</a></p>
+</section>
+
+</main>
+
+<script>
+/* ============ 轨道导航高亮 ============ */
+const rail=[...document.querySelectorAll('#railNav a')];
+const blks=rail.map(a=>document.querySelector(a.getAttribute('href')));
+const railIO=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){const i=blks.indexOf(e.target);rail.forEach((a,j)=>a.classList.toggle('on',j===i))}})},{rootMargin:'-40% 0px -50% 0px'});
+blks.forEach(b=>b&&railIO.observe(b));
+
+/* ============ 色卡复制 ============ */
+document.getElementById('swatches').addEventListener('click',e=>{
+  const sw=e.target.closest('.sw');if(!sw)return;
+  navigator.clipboard&&navigator.clipboard.writeText(sw.dataset.hex);
+  sw.classList.add('copied');setTimeout(()=>sw.classList.remove('copied'),900);
+});
+
+/* ============ E.P.S 点云剧场（真实 anchor 降采样数据 + 原值时序） ============ */
+(async()=>{
+const cv=document.getElementById('epsCanvas'),ctx=cv.getContext('2d');
+const stage=document.getElementById('epsStage'),stateEl=document.getElementById('epsState');
+let W,H;const DPR=Math.min(devicePixelRatio||1,2);
+function size(){W=stage.clientWidth;H=stage.clientHeight;cv.width=W*DPR;cv.height=H*DPR;ctx.setTransform(DPR,0,0,DPR,0,0)}
+size();addEventListener('resize',size);
+
+/* 载入 float16 降采样点云 */
+function f16(u16){const s=(u16&0x8000)?-1:1,e=(u16>>10)&0x1f,f=u16&0x3ff;
+  if(e===0)return s*f*Math.pow(2,-24);if(e===31)return f?NaN:s*Infinity;
+  return s*(1+f/1024)*Math.pow(2,e-15)}
+let pts=[];
+try{
+  const buf=await fetch('assets/anchor-sample-3k.bin').then(r=>r.arrayBuffer());
+  const u=new Uint16Array(buf);
+  for(let i=0;i<u.length;i+=3)pts.push([f16(u[i]),f16(u[i+1]),f16(u[i+2])]);
+}catch(e){ /* 兜底：程序化替身（标注非真数据） */
+  for(let i=0;i<3000;i++){const a=Math.random()*6.28,r=200+Math.random()*420,y=(Math.random()-.5)*1800;
+    pts.push([Math.cos(a)*r,y,Math.sin(a)*r]);}
+  document.getElementById('epsHud').innerHTML='E.P.S // FALLBACK PROCEDURAL — <b>真数据加载失败</b>';
+}
+/* pointMoreData: [active,size,layer,delay]（原口径） */
+const more=pts.map(()=>[1, 4+Math.random()*4, 1+Math.floor(Math.random()*3), -100+Math.random()*200]);
+
+/* 状态 */
+let scan=[-1150,-1150,-1150];       /* 数据带位置（显示 = scan-200，点亮方向） */
+let mode='in-done';                  /* in | out | in-done | out-done */
+let rotY=0,targetRot=0,auto=true,autoSpeed=.005,burst=1;
+let dragging=false,px0=0;
+let glitch=new Array(16).fill(0);
+const anims=[];
+function animate(from,to,dur,delay,cb,done){
+  anims.push({t0:performance.now()+delay,from,to,dur,cb,done,started:false});
+}
+function easeInOutQuad(t){return t<.5?2*t*t:1-Math.pow(-2*t+2,2)/2}
+
+/* fadeIn / fadeOut：时序原值 */
+function fadeIn(){
+  mode='in';stateEl.textContent='SCANNING';
+  scan=[-1150,-1150,-1150];
+  let doneN=0;
+  for(let i=0;i<3;i++){
+    animate(-1150,1350,3000/(i+1),2000*Math.log(i+1),v=>{scan[i]=v},()=>{scan[i]=1350;if(++doneN===3){mode='in-done';stateEl.textContent='ONLINE'}});
+  }
+  /* 自转 ×20 冲刺再回落（原值 400/800ms） */
+  const b0=1;animate(20,1,1200,0,v=>{burst=v});burst=20;
+}
+function fadeOut(){
+  mode='out';stateEl.textContent='SHUTDOWN';
+  scan=[-1150,-1150,-1150];
+  let doneN=0;
+  for(let i=0;i<3;i++){
+    animate(-1150,1150,2000,0,v=>{scan[i]=v},()=>{scan[i]=1150;if(++doneN===3){mode='out-done';stateEl.textContent='OFFLINE'}});
+  }
+}
+function doGlitch(){
+  const n=3+Math.floor(Math.random()*3);
+  for(let k=0;k<n;k++)setTimeout(()=>{
+    const bands=6+Math.floor(Math.random()*3);
+    glitch.fill(0);
+    for(let b=0;b<bands&&b<8;b++){glitch[2*b]=-950+Math.random()*1900;glitch[2*b+1]=(Math.random()>.5?1:-1)*Math.random()*5}
+  },80*k);
+  setTimeout(()=>glitch.fill(0),80*n+80);
+}
+document.getElementById('epsIn').onclick=fadeIn;
+document.getElementById('epsOut').onclick=fadeOut;
+document.getElementById('epsGlitch').onclick=doGlitch;
+/* 拖拽（原值 0.01/px）*/
+stage.addEventListener('pointerdown',e=>{dragging=true;px0=e.clientX;auto=false});
+addEventListener('pointermove',e=>{if(!dragging)return;targetRot+=(e.clientX-px0)*.01;px0=e.clientX});
+addEventListener('pointerup',()=>{dragging=false;auto=true});
+/* 故障循环（原值 4–6s） */
+setInterval(()=>{if(mode==='in-done')doGlitch()},4000+Math.random()*2000);
+
+const FOV=75*Math.PI/180, CAMZ=1500, CAMY=120, FSTART=500, FEND=3500, MSCALE=1.35; /* 舞台适配：anchor 原站 scale=2，此处 1.35 + 相机 1500 */
+function frame(now){
+  /* 动画推进 */
+  for(let i=anims.length-1;i>=0;i--){const a=anims[i];
+    if(now<a.t0)continue;
+    const k=Math.min((now-a.t0)/a.dur,1);
+    a.cb(a.from+(a.to-a.from)*easeInOutQuad(k));
+    if(k>=1){a.done&&a.done();anims.splice(i,1)}
+  }
+  if(auto&&!dragging)targetRot+=autoSpeed*burst;
+  rotY+=(targetRot-rotY)*.1;
+  ctx.clearRect(0,0,W,H);
+  const f=(H*.5)/Math.tan(FOV/2);
+  const cy=H*.52;
+  const cosR=Math.cos(rotY),sinR=Math.sin(rotY);
+  const isIn=(mode==='in'||mode==='in-done');
+  for(let i=0;i<pts.length;i++){
+    const p=pts[i],m=more[i];
+    let x=(p[0]*cosR-p[2]*sinR)*MSCALE, z=(p[0]*sinR+p[2]*cosR)*MSCALE, y=p[1]*MSCALE;
+    const band=scan[m[2]-1]-m[3];       /* adjustedScanLineY = scanY − delay */
+    const d=Math.abs(band-y);
+    let alpha=1, yy=y, col='200,200,200';
+    if(d>0&&d<20)col='255,255,51';       /* vec3(1,1,.2) */
+    if(isIn){ if(y>band){ if(d>=100){alpha=0}else{alpha=Math.max(0,Math.cos(d*Math.PI/200))} } }
+    else{ if(y<band){ yy-=0.05*d*d*0.02; if(d>=100){alpha=0}else{alpha=Math.max(0,Math.cos(d*Math.PI/200))} } else if(mode==='out-done'){alpha=0} }
+    if(alpha<=0)continue;
+    /* 故障带（屏幕空间 y，带宽 ±10 → 舞台系数） */
+    let gx=0;
+    for(let b=0;b<8;b++){const gy=glitch[2*b],gs=glitch[2*b+1];
+      if(gs!==0&&Math.abs(yy-gy)<24)gx+=20*gs}
+    /* 相机变换（y 向下为屏幕正方向） */
+    const wz=z+CAMZ, wy=(yy-CAMY);
+    if(wz<=60)continue;
+    const sx=W*.5+(x+gx)*f/wz, sy=cy-wy*f/wz;
+    const viewZ=wz;
+    const distA=1-Math.min(Math.max((viewZ-FSTART)/(FEND-FSTART),0),1);
+    const a2=0.6*alpha*distA*(-0.25*m[2]+1.25);
+    if(a2<=0.01)continue;
+    const size=(m[1]* .8)*distA+1.4;
+    ctx.fillStyle=`rgba(${col},${a2.toFixed(3)})`;
+    ctx.fillRect(sx-size/2,sy-size/2,size,size);
+  }
+  requestAnimationFrame(frame);
+}
+requestAnimationFrame(frame);
+/* 进视口自动点亮一次 */
+new IntersectionObserver((es,o)=>{es.forEach(e=>{if(e.isIntersecting){fadeIn();o.disconnect()}})},{threshold:.4}).observe(stage);
+})();
+
+/* ============ trans-video 亮度抠像三画布 ============ */
+(()=>{
+const src=document.getElementById('tvSrc'),out=document.getElementById('tvOut'),lum=document.getElementById('tvLum');
+const S=[src,out,lum].map(c=>{const x=c.getContext('2d');return x});
+function fit(c){const r=c.canvas.parentElement.getBoundingClientRect();c.canvas.width=r.width;c.canvas.height=r.height}
+let t0=performance.now();
+function draw(){
+  const t=(performance.now()-t0)*.001;
+  S.forEach(fit);
+  const w=src.width|0,h=src.height|0;
+  [...S].forEach(x=>x.clearRect(0,0,x.canvas.width,x.canvas.height));
+  /* 合成「左右拼装」源：左=彩色场景，右=黑白遮罩（白字 ENDFIELD + 脉冲圆） */
+  const sc=S[0],W=sc.canvas.width,H=sc.canvas.height,hw=W/2;
+  /* 左半：彩色 */
+  const g=sc.createLinearGradient(0,0,hw,H);
+  g.addColorStop(0,'#20242e');g.addColorStop(.55,'#3a3f2a');g.addColorStop(1,'#fffa00');
+  sc.fillStyle=g;sc.fillRect(0,0,hw,H);
+  sc.fillStyle='#ff1aac';sc.fillRect(0,H*.72+Math.sin(t*2)*6,hw,5);
+  sc.fillStyle='#00ffa2';sc.fillRect(0,H*.78+Math.cos(t*1.6)*6,hw,3);
+  /* 右半：遮罩（亮=不透明） */
+  sc.fillStyle='#000';sc.fillRect(hw,0,hw,H);
+  sc.fillStyle='#fff';
+  sc.font=`700 ${Math.max(18,hw/7)}px Novecento,Impact,sans-serif`;
+  sc.textAlign='center';sc.textBaseline='middle';
+  sc.fillText('ENDFIELD',hw+hw/2,H*.42);
+  const r=(t*40)%(H*.5);
+  sc.strokeStyle='#fff';sc.lineWidth=Math.max(1,8-r*.05);
+  sc.globalAlpha=Math.max(0,1-r/(H*.5));
+  sc.beginPath();sc.arc(hw+hw/2,H*.42,r,0,6.283);sc.stroke();sc.globalAlpha=1;
+  sc.fillStyle='#666';sc.fillRect(hw,H*.8,hw,2);
+  /* keyed 输出：color=左半采样，alpha=右半亮度（.3/.59/.11 原公式） */
+  const oc=S[1],OW=oc.canvas.width,OH=oc.canvas.height;
+  /* 底：网页内容示意 */
+  oc.fillStyle='#191919';oc.fillRect(0,0,OW,OH);
+  oc.fillStyle='#232323';for(let i=0;i<6;i++)oc.fillRect(OW*.08,OH*(.12+i*.14),OW*.84,OH*.06);
+  const simg=sc.getImageData(0,0,W,H),od=oc.createImageData(OW,OH);
+  for(let y=0;y<OH;y++)for(let x=0;x<OW;x++){
+    const sx=(x/OW*hw)|0, sy=(y/OH*H)|0;
+    const ci=((sy*W)+sx)*4;
+    const mi=((sy*W)+(sx+hw|0))*4;
+    const b=(simg.data[mi]*.3+simg.data[mi+1]*.59+simg.data[mi+2]*.11)/255;
+    const oi=((y*OW)+x)*4;
+    od.data[oi]=simg.data[ci];od.data[oi+1]=simg.data[ci+1];od.data[oi+2]=simg.data[ci+2];
+    od.data[oi+3]=b*255;
+  }
+  /* 先铺底再叠 keyed（SRC_ALPHA, DST_ALPHA 的近似展示） */
+  const tmp=document.createElement('canvas');tmp.width=OW;tmp.height=OH;
+  tmp.getContext('2d').putImageData(od,0,0);
+  oc.drawImage(tmp,0,0);
+  /* luminance 模式：自身亮度当 alpha，可反相 */
+  const lc=S[2],LW=lc.canvas.width,LH=lc.canvas.height;
+  lc.fillStyle='#191919';lc.fillRect(0,0,LW,LH);
+  lc.fillStyle='#2a2a2a';for(let i=0;i<5;i++)lc.fillRect(LW*.1,LH*(.15+i*.16),LW*.8,LH*.07);
+  const ld=lc.createImageData(LW,LH);
+  for(let y=0;y<LH;y++)for(let x=0;x<LW;x++){
+    const sx=(x/LW*hw)|0,sy=(y/LH*H)|0;const ci=((sy*W)+sx)*4;
+    const b=(simg.data[ci]*.3+simg.data[ci+1]*.59+simg.data[ci+2]*.11)/255;
+    const oi=((y*LW)+x)*4;
+    ld.data[oi]=simg.data[ci];ld.data[oi+1]=simg.data[ci+1];ld.data[oi+2]=simg.data[ci+2];
+    ld.data[oi+3]=b*255;
+  }
+  const tmp2=document.createElement('canvas');tmp2.width=LW;tmp2.height=LH;
+  tmp2.getContext('2d').putImageData(ld,0,0);
+  lc.drawImage(tmp2,0,0);
+  requestAnimationFrame(draw);
+}
+requestAnimationFrame(draw);
+})();
+
+/* ============ 套印故障字 ============ */
+(()=>{
+const w=document.getElementById('glitchWord');
+const m=w.querySelector('.m'),g=w.querySelector('.g');
+function burst(){
+  const n=3+Math.floor(Math.random()*3);
+  for(let k=0;k<n;k++)setTimeout(()=>{
+    const dx=()=>((Math.random()>.5?1:-1)*Math.random()*5*4)+'px';
+    const dy=()=>((Math.random()-.5)*6)+'px';
+    m.style.transform=`translate(${dx()},${dy()})`;
+    g.style.transform=`translate(${dx()},${dy()})`;
+    const c1=Math.random()*60+10,c2=c1+Math.random()*25;
+    m.style.clipPath=`inset(${c1}% 0 ${100-c2}% 0)`;
+    g.style.clipPath=`inset(${100-c2}% 0 ${c1*.6}% 0)`;
+  },80*k);
+  setTimeout(()=>{m.style.transform=g.style.transform='none';m.style.clipPath=g.style.clipPath='none'},80*n+80);
+}
+w.addEventListener('mouseenter',burst);
+setInterval(burst,5000);
+})();
+</script>
+</body>
+</html>

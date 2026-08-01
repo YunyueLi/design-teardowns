@@ -1,0 +1,71 @@
+/* 从线上站点真实抽取的设计 token(实锤,非观感推断) */
+/* 源:https://www.shopify.com/editions/winter2026 */
+:root{
+  --bg:rgb(0, 0, 0);
+  --ink:rgb(0, 0, 0);
+  /* 高频色值:#292919 #f7f7ee #fff #000 #dcdcd0 #909083 #5c5c4e #57afdf #2a2a2a #f4f4f4 */
+  --font-sans:ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  /* 加载字体:Inter-Variable, NeueMontreal, HWCigars, ImperialScript */
+  /* h1:14px/400 字距 normal 行高 21px */
+  --ease-1:cubic-bezier(.34,1.56,.64,1);
+  --ease-2:cubic-bezier(.4, 0, .2, 1);
+  --ease-3:cubic-bezier(.34, 1.56, .64, 1);
+  --ease-4:cubic-bezier(.72, .16, .19, .96);
+  --ease-5:cubic-bezier(.4, 0, 1, 1);
+  --ease-6:cubic-bezier(0, 0, .2, 1);
+  /* 按钮过渡:color 0.3s cubic-bezier(0.4, 0, 0.2, 1), background-color 0.3s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.3s cubic-bezier(0.4, 0, 0.2, 1), outline-color 0.3s cubic-bezier(0.4, 0, 0.2, 1), text-decoration-color 0.3s cubic-bezier(0.4, 0, 0.2, 1), fill 0.3s cubic-bezier(0.4, 0, 0.2, 1), stroke 0.3s cubic-bezier(0.4, 0, 0.2, 1), --tw-gradient-from 0.3s cubic-bezier(0.4, 0, 0.2, 1), --tw-gradient-via 0.3s cubic-bezier(0.4, 0, 0.2, 1), --tw-gradient-to 0.3s cubic-bezier(0.4, 0, 0.2, 1) */
+  /* 时长梯:3s 2s 6s 0s 5s 1s 4s 15s */
+  --radius-1:0;
+  --radius-2:4px;
+  --radius-3:3.40282e38px;
+  --radius-4:.1875rem;
+  --radius-5:.0625rem;
+  --radius-6:.25rem;
+  /* 按钮圆角:4px */
+  /* 探测到的库:Lenis */
+  /* 媒体:video 12 canvas 2 svg 124 img 345 */
+}
+
+/* 站点原始 CSS 自定义变量(节选,复刻参考) */
+:root{
+  --tw-scale-x:1;
+  --tw-scale-y:1;
+  --tw-scale-z:1;
+  --tw-font-weight:initial;
+  --tw-duration:initial;
+  --tw-ease:initial;
+  --tw-border-style:solid;
+  --tw-backdrop-blur:initial;
+  --tw-backdrop-brightness:initial;
+  --tw-backdrop-contrast:initial;
+  --tw-backdrop-grayscale:initial;
+  --tw-backdrop-hue-rotate:initial;
+  --tw-backdrop-invert:initial;
+  --tw-backdrop-opacity:initial;
+  --tw-backdrop-saturate:initial;
+  --tw-backdrop-sepia:initial;
+  --tw-translate-x:0;
+  --tw-translate-y:0;
+  --tw-translate-z:0;
+  --tw-rotate-x:initial;
+  --tw-rotate-y:initial;
+  --tw-rotate-z:initial;
+  --tw-skew-x:initial;
+  --tw-skew-y:initial;
+  --tw-scroll-snap-strictness:proximity;
+  --tw-space-y-reverse:0;
+  --tw-space-x-reverse:0;
+  --tw-gradient-position:initial;
+  --tw-gradient-from:#0000;
+  --tw-gradient-via:#0000;
+  --tw-gradient-to:#0000;
+  --tw-gradient-stops:initial;
+  --tw-gradient-via-stops:initial;
+  --tw-gradient-from-position:0%;
+  --tw-gradient-via-position:50%;
+  --tw-gradient-to-position:100%;
+  --tw-leading:initial;
+  --tw-tracking:initial;
+  --tw-shadow:0 0 #0000;
+  --tw-shadow-color:initial;
+}

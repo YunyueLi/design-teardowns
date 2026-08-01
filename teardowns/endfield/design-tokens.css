@@ -1,0 +1,27 @@
+/* 从线上站点真实抽取的设计 token(实锤,非观感推断) */
+/* 源:https://endfield.hypergryph.com/ */
+:root{
+  --bg:rgba(0, 0, 0, 0);
+  --ink:rgb(0, 0, 0);
+  /* 高频色值:#191919 #fff #fffa00 #d9d9d9 #000 #999 #35373c #e5e5e5 #f2f2f2 #666 */
+  --font-sans:sans-serif;
+  /* 加载字体:ProtestStrike-Regular, Roboto-Regular, Roboto-Black, Gilroy-Light, Novecentosanswide-Bold, Novecentosanswide-DemiBold, Novecentosanswide-Medium, Gilroy-Medium, Gilroy-ExtraBold, SpaceGrotesk, swiper-icons, SDK_Sans-Regular, SDK_Sans-Medium, SDK_Sans-Bold, SansMedium, SansBold, SansBlack, SansRegular */
+  /* h1:9px/400 字距 normal 行高 normal */
+  --ease-1:cubic-bezier(1,0,.7,1);
+  /* 按钮过渡:transform 0.3s, width 0.3s, height 0.3s, border-radius 0.3s */
+  /* 时长梯:3s 2s 1s 4s 1.6s 6s 5s 1.5s */
+  --radius-1:50%;
+  --radius-2:.25rem;
+  --radius-3:4px;
+  --radius-4:2.625rem;
+  --radius-5:2px;
+  --radius-6:.3125rem;
+  /* 按钮圆角:16.875px */
+  /* 媒体:video 3 canvas 1 svg 137 img 27 */
+}
+
+/* 站点原始 CSS 自定义变量(节选,复刻参考) */
+:root{
+  --swiper-theme-color:#007aff;
+  --swiper-preloader-color:#fff;
+}

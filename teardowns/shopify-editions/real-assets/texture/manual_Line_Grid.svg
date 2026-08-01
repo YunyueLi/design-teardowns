@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 1440 890" height="890" width="1440">
+<g clip-path="url(#clip0_2366_46002)">
+<line stroke-width="0.4" stroke-opacity="0.2" stroke="black" y2="-8.74229e-09" x2="889.8" y1="890" x1="889.8"></line>
+<line stroke-width="0.4" stroke-opacity="0.2" stroke="black" y2="-8.74229e-09" x2="549.8" y1="890" x1="549.8"></line>
+<line stroke-width="0.4" stroke-opacity="0.1" stroke="black" y2="-8.74229e-09" x2="719.8" y1="890" x1="719.8"></line>
+<line stroke-dasharray="0.8 3.2" stroke-width="0.4" stroke-opacity="0.2" stroke="black" y2="-0.10515" x2="1439.83" y1="889.895" x1="889.83"></line>
+<line stroke-dasharray="0.8 3.2" stroke-width="0.4" stroke-opacity="0.2" stroke="black" transform="matrix(-0.525696 -0.850672 -0.850672 0.525696 550 890)" y2="-0.2" x2="1046.23" y1="-0.2"></line>
+<line stroke-width="0.4" stroke-opacity="0.2" stroke="black" y2="0.170124" x2="-0.105109" y1="890.17" x1="1439.89"></line>
+<line stroke-width="0.4" stroke-opacity="0.2" stroke="black" y2="890.17" x2="0.105085" y1="0.170129" x1="1440.11"></line>
+<line stroke-dasharray="0.8 3.2" stroke-width="0.4" stroke-opacity="0.1" stroke="black" y2="445.2" x2="5.00009" y1="445.2" x1="1445"></line>
+<circle stroke-width="0.4" stroke-opacity="0.2" stroke="black" r="805" cy="1250" cx="720"></circle>
+<circle stroke-width="0.4" stroke-opacity="0.2" stroke="black" r="425" cy="870" cx="720"></circle>
+<circle stroke-width="0.4" stroke-opacity="0.2" stroke="black" r="425" cy="20" cx="720"></circle>
+<circle stroke-width="0.4" stroke-opacity="0.2" stroke="black" r="805" cy="-360" cx="720"></circle>
+<line stroke-width="0.4" stroke-opacity="0.2" stroke="black" y2="550.2" x2="890" y1="550.2" x1="1440"></line>
+<line stroke-width="0.4" stroke-opacity="0.2" stroke="black" y2="339.8" x2="550" y1="339.8" x1="1.74846e-08"></line>
+</g>
+<defs>
+<clipPath id="clip0_2366_46002">
+<rect fill="white" height="890" width="1440"></rect>
+</clipPath>
+</defs>
+</svg>

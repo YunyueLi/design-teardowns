@@ -1,0 +1,256 @@
+{
+  "site": "Arknights Endfield",
+  "url": "https://endfield.hypergryph.com/",
+  "fonts": [
+    {
+      "url": "https://web.hycdn.cn/endfield/official-v4/_next/static/media/font/ProtestStrike-Regular.7d04dd.woff2",
+      "file": "611bc4_ProtestStrike-Regular.7d04dd.woff2",
+      "bytes": 11452,
+      "type": "font/woff2"
+    },
+    {
+      "url": "https://web.hycdn.cn/endfield/official-v4/_next/static/media/font/ProtestStrike-Regular.8cd908.woff",
+      "file": "12f7a1_ProtestStrike-Regular.8cd908.woff",
+      "bytes": 14320,
+      "type": "font/woff"
+    },
+    {
+      "url": "https://web.hycdn.cn/endfield/official-v4/_next/static/media/font/ProtestStrike-Regular.13abe8.ttf",
+      "file": "0e8453_ProtestStrike-Regular.13abe8.ttf",
+      "bytes": 25128,
+      "type": "font/ttf"
+    },
+    {
+      "url": "https://web.hycdn.cn/endfield/official-v4/_next/static/media/font/Roboto-Black.6e4071.woff2",
+      "file": "8c7da7_Roboto-Black.6e4071.woff2",
+      "bytes": 15248,
+      "type": "font/woff2"
+    },
+    {
+      "url": "https://web.hycdn.cn/endfield/official-v4/_next/static/media/font/Roboto-Black.6a179a.woff",
+      "file": "73454d_Roboto-Black.6a179a.woff",
+      "bytes": 20336,
+      "type": "font/woff"
+    },
+    {
+      "url": "https://web.hycdn.cn/endfield/official-v4/_next/static/media/font/Roboto-Black.44fd4a.ttf",
+      "file": "bf73ba_Roboto-Black.44fd4a.ttf",
+      "bytes": 36916,
+      "type": "font/ttf"
+    },
+    {
+      "url": "https://web.hycdn.cn/endfield/official-v4/_next/static/media/font/Novecentosanswide-Bold.7ac6f1.woff2",
+      "file": "5eabbb_Novecentosanswide-Bold.7ac6f1.woff2",
+      "bytes": 16948,
+      "type": "font/woff2"
+    },
+    {
+      "url": "https://web.hycdn.cn/endfield/official-v4/_next/static/media/font/Novecentosanswide-Bold.65d5d0.woff",
+      "file": "a4aa81_Novecentosanswide-Bold.65d5d0.woff",
+      "bytes": 19460,
+      "type": "font/woff"
+    },
+    {
+      "url": "https://web.hycdn.cn/endfield/official-v4/_next/static/media/font/Novecentosanswide-Bold.4617ad.ttf",
+      "file": "7876a7_Novecentosanswide-Bold.4617ad.ttf",
+      "bytes": 33176,
+      "type": "font/ttf"
+    },
+    {
+      "url": "https://web.hycdn.cn/endfield/official-v4/_next/static/media/font/Novecentosanswide-Medium.748604.woff2",
+      "file": "ef170b_Novecentosanswide-Medium.748604.woff2",
+      "bytes": 16080,
+      "type": "font/woff2"
+    },
+    {
+      "url": "https://web.hycdn.cn/endfield/official-v4/_next/static/media/font/Novecentosanswide-Medium.ef16a8.woff",
+      "file": "a29c59_Novecentosanswide-Medium.ef16a8.woff",
+      "bytes": 18308,
+      "type": "font/woff"
+    },
+    {
+      "url": "https://web.hycdn.cn/endfield/official-v4/_next/static/media/font/Novecentosanswide-Medium.b77880.ttf",
+      "file": "daa6e6_Novecentosanswide-Medium.b77880.ttf",
+      "bytes": 30764,
+      "type": "font/ttf"
+    },
+    {
+      "url": "https://web.hycdn.cn/endfield/official-v4/_next/static/media/font/Gilroy-ExtraBold.7b2f8c.woff2",
+      "file": "78d187_Gilroy-ExtraBold.7b2f8c.woff2",
+      "bytes": 12420,
+      "type": "font/woff2"
+    },
+    {
+      "url": "https://web.hycdn.cn/endfield/official-v4/_next/static/media/font/Gilroy-ExtraBold.b8f935.woff",
+      "file": "9b22f2_Gilroy-ExtraBold.b8f935.woff",
+      "bytes": 16536,
+      "type": "font/woff"
+    },
+    {
+      "url": "https://web.hycdn.cn/endfield/official-v4/_next/static/media/font/Gilroy-ExtraBold.9856d3.ttf",
+      "file": "ce0992_Gilroy-ExtraBold.9856d3.ttf",
+      "bytes": 33804,
+      "type": "font/ttf"
+    }
+  ],
+  "video": [],
+  "audio": [],
+  "image": [
+    {
+      "url": "https://web.hycdn.cn/endfield/official-v4/_next/static/media/share.dc935341.jpg",
+      "file": "83a762_share.dc935341.jpg",
+      "bytes": 34026,
+      "type": "image/jpeg"
+    },
+    {
+      "url": "https://web.hycdn.cn/favicon.ico",
+      "file": "bf81a2_favicon.ico",
+      "bytes": 32988,
+      "type": "image/vnd.microsoft.icon"
+    },
+    {
+      "url": "https://web.hycdn.cn/endfield/official-v4/_next/static/media/content.a0b657b6.jpg",
+      "file": "9eea88_content.a0b657b6.jpg",
+      "bytes": 540931,
+      "type": "image/jpeg"
+    },
+    {
+      "url": "https://web.hycdn.cn/endfield/official-v4/_next/static/media/01.aae95e75.png",
+      "file": "b73bb9_01.aae95e75.png",
+      "bytes": 690429,
+      "type": "image/png"
+    },
+    {
+      "url": "https://web.hycdn.cn/endfield/official-v4/_next/static/media/title.bc8e821f.png",
+      "file": "5cce42_title.bc8e821f.png",
+      "bytes": 396695,
+      "type": "image/png"
+    },
+    {
+      "url": "https://web.hycdn.cn/endfield/official-v4/_next/static/media/blurred_logo.eccbe4f3.png",
+      "file": "6e6ec2_blurred_logo.eccbe4f3.png",
+      "bytes": 101185,
+      "type": "image/png"
+    },
+    {
+      "url": "https://web.hycdn.cn/upload/image/20260714/e4c3c1219db9fe092bbb6a8df8bc265a.png",
+      "file": "36e5f3_e4c3c1219db9fe092bbb6a8df8bc265a.png",
+      "bytes": 2348799,
+      "type": "image/png"
+    },
+    {
+      "url": "https://web.hycdn.cn/endfield/official-v4/_next/static/media/timeline.711f80a1.png",
+      "file": "5f9404_timeline.711f80a1.png",
+      "bytes": 11135,
+      "type": "image/png"
+    },
+    {
+      "url": "https://web.hycdn.cn/upload/image/20260303/418b73ff34245a937c7db67b082a8a18.jpg",
+      "file": "a4e752_418b73ff34245a937c7db67b082a8a18.jpg",
+      "bytes": 1682545,
+      "type": "image/jpeg"
+    },
+    {
+      "url": "https://web.hycdn.cn/upload/image/20260710/0ffe54e3ecf2e1eae71e4e67afe9514d.jpg",
+      "file": "c7febb_0ffe54e3ecf2e1eae71e4e67afe9514d.jpg",
+      "bytes": 587733,
+      "type": "image/jpeg"
+    },
+    {
+      "url": "https://web.hycdn.cn/upload/image/20260624/eb1662f1d08bdd804d3e29a904b1b1b2.png",
+      "file": "662039_eb1662f1d08bdd804d3e29a904b1b1b2.png",
+      "bytes": 2777448,
+      "type": "image/png"
+    },
+    {
+      "url": "https://web.hycdn.cn/upload/image/20260602/38ce571934dafe453b9f0a6033f353bc.jpg",
+      "file": "3027cb_38ce571934dafe453b9f0a6033f353bc.jpg",
+      "bytes": 1444406,
+      "type": "image/jpeg"
+    },
+    {
+      "url": "https://web.hycdn.cn/upload/image/20260522/ce183308cef90060fb45bf3b48cf2b9a.png",
+      "file": "c7cc4a_ce183308cef90060fb45bf3b48cf2b9a.png",
+      "bytes": 3904684,
+      "type": "image/png"
+    },
+    {
+      "url": "https://web.hycdn.cn/upload/image/20260416/357e2dff498d2d67905864c6863ce8e5.png",
+      "file": "1704e0_357e2dff498d2d67905864c6863ce8e5.png",
+      "bytes": 2578929,
+      "type": "image/png"
+    },
+    {
+      "url": "https://web.hycdn.cn/upload/image/20260411/dde7c30f64cb985113539ec6c7a03c38.jpg",
+      "file": "036c40_dde7c30f64cb985113539ec6c7a03c38.jpg",
+      "bytes": 886519,
+      "type": "image/jpeg"
+    },
+    {
+      "url": "https://web.hycdn.cn/upload/image/20260327/09077cb6f1c03328a89fc3d65ad0dc04.jpg",
+      "file": "7bbcb5_09077cb6f1c03328a89fc3d65ad0dc04.jpg",
+      "bytes": 593460,
+      "type": "image/jpeg"
+    },
+    {
+      "url": "https://web.hycdn.cn/upload/image/20260312/ae7b296513b1bf28d6fc66181a46d63e.png",
+      "file": "b6d69b_ae7b296513b1bf28d6fc66181a46d63e.png",
+      "bytes": 3005733,
+      "type": "image/png"
+    },
+    {
+      "url": "https://web.hycdn.cn/endfield/official-v4/_next/static/media/zh-cn.106ce05d.png",
+      "file": "89b1f2_zh-cn.106ce05d.png",
+      "bytes": 5273,
+      "type": "image/png"
+    }
+  ],
+  "lottie": [],
+  "source": [
+    {
+      "url": "https://web.hycdn.cn/endfield/official-v4/_next/static/css/b5668e74910496a5.css",
+      "file": "29a95b_b5668e74910496a5.css",
+      "bytes": 99689
+    },
+    {
+      "url": "https://web.hycdn.cn/endfield/official-v4/_next/static/css/4e376ab6096d83c7.css",
+      "file": "f60589_4e376ab6096d83c7.css",
+      "bytes": 7668
+    },
+    {
+      "url": "https://web.hycdn.cn/endfield/official-v4/_next/static/css/8e9f9a8af9e6c7ec.css",
+      "file": "eeaf7e_8e9f9a8af9e6c7ec.css",
+      "bytes": 8195
+    },
+    {
+      "url": "https://web.hycdn.cn/endfield/official-v4/_next/static/css/3519621a91073b60.css",
+      "file": "52ebc3_3519621a91073b60.css",
+      "bytes": 99944
+    },
+    {
+      "url": "https://web.hycdn.cn/endfield/official-v4/_next/static/css/a13bb29dcb00dc9c.css",
+      "file": "286e54_a13bb29dcb00dc9c.css",
+      "bytes": 16740
+    },
+    {
+      "url": "https://web.hycdn.cn/endfield/official-v4/_next/static/css/6b6d9a58b4c43339.css",
+      "file": "c6de16_6b6d9a58b4c43339.css",
+      "bytes": 340
+    },
+    {
+      "url": "https://web.hycdn.cn/endfield/official-v4/_next/static/css/25d8bcbc3186c526.css",
+      "file": "2b5b38_25d8bcbc3186c526.css",
+      "bytes": 83747
+    },
+    {
+      "url": "https://web.hycdn.cn/endfield/official-v4/_next/static/css/89618c72836110eb.css",
+      "file": "7ebe78_89618c72836110eb.css",
+      "bytes": 21722
+    },
+    {
+      "url": "https://web.hycdn.cn/endfield/official-v4/_next/static/css/222bf829ec1ec02b.css",
+      "file": "97c8df_222bf829ec1ec02b.css",
+      "bytes": 34832
+    }
+  ]
+}

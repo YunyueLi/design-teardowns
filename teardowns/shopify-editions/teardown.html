@@ -1,0 +1,1121 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Shopify Editions Winter '26 拆解 · The Renaissance Edition</title>
+<style>
+/* ============ 真字体（本地真文件，CDN 兜底） ============ */
+@font-face{font-family:NeueMontreal;src:url(real-assets/fonts/c0ccc1_3ee238256136fcfdfca35decbd44d0d4.woff2) format("woff2"),url(https://cdn.shopify.com/b/shopify-brochure2-assets/3ee238256136fcfdfca35decbd44d0d4.woff2) format("woff2");font-weight:700;font-style:normal;font-display:swap;font-feature-settings:"liga" 1,"kern" 1}
+@font-face{font-family:HWCigars;src:url(real-assets/fonts/b4d548_49a57a6e59f6a50f0627418abeb58fec.woff2) format("woff2"),url(https://cdn.shopify.com/b/shopify-brochure2-assets/49a57a6e59f6a50f0627418abeb58fec.woff2) format("woff2");font-weight:400;font-style:normal;font-display:swap;font-feature-settings:"liga" 1,"dlig" 1,"kern" 1}
+@font-face{font-family:ImperialScript;src:url(real-assets/fonts/0c828b_389d4f8566b3b9cbe083b682c7fabf06.woff2) format("woff2"),url(https://cdn.shopify.com/b/shopify-brochure2-assets/389d4f8566b3b9cbe083b682c7fabf06.woff2) format("woff2");font-weight:400;font-style:normal;font-display:swap}
+@font-face{font-family:InterVariable;src:url(real-assets/fonts/manual_inter-variable_5949cd.woff2) format("woff2"),url(https://cdn.shopify.com/s/files/1/0711/3431/4719/files/5949cd393a8375a896fd0a9b74307666.woff2) format("woff2");font-weight:100 900;font-style:normal;font-display:swap}
+
+/* ============ 真实 token（全部来自抽取，出处见 tokens.json 与样式表原文） ============ */
+:root{
+  --paper:#f7f7ee;          /* bg-light 实锤 */
+  --ink:#292919;            /* bg-dark 实锤（橄榄近黑） */
+  --grey-light:#dcdcd0;     /* 实锤：遮罩幕布默认色 = overlay #dcdcd0 */
+  --grey-mid:#909083;       /* 实锤：light 态达·芬奇线色 */
+  --grey-dark:#5c5c4e;      /* 实锤：正文链接色 */
+  --nav-grey:#e2e2d9;       /* 实锤：light 态移动导航底 */
+  --sidekick:#8051ff;       /* 实锤：Sidekick 紫 */
+  --sky:#57afdf;            /* 实锤：词频第 8 */
+  --blue:#155dfc;           /* 实锤 */
+  --tag-line:#D7D7CF;       /* 实锤：技能星座连线色 */
+  --popup-border:#434343;   /* 实锤：技能弹窗描边 */
+  --glow:#88DDFF;           /* 实锤：蝴蝶边缘辉光 uGlowColor 8969727 */
+  --ease-back:cubic-bezier(.34,1.56,.64,1);   /* 实锤：全站回弹主缓动，5 处 */
+  --ease-frame:cubic-bezier(.72,.16,.19,.96); /* 实锤：标题滑移与收框 */
+  --ease-lines:cubic-bezier(.34,.22,.47,.84); /* 实锤：构造线描线 3s */
+  --ease-fade:cubic-bezier(.25,.46,.45,.94);  /* 实锤：淡出 .52s */
+  --ease-tw:cubic-bezier(.4,0,.2,1);          /* 实锤：Tailwind 默认过渡 */
+  --grid-gap:clamp(12px,1vw,16px);            /* 实锤：--spacing-grid-spacing-md */
+  --page:min(92vw,1440px);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  background:var(--paper);color:var(--ink);
+  font-family:NeueMontreal,Helvetica,Arial,sans-serif;
+  font-size:16px;line-height:1.5;
+  -webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;
+}
+::selection{background:var(--sidekick);color:#fff}
+
+/* ============ 排版体系（全部为原站原值） ============ */
+.h1{font-size:clamp(48px,2.24rem + 10.96vw,150px);line-height:.9;letter-spacing:-.03em;font-weight:700;text-wrap:balance}
+.h2{font-size:clamp(34px,1.5rem + 3vw,64px);line-height:.9;letter-spacing:-.03em;font-weight:700}
+.h3{font-size:clamp(26px,1.2rem + 1.6vw,40px);line-height:.92;letter-spacing:-.02em;font-weight:700}
+.h4{font-size:24px;line-height:.95;letter-spacing:-.02em;font-weight:700}
+.narr{font-family:HWCigars,Georgia,serif;font-weight:400;letter-spacing:-.05em;text-wrap:pretty}
+.narr-1{font-size:clamp(24px,1.16rem + 1.75vw,42px);line-height:.98}
+.narr-2{font-size:clamp(19px,1.1rem + .44vw,25px);line-height:1.04}
+.narr-3{font-size:19px;line-height:1.06;letter-spacing:-.04em}
+.body-1{font-size:15px;line-height:1.35;font-weight:700}
+.body-2{font-size:12.5px;line-height:1.3;font-weight:700}
+.script{font-family:ImperialScript,Georgia,serif;font-weight:400;letter-spacing:-.02em;line-height:.96}
+.mono{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-weight:400}
+.drop-cap:first-letter{
+  font-family:ImperialScript,Georgia,serif;font-weight:400;
+  font-size:2.9em;line-height:.7;letter-spacing:-.02em;
+  float:left;margin:.08em .12em 0 0;color:var(--ink);
+}
+.muted{color:var(--grey-dark)}
+a{color:var(--grey-dark);text-decoration-thickness:.08em;text-underline-offset:2px}
+a:hover{text-decoration-style:dotted}
+
+/* ============ 布局：左侧手稿框 + 右侧内容（复刻原站 1/5 + 4/5） ============ */
+.frame-note{position:fixed;inset:auto auto 10px 12px;z-index:60;font-size:10px;color:var(--grey-mid);font-family:HWCigars,Georgia,serif}
+.layout{display:grid;grid-template-columns:minmax(230px,1fr) minmax(0,4fr);gap:0;max-width:1680px;margin:0 auto}
+aside.manuscript{
+  position:sticky;top:0;height:100svh;padding:20px 14px;
+  display:flex;flex-direction:column;justify-content:space-between;
+}
+.davinci-wrap{position:relative;aspect-ratio:340/464;width:min(240px,100%);margin:auto 0}
+.davinci-wrap svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible;color:var(--ink)}
+.davinci-wrap .frame-rect{stroke:currentColor;stroke-width:1;fill:none}
+.davinci-lines path,.davinci-lines circle{stroke:#29291926;stroke-width:.4;fill:none;stroke-dasharray:1;stroke-dashoffset:1px;transition:stroke-dashoffset 3s var(--ease-lines),stroke 3s var(--ease-lines) 2.1s}
+.davinci-lines[data-active="1"] [data-g*="1"],.davinci-lines[data-active="2"] [data-g*="2"],.davinci-lines[data-active="3"] [data-g*="3"],
+.davinci-lines[data-active="4"] [data-g*="4"],.davinci-lines[data-active="5"] [data-g*="5"],.davinci-lines[data-active="6"] [data-g*="6"],
+.davinci-lines[data-active="7"] [data-g*="7"],.davinci-lines[data-active="8"] [data-g*="8"]{stroke-dashoffset:0}
+@keyframes line-flash{0%{stroke:#292919bf}to{stroke:#29291926}}
+.davinci-lines [data-just]{animation:line-flash 4s ease-out forwards}
+.side-title{font-size:20px;line-height:.92;letter-spacing:-.02em;font-weight:700;position:relative;z-index:2}
+.side-title .ai{font-family:HWCigars,Georgia,serif;font-style:italic;font-weight:400;letter-spacing:0}
+.side-sub{font-family:HWCigars,Georgia,serif;font-size:12.5px;letter-spacing:-.03em;color:var(--grey-dark);margin-top:8px;position:relative;z-index:2}
+nav.toc{counter-reset:nav-item;margin-top:14px;position:relative;z-index:2}
+nav.toc a{
+  display:flex;justify-content:space-between;align-items:baseline;gap:8px;
+  padding:2.5px 0;text-decoration:none;color:#29291999;
+  font-size:12px;font-weight:700;letter-spacing:-.01em;line-height:1.15;
+  transition:color .3s var(--ease-tw);
+}
+nav.toc a:after{
+  counter-increment:nav-item;content:counters(nav-item,".",upper-roman);
+  font-family:HWCigars,Georgia,serif;font-weight:400;font-size:10.5px;color:#29291966;
+  transition:color .3s var(--ease-tw);
+}
+nav.toc a:hover,nav.toc a.active{color:var(--ink)}
+nav.toc a:hover:after,nav.toc a.active:after{color:var(--ink)}
+nav.toc a .tt{position:relative}
+nav.toc a .tt:before{content:"";position:absolute;left:0;right:100%;bottom:-1px;border-bottom:1px solid var(--ink);transition:right .3s var(--ease-tw)}
+nav.toc a:hover .tt:before,nav.toc a.active .tt:before{right:0}
+.side-legal{font-family:HWCigars,Georgia,serif;font-size:10px;color:var(--grey-mid)}
+main{min-width:0;padding:0 clamp(16px,3vw,56px) 120px;border-left:1px solid #2929191a}
+
+@media (max-width:960px){
+  .layout{grid-template-columns:1fr}
+  aside.manuscript{position:relative;height:auto;padding:24px 16px 8px}
+  .davinci-wrap{width:min(300px,80vw);margin:0 auto}
+  nav.toc{columns:2}
+  main{border-left:none;padding:0 16px 90px}
+}
+
+/* ============ 分节 ============ */
+section.chapter{padding-top:86px;position:relative}
+.kicker{display:flex;align-items:baseline;gap:10px;border-top:1px solid var(--ink);padding-top:10px;margin-bottom:26px}
+.kicker .num{font-family:HWCigars,Georgia,serif;font-size:13px;color:var(--grey-dark)}
+.kicker .t{font-size:13px;font-weight:700;letter-spacing:.02em;text-transform:uppercase}
+.kicker .r{margin-left:auto;font-family:HWCigars,Georgia,serif;font-size:11.5px;color:var(--grey-mid)}
+.lede{max-width:56ch}
+
+/* chips */
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin:18px 0 6px}
+.chip{
+  border:1px solid #2929193d;padding:6px 10px 5px;font-size:11.5px;font-weight:700;
+  background:#fff;border-radius:2px;display:inline-flex;gap:6px;align-items:baseline;
+}
+.chip .mono{font-size:10.5px}
+.chip b{color:var(--sidekick)}
+.tag-solid{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+
+/* 纸纹列表区（原站 texture-src-90 平铺 400px） */
+.textured{background:var(--grey-light) url(real-assets/texture/manual_texture-src-90.jpg);background-size:400px;border-radius:2px;padding:22px}
+
+/* 表格 */
+table{border-collapse:collapse;width:100%;font-size:12.5px}
+th{font-size:10.5px;text-transform:uppercase;letter-spacing:.06em;color:var(--grey-dark);text-align:left;font-weight:700}
+th,td{border-bottom:1px solid #2929191f;padding:7px 10px 6px;vertical-align:top}
+td.mono,th.mono{font-size:11.5px}
+tr:hover td{background:#2929190a}
+
+/* 色卡 */
+.swatches{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px}
+.sw{border:1px solid #2929192a;border-radius:2px;overflow:hidden;cursor:pointer;background:#fff;transition:transform .4s var(--ease-back)}
+.sw:hover{transform:translateY(-3px)}
+.sw .c{height:64px;position:relative}
+.sw .c:after{content:"点击复制";position:absolute;right:6px;bottom:5px;font-size:9px;letter-spacing:.05em;color:#fff9;mix-blend-mode:difference;opacity:0;transition:opacity .2s}
+.sw:hover .c:after{opacity:1}
+.sw .m{padding:7px 9px}
+.sw .m b{display:block;font-size:11.5px}
+.sw .m span{font-size:10.5px;color:var(--grey-dark);font-family:ui-monospace,Menlo,monospace}
+.sw .m i{display:block;font-style:normal;font-size:10px;color:var(--grey-mid);margin-top:2px;font-family:HWCigars,Georgia,serif}
+.sw.copied .c:after{content:"已复制";opacity:1}
+
+/* 字体样张 */
+.type-card{border:1px solid #2929192a;background:#fff;border-radius:2px;padding:18px 20px;margin-bottom:10px}
+.type-card .sample{margin:6px 0 10px}
+.type-meta{font-size:11px;color:var(--grey-dark);display:flex;gap:14px;flex-wrap:wrap}
+
+/* 曲线板 */
+.easing-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:10px}
+.ez{border:1px solid #2929192a;background:#fff;border-radius:2px;padding:12px}
+.ez svg{width:100%;height:86px;display:block}
+.ez .name{font-size:11.5px;font-weight:700;margin-top:6px}
+.ez .val{font-size:10px;color:var(--grey-dark);font-family:ui-monospace,Menlo,monospace}
+.ez .dot{width:9px;height:9px;border-radius:50%;background:var(--sidekick);position:relative;margin-top:8px;left:0}
+.ez.play .dot{animation:ezrun 1.4s both}
+.ez:nth-child(1).play .dot{animation-timing-function:cubic-bezier(.34,1.56,.64,1)}
+.ez:nth-child(2).play .dot{animation-timing-function:cubic-bezier(.72,.16,.19,.96)}
+.ez:nth-child(3).play .dot{animation-timing-function:cubic-bezier(.34,.22,.47,.84)}
+.ez:nth-child(4).play .dot{animation-timing-function:cubic-bezier(.25,.46,.45,.94)}
+@keyframes ezrun{from{left:0}to{left:calc(100% - 9px)}}
+
+/* demo 区块 */
+.demo{border:1px solid var(--ink);border-radius:2px;background:#fff;overflow:hidden;margin:22px 0}
+.demo header{display:flex;align-items:center;gap:10px;padding:10px 14px;border-bottom:1px solid #2929291f;background:var(--paper)}
+.demo header .t{font-weight:700;font-size:13px}
+.demo header .src{margin-left:auto;font-size:10px;color:var(--grey-mid);font-family:HWCigars,Georgia,serif}
+.demo .stage{position:relative}
+.demo .note{padding:10px 14px;border-top:1px solid #2929291f;font-family:HWCigars,Georgia,serif;font-size:12.5px;letter-spacing:-.02em;color:var(--grey-dark)}
+button.btn{
+  font:700 12px NeueMontreal,Helvetica,sans-serif;letter-spacing:.01em;
+  background:var(--ink);color:var(--paper);border:0;border-radius:2px;padding:8px 13px;cursor:pointer;
+  transition:transform .4s var(--ease-back),background .2s;
+}
+button.btn:hover{transform:translateY(-1px);background:#000}
+button.btn.ghost{background:transparent;color:var(--ink);border:1px solid #2929194d}
+button.btn.ghost[aria-pressed="true"]{background:var(--ink);color:var(--paper)}
+
+/* demo A 达·芬奇线剧场 */
+#dvStage{background:var(--ink);display:grid;place-items:center;padding:26px}
+#dvStage .davinci-wrap{width:min(300px,72vw)}
+#dvStage svg{color:var(--paper)}
+#dvStage .davinci-lines path,#dvStage .davinci-lines circle{stroke:#ffffff26}
+@keyframes line-flash-d{0%{stroke:#ffffffbf}to{stroke:#ffffff26}}
+#dvStage .davinci-lines [data-just]{animation:line-flash-d 4s ease-out forwards}
+#dvStage .side-title{color:var(--paper)}
+#dvCtl{display:flex;gap:6px;flex-wrap:wrap;padding:10px 14px;border-top:1px solid #2929291f}
+
+/* demo B 蝴蝶 */
+#bfStage{background:linear-gradient(180deg,#0b1024 0%,#1a2030 70%,#25231d 100%);height:300px}
+#bfStage canvas{width:100%;height:100%;display:block}
+
+/* demo C 技能星座 */
+#skStage{background:var(--ink);height:360px;position:relative;overflow:hidden;touch-action:none}
+#skStage svg.links{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+.sk-tag{position:absolute;transform:translate(-50%,-50%);z-index:2}
+.sk-tag .lbl{
+  background:var(--grey-light);color:var(--ink);font-weight:700;font-family:HWCigars,Georgia,serif;
+  font-size:15px;letter-spacing:-.03em;padding:9px 13px;white-space:nowrap;cursor:pointer;
+  transform:scale(var(--s,1));opacity:var(--o,.5);
+  transition:transform .5s var(--ease-back),opacity .3s,background .2s,color .2s;
+  display:inline-flex;gap:8px;align-items:baseline;
+}
+.sk-tag .cnt{font-family:NeueMontreal,Helvetica,sans-serif;font-size:10px;color:var(--grey-dark)}
+.sk-tag.active .lbl{background:var(--ink);color:var(--paper);outline:1px solid #434343}
+.sk-pop{
+  position:absolute;top:calc(100% + 2px);left:0;width:230px;background:var(--ink);color:var(--paper);
+  border-top:1px solid var(--popup-border);
+  display:grid;grid-template-rows:0fr;opacity:0;pointer-events:none;
+  transition:grid-template-rows .3s var(--ease-back) .05s,opacity .2s .05s;z-index:5;text-align:left;
+}
+.sk-tag.active .sk-pop{grid-template-rows:1fr;opacity:1}
+.sk-pop>div{overflow:hidden}
+.sk-pop p{font-size:11.5px;font-weight:700;line-height:1.35;padding:10px 12px 8px}
+.sk-pop .try{display:block;font-family:HWCigars,Georgia,serif;font-size:11px;color:var(--grey-light);padding:0 12px 10px}
+
+/* demo D 罗马数字商店 */
+#romanShop{display:flex;gap:26px;align-items:center;justify-content:center;padding:30px 16px;flex-wrap:wrap;background:#fff}
+.qty{display:flex;border:1px solid var(--grey-mid)}
+.qty button{width:36px;height:36px;border:0;background:none;font-size:16px;cursor:pointer;color:var(--ink)}
+.qty button:hover{background:var(--grey-light)}
+.qty .v{min-width:52px;display:grid;place-items:center;border-left:1px solid var(--grey-mid);border-right:1px solid var(--grey-mid);font-family:HWCigars,Georgia,serif;font-size:15px}
+.qty .v span:after{content:counter(q,upper-roman);counter-reset:q var(--q,1)}
+.price{position:relative;overflow:hidden;height:30px;min-width:150px;text-align:right;cursor:default}
+.price .row{display:flex;gap:5px;justify-content:flex-end;align-items:baseline;height:30px;transition:transform .3s ease-in-out}
+.price .row .cur{font-size:11px;font-weight:700}
+.price .big{font-size:19px;font-weight:700}
+.price:hover .row{transform:translateY(-100%)}
+.price .row.roman span.d:after{content:counter(d,upper-roman);counter-reset:d var(--d,14)}
+.price .row.roman span.c:after{content:counter(c,upper-roman);counter-reset:c var(--c,52)}
+
+/* demo E 幕布擦除 */
+#wipeStage{position:relative;height:300px;background:#0d1220;overflow:hidden}
+#wipeStage img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:brightness(calc(1 - var(--darken,0)))}
+#wipeStage .sheet{position:absolute;inset:0;background:var(--grey-light);transform:translateY(calc((1 - var(--pos,-1)) * -50% + 50%))}
+#wipeCtl{display:flex;gap:14px;align-items:center;padding:10px 14px;border-top:1px solid #2929291f;font-size:11px}
+#wipeCtl input{flex:1;accent-color:var(--sidekick)}
+
+/* 逐屏走查 */
+.walk{border:1px solid #2929192a;background:#fff;border-radius:2px;margin-bottom:26px;overflow:hidden}
+.walk .imgs{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:2px;background:#2929291f}
+.walk .imgs img{width:100%;display:block;aspect-ratio:16/10;object-fit:cover}
+.walk .body{padding:16px 18px}
+.walk .quote{font-family:HWCigars,Georgia,serif;font-size:15px;letter-spacing:-.03em;color:var(--grey-dark);margin:8px 0 10px}
+.walk .facts{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+.walk .facts span{font-size:10.5px;font-weight:700;border:1px solid #2929193d;border-radius:2px;padding:3.5px 7px;background:var(--paper)}
+.walk h4 .roman{font-family:HWCigars,Georgia,serif;font-weight:400;color:var(--grey-mid);margin-right:8px}
+
+/* 胶片带 */
+.filmstrip{display:flex;gap:6px;overflow-x:auto;padding:12px;background:var(--ink);border-radius:2px}
+.filmstrip img{height:110px;border-radius:1px;filter:grayscale(.15) contrast(1.02);transition:filter .3s,transform .3s}
+.filmstrip img:hover{filter:none;transform:scale(1.03)}
+
+/* 代码块 */
+pre{background:var(--ink);color:#f7f7eeE6;border-radius:2px;padding:14px 16px;font-size:11.5px;line-height:1.55;overflow-x:auto;font-family:ui-monospace,SFMono-Regular,Menlo,monospace}
+pre em{color:var(--glow);font-style:normal}
+pre b{color:#c9b8ff;font-weight:400}
+code{font-family:ui-monospace,Menlo,monospace;font-size:.92em;background:#2929191a;padding:1px 5px;border-radius:2px}
+pre code{background:none;padding:0}
+
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+@media (max-width:860px){.two-col{grid-template-columns:1fr}}
+.callout{border-left:3px solid var(--sidekick);background:#8051ff0d;padding:12px 16px;border-radius:0 2px 2px 0;font-size:13px}
+.callout.gold{border-color:var(--grey-mid);background:#9090830f}
+figure.shot{border:1px solid #2929192a;border-radius:2px;overflow:hidden;background:#fff}
+figure.shot img{width:100%;display:block}
+figure.shot figcaption{padding:8px 12px;font-size:11px;color:var(--grey-dark);font-family:HWCigars,Georgia,serif}
+</style>
+</head>
+<body>
+
+<div class="layout">
+<!-- ============ 左侧：达·芬奇手稿框（复刻原站侧栏系统，滚动联动线组） ============ -->
+<aside class="manuscript" aria-label="目录">
+  <div></div>
+  <div class="davinci-wrap">
+    <svg viewBox="550 208 340 464" aria-hidden="true">
+      <rect class="frame-rect" x="550" y="208" width="340" height="464" pathLength="1"></rect>
+      <g class="davinci-lines" id="sideLines" data-active="">
+        <path d="M-1840 440h5120" data-g="1,3,5"></path>
+        <path d="M-1840 336.13h2390.03" data-g="1,2,3,4,5,6,7,8"></path>
+        <path d="M889.97 543.87h2390.03" data-g="1,2,3,5,6,7,8"></path>
+        <path d="M720 -1000v2880" data-g="1,2,3,4,5,6,7,8"></path>
+        <path d="M-1636.36,-1000L3076.36,1880" data-g="1,3,4,5,6,7,8"></path>
+        <path d="M3076.36,-1000L-1636.36,1880" data-g="1,3,4,5,6,7,8"></path>
+        <path d="M339.94 -1000v1336.13" data-g="1,2,3,6,7"></path>
+        <path d="M339.94 207.74h210.09" data-g="1,2,3,6,7"></path>
+        <path d="M420.19 207.74v128.39" data-g="1,3,6,7"></path>
+        <path d="M339.94 256.78h80.25" data-g="1,3,6,7"></path>
+        <path d="M389.53 256.78v-49.04" data-g="1,3,6,7"></path>
+        <path d="M389.53 238.05h30.65" data-g="1,3,6,7"></path>
+        <circle cx="550" cy="886" r="550" data-g="2,4"></circle>
+        <circle cx="1439.97" cy="543.87" r="550" data-g="2,4"></circle>
+        <circle cx="720" cy="15" r="425" data-g="5,7,8"></circle>
+        <circle cx="720" cy="865" r="425" data-g="5,7,8"></circle>
+        <circle cx="1535.83" cy="858.7" r="917" data-g="1,6"></circle>
+        <circle cx="-95.83" cy="21.3" r="917" data-g="1,6"></circle>
+      </g>
+    </svg>
+    <div style="position:relative;z-index:2;padding:18px 16px;display:flex;flex-direction:column;height:100%;justify-content:space-between">
+      <div class="side-title">The<br>Ren<span class="ai">ai</span>ssance<br>Edition<br><span style="font-size:12px;color:var(--grey-dark)">拆解档案</span></div>
+      <div>
+        <p class="side-sub">十二章、两百张产品卡、一顶可购买的毛线帽。每个数值都来自真实抽取。</p>
+        <nav class="toc" id="toc">
+          <a href="#sec-hero"><span class="tt">总览</span></a>
+          <a href="#sec-intent"><span class="tt">定位与意图</span></a>
+          <a href="#sec-color"><span class="tt">色彩</span></a>
+          <a href="#sec-type"><span class="tt">字体</span></a>
+          <a href="#sec-scroll"><span class="tt">布局与滚动</span></a>
+          <a href="#sec-webgl"><span class="tt">WebGL 舞台</span></a>
+          <a href="#sec-lab"><span class="tt">签名实验室</span></a>
+          <a href="#sec-walk"><span class="tt">逐屏走查</span></a>
+          <a href="#sec-craft"><span class="tt">工艺细节</span></a>
+          <a href="#sec-replicate"><span class="tt">复刻要点</span></a>
+          <a href="#sec-prov"><span class="tt">出处与方法</span></a>
+          <a href="#sec-verdict"><span class="tt">评审结论</span></a>
+        </nav>
+      </div>
+    </div>
+  </div>
+  <p class="side-legal">拆解档案 · 仅限内部研究比对<br>目录编号由 CSS counter 生成——与原站同法</p>
+</aside>
+
+<main>
+
+<!-- ============ I 总览 ============ -->
+<section class="chapter" id="sec-hero">
+  <h1 class="h1" style="margin:40px 0 18px">The Ren<span class="narr" style="font-style:italic;letter-spacing:0">ai</span>ssance<br>Edition<span class="script" style="font-size:.5em;margin-left:.15em;color:var(--grey-dark)">拆解</span></h1>
+  <p class="narr narr-1 drop-cap lede">这不是观感笔记。以下每一个色值、缓动、时长、着色器公式，都来自 shopify.com/editions/winter2026 的计算样式、样式表原文、三十个 JS chunk 与十三份 Theatre.js 状态文件的直接抽取。</p>
+  <div class="chips">
+    <span class="chip tag-solid">Hydrogen + Oxygen<b style="color:var(--glow)">实锤 · powered-by 头</b></span>
+    <span class="chip tag-solid">Awwwards SOTD + 月度站 · CSSDA WOTD<b style="color:var(--glow)">实锤</b></span>
+    <span class="chip">Theatre.js 驱动 13 个 WebGL 场景<b>实锤</b></span>
+    <span class="chip">react-three-fiber<b>实锤</b></span>
+    <span class="chip">Tailwind v4.2.2<b>实锤</b></span>
+    <span class="chip">Lenis 1.3.23<b>实锤</b></span>
+    <span class="chip">Rive 矢量动画<b>实锤</b></span>
+    <span class="chip"><span class="mono">--ease-back .34,1.56,.64,1</span><b>实锤</b></span>
+    <span class="chip">十二章 200 张产品卡<b>实锤</b></span>
+    <span class="chip">detect-gpu 四档画质<b>实锤</b></span>
+  </div>
+  <figure class="shot" style="margin-top:18px">
+    <img src="assets/screens/00-hero-arrival.jpg" alt="首屏真实渲染：两位文艺复兴人物以创世纪构图相触，手持亮粉咖啡杯与购物袋" loading="eager">
+    <figcaption>as-seen：1440×900 @1.5x 真实渲染。创世纪构图的两位少年，一手咖啡一手购物袋，粉色滑板穿场而过——正典构图，异端道具。</figcaption>
+  </figure>
+</section>
+
+<!-- ============ II 定位与设计意图 ============ -->
+<section class="chapter" id="sec-intent">
+  <div class="kicker"><span class="num">II</span><span class="t">定位与设计意图</span><span class="r">营销层，半年一届的橱窗</span></div>
+  <p class="narr narr-2 lede drop-cap">Editions 是 Shopify 每半年一次的产品发布会网站，每一届自造一个世界观。这一届的世界观写在标题的字缝里：标题 SVG 把「ai」两个字母独立成组、改花体斜体、单独滑入（实锤：<code>title__word--ai</code> 组 + 独立 slide 动画）——官方文案只说「现代时代的文艺复兴」，把双关留给看得见的人（AI 释义为推断，置信高）。</p>
+  <div style="height:14px"></div>
+  <div class="two-col">
+    <div>
+      <h3 class="h4" style="margin-bottom:10px">三层设计意图（推断，证据充分）</h3>
+      <table>
+        <tr><th>意图</th><th>证据</th></tr>
+        <tr><td><b>正典与异端的拼贴</b>：文艺复兴油画世界里插入滑板、咖啡杯、购物袋、紫色眼罩、亮粉毛线帽</td><td>hero 美术、Sidekick 章肖像、#beanie 彩蛋（均实锤存在）</td></tr>
+        <tr><td><b>把「作坊」搬进页面</b>：达·芬奇构造线、黄金分割、罗马数字、花体首字，全部用工程手段实现而非贴图</td><td>SVG pathLength 描线、CSS counter 罗马数字、ImperialScript 首字下沉（样式表实锤）</td></tr>
+        <tr><td><b>自证产品力</b>：页面本身就是一家 Shopify 店——帽子用真实 variant 走真实 cart 链接结账</td><td><span class="mono">storeURL/cart/variantId:quantity</span>（JS 原文实锤）</td></tr>
+      </table>
+    </div>
+    <div>
+      <h3 class="h4" style="margin-bottom:10px">营销层 vs 产品层</h3>
+      <p style="font-size:13.5px">这站是纯营销层：Hydrogen（Remix）+ Oxygen 边缘托管，内容从 CMS 下发（连 Theatre.js 动画时间轴都是 CMS 资产）。它不承载产品功能，唯一的「产品」是那顶 $14.52 的毛线帽——而这恰是全站最锋利的一句自我介绍：<em>发布会网站本身就是一家可结账的 Shopify 商店。</em></p>
+      <div class="callout" style="margin-top:12px">
+        <b>资产层证据的一处妙笔：</b>某场景背景的文件名残留了 AI 生成提示词——「painting of forest and flowers by Sandro Botticelli」（生成者用户名已略去）。「Ren<i>ai</i>ssance」不只是文案双关：这届的文艺复兴美术本身就有 AI 参与绘制，标题与工艺互为注脚。<b>（实锤：manifest 文件名）</b>
+      </div>
+    </div>
+  </div>
+  <div id="external-context" style="margin-top:22px">
+    <h3 class="h4" style="margin-bottom:10px">外部视角（全部带来源，清单见文档）</h3>
+    <div class="two-col">
+      <table>
+        <tr><th>事实</th><th>出处</th></tr>
+        <tr><td>2025-12-10 发布，官方口径「over 150 launches」；产品副总裁公开信解释文艺复兴主题：进步、势能、勇气与新开端</td><td>shopify.com/news 两篇官方文</td></tr>
+        <tr><td><b>Awwwards Site of the Day</b>（2026-02-09，总分 7.92）+ <b>Developer Award</b>（动效与过渡子项 9.40，全项最高）+ 当月 <b>Site of the Month</b></td><td>awwwards.com/sites/the-renaissance-edition</td></tr>
+        <tr><td><b>CSSDA Website of the Day</b>（终审 8.71：UI 8.73 / UX 8.63 / 创新 8.76）</td><td>cssdesignawards.com</td></tr>
+        <tr><td>由 <b>Shopify 内部创意团队</b>制作（Awwwards 提交方为 Shopify Design；上届幕后文自述设计、开发、动效、内容全内部，近四届均为 Hydrogen 店铺）</td><td>官方幕后文 + Awwwards 署名</td></tr>
+        <tr><td>webgpu.com 收录并评为「半画廊半技术演示」：滚动驱动的辉光、折射着色器与体积云</td><td>webgpu.com/showcase</td></tr>
+      </table>
+      <div>
+        <p style="font-size:13px;margin-bottom:8px"><b>Editions 世界观年表</b>（官方归档页，一年两届「Every six months」）：Summer '22 Connect to Consumer → Winter '23 Built to Last → Summer '23 Imagine My Business → Winter '24 Foundations（Awwwards HM）→ Summer '24 Unified（SOTD）→ Winter '25 Boring（刻意无聊的极简站 + CRT 彩蛋宇宙）→ Summer '25 Horizons（内置浏览器赛车游戏）→ <b>Winter '26 Renaissance（本届）</b>→ Spring '26 Everywhere（点云体积光，官方在 Codrops 发工程复盘）。</p>
+        <div class="callout"><b>本拆解的两个独家核验：</b>控制台字符画的花体大字实为拉丁文 <b>「clavis reserat」（钥匙开启）</b>——对应隐藏路由 <code>/editions/winter2026/key</code>（HTTP 200，注入 three@0.159 import map 的独立彩蛋场景）；URL 追加 <code>?theatre</code> 参数会动态加载 Theatre.js Studio 编辑器（发布版里留着创作后门）。公开网络上尚无人记录这两处。</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ III 色彩系统 ============ -->
+<section class="chapter" id="sec-color">
+  <div class="kicker"><span class="num">III</span><span class="t">色彩系统</span><span class="r">羊皮纸与橄榄墨</span></div>
+  <p class="lede" style="font-size:14px;margin-bottom:16px">双主角：暖纸 <code>#f7f7ee</code> 与橄榄近黑 <code>#292919</code>（词频并列第一，各 23 处）。灰阶带橄榄底色而非中性灰——纸张氧化的颜色。唯一的品牌强调是 Sidekick 紫；亮粉只存在于画作里，CSS 里一处都没有。</p>
+  <div class="swatches" id="swatches">
+    <div class="sw" data-hex="#f7f7ee"><div class="c" style="background:#f7f7ee;border-bottom:1px solid #2929291a"></div><div class="m"><b>暖纸底</b><span>#f7f7ee</span><i>实锤 · bg-light，词频 23</i></div></div>
+    <div class="sw" data-hex="#292919"><div class="c" style="background:#292919"></div><div class="m"><b>橄榄墨</b><span>#292919</span><i>实锤 · bg-dark，词频 23</i></div></div>
+    <div class="sw" data-hex="#dcdcd0"><div class="c" style="background:#dcdcd0"></div><div class="m"><b>羊皮灰 · 幕布</b><span>#dcdcd0</span><i>实锤 · 章节擦除幕布默认色</i></div></div>
+    <div class="sw" data-hex="#e2e2d9"><div class="c" style="background:#e2e2d9"></div><div class="m"><b>纸灰 · 导航</b><span>#e2e2d9</span><i>实锤 · light 态移动导航底</i></div></div>
+    <div class="sw" data-hex="#909083"><div class="c" style="background:#909083"></div><div class="m"><b>石墨橄榄</b><span>#909083</span><i>实锤 · light 态构造线色</i></div></div>
+    <div class="sw" data-hex="#5c5c4e"><div class="c" style="background:#5c5c4e"></div><div class="m"><b>正文链接</b><span>#5c5c4e</span><i>实锤 · bodycopy 链接色</i></div></div>
+    <div class="sw" data-hex="#8051ff"><div class="c" style="background:#8051ff"></div><div class="m"><b>Sidekick 紫</b><span>#8051ff</span><i>实锤 · 唯一品牌强调</i></div></div>
+    <div class="sw" data-hex="#7126ff"><div class="c" style="background:#7126ff"></div><div class="m"><b>眼罩紫</b><span>#7126ff</span><i>实锤 · 吉祥物 SVG 面罩填充</i></div></div>
+    <div class="sw" data-hex="#57afdf"><div class="c" style="background:#57afdf"></div><div class="m"><b>湿壁画天蓝</b><span>#57afdf</span><i>实锤 · 词频第 8</i></div></div>
+    <div class="sw" data-hex="#88DDFF"><div class="c" style="background:#88DDFF"></div><div class="m"><b>蝶翼辉光</b><span>#88DDFF</span><i>实锤 · uGlowColor 8969727</i></div></div>
+    <div class="sw" data-hex="#D7D7CF"><div class="c" style="background:#D7D7CF"></div><div class="m"><b>星座连线</b><span>#D7D7CF</span><i>实锤 · 技能连线 stroke</i></div></div>
+    <div class="sw" data-hex="#155dfc"><div class="c" style="background:#155dfc"></div><div class="m"><b>工作蓝</b><span>#155dfc</span><i>实锤 · 词频 2 处</i></div></div>
+  </div>
+  <div class="callout gold" style="margin-top:14px">
+    <b>主题机制（实锤）：</b>全站明暗由三个 html 属性驱动——<code>data-nav-theme</code>、<code>data-sidebar-theme</code>、<code>data-title-theme</code>，各有独立阈值，由 WebGL 幕布位置实时计算（见第 VI 章）。light 态时 <code>body</code> 直接落在幕布同色 <code>#dcdcd0</code> 上，网页背景与 WebGL 画面无缝相接。
+  </div>
+</section>
+
+<!-- ============ IV 字体系统 ============ -->
+<section class="chapter" id="sec-type">
+  <div class="kicker"><span class="num">IV</span><span class="t">字体系统</span><span class="r">四支真字体已本地接入</span></div>
+  <p class="lede" style="font-size:14px;margin-bottom:16px">三角关系：怪诞体标题（Neue Montreal，商业字体）、衬线叙事（HWCigars，家族名实锤，风格近 Times 展示切）、花体点睛（Imperial Script）。第四支 Inter Variable 只服务全局导航。正文竟然全部用 700 字重——小号加粗，是这站排版最反直觉的决定。</p>
+  <div class="type-card">
+    <div class="type-meta"><b>NeueMontreal</b><span>700 · woff2 24,792 B</span><span>headline-1..6 与 bodycopy</span><span>商业字体：仅内部研究</span></div>
+    <div class="sample h2">A new world of commerce.</div>
+    <div class="type-meta mono"><span>headline-1: 72px → clamp(7.5rem, 35.79px + 10.965vw, 13.75rem)（220px！）</span><span>lh .9 · ls −.03em</span><span>text-box: trim-both cap alphabetic</span></div>
+  </div>
+  <div class="type-card">
+    <div class="type-meta"><b>HWCigars</b><span>400 · woff2 30,440 B</span><span>narrative-1..4 · 章节导语与小字</span><span>feature: liga dlig kern smcp c2sc case</span></div>
+    <div class="sample narr narr-1">The AI-powered Shopify expert who's just as obsessed with your business as you are.</div>
+    <div class="type-meta mono"><span>narrative-1: 28px → clamp(2rem, 18.53px + 1.754vw, 3rem)</span><span>lh .96 · ls −.05em</span></div>
+  </div>
+  <div class="type-card">
+    <div class="type-meta"><b>ImperialScript</b><span>400 · woff2 15,572 B</span><span>首字下沉与 script-1</span></div>
+    <div class="sample script" style="font-size:clamp(48px,8vw,96px)">Beanie</div>
+    <div class="type-meta mono"><span>drop-cap 首字: 70px → clamp(6rem, 75.79px + 2.63vw, 7.5rem) · merch 版最大 10rem</span><span>line-height 0 悬浮制</span></div>
+  </div>
+  <div class="type-card">
+    <div class="type-meta"><b>Inter Variable</b><span>100–900 · woff2 67,188 B</span><span>仅全局导航与站内搜索</span></div>
+    <div class="sample" style="font-family:InterVariable,Helvetica,sans-serif;font-size:22px;font-weight:500">Editions · Search · Start for free</div>
+  </div>
+  <table style="margin-top:8px">
+    <tr><th>层级</th><th>字族</th><th class="mono">移动端</th><th class="mono">桌面 clamp</th><th class="mono">行高 / 字距</th></tr>
+    <tr><td>headline-1</td><td>NeueMontreal 700</td><td class="mono">72px</td><td class="mono">120→220px（10.965vw）</td><td class="mono">.9 / −.03em</td></tr>
+    <tr><td>headline-2</td><td>NeueMontreal 700</td><td class="mono">64px</td><td class="mono">100→140px</td><td class="mono">.9 / −.03em</td></tr>
+    <tr><td>headline-3</td><td>NeueMontreal 700</td><td class="mono">54px</td><td class="mono">54→64px</td><td class="mono">.9 / −.02em</td></tr>
+    <tr><td>headline-4/5/6</td><td>NeueMontreal 700</td><td class="mono">32 / 24 / 18px</td><td class="mono">固定</td><td class="mono">.95 / −.02~.03em</td></tr>
+    <tr><td>narrative-1/2/3/4</td><td>HWCigars 400</td><td class="mono">28 / 24 / 20 / 12px</td><td class="mono">32→48 / 25→29 / 20 / 12px</td><td class="mono">.96–1.07 / −.04~.05em</td></tr>
+    <tr><td>bodycopy-1/2</td><td>NeueMontreal 700</td><td class="mono">16 / 14px</td><td class="mono">14 / 11px（桌面更小）</td><td class="mono">1.1</td></tr>
+    <tr><td>script-1 / drop-cap</td><td>ImperialScript 400</td><td class="mono">70px</td><td class="mono">96→120px</td><td class="mono">.96 / −.02em</td></tr>
+  </table>
+  <div class="callout" style="margin-top:12px"><b>前沿细节（实锤）：</b>每一级都声明 <code>text-box: trim-both cap alphabetic</code>——2024 年落地的 leading-trim 标准，把字框上下的空白裁到大写高度与基线，使 .9 的行高不糊排。全站是这个新特性目前最大规模的生产使用之一。日语环境自动放弃花体与衬线（<code>:lang(ja)</code> 覆写），德语标题降一档字号防爆行。</div>
+</section>
+
+<!-- ============ V 布局与滚动 ============ -->
+<section class="chapter" id="sec-scroll">
+  <div class="kicker"><span class="num">V</span><span class="t">布局与滚动</span><span class="r">一比四的手稿页</span></div>
+  <div class="two-col">
+    <div>
+      <h3 class="h4" style="margin-bottom:10px">栅格（实锤）</h3>
+      <table>
+        <tr><td>总容器</td><td class="mono">max-width 105rem（1680px），container-type: inline-size</td></tr>
+        <tr><td>左侧手稿框</td><td class="mono">固定 1/5 宽 · aspect 340/464 · min(340px, 100vw−24px)</td></tr>
+        <tr><td>内容列</td><td class="mono">右侧 4/5 · 12 列 · gap clamp(12px,1vw,16px)</td></tr>
+        <tr><td>断点</td><td class="mono">599 / 768 / 939 / 940 / 1181px · global-lg=58.75rem(940)</td></tr>
+        <tr><td>章节 hero</td><td class="mono">min-height 70svh，桌面 140svh（双拍）</td></tr>
+        <tr><td>产品卡列宽</td><td class="mono">numberOfColumns 12/6/4/3 → col-span 映射</td></tr>
+      </table>
+      <h3 class="h4" style="margin:18px 0 10px">Lenis（原文实锤）</h3>
+      <pre>new Lenis({
+  duration: 1,
+  easing: t =&gt; Math.min(1, 1.001 - Math.pow(2, -10 * t)), <em>// easeOutExpo</em>
+  orientation: "vertical",
+  smoothWheel: true,
+  wheelMultiplier: 1
+})  <em>// 仅桌面；移动端原生滚动 + 场景端 0.5 lerp 平滑</em></pre>
+    </div>
+    <div>
+      <h3 class="h4" style="margin-bottom:10px">分区进度机（JS 原文实锤）</h3>
+      <p style="font-size:13px;margin-bottom:10px">每章是一个进度区间。区间长 = 章高 + 视口高；从第三章起提前 20% 视口开始交叉（<code>earlyCrossfade: .2</code>）。进度写进 zustand，再由每章的 Theatre.js sheet 消费：</p>
+      <pre>sequencePosition = progress × (sectionH + vh) / vh
+<em>// 每章时间轴长度 10；hero 开场另加 −1→0 的 5s 序曲</em></pre>
+      <h3 class="h4" style="margin:18px 0 10px">导航明暗阈值（实锤）</h3>
+      <table>
+        <tr><th>信号</th><th class="mono">切 light 的窗口</th></tr>
+        <tr><td>倒数第二章 transitionProgress</td><td class="mono">sidebar ≥.4 · title ≥.7 · nav ≥.75</td></tr>
+        <tr><td>finalOverlayPosition</td><td class="mono">sidebar [−.85,.15] · title [−.3,.7] · nav [−.25,.75]</td></tr>
+        <tr><td>切换瞬间</td><td class="mono">data-*-immediate 骨架帧禁过渡</td></tr>
+      </table>
+      <div class="callout gold" style="margin-top:12px"><b>性能纪律（实锤）：</b>每章内容区挂载 500ms 后追加 <code>content-visibility:auto</code> + <code>contain-intrinsic-size</code>；产品卡视频退出视口即移除 <code>&lt;source&gt;</code> 并 <code>load()</code> 释放解码器；Rive 进视口 300/600ms 后才实例化。五万像素高的页面就是这样保持顺滑的。</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ VI WebGL 舞台 ============ -->
+<section class="chapter" id="sec-webgl">
+  <div class="kicker"><span class="num">VI</span><span class="t">WebGL 舞台与 Theatre.js</span><span class="r">十三份时间轴，全部来自 CMS</span></div>
+  <p class="narr narr-2 lede drop-cap">这站最被低估的事实：所有 WebGL 编排不写在代码里。十三份 Theatre.js 工程状态 JSON（Hero + 十二章）作为 CMS 资产下发，设计师在 Theatre 编辑器里排好相机、资产层、辉光、幕布的关键帧，前端只做一件事——把滚动进度写进 <code>sequence.position</code>。</p>
+  <div class="chips" style="margin-top:14px">
+    <span class="chip">HeroScene.theatre-project-state_15.json<b>已落盘</b></span>
+    <span class="chip">SidekickScene state_14<b>已落盘</b></span>
+    <span class="chip">CheckoutScene state_13<b>已落盘</b></span>
+    <span class="chip mono">objects: cube / asset-1..3 / camera / landscape / bloom / effects / particles / butterflies</span>
+  </div>
+  <div class="two-col" style="margin-top:16px">
+    <div>
+      <h3 class="h4" style="margin-bottom:10px">场景构成（实锤）</h3>
+      <table>
+        <tr><td>画面</td><td>多层图像平面（bg diffuse KTX2 + 每章 desktop.ktx2 资产层），非全 3D——「多平面立体书」</td></tr>
+        <tr><td>相机</td><td>fov 10–120 可编排 · freeOrbit 态锁 fov 90 · gaze 指针注视 0–1</td></tr>
+        <tr><td>灯光</td><td>light-1 红 light-2 蓝（补色打底），环境贴图 studio_small_09 PMREM KTX2</td></tr>
+        <tr><td>辉光</td><td>bloom 默认 luminanceThreshold .9 / smoothing .025 / radius .85；Theatre 轨道量程 0–100，默认 8</td></tr>
+        <tr><td>幕布</td><td>overlay position −1→1（含 mobilePosition 独立轨），颜色默认 #dcdcd0；darken 0–1；fadeCenter xyz ±10</td></tr>
+        <tr><td>纹理管线</td><td>KTX2 流式解码：读满 80 字节即解析头，ZSTD wasm + worker 池边下边播</td></tr>
+      </table>
+    </div>
+    <div>
+      <h3 class="h4" style="margin-bottom:10px">画质分级（JS 原文实锤）</h3>
+      <pre>detect-gpu →
+  tier 0            → fallback（静态图版）
+  tier 1 / 2 / 3    → low / medium / high
+  移动端默认        → fallback（可 forceWebGL）
+  运行时降级链      → high → medium → low</pre>
+      <h3 class="h4" style="margin:16px 0 10px">Hero 开场序曲（实锤）</h3>
+      <pre>加载完成 + 无 hash + scrollY&lt;100
+→ 延迟 100ms，5000ms 内
+   offset = −1 + (1 − (1−t)³)   <em>// cubic ease-out</em>
+→ sequence.position 从「负一个视口」推进到 0</pre>
+      <p style="font-size:12.5px" class="muted">这就是首屏那记缓慢的「入画」运镜。跳章直达或已滚动时直接置 0，绝不强迫看片头。</p>
+    </div>
+  </div>
+  <h3 class="h4" style="margin:20px 0 10px">蝴蝶——会呼吸的实例化群（着色器原文实锤）</h3>
+  <div class="two-col">
+    <pre>float flapSpeed = 4.0 + rand.y * 4.0;
+float flapAmp   = 0.8 + rand.z * 0.5;
+float t = uTime * 1.2 * flapSpeed + rand.x * 6.28;
+float wave = sin(t)
+           + sin(t * 2.1 + rand.w * 3.14) * 0.2
+           + sin(t * 0.37 + rand.z * 5.0) * 0.3;  <em>// 三层叠波</em>
+float wingBlend = smoothstep(0.02, 0.4, abs(pos.x)); <em>// 身体不动翅膀动</em>
+float asym = 1.0 + sign(pos.x) * sin(t*0.7 + rand.w*6.28) * 0.08;
+pos.y += smoothstep(1.0, -0.5, wave) * 0.25;  <em>// 落翼时抬升</em></pre>
+    <div>
+      <table>
+        <tr><td>数量上限</td><td class="mono">50 只（Kt=50）</td></tr>
+        <tr><td>几何与贴图</td><td class="mono">rest.json（顶点/UV/索引）+ butterfly2_256.ktx2 · 均已落盘</td></tr>
+        <tr><td>出生分布</td><td class="mono">半径 ≤4 的圆环 · y=(rand−.5)×2+.5 · z −5 偏移</td></tr>
+        <tr><td>颜色</td><td class="mono">逐实例 HSL 色相偏移（uHue + rand×.05）</td></tr>
+        <tr><td>辉光</td><td class="mono">边缘 #88DDFF × pulse(sin 3t×.3+.7)，最终 pow(color,1.5)</td></tr>
+        <tr><td>体型</td><td class="mono">uScale .08 × (0.8 + rand×0.4)</td></tr>
+      </table>
+      <p class="muted" style="font-size:12px;margin-top:8px">三层不同频率的正弦叠加 + 左右翅 8% 不对称 + 拍翅反作用力的身体起伏——没有一只蝴蝶的振翅相同。第 VII 章有可跑复现。</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ VII 签名实验室 ============ -->
+<section class="chapter" id="sec-lab">
+  <div class="kicker"><span class="num">VII</span><span class="t">签名实验室</span><span class="r">五台装置，全部原值</span></div>
+
+  <!-- demo A -->
+  <div class="demo" id="demoA">
+    <header><span class="t">装置一 · 达·芬奇构造线剧场</span><span class="src">SVG pathLength=1 · 描线 3s cubic-bezier(.34,.22,.47,.84) · 首亮 4s 闪烁衰减</span></header>
+    <div class="stage" id="dvStage">
+      <div class="davinci-wrap">
+        <svg viewBox="550 208 340 464" aria-hidden="true">
+          <rect class="frame-rect" x="550" y="208" width="340" height="464" pathLength="1"></rect>
+          <g class="davinci-lines" id="dvLines" data-active="">
+            <path d="M-1840 440h5120" data-g="1,3,5" pathLength="1"></path>
+            <path d="M-1840 336.13h2390.03" data-g="1,2,3,4,5,6,7,8" pathLength="1"></path>
+            <path d="M889.97 543.87h2390.03" data-g="1,2,3,5,6,7,8" pathLength="1"></path>
+            <path d="M-1840 543.87h2390.03" data-g="" pathLength="1"></path>
+            <path d="M720 -1000v2880" data-g="1,2,3,4,5,6,7,8" pathLength="1"></path>
+            <path d="M550.03 -1000v2880" data-g="1,2,3,4,5,6,7,8" pathLength="1"></path>
+            <path d="M889.97 -1000v2880" data-g="1,2,3,4,5,6,7,8" pathLength="1"></path>
+            <path d="M-1636.36,-1000L3076.36,1880" data-g="1,3,4,5,6,7,8" pathLength="1"></path>
+            <path d="M3076.36,-1000L-1636.36,1880" data-g="1,3,4,5,6,7,8" pathLength="1"></path>
+            <path d="M339.94 -1000v1336.13" data-g="1,2,3,6,7" pathLength="1"></path>
+            <path d="M339.94 207.74h210.09" data-g="1,2,3,6,7" pathLength="1"></path>
+            <path d="M420.19 207.74v128.39" data-g="1,3,6,7" pathLength="1"></path>
+            <path d="M339.94 256.78h80.25" data-g="1,3,6,7" pathLength="1"></path>
+            <path d="M389.53 256.78v-49.04" data-g="1,3,6,7" pathLength="1"></path>
+            <path d="M389.53 238.05h30.65" data-g="1,3,6,7" pathLength="1"></path>
+            <path d="M1100.06 543.87v1336.13" data-g="1,2,3,6,7" pathLength="1"></path>
+            <path d="M889.97 672.26h210.09" data-g="1,2,3,6,7" pathLength="1"></path>
+            <path d="M1019.81 672.26v-128.39" data-g="1,2,3,6,7" pathLength="1"></path>
+            <path d="M1019.81 623.22h80.25" data-g="1,2,3,6,7" pathLength="1"></path>
+            <path d="M1050.47 623.22v49.04" data-g="1,2,3,6,7" pathLength="1"></path>
+            <path d="M1050.47 641.95h-30.65" data-g="1,2,3,6,7" pathLength="1"></path>
+            <circle cx="550" cy="886" r="550" data-g="2,4" pathLength="1"></circle>
+            <circle cx="1439.97" cy="543.87" r="550" data-g="2,4" pathLength="1"></circle>
+            <circle cx="2.5" cy="-365" r="805" data-g="3" pathLength="1"></circle>
+            <circle cx="1437.5" cy="-365" r="805" data-g="3" pathLength="1"></circle>
+            <circle cx="2.5" cy="1245" r="805" data-g="3" pathLength="1"></circle>
+            <circle cx="1437.5" cy="1245" r="805" data-g="3" pathLength="1"></circle>
+            <circle cx="720" cy="15" r="425" data-g="5,7,8" pathLength="1"></circle>
+            <circle cx="720" cy="865" r="425" data-g="5,7,8" pathLength="1"></circle>
+            <circle cx="720" cy="-365" r="805" data-g="5" pathLength="1"></circle>
+            <circle cx="720" cy="1245" r="805" data-g="5" pathLength="1"></circle>
+            <circle cx="1535.83" cy="858.7" r="917" data-g="1,6" pathLength="1"></circle>
+            <circle cx="-95.83" cy="858.7" r="917" data-g="1,6" pathLength="1"></circle>
+            <circle cx="1535.83" cy="21.3" r="917" data-g="1,6" pathLength="1"></circle>
+            <circle cx="-95.83" cy="21.3" r="917" data-g="1,6" pathLength="1"></circle>
+          </g>
+        </svg>
+        <div style="position:relative;z-index:2;padding:16px;height:100%;display:flex;flex-direction:column;justify-content:space-between">
+          <div class="side-title" style="color:var(--paper)">The<br>Ren<span class="ai">ai</span>ssance<br>Edition</div>
+          <div class="side-legal" style="color:#f7f7ee66">线组 <span id="dvNum" class="mono">—</span> · 原站按章切换</div>
+        </div>
+      </div>
+    </div>
+    <div id="dvCtl"></div>
+    <div class="note">原站的每一章激活一组构造线（章→组映射实锤：hero→7、Sidekick→6、Agentic→6、Online→5、Retail→4、Marketing→3、Checkout→2、Operations→1、Shop app→8、B2B→7、Finance→6、Shipping→5、Developer→4）。三段折线是黄金螺旋的方形化——台阶长 80.25 → 49.04 → 30.65，相邻比 1.636、1.600 ≈ φ。首次点亮的组以 4s 从亮白闪至 15% 低语态；加载期外框先 6s 描到 80%，资源就绪后 1s 收口。</div>
+  </div>
+
+  <!-- demo B -->
+  <div class="demo" id="demoB">
+    <header><span class="t">装置二 · 蝴蝶扑翼公式</span><span class="src">三层正弦叠波 · wingBlend smoothstep(.02,.4) · 原值直搬</span></header>
+    <div class="stage" id="bfStage"><canvas id="bfCanvas"></canvas></div>
+    <div class="note">画布 2D 复现顶点着色器的翅膀数学：每只蝴蝶四个随机数决定频率（4–8）、振幅（0.8–1.3）、相位与不对称度；<code>wave = sin(t) + 0.2·sin(2.1t+φ) + 0.3·sin(0.37t+φ')</code>；身体在落翼时上浮 <code>smoothstep(1,−.5,wave)×0.25</code>。边缘辉光取原站 uGlowColor <b style="color:var(--glow)">#88DDFF</b>。几何为示意简化，公式与参数为实锤原值。</div>
+  </div>
+
+  <!-- demo C -->
+  <div class="demo" id="demoC">
+    <header><span class="t">装置三 · 技能星座（邻近物理 + SSE 计数）</span><span class="src">scale 2.1→0.7@400px · 斥力 80 · 连线 #D7D7CF · 弹窗 grid-rows 0fr→1fr</span></header>
+    <div class="stage" id="skStage">
+      <svg class="links" id="skLinks"></svg>
+    </div>
+    <div class="note">指针是引力中心：距离 0 处标签放大到 2.1 倍、不透明度 1；400px 外缩到 0.7、0.4。标签之间有 80 强度的斥力与标签盒碰撞规避；连线按「每 120° 扇区取最近邻」生成，端点带 300ms ease-out 过渡。点击开合弹窗——<code>grid-template-rows 0fr→1fr</code>，300ms 回弹曲线，延迟 50ms。原站的计数徽章由 EventSource 直播全网 Sidekick 技能实时使用数（本 demo 以定时增量模拟；计数上升动画为原值：1s 三次方缓出）。</div>
+  </div>
+
+  <!-- demo D -->
+  <div class="demo" id="demoD">
+    <header><span class="t">装置四 · 罗马数字商店</span><span class="src">CSS counter upper-roman · 悬停价格翻转 .3s ease-in-out</span></header>
+    <div class="stage" id="romanShop">
+      <div>
+        <div style="font-size:11px;font-weight:700;margin-bottom:4px">Renaissance Person</div>
+        <div class="script" style="font-size:44px">Beanie</div>
+      </div>
+      <div class="qty" aria-label="数量">
+        <button id="qDec" aria-label="减一">−</button>
+        <div class="v"><span id="qVal" style="--q:1"></span></div>
+        <button id="qInc" aria-label="加一">+</button>
+      </div>
+      <div>
+        <div style="font-size:10px;color:var(--grey-dark);text-align:right;margin-bottom:2px">Subtotal · 悬停看罗马数字</div>
+        <div class="price" id="price">
+          <div class="row"><span class="big" id="pArabic">$14.52</span><span class="cur">USD</span></div>
+          <div class="row roman"><span class="big">$<span class="d" style="--d:14"></span>.<span class="c" style="--c:52"></span></span><span class="cur">USD</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="note">原站彩蛋原样复现：数量以 <code>counter(quantity, upper-roman)</code> 显示；价格悬停时整行上翻，露出罗马数字写法的美元金额（dollars 与 cents 各一个 counter）。$14.52 是那顶帽子的真实定价——XIV.LII。深链 <code>#beanie</code> 会滚到 Checkout 章并打开真实可结账的弹窗。</div>
+  </div>
+
+  <!-- demo E -->
+  <div class="demo" id="demoE">
+    <header><span class="t">装置五 · 羊皮纸幕布（Theatre 轨道模拟）</span><span class="src">overlay.position −1→1 · 颜色 #dcdcd0 · darken 0→1</span></header>
+    <div class="stage" id="wipeStage" style="--pos:-1;--darken:0">
+      <img src="assets/screens/09-retail-hero.jpg" alt="Retail 章 WebGL 场景">
+      <div class="sheet"></div>
+    </div>
+    <div id="wipeCtl">
+      <span class="mono">position <b id="wipeVal">−1.00</b></span>
+      <input type="range" id="wipeRange" min="-100" max="100" value="-100" aria-label="幕布位置">
+      <span class="mono muted">darken 联动 |pos|→0 区间</span>
+    </div>
+    <div class="note">章节之间的「翻页」不是 DOM 过渡：Theatre 时间轴驱动一块 #dcdcd0 的全屏幕布从 −1（画面外）推到 1（盖满再离场），同轨还有 darken 压暗与 fadeCenter 径向衰减中心。移动端有独立的 mobilePosition 轨道。light 主题的切换窗口（第 V 章的表）就挂在这个值上。</div>
+  </div>
+</section>
+
+<!-- ============ VIII 逐屏走查 ============ -->
+<section class="chapter" id="sec-walk">
+  <div class="kicker"><span class="num">VIII</span><span class="t">逐屏走查</span><span class="r">十四幕 · 全部真实渲染截图</span></div>
+  <p class="lede" style="font-size:14px;margin-bottom:20px">十二章共 200 张产品卡（Sidekick 20 · Agentic 2 · Online 23 · Retail 17 · Marketing 13 · Checkout 10 · Operations 22 · Shop app 6 · B2B 14 · Finance 12 · Shipping 7 · Developer 54，按 HTML article 计数，实锤）。每章结构一律：WebGL hero（70svh，桌面 140svh 双拍）→ 花体首字导语 → 白纸内容区。</p>
+
+  <div class="walk">
+    <div class="imgs"><img src="assets/screens/00-hero-arrival.jpg" alt="Hero 开场" loading="lazy"><img src="assets/screens/01-hero-transition.jpg" alt="Hero 滚动反相" loading="lazy"></div>
+    <div class="body">
+      <h4 class="h4"><span class="roman">序</span>Hero · 创世纪与星夜蚀刻</h4>
+      <p class="quote">"A new world of commerce. 150+ product updates."</p>
+      <p style="font-size:13px">加载框先行（6s 描边到 80%），随后 5 秒序曲运镜入画。滚动离场时整幅油画反相成星夜蚀刻——白昼与黑夜、油画与底稿的显影切换，是 Theatre 时间轴上 effects 轨的杰作。十二章目录悬浮画中，罗马数字由 CSS counter 生成。</p>
+      <div class="facts"><span>hero 高 150svh，translate −100%</span><span>目录 hover 3s 自动消焦</span><span>蝴蝶与粒子常驻</span></div>
+    </div>
+  </div>
+
+  <div class="walk">
+    <div class="imgs"><img src="assets/screens/02-sidekick-hero.jpg" alt="Sidekick 章 hero" loading="lazy"><img src="assets/screens/31-skill-tag-active.jpg" alt="技能星座交互态" loading="lazy"></div>
+    <div class="body">
+      <h4 class="h4"><span class="roman">I</span>Sidekick · 紫眼罩肖像与技能星座</h4>
+      <p class="quote">"The AI-powered Shopify expert who's just as obsessed with your business as you are."</p>
+      <p style="font-size:13px">本章 20 卡是全站交互密度之最：SMIL 动画的吉祥物脸（悬停才眨眼，3.34s 循环）、EventSource 直播的技能使用计数、emoji 升腾（确定性伪随机 <code>sin(i·12.9898+s·78.233)·43758.5453</code>——把 GLSL 经典 hash 搬进 JS）、移动端触觉反馈 <code>navigator.vibrate(10)</code>、Apps 卡云的指针斥力视差。还有一个隐藏按钮：下载 emoji 包 zip。</p>
+      <div class="facts"><span>技能标签 jitter ±10px 确定性随机</span><span>弹窗按象限翻转 --popup-*</span><span>Esc 全局关闭</span><span>卡片 intro：WAAPI scale .5→1 回弹，随机延迟 0–800ms</span></div>
+    </div>
+  </div>
+
+  <div class="walk">
+    <div class="imgs"><img src="assets/screens/04-agentic-hero.jpg" alt="Agentic 章 hero" loading="lazy"><img src="assets/screens/05-agentic-hero-b.jpg" alt="Agentic hero 第二拍" loading="lazy"></div>
+    <div class="body">
+      <h4 class="h4"><span class="roman">II</span>Agentic · 窗景与流线画布</h4>
+      <p class="quote">"Sell directly in AI chats with built-in tools that syndicate your products to every AI platform."</p>
+      <p style="font-size:13px">仅 2 卡的短章，讲「在 ChatGPT 里直接卖货」。XXL 卡带 Canvas 2D 流线装置：60 条三段贝塞尔管道、每条 3 颗粒子，喉部提速 3.5 倍、缘部 0.3 倍——商品数据穿过「AI 咽喉」的隐喻。由 Rive 事件 showCanvas/hideCanvas 开关。</p>
+      <div class="facts"><span>LINE_COUNT 60 · 粒子半径 1 · 线宽 .3 · 透明度 .51</span><span>端点抖动 ±1.5px</span><span>速度斜坡 3.2</span></div>
+    </div>
+  </div>
+
+  <div class="walk">
+    <div class="imgs"><img src="assets/screens/06-online-hero.jpg" alt="Online 章 hero" loading="lazy"><img src="assets/screens/08-online-rollouts.jpg" alt="Rollouts 特色卡" loading="lazy"></div>
+    <div class="body">
+      <h4 class="h4"><span class="roman">III</span>Online · 建站与 23 卡长章</h4>
+      <p class="quote">"Validate store changes with A/B testing and an AI tool that simulates shopping behavior."</p>
+      <p style="font-size:13px">Rollouts、SimGym（AI 模拟购物行为）、Tinker——三张注册表特色卡都在本章。Rollouts 卡另配流线画布第二处实例。产品卡媒体优先级链（实锤）：customVideo &gt; Rive &gt; video &gt; image，四级响应式视频源矩阵（mov/webm/mp4 × 1x/2x × 桌面/移动 = 12 路 source）。</p>
+      <div class="facts"><span>23 卡全站第二长</span><span>SimGym 卡：sticky 讲解列</span></div>
+    </div>
+  </div>
+
+  <div class="walk">
+    <div class="imgs"><img src="assets/screens/09-retail-hero.jpg" alt="Retail 章 hero" loading="lazy"><img src="assets/screens/10-retail-hero-b.jpg" alt="Retail hero 第二拍" loading="lazy"></div>
+    <div class="body">
+      <h4 class="h4"><span class="roman">IV</span>Retail · POS Hub 硬件陈列</h4>
+      <p class="quote">"New in-store hardware that provides unwavering reliability."</p>
+      <p style="font-size:13px">17 卡讲线下硬件。hero 的 140svh 双拍在此最典型：第一拍全景油画，第二拍相机推近资产层（Theatre camera 轨），文字换场。</p>
+      <div class="facts"><span>place-content-end 布局变体</span><span>RetailScene state 文件名带 cs-251209v2 版本号</span></div>
+    </div>
+  </div>
+
+  <div class="walk">
+    <div class="imgs"><img src="assets/screens/11-marketing-hero.jpg" alt="Marketing 章 hero" loading="lazy"><img src="assets/screens/13-marketing-shopify-product-network.jpg" alt="Product Network 特色卡" loading="lazy"></div>
+    <div class="body">
+      <h4 class="h4"><span class="roman">V</span>Marketing · 产品网络</h4>
+      <p class="quote">"Grow your sales with a first-of-its-kind product network."</p>
+      <p style="font-size:13px">13 卡。特色卡「Shopify Product Network」以 25vh 的 sticky 空间陈述——跨店商品分发网络，是本届最重的商业发布之一。</p>
+      <div class="facts"><span>md:mt-[25vh] 呼吸位</span><span>headline-3! 强制层级</span></div>
+    </div>
+  </div>
+
+  <div class="walk">
+    <div class="imgs"><img src="assets/screens/14-checkout-hero.jpg" alt="Checkout 章 hero" loading="lazy"><img src="assets/screens/32-beanie-modal.jpg" alt="Beanie 购买弹窗与 Sobel 素描场景" loading="lazy"></div>
+    <div class="body">
+      <h4 class="h4"><span class="roman">VI</span>Checkout · 帽子与素描结账</h4>
+      <p class="quote">"Convert customers with personalized checkout experiences and more payment options."</p>
+      <p style="font-size:13px">全站王牌彩蛋。打开购买弹窗的瞬间，WebGL 场景切换 Sobel 边缘检测——整幅油画退成 <code>[.995,.995,.933]</code> 底色的铅笔素描，唯有那顶实拍的亮粉毛线帽保持彩色。挂真实 Shopify variant，<code>cart/{variantId}:{qty}</code> 直达结账；数量与悬停价格全部罗马数字。弹窗开场 800ms、收场 500ms，其间全站主题翻 light。</p>
+      <div class="facts"><span>#beanie 深链自动滚章开窗</span><span>hatHoverIntensity 指针轨</span><span>free shipping 猎豹版画图标</span><span>"All sales are final"</span></div>
+    </div>
+  </div>
+
+  <div class="walk">
+    <div class="imgs"><img src="assets/screens/16-operations-hero.jpg" alt="Operations 章 hero" loading="lazy"><img src="assets/screens/29-operations-cards.jpg" alt="Operations 白纸内容区" loading="lazy"></div>
+    <div class="body">
+      <h4 class="h4"><span class="roman">VII</span>Operations · 白纸区的标准形态</h4>
+      <p class="quote">"Improve everyday workflows with flexible inventory modeling and trend-spotting analytics."</p>
+      <p style="font-size:13px">22 卡。右图是全站内容区的标准解剖：白纸底、12 列栅格、卡片容器查询（<code>@container</code> 480/576px 两档内容宽），文字列表区铺 400px 平铺纸纹。</p>
+      <div class="facts"><span>texture-src-90.jpg 纸纹实锤</span><span>col-span 12/6/4/3 映射</span></div>
+    </div>
+  </div>
+
+  <div class="walk">
+    <div class="imgs"><img src="assets/screens/18-shop-app-hero.jpg" alt="Shop app 章 hero" loading="lazy"><img src="assets/screens/20-b2b-hero.jpg" alt="B2B 章 hero" loading="lazy"></div>
+    <div class="body">
+      <h4 class="h4"><span class="roman">VIII–IX</span>Shop app · B2B</h4>
+      <p class="quote">"Reach millions of high-intent shoppers…" · "Take your wholesale business global…"</p>
+      <p style="font-size:13px">Shop app 6 卡（全站最短）与 B2B 14 卡。两章 hero 布局变体相反：前者 place-content-end + 30vh 標題底距，后者 27vh 顶距——同一套系统在 Ds 映射表里逐章微调（实锤）。</p>
+      <div class="facts"><span>global-lg:pb-[30vh] / pt-[27vh]</span></div>
+    </div>
+  </div>
+
+  <div class="walk">
+    <div class="imgs"><img src="assets/screens/22-finance-hero.jpg" alt="Finance 章 hero" loading="lazy"><img src="assets/screens/24-shipping-hero.jpg" alt="Shipping 章 hero" loading="lazy"></div>
+    <div class="body">
+      <h4 class="h4"><span class="roman">X–XI</span>Finance · Shipping</h4>
+      <p class="quote">"Modern financial tools designed for growing your business and getting that coin." · "Ship confidently and cheetah-fast…"</p>
+      <p style="font-size:13px">12 卡与 7 卡。文案口吻在此彻底放飞（getting that coin / cheetah-fast），与油画的庄重形成反差——整站的语调策略：画面越古典，文字越街头。</p>
+      <div class="facts"><span>finance 标题顶距 35vh 全站最深</span></div>
+    </div>
+  </div>
+
+  <div class="walk">
+    <div class="imgs"><img src="assets/screens/26-developer-hero.jpg" alt="Developer 章 hero" loading="lazy"><img src="assets/screens/30-end.jpg" alt="页尾" loading="lazy"></div>
+    <div class="body">
+      <h4 class="h4"><span class="roman">XII</span>Developer · 54 卡的终章</h4>
+      <p class="quote">"A completely new way to build for commerce with the power of AI."</p>
+      <p style="font-size:13px">54 卡，占全站四分之一强——这届 Editions 把最大的篇幅给了开发者（.dev dash、Agents、Checkout Kit、MCP）。终章之后页面收在暖纸色页尾。Developer 章列表区独享无纹理处理（<code>isListTextured=false</code>，实锤）。</p>
+      <div class="facts"><span>54 卡全站最长</span><span>末卡 pb-64 特判</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ IX 工艺细节 ============ -->
+<section class="chapter" id="sec-craft">
+  <div class="kicker"><span class="num">IX</span><span class="t">工艺细节</span><span class="r">二十件小事，件件有出处</span></div>
+  <div class="two-col">
+    <table>
+      <tr><th>细节</th><th>数值（全部实锤）</th></tr>
+      <tr><td>视频灯箱 = View Transitions API</td><td class="mono">viewTransitionName: video-container / -background / -close-button；old contain → new cover</td></tr>
+      <tr><td>灯箱底是达·芬奇网格纸</td><td class="mono">Line_Grid.svg 三档响应式（已落盘）</td></tr>
+      <tr><td>模态无障碍</td><td class="mono">main/footer/header/aside 全部 inert + 焦点陷阱 + Esc</td></tr>
+      <tr><td>视频退出即卸源</td><td class="mono">removeChild(source) + load() 释放解码器</td></tr>
+      <tr><td>响应式视频矩阵</td><td class="mono">mov/webm/mp4 × 1x/2x × 桌面/移动 = 12 路 + 1 路 mp4 兜底</td></tr>
+      <tr><td>图片 srcset 阶梯</td><td class="mono">8 档 × 400w 起步（1680×2/8 取整）</td></tr>
+      <tr><td>技能计数直播</td><td class="mono">EventSource：init 全量 + update 增量（newUsers）</td></tr>
+      <tr><td>触觉反馈</td><td class="mono">navigator.vibrate(10)（触屏点击技能标签）</td></tr>
+      <tr><td>popup 滚轮转发</td><td class="mono">跨窗口 wheel 广播，主页面每帧吸收 15%</td></tr>
+      <tr><td>跳转焦点通道</td><td class="mono">每章末隐形「Back to navigation」按钮（focus-visible 才现身）</td></tr>
+    </table>
+    <table>
+      <tr><th>细节</th><th>数值（全部实锤）</th></tr>
+      <tr><td>吉祥物 SVG</td><td class="mono">SMIL 动画 · 3.33667s · 悬停播放 · 面 #1c004f 罩 #7126ff</td></tr>
+      <tr><td>技能弹窗方向自适应</td><td class="mono">按象限翻转 --popup-top/left/translate/origin/border</td></tr>
+      <tr><td>emoji 升腾</td><td class="mono">10–14 枚 · delay rand×2+.3s · scale .6–1.2 · 时长=scale×2</td></tr>
+      <tr><td>计数上升</td><td class="mono">1s 三次方缓出 rAF 数字滚动</td></tr>
+      <tr><td>Apps 云入场</td><td class="mono">WAAPI scale ×.5→1 · 0–800ms 随机延迟 · ease-out-back</td></tr>
+      <tr><td>Apps 云斥力</td><td class="mono">maxDistance 300 · repulsion 20 · 视差 ±15px</td></tr>
+      <tr><td>控制台彩蛋 = 藏宝图</td><td class="mono">ASCII 手稿画 + 花体拉丁文「clavis reserat」→ 隐藏路由 /key（three@0.159 独立场景）</td></tr>
+      <tr><td>创作后门</td><td class="mono">URL ?theatre 参数动态加载 Theatre.js Studio</td></tr>
+      <tr><td>emoji 包下载彩蛋</td><td class="mono">shopify-w26-emoji-pack.zip 隐形按钮</td></tr>
+      <tr><td>加载序列</td><td class="mono">线框 6s→80% · 就绪后 1s 收口 · 标题居中→ai 滑入(−898px, .6s)→侧栏归位</td></tr>
+      <tr><td>降级观</td><td class="mono">prefers-reduced-motion 全链路：Lenis 关、序曲跳、View Transition 禁</td></tr>
+    </table>
+  </div>
+</section>
+
+<!-- ============ X 复刻要点 ============ -->
+<section class="chapter" id="sec-replicate">
+  <div class="kicker"><span class="num">X</span><span class="t">复刻要点</span><span class="r">可直接拷走的 token 与公式</span></div>
+  <div class="two-col">
+    <div>
+<pre>:root{
+  --paper:#f7f7ee;   --ink:#292919;
+  --grey-light:#dcdcd0; --grey-mid:#909083;
+  --grey-dark:#5c5c4e;  --nav-grey:#e2e2d9;
+  --sidekick:#8051ff;   --glow:#88DDFF;
+  --ease-back:cubic-bezier(.34,1.56,.64,1);
+  --ease-frame:cubic-bezier(.72,.16,.19,.96);
+  --ease-lines:cubic-bezier(.34,.22,.47,.84);
+  --ease-fade:cubic-bezier(.25,.46,.45,.94);
+  --grid-gap:clamp(12px,1vw,16px);
+}
+<em>/* 罗马数字目录（原站原法） */</em>
+nav li a::after{
+  counter-increment:nav-item;
+  content:counters(nav-item,".",upper-roman);
+}
+<em>/* 花体首字下沉 */</em>
+.drop-cap::first-letter{
+  font-family:ImperialScript,Georgia,serif;
+  font-size:clamp(6rem,75.79px + 2.63vw,7.5rem);
+  line-height:0;
+}</pre>
+    </div>
+    <div>
+<pre><em>// 滚动 → Theatre 时间轴（架构核心）</em>
+const scale = (sectionH + vh) / vh
+sheet.sequence.position =
+  clamp01(progress) * scale + introOffset
+
+<em>// 分区进度（earlyCrossfade = .2 从第三章起）</em>
+zone = sectionH + vh + vh * earlyCrossfade
+progress = (scrollY - (top - vh - early)) / zone
+
+<em>// 构造线：pathLength=1 归一化描线</em>
+path{stroke-dasharray:1;stroke-dashoffset:1px;
+  transition:stroke-dashoffset 3s var(--ease-lines)}
+
+<em>// 选型决策 */</em>
+编排密 → Theatre.js（设计师拥有时间轴）
+矢量微交互 → Rive（状态机 + 事件回调）
+数据流示意 → Canvas 2D（够用即止）
+油画世界 → 多层图像平面，不做全 3D</pre>
+    </div>
+  </div>
+  <div class="callout" style="margin-top:14px"><b>工程坑（实测）：</b>KTX2 必须配 worker 池流式解码否则首屏卡死；移动端 Safari 用原生滚动 + JS lerp .5 而非 Lenis（触摸链劫持会毁惯性）；View Transition 的 old/new 要分别 object-fit contain/cover 才不跳形；罗马数字 counter 在 IV 以上宽度突变，务必等宽预留；Sobel 场景切换时先把主题三属性一起翻 light 再开窗，否则文字闪黑。</div>
+</section>
+
+<!-- ============ XI 出处与方法 ============ -->
+<section class="chapter" id="sec-prov">
+  <div class="kicker"><span class="num">XI</span><span class="t">出处与方法</span><span class="r">页内简版 · 全文见文档</span></div>
+  <div class="two-col">
+    <div>
+      <h3 class="h4" style="margin-bottom:8px">实锤（直接抽取）</h3>
+      <ul style="font-size:13px;padding-left:18px;line-height:1.7">
+        <li>计算样式探针 + 样式表原文两份合计 130,780B（Tailwind v4.2.2 单文件 129,725B + 字体声明 1,055B）</li>
+        <li>30 个 JS chunk 全量下载精读（路由包 243KB 至场景包 1.2KB）</li>
+        <li>13 份 Theatre.js state JSON（3 份已落盘入库）</li>
+        <li>四支字体真文件 + rest.json 蝴蝶几何 + butterfly2_256.ktx2 + PMREM 环境贴图 + 纸纹 + 网格纸</li>
+        <li>六个 .bin 级证据以 manifest.json 逐文件记账</li>
+        <li>33 张逐屏截图（SwiftShader 软渲染 WebGL）+ 8 帧滚动关键帧</li>
+      </ul>
+      <h3 class="h4" style="margin:14px 0 8px">推断（证据充分）</h3>
+      <ul style="font-size:13px;padding-left:18px;line-height:1.7">
+        <li>Hydrogen/Remix：路由命名 <span class="mono">($locale).editions.winter2026</span> + Oxygen CDN 路径（高）</li>
+        <li>美术为 AI 生成 + 人工拼贴修饰：文件名残留提示词（高）</li>
+        <li>「作坊 / 手稿」为有意母题：构造线 + 罗马数字 + 花体的系统性（高，意图类）</li>
+      </ul>
+    </div>
+    <div>
+      <h3 class="h4" style="margin-bottom:8px">真实滚动关键帧</h3>
+      <div class="filmstrip">
+        <img src="keyframes/00.jpg" alt="关键帧 0" loading="lazy"><img src="keyframes/01.jpg" alt="关键帧 1" loading="lazy"><img src="keyframes/02.jpg" alt="关键帧 2" loading="lazy"><img src="keyframes/03.jpg" alt="关键帧 3" loading="lazy"><img src="keyframes/04.jpg" alt="关键帧 4" loading="lazy"><img src="keyframes/05.jpg" alt="关键帧 5" loading="lazy"><img src="keyframes/06.jpg" alt="关键帧 6" loading="lazy"><img src="keyframes/07.jpg" alt="关键帧 7" loading="lazy">
+      </div>
+      <p class="muted" style="font-size:12px;margin-top:8px">脚本匀速滚动录屏抽帧；WebGL 幕布、反相、蝴蝶均真实触发。完整链路、局限清单（如 SSE 端点未抓包、Background 1MB 着色器未逐行）见 <a href="出处与方法.md">出处与方法</a> 与 <a href="事实核查.md">事实核查</a>。</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ XII 评审结论 ============ -->
+<section class="chapter" id="sec-verdict">
+  <div class="kicker"><span class="num">XII</span><span class="t">评审结论</span><span class="r">全文见 设计评审.md</span></div>
+  <p class="narr narr-1 drop-cap lede">这站把「营销页」做成了「作品」的原因只有一个：工具链的权力分配。Theatre.js 把时间轴交给设计师，CMS 把场景交给内容团队，代码只保留物理与纪律——于是十二章油画各自成戏，而工程始终只有一套。</p>
+  <p style="font-size:13.5px;margin-top:14px" class="muted">五份文档：<a href="设计解构.md">设计解构</a> · <a href="复刻指南.md">复刻指南</a> · <a href="出处与方法.md">出处与方法</a> · <a href="事实核查.md">事实核查</a> · <a href="设计评审.md">设计评审</a></p>
+</section>
+
+</main>
+</div>
+
+<script>
+/* ============ 目录高亮 + 侧栏构造线按章切换（复刻原站 Co 映射的节奏） ============ */
+const tocLinks=[...document.querySelectorAll('#toc a')];
+const secs=tocLinks.map(a=>document.querySelector(a.getAttribute('href')));
+const sideLines=document.getElementById('sideLines');
+const groupBySec=[7,6,6,5,4,3,2,1,8,7,6,5];  /* 原站 hero..developer 的章→组映射节选 */
+let shownGroups=new Set();
+const io=new IntersectionObserver(es=>{
+  es.forEach(e=>{
+    if(!e.isIntersecting)return;
+    const i=secs.indexOf(e.target);
+    tocLinks.forEach((a,j)=>a.classList.toggle('active',j===i));
+    const g=groupBySec[i%groupBySec.length];
+    sideLines.dataset.active=String(g);
+    sideLines.querySelectorAll('[data-just]').forEach(el=>el.removeAttribute('data-just'));
+    if(!shownGroups.has(g)){shownGroups.add(g);
+      sideLines.querySelectorAll(`[data-g*="${g}"]`).forEach(el=>el.setAttribute('data-just',''));}
+  });
+},{rootMargin:'-40% 0px -50% 0px'});
+secs.forEach(s=>s&&io.observe(s));
+
+/* ============ 色卡点击复制 ============ */
+document.getElementById('swatches').addEventListener('click',e=>{
+  const sw=e.target.closest('.sw');if(!sw)return;
+  navigator.clipboard&&navigator.clipboard.writeText(sw.dataset.hex);
+  sw.classList.add('copied');setTimeout(()=>sw.classList.remove('copied'),900);
+});
+
+/* ============ demo A：构造线剧场 ============ */
+const dv=document.getElementById('dvLines'),dvCtl=document.getElementById('dvCtl'),dvNum=document.getElementById('dvNum');
+const dvShown=new Set();
+for(let g=1;g<=8;g++){
+  const b=document.createElement('button');b.className='btn ghost';b.textContent='线组 '+['I','II','III','IV','V','VI','VII','VIII'][g-1];
+  b.setAttribute('aria-pressed','false');
+  b.onclick=()=>{
+    dvCtl.querySelectorAll('button').forEach(x=>x.setAttribute('aria-pressed','false'));
+    b.setAttribute('aria-pressed','true');
+    dv.dataset.active=String(g);dvNum.textContent=['I','II','III','IV','V','VI','VII','VIII'][g-1];
+    dv.querySelectorAll('[data-just]').forEach(el=>el.removeAttribute('data-just'));
+    if(!dvShown.has(g)){dvShown.add(g);dv.querySelectorAll(`[data-g*="${g}"]`).forEach(el=>el.setAttribute('data-just',''));}
+  };
+  dvCtl.appendChild(b);
+}
+setTimeout(()=>dvCtl.querySelectorAll('button')[6].click(),600); /* 默认 hero 的线组 VII */
+
+/* ============ demo B：蝴蝶扑翼（着色器公式的 Canvas 复现） ============ */
+(()=>{
+const cv=document.getElementById('bfCanvas'),ctx=cv.getContext('2d');
+let W,H,raf;const DPR=Math.min(devicePixelRatio||1,2);
+function size(){W=cv.clientWidth;H=cv.clientHeight;cv.width=W*DPR;cv.height=H*DPR;ctx.setTransform(DPR,0,0,DPR,0,0)}
+size();addEventListener('resize',size);
+const N=14,bs=[];
+for(let i=0;i<N;i++){
+  const r=[Math.random(),Math.random(),Math.random(),Math.random()];
+  bs.push({r,x:Math.random()*1,y:Math.random()*1,drift:.00008+Math.random()*.00018,ph:Math.random()*6.28});
+}
+const GLOW='#88DDFF';
+function draw(tms){
+  const t0=tms*.001;
+  ctx.clearRect(0,0,W,H);
+  for(const b of bs){
+    const[rx,ry,rz,rw]=b.r;
+    const flapSpeed=4+ry*4, flapAmp=.8+rz*.5;
+    const t=t0*1.2*flapSpeed+rx*6.28;
+    let wave=Math.sin(t)+Math.sin(t*2.1+rw*3.14)*.2+Math.sin(t*.37+rz*5)*.3;
+    wave=Math.max(-1.35,Math.min(1.35,wave));
+    /* 漂移路径 */
+    b.ph+=b.drift*60;const px=(b.x+Math.sin(b.ph)*.06)*W, py=(b.y+Math.cos(b.ph*.7)*.05)*H
+      - (1-Math.min(1,Math.max(0,(wave+0.5)/1.5)))*6; /* smoothstep(1,-.5,wave)*bob */
+    const S=(0.8+rx*0.4)*13;
+    const asym=1+Math.sin(t*.7+rw*6.28)*.08;
+    const a1=wave*flapAmp, aL=a1*asym, aR=a1*(2-asym);
+    ctx.save();ctx.translate(px,py);
+    /* 辉光 */
+    ctx.shadowColor=GLOW;ctx.shadowBlur=8+4*Math.abs(Math.sin(t0*3+rw*6.28));
+    /* 身体 */
+    ctx.fillStyle='#f7f7ee';ctx.fillRect(-.6,-S*.55,1.2,S*1.1);
+    /* 双翅：wingBlend——靠近身体的根部少转，翼尖全转 */
+    for(const s of[-1,1]){
+      const ang=(s<0?aL:aR)*s*.9;
+      ctx.save();ctx.rotate(ang*s*-1);
+      const g=ctx.createLinearGradient(0,0,s*S*1.7,0);
+      g.addColorStop(0,'rgba(247,247,238,.95)');g.addColorStop(1,'rgba(136,221,255,.75)');
+      ctx.fillStyle=g;
+      ctx.beginPath();
+      ctx.moveTo(0,-S*.1);
+      ctx.quadraticCurveTo(s*S*1.05,-S*.95,s*S*1.65,-S*.25);
+      ctx.quadraticCurveTo(s*S*1.2,S*.1,s*S*.75,S*.06);
+      ctx.quadraticCurveTo(s*S*1.05,S*.55,s*S*.55,S*.72);
+      ctx.quadraticCurveTo(s*S*.18,S*.42,0,S*.12);
+      ctx.closePath();ctx.fill();
+      ctx.restore();
+    }
+    ctx.restore();
+    b.x+=(Math.sin(b.ph*.9)*.00025);b.y+=(Math.cos(b.ph*.6)*.0002);
+    if(b.x<-.05)b.x=1.05;if(b.x>1.05)b.x=-.05;if(b.y<-.05)b.y=1.05;if(b.y>1.05)b.y=-.05;
+  }
+  raf=requestAnimationFrame(draw);
+}
+const mo=matchMedia('(prefers-reduced-motion: reduce)');
+function go(){cancelAnimationFrame(raf);if(!mo.matches)raf=requestAnimationFrame(draw);else{draw(0);cancelAnimationFrame(raf)}}
+go();mo.addEventListener?.('change',go);
+})();
+
+/* ============ demo C：技能星座 ============ */
+(()=>{
+const stage=document.getElementById('skStage'),svg=document.getElementById('skLinks');
+const CMDS=[['/forecast',3120],['/segment',1876],['/campaign',2413],['/report',1544],['/import-b2b',689],['/translate',990],['/price-test',1207]];
+const tags=[];
+const POS=[[18,26],[50,18],[80,30],[28,62],[58,55],[82,72],[38,84]];
+CMDS.forEach((c,i)=>{
+  const el=document.createElement('div');el.className='sk-tag';
+  el.style.left=POS[i][0]+'%';el.style.top=POS[i][1]+'%';
+  el.innerHTML=`<span class="lbl">${c[0]}<span class="cnt">↑<b class="n">${c[1]}</b></span></span>
+  <div class="sk-pop"><div><p>用 Sidekick 一句话完成 ${c[0].slice(1)}。原站此处为富文本 + 「Try it with Sidekick」。</p><span class="try">Try it with Sidekick</span></div></div>`;
+  stage.appendChild(el);tags.push(el);
+  el.querySelector('.lbl').addEventListener('click',ev=>{
+    ev.stopPropagation();
+    const on=el.classList.contains('active');
+    tags.forEach(t=>t.classList.remove('active'));
+    if(!on)el.classList.add('active');
+  });
+});
+stage.addEventListener('click',()=>tags.forEach(t=>t.classList.remove('active')));
+addEventListener('keydown',e=>{if(e.key==='Escape')tags.forEach(t=>t.classList.remove('active'))});
+/* 邻近物理：原值 2.1→0.7 @400px；透明度 1→0.4 */
+let mx=-1e4,my=-1e4;
+stage.addEventListener('pointermove',e=>{const r=stage.getBoundingClientRect();mx=e.clientX-r.left;my=e.clientY-r.top});
+stage.addEventListener('pointerleave',()=>{mx=-1e4;my=-1e4});
+function centers(){const r=stage.getBoundingClientRect();
+  return tags.map(t=>{const b=t.getBoundingClientRect();return[b.left+b.width/2-r.left,b.top+b.height/2-r.top]});}
+function tick(){
+  const cs=centers();
+  cs.forEach((c,i)=>{
+    const d=Math.hypot(mx-c[0],my-c[1]),k=Math.min(d/400,1);
+    const s=2.1-(2.1-.7)*k, o=1-(1-.4)*k;
+    tags[i].style.setProperty('--s',s.toFixed(3));
+    tags[i].style.setProperty('--o',o.toFixed(3));
+  });
+  /* 每 120° 扇区取最近邻连线（原算法，pi=3） */
+  const links=new Set();const segs=[];
+  cs.forEach((a,i)=>{
+    const cands=cs.map((b,j)=>({j,d:Math.hypot(b[0]-a[0],b[1]-a[1]),ang:(Math.atan2(b[1]-a[1],b[0]-a[0])+6.283)%6.283})).filter(x=>x.j!==i);
+    for(let s=0;s<3;s++){
+      const lo=s*2.0944,hi=lo+2.0944;
+      const inSec=cands.filter(x=>x.ang>=lo&&x.ang<hi).sort((p,q)=>p.d-q.d)[0];
+      if(!inSec)continue;
+      const key=i<inSec.j?i+'-'+inSec.j:inSec.j+'-'+i;
+      if(!links.has(key)){links.add(key);segs.push([a,cs[inSec.j]])}
+    }
+  });
+  const r=stage.getBoundingClientRect();
+  svg.setAttribute('viewBox',`0 0 ${r.width} ${r.height}`);
+  svg.innerHTML=segs.map(([a,b])=>`<line x1="${a[0]}" y1="${a[1]}" x2="${b[0]}" y2="${b[1]}" stroke="#D7D7CF" stroke-width="1" stroke-opacity="0.8"/>`).join('');
+  requestAnimationFrame(tick);
+}
+tick();
+/* SSE 计数模拟：原站为 EventSource 直播；上升动画 1s 三次方缓出（原值） */
+setInterval(()=>{
+  const t=tags[Math.floor(Math.random()*tags.length)].querySelector('.n');
+  const from=+t.textContent,to=from+1+Math.floor(Math.random()*4),st=performance.now();
+  (function up(now){const k=Math.min((now-st)/1000,1);const e=1-Math.pow(1-k,3);
+    t.textContent=Math.floor(from+(to-from)*e);if(k<1)requestAnimationFrame(up)})(st);
+},2600);
+})();
+
+/* ============ demo D：罗马数字商店 ============ */
+(()=>{
+let q=1;const price=14.52;
+const qv=document.getElementById('qVal'),pa=document.getElementById('pArabic'),pr=document.getElementById('price');
+function render(){
+  qv.style.setProperty('--q',q);
+  const total=price*q,d=Math.floor(total),c=Math.round((total-d)*100);
+  pa.textContent='$'+total.toFixed(2);
+  pr.querySelector('.roman .d').style.setProperty('--d',d);
+  pr.querySelector('.roman .c').style.setProperty('--c',c);
+}
+document.getElementById('qDec').onclick=()=>{q=Math.max(1,q-1);render()};
+document.getElementById('qInc').onclick=()=>{q=Math.min(24,q+1);render()};
+render();
+})();
+
+/* ============ demo E：幕布擦除 ============ */
+(()=>{
+const st=document.getElementById('wipeStage'),rg=document.getElementById('wipeRange'),val=document.getElementById('wipeVal');
+rg.addEventListener('input',()=>{
+  const p=rg.value/100;
+  st.style.setProperty('--pos',p);
+  /* darken 联动：幕布接近中位时压暗画面（模拟 Theatre darken 轨的常见排布） */
+  st.style.setProperty('--darken',(1-Math.min(1,Math.abs(p)))*0.55);
+  val.textContent=(p<0?'−':'')+Math.abs(p).toFixed(2);
+});
+})();
+
+/* ============ 缓动曲线板起播 ============ */
+document.querySelectorAll('.ez').forEach(ez=>{
+  ez.addEventListener('mouseenter',()=>{ez.classList.remove('play');void ez.offsetWidth;ez.classList.add('play')});
+});
+</script>
+</body>
+</html>

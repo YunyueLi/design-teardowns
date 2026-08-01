@@ -1,0 +1,173 @@
+{
+  "site": "Shopify Editions Winter 2026",
+  "url": "https://www.shopify.com/editions/winter2026",
+  "fonts": [
+    {
+      "url": "https://cdn.shopify.com/b/shopify-brochure2-assets/3ee238256136fcfdfca35decbd44d0d4.woff2",
+      "file": "c0ccc1_3ee238256136fcfdfca35decbd44d0d4.woff2",
+      "bytes": 24792,
+      "type": "application/octet-stream"
+    },
+    {
+      "url": "https://cdn.shopify.com/b/shopify-brochure2-assets/49a57a6e59f6a50f0627418abeb58fec.woff2",
+      "file": "b4d548_49a57a6e59f6a50f0627418abeb58fec.woff2",
+      "bytes": 30440,
+      "type": "application/octet-stream"
+    },
+    {
+      "url": "https://cdn.shopify.com/b/shopify-brochure2-assets/389d4f8566b3b9cbe083b682c7fabf06.woff2",
+      "file": "0c828b_389d4f8566b3b9cbe083b682c7fabf06.woff2",
+      "bytes": 15572,
+      "type": "application/octet-stream"
+    },
+    {
+      "url": "https://cdn.shopify.com/s/files/1/0711/3431/4719/files/5949cd393a8375a896fd0a9b74307666.woff2",
+      "file": "17e851_5949cd393a8375a896fd0a9b74307666.woff2",
+      "bytes": 67188,
+      "type": "font/woff2"
+    },
+    {
+      "url": "https://cdn.shopify.com/b/shopify-brochure2-assets/c7940dc3df669ae1f3849427d60e196f.ttf",
+      "file": "fb805f_c7940dc3df669ae1f3849427d60e196f.ttf",
+      "bytes": 25176,
+      "type": "font/woff2"
+    },
+    {
+      "url": "https://cdn.shopify.com/b/shopify-brochure2-assets/5e4f1f9da7ccc96243038d38075551e9.ttf",
+      "file": "662eb8_5e4f1f9da7ccc96243038d38075551e9.ttf",
+      "bytes": 30440,
+      "type": "font/woff2"
+    },
+    {
+      "url": "https://cdn.shopify.com/b/shopify-brochure2-assets/7afd6fda87d6d8283f25b009dcd0d423.ttf",
+      "file": "34f19e_7afd6fda87d6d8283f25b009dcd0d423.ttf",
+      "bytes": 15600,
+      "type": "font/woff2"
+    }
+  ],
+  "video": [],
+  "audio": [],
+  "image": [
+    {
+      "url": "https://cdn.shopify.com/s/files/1/0951/3130/4218/files/share.png?v=1765212809",
+      "file": "40e8a7_share.png",
+      "bytes": 1248075,
+      "type": "image/png"
+    },
+    {
+      "url": "https://cdn.shopify.com/s/files/1/0951/3130/4218/files/favicon_16.png?v=1760634627",
+      "file": "77785d_favicon_16.png",
+      "bytes": 978,
+      "type": "image/png"
+    },
+    {
+      "url": "https://cdn.shopify.com/s/files/1/0951/3130/4218/files/favicon_32.png?v=1760634627",
+      "file": "e19d4c_favicon_32.png",
+      "bytes": 2603,
+      "type": "image/png"
+    },
+    {
+      "url": "https://cdn.shopify.com/s/files/1/0951/3130/4218/files/default_ee658e76-0d9b-46c9-b479-5baab424fb97.png?v=1765164617&width=100&height=88&crop=center",
+      "file": "776c4a_default_ee658e76-0d9b-46c9-b479-5baab424fb97.png",
+      "bytes": 14392,
+      "type": "image/png"
+    },
+    {
+      "url": "https://cdn.shopify.com/s/files/1/0951/3130/4218/files/preview_images/5aa1f17e22044052af94fde4bb1d052c.thumbnail.0000000000.jpg?v=1765338996&width=100&crop=center",
+      "file": "0bf1b3_5aa1f17e22044052af94fde4bb1d052c.thumbnail.0000000000.jpg",
+      "bytes": 2021,
+      "type": "image/jpeg"
+    },
+    {
+      "url": "https://cdn.shopify.com/s/files/1/0951/3130/4218/files/preview_images/f880db5d8462441482ecbc2437cacf5d.thumbnail.0000000000.jpg?v=1765379387&width=100&crop=center",
+      "file": "39ab1e_f880db5d8462441482ecbc2437cacf5d.thumbnail.0000000000.jpg",
+      "bytes": 3707,
+      "type": "image/jpeg"
+    },
+    {
+      "url": "https://cdn.shopify.com/s/files/1/0951/3130/4218/files/compressed-pulseDesktopPoster-desktop.webp?v=1765345989&width=1000&height=521&crop=center",
+      "file": "1df25b_compressed-pulseDesktopPoster-desktop.webp",
+      "bytes": 321904,
+      "type": "image/png"
+    },
+    {
+      "url": "https://cdn.shopify.com/s/files/1/0951/3130/4218/files/apps-bg-image.png?v=1763934791&width=100&height=43&crop=center",
+      "file": "c30c78_apps-bg-image.png",
+      "bytes": 3869,
+      "type": "image/png"
+    },
+    {
+      "url": "https://cdn.shopify.com/s/files/1/0951/3130/4218/files/chatgptdesktopposter_12_10.webp?v=1765374017&width=100&height=97&crop=center",
+      "file": "24f912_chatgptdesktopposter_12_10.webp",
+      "bytes": 12571,
+      "type": "image/png"
+    },
+    {
+      "url": "https://cdn.shopify.com/s/files/1/0951/3130/4218/files/default_abdd996f-1b4e-44a5-bfcc-8addca857894.png?v=1765164459&width=100&height=98&crop=center",
+      "file": "ff3afc_default_abdd996f-1b4e-44a5-bfcc-8addca857894.png",
+      "bytes": 11187,
+      "type": "image/png"
+    },
+    {
+      "url": "https://cdn.shopify.com/s/files/1/0951/3130/4218/files/U190_pos_extension_storage_dark.png?v=1763597323&width=100&height=101&crop=center",
+      "file": "ccd27f_U190_pos_extension_storage_dark.png",
+      "bytes": 13624,
+      "type": "image/png"
+    },
+    {
+      "url": "https://cdn.shopify.com/s/files/1/0951/3130/4218/files/BG-R.png?v=1761935402&width=100&height=67&crop=center",
+      "file": "610c66_BG-R.png",
+      "bytes": 8821,
+      "type": "image/png"
+    },
+    {
+      "url": "https://cdn.shopify.com/s/files/1/0951/3130/4218/files/U105_Shopify_Email_SMS_marketing.png?v=1764621466&width=100&height=96&crop=center",
+      "file": "fc757e_U105_Shopify_Email_SMS_marketing.png",
+      "bytes": 14859,
+      "type": "image/png"
+    },
+    {
+      "url": "https://cdn.shopify.com/s/files/1/0951/3130/4218/files/U191_Faster_bulk_data_imports.png?v=1764969366&width=100&height=93&crop=center",
+      "file": "8f300c_U191_Faster_bulk_data_imports.png",
+      "bytes": 13475,
+      "type": "image/png"
+    },
+    {
+      "url": "https://cdn.shopify.com/s/files/1/0951/3130/4218/files/U183_Checkout_for_web_f222b0b3-24d2-4ee2-aff2-ebf8ffb4a766.png?v=1765120160&width=100&height=86&crop=center",
+      "file": "67af97_U183_Checkout_for_web_f222b0b3-24d2-4ee2-aff2-ebf8ffb4a766.png",
+      "bytes": 11693,
+      "type": "image/png"
+    },
+    {
+      "url": "https://cdn.shopify.com/s/files/1/0951/3130/4218/files/U271_Checkout_MCP.png?v=1764963709&width=100&height=86&crop=center",
+      "file": "5c743b_U271_Checkout_MCP.png",
+      "bytes": 14095,
+      "type": "image/png"
+    },
+    {
+      "url": "https://cdn.shopify.com/s/files/1/0951/3130/4218/files/U267_Tangle.png?v=1764976717&width=100&height=85&crop=center",
+      "file": "1e830a_U267_Tangle.png",
+      "bytes": 12732,
+      "type": "image/png"
+    },
+    {
+      "url": "https://cdn.shopify.com/s/files/1/0951/3130/4218/files/compressed-u2poster_12_9.webp?v=1765315033&width=100&height=83&crop=center",
+      "file": "60c548_compressed-u2poster_12_9.webp",
+      "bytes": 3075,
+      "type": "image/jpeg"
+    }
+  ],
+  "lottie": [],
+  "source": [
+    {
+      "url": "https://cdn.shopify.com/oxygen-v2/47215/49013/102837/4097382/assets/tailwind-G-N6aznT.css",
+      "file": "9d860a_tailwind-G-N6aznT.css",
+      "bytes": 129725
+    },
+    {
+      "url": "https://cdn.shopify.com/oxygen-v2/47215/49013/102837/4097382/assets/fonts-latin-CzfLCQn_.css",
+      "file": "e9bb44_fonts-latin-CzfLCQn_.css",
+      "bytes": 1055
+    }
+  ]
+}
