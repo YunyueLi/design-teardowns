@@ -299,7 +299,7 @@ html.style.fontSize = r + "px"
   <div class="band"><span class="en">Live Specimen</span><span class="sm">真实数据演示 · anchor.bin 降采样 3,000 点（原 7,484）</span></div>
 
   <div class="demo">
-    <header><span class="t">E.P.S 点云剧场——扫描线点亮 + 故障 + 拖拽自转</span><span class="src">全部时序与公式为原值 · Canvas 2D 投影复现（原站 three.js Points）</span></header>
+    <header><span class="t">E.P.S 点云剧场——扫描线点亮 + 激光束 + 故障 + 拖拽自转</span><span class="src">顶点/片元着色器照抄原文 · WebGL2 加法混合（原站 three.js Points 同管线）</span></header>
     <div id="epsStage">
       <canvas id="epsCanvas"></canvas>
       <div id="epsHud">E.P.S // ANCHOR — <b id="epsState">STANDBY</b> · POINTS 3000/7484 · DRAG TO ROTATE</div>
@@ -310,7 +310,7 @@ html.style.fontSize = r + "px"
       <button class="btn ghost" id="epsGlitch">故障一阵</button>
       <span class="mono">三线时长 3000/(i+1) ms · 延迟 2000·ln(i+1) ms · 带宽 ±20 · 衰减 cos(d·π/200) · 掉落 0.05·d²</span>
     </div>
-    <div class="note">数据为真实 anchor.bin 的 3,000 点降采样样本（float16，研究用途）；归一化数学与原站 setup 相同（AABB → 高度 1900 → 居中）。层级 alpha <code>(−0.25·layer+1.25)×0.6</code>、点径 4–8 随距离衰减、扫描带内变黄 vec3(1,1,.2)、故障 = 8 条屏幕空间水平带 ±(≤5)×20px、每阵 3–6 连发 × 80ms——全部照抄着色器与调度器原文。原站另有 500–2000 条实例化激光束与 75% 像素比降级（renderLevel 2），此处从简。</div>
+    <div class="note">数据为真实 anchor.bin 的 3,000 点降采样样本（float16，研究用途）；归一化数学与原站 setup 相同（AABB → 高度 1900 → 居中）。渲染管线与原站同构：<b>顶点/片元着色器逐行照抄</b>（羽化点精灵 coreRadius .1 / featherWidth .1、内辉光 .6、Reinhard 压缩 mix .5、非对称暗角中心 x=0.4、层级 alpha <code>(−0.25·layer+1.25)×0.6</code>、点径 <code>size×scale×distA+4</code>、带内变黄 vec3(1,1,.2)、故障带 ±10 视图空间 y × 位移 20），混合为 three.js AdditiveBlending 同款 <code>blendFunc(SRC_ALPHA, ONE)</code>、depthWrite 关。扫描期间天花板（x∈{−3000,400,3000}, y=2000）向带 ±40 内的真实点发射激光：噪声调制、尾部渐隐、次线强度 0.4——池 240（原站 renderLevel 分档 500–2000，等比缩）。仅剩差异：无 benchmark 三档降级。</div>
   </div>
 
   <div class="two-col" style="margin-top:18px">
@@ -421,6 +421,20 @@ console: <em>[E.P.S] performance test duration / renderLevel</em></pre>
       <div class="facts"><span>codePrinter 打字机模块（CSS 模块名实锤）</span><span>flashing 关键帧多章复用</span></div>
     </div>
   </div>
+
+  <div class="band" style="margin-top:26px"><span class="en">H5 Walkthrough</span><span class="sm">竖屏实测 · iPhone 13 视口 390×844 @3x · CDP 真触摸滑动</span></div>
+  <div style="display:flex;gap:10px;overflow-x:auto;padding:14px 2px 8px;background:#101115;border:1px solid #24262c">
+    <img src="assets/screens-h5/01-home.jpg" alt="H5 首页" loading="lazy" style="height:340px;width:auto;flex:0 0 auto">
+    <img src="assets/screens-h5/02-operator.jpg" alt="H5 干员" loading="lazy" style="height:340px;width:auto;flex:0 0 auto">
+    <img src="assets/screens-h5/03-lore-entry.jpg" alt="H5 世界观入口" loading="lazy" style="height:340px;width:auto;flex:0 0 auto">
+    <img src="assets/screens-h5/04-lore-dijiang.jpg" alt="H5 帝江号" loading="lazy" style="height:340px;width:auto;flex:0 0 auto">
+    <img src="assets/screens-h5/05-information.jpg" alt="H5 影像资料" loading="lazy" style="height:340px;width:auto;flex:0 0 auto">
+    <img src="assets/screens-h5/06-calendar.jpg" alt="H5 内容日历" loading="lazy" style="height:340px;width:auto;flex:0 0 auto">
+    <img src="assets/screens-h5/07-gameplay.jpg" alt="H5 玩法" loading="lazy" style="height:340px;width:auto;flex:0 0 auto">
+    <img src="assets/screens-h5/08-aic.jpg" alt="H5 AIC" loading="lazy" style="height:340px;width:auto;flex:0 0 auto">
+    <img src="assets/screens-h5/09-notice.jpg" alt="H5 公告" loading="lazy" style="height:340px;width:auto;flex:0 0 auto">
+  </div>
+  <div class="note" style="margin-top:10px">竖屏是<b>另一套文档流</b>而非同一页的响应式：普通长滚动（实测 scrollHeight 5,956px @ 664px 视口），hash 仍随滚动逐段同步（#home → #operator → #lore → #information → #calendar → #gameplay → #aic → #notice，与桌面同序）。html 字号实测 5.53px（390pt 宽），即竖屏 1080×1920 设计画布 rem 公式的直接输出。<b>E.P.S 点云舞台在 H5 缺席</b>——Lore 屏只剩顶部一撮装饰性粒子，六地标退化为 DOM 胶囊轮播（1/6 帝江号 + 左右圆钮，走查实锤）；重 WebGL 只供桌面。顶栏常驻：音频开关 + 「前往游戏」CTA + 汉堡菜单。</div>
 </section>
 
 <!-- 08 工艺 -->
@@ -538,10 +552,12 @@ document.getElementById('swatches').addEventListener('click',e=>{
 
 /* ============ E.P.S 点云剧场（真实 anchor 降采样数据 + 原值时序） ============ */
 (async()=>{
-const cv=document.getElementById('epsCanvas'),ctx=cv.getContext('2d');
+const cv=document.getElementById('epsCanvas');
 const stage=document.getElementById('epsStage'),stateEl=document.getElementById('epsState');
+const gl=cv.getContext('webgl2',{alpha:true,antialias:false,premultipliedAlpha:false});
+if(!gl){document.getElementById('epsHud').innerHTML='E.P.S // WEBGL2 UNAVAILABLE — <b>无法启动</b>';return}
 let W,H;const DPR=Math.min(devicePixelRatio||1,2);
-function size(){W=stage.clientWidth;H=stage.clientHeight;cv.width=W*DPR;cv.height=H*DPR;ctx.setTransform(DPR,0,0,DPR,0,0)}
+function size(){W=stage.clientWidth;H=stage.clientHeight;cv.width=W*DPR;cv.height=H*DPR;gl.viewport(0,0,cv.width,cv.height)}
 size();addEventListener('resize',size);
 
 /* 载入 float16 降采样点云 */
@@ -558,62 +574,266 @@ try{
     pts.push([Math.cos(a)*r,y,Math.sin(a)*r]);}
   document.getElementById('epsHud').innerHTML='E.P.S // FALLBACK PROCEDURAL — <b>真数据加载失败</b>';
 }
-/* pointMoreData: [active,size,layer,delay]（原口径） */
-const more=pts.map(()=>[1, 4+Math.random()*4, 1+Math.floor(Math.random()*3), -100+Math.random()*200]);
+const N=pts.length;
 
-/* 状态 */
-let scan=[-1150,-1150,-1150];       /* 数据带位置（显示 = scan-200，点亮方向） */
-let mode='in-done';                  /* in | out | in-done | out-done */
+/* ========== 着色器：顶点/片元均照抄原文（chunk 226），仅删未用 uniform ========== */
+const VS=`#version 300 es
+precision highp float;
+in vec3 position;
+in vec4 pointMoreData;            /* [active,size,layer,delay] 原口径 */
+uniform mat4 modelViewMatrix, projectionMatrix;
+uniform float scanLineY1, scanLineY2, scanLineY3, scanLineWidth;
+uniform bool isActive;
+uniform float cameraFadeDistance, cameraFadeStart, pointSizeScale;
+uniform vec4 glitchEffects0, glitchEffects1, glitchEffects2, glitchEffects3;
+out float vAlpha; out vec3 vColor; out float vDistanceAlpha;
+void main(){
+  float pointActive=pointMoreData.x, size=pointMoreData.y, layer=pointMoreData.z, delay=pointMoreData.w;
+  float scanLineY=scanLineY1;
+  if(abs(layer-2.0)<0.1)scanLineY=scanLineY2;
+  if(abs(layer-3.0)<0.1)scanLineY=scanLineY3;
+  float adjustedScanLineY=scanLineY-delay;
+  float y=position.y;
+  float scanLineDist=abs(adjustedScanLineY-y);
+  vec3 newPosition=position;
+  float alpha=pointActive;
+  if(scanLineDist>0.0&&scanLineDist<scanLineWidth){vColor=vec3(1.0,1.0,0.2);}else{vColor=vec3(0.8,0.8,0.8);}
+  float range=100.0;
+  if(isActive){
+    if(y>adjustedScanLineY){
+      if(scanLineDist>=range){alpha=0.0;}else{alpha=clamp(cos(scanLineDist*3.1415926/(range*2.0)),0.0,1.0);}
+    }
+  }else{
+    if(y<adjustedScanLineY){
+      newPosition.y-=0.05*scanLineDist*scanLineDist;   /* 碎落 */
+      if(scanLineDist>=range){alpha=0.0;}else{alpha=clamp(cos(scanLineDist*3.1415926/(range*2.0)),0.0,1.0);}
+    }
+  }
+  vec4 mvPosition=modelViewMatrix*vec4(newPosition,1.0);
+  float viewZ=-mvPosition.z;
+  float distanceAlpha=1.0-clamp((viewZ-cameraFadeStart)/(cameraFadeDistance-cameraFadeStart),0.0,1.0);
+  vAlpha=0.6*alpha*distanceAlpha*(-0.25*layer+1.25)*pointActive;
+  vDistanceAlpha=distanceAlpha;
+  /* === glitch效果 ===（原注释）带宽 ±10 视图空间 y · 位移 20×强度 */
+  float glitchYRange=10.0, glitchXOffset=20.0;
+  vec4 glitchs[4];
+  glitchs[0]=glitchEffects0;glitchs[1]=glitchEffects1;glitchs[2]=glitchEffects2;glitchs[3]=glitchEffects3;
+  for(int i=0;i<4;i++){
+    float gy0=glitchs[i].x,gx0=glitchs[i].y,gy1=glitchs[i].z,gx1=glitchs[i].w;
+    float screenY=mvPosition.y;
+    if(abs(screenY-gy0)<glitchYRange){mvPosition.x+=glitchXOffset*gx0;}
+    if(abs(screenY-gy1)<glitchYRange){mvPosition.x+=glitchXOffset*gx1;}
+  }
+  gl_Position=projectionMatrix*mvPosition;
+  gl_PointSize=size*pointSizeScale*distanceAlpha+4.0;
+}`;
+const FS=`#version 300 es
+precision highp float;
+in float vAlpha; in vec3 vColor; in float vDistanceAlpha;
+uniform float featherWidth, coreRadius, innerGlowStrength, compressStrength;
+uniform vec2 resolution;
+out vec4 outColor;
+void main(){
+  vec2 center=gl_PointCoord-vec2(0.5);
+  float dist=length(center);
+  float radius=0.5;
+  if(dist>radius){discard;}
+  float alpha=vAlpha;
+  if(dist<=coreRadius*vDistanceAlpha){alpha=vAlpha;}
+  else{
+    float fadeOut1=smoothstep(radius,coreRadius,dist);
+    float fadeOut2=smoothstep(radius*0.8,coreRadius,dist);
+    float featherAlpha=mix(fadeOut1,fadeOut2,clamp(featherWidth,0.1,1.0));
+    float distanceFade=1.0-pow(dist/radius,2.0);
+    float additionalFeather=1.0-pow(dist/radius,1.0+featherWidth*2.0);
+    alpha=vAlpha*featherAlpha*distanceFade*additionalFeather;
+  }
+  float innerGlow=1.0-smoothstep(0.0,coreRadius*3.0,dist);
+  vec3 finalColor=vColor+vColor*innerGlow*innerGlowStrength;
+  /* 亮度压缩插值，防止高密度过曝，低密度不变（原注释）*/
+  vec3 compressed=finalColor/(finalColor+vec3(1.0));
+  finalColor=mix(finalColor,compressed,compressStrength);
+  float colorBrightness=dot(vColor,vec3(0.299,0.587,0.114));
+  if(colorBrightness>0.6){alpha*=1.0+(colorBrightness-0.6)*0.5;}
+  /* === 镜头暗角 ===（原注释）中心偏 x=0.4 · 左 0.8 / 右 0.6 压缩 */
+  vec2 uv=gl_FragCoord.xy/resolution;
+  float vd;
+  if(uv.x<0.4){vd=distance(vec2((uv.x-0.4)*0.8+0.4,uv.y),vec2(0.4,0.5));}
+  else{vd=distance(vec2((uv.x-0.4)*0.6+0.4,uv.y),vec2(0.4,0.5));}
+  float vig=1.0;
+  if(vd>0.3){vig=1.0-smoothstep(0.4,0.5,vd);}
+  alpha*=vig;
+  outColor=vec4(finalColor,alpha);
+}`;
+/* 激光束着色器（原文骨架：mix(src,target,t)·噪声·尾淡） */
+const LVS=`#version 300 es
+precision highp float;
+in float endpoint; in vec3 src; in vec3 target; in float progress; in float randomOffset; in float baseOpacity;
+uniform mat4 modelViewMatrix, projectionMatrix;
+out float vT; out float vRnd; out float vOp; out float vViewZ;
+void main(){
+  float t=clamp(progress,0.0,1.0);
+  vT=endpoint*t; vRnd=randomOffset; vOp=baseOpacity;
+  vec3 pos=mix(src,target,vT);
+  vec4 mv=modelViewMatrix*vec4(pos,1.0);
+  vViewZ=-mv.z;
+  gl_Position=projectionMatrix*mv;
+}`;
+const LFS=`#version 300 es
+precision highp float;
+in float vT; in float vRnd; in float vOp; in float vViewZ;
+uniform sampler2D noiseTexture;
+uniform float cameraFadeDistance;
+out vec4 outColor;
+void main(){
+  float distanceAlpha=1.0-clamp(vViewZ/cameraFadeDistance,0.0,1.0);
+  float noise=texture(noiseTexture,vec2(fract(vT+vRnd),0.5)).r;
+  float alpha=vOp*distanceAlpha*noise*vT;
+  if(alpha<0.01)discard;
+  outColor=vec4(1.0,1.0,1.0,alpha);
+}`;
+function mkProg(vs,fs){
+  const p=gl.createProgram();
+  for(const[t,s]of[[gl.VERTEX_SHADER,vs],[gl.FRAGMENT_SHADER,fs]]){
+    const sh=gl.createShader(t);gl.shaderSource(sh,s);gl.compileShader(sh);
+    if(!gl.getShaderParameter(sh,gl.COMPILE_STATUS))throw new Error(gl.getShaderInfoLog(sh));
+    gl.attachShader(p,sh);
+  }
+  gl.linkProgram(p);
+  if(!gl.getProgramParameter(p,gl.LINK_STATUS))throw new Error(gl.getProgramInfoLog(p));
+  return p;
+}
+const prog=mkProg(VS,FS), lprog=mkProg(LVS,LFS);
+
+/* 点云 buffers */
+const posArr=new Float32Array(N*3), moreArr=new Float32Array(N*4);
+for(let i=0;i<N;i++){
+  posArr[i*3]=pts[i][0];posArr[i*3+1]=pts[i][1];posArr[i*3+2]=pts[i][2];
+  moreArr[i*4]=1;                                  /* active */
+  moreArr[i*4+1]=4+Math.random()*4;                /* size 4–8 */
+  moreArr[i*4+2]=1+Math.floor(Math.random()*3);    /* layer 1–3 */
+  moreArr[i*4+3]=-100+Math.random()*200;           /* delay ±100 */
+}
+const vao=gl.createVertexArray();gl.bindVertexArray(vao);
+const posBuf=gl.createBuffer();gl.bindBuffer(gl.ARRAY_BUFFER,posBuf);gl.bufferData(gl.ARRAY_BUFFER,posArr,gl.STATIC_DRAW);
+let loc=gl.getAttribLocation(prog,'position');gl.enableVertexAttribArray(loc);gl.vertexAttribPointer(loc,3,gl.FLOAT,false,0,0);
+const moreBuf=gl.createBuffer();gl.bindBuffer(gl.ARRAY_BUFFER,moreBuf);gl.bufferData(gl.ARRAY_BUFFER,moreArr,gl.STATIC_DRAW);
+loc=gl.getAttribLocation(prog,'pointMoreData');gl.enableVertexAttribArray(loc);gl.vertexAttribPointer(loc,4,gl.FLOAT,false,0,0);
+gl.bindVertexArray(null);
+
+/* 激光池（原站 renderLevel 0 上限 2000 / 每 2 帧 20 束；此处 240 池等比缩） */
+const LMAX=240;
+const lSrc=new Float32Array(LMAX*2*3),lTgt=new Float32Array(LMAX*2*3),lEnd=new Float32Array(LMAX*2),
+      lPro=new Float32Array(LMAX*2),lRnd=new Float32Array(LMAX*2),lOp=new Float32Array(LMAX*2);
+const lasers=[];for(let i=0;i<LMAX;i++){lasers.push({alive:false,t0:0,life:0,op:1});lEnd[i*2]=0;lEnd[i*2+1]=1}
+const lvao=gl.createVertexArray();gl.bindVertexArray(lvao);
+function lbuf(name,arr,size){const b=gl.createBuffer();gl.bindBuffer(gl.ARRAY_BUFFER,b);gl.bufferData(gl.ARRAY_BUFFER,arr,gl.DYNAMIC_DRAW);
+  const l=gl.getAttribLocation(lprog,name);gl.enableVertexAttribArray(l);gl.vertexAttribPointer(l,size,gl.FLOAT,false,0,0);return b}
+const bSrc=lbuf('src',lSrc,3),bTgt=lbuf('target',lTgt,3),bEnd=lbuf('endpoint',lEnd,1),
+      bPro=lbuf('progress',lPro,1),bRnd=lbuf('randomOffset',lRnd,1),bOp=lbuf('baseOpacity',lOp,1);
+gl.bindVertexArray(null);
+/* 1D 噪声纹理（原站 8 倍频 value noise；此处等价随机） */
+const ntex=gl.createTexture();gl.bindTexture(gl.TEXTURE_2D,ntex);
+const nd=new Uint8Array(256);for(let i=0;i<256;i++)nd[i]=90+Math.random()*165;
+gl.texImage2D(gl.TEXTURE_2D,0,gl.LUMINANCE,256,1,0,gl.LUMINANCE,gl.UNSIGNED_BYTE,nd);
+gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_MIN_FILTER,gl.LINEAR);gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_MAG_FILTER,gl.LINEAR);
+gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_WRAP_S,gl.REPEAT);
+
+/* uniforms */
+const U={},LU={};
+for(const n of['modelViewMatrix','projectionMatrix','scanLineY1','scanLineY2','scanLineY3','scanLineWidth','isActive','cameraFadeDistance','cameraFadeStart','pointSizeScale','glitchEffects0','glitchEffects1','glitchEffects2','glitchEffects3','featherWidth','coreRadius','innerGlowStrength','compressStrength','resolution'])U[n]=gl.getUniformLocation(prog,n);
+for(const n of['modelViewMatrix','projectionMatrix','noiseTexture','cameraFadeDistance'])LU[n]=gl.getUniformLocation(lprog,n);
+
+/* 状态（时序原值） */
+let scan=[-1150,-1150,-1150];
+let mode='in-done';
 let rotY=0,targetRot=0,auto=true,autoSpeed=.005,burst=1;
 let dragging=false,px0=0;
-let glitch=new Array(16).fill(0);
+let glitch=new Float32Array(16);
 const anims=[];
-function animate(from,to,dur,delay,cb,done){
-  anims.push({t0:performance.now()+delay,from,to,dur,cb,done,started:false});
-}
+function animate(from,to,dur,delay,cb,done){anims.push({t0:performance.now()+delay,from,to,dur,cb,done})}
 function easeInOutQuad(t){return t<.5?2*t*t:1-Math.pow(-2*t+2,2)/2}
-
-/* fadeIn / fadeOut：时序原值 */
 function fadeIn(){
   mode='in';stateEl.textContent='SCANNING';
   scan=[-1150,-1150,-1150];
   let doneN=0;
-  for(let i=0;i<3;i++){
-    animate(-1150,1350,3000/(i+1),2000*Math.log(i+1),v=>{scan[i]=v},()=>{scan[i]=1350;if(++doneN===3){mode='in-done';stateEl.textContent='ONLINE'}});
-  }
-  /* 自转 ×20 冲刺再回落（原值 400/800ms） */
-  const b0=1;animate(20,1,1200,0,v=>{burst=v});burst=20;
+  for(let i=0;i<3;i++)animate(-1150,1350,3000/(i+1),2000*Math.log(i+1),v=>{scan[i]=v},()=>{scan[i]=1350;if(++doneN===3){mode='in-done';stateEl.textContent='ONLINE'}});
+  animate(20,1,1200,0,v=>{burst=v});burst=20;   /* ×20 冲刺 → 回落（原 400/800ms 两段） */
 }
 function fadeOut(){
   mode='out';stateEl.textContent='SHUTDOWN';
   scan=[-1150,-1150,-1150];
   let doneN=0;
-  for(let i=0;i<3;i++){
-    animate(-1150,1150,2000,0,v=>{scan[i]=v},()=>{scan[i]=1150;if(++doneN===3){mode='out-done';stateEl.textContent='OFFLINE'}});
-  }
+  for(let i=0;i<3;i++)animate(-1150,1150,2000,0,v=>{scan[i]=v},()=>{scan[i]=1150;if(++doneN===3){mode='out-done';stateEl.textContent='OFFLINE'}});
 }
 function doGlitch(){
   const n=3+Math.floor(Math.random()*3);
   for(let k=0;k<n;k++)setTimeout(()=>{
-    const bands=6+Math.floor(Math.random()*3);
     glitch.fill(0);
-    for(let b=0;b<bands&&b<8;b++){glitch[2*b]=-950+Math.random()*1900;glitch[2*b+1]=(Math.random()>.5?1:-1)*Math.random()*5}
+    const bands=6+Math.floor(Math.random()*3);
+    for(let b=0;b<Math.min(bands,8);b++){glitch[2*b]=-950+Math.random()*1900;glitch[2*b+1]=(Math.random()>.5?1:-1)*Math.random()*5}
   },80*k);
   setTimeout(()=>glitch.fill(0),80*n+80);
 }
 document.getElementById('epsIn').onclick=fadeIn;
 document.getElementById('epsOut').onclick=fadeOut;
 document.getElementById('epsGlitch').onclick=doGlitch;
-/* 拖拽（原值 0.01/px）*/
 stage.addEventListener('pointerdown',e=>{dragging=true;px0=e.clientX;auto=false});
 addEventListener('pointermove',e=>{if(!dragging)return;targetRot+=(e.clientX-px0)*.01;px0=e.clientX});
 addEventListener('pointerup',()=>{dragging=false;auto=true});
-/* 故障循环（原值 4–6s） */
 setInterval(()=>{if(mode==='in-done')doGlitch()},4000+Math.random()*2000);
 
-const FOV=75*Math.PI/180, CAMZ=1500, CAMY=120, FSTART=500, FEND=3500, MSCALE=1.35; /* 舞台适配：anchor 原站 scale=2，此处 1.35 + 相机 1500 */
+/* 相机与矩阵（fov75 原值；舞台适配 CAMZ 1500 / CAMY 120 / 缩放 1.35） */
+const FOV=75*Math.PI/180, CAMZ=1350, CAMY=120, FSTART=500, FEND=3500, MSCALE=1.5;
+function perspective(fovy,aspect,near,far){
+  const f=1/Math.tan(fovy/2),nf=1/(near-far);
+  return new Float32Array([f/aspect,0,0,0, 0,f,0,0, 0,0,(far+near)*nf,-1, 0,0,2*far*near*nf,0]);
+}
+function modelView(rot){
+  const c=Math.cos(rot),s=Math.sin(rot),m=MSCALE;
+  /* 先绕 Y 旋转+缩放，再平移到相机系（相机位于 (0,CAMY,CAMZ) 看向原点即平移 (0,-CAMY,-CAMZ)） */
+  return new Float32Array([c*m,0,-s*m,0, 0,m,0,0, s*m,0,c*m,0, 0,-CAMY,-CAMZ,1]);
+}
+/* 激光生成：扫描期间每 2 帧补束（原节奏），起点天花板 x∈{-3000,400,3000} y=2000 */
+let frameCount=0;
+function spawnLasers(){
+  if(mode!=='in')return;
+  if(frameCount%2)return;
+  const active=scan.map((s,i)=>s>-1100&&s<1300?i:-1).filter(i=>i>=0);
+  if(!active.length)return;
+  for(let k=0;k<6;k++){
+    const slot=lasers.findIndex(l=>!l.alive);if(slot<0)break;
+    const li=active[Math.floor(Math.random()*active.length)];
+    const band=scan[li];
+    /* 目标：扫描带 ±40 内的真实点 */
+    let tries=0,pi=-1;
+    while(tries++<24){const c=Math.floor(Math.random()*N);if(Math.abs(pts[c][1]-band)<40){pi=c;break}}
+    if(pi<0)continue;
+    const l=lasers[slot];l.alive=true;l.t0=performance.now();l.life=(0.5+Math.random())*400;
+    l.op=li===0?1:0.4;                             /* 次线 0.4 */
+    const sx=[-3000,400,3000][Math.floor(Math.random()*3)];
+    const s6=slot*6,s2=slot*2;
+    lSrc[s6]=sx;lSrc[s6+1]=2000;lSrc[s6+2]=(Math.random()-.5)*1600;
+    lSrc[s6+3]=lSrc[s6];lSrc[s6+4]=lSrc[s6+1];lSrc[s6+5]=lSrc[s6+2];
+    lTgt[s6]=pts[pi][0];lTgt[s6+1]=pts[pi][1];lTgt[s6+2]=pts[pi][2];
+    lTgt[s6+3]=lTgt[s6];lTgt[s6+4]=lTgt[s6+1];lTgt[s6+5]=lTgt[s6+2];
+    lRnd[s2]=lRnd[s2+1]=Math.random();
+    lOp[s2]=lOp[s2+1]=l.op;
+  }
+}
+function updateLasers(now){
+  let n=0;
+  for(let i=0;i<LMAX;i++){const l=lasers[i];
+    if(!l.alive)continue;
+    const k=(now-l.t0)/l.life;
+    if(k>=1){l.alive=false;lPro[i*2]=lPro[i*2+1]=0;continue}
+    lPro[i*2]=lPro[i*2+1]=k<.5?k*2:1-(k-.5)*2*0.3;   /* 冲到头再缓收 */
+    n++;
+  }
+  return n;
+}
 function frame(now){
-  /* 动画推进 */
+  frameCount++;
   for(let i=anims.length-1;i>=0;i--){const a=anims[i];
     if(now<a.t0)continue;
     const k=Math.min((now-a.t0)/a.dur,1);
@@ -622,41 +842,46 @@ function frame(now){
   }
   if(auto&&!dragging)targetRot+=autoSpeed*burst;
   rotY+=(targetRot-rotY)*.1;
-  ctx.clearRect(0,0,W,H);
-  const f=(H*.5)/Math.tan(FOV/2);
-  const cy=H*.52;
-  const cosR=Math.cos(rotY),sinR=Math.sin(rotY);
+  spawnLasers();const liveLasers=updateLasers(now);
+  gl.clearColor(0,0,0,0);gl.clear(gl.COLOR_BUFFER_BIT);
+  gl.disable(gl.DEPTH_TEST);
+  gl.enable(gl.BLEND);
+  gl.blendFuncSeparate(gl.SRC_ALPHA,gl.ONE,gl.ONE,gl.ONE);   /* AdditiveBlending（three 同款） */
+  const proj=perspective(FOV,W/H,1,10000), mv=modelView(rotY);
   const isIn=(mode==='in'||mode==='in-done');
-  for(let i=0;i<pts.length;i++){
-    const p=pts[i],m=more[i];
-    let x=(p[0]*cosR-p[2]*sinR)*MSCALE, z=(p[0]*sinR+p[2]*cosR)*MSCALE, y=p[1]*MSCALE;
-    const band=scan[m[2]-1]-m[3];       /* adjustedScanLineY = scanY − delay */
-    const d=Math.abs(band-y);
-    let alpha=1, yy=y, col='200,200,200';
-    if(d>0&&d<20)col='255,255,51';       /* vec3(1,1,.2) */
-    if(isIn){ if(y>band){ if(d>=100){alpha=0}else{alpha=Math.max(0,Math.cos(d*Math.PI/200))} } }
-    else{ if(y<band){ yy-=0.05*d*d*0.02; if(d>=100){alpha=0}else{alpha=Math.max(0,Math.cos(d*Math.PI/200))} } else if(mode==='out-done'){alpha=0} }
-    if(alpha<=0)continue;
-    /* 故障带（屏幕空间 y，带宽 ±10 → 舞台系数） */
-    let gx=0;
-    for(let b=0;b<8;b++){const gy=glitch[2*b],gs=glitch[2*b+1];
-      if(gs!==0&&Math.abs(yy-gy)<24)gx+=20*gs}
-    /* 相机变换（y 向下为屏幕正方向） */
-    const wz=z+CAMZ, wy=(yy-CAMY);
-    if(wz<=60)continue;
-    const sx=W*.5+(x+gx)*f/wz, sy=cy-wy*f/wz;
-    const viewZ=wz;
-    const distA=1-Math.min(Math.max((viewZ-FSTART)/(FEND-FSTART),0),1);
-    const a2=0.6*alpha*distA*(-0.25*m[2]+1.25);
-    if(a2<=0.01)continue;
-    const size=(m[1]* .8)*distA+1.4;
-    ctx.fillStyle=`rgba(${col},${a2.toFixed(3)})`;
-    ctx.fillRect(sx-size/2,sy-size/2,size,size);
+  gl.useProgram(prog);gl.bindVertexArray(vao);
+  gl.uniformMatrix4fv(U.modelViewMatrix,false,mv);
+  gl.uniformMatrix4fv(U.projectionMatrix,false,proj);
+  gl.uniform1f(U.scanLineY1,scan[0]);gl.uniform1f(U.scanLineY2,scan[1]);gl.uniform1f(U.scanLineY3,scan[2]);
+  gl.uniform1f(U.scanLineWidth,20);
+  gl.uniform1i(U.isActive,isIn?1:0);
+  gl.uniform1f(U.cameraFadeDistance,FEND);gl.uniform1f(U.cameraFadeStart,FSTART);
+  gl.uniform1f(U.pointSizeScale,DPR*0.9);
+  gl.uniform4f(U.glitchEffects0,glitch[0],glitch[1],glitch[2],glitch[3]);
+  gl.uniform4f(U.glitchEffects1,glitch[4],glitch[5],glitch[6],glitch[7]);
+  gl.uniform4f(U.glitchEffects2,glitch[8],glitch[9],glitch[10],glitch[11]);
+  gl.uniform4f(U.glitchEffects3,glitch[12],glitch[13],glitch[14],glitch[15]);
+  gl.uniform1f(U.featherWidth,.1);gl.uniform1f(U.coreRadius,.1);
+  gl.uniform1f(U.innerGlowStrength,.6);gl.uniform1f(U.compressStrength,.5);
+  gl.uniform2f(U.resolution,cv.width,cv.height);
+  if(mode!=='out-done')gl.drawArrays(gl.POINTS,0,N);
+  if(liveLasers>0){
+    gl.useProgram(lprog);gl.bindVertexArray(lvao);
+    gl.uniformMatrix4fv(LU.modelViewMatrix,false,mv);
+    gl.uniformMatrix4fv(LU.projectionMatrix,false,proj);
+    gl.uniform1f(LU.cameraFadeDistance,FEND+CAMZ);
+    gl.activeTexture(gl.TEXTURE0);gl.bindTexture(gl.TEXTURE_2D,ntex);gl.uniform1i(LU.noiseTexture,0);
+    gl.bindBuffer(gl.ARRAY_BUFFER,bSrc);gl.bufferSubData(gl.ARRAY_BUFFER,0,lSrc);
+    gl.bindBuffer(gl.ARRAY_BUFFER,bTgt);gl.bufferSubData(gl.ARRAY_BUFFER,0,lTgt);
+    gl.bindBuffer(gl.ARRAY_BUFFER,bPro);gl.bufferSubData(gl.ARRAY_BUFFER,0,lPro);
+    gl.bindBuffer(gl.ARRAY_BUFFER,bRnd);gl.bufferSubData(gl.ARRAY_BUFFER,0,lRnd);
+    gl.bindBuffer(gl.ARRAY_BUFFER,bOp);gl.bufferSubData(gl.ARRAY_BUFFER,0,lOp);
+    gl.drawArrays(gl.LINES,0,LMAX*2);
   }
+  gl.bindVertexArray(null);
   requestAnimationFrame(frame);
 }
 requestAnimationFrame(frame);
-/* 进视口自动点亮一次 */
 new IntersectionObserver((es,o)=>{es.forEach(e=>{if(e.isIntersecting){fadeIn();o.disconnect()}})},{threshold:.4}).observe(stage);
 })();
 

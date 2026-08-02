@@ -322,6 +322,7 @@ figure.shot figcaption{padding:8px 12px;font-size:11px;color:var(--grey-dark);fo
           <a href="#sec-webgl"><span class="tt">WebGL 舞台</span></a>
           <a href="#sec-lab"><span class="tt">签名实验室</span></a>
           <a href="#sec-walk"><span class="tt">逐屏走查</span></a>
+          <a href="#sec-key"><span class="tt">隐藏章 · 钥匙</span></a>
           <a href="#sec-craft"><span class="tt">工艺细节</span></a>
           <a href="#sec-replicate"><span class="tt">复刻要点</span></a>
           <a href="#sec-prov"><span class="tt">出处与方法</span></a>
@@ -562,7 +563,7 @@ pos.y += smoothstep(1.0, -0.5, wave) * 0.25;  <em>// 落翼时抬升</em></pre>
 
 <!-- ============ VII 签名实验室 ============ -->
 <section class="chapter" id="sec-lab">
-  <div class="kicker"><span class="num">VII</span><span class="t">签名实验室</span><span class="r">五台装置，全部原值</span></div>
+  <div class="kicker"><span class="num">VII</span><span class="t">签名实验室</span><span class="r">七台装置，全部原值</span></div>
 
   <!-- demo A -->
   <div class="demo" id="demoA">
@@ -672,6 +673,44 @@ pos.y += smoothstep(1.0, -0.5, wave) * 0.25;  <em>// 落翼时抬升</em></pre>
       <span class="mono muted">darken 联动 |pos|→0 区间</span>
     </div>
     <div class="note">章节之间的「翻页」不是 DOM 过渡：Theatre 时间轴驱动一块 #dcdcd0 的全屏幕布从 −1（画面外）推到 1（盖满再离场），同轨还有 darken 压暗与 fadeCenter 径向衰减中心。移动端有独立的 mobilePosition 轨道。light 主题的切换窗口（第 V 章的表）就挂在这个值上。</div>
+  </div>
+
+  <!-- demo F -->
+  <div class="demo" id="demoF">
+    <header><span class="t">装置六 · Theatre 状态回放（HeroScene 真轨道）</span><span class="src">state_15.json · 10 objects / 33 tracks / 87 keyframes · 逐帧贝塞尔求值</span></header>
+    <div id="thStage" style="display:grid;grid-template-columns:1fr 240px;gap:0;background:#292919">
+      <canvas id="thCanvas" style="width:100%;height:300px;display:block"></canvas>
+      <div style="padding:14px;border-left:1px solid #3a3a28;display:flex;flex-direction:column;gap:8px">
+        <select id="thTrack" aria-label="选择轨道" style="background:#1f1f14;color:#f7f7ee;border:1px solid #4a4a34;padding:6px;font:12px/1.4 ui-monospace,monospace"></select>
+        <div class="mono" style="color:#f7f7ee;font-size:12px">position <b id="thPos">0.00</b> / 10</div>
+        <div class="mono" style="color:#88ddaa;font-size:12px">value <b id="thVal">0</b></div>
+        <div id="thProxyWrap" style="flex:1;position:relative;background:#1f1f14;border:1px solid #3a3a28;overflow:hidden">
+          <div id="thProxy" style="position:absolute;left:50%;top:50%;width:34px;height:34px;background:#f7f7ee;transform:translate(-50%,-50%)"></div>
+          <div id="thDots" style="position:absolute;inset:0;background-image:radial-gradient(circle at 20% 30%,#f7f7ee 1px,transparent 1.6px),radial-gradient(circle at 70% 60%,#f7f7ee 1px,transparent 1.6px),radial-gradient(circle at 45% 80%,#f7f7ee 1px,transparent 1.6px),radial-gradient(circle at 85% 20%,#f7f7ee 1px,transparent 1.6px);background-size:90px 90px"></div>
+          <div class="mono" style="position:absolute;left:8px;bottom:6px;font-size:10px;color:#8a8a6a">cube ← position/rotation 轨 · 辉光 ← bloom 轨 · 尘埃 ← particles.opacity</div>
+        </div>
+      </div>
+    </div>
+    <div id="thCtl" style="display:flex;align-items:center;gap:12px;padding:10px 14px;background:#1f1f14">
+      <button class="btn" id="thPlay">播放</button>
+      <input type="range" id="thRange" min="0" max="1000" value="0" style="flex:1" aria-label="时间轴位置">
+      <span class="mono muted" style="font-size:11px">sequence.position = 滚动进度 × (章高+vh)/vh —— 原站把这条时间轴挂在滚轮上</span>
+    </div>
+    <div class="note">这不是模拟：右侧数据是 <code>manual_HeroScene.theatre-project-state_15.json</code> 的全部 32 条有效轨道（含贝塞尔手柄原值），求值方式与 Theatre 相同——相邻关键帧间做 cubic-bezier(左帧右手柄, 右帧左手柄) 缓动。曲线板里能看见 hero 序章的全部编排：相机 z 从 −18.57 冲到 6.45 再退到 −2.29、landscape 的 KTX2 帧序列 0→124、bloom 在 1.767–2.233 处的尖峰 4→1、粒子透明度四段折线。选一条轨道看它的真实曲线。</div>
+  </div>
+
+  <!-- demo G -->
+  <div class="demo" id="demoG">
+    <header><span class="t">装置七 · 蝴蝶标本（rest.json 真几何 + 折翼着色器原文）</span><span class="src">2,589 顶点 / 3,616 三角 · 三层叠波 + wingBlend smoothstep(.02,.4) · ±8% 不对称</span></header>
+    <div id="bf2Stage" style="position:relative;height:340px;background:radial-gradient(120% 120% at 50% 40%,#3a3a28 0%,#292919 60%,#1c1c10 100%);overflow:hidden">
+      <canvas id="bf2Canvas" style="width:100%;height:100%;display:block"></canvas>
+      <div class="mono" style="position:absolute;left:12px;bottom:10px;font-size:11px;color:#c9c9b0">REST.JSON — 原站蝴蝶网格 · 辉光 #88DDFF（= 8969727，实锤换算）</div>
+    </div>
+    <div style="display:flex;align-items:center;gap:12px;padding:10px 14px;background:#1f1f14">
+      <button class="btn" id="bf2Rand">换一只（重掷 instanceRandom）</button>
+      <span class="mono muted" style="font-size:11px">wave = sin(t) + 0.2·sin(2.1t+φw·π) + 0.3·sin(0.37t+φz·5) · flapSpeed 4–8 · flapAmp 0.8–1.3 · bob smoothstep(1,−.5,wave)×0.25</span>
+    </div>
+    <div class="note">几何来自已落盘的 <code>manual_rest.json</code>（position/normal/uv/index 全套，2,589 顶点）；顶点着色器为 Butterflies chunk 原文——三层叠波驱动 |x| 方向的翼面绕体轴折叠，左右翼相位差 ±8%。原站以 50 只 instancedMesh + KTX2 翼面贴图 + PMREM 环境铺满 hero；此处单只标本、以法线明暗替代贴图（KTX2/UASTC 需 wasm 转码器，属体裁取舍），边缘辉光公式与脉动为原值。</div>
   </div>
 </section>
 
@@ -791,9 +830,98 @@ pos.y += smoothstep(1.0, -0.5, wave) * 0.25;  <em>// 落翼时抬升</em></pre>
   </div>
 </section>
 
-<!-- ============ IX 工艺细节 ============ -->
+<!-- ============ IX 隐藏章 · 钥匙 ============ -->
+<section class="chapter" id="sec-key">
+  <div class="kicker"><span class="num">IX</span><span class="t">隐藏章 · 钥匙</span><span class="r">clavis reserat——钥匙开启它</span></div>
+
+  <p style="max-width:74ch">控制台的花体拉丁文只是请柬。真正的彩蛋是一台<b>双窗口 WebGL 装置</b>：Shipping 章的猎豹鞍带上挂着一把金钥匙（three.js 场景内可点击、悬停自旋 2π/600ms），点击后 <code>window.open</code> 弹出一扇 4:3 的小窗——<code>宽 = min(vw,vh)×0.53×4/3</code>，以点击点为中心，窗名 <code>ripple_popup</code>，加载独立路由 <code>/editions/winter2026/key</code>（three@0.159 + 92KB 专属 bundle popup.min）。这扇小窗不是页面，是一支<b>透镜</b>。</p>
+
+  <div class="demo">
+    <header><span class="t">五幕剧 · 无头双窗实录</span><span class="src">Playwright 双页联动 · WebRTC 真握手（video readyState 4）· 全部截图为真实渲染</span></header>
+    <div style="display:flex;gap:10px;overflow-x:auto;padding:14px;background:var(--curtain,#dcdcd0)">
+      <img src="assets/key/01-main-shipping-lock.jpg" alt="主窗口 Shipping 章：猎豹鞍带上的金锁" loading="lazy" style="height:250px;width:auto;flex:0 0 auto">
+      <img src="assets/key/03-popup-key-boids-keyhole.jpg" alt="弹窗：金钥匙 + 锁孔 + boid 彩带 + 紫光灯画面" loading="lazy" style="height:250px;width:auto;flex:0 0 auto">
+      <img src="assets/key/04-popup-key-inserted.jpg" alt="弹窗：钥匙插入位" loading="lazy" style="height:250px;width:auto;flex:0 0 auto">
+      <img src="assets/key/05-popup-graffiti-onset.jpg" alt="弹窗：涂鸦模式启动" loading="lazy" style="height:250px;width:auto;flex:0 0 auto">
+      <img src="assets/key/06-popup-hero-dither-skateboard.jpg" alt="弹窗：hero 章 Bayer 抖动 + 金滑板" loading="lazy" style="height:250px;width:auto;flex:0 0 auto">
+      <img src="assets/key/07-popup-marketing-water.jpg" alt="弹窗：marketing 章水面折射" loading="lazy" style="height:250px;width:auto;flex:0 0 auto">
+    </div>
+    <div class="note"><b>第一幕</b>·主窗口把自己的 WebGL 画布 <code>captureStream(60)</code>（≤5Mbps、每 16ms requestFrame），经 BroadcastChannel 信令（offer 每 100ms 重发、10s 超时）建 RTCPeerConnection，把直播流塞给弹窗做 <code>VideoTexture</code>。<b>第二幕</b>·弹窗按 <code>window.screenX</code> 与主窗广播的画布矩形做屏幕级对齐（fov 50、planeZ −5、lerp .25）——拖动小窗划过屏幕，窗里的画面始终与主画面逐像素对位：透镜成立。<b>第三幕</b>·每章一支片元着色器重新冲洗直播画面（下表），且每章掉落一件<b>镀金收藏品</b>（#BF9852 · metalness 1 · roughness .2 · 仓库 HDR），点击拾起→彩带鱼群多一尾（Boids，上限 12）。<b>第四幕</b>·Shipping 章锁孔现身（keyhole.glb，命中高亮 envMapIntensity 1→10），把钥匙拖近 2 世界单位内放下：<code>KEY_INSERT_COMPLETE</code> 广播——主窗口 Theatre 轨道 <code>coinRain</code> 触发 150 枚 instanced 金币雨（重力 4、初速 2.5、寿命至 y&lt;−3），鞍带金锁的 GLB 动画被 0.08 lerp 擦到开锁位。<b>第五幕</b>·弹窗切入 <code>blacklight</code> 紫光灯着色器 + Graffiti-Canvas KTX2 加法叠层（1:2 长卷、随主页滚动展开、mud_normal 扰动 + 哈希闪烁）——小窗变成 UV 手电，照出全站隐藏的涂鸦。</div>
+  </div>
+
+  <div class="two-col">
+    <div>
+      <h3 style="font-size:15px;margin-bottom:8px">十二章 · 十二件镀金收藏品（原文实锤）</h3>
+      <table>
+        <tr><th>章</th><th class="mono">模型</th><th class="mono">scale</th></tr>
+        <tr><td>Hero</td><td class="mono">skateboard.glb</td><td class="mono">1.25</td></tr>
+        <tr><td>Sidekick</td><td class="mono">compass.glb</td><td class="mono">.7</td></tr>
+        <tr><td>Online</td><td class="mono">scroll.glb（卷轴）</td><td class="mono">1.2</td></tr>
+        <tr><td>Retail</td><td class="mono">pos.glb</td><td class="mono">5</td></tr>
+        <tr><td>Marketing</td><td class="mono">lute.glb（鲁特琴）</td><td class="mono">1.2</td></tr>
+        <tr><td>Checkout</td><td class="mono">cardreader.glb</td><td class="mono">10</td></tr>
+        <tr><td>Operations</td><td class="mono">compass.glb</td><td class="mono">.7</td></tr>
+        <tr><td>Shop app</td><td class="mono">duck.glb（橡皮鸭）</td><td class="mono">14</td></tr>
+        <tr><td>B2B</td><td class="mono">iphone.glb</td><td class="mono">14</td></tr>
+        <tr><td>Finance</td><td class="mono">skateboard.glb</td><td class="mono">1.25</td></tr>
+        <tr><td>Shipping</td><td class="mono"><b>key.glb（钥匙）</b></td><td class="mono">2.6</td></tr>
+        <tr><td>Developer</td><td class="mono">ring.glb（戒指）</td><td class="mono">1.2</td></tr>
+      </table>
+      <div class="callout" style="margin-top:10px"><b>Shoppy 也在场：</b>DancingRenaissanceShoppyv5_compressed.glb 常驻弹窗上缘（scale 2.5），两条动画轨 Armature / Hat，默认循环跳舞。金币 coin-reduced.glb 与全部收藏品共用金漆与 DRACO 解码（gstatic 1.5.6）。</div>
+    </div>
+    <div>
+      <h3 style="font-size:15px;margin-bottom:8px">透镜着色器（每章一支，全文在库）</h3>
+      <table>
+        <tr><th>章</th><th>处理</th></tr>
+        <tr><td>hero</td><td class="mono">20px 网格化 + 4×4 Bayer 抖动（/25）→ 铜版画</td></tr>
+        <tr><td>marketing</td><td class="mono">水面折射（8 步 × 7 向、freq 8、gain 700）+ mud 法线扰动</td></tr>
+        <tr><td>shop-app / developer</td><td class="mono">3px Bayer 抖动（/20），一反相一正相</td></tr>
+        <tr><td>finance / shipping</td><td class="mono">pow(rgb, 2.0) 显影加深</td></tr>
+        <tr><td>其余章</td><td class="mono">pow(rgb, 2.5) 暗房基调</td></tr>
+        <tr><td>blacklight（涂鸦）</td><td class="mono">luma 紫光灯 + fwidth 边缘检测 ×10 → 蓝边发光 + 径向衰减</td></tr>
+      </table>
+      <h3 style="font-size:15px;margin:14px 0 8px">Boids 彩带鱼群（原文实锤）</h3>
+      <pre>1 尾起步，每「发现」一章 +1，上限 12
+霓虹 12 色 ⇄ 拾起时渐变金 12 色（lerp .15）
+带状网格：15±1 节 · 链式 lerp .28±.05
+鱼形宽度 pow(1−t,.3)·pow(t+.1,.5) × .06
+体波 sin 双频（6–9Hz）×t² · 螺旋泳姿三层
+分离力平方反比（r²&lt;.16）·环绕半径 1.5×(1−moving×.7)
+AdditiveBlending · DoubleSide · depthWrite off</pre>
+    </div>
+  </div>
+
+  <div class="two-col" style="margin-top:16px">
+    <div>
+      <h3 style="font-size:15px;margin-bottom:8px">跨窗协议（BroadcastChannel «shop-popup-sync» + localStorage 兜底）</h3>
+      <table>
+        <tr><th class="mono">消息</th><th>方向 · 语义</th></tr>
+        <tr><td class="mono">CANVAS_RECT / MAIN_WINDOW</td><td>主→弹 · 画布矩形 + 窗位/滚动（rAF 逐帧）</td></tr>
+        <tr><td class="mono">ACTIVE_SECTION</td><td>主→弹 · 章名/进度/theatreTime（同一公式 (h+vh)/vh）</td></tr>
+        <tr><td class="mono">POPUP_POSITION / POPUP_CENTER</td><td>弹→主 · 屏幕矩形 + 归一坐标/速度/颜色</td></tr>
+        <tr><td class="mono">POPUP_RIPPLE</td><td>弹→主 · 拾起时的涟漪坐标 + 霓虹色（7 色 4s 自轮换）</td></tr>
+        <tr><td class="mono">WHEEL_EVENT</td><td>弹→主 · 滚轮转发，主窗每帧吸收 15%</td></tr>
+        <tr><td class="mono">KEY_INSERT_COMPLETE / KEY_SEQUENCE_RESET</td><td>弹⇄主 · 开锁 / 复位（金币雨、锁动画、涂鸦切换）</td></tr>
+        <tr><td class="mono">WEBRTC_READY / POPUP_CLOSED / KEY_ANIMATED_OUT</td><td>握手成功 / 关窗清理 / 主画面钥匙飞离</td></tr>
+      </table>
+    </div>
+    <div>
+      <h3 style="font-size:15px;margin-bottom:8px">生存法则与后门（原文实锤）</h3>
+      <pre>弹窗失焦 10s → window.close()
+文档隐藏 9s → 关闭；视频冻结 3s×3 → 重连（≤3 次）
+WebRTC 断 → 直接关窗（透镜不许离线）
+STUN: stun.l.google.com:19302（localhost 免）
+?mode=scan → 扫描模式（色锁黄，无涂鸦线）
+?debug=1 → 调试；<b>?popup=（空值）→ 免点击直开弹窗</b>
+主窗 beforeunload → 反手关掉自己的弹窗</pre>
+      <div class="callout" style="margin-top:10px"><b>连蝴蝶都知情：</b>Butterflies chunk 独立订阅 KEY_INSERT_COMPLETE——开锁瞬间蝴蝶场景的 GLB 动画时间轴被逐帧擦向终点（timeScale=0 手动 mixer），关窗即回卷。<b>核查注记：</b>useKeyPopupStore 里预留的 keyUnlock/POPUP_CENTER 主窗消费端在成品 chunk 中未见接线（推断为未启用或内部版功能）；弹窗构造线 GridPattern 的 26 条线坐标与本页侧栏达·芬奇手稿框同源（1440×890 系）。</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ X 工艺细节 ============ -->
 <section class="chapter" id="sec-craft">
-  <div class="kicker"><span class="num">IX</span><span class="t">工艺细节</span><span class="r">二十件小事，件件有出处</span></div>
+  <div class="kicker"><span class="num">X</span><span class="t">工艺细节</span><span class="r">二十件小事，件件有出处</span></div>
   <div class="two-col">
     <table>
       <tr><th>细节</th><th>数值（全部实锤）</th></tr>
@@ -816,7 +944,7 @@ pos.y += smoothstep(1.0, -0.5, wave) * 0.25;  <em>// 落翼时抬升</em></pre>
       <tr><td>计数上升</td><td class="mono">1s 三次方缓出 rAF 数字滚动</td></tr>
       <tr><td>Apps 云入场</td><td class="mono">WAAPI scale ×.5→1 · 0–800ms 随机延迟 · ease-out-back</td></tr>
       <tr><td>Apps 云斥力</td><td class="mono">maxDistance 300 · repulsion 20 · 视差 ±15px</td></tr>
-      <tr><td>控制台彩蛋 = 藏宝图</td><td class="mono">ASCII 手稿画 + 花体拉丁文「clavis reserat」→ 隐藏路由 /key（three@0.159 独立场景）</td></tr>
+      <tr><td>控制台彩蛋 = 藏宝图</td><td class="mono">ASCII 手稿画 + 花体拉丁文「clavis reserat」→ /key 双窗装置（全链路见 IX 隐藏章）</td></tr>
       <tr><td>创作后门</td><td class="mono">URL ?theatre 参数动态加载 Theatre.js Studio</td></tr>
       <tr><td>emoji 包下载彩蛋</td><td class="mono">shopify-w26-emoji-pack.zip 隐形按钮</td></tr>
       <tr><td>加载序列</td><td class="mono">线框 6s→80% · 就绪后 1s 收口 · 标题居中→ai 滑入(−898px, .6s)→侧栏归位</td></tr>
@@ -825,9 +953,9 @@ pos.y += smoothstep(1.0, -0.5, wave) * 0.25;  <em>// 落翼时抬升</em></pre>
   </div>
 </section>
 
-<!-- ============ X 复刻要点 ============ -->
+<!-- ============ XI 复刻要点 ============ -->
 <section class="chapter" id="sec-replicate">
-  <div class="kicker"><span class="num">X</span><span class="t">复刻要点</span><span class="r">可直接拷走的 token 与公式</span></div>
+  <div class="kicker"><span class="num">XI</span><span class="t">复刻要点</span><span class="r">可直接拷走的 token 与公式</span></div>
   <div class="two-col">
     <div>
 <pre>:root{
@@ -877,9 +1005,9 @@ path{stroke-dasharray:1;stroke-dashoffset:1px;
   <div class="callout" style="margin-top:14px"><b>工程坑（实测）：</b>KTX2 必须配 worker 池流式解码否则首屏卡死；移动端 Safari 用原生滚动 + JS lerp .5 而非 Lenis（触摸链劫持会毁惯性）；View Transition 的 old/new 要分别 object-fit contain/cover 才不跳形；罗马数字 counter 在 IV 以上宽度突变，务必等宽预留；Sobel 场景切换时先把主题三属性一起翻 light 再开窗，否则文字闪黑。</div>
 </section>
 
-<!-- ============ XI 出处与方法 ============ -->
+<!-- ============ XII 出处与方法 ============ -->
 <section class="chapter" id="sec-prov">
-  <div class="kicker"><span class="num">XI</span><span class="t">出处与方法</span><span class="r">页内简版 · 全文见文档</span></div>
+  <div class="kicker"><span class="num">XII</span><span class="t">出处与方法</span><span class="r">页内简版 · 全文见文档</span></div>
   <div class="two-col">
     <div>
       <h3 class="h4" style="margin-bottom:8px">实锤（直接抽取）</h3>
@@ -908,9 +1036,9 @@ path{stroke-dasharray:1;stroke-dashoffset:1px;
   </div>
 </section>
 
-<!-- ============ XII 评审结论 ============ -->
+<!-- ============ XIII 评审结论 ============ -->
 <section class="chapter" id="sec-verdict">
-  <div class="kicker"><span class="num">XII</span><span class="t">评审结论</span><span class="r">全文见 设计评审.md</span></div>
+  <div class="kicker"><span class="num">XIII</span><span class="t">评审结论</span><span class="r">全文见 设计评审.md</span></div>
   <p class="narr narr-1 drop-cap lede">这站把「营销页」做成了「作品」的原因只有一个：工具链的权力分配。Theatre.js 把时间轴交给设计师，CMS 把场景交给内容团队，代码只保留物理与纪律——于是十二章油画各自成戏，而工程始终只有一套。</p>
   <p style="font-size:13.5px;margin-top:14px" class="muted">五份文档：<a href="设计解构.md">设计解构</a> · <a href="复刻指南.md">复刻指南</a> · <a href="出处与方法.md">出处与方法</a> · <a href="事实核查.md">事实核查</a> · <a href="设计评审.md">设计评审</a></p>
 </section>
@@ -1110,6 +1238,209 @@ rg.addEventListener('input',()=>{
   st.style.setProperty('--darken',(1-Math.min(1,Math.abs(p)))*0.55);
   val.textContent=(p<0?'−':'')+Math.abs(p).toFixed(2);
 });
+})();
+
+/* ============ demo F：Theatre 状态回放（HeroScene 真轨道） ============ */
+(()=>{
+const DATA={"length":10,"tracks":[{"o":"cube","p":"position.x","k":[[0,0.0,0.5,1,0.5,0],[10,0.0,0.5,1,0.5,0]]},{"o":"cube","p":"position.y","k":[[0,0.0,0.5,1,0.5,0],[10,0.0,0.5,1,0.5,0]]},{"o":"cube","p":"position.z","k":[[0,-7.33,0.5,1,0.5,0],[10,0.0,0.5,1,0.5,0]]},{"o":"cube","p":"rotation.x","k":[[0,4.16,0.5,1,0.5,0],[10,0.0,0.5,1,0.5,0]]},{"o":"cube","p":"rotation.y","k":[[0,-1.98,0.5,1,0.5,0],[10,0.0,0.5,1,0.5,0]]},{"o":"cube","p":"rotation.z","k":[[0,2.43,0.5,1,0.5,0],[10,0.0,0.5,1,0.5,0]]},{"o":"asset-1","p":"visibility","k":[[0.5,0.0,0.5,1,0.469,0.486],[1,1.0,0.5,1,0.5,0]]},{"o":"asset-1","p":"timeline","k":[[0.767,0.0,0.5,1,0.5,0],[1.8,5.84,0.5,1,0.5,0]]},{"o":"asset-1","p":"animations.Scene.progress","k":[[0.367,1.0,0.5,1,0.55,0.085],[1,0.0,0.401,0.623,0.448,0.403],[1.767,1.0,0.634,0.638,0.5,0],[2.467,0.09,0.5,1,0.5,0]]},{"o":"asset-2","p":"visibility","k":[[0,0.0,0.5,1,0.55,0.085],[1,1.0,0.67,0.612,0.5,0]]},{"o":"asset-2","p":"frameProgress","k":[[1,0.0,0.5,1,0.397,0.424],[2.233,1.0,0.624,0.628,0.5,0]]},{"o":"camera","p":"position.x","k":[[0,0.0,0.5,1,0.748,0.021],[1,0.0,0.5,0.876,0.5,0],[1.8,0.0,0.5,1,0.5,0],[2.667,0.0,0.5,1,0.5,0]]},{"o":"camera","p":"position.y","k":[[0,0.0,0.5,1,0.748,0.021],[1,0.0,0.5,0.876,0.5,0],[1.8,0.74,0.5,1,0.5,0],[2.667,-0.21,0.5,1,0.5,0]]},{"o":"camera","p":"position.z","k":[[0,-18.57,0.5,1,0.748,0.021],[1,6.45,0.5,0.876,0.5,0],[1.8,10.34,0.5,1,0.5,0],[2.667,-2.29,0.5,1,0.5,0]]},{"o":"camera","p":"rotation.x","k":[[0,0.0,0.5,1,0.82,0.01],[1,0.0,0.521,0.814,0.5,0],[1.8,0.0,0.5,1,0.5,0],[3.033,-0.04,0.5,1,0.5,0]]},{"o":"camera","p":"rotation.y","k":[[0,0.0,0.5,1,0.82,0.01],[1,0.0,0.5,1,0.5,0],[1.8,0.0,0.5,1,0.5,0],[3.033,0.0,0.5,1,0.5,0]]},{"o":"camera","p":"rotation.z","k":[[0,0.27,0.5,1,0.82,0.01],[1,0.0,0.5,1,0.5,0],[1.8,-0.025,0.5,1,0.5,0],[3.033,0.28,0.5,1,0.5,0]]},{"o":"camera","p":"fov","k":[[1,25.0,0.5,1,0.5,0],[2.6,22.0,0.5,1,0.5,0]]},{"o":"camera","p":"target.x","k":[[0.267,0.0,0.5,1,0.5,0],[1,0.0,0.5,1,0.5,0],[1.8,0.0,0.5,1,0.5,0],[2.667,0.0,0.5,1,0.5,0]]},{"o":"camera","p":"target.y","k":[[0.267,0.0,0.5,1,0.5,0],[1,0.0,0.5,1,0.5,0],[1.8,0.54,0.5,1,0.5,0],[2.667,0.0,0.5,1,0.5,0]]},{"o":"camera","p":"target.z","k":[[0.267,-21.8,0.5,1,0.5,0],[1,1.0,0.5,1,0.5,0],[1.8,1.0,0.5,1,0.5,0],[2.667,-7.06,0.5,1,0.5,0]]},{"o":"asset-3","p":"position.x","k":[[0,-1.0,0.5,1,0.5,0],[2.133,-1.76,0.5,1,0.5,0]]},{"o":"asset-3","p":"position.y","k":[[0,13.46,0.5,1,0.5,0],[2.133,-4.19,0.5,1,0.5,0]]},{"o":"asset-3","p":"position.z","k":[[0,-2.95,0.5,1,0.5,0],[2.133,-0.56,0.5,1,0.5,0]]},{"o":"asset-3","p":"rotation.x","k":[[0,-1.45,0.5,1,0.5,0],[2.133,-1.41,0.5,1,0.5,0]]},{"o":"asset-3","p":"rotation.y","k":[[0,0.0,0.5,1,0.5,0],[2.133,0.21,0.5,1,0.5,0]]},{"o":"asset-3","p":"rotation.z","k":[[0,-0.17,0.5,1,0.5,0],[2.133,0.03,0.5,1,0.5,0]]},{"o":"landscape","p":"frame","k":[[1,0.0,0.5,1,0.459,0.475],[2.1,124.0,0.593,0.618,0.5,0]]},{"o":"landscape","p":"brightness","k":[[1.167,1.0,0.5,1,0.5,0],[2.3,1.52,0.5,1,0.5,0]]},{"o":"bloom-effect","p":"intensity","k":[[1.767,4.0,0.5,1,0.5,0],[2.233,1.0,0.5,1,0.5,0]]},{"o":"effects","p":"bloom.intensity","k":[[1.767,3.5,0.5,1,0.5,0],[2,1.0,0.5,1,0.5,0],[2.433,0.2,0.5,1,0.5,0]]},{"o":"particles","p":"opacity","k":[[0,0.0,0.5,1,0.5,0],[0.4,0.59,0.5,1,0.5,0],[1,0.84,0.5,1,0.5,0],[1.133,0.64,0.5,1,0.5,0]]}]};
+const cvs=document.getElementById('thCanvas'),c2=cvs.getContext('2d');
+const sel=document.getElementById('thTrack'),rng=document.getElementById('thRange');
+const posEl=document.getElementById('thPos'),valEl=document.getElementById('thVal');
+const proxy=document.getElementById('thProxy'),dots=document.getElementById('thDots'),playBtn=document.getElementById('thPlay');
+DATA.tracks.forEach((t,i)=>{const o=document.createElement('option');o.value=i;o.textContent=`${t.o} · ${t.p}（${t.k.length} kf）`;sel.appendChild(o)});
+sel.value=13; /* camera.position.z——最戏剧化的一条 */
+/* Theatre 同款求值：相邻关键帧之间 cubic-bezier(左帧右手柄x,y, 右帧左手柄x,y) */
+function bezierY(x1,y1,x2,y2,x){
+  if(x<=0)return 0;if(x>=1)return 1;
+  let t=x;
+  for(let i=0;i<8;i++){
+    const t1=1-t;
+    const xt=3*t1*t1*t*x1+3*t1*t*t*x2+t*t*t;
+    const dx=3*t1*t1*x1+6*t1*t*(x2-x1)+3*t*t*(1-x2);
+    if(Math.abs(dx)<1e-6)break;
+    t-=(xt-x)/dx;t=Math.max(0,Math.min(1,t));
+  }
+  const t1=1-t;
+  return 3*t1*t1*t*y1+3*t1*t*t*y2+t*t*t;
+}
+function evalTrack(t,pos){
+  const k=t.k;
+  if(pos<=k[0][0])return k[0][1];
+  if(pos>=k[k.length-1][0])return k[k.length-1][1];
+  for(let i=0;i<k.length-1;i++){
+    const a=k[i],b=k[i+1];
+    if(pos>=a[0]&&pos<=b[0]){
+      const u=(pos-a[0])/(b[0]-a[0]);
+      const e=bezierY(a[4],a[5],b[2],b[3],u);   /* a 的右手柄 + b 的左手柄 */
+      return a[1]+(b[1]-a[1])*e;
+    }
+  }
+  return k[k.length-1][1];
+}
+function get(o,p,pos){const t=DATA.tracks.find(t=>t.o===o&&t.p===p);return t?evalTrack(t,pos):0}
+let W2,H2,DPR2=Math.min(devicePixelRatio||1,2);
+function sz(){W2=cvs.clientWidth;H2=cvs.clientHeight;cvs.width=W2*DPR2;cvs.height=H2*DPR2;c2.setTransform(DPR2,0,0,DPR2,0,0)}
+sz();addEventListener('resize',()=>{sz();draw()});
+const VIEW=3.2; /* 曲线板只画 0–3.2：hero 序章关键帧全部落在这里 */
+function draw(){
+  const pos=rng.value/100;
+  c2.clearRect(0,0,W2,H2);
+  const selT=DATA.tracks[+sel.value];
+  DATA.tracks.forEach(t=>{
+    if(t===selT)return;
+    drawCurve(t,'rgba(247,247,238,.14)',1);
+  });
+  drawCurve(selT,'#88ddaa',1.8);
+  /* 关键帧点 */
+  const mm=minmax(selT);
+  selT.k.forEach(k=>{
+    if(k[0]>VIEW)return;
+    const x=k[0]/VIEW*W2,y=mapY(k[1],mm);
+    c2.fillStyle='#f7f7ee';c2.fillRect(x-2.5,y-2.5,5,5);
+  });
+  /* 播放头 */
+  const px=Math.min(pos/VIEW,1)*W2;
+  c2.strokeStyle='#c9a227';c2.lineWidth=1;c2.beginPath();c2.moveTo(px,0);c2.lineTo(px,H2);c2.stroke();
+  posEl.textContent=pos.toFixed(2);
+  valEl.textContent=evalTrack(selT,pos).toFixed(3);
+  /* proxy：cube 轨驱动方块 · bloom 轨驱动辉光 · particles 轨驱动尘埃 */
+  const cx=get('cube','position.x',pos)*8, cy=-get('cube','position.y',pos)*8, cz=get('cube','position.z',pos);
+  const rx=get('cube','rotation.x',pos), ry=get('cube','rotation.y',pos), rz=get('cube','rotation.z',pos);
+  const s=Math.max(.2,1+cz*0.08);
+  proxy.style.transform=`translate(calc(-50% + ${cx}px), calc(-50% + ${cy}px)) scale(${s.toFixed(3)}) rotateX(${rx}rad) rotateY(${ry}rad) rotate(${rz}rad)`;
+  const bloom=get('effects','bloom.intensity',pos);
+  proxy.style.boxShadow=`0 0 ${bloom*14}px ${bloom*4}px rgba(247,247,238,${Math.min(.9,bloom*.24)})`;
+  dots.style.opacity=get('particles','opacity',pos);
+}
+function minmax(t){let mn=1e9,mx=-1e9;t.k.forEach(k=>{mn=Math.min(mn,k[1]);mx=Math.max(mx,k[1])});if(mx-mn<1e-6){mn-=1;mx+=1}return[mn,mx]}
+function mapY(v,[mn,mx]){return H2-14-(v-mn)/(mx-mn)*(H2-28)}
+function drawCurve(t,color,w){
+  const mm=minmax(t);
+  c2.strokeStyle=color;c2.lineWidth=w;c2.beginPath();
+  for(let i=0;i<=160;i++){
+    const pos=i/160*VIEW,x=i/160*W2,y=mapY(evalTrack(t,pos),mm);
+    i?c2.lineTo(x,y):c2.moveTo(x,y);
+  }
+  c2.stroke();
+}
+sel.addEventListener('change',draw);
+rng.addEventListener('input',draw);
+let playing=false,rafId=null,t0=0,p0=0;
+playBtn.addEventListener('click',()=>{
+  playing=!playing;playBtn.textContent=playing?'暂停':'播放';
+  if(playing){t0=performance.now();p0=rng.value/100;if(p0>=3.2)p0=0;
+    const step=now=>{if(!playing)return;
+      const p=p0+(now-t0)/1000;         /* 1 unit/s；原站由滚动驱动 */
+      rng.value=Math.min(1000,p*100);draw();
+      if(p>=10){playing=false;playBtn.textContent='播放';return}
+      rafId=requestAnimationFrame(step)};
+    rafId=requestAnimationFrame(step);
+  }else if(rafId)cancelAnimationFrame(rafId);
+});
+draw();
+})();
+
+/* ============ demo G：蝴蝶标本（rest.json 真几何 + 折翼原文） ============ */
+(async()=>{
+const cvn=document.getElementById('bf2Canvas'),stage=document.getElementById('bf2Stage');
+const gl=cvn.getContext('webgl2',{alpha:true,antialias:false});
+if(!gl){stage.querySelector('.mono').textContent='WEBGL2 UNAVAILABLE';return}
+let W3,H3;const DPR3=Math.min(devicePixelRatio||1,2);
+function sz3(){W3=stage.clientWidth;H3=stage.clientHeight;cvn.width=W3*DPR3;cvn.height=H3*DPR3;gl.viewport(0,0,cvn.width,cvn.height)}
+sz3();addEventListener('resize',sz3);
+let geo;
+try{geo=await fetch('real-assets/texture/manual_rest.json').then(r=>r.json())}catch(e){
+  stage.querySelector('.mono').textContent='REST.JSON 加载失败——请以本地服务器打开（python3 -m http.server）';return}
+const VS3=`#version 300 es
+precision highp float;
+in vec3 position; in vec3 normal; in vec2 uv;
+uniform mat4 uProj, uView, uModel;
+uniform float uTime, uSpeed, uScale;
+uniform vec4 instanceRandom;
+out vec2 vUv; out vec3 vN; out vec4 vRandom;
+void main(){
+  vUv=uv; vRandom=instanceRandom;
+  vec3 pos=position;
+  float flapSpeed=4.0+instanceRandom.y*4.0;
+  float flapAmp=0.8+instanceRandom.z*0.5;
+  float phase=instanceRandom.x*6.28;
+  float t=uTime*uSpeed*flapSpeed+phase;
+  float wave=sin(t);
+  wave+=sin(t*2.1+instanceRandom.w*3.14)*0.2;
+  wave+=sin(t*0.37+instanceRandom.z*5.0)*0.3;
+  float wingDist=abs(pos.x);
+  float wingBlend=smoothstep(0.02,0.4,wingDist);
+  float asymmetry=1.0+sign(pos.x)*sin(t*0.7+instanceRandom.w*6.28)*0.08;
+  float flapAngle=wave*flapAmp*wingBlend*asymmetry;
+  float c=cos(flapAngle), s=sin(flapAngle);
+  float newX=pos.x*c-pos.y*s*sign(pos.x);
+  float newY=pos.x*s*sign(pos.x)+pos.y*c;
+  pos.x=newX; pos.y=newY;
+  pos.y+=smoothstep(1.0,-0.5,wave)*0.25;
+  pos*=uScale*(0.8+instanceRandom.x*0.4);
+  vN=mat3(uModel)*normal;
+  gl_Position=uProj*uView*uModel*vec4(pos,1.0);
+}`;
+const FS3=`#version 300 es
+precision highp float;
+in vec2 vUv; in vec3 vN; in vec4 vRandom;
+uniform float uTime;
+uniform vec3 uGlowColor;
+out vec4 o;
+void main(){
+  vec3 N=normalize(vN);
+  float lam=abs(dot(N,normalize(vec3(.4,.7,.6))))*.75+.25;
+  vec3 base=vec3(0.72,0.80,0.90)*lam;
+  float pulse=sin(uTime*3.0+vRandom.a*6.28)*0.3+0.7;
+  float edgeGlow=2.0-smoothstep(0.1,0.9,vUv.x)-smoothstep(0.1,0.9,vUv.y);
+  vec3 color=base+uGlowColor*edgeGlow*0.3*pulse;
+  color=pow(color,vec3(1.5));
+  o=vec4(color,1.0);
+}`;
+function prog3(vs,fs){const p=gl.createProgram();
+  for(const[t,s]of[[gl.VERTEX_SHADER,vs],[gl.FRAGMENT_SHADER,fs]]){const sh=gl.createShader(t);gl.shaderSource(sh,s);gl.compileShader(sh);
+    if(!gl.getShaderParameter(sh,gl.COMPILE_STATUS))throw new Error(gl.getShaderInfoLog(sh));gl.attachShader(p,sh)}
+  gl.linkProgram(p);return p}
+const P=prog3(VS3,FS3);
+const vao3=gl.createVertexArray();gl.bindVertexArray(vao3);
+function attr(name,arr,size){const b=gl.createBuffer();gl.bindBuffer(gl.ARRAY_BUFFER,b);
+  gl.bufferData(gl.ARRAY_BUFFER,new Float32Array(arr),gl.STATIC_DRAW);
+  const l=gl.getAttribLocation(P,name);gl.enableVertexAttribArray(l);gl.vertexAttribPointer(l,size,gl.FLOAT,false,0,0)}
+attr('position',geo.position,3);attr('normal',geo.normal,3);attr('uv',geo.uv,2);
+const ib=gl.createBuffer();gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER,ib);
+gl.bufferData(gl.ELEMENT_ARRAY_BUFFER,new Uint16Array(geo.index),gl.STATIC_DRAW);
+gl.bindVertexArray(null);
+console.log('[bf] mesh',geo.position.length/3,'verts',geo.index.length/3,'tris');
+let bfLogged=false;
+const U3={};for(const n of['uProj','uView','uModel','uTime','uSpeed','uScale','instanceRandom','uGlowColor'])U3[n]=gl.getUniformLocation(P,n);
+let rnd=[Math.random(),Math.random(),Math.random(),Math.random()];
+document.getElementById('bf2Rand').onclick=()=>{rnd=[Math.random(),Math.random(),Math.random(),Math.random()]};
+function persp3(f,a,n,fa){const t=1/Math.tan(f/2),nf=1/(n-fa);
+  return new Float32Array([t/a,0,0,0,0,t,0,0,0,0,(fa+n)*nf,-1,0,0,2*fa*n*nf,0])}
+const VIEW3=new Float32Array([1,0,0,0,0,1,0,0,0,0,1,0,0,-0.1,-4.8,1]);
+function model3(ry){const c=Math.cos(ry),s=Math.sin(ry);
+  const tx=-0.62,cx=Math.cos(tx),sx=Math.sin(tx);   /* 俯视倾角：标本视角 */
+  /* Rx · Ry（列主序） */
+  return new Float32Array([c,sx*s,-cx*s,0, 0,cx,sx,0, s,-sx*c,cx*c,0, 0,0,0,1])}
+function loop(now){
+  const t=now*0.001;
+  gl.clearColor(0,0,0,0);gl.clear(gl.COLOR_BUFFER_BIT|gl.DEPTH_BUFFER_BIT);
+  gl.enable(gl.DEPTH_TEST);gl.disable(gl.CULL_FACE);
+  gl.useProgram(P);gl.bindVertexArray(vao3);
+  gl.uniformMatrix4fv(U3.uProj,false,persp3(40*Math.PI/180,W3/H3,.1,100));
+  gl.uniformMatrix4fv(U3.uView,false,VIEW3);
+  gl.uniformMatrix4fv(U3.uModel,false,model3(Math.sin(t*.4)*.7-.35));
+  gl.uniform1f(U3.uTime,t);
+  gl.uniform1f(U3.uSpeed,1.2);          /* 原值 uSpeed 1.2 */
+  gl.uniform1f(U3.uScale,1.45);
+  gl.uniform4f(U3.instanceRandom,rnd[0],rnd[1],rnd[2],rnd[3]);
+  gl.uniform3f(U3.uGlowColor,0x88/255,0xDD/255,0xFF/255);   /* #88DDFF */
+  gl.drawElements(gl.TRIANGLES,geo.index.length,gl.UNSIGNED_SHORT,0);
+  if(!bfLogged){bfLogged=true;console.log('[bf] first draw, glError=',gl.getError(),'viewport',W3,H3)}
+  gl.bindVertexArray(null);
+  requestAnimationFrame(loop);
+}
+requestAnimationFrame(loop);
 })();
 
 /* ============ 缓动曲线板起播 ============ */
