@@ -1,0 +1,2056 @@
+<!DOCTYPE html><html lang="zh-CN" class="lenis"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="dark">
+<meta name="description" content="JourneyPilot：一支为你工作的旅行机组。多智能体并行调研、逐条核证、句句有出处的行程企划系统。">
+<meta property="og:title" content="JourneyPilot：你的旅行，背后有一支机组">
+<meta property="og:description" content="一支为你工作的旅行机组：多智能体并行调研、逐条核证、句句有出处的行程企划系统。">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://imlagom.com/projects/journeypilot/assets/og-cover.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://imlagom.com/projects/journeypilot/assets/og-cover.png">
+<title>JourneyPilot：你的旅行，背后有一支机组</title>
+<meta name="theme-color" content="#0D1F3C">
+<style>html{overflow-x:hidden}</style>
+<script>
+/* 刷新即清空：关掉浏览器的滚动记忆、剥掉进入时的 #锚点跳转，
+   每次刷新都从顶部起飞——时间轴从 0 重新计数，登机牌重新集章。 */
+(function(){
+  try{ if("scrollRestoration" in history) history.scrollRestoration="manual"; }catch(e){}
+  if(location.hash){ try{ history.replaceState(null,"",location.pathname+location.search); }catch(e){} }
+  try{ window.scrollTo(0,0); }catch(e){}
+})();
+</script>
+<link rel="icon" type="image/png" sizes="64x64" href="assets/favicon-64.png">
+<link rel="preload" href="assets/fonts/league-gothic.woff2" as="font" type="font/woff2" crossorigin="">
+<link rel="preload" href="assets/fonts/archivo-narrow-600.woff2" as="font" type="font/woff2" crossorigin="">
+<noscript><style>.reveal { opacity: 1; transform: none; }</style></noscript>
+  <script type="module" crossorigin="" src="./assets/index-CHG7eXbg.js"></script>
+  <link rel="stylesheet" crossorigin="" href="./assets/index-CckCQRv1.css">
+<style>
+/* ============ 追加层：动效与页脚（覆盖打包 CSS，故置于 link 之后） ============ */
+
+/* Task 6 · 「开始旅行」：GitHub 图标 + 文案 */
+.fin-ctas .btn-start{ display:inline-flex; align-items:center; gap:9px; padding-left:26px; padding-right:28px; }
+.btn-start .btn-gh{ flex:none; display:block; }
+
+/* Task 5 · 页脚邮戳（点击回到顶部；文字本身不可点） */
+.microfoot{ align-items:center; }
+.foot-stamp{
+  flex:none; position:relative; width:clamp(88px,10vw,120px); aspect-ratio:1;
+  margin:-6px 0 -6px 16px; padding:0; border:0; background:none; cursor:pointer; rotate:-8deg;
+  transition:rotate .3s var(--ease-out), scale .3s var(--ease-out), filter .3s ease;
+}
+.foot-stamp img{ display:block; width:100%; height:100%; border-radius:50%; }
+.foot-stamp svg{ position:absolute; inset:0; width:100%; height:100%; }
+.foot-stamp:hover{ rotate:0deg; scale:1.05; filter:brightness(1.07); }
+.foot-stamp:active{ scale:.97; }
+.foot-stamp:focus-visible{ outline:2px solid var(--orange); outline-offset:5px; border-radius:50%; }
+
+/* Task 3 · 行程卡随日期切换时的淡入淡出 */
+#daycard{ transition:opacity .26s ease; }
+#daycard.swapping{ opacity:0; }
+
+/* Task 2 · 记忆开关：滑动药丸 + 清单丝滑增删 */
+.mswitch{ position:relative; }
+.mswitch::before{
+  content:""; position:absolute; z-index:0; top:4px; bottom:4px; left:4px; right:calc(50% + 1.5px);
+  border-radius:999px; background:var(--orange);
+  transition:left .42s var(--ease-out), right .42s var(--ease-out);
+}
+.mswitch:has(#mem-on.sel)::before{ left:calc(50% + 1.5px); right:4px; }
+.mopt{ position:relative; z-index:1; transition:color .3s ease; }
+.mopt.sel{ background:none; }   /* 药丸接管橙底，去掉每颗按钮各自的底色 */
+
+/* 记忆开时新增的「替补推荐」行：从压扁状态展开而非硬切 */
+.mrow.added{
+  display:flex !important; overflow:hidden;
+  max-height:0; padding-top:0; padding-bottom:0; border-top-width:0;
+  opacity:0; transform:translateY(-6px);
+  transition:max-height .45s var(--ease-out), padding .45s var(--ease-out), opacity .38s ease, transform .45s var(--ease-out);
+}
+.mem-main.on .mrow.added{ max-height:120px; padding-top:14px; padding-bottom:14px; border-top-width:1px; opacity:1; transform:none; }
+
+/* 记忆说明条：同样展开 */
+.mem-note{
+  display:block !important; overflow:hidden;
+  max-height:0; margin-top:0; padding-top:0; padding-bottom:0; opacity:0; transform:translateY(-4px);
+  transition:max-height .5s var(--ease-out), margin .5s var(--ease-out), padding .5s var(--ease-out), opacity .4s ease, transform .5s var(--ease-out);
+}
+.mem-main.on .mem-note{ max-height:220px; margin-top:18px; padding-top:13px; padding-bottom:13px; opacity:1; transform:none; }
+
+/* 被排除菜品：删除线与配色平滑过渡 */
+.mrow.blocked .name{ transition:color .35s ease; }
+.mrow.blocked .mtag{ transition:color .35s ease, border-color .35s ease; }
+
+/* ==================== Round-6：展示板重构 · 末帧标题 · 徽章物理 ==================== */
+
+/* —— Task 3 · 放映控制精简：只留「暂停/继续」；时间显示留在 DOM 供脚本读、视觉移除 —— */
+.th-clock{ display:none; }
+
+/* —— Task 4 · 展示板：顶行进度条 → 主/子任务行 → 全宽航线图 → 底部小字计数 —— */
+.thea-body{ display:block; }
+.thea-deck{ margin-bottom:20px; }
+
+/* 当前任务行：左＝主要任务（突出，生成式左→右擦出），右＝详细子任务（从下往上换行） */
+.thea-now{
+  display:grid; grid-template-columns:minmax(128px,.3fr) 1fr; align-items:stretch;
+  background:var(--panel-deep); border:1px solid var(--line-soft); border-radius:10px;
+  margin-bottom:22px; min-height:74px; overflow:hidden;
+}
+.tn-main{
+  position:relative; overflow:hidden; display:flex; align-items:center; gap:9px;
+  padding:15px 20px; border-right:1px solid var(--line-soft); min-width:0;
+  font-size:clamp(15px,1.65vw,20px); font-weight:700; letter-spacing:-.01em;
+  line-height:1.25; color:var(--cream);
+  /* 覆盖全局 .reveal（tn-main 借用了 reveal 类名做擦入，但不是滚动揭示件，
+     不能吃 .reveal 的 opacity:0 / translateY(22px)——那正是左右不在一条水平线的元凶）*/
+  opacity:1; transform:none;
+}
+.tn-main::before{
+  content:""; flex:none; width:7px; height:7px; border-radius:50%; background:var(--orange);
+  animation:tnPulse 1.9s var(--ease-out) infinite;
+}
+.tn-main.gatel::before{ background:var(--cream); }
+.tn-main.reveal{ animation:tnWipe .5s var(--ease-out) both; }
+/* 常驻光泽：调研进行时，一束橙光只贴着「字形」反复扫过（background-clip:text，
+   格子本身不再整块泛光）；暂停 / 拖动进度时脚本撤下 #thea-stage.running，标题回素色。
+   round-20：频率再提——3.0s 一轮，扫 2.4s + 停 0.6s。
+   注意 animation 单属性：running 与 .reveal 的 tnWipe 相撞时要双动画并列声明。 */
+#thea-stage.running .tn-main{
+  background-image:linear-gradient(100deg,var(--cream) 42%,#E4571F 47.5%,#F2A05F 50%,#E4571F 52.5%,var(--cream) 58%);
+  background-size:240% 100%; background-repeat:no-repeat;
+  -webkit-background-clip:text; background-clip:text;
+  -webkit-text-fill-color:transparent; color:transparent;
+  animation:tnShimmer 3s cubic-bezier(.45,.05,.35,.95) infinite;
+}
+#thea-stage.running .tn-main.reveal{
+  animation:tnWipe .5s var(--ease-out) both, tnShimmer 3s cubic-bezier(.45,.05,.35,.95) infinite;
+}
+.tn-sub{
+  position:relative; overflow:hidden; min-height:2.8em; padding:12px 20px; min-width:0;
+}
+.tn-line{
+  position:absolute; left:20px; right:20px; top:50%; transform:translateY(-50%);
+  display:flex; gap:10px; align-items:baseline;
+  font-family:var(--font-mono); font-size:13px; line-height:1.5; color:var(--cream-dim);
+}
+.tn-line.in{ animation:tnIn .42s var(--ease-out) both; }
+.tn-line.out{ animation:tnOut .42s var(--ease-out) both; }
+.tn-ic{ flex:0 0 auto; width:1.2em; text-align:center; color:var(--slate); }
+.tn-line.ok .tn-ic{ color:var(--orange); }
+.tn-line.warn{ color:var(--cream); } .tn-line.warn .tn-ic{ color:var(--orange); }
+.tn-line.gatel{ color:var(--cream); }
+.tn-tx{ min-width:0; }
+.scrubbing .tn-line,.scrubbing .tn-main{ animation:none; }
+
+@keyframes tnWipe{ from{ clip-path:inset(0 100% 0 0); } to{ clip-path:inset(0 0 0 0); } }
+@keyframes tnSweep{ from{ transform:translateX(-100%); } to{ transform:translateX(100%); } }
+/* round-19：扫光改字内行光——动 background-position（240% 底、100%→0% 即左→右），
+   80% 处到站、歇 0.7s 就开始下一轮；首尾两态光带都在字形之外，循环回跳不可见。 */
+@keyframes tnShimmer{ 0%{ background-position:100% 0; } 80%{ background-position:0% 0; } 100%{ background-position:0% 0; } }
+@keyframes tnIn{ from{ opacity:0; transform:translateY(calc(-50% + 1.05em)); } to{ opacity:1; transform:translateY(-50%); } }
+@keyframes tnOut{ from{ opacity:1; transform:translateY(-50%); } to{ opacity:0; transform:translateY(calc(-50% - 1.05em)); } }
+@keyframes tnPulse{ 0%{ box-shadow:0 0 0 0 rgba(228,87,31,.5); } 70%{ box-shadow:0 0 0 6px rgba(228,87,31,0); } to{ box-shadow:0 0 0 0 rgba(228,87,31,0); } }
+
+/* 航线图全宽；底部计数改小字、行内排布，随进程跳动 */
+.thea-map{ width:100%; }
+.cnt-row{ margin-top:20px; padding-top:16px; gap:clamp(18px,4vw,46px); }
+.cnt{ display:flex; align-items:baseline; gap:8px; }
+.cnt-num{ font-size:16px; font-weight:700; }
+.cnt-cap{ margin-top:0; }
+
+@media (max-width:640px){
+  .thea-now{ grid-template-columns:1fr; }
+  .tn-main{ border-right:0; border-bottom:1px solid var(--line-soft); }
+  .tn-sub{ min-height:3.4em; }
+}
+
+/* —— Task 2 · CH1 承接起飞末帧：标题落在夜空上，随后模糊渐隐、露出下方纯色展示板 —— */
+.ch1-hold{ position:relative; isolation:isolate; }
+/* 单层 · 定屏：起飞长镜头的最后一帧由这一层原地接管。
+   round-17 彻底修：不再用 <img> 的 CSS cover 去「复刻」画布裁切（宽屏下画布纵向焦点
+   (n-l)*.2 ≠ object-position 0，必错位）——改为同一套 drawImage 数学画进本层画布，
+   逐像素等同；接管因此可以瞬时切换，不再需要 .25s 淡入去横跨 unpin 后的位移帧。 */
+.ch1-sky{
+  position:fixed; inset:0; z-index:0; pointer-events:none; overflow:hidden;
+  opacity:0; visibility:hidden; will-change:opacity;
+}
+.ch1-sky img{ display:none; } /* 仅作 f_072 的解码源，渲染交给画布 */
+.ch1-sky-cv{ position:absolute; top:0; left:0; will-change:filter; }
+/* JP-16 · 2026-07-28：原先 ≤719/粗指针整层 display:none —— 手机上 hero 不钉屏、没有起飞长镜头
+   的末帧可供接管（bundle 同条件退回 bg-close 淡入），夜空于是整层缺席，「先思考，再起飞。」
+   直接落在纯 navy 上，与桌面不是同一个交接。
+   改法不去解冻 bundle：手机端把这一层从「fixed 接管层」降级成「CH1 自己的背景层」——
+   position:absolute 铺满本章，随章入场显影、随展示板升起模糊溶解，交回纯色底。
+   画布那套 drawImage 数学是为复刻 hero 画布的裁切而生的，这里没有可复刻对象，
+   直接用 <img> 的 object-position 74%/20%（与桌面 (i-a)*.74 / (n-l)*.2 同焦点）。 */
+@media (max-width:719px),(pointer:coarse){
+  /* overflow:clip 而非 hidden：只要裁掉溶解期溢出的模糊边，不想多出一个滚动容器 */
+  #ch1{ position:relative; overflow:clip; }
+  /* 高度必须是「一屏」而不是 inset:0 铺满整章：本章在 390px 上有 1676px 高，
+     16:9 的原帧按 portrait cover 撑满会放大 7.6 倍，看到的只剩机翼的一块糊边。
+     118svh 让缩放退回 ~1.2 倍（源 1280 宽 → 渲染 1500 宽，取中间 390），
+     构图里飞机与尾迹都在，底缘由 .ch1-sky-scrim 的末段渐变收进 navy。 */
+  .ch1-sky{ position:absolute; top:0; left:0; right:0; bottom:auto; height:118svh; visibility:visible; }
+  /* 52%/58%：标题落在干净夜空上，机翼与尾迹沉到右下角当景深（桌面画布的 74%/20%
+     是为复刻 hero 横幅裁切算的，竖屏套上去只会把机身怼到标题脸上）。 */
+  .ch1-sky img{ display:block; width:100%; height:100%; object-fit:cover; object-position:52% 58%; }
+  .ch1-sky-cv,.ch1-sky-hscrim,.ch1-sky-deep{ display:none; }
+  /* 轻 scrim 恒开（桌面靠脚本把重 scrim 缓释成它，手机没有这段交接）；
+     opacity 由本层脚本写内联值——后面 T5c 块里的 `.ch1-sky .ch1-sky-scrim{opacity:0}`
+     同特异性但更靠后，CSS 里压不过它。 */
+}
+.ch1-sky-scrim{
+  position:absolute; inset:0;
+  background:linear-gradient(180deg,rgba(13,31,60,.30) 0,rgba(13,31,60,.08) 30%,rgba(18,41,75,.62) 72%,var(--navy-2) 100%);
+}
+.ch1-hold > .chap-head,.ch1-hold > .stage,.ch1-hold > .crew,.ch1-hold > .chart-deco{ position:relative; z-index:1; }
+/* 标题进场：随夜空显现轻轻上浮 */
+.ch1-hold .chap-head h2,.ch1-hold .chap-head .deck{ opacity:0; transform:translateY(16px); transition:opacity .7s var(--ease-out),transform .7s var(--ease-out); }
+.ch1-hold.lit .chap-head h2{ opacity:1; transform:none; }
+.ch1-hold.lit .chap-head .deck{ opacity:1; transform:none; transition-delay:.12s; }
+
+/* —— Task 5 / Round-7 · 机组徽章：按哪儿沉哪儿的接触感 + 松手翘起回弹 + 选中光晕 + 职责浮窗 —— */
+.crew{ position:relative; }
+.crew-m{ perspective:480px; }
+.crew-badge{
+  display:block; width:100%; max-width:92px; margin:0 auto; border-radius:50%;
+  cursor:pointer; outline:none; -webkit-tap-highlight-color:transparent;
+  transform-style:preserve-3d; will-change:transform; transform:translateZ(0);
+  /* 松手/进选中态走这条带过冲的曲线 → 徽章「翘」上来的回弹 */
+  transition:transform .5s cubic-bezier(.34,1.42,.5,1), box-shadow .4s ease, filter .35s ease;
+  box-shadow:0 3px 10px rgba(7,18,36,.42);
+}
+.crew-badge img{ display:block; width:100%; height:auto; border-radius:50%; pointer-events:none; backface-visibility:hidden; }
+/* 悬浮：整枚离桌面抬起、微微前倾（选中态另有定格，故排除 .active） */
+.crew-m:not(.active):hover .crew-badge:not(.pressing),
+.crew-m:not(.active) .crew-badge:focus-visible{
+  transform:translateY(-5px) rotateX(9deg) scale(1.05);
+  box-shadow:0 15px 26px rgba(7,18,36,.5); filter:brightness(1.06);
+}
+.crew-badge:focus-visible{ outline:2px solid var(--orange); outline-offset:6px; }
+/* 按下瞬间：贴合手指处下沉，极短硬接触过渡（transform 由 JS 按落点写内联） */
+.crew-badge.pressing{ transition:transform .08s cubic-bezier(.4,0,1,1), box-shadow .08s ease; box-shadow:0 1px 5px rgba(7,18,36,.6); }
+/* 选中：翘起定格 + 橙色光晕（暗底更亮），取代原来的描边环 */
+.crew-m.active .crew-badge{
+  transform:translateY(-8px) rotateX(-15deg) scale(1.05);
+  box-shadow:0 0 0 1px rgba(228,87,31,.32), 0 0 24px 5px rgba(228,87,31,.46), 0 22px 32px rgba(7,18,36,.55);
+  filter:brightness(1.1);
+}
+.crew-pop{
+  position:absolute; z-index:6; max-width:min(280px,80vw);
+  background:var(--panel-deep); border:1px solid var(--line); border-radius:10px;
+  padding:12px 15px; box-shadow:0 16px 36px rgba(7,18,36,.6);
+  opacity:0; transform:translateY(-6px); pointer-events:none;
+  transition:opacity .26s var(--ease-out),transform .26s var(--ease-out);
+}
+.crew-pop.show{ opacity:1; transform:none; }
+.cp-caret{
+  position:absolute; top:-6px; left:20px; width:11px; height:11px; rotate:45deg;
+  background:var(--panel-deep); border-left:1px solid var(--line); border-top:1px solid var(--line);
+}
+.cp-role{ display:block; font-size:14px; font-weight:700; color:var(--cream); margin-bottom:4px; }
+.cp-duty{ display:block; font-size:12.8px; line-height:1.5; color:var(--cream-dim); }
+@media (max-width:640px){ .crew-badge{ max-width:76px; } }
+
+/* ==================== Round-7：名册字号 · 找缺口迟现 · 证据卡切换 · 记忆层揭示 · 页尾双行 ==================== */
+
+/* —— T4 · 机组名册标题放大 —— */
+.crew-lbl{ font-size:15px; letter-spacing:.04em; color:var(--cream-dim); }
+
+/* —— T11 · 页尾双行署名 —— */
+.microfoot span{ line-height:1.62; }
+
+/* —— T3 · 找缺口：运行到该步才现身（不预先占位） —— */
+#n-gap{ opacity:0; transition:opacity .55s var(--ease-out); }
+#n-gap.on{ opacity:1; }
+.stop-label[data-for="n-gap"]{ opacity:0 !important; transition:opacity .55s var(--ease-out); }
+.stop-label[data-for="n-gap"].on{ opacity:.94 !important; }
+/* —— round-17 · 回环虚线也只在「打回」时描画：虚线自身拧 dashoffset 只是平移花纹、藏不住线，
+     故改 mask 描画杆（同 tmap 配方）；id="looparc" 移到杆上，bundle 的 .on 落点不变。
+     方向＝沿路径起点（质量把关侧）向找缺口、编队调度描回——正是打回重做的流向。 —— */
+.loop-arc{ stroke-dashoffset:.03 !important; transition:none; }
+#looparc{ stroke-dashoffset:1; transition:stroke-dashoffset 1.15s ease; }
+#looparc.on{ stroke-dashoffset:0; }
+.scrubbing #looparc{ transition:none !important; }
+
+/* —— T6 · 证据卡：默认只显第一张，悬浮某句时卡片切换叠放淡入 —— */
+.evi-cards{ position:relative; min-height:186px; }
+.evc{
+  position:absolute; inset:0 0 auto 0; margin:0;
+  opacity:0; visibility:hidden; transform:translateY(12px) scale(.985); pointer-events:none;
+  transition:opacity .32s ease, transform .4s var(--ease-out), visibility .32s;
+}
+.evc.lit{ opacity:1; visibility:visible; transform:none; pointer-events:auto; }
+@media (max-width:720px){
+  .evi-cards{ min-height:0; }
+  .evc{ position:relative; opacity:1; visibility:visible; transform:none; pointer-events:auto; }
+}
+
+/* —— T8 · 记忆层：默认（=页面初始的「记忆开」态）即展开六层；记忆关时「你的偏好 / 记忆档案」收起为四层。
+     round-21 修：层数可见性改与整句标签同源——两者都由 :has(#mem-on.sel) 驱动（单一真相），
+     且默认态即为正确态。旧版靠 JS 加 .lit + max-height 过渡「从收起展开」，标签却由 CSS 立即显「六层」，
+     过渡一旦没跑完（后台/被节流的标签页、加载时机）就出现「标签说六层、却只画四条」的错位；
+     现在过渡只是装饰，即便完全不跑，默认态也已是六层且与标签一致。 —— */
+#layers .layer[data-mem]{
+  max-height:64px; margin-top:20px; opacity:1; overflow:hidden; transform:none;
+  transition:max-height .5s var(--ease-out), margin-top .5s var(--ease-out), opacity .42s ease, transform .5s var(--ease-out);
+}
+.mem:not(:has(#mem-on.sel)) #layers .layer[data-mem]{
+  max-height:0; margin-top:0; opacity:0; transform:translateY(-6px);
+}
+
+/* —— T9 · 行程图：当前日实线橙线，往日淡淡的灰色虚线（累积可见），未到的日子不显示 —— */
+.tmap .rt{ transition:stroke .5s ease, opacity .5s ease; }
+.tmap .rt.sel{ stroke:var(--orange); stroke-dasharray:none; opacity:1; }
+.tmap .rt.hist{ stroke:var(--slate); stroke-dasharray:5 6; opacity:.5; }
+
+/* —— T10 · 终章「盖章处」：滑到近底 → 划出一圈 → 写「盖章处」→ 悬浮呼吸 → 点击盖下遮住 —— */
+/* 盖章前后页面长度恒定（2026-07-23 走查）：盖章那一刻脚本会把提示语清空（o.textContent=""），
+   这里给提示行预留一整行高度，空与不空占位一致——页面底部不再随盖章伸缩。 */
+.fin-cap{ font-size:clamp(14px,1.5vw,17px); line-height:1.5; min-height:1.5em; letter-spacing:.12em; color:var(--cream-dim); margin:42px 0 0; }
+.fin-rig{ margin-top:24px; }
+/* 划圈目标（点击前顶在图钉环位置） */
+.fin-target{
+  position:absolute; inset:-13px; width:auto; height:auto; overflow:visible; z-index:2; pointer-events:none;
+  transform-origin:center;
+}
+.ft-ring{
+  fill:none; stroke:var(--orange); stroke-width:3; opacity:.9;
+  stroke-dasharray:1; stroke-dashoffset:1;
+  transform:rotate(-90deg); transform-box:fill-box; transform-origin:center;
+  transition:stroke-dashoffset 1.05s var(--ease-out);
+}
+.fin-stamp.drawn .ft-ring{ stroke-dashoffset:0; }
+.fin-here{
+  position:absolute; inset:0; z-index:2; display:flex; align-items:center; justify-content:center;
+  font-family:var(--font-mono); font-size:clamp(12px,1.25vw,15px); letter-spacing:.28em; text-indent:.28em;
+  color:var(--orange); opacity:0; pointer-events:none; transition:opacity .5s ease .95s;
+}
+.fin-stamp.drawn .fin-here{ opacity:.9; }
+/* 划圈之前，虚线图钉环先隐去（改由划出的圆担当），盖章后再作为落定的实线框浮现 */
+.fin-pad{ opacity:0; }
+.fin-rig.done .fin-pad{ opacity:1; }
+/* 悬浮：圆形呼吸（仅在已划圈、未盖章时） */
+.fin-rig:not(.done) .fin-stamp.drawn:hover .fin-target{ animation:ftBreath 1.9s ease-in-out infinite; }
+@keyframes ftBreath{ 0%,100%{ transform:scale(1); } 50%{ transform:scale(1.055); } }
+/* 邮戳图默认藏起，盖章瞬间显形并盖住「盖章处」 */
+.fin-stamp img{ opacity:0; transition:opacity .22s ease; }
+.fin-rig.done .fin-stamp img{ opacity:1; }
+.fin-rig.done .fin-target,.fin-rig.done .fin-here{ opacity:0; transition:opacity .3s ease; }
+
+/* ==================== Round-8：代码修缮（遮挡避让 · 剧场跟随 · 两栏配平） ==================== */
+
+/* —— R8-1 · 桌面登机牌避让：滚到仪表区（出发牌/上下文层/行程图/放行单）时收拢为「圆徽 + 计数」，
+     离开即展开。dodge 由页尾脚本按矩形相交实时判定；宽度用显式值以便过渡。 —— */
+@media (min-width:720px){
+  .pass-stub{ transition:width .38s var(--ease-out), transform .18s ease; }
+  .ps-main{ overflow:hidden; min-width:0; transition:opacity .2s ease; }
+  /* 收拢：只留圆徽 + 计数，二者一同居中（旧写法 flex-grow:.001 让隐形的品牌块吃掉所有富余宽度，
+     把圆徽顶到最左、计数顶到最右，中间一大段空白——即此前的显示错位） */
+  .pass.dodge .pass-stub{ width:120px; justify-content:center; gap:12px; }
+  .pass.dodge .ps-main{ display:none; }
+  .pass.dodge .ps-count{ min-width:0; text-align:center; }
+  .pass.dodge .ps-slots{ display:none; }
+}
+
+/* —— R8-1m · 移动端落章回执：不再悬在页面内容上，改为滑入底栏内部右侧（只压自家 UI） —— */
+@media (max-width:719px){
+  .ps-toast{ right:8px; bottom:7px; padding:4px 12px 4px 8px; font-size:12px; gap:8px; }
+  .ps-toast img{ width:26px; height:26px; }
+}
+
+/* —— R8-2 · 移动端剧场航线图：右缘渐隐提示可横滚；跟随滚动由页尾脚本驱动 —— */
+@media (max-width:719px){
+  .thea-map{ position:relative; }
+  .thea-map::before,.thea-map::after{
+    content:""; position:absolute; top:0; bottom:0; width:30px; z-index:2; pointer-events:none;
+    opacity:0; transition:opacity .3s ease;
+  }
+  .thea-map::before{ left:0; background:linear-gradient(90deg,var(--panel) 0%,transparent 100%); }
+  .thea-map::after{ right:0; background:linear-gradient(270deg,var(--panel) 0%,transparent 100%); }
+  .thea-map.fade-l::before{ opacity:1; }
+  .thea-map.fade-r::after{ opacity:1; }
+}
+
+/* —— JP-4 · 出发板移动端横滑提示：.board-wrap 是滚动层，fade 挂在静态父 .board-zone 上（bundle 已 position:relative）。
+     .board 底色 var(--panel)，渐隐同色。页尾脚本按 scrollLeft 切 fade-l/fade-r。 —— */
+@media (max-width:719px){
+  .board-zone::before,.board-zone::after{
+    content:""; position:absolute; top:0; bottom:0; width:30px; z-index:3; pointer-events:none;
+    opacity:0; transition:opacity .3s ease;
+  }
+  .board-zone::before{ left:0; background:linear-gradient(90deg,var(--panel) 0%,transparent 100%); border-radius:var(--r-panel) 0 0 var(--r-panel); }
+  .board-zone::after{ right:0; background:linear-gradient(270deg,var(--panel) 0%,transparent 100%); border-radius:0 var(--r-panel) var(--r-panel) 0; }
+  .board-zone.fade-l::before{ opacity:1; }
+  .board-zone.fade-r::after{ opacity:1; }
+}
+
+/* —— JP-5 · 东京行程图移动端横滑提示 + 换日追随：桌面 .tmap-scroll display:contents（svg 仍为 map-panel 直系 flex 子项，
+     桌面零改动）；≤719 变滚动容器，map-panel 让出 overflow、静态承载边缘渐隐；换日把当日首站滚进画面中央（页尾脚本）。 —— */
+.tmap-scroll,.tmap-frame{ display:contents; }
+@media (max-width:719px){
+  .map-panel{ overflow-x:visible; position:relative; }
+  .tmap-frame{ display:block; position:relative; min-width:0; }
+  .tmap-scroll{ display:block; width:100%; overflow-x:auto; }
+  /* JP-11 · 渐隐改挂 .tmap-frame：只罩地图取景框，Day 芯片行不再被洗白 */
+  .tmap-frame::before,.tmap-frame::after{
+    content:""; position:absolute; top:0; bottom:0; width:30px; z-index:3; pointer-events:none;
+    opacity:0; transition:opacity .3s ease;
+  }
+  .tmap-frame::before{ left:0; background:linear-gradient(90deg,var(--panel) 0%,transparent 100%); }
+  .tmap-frame::after{ right:0; background:linear-gradient(270deg,var(--panel) 0%,transparent 100%); }
+  .map-panel.fade-l .tmap-frame::before{ opacity:1; }
+  .map-panel.fade-r .tmap-frame::after{ opacity:1; }
+}
+
+/* —— R8-5a · 证据章两栏配平：换卡台自撑满行高，可见卡垂直居中，不再头重脚空 —— */
+@media (min-width:721px){
+  .evi-cards{ align-self:stretch; min-height:186px; }
+  .evc{ inset:auto 0; top:50%; transform:translateY(calc(-50% + 12px)) scale(.985); }
+  .evc.lit{ transform:translateY(-50%); }
+}
+
+/* —— R8-5b · 记忆章两栏配平：上下文层面板拉满行高，六层内容垂直居中 —— */
+@media (min-width:721px){
+  .mem{ align-items:stretch; }
+  .layers{ display:flex; flex-direction:column; justify-content:center; }
+}
+
+/* —— R8-5c · 双引擎配平：快答卡撑满与深研卡等高的舞台（切换不换框形），
+     答案文字在留白里垂直居中，来源行沉底，卡内不再悬空 —— */
+.eng-panes{ display:grid; }
+.pane.show{ position:relative; display:flex; flex-direction:column; }
+.fast-card,.deep-card{ flex:1; }
+.fast-card{ display:flex; flex-direction:column; }
+.fast-ans{ flex:1; min-height:0; display:flex; align-items:center; }
+.src-line{ margin-top:18px; }
+/* 胶囊只裹住文字：作为 flex 列子项，默认 align-items:stretch 会把「秒级响应/开始调研」拉满整行宽——此前的长度 bug。 */
+.eng-badge{ align-self:flex-start; }
+
+/* —— JP-8 · P0 · CH6 成果栏移动端整行被裁，地图右半与全部金额在画外 ——
+   bundle ≤1000 把 .art-grid 收成单列 `1fr` = minmax(auto,1fr)，auto 下限取子项 min-content；
+   而 .map-panel 的 min-content 被 ≤640 的 `.tmap{min-width:640px}` 顶到 686px（640+内衬44+描边2），
+   单列轨道随之涨到 686px，两个子项（地图面板 / 日卡+预算）一起长到 686px，
+   右侧 336px 被 body{overflow-x:hidden} 静默裁掉——390px 机上实测：
+   地图右半（Day 2 全线、Day 5 东京站/银座、羽田进场落点）不可见且无法滚到，
+   日卡每项票价、预算四行金额与「五日总价 ¥19,080」全部在画外，预算条一律看着满格；
+   连带 JP-5 的横滑渐隐/换日追随也从未触发（滚动层被撑到 640px，自认为「装得下」）。
+   解法：单列轨道下限压回 0，两个子项 min-width:0，横滚职责交还 .tmap-scroll。 */
+@media (max-width:1000px){
+  .art-grid{ grid-template-columns:minmax(0,1fr); }
+  .art-grid > .map-panel,.art-grid > .art-side{ min-width:0; }
+  .tmap-scroll{ min-width:0; }
+}
+
+/* —— JP-9 · Day 芯片窄屏折成 4+1 断行 —— 单列后地图面板内宽只剩 ~304px（320px 机上 234px），
+   五枚 70px 芯片放不下，Day 5 独占第二行、左对齐挂着，像掉队而非并列。
+   ≤640 改等分整行的分段选择器：一行五格、宽度均摊、字号随宽收缩，形态即「五天」本身。
+   641–719 面板内宽 ~630px 仍宽裕，维持原胶囊排布不动。 */
+@media (max-width:640px){
+  .day-chips{ flex-wrap:nowrap; gap:6px; }
+  .dchip{ flex:1 1 0; min-width:0; padding:7px 4px; text-align:center; font-size:clamp(10.5px,3.05vw,12.5px); }
+}
+
+/* —— JP-12 · 章导语的硬换行在手机上炸出孤字行 ——
+   三处 .deck 用 <br> 排成桌面上的对句（每句正好一行）；390px 上每句先自然折行、再撞上 <br>，
+   CH4 那条就成了「…都基于一个 / 来源： / …查证过的 / 信息…… / 碰一碰行程…」——两行孤字。
+   一行放不下 22 字，对句在手机上本就不成立；≤719 收掉硬换行，导语回到顺排段落。 */
+@media (max-width:719px){
+  .chap-head .deck br{ display:none; }
+}
+
+/* —— JP-13 · 章间留白手机端收到 11vh —— bundle `.chap{padding:clamp(130px,18vh,230px)}` 是随视口高走的，
+   桌面上内容宽而密，18vh 读作从容；手机上内容堆成窄长条，上下章各 152px 叠成 ~304px 纯深蓝（约 36% 屏高），
+   读起来像页面断了。≤719 收到 11vh（~186px），分章呼吸仍在，桌面口径一字不动。
+   #ch1 同步：它的上衬是 JP-1 用来顶替桌面 -520px 负边距的，不跟着收就会比别的章多出 60px。 */
+@media (max-width:719px){
+  .chap{ padding-top:clamp(84px,11vh,150px); padding-bottom:clamp(84px,11vh,150px); }
+}
+
+/* —— JP-14 · 呼吸段字幕让开插画 —— 「巡航高度。目的地临近。」末两字压在舷窗亮框上。
+   两句各自成行后最长 6 字（~126px），在 320px 上也能停在插画主体之前。 */
+@media (max-width:719px){
+  .br-line .brl-s{ display:block; }
+}
+
+/* —— JP-17 · 剧场进度轨改竖排字，收回一条线 —— bundle 在 ≤640 给 `.ph{flex:1 0 28%}`，
+   七档横排标签折成三行：390px 上 .thea-rail 实测 316×109，整条 .thea-deck 吃掉 160px，
+   放映装置还没开始演，控制条先占掉小半屏。标签全是四字中文，竖排后每档只占一列字宽，
+   七档连 gap ≈ 127px，一行放得下——不折行，轨就还是一条线。
+   ≤719 一并接管（641–719 区间原本挤在控制条右侧靠 ellipsis 截字，同样不成立）。 */
+@media (max-width:719px){
+  .thea-deck{ gap:12px; }
+  .thea-rail{ flex-wrap:nowrap; gap:6px; }
+  .ph{ flex:1 1 0; min-width:0; }
+  .ph-label{
+    writing-mode:vertical-rl; text-orientation:upright;
+    width:max-content; margin:0 auto 7px;      /* 块宽跟着单列字走，auto 边距把它摆到档位正中 */
+    font-size:11px; letter-spacing:.05em;
+    overflow:visible; text-overflow:clip;      /* 竖排后高度由内容定，没有可截的溢出 */
+  }
+}
+
+/* —— JP-18 · 章插画在手机上从「侧栏配图」胀成「主视觉」 —— bundle 桌面 `clamp(230px,26vw,400px)`
+   ≈ 26vw，是标题左栏旁边的一件挂饰；≤1000 的单列版 `min(72vw,360px)` 到 390px 上是 288px = 74vw，
+   宽度翻了近三倍，读起来比标题还重。七章同尺寸，不是某一章的毛病。
+   收到 56vw（390 下 218px）：仍是章内最大的一块图，但让回了主次。
+   .tall（CH6 东京海报，竖幅且带 cinemagraph）单独给 52vw，不按方图口径压。 */
+@media (max-width:719px){
+  .chap-art{ width:min(56vw,260px); }
+  .chap-art.tall{ width:min(52vw,250px); }
+}
+</style>
+  <style>
+  /* round-7 线环涟漪/圆点已退役（2026-07-19 二审）；菜单样式全量收拢到下一个 style 块的统一块 */
+  </style>
+  <style>
+  /* ── 2026-07-19 二审：三页统一项目菜单重构 ──
+     面板仍取主站暖纸底；条目=各自 landing 的「缩影卡」（EC 校样蓝图细格 / JP 夜航破晓 / 海龟汤陈年卷宗）；
+     品牌 icon+字标图取代圆点纯文字；左色带/圆点退役；涟漪由线环改水彩晕染面（.np-wash，脚本同步改）。
+     背景一律 .npm-item.npm-xx 双类写（压过 bundle 同特异性的 .npm-item:hover 背景，三页同一份） */
+  .nav-proj-menu{position:absolute;top:calc(100% + 10px);right:0;width:328px;max-width:calc(100vw - 32px);background:#f7f1e3;border:1px solid rgba(122,102,66,.34);border-radius:14px;padding:6px;box-shadow:0 22px 48px rgba(10,8,5,.42),0 3px 10px rgba(10,8,5,.18);opacity:0;visibility:hidden;transform:translateY(-6px);transition:opacity .24s cubic-bezier(.23,1,.32,1),transform .24s cubic-bezier(.23,1,.32,1),visibility .24s;z-index:70}
+  .nav-proj.open .nav-proj-menu{opacity:1;visibility:visible;transform:none}@media (hover:hover) and (pointer:fine){.nav-proj:hover .nav-proj-menu{opacity:1;visibility:visible;transform:none}}
+  /* 2026-07-20 顶栏站点跳转：主页/摄影/博客 居技术拆解左侧；窄屏(<=760px)折进菜单底行 .npm-foot */
+  .nav-sep{flex:none;width:1px;height:16px;background:var(--line-soft);margin:0 2px}
+  .npm-foot{display:none;margin-top:5px;padding:8px 4px 4px;border-top:1px solid rgba(122,102,66,.22);gap:4px}
+  .npm-foot a{flex:1;text-align:center;font-size:13.5px;letter-spacing:.04em;color:#5a4a35;text-decoration:none;padding:8px 0;border-radius:7px;transition:color .18s,background .18s}
+  .npm-foot a:hover{color:#2a2016;background:rgba(122,102,66,.1)}
+  @media (max-width:760px){.nav-site,.nav-sep{display:none}.npm-foot{display:flex}}
+
+  .npm-item{position:relative;overflow:hidden;isolation:isolate;display:flex;gap:13px;align-items:center;padding:16px 15px;border-radius:9px;text-decoration:none;box-shadow:inset 0 0 0 1px var(--edge,rgba(122,102,66,.16));transition:box-shadow .32s cubic-bezier(.32,.72,0,1),transform .32s cubic-bezier(.32,.72,0,1)}
+  .npm-item+.npm-item{margin-top:5px}
+  .npm-item:hover{background:transparent;transform:translateY(-1px);box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--w1) 52%,transparent),0 6px 16px rgba(40,26,12,.16)}
+  .npm-item:active{transform:scale(.985)}
+  .npm-item:focus-visible{outline:2px solid var(--w1);outline-offset:1px}
+  .npm-item::before{content:"";position:absolute;inset:0;width:auto;height:auto;margin:0;border-radius:0;transform:none;z-index:0;pointer-events:none;background:linear-gradient(90deg,color-mix(in srgb,var(--w1) 10%,transparent),transparent 70%);opacity:0;transition:opacity .32s cubic-bezier(.32,.72,0,1)}
+  .npm-item:hover::before,.npm-item:focus-visible::before{opacity:1}
+  .npm-item.npm-ec{--edge:rgba(28,27,24,.13);--w1:#b3402a;--w2:#8a3020;--w3:#423a31;background:linear-gradient(90deg,rgba(252,251,248,0) 42%,rgba(252,251,248,.9) 80%),linear-gradient(rgba(120,60,44,.08) 1px,transparent 1px),linear-gradient(90deg,rgba(120,60,44,.08) 1px,transparent 1px),#fcfbf8;background-size:auto,13px 13px,13px 13px,auto}
+  .npm-item.npm-jp{--edge:rgba(242,233,216,.18);--w1:#e4571f;--w2:#f2a05f;--w3:#f2e9d8;--wash-blend:screen;--wash-o:.5;background:radial-gradient(1.5px 1.5px at 82% 22%,rgba(242,233,216,.9),transparent),radial-gradient(1px 1px at 63% 55%,rgba(242,233,216,.62),transparent),radial-gradient(1.2px 1.2px at 71% 30%,rgba(242,233,216,.45),transparent),url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 44'%3E%3Cpath d='M4 40C34 10 78 4 116 13' fill='none' stroke='%23f2e9d8' stroke-opacity='.4' stroke-width='1.4' stroke-dasharray='1 6' stroke-linecap='round'/%3E%3C/svg%3E") right 10px top 7px/116px auto no-repeat,radial-gradient(135% 210% at 102% 118%,rgba(228,87,31,.5),rgba(228,87,31,0) 55%),linear-gradient(103deg,#101c33,#0d1f3c 55%,#142b52)}
+  .npm-item.npm-ts{--edge:rgba(122,102,66,.3);--w1:#b89968;--w2:#b91c1c;--w3:#8b7a4e;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2'/%3E%3CfeColorMatrix values='0 0 0 0 .36 0 0 0 0 .3 0 0 0 0 .18 0 0 0 .06 0'/%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23g)'/%3E%3C/svg%3E"),radial-gradient(130% 180% at 12% -12%,#faf5e8,#f0e5c8 55%,#e2d2a8 108%)}
+  .npm-ico{flex:none;width:40px;height:40px;object-fit:contain;position:relative;z-index:2;transition:transform .5s cubic-bezier(.32,.72,0,1)}
+  .npm-item:hover .npm-ico{transform:translateY(-1.5px) rotate(-4deg)}
+  .npm-item.npm-jp:hover .npm-ico{transform:translate(2px,-2px) rotate(8deg)}
+  .npm-txt{display:flex;flex-direction:column;gap:6px;min-width:0;position:relative;z-index:2}
+  .npm-word{display:block;height:15px;width:auto;align-self:flex-start}
+  .npm-jp .npm-word{height:14px}
+  .npm-txt .npm-name{font-family:Georgia,"Songti SC","Noto Serif SC",serif;font-size:16.5px;line-height:1;font-weight:700;color:#33291b;letter-spacing:.045em;transition:color .24s ease}
+  .npm-item.npm-ts:hover .npm-txt .npm-name{color:#8f1d15}
+  .npm-txt i{font-family:ui-sans-serif,system-ui,"PingFang SC",sans-serif;font-size:12px;color:#6b6154;font-style:normal;line-height:1.45;letter-spacing:.02em}
+  .npm-jp .npm-txt i{color:rgba(242,233,216,.78)}
+  .npm-ts .npm-txt i{color:#6e5f42}
+  .npm-item.is-current::after{content:"当前";position:absolute;top:8px;right:9px;z-index:2;font-family:ui-sans-serif,system-ui,"PingFang SC",sans-serif;font-size:9.5px;line-height:1;letter-spacing:.14em;padding:3px 6px 3px 7.5px;border-radius:999px;color:var(--cur-ink,#86683c);box-shadow:inset 0 0 0 1px var(--cur-ring,rgba(139,116,64,.4))}
+  .npm-ec.is-current::after{--cur-ink:#b3402a;--cur-ring:rgba(179,64,42,.32)}
+  .npm-jp.is-current::after{--cur-ink:rgba(242,233,216,.9);--cur-ring:rgba(242,233,216,.32)}
+  .np-wash{position:absolute;left:0;top:0;width:120px;height:120px;margin:-60px 0 0 -60px;border-radius:50%;pointer-events:none;z-index:1;opacity:0;background:radial-gradient(closest-side,color-mix(in srgb,var(--rc) 88%,#fff) 0%,var(--rc) 30%,color-mix(in srgb,var(--rc) 42%,transparent) 62%,transparent 100%);mix-blend-mode:var(--wash-blend,multiply);filter:blur(9px);will-change:transform,opacity}
+  @keyframes np-wash{0%{transform:translate(var(--rx),var(--ry)) scale(.1);opacity:0}14%{opacity:var(--wash-o,.42)}100%{transform:translate(var(--rx),var(--ry)) scale(3.6);opacity:0}}
+  </style>
+  <style>
+  /* ============ 素材轮 2026-07-17：呼吸图/海报 cinemagraph · 终章 A5-v3 + 辉光慢层 · alpha 云缝 ============ */
+
+  /* 呼吸图活化：视频叠静图之上，播放后淡入（回件是原图的重新演绎，硬切会跳 12%，溶接配方同 V1 帧序列） */
+  .br-live{
+    position:absolute;inset:0;width:100%;height:100%;object-fit:cover;pointer-events:none;
+    opacity:0;transition:opacity .6s ease;
+    -webkit-mask-image:linear-gradient(180deg,transparent 0,#000 10%,#000 90%,transparent 100%);
+    mask-image:linear-gradient(180deg,transparent 0,#000 10%,#000 90%,transparent 100%);
+  }
+  .br-live.on{opacity:1}
+  /* 东京海报活化：视频叠 A4 之上，继承 figure 的贴挂倾角；竖幅 3:4 源在 2:3 框内 cover（塔居中，两侧各裁 6%） */
+  .chap-art{position:relative}
+  .poster-live{
+    position:absolute;inset:0;width:100%;height:100%;object-fit:cover;pointer-events:none;
+    border-radius:inherit;opacity:0;transition:opacity .6s ease;
+  }
+  .poster-live.on{opacity:1}
+  /* JP-19 · 2026-07-28：原先 ≤719/粗指针一律隐藏（脚本同条件不入坞），三支 cinemagraph 在手机上
+     一支都不播——呼吸段与东京海报退回静图，与桌面不是同一件作品。改为全端一致：
+     入坞管理仍在脚本（近视口 ±360px 才赋 src、离开暂停、出错退静图），CSS 不再拦。 */
+
+  /* 终章 A5-v3：灭点 76% → 71%（picture 需撑满 fin-zoom，img 百分比高度才有解） */
+  .fin-zoom picture{position:absolute;inset:0;display:block}
+  .fin-zoom img{object-position:center 71%}
+  /* 辉光慢层：D5-1 重模糊 + screen 叠加，18s 呼吸（teardowns 双时间尺度的环境层；重模糊规避与 A5-v3 的逐灯对位） */
+  .fin-glow{
+    position:absolute;inset:auto 0 0 0;height:62%;pointer-events:none;mix-blend-mode:screen;
+    background:url(assets/fin-glow.webp) center 78%/cover no-repeat;
+    filter:blur(26px) brightness(1.05);opacity:.2;
+    animation:finGlowBreathe 18s ease-in-out infinite alternate;
+  }
+  @keyframes finGlowBreathe{from{opacity:.14}to{opacity:.28}}
+
+  /* alpha 云缝：透明通道自带融边，mask 退役；带子略降不透明度融进夜色。
+     旧实底云图退役后 CH7(--navy-2) 与终章(--navy) 的分界会裸露，云缝自己铺桥接渐变补上 */
+  .cloud-seam{background:linear-gradient(180deg,var(--navy-2) 0,var(--navy) 72%)}
+  .cloud-seam img{-webkit-mask-image:none;mask-image:none;opacity:.92;object-position:center 62%}
+  </style>
+  <style>
+  /* ============ round-14 2026-07-19 终审走查（登机牌引导/票根字位/末帧衔接/徽章物理） ============ */
+
+  /* —— T2 · 登机牌领取引导：批注箭头 + 一句「为什么要领」；领取后随牌隐去 —— */
+  .pcl-hint{ display:flex; align-items:flex-start; gap:8px; max-width:340px; position:relative; top:10px;
+    transition:opacity .45s ease, visibility .45s; }
+  .pclh-arrow{ flex:0 0 auto; color:var(--orange); opacity:.9; margin-top:14px;
+    animation:pclhNudge 2.4s ease-in-out infinite; }
+  .pclh-txt{ margin:0; font-size:13.5px; line-height:1.8; color:var(--cream-dim); letter-spacing:.02em; }
+  .pclh-txt b{ display:block; font-weight:600; color:var(--cream); }
+  @keyframes pclhNudge{ 0%,100%{ transform:translate(0,0) rotate(0deg); } 50%{ transform:translate(-6px,4px) rotate(-4deg); } }
+  .pass-claim.claimed ~ .pcl-hint{ opacity:0; visibility:hidden; }
+  @media (max-width:719px),(pointer:coarse){ .pcl-hint{ display:none; } }
+
+  /* —— T1b · 飞行克隆剥过渡：克隆同时带 .pass-claim（transition:transform .18s）与 .pass-fly（fixed 0,0）。
+       GSAP 初始化 transform 缓存的 computed 读取会强制 reflow，令 CSS 过渡以 (0,0) 为前值——
+       首帧从视口左上角「飞入」登机牌位置的假入场即由此而来。scrub/JS 驱动的属性一律剥 transition。 —— */
+  .pass-fly{ transition:none !important; }
+  .pass-fly *{ transition:none !important; animation:none !important; }
+
+  /* —— T1c · 飞行途中形变（领取卡 → 票根的自然过渡）：
+       同一张票根纸上，旧卡面（.pf-old）前半程淡出、撕孔虚线随之隐去（--pfo），
+       票根脸（.pf-new＝真 stub 的克隆，定寸 284×68 居中）后半程浮现——
+       落地时与真票根像素等同，交接不可见。透明度全部由 jpFly 的 onUpdate 驱动。 —— */
+  .pass-fly::before{ opacity:var(--pfo,1); }
+  .pf-old{ display:flex; flex-direction:column; align-items:stretch; width:100%; }
+  .pf-new{
+    position:absolute; left:50%; top:50%; width:284px; height:68px; margin:-34px 0 0 -142px;
+    opacity:0; background:none; box-shadow:none !important; pointer-events:none;
+  }
+
+  /* —— T3 · 收拢票根：纸面背景不再随宽度压扁（印刷撕孔线固定在 204px 处，118px 窗口内只见干净纸面） —— */
+  @media (min-width:720px){
+    .pass.dodge .pass-stub{ background-size:284px 68px; }
+  }
+
+  /* —— T4 · 票根章节改人话名（bundle 同步改 t.name）：CJK 字距与字号微调 —— */
+  .ps-leg{ font-size:11.5px; letter-spacing:.1em; }
+
+  /* —— T5a · 罗盘装饰归位 absolute：此前被 Task2 的 position:relative 连坐覆盖成流内元素，
+       凭空垫出 620px 死间隙，把「先思考，再起飞」推到 pin 结束之后才入场 —— */
+  .ch1-hold > .chart-deco{ position:absolute; }
+
+  /* —— T5b · 揭幕不再有不透明幕布：桌面端 CH1 顶段透明，标题直接浮在起飞末帧的画布上；
+       舞台区之前渐回 navy-2 承接 sky 溶解 —— */
+  @media (min-width:720px) and (pointer:fine){
+    #ch1{ background:linear-gradient(180deg, rgba(18,41,75,0) 0 430px, var(--navy-2) 560px); border-top:0; }
+  }
+
+  /* —— JP-1 · CH1 负边距移动端兜底：桌面 -520px 服务于「hero 末帧夜空承接 CH1 标题」，
+       但移动端 hero 不钉屏（bundle JS 在 (pointer:coarse)/(max-width:719px) 下返回 pinned:false）、
+       .ch1-sky 同条件 display:none，无任何补偿 → 负边距把 CH1 整体上提 520px 盖住 hero 出发板与 CTA。
+       媒体查询条件与 JS 门控完全同源。
+       上衬值与 JP-13 的手机端章间口径同源（11vh），否则 CH1 会比其余各章多出 ~60px。 —— */
+  @media (max-width:719px),(pointer:coarse){
+    #ch1{ margin-top:0; padding-top:clamp(84px,11vh,150px); }
+  }
+
+  /* —— JP-3 · 剧场进度轨竖滑陷阱：bundle 的 .thea-rail{touch-action:none} 在 ≤640 全宽铺开（flex:1 0 100%）
+       后成为 CH1 正中一条「卡死带」，竖滑起点落在其上页面不滚。改 pan-y 把竖滑交还页面、保留横向拖拽 scrub。
+       条件与 JP JS 门控同源 (max-width:719px),(pointer:coarse)。 —— */
+  @media (max-width:719px),(pointer:coarse){
+    .thea-rail{ touch-action:pan-y; }
+  }
+
+  /* —— T5c · sky 层复刻 hero 的双 scrim：交接瞬间两层像素等同（同帧 + 同 scrim），
+       随后滚动把重 scrim 缓释成本层的轻 scrim（破晓），页尾脚本驱动。
+       round-17：hero 的 scrim 是按 hero 盒（常比视口高）铺的渐变，本复刻层若按视口铺，
+       纵向百分比必错位——故与画布一样吃 --sky-h（= hero 盒高）、顶对齐。 —— */
+  .ch1-sky-hscrim{ position:absolute; top:0; left:0; right:0; height:var(--sky-h,100%); opacity:0;
+    background:linear-gradient(90deg,rgba(13,31,60,.92),rgba(13,31,60,.55) 30%,rgba(13,31,60,.08) 58%,rgba(13,31,60,0) 74%),
+               linear-gradient(180deg,rgba(13,31,60,.18),rgba(13,31,60,0) 28%,rgba(13,31,60,.42) 62%,rgba(13,31,60,.95) 97%); }
+  .ch1-sky-deep{ position:absolute; top:0; left:0; right:0; height:var(--sky-h,100%); opacity:0;
+    background:linear-gradient(180deg,transparent 55%,rgba(13,31,60,.92) 96%); }
+  .ch1-sky .ch1-sky-scrim{ opacity:0; }
+
+  /* —— T6 · 机组徽章：选中态不再前倾（rotateX 的 3D 投影会让光晕跑偏），
+       光晕为正圆、与徽章同心 —— */
+  .crew-m.active .crew-badge{
+    transform:translateY(-6px) scale(1.06);
+  }
+  </style>
+  <style>
+  /* ============ round-17 2026-07-19 八项走查（末帧画布/扫光橙/子任务重叠/证据成稿/记忆拆行/连线逐站/Day卡天气交通/登机牌内收） ============ */
+
+  /* —— T5 · 记忆段说明句独立成行：陈述与操作提示分开，提示更小更暗 —— */
+  .deck-cue{ display:block; margin-top:14px; font-size:.82em; color:var(--slate); letter-spacing:.02em; }
+
+  /* —— T6 · 换日：当天线的退场交给 GSAP 慢慢压暗（opacity 从 transition 里剥离，避免双驱动打架）；
+       站点与站名「选中快、退场慢」 —— */
+  .tmap .rt{ transition:stroke .5s ease; }
+  .tmap .pt{ transition:fill .9s ease, stroke .9s ease; }
+  .tmap .pt.sel{ transition:fill .25s ease, stroke .25s ease; }
+  .tmap .pt-label{ transition:fill .9s ease; }
+  .tmap .pt-label.sel{ transition:fill .25s ease; }
+
+  /* —— T7 · Day 卡：天气行 + 交通指引行；卡下一句自定义交通注脚 —— */
+  .dc-meta{ display:flex; align-items:baseline; gap:10px; margin-top:12px; }
+  .dcm-wx{ flex:none; font-size:11.5px; color:var(--cream); border:1px solid var(--line); border-radius:999px; padding:2.5px 11px; white-space:nowrap; }
+  .dcm-note{ font-size:12.5px; color:var(--slate); }
+  .dc-transit{ display:flex; align-items:baseline; gap:10px; margin-top:4px; padding-top:13px; border-top:1px dashed var(--line); font-size:13px; color:var(--cream-dim); }
+  .dct-lbl{ flex:none; font-family:var(--font-mono); font-size:11px; letter-spacing:.08em; color:var(--slate); }
+  .dc-alt{ margin:-8px 2px 0 12px; padding-left:12px; border-left:2px solid var(--orange-soft); font-size:12.5px; line-height:1.6; color:var(--slate); }
+
+  /* —— T8 · 登机牌四角内收：P1 纸面的印刷框线约在 8% 内缩处，20px 衬距会压线 —— */
+  @media (min-width:720px){
+    .pass-card{ padding:31px 33px 27px; }
+  }
+
+  /* —— round-20 · 上下文层数分情况整句展示：开=「这次回答中包含了六层记忆」（六字橙），
+       关=「这次回答中包含了四层记忆」（素色）；字号上调、行距舒展（框高富余） —— */
+  .layers .lc{ font-style:normal; }
+  .layers .lc-hi{ color:var(--orange); font-weight:600; font-style:normal; }
+  .mem:has(#mem-on.sel) .lc-4{ display:none; }
+  .mem:not(:has(#mem-on.sel)) .lc-6{ display:none; }
+  .layers .lbl{ font-size:13.5px; margin-bottom:18px; }
+  #layers .layer{ margin-top:20px; }
+  #layers .l-name{ margin-bottom:7px; }
+  /* round-21 勘误：整句标签与两条记忆层的显隐现已同源——都读 :has(#mem-on.sel)（见 T8），
+     不再靠 JS 的 .lit 类＋max-height 过渡去「展开」，杜绝标签与条数错位；本处只管标签选字与配色
+     （「四」回素色、weight 继承，突出只留给「六」）。Mf 仍照旧 toggle 按钮的 .sel，即此处的真相源。 */
+
+  /* —— round-18 · 谢幕进场线改流星：页面到位后亮头沿轨迹俯冲进灭点，尾迹留在画上 —— */
+  .fin-comet{ fill:#FFE1BC; filter:drop-shadow(0 0 5px rgba(242,160,95,.95)) drop-shadow(0 0 13px rgba(228,87,31,.55)); pointer-events:none; }
+  .fin-tail{ fill:none; stroke:rgba(242,160,95,.8); stroke-width:3.2; stroke-linecap:round; stroke-dasharray:.18 1; stroke-dashoffset:.18; filter:blur(.5px); pointer-events:none; }
+
+  /* —— round-20 · 地图分段线：每两点之间是一条独立 <line> 自己做 dashoffset 描画，
+       不再靠 <mask> 内容动画揭示整条路线（mask 内容动画在部分渲染路径上不重绘消费者，
+       线会憋到失效时一起蹦出）。样式克隆 .rt.sel（橙 2.5 圆帽），整天画完后与整条路线做像素等同交接。 —— */
+  .tmap .rt-seg{ fill:none; stroke:var(--orange); stroke-width:2.5; stroke-linecap:round; pointer-events:none; }
+
+  /* —— round-20 · 登机牌三形态统一品牌件：墨色图标+字标（奶油纸面用 -ink 变体，橙航迹保留）；
+       大卡去 JP-2026，航线改 From Now → To Future，via 品牌字标架在航线上方（与领取卡同语义） —— */
+  .ps-icon{ display:block; height:22px; width:auto; }
+  .ps-word{ display:block; height:10px; width:auto; margin-bottom:3px; }
+  .pc-icon{ height:24px; }
+  .pc-word{ display:block; height:13px; width:auto; }
+  .pcr-mid{ flex:1; min-width:0; display:flex; flex-direction:column; align-items:center; gap:6px; align-self:flex-end; padding-bottom:5px; }
+  .pcr-via{ display:flex; align-items:center; gap:6px; }
+  .pcr-brand{ display:block; height:10px; width:auto; position:relative; top:-1px; }
+  .pcr-mid .pc-jet{ align-self:stretch; margin-bottom:0; height:14px; }
+  </style>
+</head>
+<body id="top">
+<div class="grain" aria-hidden="true"></div>
+<header class="nav">
+  <a class="brand" href="#top" aria-label="JourneyPilot 顶部">
+    <img src="assets/brand-icon.webp" alt="" width="116" height="96" style="height:22px;width:auto;display:block" decoding="async">
+    <img src="assets/brand-word.webp" alt="JourneyPilot" width="425" height="64" style="height:17px;width:auto;display:block" decoding="async">
+  </a>
+  <div class="nav-right">
+    <!-- 2026-07-20：站点跳转（主页/摄影/博客）入顶栏，居技术拆解左侧；窄屏折进项目菜单 .npm-foot -->
+    <a class="nav-doc nav-site" href="../../">主页</a>
+    <a class="nav-doc nav-site" href="../../photography/">摄影</a>
+    <a class="nav-doc nav-site" href="../../blog/">博客</a>
+    <span class="nav-sep" aria-hidden="true"></span>
+    <a class="nav-doc" href="../../blog/case-journeypilot/">技术拆解</a>
+    <div class="nav-proj" id="navProj">
+      <button class="nav-proj-btn" id="navProjBtn" type="button" aria-haspopup="true" aria-expanded="false" aria-controls="navProjMenu">
+        项目
+        <svg class="chev" width="12" height="12" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+      </button>
+      <!-- 2026-07-19 二审：条目=各 landing 缩影卡，品牌 icon+字标图（统一小图 /projects/_menu/）；圆点/左色带退役 -->
+      <div class="nav-proj-menu" id="navProjMenu" role="menu" aria-label="项目切换">
+        <a class="npm-item npm-jp is-current" role="menuitem" href="#top" aria-current="page">
+          <img class="npm-ico" src="../_menu/jp-icon.webp" alt="" width="92" height="76" loading="lazy" decoding="async">
+          <span class="npm-txt">
+            <img class="npm-word" src="../_menu/jp-word.webp" alt="JourneyPilot" width="252" height="38" loading="lazy" decoding="async">
+            <i>一句话，变成一张登机牌</i>
+          </span>
+        </a>
+        <a class="npm-item npm-ec" role="menuitem" href="../easycode/">
+          <img class="npm-ico" src="../_menu/ec-icon.webp" alt="" width="78" height="80" loading="lazy" decoding="async">
+          <span class="npm-txt">
+            <img class="npm-word" src="../_menu/ec-word.webp" alt="EasyCode" width="236" height="40" loading="lazy" decoding="async">
+            <i>把刷题变成被指导的练习</i>
+          </span>
+        </a>
+        <a class="npm-item npm-ts" role="menuitem" href="../turtle-soup/">
+          <img class="npm-ico" src="../_menu/ts-icon.webp" alt="" width="74" height="96" loading="lazy" decoding="async">
+          <span class="npm-txt">
+            <img class="npm-word" src="../_menu/ts-word.webp" alt="海龟汤事务所" width="268" height="48" loading="lazy" decoding="async">
+            <i>AI 主持的海龟汤推理游戏</i>
+          </span>
+        </a>
+        <!-- 窄屏（≤760px）站点跳转折进菜单底行；桌面由顶栏 .nav-site 承担 -->
+        <div class="npm-foot">
+          <a href="../../">主页</a>
+          <a href="../../photography/">摄影</a>
+          <a href="../../blog/">博客</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<main>
+  <!-- ================= HERO ================= -->
+  <div class="pin-spacer" style="order: 0; place-self: auto; grid-area: auto; z-index: auto; float: none; flex-shrink: 1; display: flex; margin: 0px; inset: 0px; position: relative; flex-basis: auto; overflow: visible; box-sizing: border-box; width: 1440px; height: 2351px; padding: 0px 0px 1260px;"><section class="hero take-frames" data-take="frames" style="translate: none; rotate: none; scale: none; inset: 0px auto auto 0px; margin: 0px; max-width: 1440px; width: 1440px; max-height: 1091.28px; height: 1091.28px; padding: 81px 72px 64px; transform: translate(0px, 0px);">
+    <div class="hero-bg" aria-hidden="true">
+      <img class="bg-base" src="assets/hero-departure.webp" width="1672" height="941" alt="" fetchpriority="high" decoding="async">
+      <img class="bg-close" src="assets/hero-departure-close.webp" width="1672" height="941" alt="" loading="lazy" decoding="async">
+      <!-- 起飞穿云层 ×2：p=0 不可见，src 由 LayerRig 于 LCP 后懒赋（data-src），不占首屏预算 -->
+      <div class="hero-cloud hero-cloud-a"><img data-src="assets/cloud-band.webp" width="1672" height="941" alt="" decoding="async"></div>
+      <div class="hero-cloud hero-cloud-b"><img data-src="assets/cloud-band.webp" width="1672" height="941" alt="" decoding="async"></div>
+      <canvas class="hero-frames" width="2160" height="1637"></canvas><div class="hero-scrim"></div>
+      <div class="hero-scrim-deep"></div>
+    </div>
+    <div class="hero-top">
+      <div>
+        <h1 class="" style="translate: none; rotate: none; scale: none; opacity: 1; visibility: inherit; transform: translate(0px, 0px);">你的旅行，<br>背后有<span class="nowrap"><span class="accent">一支机组</span>。</span></h1>
+        <p class="deck" style="translate: none; rotate: none; scale: none; opacity: 1; visibility: inherit; transform: translate(0px, 0px);">JourneyPilot 是一套多智能体旅行规划系统。一支研究编队为你并行调研、逐条核证、反复打磨，直到一份句句有出处的行程送到你面前。</p>
+        <div class="cta-row" style="translate: none; rotate: none; scale: none; opacity: 1; visibility: inherit; transform: translate(0px, 0px);">
+          <button class="pass-claim" id="pass-claim" type="button" aria-label="领取登机牌：From Now via JourneyPilot to Future">
+            <span class="pcl-head" aria-hidden="true">
+              <span class="pcl-tag">BOARDING PASS · 登机牌</span>
+            </span>
+            <span class="pcl-route" aria-hidden="true">
+              <span class="pcl-leg"><i class="pcl-lab">FROM</i><b class="pcl-val">Now</b></span>
+              <span class="pcl-hop">
+                <svg viewBox="0 0 54 16" width="40" height="12"><path d="M1 8 H34" fill="none" stroke="#0D1F3C" stroke-width="1.4" stroke-dasharray="1.5 4" stroke-linecap="round" opacity=".4"></path><path d="M36 8 L47 8 L43.6 4 L45.6 4 L50 8 L45.6 12 L43.6 12 L47 8 Z" fill="#E4571F"></path></svg>
+              </span>
+              <span class="pcl-leg"><i class="pcl-lab">VIA</i><b class="pcl-val pcl-brand">JourneyPilot</b></span>
+              <span class="pcl-hop">
+                <svg viewBox="0 0 54 16" width="40" height="12"><path d="M1 8 H34" fill="none" stroke="#0D1F3C" stroke-width="1.4" stroke-dasharray="1.5 4" stroke-linecap="round" opacity=".4"></path><path d="M36 8 L47 8 L43.6 4 L45.6 4 L50 8 L45.6 12 L43.6 12 L47 8 Z" fill="#E4571F"></path></svg>
+              </span>
+              <span class="pcl-leg"><i class="pcl-lab">TO</i><b class="pcl-val">Future</b></span>
+            </span>
+            <span class="pcl-act">领取登机牌<svg class="pcl-arrow" viewBox="0 0 24 24" width="14" height="14" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"></path></svg></span>
+          </button>
+          <!-- round-14 T2 · 领取引导：批注箭头指向登机牌 + 讲清「领了做什么」 -->
+          <div class="pcl-hint" aria-hidden="true">
+            <svg class="pclh-arrow" viewBox="0 0 74 46" width="60" height="38" aria-hidden="true">
+              <path d="M68 8 C 46 6 22 12 9 30" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-dasharray="0.5 6.5"></path>
+              <path d="M17.7 25.1 L9 30 L10.9 20.2" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+            </svg>
+            <p class="pclh-txt"><b>这张是给你的。</b>点击领取，沿途 8 站，<br>每站替你盖一枚邮戳。</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="board-zone" style="translate: none; rotate: none; scale: none; opacity: 1; visibility: inherit; transform: translate(0px, 0px);">
+      <div class="board-wrap">
+      <!-- 语义修正（M5 audit）：<a role="row"> 会覆写链接角色，出发板改导航地标；
+           表头行纯视觉，对辅助技术隐藏（链接文本自含目的地与登机口） -->
+      <div class="board" id="board" role="navigation" aria-label="章节出发板">
+        <div class="board-row board-head" aria-hidden="true">
+          <span>航班</span>
+          <span>目的地</span>
+          <span>航站楼</span>
+          <span>登机口</span>
+          <span>状态</span>
+        </div>
+        <a class="board-row active" href="#ch1" aria-label="航班 JP101，编队 先思考再起飞，航站楼 T1 机组厅，登机口 C01，正在登机">
+          <span class="b-flight flap2" data-col="code" data-text="JP 101" aria-hidden="true"><span class="fcell">J</span><span class="fcell">P</span><span class="fcell gap"></span><span class="fcell">1</span><span class="fcell">0</span><span class="fcell">1</span></span>
+          <span class="b-dest flap2" data-col="dest" data-text="编队 先思考再起飞" aria-hidden="true"><span class="fcell">编</span><span class="fcell">队</span><span class="fcell gap"></span><span class="fcell">先</span><span class="fcell">思</span><span class="fcell">考</span><span class="fcell">再</span><span class="fcell">起</span><span class="fcell">飞</span></span>
+          <span class="b-term flap2" data-col="term" data-text="T1" aria-hidden="true"><span class="fcell">T</span><span class="fcell">1</span></span>
+          <span class="b-gate flap2" data-col="gate" data-text="C01" aria-hidden="true"><span class="fcell">C</span><span class="fcell">0</span><span class="fcell">1</span></span>
+          <span class="b-status" data-status="board"><span class="st-dot" aria-hidden="true"></span><span class="flap2" data-col="status" data-text="正在登机" aria-hidden="true"><span class="fcell">正</span><span class="fcell">在</span><span class="fcell">登</span><span class="fcell">机</span></span></span>
+        </a>
+        <a class="board-row" href="#ch2" aria-label="航班 JP102，双引擎 快与深，航站楼 T1 机组厅，登机口 C02，预计准点">
+          <span class="b-flight flap2" data-col="code" data-text="JP 102" aria-hidden="true"><span class="fcell">J</span><span class="fcell">P</span><span class="fcell gap"></span><span class="fcell">1</span><span class="fcell">0</span><span class="fcell">2</span></span>
+          <span class="b-dest flap2" data-col="dest" data-text="双引擎 快与深" aria-hidden="true"><span class="fcell">双</span><span class="fcell">引</span><span class="fcell">擎</span><span class="fcell gap"></span><span class="fcell">快</span><span class="fcell">与</span><span class="fcell">深</span></span>
+          <span class="b-term flap2" data-col="term" data-text="T1" aria-hidden="true"><span class="fcell">T</span><span class="fcell">1</span></span>
+          <span class="b-gate flap2" data-col="gate" data-text="C02" aria-hidden="true"><span class="fcell">C</span><span class="fcell">0</span><span class="fcell">2</span></span>
+          <span class="b-status" data-status="ontime"><span class="st-dot" aria-hidden="true"></span><span class="flap2" data-col="status" data-text="预计准点" aria-hidden="true"><span class="fcell">预</span><span class="fcell">计</span><span class="fcell">准</span><span class="fcell">点</span></span></span>
+        </a>
+        <a class="board-row term-start" href="#ch3" aria-label="航班 JP203，指挥权 你来拍板，航站楼 T2 指挥厅，登机口 C03，催促登机">
+          <span class="b-flight flap2" data-col="code" data-text="JP 203" aria-hidden="true"><span class="fcell">J</span><span class="fcell">P</span><span class="fcell gap"></span><span class="fcell">2</span><span class="fcell">0</span><span class="fcell">3</span></span>
+          <span class="b-dest flap2" data-col="dest" data-text="指挥权 你来拍板" aria-hidden="true"><span class="fcell">指</span><span class="fcell">挥</span><span class="fcell">权</span><span class="fcell gap"></span><span class="fcell">你</span><span class="fcell">来</span><span class="fcell">拍</span><span class="fcell">板</span></span>
+          <span class="b-term flap2" data-col="term" data-text="T2" aria-hidden="true"><span class="fcell">T</span><span class="fcell">2</span></span>
+          <span class="b-gate flap2" data-col="gate" data-text="C03" aria-hidden="true"><span class="fcell">C</span><span class="fcell">0</span><span class="fcell">3</span></span>
+          <span class="b-status" data-status="final"><span class="st-dot" aria-hidden="true"></span><span class="flap2" data-col="status" data-text="催促登机" aria-hidden="true"><span class="fcell">催</span><span class="fcell">促</span><span class="fcell">登</span><span class="fcell">机</span></span></span>
+        </a>
+        <a class="board-row" href="#ch4" aria-label="航班 JP204，证据链 句句有出处，航站楼 T2 指挥厅，登机口 C04，预计准点">
+          <span class="b-flight flap2" data-col="code" data-text="JP 204" aria-hidden="true"><span class="fcell">J</span><span class="fcell">P</span><span class="fcell gap"></span><span class="fcell">2</span><span class="fcell">0</span><span class="fcell">4</span></span>
+          <span class="b-dest flap2" data-col="dest" data-text="证据链 句句有出处" aria-hidden="true"><span class="fcell">证</span><span class="fcell">据</span><span class="fcell">链</span><span class="fcell gap"></span><span class="fcell">句</span><span class="fcell">句</span><span class="fcell">有</span><span class="fcell">出</span><span class="fcell">处</span></span>
+          <span class="b-term flap2" data-col="term" data-text="T2" aria-hidden="true"><span class="fcell">T</span><span class="fcell">2</span></span>
+          <span class="b-gate flap2" data-col="gate" data-text="C04" aria-hidden="true"><span class="fcell">C</span><span class="fcell">0</span><span class="fcell">4</span></span>
+          <span class="b-status" data-status="ontime"><span class="st-dot" aria-hidden="true"></span><span class="flap2" data-col="status" data-text="预计准点" aria-hidden="true"><span class="fcell">预</span><span class="fcell">计</span><span class="fcell">准</span><span class="fcell">点</span></span></span>
+        </a>
+        <a class="board-row term-start" href="#ch5" aria-label="航班 JP305，记忆 越聊越懂你，航站楼 T3 旅程厅，登机口 C05，预计准点">
+          <span class="b-flight flap2" data-col="code" data-text="JP 305" aria-hidden="true"><span class="fcell">J</span><span class="fcell">P</span><span class="fcell gap"></span><span class="fcell">3</span><span class="fcell">0</span><span class="fcell">5</span></span>
+          <span class="b-dest flap2" data-col="dest" data-text="记忆 越聊越懂你" aria-hidden="true"><span class="fcell">记</span><span class="fcell">忆</span><span class="fcell gap"></span><span class="fcell">越</span><span class="fcell">聊</span><span class="fcell">越</span><span class="fcell">懂</span><span class="fcell">你</span></span>
+          <span class="b-term flap2" data-col="term" data-text="T3" aria-hidden="true"><span class="fcell">T</span><span class="fcell">3</span></span>
+          <span class="b-gate flap2" data-col="gate" data-text="C05" aria-hidden="true"><span class="fcell">C</span><span class="fcell">0</span><span class="fcell">5</span></span>
+          <span class="b-status" data-status="ontime"><span class="st-dot" aria-hidden="true"></span><span class="flap2" data-col="status" data-text="预计准点" aria-hidden="true"><span class="fcell">预</span><span class="fcell">计</span><span class="fcell">准</span><span class="fcell">点</span></span></span>
+        </a>
+        <a class="board-row" href="#ch6" aria-label="航班 JP306，成果 直接能用的行程，航站楼 T3 旅程厅，登机口 C06，即将起飞">
+          <span class="b-flight flap2" data-col="code" data-text="JP 306" aria-hidden="true"><span class="fcell">J</span><span class="fcell">P</span><span class="fcell gap"></span><span class="fcell">3</span><span class="fcell">0</span><span class="fcell">6</span></span>
+          <span class="b-dest flap2" data-col="dest" data-text="成果 直接能用的行程" aria-hidden="true"><span class="fcell">成</span><span class="fcell">果</span><span class="fcell gap"></span><span class="fcell">直</span><span class="fcell">接</span><span class="fcell">能</span><span class="fcell">用</span><span class="fcell">的</span><span class="fcell">行</span><span class="fcell">程</span></span>
+          <span class="b-term flap2" data-col="term" data-text="T3" aria-hidden="true"><span class="fcell">T</span><span class="fcell">3</span></span>
+          <span class="b-gate flap2" data-col="gate" data-text="C06" aria-hidden="true"><span class="fcell">C</span><span class="fcell">0</span><span class="fcell">6</span></span>
+          <span class="b-status" data-status="depart"><span class="st-dot" aria-hidden="true"></span><span class="flap2" data-col="status" data-text="即将起飞" aria-hidden="true"><span class="fcell">即</span><span class="fcell">将</span><span class="fcell">起</span><span class="fcell">飞</span></span></span>
+        </a>
+      </div>
+      </div>
+    </div>
+  </section></div>
+
+  <!-- ================= CH1 编队 ================= -->
+  <section class="chap chap-alt ch1-hold lit" id="ch1">
+    <!-- Task 2 · 承接起飞长镜头的最后一帧：标题落在这帧夜空上，随后模糊渐隐、露出下方纯色的流程展示板 -->
+    <div class="ch1-sky" id="ch1-sky" aria-hidden="true" style="--sky-h: 1091px; opacity: 0; visibility: hidden;">
+      <img src="assets/hero-take/f_072.webp" width="1280" height="720" alt="" decoding="async" fetchpriority="low">
+      <canvas class="ch1-sky-cv" aria-hidden="true" width="2160" height="1637" style="width: 1440px; height: 1091.28px;"></canvas>
+      <!-- round-14 T5c · hero 双 scrim 的复刻层：交接瞬间与画布像素等同，随后滚动缓释成轻 scrim -->
+      <div class="ch1-sky-hscrim" style="opacity: 1;"></div>
+      <div class="ch1-sky-deep" style="opacity: 1;"></div>
+      <div class="ch1-sky-scrim" style="opacity: 0;"></div>
+    </div>
+    <svg class="chart-deco" viewBox="0 0 600 600" aria-hidden="true">
+      <g fill="none" stroke="#F2E9D8" stroke-width="1.5">
+        <circle cx="300" cy="300" r="252" stroke-dasharray="2 10" opacity=".55"></circle>
+        <circle cx="300" cy="300" r="210" opacity=".4"></circle>
+        <circle cx="300" cy="300" r="34" opacity=".5"></circle>
+        <g opacity=".6">
+          <path d="M 300 66 L 316 268 L 300 300 L 284 268 Z"></path>
+          <path d="M 300 534 L 316 332 L 300 300 L 284 332 Z"></path>
+          <path d="M 66 300 L 268 284 L 300 300 L 268 316 Z"></path>
+          <path d="M 534 300 L 332 284 L 300 300 L 332 316 Z"></path>
+        </g>
+        <path d="M 152 152 L 272 272 M 448 152 L 328 272 M 152 448 L 272 328 M 448 448 L 328 328" opacity=".35"></path>
+        <path d="M -40 520 C 160 402 420 432 640 252" stroke-dasharray="7 9" opacity=".6"></path>
+        <path d="M -60 424 C 180 332 380 362 660 174" stroke-dasharray="2 8" opacity=".35"></path>
+        <circle cx="163" cy="446" r="5" opacity=".65"></circle>
+        <circle cx="428" cy="366" r="5" opacity=".65"></circle>
+      </g>
+    </svg>
+    <div class="chap-head">
+      <h2>先思考，再起飞。</h2>
+      <p class="deck">一句「去东京玩五天」，编队立刻列队：规划员制定航线，四名研究员并行开工，校验员逐条对证，审查员不满意就打回重做。你看到的每一步，都是真实的编排。</p>
+      <figure class="chap-art tilt-l reveal" aria-hidden="true">
+        <img src="assets/spot-ch1-flightplan.webp" width="1254" height="1254" alt="" loading="lazy" decoding="async">
+      </figure>
+    </div>
+
+    <div class="stage lamp" id="thea-stage">
+      <div class="thea">
+        <div class="thea-deck">
+          <div class="thea-ctl" role="group" aria-label="放映控制">
+            <button class="tbtn tbtn-play" id="th-play" type="button" aria-label="暂停">
+              <svg class="i-play" viewBox="0 0 12 12" aria-hidden="true"><path d="M3.4 1.8 L10.2 6 L3.4 10.2 Z"></path></svg>
+              <svg class="i-pause" viewBox="0 0 12 12" aria-hidden="true"><path d="M3.4 2 v8 M8.6 2 v8"></path></svg>
+            </button>
+            <span class="th-clock" id="th-clock" aria-hidden="true">0:00 / 0:21</span>
+          </div>
+          <div class="thea-rail" id="thea-rail" role="slider" tabindex="0" aria-label="运行进度，左右方向键单步" aria-valuemin="0" aria-valuemax="21" aria-valuenow="0" aria-valuetext="0:00 / 0:21">
+            <div class="ph" style="--fill: 0.0000;"><div class="ph-label">明确需求</div><div class="ph-bar"></div></div>
+            <div class="ph" style="--fill: 0.0000;"><div class="ph-label">制定计划</div><div class="ph-bar"></div></div>
+            <div class="ph" style="--fill: 0.0000;"><div class="ph-label">等你批准</div><div class="ph-bar"></div></div>
+            <div class="ph" style="--fill: 0.0000;"><div class="ph-label">并行调研</div><div class="ph-bar"></div></div>
+            <div class="ph" style="--fill: 0.0000;"><div class="ph-label">逐条核证</div><div class="ph-bar"></div></div>
+            <div class="ph" style="--fill: 0.0000;"><div class="ph-label">质量把关</div><div class="ph-bar"></div></div>
+            <div class="ph" style="--fill: 0.0000;"><div class="ph-label">综合成稿</div><div class="ph-bar"></div></div>
+          </div>
+        </div>
+        <div class="thea-body">
+          <div class="thea-now">
+            <div class="tn-main" id="tn-main" aria-hidden="true"></div>
+            <div class="tn-sub" id="thea-feed" role="log" aria-label="运行日志"></div>
+          </div>
+          <div class="thea-map charted">
+            <div class="thea-map-scroll">
+              <svg viewBox="0 0 1254 418" role="img" aria-label="一次深度调研运行的航线图：十六站，从问清需求经两道审批门与四路并行，到地点落图">
+                <path class="seg" id="sg1" d="M 56 236 L 167 236" pathLength="1"></path>
+                <path class="seg" id="sg2" d="M 167 236 L 278 236" pathLength="1"></path>
+                <path class="seg" id="sg3" d="M 278 236 L 389 236" pathLength="1"></path>
+                <path class="seg" id="sg4" d="M 389 236 L 500 236" pathLength="1"></path>
+                <path class="seg" id="fo1" d="M 500 236 C 545 236 560 118 610 118" pathLength="1"></path>
+                <path class="seg" id="fo2" d="M 500 236 C 545 236 560 192 610 192" pathLength="1"></path>
+                <path class="seg" id="fo3" d="M 500 236 C 545 236 560 280 610 280" pathLength="1"></path>
+                <path class="seg" id="fo4" d="M 500 236 C 545 236 560 354 610 354" pathLength="1"></path>
+                <path class="seg" id="fi1" d="M 610 118 C 660 118 696 236 744 236" pathLength="1"></path>
+                <path class="seg" id="fi2" d="M 610 192 C 660 192 696 236 744 236" pathLength="1"></path>
+                <path class="seg" id="fi3" d="M 610 280 C 660 280 696 236 744 236" pathLength="1"></path>
+                <path class="seg" id="fi4" d="M 610 354 C 660 354 696 236 744 236" pathLength="1"></path>
+                <path class="seg" id="sg5" d="M 744 236 L 838 236" pathLength="1"></path>
+                <path class="seg" id="sg6" d="M 838 236 L 932 236" pathLength="1"></path>
+                <path class="seg" id="sg7" d="M 932 236 L 1026 236" pathLength="1"></path>
+                <path class="seg" id="sg8" d="M 1026 236 L 1120 236" pathLength="1"></path>
+                <path class="seg" id="sg9" d="M 1120 236 L 1214 236" pathLength="1"></path>
+                <defs>
+                  <mask id="lam"><path class="mrev" id="looparc" d="M 1010 224 C 900 70 620 70 516 224" pathLength="1"></path></mask>
+                </defs>
+                <path class="loop-arc" d="M 1010 224 C 900 70 620 70 516 224" pathLength="1" mask="url(#lam)"></path>
+
+                <circle class="stop" id="n-clar" cx="56" cy="236" r="7"></circle>
+                <text class="stop-label" data-for="n-clar" x="56" y="268" text-anchor="middle">问清需求</text>
+                <circle class="stop" id="n-brief" cx="167" cy="236" r="7"></circle>
+                <text class="stop-label" data-for="n-brief" x="167" y="268" text-anchor="middle">任务简报</text>
+                <circle class="stop" id="n-plan" cx="278" cy="236" r="7"></circle>
+                <text class="stop-label" data-for="n-plan" x="278" y="268" text-anchor="middle">制定计划</text>
+                <polygon class="stop" id="n-pgate" data-cx="389" data-cy="236" points="389,225 400,236 389,247 378,236"></polygon>
+                <circle class="gate-ring" id="gatering" cx="389" cy="236" r="16"></circle>
+                <text class="stop-label" data-for="n-pgate" x="389" y="268" text-anchor="middle">计划门</text>
+                <circle class="stop" id="n-disp" cx="500" cy="236" r="7"></circle>
+                <text class="stop-label" data-for="n-disp" x="500" y="268" text-anchor="middle">编队调度</text>
+                <circle class="stop" id="n-dest" cx="610" cy="118" r="7"></circle>
+                <text class="stop-label" data-for="n-dest" x="610" y="100" text-anchor="middle">查目的地</text>
+                <circle class="stop" id="n-tran" cx="610" cy="192" r="7"></circle>
+                <text class="stop-label" data-for="n-tran" x="610" y="174" text-anchor="middle">查交通</text>
+                <circle class="stop" id="n-acco" cx="610" cy="280" r="7"></circle>
+                <text class="stop-label" data-for="n-acco" x="610" y="308" text-anchor="middle">查住宿</text>
+                <circle class="stop" id="n-itin" cx="610" cy="354" r="7"></circle>
+                <text class="stop-label" data-for="n-itin" x="610" y="382" text-anchor="middle">排行程</text>
+                <circle class="stop" id="n-fresh" cx="744" cy="236" r="7"></circle>
+                <text class="stop-label" data-for="n-fresh" x="744" y="268" text-anchor="middle">验时效</text>
+                <circle class="stop" id="n-veri" cx="838" cy="236" r="7"></circle>
+                <text class="stop-label" data-for="n-veri" x="838" y="268" text-anchor="middle">逐条核证</text>
+                <polygon class="stop" id="n-rgate" data-cx="932" data-cy="236" points="932,225 943,236 932,247 921,236"></polygon>
+                <text class="stop-label" data-for="n-rgate" x="932" y="268" text-anchor="middle">风险门</text>
+                <circle class="stop" id="n-gap" cx="761" cy="108" r="7"></circle>
+                <text class="stop-label" data-for="n-gap" x="761" y="88" text-anchor="middle">找缺口</text>
+                <circle class="stop" id="n-revw" cx="1026" cy="236" r="7"></circle>
+                <text class="stop-label" data-for="n-revw" x="1026" y="268" text-anchor="middle">质量把关</text>
+                <circle class="stop" id="n-syn" cx="1120" cy="236" r="7"></circle>
+                <text class="stop-label" data-for="n-syn" x="1120" y="268" text-anchor="middle">综合成稿</text>
+                <circle class="stop" id="n-geo" cx="1214" cy="236" r="9"></circle>
+                <text class="stop-label" data-for="n-geo" x="1214" y="268" text-anchor="middle">地点落图</text>
+              <circle class="stop-hit" cx="56" cy="236" r="17" role="img" aria-label="问清需求：开工前把模糊的想法问成明确的需求。" data-st="clar"></circle><circle class="stop-hit" cx="167" cy="236" r="17" role="img" aria-label="任务简报：把你的话整理成一份机组人人可读的简报。" data-st="brief"></circle><circle class="stop-hit" cx="278" cy="236" r="17" role="img" aria-label="制定计划：把整趟旅程拆成可以并行的调研任务。" data-st="plan"></circle><circle class="stop-hit" cx="389" cy="236" r="17" role="img" aria-label="计划门：整套计划先摆到你面前，你批准才起飞。" data-st="pgate"></circle><circle class="stop-hit" cx="500" cy="236" r="17" role="img" aria-label="编队调度：派工、收工、决定下一波谁出发。" data-st="disp"></circle><circle class="stop-hit" cx="610" cy="118" r="17" role="img" aria-label="查目的地：景点、美食、时令活动，逐条带出处。" data-st="dest"></circle><circle class="stop-hit" cx="610" cy="192" r="17" role="img" aria-label="查交通：机票、铁路、市内通行，算好换乘与时间。" data-st="tran"></circle><circle class="stop-hit" cx="610" cy="280" r="17" role="img" aria-label="查住宿：按你的预算与偏好筛房，留证据充分的。" data-st="acco"></circle><circle class="stop-hit" cx="610" cy="354" r="17" role="img" aria-label="排行程：把三路调研拼成一天一天的行程。" data-st="itin"></circle><circle class="stop-hit" cx="744" cy="236" r="17" role="img" aria-label="验时效：每条证据盖上采集时间，过旧的打回重查。" data-st="fresh"></circle><circle class="stop-hit" cx="838" cy="236" r="17" role="img" aria-label="逐条核证：行程里每句话对一遍证据，冲突当场裁决。" data-st="veri"></circle><circle class="stop-hit" cx="932" cy="236" r="17" role="img" aria-label="风险门：出现高风险建议时拦下来，先问你。" data-st="rgate"></circle><circle class="stop-hit" cx="761" cy="108" r="17" role="img" aria-label="找缺口：审查打回后，定位还缺哪块证据。" data-st="gap"></circle><circle class="stop-hit" cx="1026" cy="236" r="17" role="img" aria-label="质量把关：整份行程再过一遍，不满意就打回重做。" data-st="revw"></circle><circle class="stop-hit" cx="1120" cy="236" r="17" role="img" aria-label="综合成稿：把全部产出写成行程、地图与预算。" data-st="syn"></circle><circle class="stop-hit" cx="1214" cy="236" r="17" role="img" aria-label="地点落图：行程里的每个地点，逐一标进地图。" data-st="geo"></circle></svg>
+              <div class="thea-card" id="thea-card" aria-hidden="true">
+                <img class="tc-badge" id="tc-badge" width="44" height="44" alt="">
+                <span class="tc-text"><span class="tc-name" id="tc-name"></span><span class="tc-duty" id="tc-duty"></span></span>
+              </div>
+            </div>
+          </div>
+          <div class="cnt-row">
+            <div class="cnt"><span class="cnt-num"><span id="cnt-tools">—</span> 次</span><span class="cnt-cap">工具调用</span></div>
+            <div class="cnt"><span class="cnt-num"><span id="cnt-src">—</span> 条</span><span class="cnt-cap">引用来源</span></div>
+            <div class="cnt"><span class="cnt-num" id="cnt-time">—</span><span class="cnt-cap">全程用时</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Task 5 · 机组名册：徽章有物理按压手感（按哪儿哪儿沉），点击后下方弹出该成员的职责小浮窗 -->
+    <div class="crew" role="group" aria-label="机组名册">
+      <span class="crew-lbl">机组名册</span>
+      <div class="crew-row" id="crew-row">
+        <figure class="crew-m reveal" data-role="规划员" data-duty="把整趟旅程拆成可以并行的调研任务。">
+          <span class="crew-badge" role="button" tabindex="0" aria-label="规划员：把整趟旅程拆成可以并行的调研任务。"><img src="assets/badge-planner.webp" width="443" height="443" alt="" loading="lazy" decoding="async"></span>
+          <figcaption>规划员</figcaption>
+        </figure>
+        <figure class="crew-m reveal" data-role="调度员" data-duty="派工、收工、决定下一波谁出发。">
+          <span class="crew-badge" role="button" tabindex="0" aria-label="调度员：派工、收工、决定下一波谁出发。"><img src="assets/badge-dispatcher.webp" width="443" height="443" alt="" loading="lazy" decoding="async"></span>
+          <figcaption>调度员</figcaption>
+        </figure>
+        <figure class="crew-m reveal" data-role="目的地研究员" data-duty="景点、美食、时令活动，逐条带出处。">
+          <span class="crew-badge" role="button" tabindex="0" aria-label="目的地研究员：景点、美食、时令活动，逐条带出处。"><img src="assets/badge-dest.webp" width="443" height="443" alt="" loading="lazy" decoding="async"></span>
+          <figcaption>目的地研究员</figcaption>
+        </figure>
+        <figure class="crew-m reveal" data-role="交通研究员" data-duty="机票、铁路、市内通行，算好换乘与时间。">
+          <span class="crew-badge" role="button" tabindex="0" aria-label="交通研究员：机票、铁路、市内通行，算好换乘与时间。"><img src="assets/badge-transport.webp" width="443" height="443" alt="" loading="lazy" decoding="async"></span>
+          <figcaption>交通研究员</figcaption>
+        </figure>
+        <figure class="crew-m reveal" data-role="住宿研究员" data-duty="按你的预算与偏好筛房，留证据充分的。">
+          <span class="crew-badge" role="button" tabindex="0" aria-label="住宿研究员：按你的预算与偏好筛房，留证据充分的。"><img src="assets/badge-stay.webp" width="443" height="443" alt="" loading="lazy" decoding="async"></span>
+          <figcaption>住宿研究员</figcaption>
+        </figure>
+        <figure class="crew-m reveal" data-role="行程规划师" data-duty="把三路调研拼成一天一天的行程。">
+          <span class="crew-badge" role="button" tabindex="0" aria-label="行程规划师：把三路调研拼成一天一天的行程。"><img src="assets/badge-itinerary.webp" width="443" height="443" alt="" loading="lazy" decoding="async"></span>
+          <figcaption>行程规划师</figcaption>
+        </figure>
+        <figure class="crew-m reveal" data-role="校验员" data-duty="行程里每句话对一遍证据，冲突当场裁决。">
+          <span class="crew-badge" role="button" tabindex="0" aria-label="校验员：行程里每句话对一遍证据，冲突当场裁决。"><img src="assets/badge-verifier.webp" width="443" height="443" alt="" loading="lazy" decoding="async"></span>
+          <figcaption>校验员</figcaption>
+        </figure>
+        <figure class="crew-m reveal" data-role="审查员" data-duty="整份行程再过一遍，不满意就打回重做。">
+          <span class="crew-badge" role="button" tabindex="0" aria-label="审查员：整份行程再过一遍，不满意就打回重做。"><img src="assets/badge-reviewer.webp" width="443" height="443" alt="" loading="lazy" decoding="async"></span>
+          <figcaption>审查员</figcaption>
+        </figure>
+      </div>
+      <div class="crew-pop" id="crew-pop" role="status" aria-live="polite" hidden="">
+        <span class="cp-caret" aria-hidden="true"></span>
+        <b class="cp-role" id="cp-role"></b>
+        <span class="cp-duty" id="cp-duty"></span>
+      </div>
+    </div>
+
+  </section>
+  <!-- ================= CH2 双引擎 ================= -->
+  <section class="chap" id="ch2">
+    <div class="chap-head">
+      <h2>一个开关，两种引擎。</h2>
+      <p class="deck">签证、汇率、开放时间，快引擎直接作答。<br>整段旅程的深度企划，交给深研引擎和整支编队。<br>不同的问题，不同的打开方式。</p>
+      <figure class="chap-art tilt-r reveal" aria-hidden="true">
+        <img src="assets/spot-ch2-engines.webp" width="1254" height="1254" alt="" loading="lazy" decoding="async">
+      </figure>
+    </div>
+
+    <div class="eng">
+      <!-- 引擎选择器仪表（M4）：航迹小窗（两条剖面 ghost 常驻、live 随扳杆描画/回抽）+ 滑槽拨杆。
+           铭牌是真按钮（tab 语义沿用），钮子与小窗全是随动件；data-eng 是唯一状态位。 -->
+      <div class="eng-sel" id="eng-sel" data-eng="fast">
+        <div class="eng-profile" aria-hidden="true">
+          <svg viewBox="0 0 340 72">
+            <path class="prof-ground" d="M 14 60 H 326"></path>
+            <path class="prof-ghost" d="M 24 58 Q 87 26 150 58"></path>
+            <path class="prof-ghost" d="M 24 58 C 100 4 240 4 316 58"></path>
+            <path class="prof-live prof-fast" d="M 24 58 Q 87 26 150 58" pathLength="1"></path>
+            <path class="prof-live prof-deep" d="M 24 58 C 100 4 240 4 316 58" pathLength="1"></path>
+            <circle class="prof-dot pd-fast" cx="150" cy="58" r="4"></circle>
+            <circle class="prof-dot pd-deep" cx="76" cy="32" r="4"></circle>
+            <circle class="prof-dot pd-deep" cx="138" cy="19" r="4"></circle>
+            <circle class="prof-dot pd-deep" cx="202" cy="19" r="4"></circle>
+            <circle class="prof-dot pd-deep" cx="264" cy="32" r="4"></circle>
+          </svg>
+          <span class="pcap pcap-fast">低空短途，1 次直答</span>
+          <span class="pcap pcap-deep">高空长航，4 名研究员</span>
+        </div>
+        <div class="eng-lever" role="tablist" aria-label="引擎切换">
+          <button class="esw-btn sel" id="esw-fast" type="button" role="tab" aria-selected="true" aria-controls="pane-fast">快答引擎</button>
+          <span class="lever-slot" id="lever-slot" aria-hidden="true"><i class="lever-knob"></i></span>
+          <button class="esw-btn" id="esw-deep" type="button" role="tab" aria-selected="false" aria-controls="pane-deep">深研引擎</button>
+        </div>
+      </div>
+      <p class="eng-q">「日本个人旅游签证要准备哪些材料？」</p>
+      <div class="eng-panes">
+        <div class="pane show" id="pane-fast" role="tabpanel" aria-labelledby="esw-fast">
+          <div class="fast-card lamp">
+            <span class="eng-badge">秒级响应</span>
+            <div class="fast-ans" id="fast-ans">短期单次签：护照、照片、申请表、在职与收入证明、银行流水、往返机票与酒店订单。材料齐全，通常 5 个工作日出签。</div>
+            <div class="src-line">来源 领事馆签证须知，上周核验</div>
+          </div>
+        </div>
+        <div class="pane" id="pane-deep" role="tabpanel" aria-labelledby="esw-deep">
+          <div class="deep-card lamp">
+            <span class="eng-badge">编队起飞</span>
+            <div class="fan-wrap">
+              <svg class="fan-svg" viewBox="0 0 340 240" aria-hidden="true">
+                <path class="fan-line" d="M 60 120 C 120 120 140 45 205 45" pathLength="1"></path>
+                <path class="fan-line" d="M 60 120 C 120 120 140 95 205 95" pathLength="1"></path>
+                <path class="fan-line" d="M 60 120 C 120 120 140 145 205 145" pathLength="1"></path>
+                <path class="fan-line" d="M 60 120 C 120 120 140 195 205 195" pathLength="1"></path>
+                <circle class="fan-hub" cx="60" cy="120" r="10"></circle>
+                <circle class="fan-dot" cx="205" cy="45" r="7"></circle>
+                <circle class="fan-dot" cx="205" cy="95" r="7"></circle>
+                <circle class="fan-dot" cx="205" cy="145" r="7"></circle>
+                <circle class="fan-dot" cx="205" cy="195" r="7"></circle>
+                <text class="fan-label" x="224" y="50">目的地</text>
+                <text class="fan-label" x="224" y="100">交通</text>
+                <text class="fan-label" x="224" y="150">住宿</text>
+                <text class="fan-label" x="224" y="200">行程</text>
+              </svg>
+              <ul class="deep-list">
+                <li><b>问题升格</b>为「东京五日深度企划」</li>
+                <li><b>四名研究员</b>已列队，并行开工</li>
+                <li><b>产出</b>：完整行程、地图与预算，句句有出处</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= CH3 指挥权 ================= -->
+  <section class="chap chap-alt" id="ch3">
+    <div class="chap-head">
+      <h2>AI 提案，你拍板。</h2>
+      <p class="deck">起飞之前，规划员把整套计划摊在你面前。<br>批准、调整、补充要求，都是一句话的事。</p>
+      <figure class="chap-art tilt-l reveal" aria-hidden="true">
+        <img src="assets/spot-ch3-tower.webp" width="1254" height="1254" alt="" loading="lazy" decoding="async">
+      </figure>
+    </div>
+
+    <div class="gate-wrap">
+      <div class="gcard lamp" id="gcard">
+        <div class="g-head">
+          <b>东京五日 企划单</b>
+        </div>
+        <div class="g-steps">
+          <div class="g-step">
+            <span class="g-no">Step 1</span>
+            <span>摸清目的地：景点、美食、文化与时令</span>
+            <span class="g-agents">目的地研究员</span>
+            <span class="g-tag" id="tag-s1"></span>
+          </div>
+          <div class="g-step">
+            <span class="g-no">Step 2</span>
+            <span>交通与住宿同时开工</span>
+            <span class="g-agents">交通研究员 + 住宿研究员 并行</span>
+            <span class="g-tag" id="tag-s2"></span>
+          </div>
+          <div class="g-step">
+            <span class="g-no">Step 3</span>
+            <span>编排每一天，直到分钟级</span>
+            <span class="g-agents">行程规划师</span>
+            <span class="g-tag" id="tag-s3"></span>
+          </div>
+        </div>
+        <div class="g-chips" id="g-chips">
+          <button class="chip" type="button" data-adj="budget">预算再紧一点</button>
+          <button class="chip" type="button" data-adj="pace">节奏慢一点</button>
+          <button class="chip" type="button" data-adj="food">美食优先</button>
+        </div>
+        <div class="g-note" id="g-note"></div>
+        <div class="g-actions">
+          <button class="gbtn primary" id="g-approve" type="button">开始调研</button>
+          <button class="gbtn" id="g-adjust" type="button">调整或补充</button>
+        </div>
+        <div class="stamp" aria-hidden="true">调研中</div>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- ================= 呼吸段 · 编队爬升 ================= -->
+  <section class="breather" aria-label="插画：编队爬升">
+    <img src="assets/breather-formation.webp" width="1672" height="941" alt="" loading="lazy" decoding="async" style="translate: none; rotate: none; scale: none; transform: scale(1.07, 1.07);">
+    <!-- 呼吸图活化（素材轮 2026-07-17）：静图打底，视频入坞后淡入接管；桌面细指针限定，脚本见页尾 lazyvid -->
+    <video class="br-live" data-src="assets/breather-formation-live.mp4" muted="" loop="" playsinline="" preload="none" aria-hidden="true"></video>
+    <p class="br-line reveal"><span class="brl-s">已批准。</span><span class="brl-s">编队爬升中。</span></p>
+  </section>
+
+  <!-- ================= CH4 证据链 ================= -->
+  <section class="chap" id="ch4">
+    <div class="chap-head">
+      <h2>每一句，都有出处。</h2>
+      <p class="deck">交付给你的计划，每个重要的选择都基于一个来源：<br>你补充的、它记住的、你设的规矩、查证过的信息……<br>碰一碰行程，看看每个计划从哪里来。</p>
+      <figure class="chap-art tilt-r reveal" aria-hidden="true">
+        <img src="assets/spot-ch4-evidence.webp" width="1254" height="1254" alt="" loading="lazy" decoding="async">
+      </figure>
+    </div>
+
+    <div class="evi">
+      <div class="evi-text">
+        <span class="lbl">DAY 2 节选 · 成稿</span>
+        <p>上午 <span class="claim active" data-ev="ev2" tabindex="0" role="button" aria-controls="ev2" aria-current="true">teamLab 无界，09:00 开馆即入</span>。午后 <span class="claim" data-ev="ev4" tabindex="0" role="button" aria-controls="ev4">月岛，吃文字烧</span>。晚餐 <span class="claim" data-ev="ev1" tabindex="0" role="button" aria-controls="ev1">无花生菜单的家庭料理店</span>，饭后台场看夜景。夜宿 <span class="claim" data-ev="ev3" tabindex="0" role="button" aria-controls="ev3">新宿家庭房，含早每晚 ¥860</span>。</p>
+      </div>
+      <div class="evi-cards">
+        <div class="evc lit" id="ev2">
+          <div class="evc-top"><span class="evc-src">teamLab 官网</span><span class="evc-fresh">官方核验</span></div>
+          <div class="evc-body">开馆时间与预约规则取自官方页面，行程按 09:00 开馆安排。</div>
+          <div class="evc-status">● 已核验</div>
+        </div>
+        <div class="evc" id="ev4">
+          <div class="evc-top"><span class="evc-src">「想去月岛吃文字烧」</span><span class="evc-fresh">调研要求</span></div>
+          <div class="evc-body">建案时提出的要求，已排进 Day 2 午后。</div>
+          <div class="evc-status">◆ 已采纳</div>
+        </div>
+        <div class="evc" id="ev1">
+          <div class="evc-top"><span class="evc-src">「孩子花生过敏」</span><span class="evc-fresh">用户记忆</span></div>
+          <div class="evc-body">三周前记下的档案，餐厅均按无花生菜单筛选。</div>
+          <div class="evc-status">◐ 已应用</div>
+        </div>
+        <div class="evc" id="ev3">
+          <div class="evc-top"><span class="evc-src">住宿上限 每晚 ¥900</span><span class="evc-fresh">用户限制</span></div>
+          <div class="evc-body">账户级预算规则，已选定 ¥860 的家庭房。</div>
+          <div class="evc-status">○ 已生效</div>
+        </div>
+      </div>
+    </div>
+
+  </section>
+  <!-- ================= CH5 记忆 ================= -->
+  <section class="chap chap-alt" id="ch5">
+    <div class="chap-head">
+      <h2>越聊，越懂你。</h2>
+      <p class="deck">孩子花生过敏这件事，你只需要说一次。之后的每一份行程、每一家餐厅，它都替你记着。<span class="deck-cue">切换下面的开关，看看有记忆和没记忆的差别。</span></p>
+      <figure class="chap-art tilt-l reveal" aria-hidden="true">
+        <img src="assets/spot-ch5-suitcase.webp" width="1254" height="1254" alt="" loading="lazy" decoding="async">
+      </figure>
+    </div>
+
+    <div class="mem">
+      <div class="mem-main on lamp" id="mem-main">
+        <div class="mem-ctl">
+          <span class="mem-q">「Day 3 中午想吃地道川菜」</span>
+          <!-- 语义修正（M5 audit）：开关切换的是同一份清单，不存在成对面板，radio 比 tab 贴切 -->
+          <div class="mswitch" role="radiogroup" aria-label="记忆开关">
+            <button class="mopt" id="mem-off" type="button" role="radio" aria-checked="false">记忆 关</button>
+            <button class="mopt sel" id="mem-on" type="button" role="radio" aria-checked="true">记忆 开</button>
+          </div>
+        </div>
+        <div class="mlist">
+          <div class="mrow">
+            <span><span class="name">巷子口川菜馆</span><span class="sub">担担面招牌，步行 6 分钟</span></span>
+            <span class="mtag">人均 ¥95</span>
+          </div>
+          <div class="mrow blocked">
+            <span><span class="name">蜀香居</span><span class="sub">名菜宫保鸡丁，含花生</span></span>
+            <span class="mtag" data-on="已排除 花生" data-off="人均 ¥120">已排除 花生</span>
+          </div>
+          <div class="mrow blocked">
+            <span><span class="name">麻辣工坊</span><span class="sub">招牌花生冷盘，含花生</span></span>
+            <span class="mtag" data-on="已排除 花生" data-off="人均 ¥88">已排除 花生</span>
+          </div>
+          <div class="mrow added">
+            <span><span class="name">山城小馆</span><span class="sub">钵钵鸡可做无花生版本，商家页面已标注</span></span>
+            <span class="mtag">替补推荐</span>
+          </div>
+        </div>
+        <div class="mem-note">已为你避开 3 道含花生菜品。依据：家庭档案「孩子花生过敏」，你在三周前提到过。</div>
+      </div>
+
+      <div class="layers" id="layers">
+        <span class="lbl"><span class="lc lc-6">这次回答中包含了<b class="lc-hi">六</b>层记忆</span><span class="lc lc-4">这次回答中包含了四层记忆</span></span>
+        <div class="layer" style="--w: 26%"><div class="l-name"><span>系统指令</span><span class="mono">SYSTEM</span></div><div class="l-bar"></div></div>
+        <div class="layer lit" style="--w: 34%" data-mem=""><div class="l-name"><span>你的偏好</span><span class="mono">PREFERENCES</span></div><div class="l-bar"></div></div>
+        <div class="layer" style="--w: 22%"><div class="l-name"><span>画像推断</span><span class="mono">PORTRAIT</span></div><div class="l-bar"></div></div>
+        <div class="layer" style="--w: 30%"><div class="l-name"><span>历史摘要</span><span class="mono">ANCHOR</span></div><div class="l-bar"></div></div>
+        <div class="layer lit" style="--w: 46%" data-mem=""><div class="l-name"><span>记忆档案</span><span class="mono">FACTS</span></div><div class="l-bar"></div></div>
+        <div class="layer" style="--w: 62%"><div class="l-name"><span>本次对话</span><span class="mono">MESSAGES</span></div><div class="l-bar"></div></div>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- ================= 呼吸段 · 舷窗巡航 ================= -->
+  <section class="breather mid" aria-label="插画：舷窗巡航">
+    <img src="assets/breather-porthole.webp" width="1672" height="941" alt="" loading="lazy" decoding="async" style="translate: none; rotate: none; scale: none; transform: scale(1.07, 1.07);">
+    <video class="br-live" data-src="assets/breather-porthole-live.mp4" muted="" loop="" playsinline="" preload="none" aria-hidden="true"></video>
+    <p class="br-line reveal"><span class="brl-s">巡航高度。</span><span class="brl-s">目的地临近。</span></p>
+  </section>
+
+  <!-- ================= CH6 成果 ================= -->
+  <section class="chap" id="ch6">
+    <div class="chap-head">
+      <h2>一份直接能用的行程。</h2>
+      <p class="deck">地图、日程、预算，一次成型。五天二十一站按日成线，每一站都落在图上，落地就能照着走。</p>
+      <figure class="chap-art tall tilt-r reveal">
+        <img src="assets/poster-tokyo.webp" width="1024" height="1536" alt="东京之夜：喷气时代风格的目的地海报" loading="lazy" decoding="async">
+        <!-- C-A4-v3 cinemagraph（素材轮回件三验合格）：窗点微闪 + 航线虚线流动，静图打底淡入接管 -->
+        <video class="poster-live" data-src="assets/poster-tokyo-live.mp4" muted="" loop="" playsinline="" preload="none" aria-hidden="true"></video>
+      </figure>
+    </div>
+
+    <div class="art">
+      <div class="art-grid">
+        <div class="map-panel lamp charted">
+          <div class="day-chips" id="day-chips">
+            <button class="dchip sel" type="button" data-day="1" aria-pressed="true">Day 1</button>
+            <button class="dchip" type="button" data-day="2" aria-pressed="false">Day 2</button>
+            <button class="dchip" type="button" data-day="3" aria-pressed="false">Day 3</button>
+            <button class="dchip" type="button" data-day="4" aria-pressed="false">Day 4</button>
+            <button class="dchip" type="button" data-day="5" aria-pressed="false">Day 5</button>
+          </div>
+          <!-- 东京图：viewBox = chart-tokyo.webp × 0.5，河湾罗盘皆按底图实勘落位；
+               航线用 mask 描画（虚线纹样保得住），遮罩杆在 defs 里、JS 只拧 .mrev 的 dashoffset -->
+          <!-- JP-5 · 移动端横滚层：桌面 display:contents 隐形（svg 仍为 map-panel 直系 flex 子项，桌面布局零改动），
+               ≤719 变滚动容器，边缘渐隐 + 换日追随由页尾脚本驱动 -->
+          <!-- JP-11 · .tmap-frame 是静态承载层（桌面 display:contents 隐形），≤719 变 position:relative 的
+               地图取景框，左右渐隐挂在它身上 —— 挂在 .map-panel 上会连 Day 芯片行一起罩住，首尾两枚被洗掉。 -->
+          <div class="tmap-frame">
+          <div class="tmap-scroll">
+          <svg class="tmap" id="tmap" viewBox="0 0 707 543" role="img" aria-label="东京五日行程图：21 个地点按天成线，进场航线画进东京">
+            <defs>
+              <mask id="appm"><path class="mrev" d="M 702 322 C 645 375 595 468 505 505 C 458 524 402 496 368 452" pathLength="1" style="stroke-dashoffset: 1px;"></path></mask>
+              <mask id="rtm-1"><path class="mrev" d="M 390 152 L 452 128 L 300 130 L 330 180" pathLength="1"></path></mask>
+              <mask id="rtm-2"><path class="mrev" d="M 440 272 L 468 297 L 505 330 L 468 398" pathLength="1"></path></mask>
+              <mask id="rtm-3"><path class="mrev" d="M 148 300 L 176 315 L 205 330 L 185 365" pathLength="1"></path></mask>
+              <mask id="rtm-4"><path class="mrev" d="M 170 225 L 105 200 L 140 180 L 265 185" pathLength="1"></path></mask>
+              <mask id="rtm-5"><path class="mrev" d="M 350 190 L 300 205 L 310 245 L 355 250 L 390 285" pathLength="1"></path></mask>
+            </defs>
+            <path class="app-line" d="M 702 322 C 645 375 595 468 505 505 C 458 524 402 496 368 452" mask="url(#appm)"></path>
+            <g class="app-plane" aria-hidden="true" transform="translate(702 322) rotate(226.86483124082267)"><path d="M 0 -8 L 5.5 7 L 0 3.5 L -5.5 7 Z"></path></g>
+            <g class="app-roundel" data-svg-origin="368 452" transform="matrix(0,0,0,0,368,452)" style="transform-origin: 0px 0px; translate: none; rotate: none; scale: none;"><circle class="rnd-o" cx="368" cy="452" r="10"></circle><circle class="rnd-i" cx="368" cy="452" r="4.2"></circle></g>
+            <text class="app-label" x="350" y="446" text-anchor="end">羽田</text>
+            <path class="rt" data-day="1" d="M 390 152 L 452 128 L 300 130 L 330 180" mask="url(#rtm-1)"></path>
+            <path class="rt" data-day="2" d="M 440 272 L 468 297 L 505 330 L 468 398" mask="url(#rtm-2)"></path>
+            <path class="rt" data-day="3" d="M 148 300 L 176 315 L 205 330 L 185 365" mask="url(#rtm-3)"></path>
+            <path class="rt" data-day="4" d="M 170 225 L 105 200 L 140 180 L 265 185" mask="url(#rtm-4)"></path>
+            <path class="rt" data-day="5" d="M 350 190 L 300 205 L 310 245 L 355 250 L 390 285" mask="url(#rtm-5)"></path>
+            <circle class="pt" data-day="1" cx="390" cy="152" r="9" data-svg-origin="390 152" transform="matrix(0,0,0,0,390,152)" style="translate: none; rotate: none; scale: none; transform-origin: 0px 0px; opacity: 0;"></circle><text class="pt-label" data-day="1" x="374" y="146" text-anchor="end" style="opacity: 0;">浅草寺</text>
+            <circle class="pt" data-day="1" cx="452" cy="128" r="7.5" data-svg-origin="452 128" transform="matrix(0,0,0,0,452,128)" style="translate: none; rotate: none; scale: none; transform-origin: 0px 0px; opacity: 0;"></circle><text class="pt-label" data-day="1" x="452" y="112" text-anchor="middle" style="opacity: 0;">晴空塔</text>
+            <circle class="pt" data-day="1" cx="300" cy="130" r="7.5" data-svg-origin="300 130" transform="matrix(0,0,0,0,300,130)" style="translate: none; rotate: none; scale: none; transform-origin: 0px 0px; opacity: 0;"></circle><text class="pt-label" data-day="1" x="300" y="114" text-anchor="middle" style="opacity: 0;">谷中银座</text>
+            <circle class="pt" data-day="1" cx="330" cy="180" r="7.5" data-svg-origin="330 180" transform="matrix(0,0,0,0,330,180)" style="translate: none; rotate: none; scale: none; transform-origin: 0px 0px; opacity: 0;"></circle><text class="pt-label" data-day="1" x="312" y="166" text-anchor="end" style="opacity: 0;">上野</text>
+            <circle class="pt" data-day="2" cx="440" cy="272" r="9" data-svg-origin="440 272" transform="matrix(0,0,0,0,440,272)" style="translate: none; rotate: none; scale: none; transform-origin: 0px 0px; opacity: 0;"></circle><text class="pt-label" data-day="2" x="452" y="264" text-anchor="start" style="opacity: 0;">筑地</text>
+            <circle class="pt" data-day="2" cx="468" cy="297" r="7.5" data-svg-origin="468 297" transform="matrix(0,0,0,0,468,297)" style="translate: none; rotate: none; scale: none; transform-origin: 0px 0px; opacity: 0;"></circle><text class="pt-label" data-day="2" x="482" y="301" text-anchor="start" style="opacity: 0;">月岛</text>
+            <circle class="pt" data-day="2" cx="505" cy="330" r="7.5" data-svg-origin="505 330" transform="matrix(0,0,0,0,505,330)" style="translate: none; rotate: none; scale: none; transform-origin: 0px 0px; opacity: 0;"></circle><text class="pt-label" data-day="2" x="519" y="334" text-anchor="start" style="opacity: 0;">teamLab</text>
+            <circle class="pt" data-day="2" cx="468" cy="398" r="7.5" data-svg-origin="468 398" transform="matrix(0,0,0,0,468,398)" style="translate: none; rotate: none; scale: none; transform-origin: 0px 0px; opacity: 0;"></circle><text class="pt-label" data-day="2" x="468" y="422" text-anchor="middle" style="opacity: 0;">台场</text>
+            <circle class="pt" data-day="3" cx="148" cy="300" r="9" data-svg-origin="148 300" transform="matrix(0,0,0,0,148,300)" style="translate: none; rotate: none; scale: none; transform-origin: 0px 0px; opacity: 0;"></circle><text class="pt-label" data-day="3" x="134" y="296" text-anchor="end" style="opacity: 0;">明治神宫</text>
+            <circle class="pt" data-day="3" cx="176" cy="315" r="7.5" data-svg-origin="176 315" transform="matrix(0,0,0,0,176,315)" style="translate: none; rotate: none; scale: none; transform-origin: 0px 0px; opacity: 0;"></circle><text class="pt-label" data-day="3" x="176" y="299" text-anchor="middle" style="opacity: 0;">原宿</text>
+            <circle class="pt" data-day="3" cx="205" cy="330" r="7.5" data-svg-origin="205 330" transform="matrix(0,0,0,0,205,330)" style="translate: none; rotate: none; scale: none; transform-origin: 0px 0px; opacity: 0;"></circle><text class="pt-label" data-day="3" x="219" y="334" text-anchor="start" style="opacity: 0;">表参道</text>
+            <circle class="pt" data-day="3" cx="185" cy="365" r="7.5" data-svg-origin="185 365" transform="matrix(0,0,0,0,185,365)" style="translate: none; rotate: none; scale: none; transform-origin: 0px 0px; opacity: 0;"></circle><text class="pt-label" data-day="3" x="185" y="389" text-anchor="middle" style="opacity: 0;">涩谷</text>
+            <circle class="pt" data-day="4" cx="170" cy="225" r="9" data-svg-origin="170 225" transform="matrix(0,0,0,0,170,225)" style="translate: none; rotate: none; scale: none; transform-origin: 0px 0px; opacity: 0;"></circle><text class="pt-label" data-day="4" x="170" y="249" text-anchor="middle" style="opacity: 0;">新宿御苑</text>
+            <circle class="pt" data-day="4" cx="105" cy="200" r="7.5" data-svg-origin="105 200" transform="matrix(0,0,0,0,105,200)" style="translate: none; rotate: none; scale: none; transform-origin: 0px 0px; opacity: 0;"></circle><text class="pt-label" data-day="4" x="91" y="204" text-anchor="end" style="opacity: 0;">都厅展望台</text>
+            <circle class="pt" data-day="4" cx="140" cy="180" r="7.5" data-svg-origin="140 180" transform="matrix(0,0,0,0,140,180)" style="translate: none; rotate: none; scale: none; transform-origin: 0px 0px; opacity: 0;"></circle><text class="pt-label" data-day="4" x="140" y="164" text-anchor="middle" style="opacity: 0;">回忆横丁</text>
+            <circle class="pt" data-day="4" cx="265" cy="185" r="7.5" data-svg-origin="265 185" transform="matrix(0,0,0,0,265,185)" style="translate: none; rotate: none; scale: none; transform-origin: 0px 0px; opacity: 0;"></circle><text class="pt-label" data-day="4" x="279" y="189" text-anchor="start" style="opacity: 0;">神乐坂</text>
+            <circle class="pt" data-day="5" cx="350" cy="190" r="9" data-svg-origin="350 190" transform="matrix(0,0,0,0,350,190)" style="translate: none; rotate: none; scale: none; transform-origin: 0px 0px; opacity: 0;"></circle><text class="pt-label" data-day="5" x="364" y="186" text-anchor="start" style="opacity: 0;">秋叶原</text>
+            <circle class="pt" data-day="5" cx="300" cy="205" r="7.5" data-svg-origin="300 205" transform="matrix(0,0,0,0,300,205)" style="translate: none; rotate: none; scale: none; transform-origin: 0px 0px; opacity: 0;"></circle><text class="pt-label" data-day="5" x="286" y="209" text-anchor="end" style="opacity: 0;">神保町</text>
+            <circle class="pt" data-day="5" cx="310" cy="245" r="7.5" data-svg-origin="310 245" transform="matrix(0,0,0,0,310,245)" style="translate: none; rotate: none; scale: none; transform-origin: 0px 0px; opacity: 0;"></circle><text class="pt-label" data-day="5" x="296" y="249" text-anchor="end" style="opacity: 0;">皇居外苑</text>
+            <circle class="pt" data-day="5" cx="355" cy="250" r="7.5" data-svg-origin="355 250" transform="matrix(0,0,0,0,355,250)" style="translate: none; rotate: none; scale: none; transform-origin: 0px 0px; opacity: 0;"></circle><text class="pt-label" data-day="5" x="369" y="254" text-anchor="start" style="opacity: 0;">东京站</text>
+            <circle class="pt" data-day="5" cx="390" cy="285" r="7.5" data-svg-origin="390 285" transform="matrix(0,0,0,0,390,285)" style="translate: none; rotate: none; scale: none; transform-origin: 0px 0px; opacity: 0;"></circle><text class="pt-label" data-day="5" x="404" y="289" text-anchor="start" style="opacity: 0;">银座</text>
+          </svg>
+          </div>
+          </div>
+        </div>
+
+        <div class="art-side">
+          <div class="daycard lamp" id="daycard" aria-live="polite">
+            <div class="dc-title"><b>Day 1 浅草·下町线</b><span class="mono">步行 5.1 km</span></div>
+            <div class="dc-meta"><span class="dcm-wx mono">晴 · 24°C</span><span class="dcm-note">傍晚河边起风，加件薄外套</span></div>
+            <div class="ditem"><span>浅草寺 雷门晨拜<span class="sub">开门前抵达，仲见世还没挤</span></span><span class="price">免费</span></div>
+            <div class="ditem"><span>晴空塔 天望甲板<span class="sub">预约当日票，避开正午峰值</span></span><span class="price">¥2,100</span></div>
+            <div class="ditem"><span>谷中银座 黄昏散步<span class="sub">落日染巷，下町烟火气</span></span><span class="price">免费</span></div>
+            <div class="dc-transit"><span class="dct-lbl">交通</span><span>都营浅草线一线贯穿，西瓜卡直刷</span></div>
+          </div>
+          <div class="budget lamp">
+            <div class="b-title"><b>五日预算</b><span class="btotal" id="btotal">¥19,080</span></div>
+            <div class="brow"><span>住宿</span><div class="bbar"><span class="bfill" id="bb-stay" style="--sx: .66"></span></div><span class="price" id="bp-stay">¥6,320</span></div>
+            <div class="brow"><span>交通</span><div class="bbar"><span class="bfill" id="bb-tran" style="--sx: .41"></span></div><span class="price" id="bp-tran">¥3,900</span></div>
+            <div class="brow"><span>餐饮</span><div class="bbar"><span class="bfill" id="bb-food" style="--sx: .57"></span></div><span class="price" id="bp-food">¥5,460</span></div>
+            <div class="brow"><span>门票</span><div class="bbar"><span class="bfill" id="bb-tick" style="--sx: .35"></span></div><span class="price" id="bp-tick">¥3,400</span></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+  </section>
+
+  <!-- ================= CH7 引擎盖 ================= -->
+  <section class="chap chap-alt" id="ch7">
+    <div class="chap-head">
+      <h2>在引擎盖下。</h2>
+      <p class="deck">一张放行单，五行看懂工程底座。</p>
+      <figure class="chap-art tilt-l reveal" aria-hidden="true">
+        <img src="assets/spot-ch7-cutaway.webp" width="1254" height="1254" alt="" loading="lazy" decoding="async">
+      </figure>
+    </div>
+
+    <!-- 机务放行单：全 mono 行、无图表（数据兜底在脚注），正向讲述不外链 -->
+    <div class="release reveal" role="table" aria-label="机务放行单">
+      <div class="rel-row" role="row">
+        <span class="rel-code" role="cell">RAG</span>
+        <span class="rel-line" role="cell">向量召回、关键词、重排，三级火箭把端到端检索质量翻了一倍</span>
+        <span class="rel-val" role="cell">+105%</span>
+      </div>
+      <div class="rel-row" role="row">
+        <span class="rel-code" role="cell">MCP</span>
+        <span class="rel-line" role="cell">搜索、地图、航班、火车、天气、汇率、游记，工具舱按需装配给每名研究员</span>
+        <span class="rel-val" role="cell">13 舱</span>
+      </div>
+      <div class="rel-row" role="row">
+        <span class="rel-code" role="cell">CTX</span>
+        <span class="rel-line" role="cell">系统、偏好、画像、摘要、记忆、对话，按 token 预算逐层装配，绝不挤掉你的硬约束</span>
+        <span class="rel-val" role="cell">6 层</span>
+      </div>
+      <div class="rel-row" role="row">
+        <span class="rel-code" role="cell">SSE</span>
+        <span class="rel-line" role="cell">从每一次思考到每一次工具调用，运行全程直播给你看</span>
+        <span class="rel-val" role="cell">逐事件</span>
+      </div>
+      <div class="rel-row" role="row">
+        <span class="rel-code" role="cell">COST</span>
+        <span class="rel-line" role="cell">每一次模型调用都记账，按机组成员与节点双维归因，瓶颈一眼可见</span>
+        <span class="rel-val" role="cell">每一步</span>
+      </div>
+    </div>
+  </section>
+  <!-- ================= 云层过渡 ================= -->
+  <!-- 云缝（素材轮 2026-07-17）：换 D4-1 真 alpha 云带，硬边由透明通道根治，mask 退役 -->
+  <div class="cloud-seam" aria-hidden="true">
+    <img src="assets/cloud-band-alpha.webp" width="2000" height="500" alt="" loading="lazy" decoding="async" style="translate: none; rotate: none; scale: none; transform: translate(0%, 4.5%);">
+  </div>
+
+  <!-- ================= 终章 ================= -->
+  <section class="finale" id="arrival">
+    <!-- 谢幕（M4）：电影速之三 = 跑道向灭点推近（fin-zoom）+ 进场线描画（与画中出发尾迹成对仗）
+         + ARR 邮戳垂降；落定后亲手盖章走 pass.ts 谢幕礼。灭点实测约在画面 50% 76%。 -->
+    <div class="finale-bg" aria-hidden="true">
+      <div class="fin-zoom" id="fin-zoom" style="translate: none; rotate: none; scale: none; transform: translate(0px, 0px);">
+        <!-- A5-v3（素材轮 2026-07-17）：灭点实测 (837,667) ≈ 50% 71%，fin-zoom 原点与进场线终点已同步；
+             进场线改走低位入场，避让画中左上→右上的出发尾迹 -->
+        <picture>
+          <source media="(max-width:719px)" srcset="assets/finale-runway-m.webp">
+          <img src="assets/finale-runway.webp" width="1672" height="941" alt="" loading="lazy" decoding="async">
+        </picture>
+        <svg class="fin-sky" viewBox="0 0 1672 941" preserveAspectRatio="xMidYMid slice">
+          <path class="fin-app" id="fin-app" d="M -40 320 C 320 400 620 540 837 667" pathLength="1"></path>
+        </svg>
+      </div>
+      <div class="fin-glow" aria-hidden="true"></div>
+      <div class="finale-scrim"></div>
+    </div>
+    <h2 class="fin-h">下一段旅程，<br><span class="accent">带上机组</span>。</h2>
+    <p class="fin-sub">从一句需求到一份成稿，机组替你规划全程。你说过的、它记住的，下次出发都还作数。</p>
+    <p class="fin-cap" id="fin-cap">亲手盖下终章邮戳</p>
+    <div class="fin-rig" id="fin-rig">
+      <span class="fin-pad" aria-hidden="true"></span>
+      <button class="fin-stamp" id="fin-stamp" type="button" aria-label="盖下终章邮戳，集齐全程八章" style="opacity: 0; visibility: hidden;">
+        <svg class="fin-target" viewBox="0 0 200 200" aria-hidden="true"><circle class="ft-ring" cx="100" cy="100" r="96" pathLength="1"></circle></svg>
+        <span class="fin-here" aria-hidden="true">盖章处</span>
+        <img src="assets/stamps/stamp-arr.webp" width="192" height="192" alt="" loading="lazy" decoding="async">
+      </button>
+      <span class="fin-ink" id="fin-ink" aria-hidden="true"></span>
+    </div>
+    <div class="fin-ctas">
+      <a class="btn btn-start" href="https://github.com/Dreamaker-TA/JourneyPilot" target="_blank" rel="noopener">
+        <svg class="btn-gh" width="19" height="19" viewBox="0 0 16 16" aria-hidden="true"><path fill="currentColor" fill-rule="evenodd" clip-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82a7.65 7.65 0 0 1 2-.27c.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8Z"></path></svg>
+        <span>开始旅行</span>
+      </a>
+    </div>
+
+    <div class="microfoot">
+      <span>© 2026 JourneyPilot，是由 Lagom 汤骜和硅基生命共同完成开发的项目。<br>感谢每一度电力和风扇的呼啸，他们帮助我将脑中的想法变成眼前的现实。</span>
+      <button class="foot-stamp" id="foot-stamp" type="button" aria-label="回到顶部">
+        <img src="assets/stamp-postmark.webp" width="1254" height="1254" alt="" loading="lazy" decoding="async">
+        <svg viewBox="0 0 200 200" aria-hidden="true">
+          <defs><path id="pm-ring-foot" d="M 100,100 m 0,-69 a 69,69 0 1,1 0,138 a 69,69 0 1,1 0,-138"></path></defs>
+          <text font-family="ui-monospace, Menlo, monospace" font-size="10" letter-spacing="3.2" fill="#F2E9D8" opacity=".8">
+            <textPath href="#pm-ring-foot">JOURNEYPILOT · 回到顶部 · MMXXVI ·</textPath>
+          </text>
+        </svg>
+      </button>
+    </div>
+  </section>
+</main>
+
+<!-- ================= 登机牌（全页装置：进度/导航/集章/谢幕礼） =================
+     章位格由 fixtures/legs.ts 生成（八航段唯一源）；stub 由 pass.ts 在入坞时显形。 -->
+<aside class="pass" id="pass">
+  <button class="pass-stub" id="pass-stub" type="button" aria-expanded="false" aria-controls="pass-card" hidden="">
+    <img class="ps-roundel ps-icon" src="assets/brand-icon-ink.webp" width="116" height="96" alt="" decoding="async">
+    <span class="ps-main">
+      <img class="ps-word" src="assets/brand-word-ink.webp" width="425" height="64" alt="JourneyPilot" decoding="async">
+      <span class="ps-leg" id="pass-leg">值机</span>
+    </span>
+    <span class="ps-count" id="pass-count" aria-hidden="true"></span>
+    <span class="ps-slots" id="pass-slots" aria-hidden="true"><i class="ps-dot" data-leg="chk"></i><i class="ps-dot" data-leg="l01"></i><i class="ps-dot" data-leg="l02"></i><i class="ps-dot" data-leg="l03"></i><i class="ps-dot" data-leg="l04"></i><i class="ps-dot" data-leg="l05"></i><i class="ps-dot" data-leg="l06"></i><i class="ps-dot" data-leg="arr"></i></span>
+    <span class="sr-only">打开登机牌</span>
+  </button>
+  <!-- 落章回执：盖章瞬间从 stub 后滑出的小纸条（事件时刻赢注意力，不做常驻飘动） -->
+  <div class="ps-toast" id="pass-toast" aria-hidden="true" hidden="">
+    <img id="pass-toast-img" width="34" height="34" alt="" decoding="async">
+    <span id="pass-toast-name"></span>
+  </div>
+  <div class="pass-card" id="pass-card" role="region" aria-label="登机牌" hidden="">
+    <div class="pc-head">
+      <img class="ps-roundel ps-icon pc-icon" src="assets/brand-icon-ink.webp" width="116" height="96" alt="" decoding="async">
+      <img class="pc-word" src="assets/brand-word-ink.webp" width="425" height="64" alt="JourneyPilot" decoding="async">
+    </div>
+    <div class="pc-route" aria-label="From Now via JourneyPilot to Future">
+      <span class="pcr-leg"><i class="pcr-lab">FROM</i><b>Now</b></span>
+      <span class="pcr-mid">
+        <span class="pcr-via"><i class="pcr-lab">VIA</i><img class="pcr-brand" src="assets/brand-word-ink.webp" width="425" height="64" alt="JourneyPilot" decoding="async"></span>
+        <svg class="pc-jet" viewBox="0 0 96 16" aria-hidden="true">
+          <path d="M2 8 H38 M58 8 H94" fill="none" stroke="#0D1F3C" stroke-width="1.6" stroke-dasharray="1 5" stroke-linecap="round"></path>
+          <path d="M42 8 L52 8 L49 4.4 L50.8 4.4 L55 8 L50.8 11.6 L49 11.6 L52 8" fill="#E4571F"></path>
+        </svg>
+      </span>
+      <span class="pcr-leg pcr-to"><i class="pcr-lab">TO</i><b>Future</b></span>
+    </div>
+    <div class="pc-info">
+      <span class="pi"><i>旅客</i><b>你</b></span>
+      <span class="pi"><i>舱位</i><b>1A</b></span>
+      <span class="pi"><i>登机口</i><b>C01</b></span>
+    </div>
+    <div class="pc-grid" id="pass-grid"><button type="button" class="pc-slot" data-leg="chk" aria-label="跳转 CHK 值机"><span class="slot-stamp" style="--ang:-6deg">CHK</span><span class="slot-name">值机</span></button><button type="button" class="pc-slot" data-leg="l01" aria-label="跳转 L01 编队"><span class="slot-stamp" style="--ang:4deg">L01</span><span class="slot-name">编队</span></button><button type="button" class="pc-slot" data-leg="l02" aria-label="跳转 L02 双引擎"><span class="slot-stamp" style="--ang:-3deg">L02</span><span class="slot-name">双引擎</span></button><button type="button" class="pc-slot" data-leg="l03" aria-label="跳转 L03 塔台"><span class="slot-stamp" style="--ang:7deg">L03</span><span class="slot-name">塔台</span></button><button type="button" class="pc-slot" data-leg="l04" aria-label="跳转 L04 证据"><span class="slot-stamp" style="--ang:-5deg">L04</span><span class="slot-name">证据</span></button><button type="button" class="pc-slot" data-leg="l05" aria-label="跳转 L05 记忆"><span class="slot-stamp" style="--ang:3deg">L05</span><span class="slot-name">记忆</span></button><button type="button" class="pc-slot" data-leg="l06" aria-label="跳转 L06 抵达"><span class="slot-stamp" style="--ang:-7deg">L06</span><span class="slot-name">抵达</span></button><button type="button" class="pc-slot" data-leg="arr" aria-label="跳转 ARR 终章"><span class="slot-stamp" style="--ang:5deg">ARR</span><span class="slot-name">终章</span></button></div>
+    <div class="pc-foot">
+      <!-- 条码由 P1 卡面纸印刷版承担（左下角），CSS 假条码退役 -->
+      <span class="pc-prog">航程 <b class="mono" id="pass-prog">0</b><span class="mono">/8</span></span>
+    </div>
+  </div>
+  <p class="sr-only" aria-live="polite" id="pass-live"></p>
+</aside>
+
+<script>
+/* project dropdown: click-toggle (a11y) + hover on desktop (CSS) */
+(function(){
+  var wrap=document.getElementById("navProj"),btn=document.getElementById("navProjBtn");
+  if(!wrap||!btn)return;
+  function set(o){wrap.classList.toggle("open",o);btn.setAttribute("aria-expanded",o?"true":"false");}
+  btn.addEventListener("click",function(e){e.stopPropagation();set(!wrap.classList.contains("open"));});
+  document.addEventListener("click",function(e){if(!wrap.contains(e.target))set(false);});
+  document.addEventListener("keydown",function(e){if(e.key==="Escape")set(false);});
+})();
+
+/* Task 1 · 出发板：进场翻牌拼字；随首屏下滑（起飞长镜头推进），逐格反向翻回空白，
+   赶在信息板滑走消失之前把内容清空。清空进度由 hero pin 的推进量驱动（bundle 暴露 __jpHeroP）。 */
+(function(){
+  var LAT="ABCDEFGHJKLMNPQRSTUVWXYZ0123456789",CJK="东京航线云舱登机起飞值候门程旅站阶段编队";
+  var CFG={code:{ms:58,off:0},term:{ms:82,off:150},gate:{ms:70,off:250},status:{ms:96,off:390},dest:{ms:118,off:560}};
+  var board=document.getElementById("board");if(!board)return;
+  var rows=Array.prototype.slice.call(board.querySelectorAll(".board-row")).filter(function(r){return !r.classList.contains("board-head");});
+  var all=[];
+  rows.forEach(function(r,ri){
+    Array.prototype.forEach.call(r.querySelectorAll(".flap2"),function(el){
+      var cfg=CFG[el.getAttribute("data-col")]||CFG.dest;
+      var txt=el.getAttribute("data-text")||el.textContent||"";el.textContent="";var ci=0;
+      for(var i=0;i<txt.length;i++){var ch=txt[i],t=document.createElement("span");
+        if(ch===" "){t.className="fcell gap";el.appendChild(t);continue;}
+        t.className="fcell";t.textContent=ch;el.appendChild(t);
+        all.push({el:t,ch:ch,lat:/[A-Za-z0-9]/.test(ch),cleared:false,timer:0,row:ri,cfg:cfg,ci:ci++});
+      }
+    });
+  });
+  function flapT(t,toBlank,delay){
+    if(t.timer)clearTimeout(t.timer);
+    var run=function(){var pool=t.lat?LAT:CJK,k=2+Math.floor(Math.random()*2),n=0;
+      (function step(){
+        if(n<k){t.el.textContent=pool.charAt(Math.floor(Math.random()*pool.length))||"";
+          t.el.classList.remove("tick");void t.el.offsetWidth;t.el.classList.add("tick");n++;
+          t.timer=window.setTimeout(step,64+n*8);}
+        else{t.el.textContent=toBlank?"":t.ch;t.el.classList.remove("tick");t.timer=0;}
+      })();};
+    t.cleared=toBlank;
+    if(delay){t.timer=window.setTimeout(run,delay);}else{run();}
+  }
+  var arrived=false;
+  function arrive(){arrived=true;all.forEach(function(t){t.el.textContent=t.ch;});
+    all.forEach(function(t){if(!t.cleared)flapT(t,false,t.row*150+t.cfg.off+t.ci*40);});}
+  if("IntersectionObserver" in window){
+    var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting&&!arrived){arrive();io.disconnect();}});},{threshold:.25});
+    io.observe(board);
+  }else arrive();
+  /* 反向清空：每格按行→列的次序，在清空进度 c∈[.02,.15] 内依次翻回空白，可随上滑翻回 */
+  var N=all.length;all.forEach(function(t,i){t.thr=0.02+(i/Math.max(1,N-1))*0.13;});
+  var lastC=-1;
+  function drive(c){c=c<0?0:c>1?1:c;if(c===lastC)return;lastC=c;
+    all.forEach(function(t){var should=c>=t.thr;if(should!==t.cleared)flapT(t,should,0);});}
+  /* hero 钉住段推进量 ≈ scrollY /（140% 视高）；清空吃满在推进 15% 处，赶在信息板滑走(≈20%)前。
+     直接在 scroll 里算（drive 有 lastC 去重、只对变态的格子翻牌），不走 rAF——避免后台标签页 rAF 冻结时失灵 */
+  function onScroll(){
+    var vh=window.innerHeight||1;
+    /* JP-15 · 2026-07-28：原先 <720px 直接 return —— 因为 scrollY/(1.4vh) 是 hero 钉住 140% 视高的
+       行程量，手机端不钉屏，这个分母没有对应物。缺的不是动效，是驱动量。
+       改用出发板自身在视口里的位置：板顶从 55%vh 升到 5%vh 为清空窗口，末端给到 0.17
+       （> 最大阈值 0.15，保证末格也翻空）。翻牌逻辑与桌面同一套，上滚照样翻回来。 */
+    if(!matchMedia("(min-width:720px)").matches){
+      drive(((vh*0.55-board.getBoundingClientRect().top)/(vh*0.50))*0.17);
+      return;
+    }
+    drive(window.scrollY/(vh*1.4));
+  }
+  window.addEventListener("scroll",onScroll,{passive:true});
+  window.addEventListener("resize",onScroll);
+  onScroll();
+})();
+
+/* ---- Task 3 · 行程卡随左侧日期切换 ---- */
+(function(){
+  var card=document.getElementById("daycard"),chips=document.getElementById("day-chips");
+  if(!card||!chips)return;
+  var DAYS={
+    "1":{line:"Day 1 浅草·下町线",walk:"步行 5.1 km",wx:"晴 · 24°C",note:"傍晚河边起风，加件薄外套",transit:"都营浅草线一线贯穿，西瓜卡直刷",items:[
+      ["浅草寺 雷门晨拜","开门前抵达，仲见世还没挤","免费"],
+      ["晴空塔 天望甲板","预约当日票，避开正午峰值","¥2,100"],
+      ["谷中银座 黄昏散步","落日染巷，下町烟火气","免费"]]},
+    "2":{line:"Day 2 湾岸线",walk:"步行 3.8 km",wx:"多云 · 26°C",note:"湾岸海风大，夜拍稳住相机",transit:"百合海鸥号一日券 ¥820，湾岸三站全覆盖",items:[
+      ["筑地场外市场 早餐","玉子烧配海胆，9 点前最鲜","人均 ¥120"],
+      ["teamLab 无界","09:00 开门先到先得","¥3,800"],
+      ["台场 海滨夜色","彩虹桥点灯后最上镜","免费"]]},
+    "3":{line:"Day 3 涩谷线",walk:"步行 4.2 km",wx:"晴 · 27°C",note:"午后紫外线强，备防晒",transit:"JR 山手线两站直达，站内换乘不出闸",items:[
+      ["明治神宫 晨间参拜","09:00 前人最少","免费"],
+      ["午餐 山城小馆","无花生版钵钵鸡，已查证","人均 ¥98","d3-lunch"],
+      ["涩谷天空展望台","日落前 40 分钟入场","¥230"]]},
+    "4":{line:"Day 4 新宿线",walk:"步行 4.6 km",wx:"阵雨转阴 · 22°C",note:"带伞；回忆横丁有雨棚",transit:"都营大江户线一线到底，末班 00:24",items:[
+      ["新宿御苑 庭园漫步","温室与草坪，开门即入","¥500"],
+      ["都厅展望台 免费眺望","天晴可见富士山轮廓","免费"],
+      ["回忆横丁 宵夜","串烧配热清酒，巷子很窄","人均 ¥140"]]},
+    "5":{line:"Day 5 千代田线",walk:"步行 5.4 km",wx:"晴 · 25°C",note:"上午顺光，皇居外苑最出片",transit:"Metro 24 小时券 ¥600，三段地铁刚好回本",items:[
+      ["秋叶原 电器街","上午逛店，午后人潮起","免费"],
+      ["皇居外苑 二重桥","松林与护城河，慢走一圈","免费"],
+      ["银座 收尾采买","伴手礼与咖啡，闭馆前从容","人均 ¥160"]]}
+  };
+  function esc(s){return String(s).replace(/[&<>]/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;"}[c];});}
+  function build(d){
+    var h='<div class="dc-title"><b>'+esc(d.line)+'</b><span class="mono">'+esc(d.walk)+'</span></div>';
+    if(d.wx)h+='<div class="dc-meta"><span class="dcm-wx mono">'+esc(d.wx)+'</span><span class="dcm-note">'+esc(d.note||"")+'</span></div>';
+    d.items.forEach(function(it){
+      var id=it[3]?' id="'+it[3]+'"':'';
+      h+='<div class="ditem"'+id+'><span>'+esc(it[0])+'<span class="sub">'+esc(it[1])+'</span></span><span class="price">'+esc(it[2])+'</span></div>';
+    });
+    if(d.transit)h+='<div class="dc-transit"><span class="dct-lbl">交通</span><span>'+esc(d.transit)+'</span></div>';
+    return h;
+  }
+  var cur="1";
+  function render(day){
+    var d=DAYS[day];
+    if(!d||day===cur)return;
+    cur=day;
+    card.classList.add("swapping");
+    window.setTimeout(function(){card.innerHTML=build(d);card.classList.remove("swapping");},150);
+  }
+  chips.addEventListener("click",function(e){
+    var b=e.target.closest(".dchip");
+    if(!b)return;
+    render(b.getAttribute("data-day")||"1");
+  });
+})();
+
+/* ---- Task 5 · 页脚邮戳点击回到顶部（复用 Lenis 的锚点平滑滚动，等价于点击品牌标） ---- */
+(function(){
+  var stamp=document.getElementById("foot-stamp");
+  if(!stamp)return;
+  stamp.addEventListener("click",function(){
+    var a=document.createElement("a");
+    a.href="#top";
+    a.style.cssText="position:absolute;width:1px;height:1px;opacity:0;pointer-events:none;";
+    document.body.appendChild(a);
+    a.click();
+    window.setTimeout(function(){a.remove();},0);
+  });
+})();
+
+/* ---- Task 1 / round-14 T5 / round-17 · CH1 承接起飞末帧（像素等同版）：
+   ① 渲染不再走 <img> 的 CSS cover——宽屏下画布的纵向焦点 (n-l)*.2 无法用 object-position 复刻，
+      这正是残余错位的真凶。改为把 f_072 用与 bundle draw() 完全相同的数学
+      （backing = hero 盒 × dpr、o=max(i/w,n/h)、c=(i-a)*.74、u=(n-l)*.2）画进本层画布，
+      任何视口比例下都逐像素等同。
+   ② 因为像素等同，接管改「零过渡瞬切」：旧 .25s 淡入会横跨 unpin 后画布位移的帧段（快滚=鬼影）。
+   ③ 双 scrim 复刻层与画布同吃 --sky-h（hero 盒高），渐变百分比不再相对视口漂移。
+   之后照旧：破晓缓释 + 展示板升起时模糊溶解。 ---- */
+(function(){
+  var sky=document.getElementById("ch1-sky"),stage=document.getElementById("thea-stage"),
+      ch1=document.getElementById("ch1"),head=ch1&&ch1.querySelector(".chap-head"),
+      hero=document.querySelector(".hero"),
+      img=sky&&sky.querySelector("img"),
+      cv=sky&&sky.querySelector(".ch1-sky-cv"),
+      ctx=cv&&cv.getContext&&cv.getContext("2d"),
+      hs=sky&&sky.querySelector(".ch1-sky-hscrim"),
+      dp=sky&&sky.querySelector(".ch1-sky-deep"),
+      ss=sky&&sky.querySelector(".ch1-sky-scrim");
+  if(!sky||!stage)return;
+  /* JP-16 · 手机端：夜空不是「接管 hero 末帧」，而是 CH1 自己的背景层（见上方同名 CSS 块）。
+     两段进度都取自元素在视口里的真实位置，与桌面的 heroP/pinEndY 无关：
+       inn = 章顶从 92%vh 升到 57%vh —— 夜空显影，标题同拍点亮；
+       out = 夜空带自己的底缘从 100%vh 升到 30%vh —— 模糊溶解，交回纯色底。
+     out 取自夜空带本身而非展示板：这一层在手机端是 absolute 随章滚动的，
+     它自己的底缘就是「这段夜色演完了」的准确时刻，与展示板的位置无关。
+     两段都可逆，上滚原样退回。画布与双 scrim 复刻层在手机端 display:none，不参与。 */
+  if(matchMedia("(max-width:719px)").matches||matchMedia("(pointer:coarse)").matches){
+    if(ss)ss.style.opacity="1";
+    var mupd=function(){
+      var vh=window.innerHeight||1,
+          hr=ch1.getBoundingClientRect(),kr=sky.getBoundingClientRect(),
+          inn=clamp((vh*0.92-hr.top)/(vh*0.35)),
+          out=clamp((vh-kr.bottom)/(vh*0.70)),
+          op=Math.min(inn,1-out);
+      sky.style.opacity=op.toFixed(3);
+      sky.style.visibility=op<=0.002?"hidden":"visible";
+      sky.style.filter=out>0?"blur("+(out*14).toFixed(1)+"px)":"";
+      if(inn>=.35&&!ch1.classList.contains("lit"))ch1.classList.add("lit");
+    };
+    window.addEventListener("scroll",mupd,{passive:true});
+    window.addEventListener("resize",mupd);
+    mupd();
+    return;
+  }
+  var heroP=0,pw=0,ph=0;
+  function clamp(v){return v<0?0:v>1?1:v;}
+  function paint(){
+    if(!ctx||!img||!img.naturalWidth||!hero)return;
+    var r=hero.getBoundingClientRect(),
+        e=Math.min(window.devicePixelRatio||1,2),
+        W=Math.round(r.width*e),H=Math.round(r.height*e);
+    if(W===pw&&H===ph)return;
+    pw=W;ph=H;
+    cv.width=W;cv.height=H;
+    cv.style.width=r.width+"px";cv.style.height=r.height+"px";
+    var o=Math.max(W/img.naturalWidth,H/img.naturalHeight),
+        a=img.naturalWidth*o,l=img.naturalHeight*o;
+    ctx.clearRect(0,0,W,H);
+    ctx.drawImage(img,(W-a)*.74,(H-l)*.2,a,l);
+  }
+  if(img){
+    if(img.complete&&img.naturalWidth)paint();
+    else img.addEventListener("load",paint);
+  }
+  function pinEndY(){
+    var sp=document.querySelector(".pin-spacer"),hero=document.querySelector(".hero");
+    if(!sp||!hero)return (window.innerHeight||900)*1.4;
+    return sp.offsetTop+sp.offsetHeight-hero.offsetHeight;
+  }
+  var hf=null;
+  function upd(){
+    var vh=window.innerHeight||1,r=stage.getBoundingClientRect();
+    if(hero)sky.style.setProperty("--sky-h",hero.offsetHeight+"px");
+    var fin=heroP>=.995?1:0;                              /* 末帧定格后瞬时接管（像素等同，切换不可见） */
+    if(fin)paint();                                       /* 接管前确保画布尺寸与 hero 盒同步 */
+    var out=clamp((vh*0.72-r.top)/(vh*0.60));             /* 展示板升起时溶解 */
+    var op=Math.min(fin,1-out);
+    sky.style.opacity=op.toFixed(3);
+    sky.style.visibility=op<=0.002?"hidden":"visible";
+    /* round-17c · 残影修复：sky 接管期间把 hero 画布藏起来。解除钉住后 hero 随文档上滚，
+       其画布下半截会从视口顶露出；sky 一进入溶解半透明区，两架错位的飞机就叠成鬼影。
+       接管瞬间（p∈[.995,1) 仍钉住）sky 与画布像素等同且不透明，藏画布不可见；
+       heroP 掉回 .995 以下时 sky 瞬灭、画布瞬回，同帧交接无缝。
+       （.hero-frames 的过渡只管 opacity，改 visibility 不吃 .45s 过渡。） */
+    if(hf||(hf=document.querySelector(".hero-frames")))hf.style.visibility=fin?"hidden":"visible";
+    /* 破晓：0=与 hero 完全一致的重 scrim；随滚动过渡到本层的轻 scrim（可逆） */
+    var rel=clamp((window.scrollY-pinEndY())/(vh*0.55));
+    if(hs)hs.style.opacity=(1-rel).toFixed(3);
+    if(dp)dp.style.opacity=(1-rel).toFixed(3);
+    if(ss)ss.style.opacity=rel.toFixed(3);
+    if(cv)cv.style.filter=out>0?"blur("+(out*16).toFixed(1)+"px)":"";
+    if(heroP>=.84&&ch1&&!ch1.classList.contains("lit"))ch1.classList.add("lit");
+  }
+  window.__jpHeroP=function(p){heroP=p;upd();};
+  window.addEventListener("scroll",upd,{passive:true});
+  window.addEventListener("resize",function(){pw=0;ph=0;paint();upd();});
+  if(head&&"IntersectionObserver" in window){
+    new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){ch1.classList.add("lit");}});},{threshold:.2}).observe(head);
+  }else if(ch1){ch1.classList.add("lit");}
+  upd();
+})();
+
+/* ---- Task 5 · 机组徽章：物理按压（按哪儿沉哪儿，边缘更斜）+ 点击弹出职责浮窗 ---- */
+(function(){
+  var row=document.getElementById("crew-row"),pop=document.getElementById("crew-pop"),
+      crew=row&&row.closest(".crew"),
+      cpRole=document.getElementById("cp-role"),cpDuty=document.getElementById("cp-duty");
+  if(!row||!pop||!crew)return;
+  var caret=pop.querySelector(".cp-caret"),activeFig=null;
+  Array.prototype.forEach.call(row.querySelectorAll(".crew-badge"),function(b){
+    function down(e){
+      var r=b.getBoundingClientRect();
+      var px=(e&&e.clientX!=null)?e.clientX:r.left+r.width/2,
+          py=(e&&e.clientY!=null)?e.clientY:r.top+r.height/2;
+      var nx=(px-r.left)/r.width,ny=(py-r.top)/r.height;
+      var dx=Math.max(-1,Math.min(1,(nx-.5)*2)),dy=Math.max(-1,Math.min(1,(ny-.5)*2));
+      /* round-14 T6 · 支点固定在徽章圆心（跷跷板）：按下的那侧沉下去、正对面翘起来，
+         不再整体位移——像压一枚钉在原地的金属徽章 */
+      b.style.transformOrigin="50% 50%";
+      b.classList.add("pressing");
+      b.style.transform="rotateX("+(-dy*16).toFixed(1)+"deg) rotateY("+(dx*16).toFixed(1)+"deg) scale(.988)";
+    }
+    function up(){b.classList.remove("pressing");b.style.transform="";b.style.transformOrigin="";}
+    b.addEventListener("pointerdown",down);
+    b.addEventListener("pointerup",up);
+    b.addEventListener("pointerleave",up);
+    b.addEventListener("pointercancel",up);
+    b.addEventListener("click",function(){toggle(b.closest(".crew-m"));});
+    b.addEventListener("keydown",function(e){
+      if(e.key==="Enter"||e.key===" "){e.preventDefault();down(null);window.setTimeout(up,150);toggle(b.closest(".crew-m"));}
+    });
+  });
+  function place(fig){
+    var cr=crew.getBoundingClientRect(),fr=fig.getBoundingClientRect();
+    var pw=pop.offsetWidth,cw=crew.clientWidth,cx=fr.left-cr.left+fr.width/2;
+    var left=Math.max(8,Math.min(cw-8-pw,cx-pw/2));
+    pop.style.left=left+"px";pop.style.top=(fr.bottom-cr.top+14)+"px";
+    if(caret)caret.style.left=Math.max(12,Math.min(pw-12,cx-left))+"px";
+  }
+  function show(fig){
+    if(activeFig)activeFig.classList.remove("active");
+    activeFig=fig;fig.classList.add("active");
+    cpRole.textContent=fig.getAttribute("data-role")||"";
+    cpDuty.textContent=fig.getAttribute("data-duty")||"";
+    pop.hidden=false;void pop.offsetWidth;place(fig);pop.classList.add("show");
+  }
+  function hide(){pop.classList.remove("show");if(activeFig){activeFig.classList.remove("active");activeFig=null;}
+    window.setTimeout(function(){if(!pop.classList.contains("show"))pop.hidden=true;},280);}
+  function toggle(fig){if(!fig)return;if(activeFig===fig)hide();else show(fig);}
+  document.addEventListener("click",function(e){if(!e.target.closest(".crew-m")&&!e.target.closest(".crew-pop"))hide();});
+  document.addEventListener("keydown",function(e){if(e.key==="Escape")hide();});
+  window.addEventListener("resize",function(){if(activeFig&&pop.classList.contains("show"))place(activeFig);});
+})();
+
+/* ---- Task 10 · 终章「盖章处」：邮戳滑入视野即划出一圈、随后写上「盖章处」 ---- */
+(function(){
+  var stamp=document.getElementById("fin-stamp");
+  if(!stamp)return;
+  if("IntersectionObserver" in window){
+    var io=new IntersectionObserver(function(es){es.forEach(function(e){
+      if(e.isIntersecting){stamp.classList.add("drawn");io.disconnect();}
+    });},{threshold:.55});
+    io.observe(stamp);
+  }else stamp.classList.add("drawn");
+})();
+</script>
+<script>
+/* 顶栏「项目」：委托式点击开合（JP bundle 水合后会替换按钮节点，故用 document 委托，免于失效）
+   + hover 展开(CSS) + 点外部/Esc 收起 + 鼠标水波涟漪(每项取自身 --proj/2/3) */
+(function(){
+  document.addEventListener('click',function(e){
+    var proj=document.getElementById('navProj'); if(!proj) return;
+    var btn=document.getElementById('navProjBtn');
+    if(btn&&btn.contains(e.target)){
+      var willOpen=!proj.classList.contains('open');
+      proj.classList.toggle('open',willOpen);
+      btn.setAttribute('aria-expanded',willOpen?'true':'false');
+    }else if(!proj.contains(e.target)){
+      proj.classList.remove('open');
+      if(btn)btn.setAttribute('aria-expanded','false');
+    }
+  });
+  document.addEventListener('keydown',function(e){if(e.key!=='Escape')return;var p=document.getElementById('navProj');if(p){p.classList.remove('open');var b=document.getElementById('navProjBtn');if(b)b.setAttribute('aria-expanded','false');}});
+  if(!matchMedia('(hover:hover) and (pointer:fine)').matches)return;
+  function bindRipple(item){
+    if(item.__np)return; item.__np=1;
+    var cs=getComputedStyle(item),
+        pal=[(cs.getPropertyValue('--w1')||'#e4571f').trim(),(cs.getPropertyValue('--w2')||'#f2a05f').trim(),(cs.getPropertyValue('--w3')||'#f2e9d8').trim()],
+        x=0,y=0,ci=0;
+    /* 2026-07-19 二审:线环改水彩晕染面(.np-wash),仍跨界单发 */
+    function emit(){var r=document.createElement('span');r.className='np-wash';r.style.setProperty('--rx',x+'px');r.style.setProperty('--ry',y+'px');r.style.setProperty('--rc',pal[ci++%pal.length]);r.style.animation='np-wash 1100ms cubic-bezier(.19,1,.22,1) forwards';item.appendChild(r);r.addEventListener('animationend',function(){r.remove();});}
+    item.addEventListener('pointerenter',function(e){var b=item.getBoundingClientRect();x=e.clientX-b.left;y=e.clientY-b.top;emit();});
+  }
+  function bindAll(){var p=document.getElementById('navProj');if(!p)return;Array.prototype.forEach.call(p.querySelectorAll('.npm-item'),bindRipple);}
+  bindAll(); window.addEventListener('load',bindAll);
+})();
+</script>
+<script>
+/* 素材轮 2026-07-17 · lazyvid：cinemagraph 三支的入坞管理。
+   桌面细指针限定；靠近视口(±360px)才赋 src；进入播放并淡入(.on)，离开暂停省电。
+   任何一步失败都静默退回静图（视频只是静图的活化层，不承担叙事必需信息）。 */
+(function(){
+  /* JP-19 · 2026-07-28 全端放开（原 `(min-width:720px) and (pointer:fine)` 闸口撤销）。
+     入坞策略一字不改：preload="none" + 近视口 ±360px 才赋 src，滚不到就不下载；
+     muted/loop/playsinline 满足 iOS 自动播放条件，play() 被拒或解码出错都静默退回静图。 */
+  var vids=document.querySelectorAll('video.br-live,video.poster-live');
+  if(!vids.length||!('IntersectionObserver' in window))return;
+  var io=new IntersectionObserver(function(es){
+    es.forEach(function(e){
+      var v=e.target;
+      if(e.isIntersecting){
+        if(!v.src&&v.dataset.src){v.src=v.dataset.src;v.load();}
+        var p=v.play();
+        if(p&&p.catch)p.catch(function(){});
+      }else if(v.src){v.pause();}
+    });
+  },{rootMargin:'360px 0px'});
+  vids.forEach(function(v){
+    v.addEventListener('playing',function(){v.classList.add('on');},{once:true});
+    v.addEventListener('error',function(){v.classList.remove('on');v.style.display='none';});
+    io.observe(v);
+  });
+})();
+</script>
+<script>
+/* Round-8 · R8-1 桌面登机牌避让：牌面（展开时的完整足迹）与任一仪表区矩形相交即收拢。
+   永远用「展开态足迹」判定，收拢后矩形变小也不会抖回来；打开卡片时不避让（用户主动召出）。 */
+(function(){
+  if(!matchMedia('(min-width:720px)').matches)return;
+  var pass=document.getElementById('pass'),stub=document.getElementById('pass-stub'),card=document.getElementById('pass-card');
+  if(!pass||!stub)return;
+  var zones=['.board','#ch5 .layers','#ch6 .art-grid','#ch7 .release']
+    .map(function(q){return document.querySelector(q);})
+    .filter(Boolean);
+  if(!zones.length)return;
+  var ticking=false;
+  function judge(){
+    ticking=false;
+    if(stub.hidden)return;
+    if(card&&!card.hidden){pass.classList.remove('dodge');return;}
+    var W=window.innerWidth,H=window.innerHeight,
+        L=W-16-284-8,T=H-16-68-8,R=W-16+8,B=H-16+8,hit=false;
+    for(var i=0;i<zones.length;i++){
+      var z=zones[i].getBoundingClientRect();
+      if(z.left<R&&z.right>L&&z.top<B&&z.bottom>T){hit=true;break;}
+    }
+    pass.classList.toggle('dodge',hit);
+  }
+  function onScroll(){if(!ticking){ticking=true;requestAnimationFrame(judge);}}
+  window.addEventListener('scroll',onScroll,{passive:true});
+  window.addEventListener('resize',onScroll);
+  judge();
+})();
+</script>
+<script>
+/* Round-8 · R8-2 移动端剧场航线图跟随：航线图窄屏下可横滚（920px 最小宽），
+   放映推进到哪一站，就把那一站平滑滚进画面中央；观众手动滚动后让位 4 秒。
+   两侧渐隐（.fade-l/.fade-r）提示看不见的方向还有航程。 */
+(function(){
+  var map=document.querySelector('.thea-map'),scroller=document.querySelector('.thea-map-scroll'),
+      svg=scroller&&scroller.querySelector('svg');
+  if(!map||!scroller||!svg)return;
+  var VBW=1254,holdUntil=0;
+  function scrollable(){return scroller.scrollWidth-scroller.clientWidth>8;}
+  function fades(){
+    if(!scrollable()){map.classList.remove('fade-l','fade-r');return;}
+    map.classList.toggle('fade-l',scroller.scrollLeft>8);
+    map.classList.toggle('fade-r',scroller.scrollLeft<scroller.scrollWidth-scroller.clientWidth-8);
+  }
+  ['touchstart','wheel','pointerdown'].forEach(function(ev){
+    scroller.addEventListener(ev,function(){holdUntil=Date.now()+4000;},{passive:true});
+  });
+  scroller.addEventListener('scroll',fades,{passive:true});
+  window.addEventListener('resize',fades);
+  fades();
+  function follow(el){
+    if(!scrollable()||Date.now()<holdUntil)return;
+    var cx=parseFloat(el.getAttribute('cx')||el.getAttribute('data-cx')||'');
+    if(isNaN(cx))return;
+    var x=cx/VBW*svg.getBoundingClientRect().width-scroller.clientWidth/2;
+    scroller.scrollTo({left:Math.max(0,x),behavior:'smooth'});
+  }
+  if('MutationObserver' in window){
+    new MutationObserver(function(ms){
+      var last=null;
+      ms.forEach(function(m){
+        var el=m.target;
+        if(el.classList&&el.classList.contains('stop')&&el.classList.contains('on'))last=el;
+      });
+      if(last)follow(last);
+    }).observe(svg,{attributes:true,attributeFilter:['class'],subtree:true});
+  }
+})();
+
+/* JP-4 · 出发板移动端横滑渐隐：.board-wrap 滚动 → .board-zone 切 fade-l/fade-r（复用 R8-2 配方） */
+(function(){
+  var wrap=document.querySelector('.board-wrap'),zone=wrap&&wrap.closest('.board-zone');
+  if(!wrap||!zone)return;
+  function scrollable(){return wrap.scrollWidth-wrap.clientWidth>8;}
+  function fades(){
+    if(!scrollable()){zone.classList.remove('fade-l','fade-r');return;}
+    zone.classList.toggle('fade-l',wrap.scrollLeft>8);
+    zone.classList.toggle('fade-r',wrap.scrollLeft<wrap.scrollWidth-wrap.clientWidth-8);
+  }
+  wrap.addEventListener('scroll',fades,{passive:true});
+  window.addEventListener('resize',fades);
+  fades();
+})();
+
+/* JP-5 · 东京行程图移动端横滑渐隐 + 换日追随：.tmap-scroll 滚动 → .map-panel 切 fade；
+   点 Day 芯片把当日首站平滑滚进画面中央（换日是显式意图，立即追随、不受手动让位约束）。 */
+(function(){
+  var panel=document.querySelector('.map-panel'),scroller=document.querySelector('.tmap-scroll'),
+      svg=document.getElementById('tmap'),chips=document.getElementById('day-chips');
+  if(!panel||!scroller||!svg)return;
+  var VBW=707,holdUntil=0;
+  function scrollable(){return scroller.scrollWidth-scroller.clientWidth>8;}
+  function fades(){
+    if(!scrollable()){panel.classList.remove('fade-l','fade-r');return;}
+    panel.classList.toggle('fade-l',scroller.scrollLeft>8);
+    panel.classList.toggle('fade-r',scroller.scrollLeft<scroller.scrollWidth-scroller.clientWidth-8);
+  }
+  ['touchstart','wheel','pointerdown'].forEach(function(ev){
+    scroller.addEventListener(ev,function(){holdUntil=Date.now()+4000;},{passive:true});
+  });
+  scroller.addEventListener('scroll',fades,{passive:true});
+  window.addEventListener('resize',fades);
+  fades();
+  /* 取当日全部站点的横向包络中心，而不是首站——首站常在当日路线一端（如 Day 2 筑地在最北），
+     只对准它会把当天后半程仍留在画外。 */
+  function centerDay(day,smooth){
+    if(!scrollable())return;
+    var pts=svg.querySelectorAll('.pt[data-day="'+day+'"]');
+    if(!pts.length)return;
+    var lo=Infinity,hi=-Infinity;
+    Array.prototype.forEach.call(pts,function(p){
+      var cx=parseFloat(p.getAttribute('cx'));
+      if(isNaN(cx))return;
+      if(cx<lo)lo=cx; if(cx>hi)hi=cx;
+    });
+    if(lo===Infinity)return;
+    var x=(lo+hi)/2/VBW*svg.getBoundingClientRect().width-scroller.clientWidth/2;
+    x=Math.max(0,Math.min(x,scroller.scrollWidth-scroller.clientWidth));
+    scroller.scrollTo({left:x,behavior:smooth?'smooth':'auto'});
+  }
+  /* JP-10 · 初始取景：不做这一步，地图开局停在 scrollLeft=0——那是东京湾西侧的空白海面，
+     Day 1 的浅草·下町线整条在画外，读者第一眼看到的是「一张没有站点的图」。
+     首帧（含字体/底图落位后再补一次）把当日包络对进画面中央。 */
+  function frame(){ centerDay((chips&&chips.querySelector('.dchip.sel')||{getAttribute:function(){return '1';}}).getAttribute('data-day')||'1',false); fades(); }
+  frame();
+  requestAnimationFrame(frame);
+  window.addEventListener('load',frame);
+  if(chips){
+    chips.addEventListener('click',function(e){
+      var b=e.target.closest('.dchip');
+      if(!b)return;
+      holdUntil=0;
+      centerDay(b.getAttribute('data-day')||'1',true);
+    });
+  }
+})();
+</script>
+<script type="module" src="https://static.cloudflareinsights.com/beacon.min.js/v4513226cdae34746b4dedf0b4dfa099e1781791509496" integrity="sha512-ZE9pZaUXND66v380QUtch/5sE9tPFh2zg45pR2PB0CVkCtOREv2AJKkSidISWkysEuQ0EH8faUU5du78bx87UQ==" data-cf-beacon="{&quot;version&quot;:&quot;2024.11.0&quot;,&quot;token&quot;:&quot;32de4bed94b74a8683460c52ad5d0369&quot;,&quot;r&quot;:1}" crossorigin="anonymous"></script>
+
+
+</body></html>

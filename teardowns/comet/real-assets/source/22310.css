@@ -1,0 +1,71 @@
+/* Copyright 2025 The Perplexity Browser Authors. All rights reserved. */
+
+.b-set-default-instruction-win10__wrapper {
+  display: flex;
+  gap: 40px;
+  align-items: center;
+  justify-content: center;
+  max-width: 640px;
+  margin-top: -20px;
+}
+
+.b-set-default-instruction-win10__wrapper > * {
+  flex: 1;
+  flex-basis: 300px;
+}
+
+.b-set-default-instruction-win10__video-wrapper {
+  box-shadow: 0 12px 16px 0 rgb(0 0 0 / 10%);
+  border: 1px solid var(--perplexity-border-offset-dynamic);
+
+  width: var(--win10-video-size);
+  height: var(--win10-video-size);
+  position: relative;
+
+  border-radius: 20px;
+  overflow: hidden;
+}
+
+.b-set-default-instruction-win10__video {
+  width: var(--win10-video-size);
+  height: var(--win10-video-size);
+}
+
+.b-set-default-instruction-win10__steps {
+  list-style: none;
+  counter-reset: list-counter;
+  padding-left: 0;
+
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.b-set-default-instruction-win10__step {
+  counter-increment: list-counter;
+  display: flex;
+
+  color: var(--perplexity-text-primary-v2);
+  font-size: 14px;
+  line-height: 20px;
+
+  --continue-button-width: 133px;
+}
+
+.b-set-default-instruction-win10__step::before {
+  content: counter(list-counter);
+  background-color: var(--perplexity-surface-offset-plus-1);
+  color: var(--perplexity-text-secondary-v2);
+  font-weight: 500;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 12px;
+}
+
+.b-set-default-instruction-win10__button-wrapper {
+  margin-top: 8px;
+}

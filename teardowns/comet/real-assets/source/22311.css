@@ -1,0 +1,127 @@
+/* Copyright 2025 The Perplexity Browser Authors. All rights reserved. */
+
+.b-set-default-instruction-win11__wrapper {
+  position: relative;
+
+  background: url('/assets/stardust.png');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 150%;
+
+  max-width: 800px;
+  height: 250px;
+
+  overflow: hidden;
+  border-radius: 20px;
+
+  border: 1px solid var(--perplexity-border-offset-dynamic);
+
+  pointer-events: none;
+  user-select: none;
+}
+
+.b-set-default-instruction-win11__body {
+  position: relative;
+  right: 32px;
+  top: 32px;
+
+  background-color: #F0F3F9;
+
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+
+  min-height: 550px;
+
+  padding: 25px;
+
+  font-family: system-ui, sans-serif;
+}
+
+.b-set-default-instruction-win11__header {
+  display: flex;
+
+  width: 100%;
+  height: fit-content;
+  color: #5B5C5F;
+
+  justify-content: flex-end;
+  align-items: baseline;
+  gap: 20px;
+
+  padding: 0 16px;
+
+  font-family: system-ui, sans-serif;
+
+  max-width: 550px;
+}
+
+.b-set-default-instruction-win11__header svg {
+  min-width: 20px;
+}
+
+.b-set-default-instruction-win11__chevrone path {
+  stroke-width: 2.5px;
+}
+
+.b-set-default-instruction-win11__breadcrumb {
+  font-size: 35px;
+  line-height: 35px;
+  white-space: nowrap;
+}
+
+.b-set-default-instruction-win11__breadcrumb--selected {
+  color: black;
+}
+
+.b-set-default-instruction-win11__banner {
+  background-color: white;
+  padding: 20px;
+
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 20px;
+
+  width: 100%;
+
+  color: black;
+
+  border: 1.25px solid #E2E5EA;
+  font-size: 17.5px;
+  line-height: 22.5px;
+
+  margin-top: 25px;
+}
+
+.b-set-default-instruction-win11__banner-text {
+  flex: 1;
+}
+
+.b-set-default-instruction-win11__default-button {
+  border: 1.25px solid #0003;
+  border-radius: 7.5px;
+
+  font-size: 17.5px;
+  line-height: 22.5px;
+
+  padding: 7px 14px;
+}
+
+.b-set-default-instruction-win11__default-button-wrapper {
+  position: relative;
+
+  border: 3px solid #21808D;
+  border-radius: 9px;
+  padding: 3px;
+}
+
+.b-set-default-instruction-win11__pointer {
+  position: absolute;
+
+  width: 60px;
+  height: 60px;
+  top: 18px;
+  left: calc(50% + 2px);
+  transform: translateX(-50%);
+}

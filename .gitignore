@@ -15,25 +15,10 @@ __pycache__/
 
 # ---------------------------------------------------------------------------
 # Binary assets are the PRODUCT of this repository and are intentionally NOT
-# ignored. Screenshots (.png, .jpg, .webp), self-contained HTML, CSS, and JSON
-# are all meant to be committed. Do not add blanket image or asset ignores.
-#
-# The patterns below are the opposite: a safety net. This is a PUBLIC
-# repository, and the asset types listed here must never be committed here,
-# because they are proprietary and live only in the separate private
-# repository. This covers commercial fonts, and video or audio captured from
-# analyzed products. Keeping them ignored means a copyrighted binary cannot be
-# added to the public repo by accident.
+# ignored: screenshots, HTML, CSS, JSON, fonts, videos, source chunks, point
+# clouds, and 3D models captured for research all live here. This is the ONE
+# and only repository (single-repo policy, 2026-08-03): the former private
+# companion repo has been merged in and retired. real-assets/** contains
+# third-party copyrighted material kept strictly for design research and
+# comparison; it is not covered by this repo's MIT/CC licenses.
 # ---------------------------------------------------------------------------
-**/real-assets/fonts/
-**/real-assets/video/
-**/real-assets/audio/
-**/real-assets/source/
-**/real-assets/model/
-**/recording/*.webm
-**/recording/*.mp4
-**/*.woff2
-**/*.otf
-**/*.ttf
-**/*.mp3
-**/*.wav

@@ -1,0 +1,537 @@
+<!DOCTYPE html><html lang="zh-CN" class="lenis"><head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>海龟汤事务所 · AI 主持的海龟汤推理游戏</title>
+<meta name="description" content="1932 雨夜事务所。AI 出题、AI 主持、AI 裁判的海龟汤推理游戏：每碗汤送检三道关，盲解三遍杀多解，汤永远新鲜。">
+<meta property="og:title" content="海龟汤事务所">
+<meta property="og:description" content="一人一桌一盏灯，AI 主持的海龟汤推理游戏。汤，永远新鲜。">
+<meta property="og:type" content="website">
+<meta property="og:image" content="https://imlagom.com/projects/turtle-soup/assets/img/og-cover.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://imlagom.com/projects/turtle-soup/assets/img/og-cover.png">
+<meta name="theme-color" content="#0a0806">
+<style>html{overflow-x:hidden}</style>
+<link rel="icon" type="image/png" sizes="64x64" href="assets/img/favicon-64.png">
+<link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png">
+<link rel="preload" as="image" href="assets/video/v1-street-loop.jpg">
+<noscript><style>
+  /* 无 JS 兜底：渐显与编排全部呈终态，内容不藏。
+     Vite 构建把 CSS link 注入在本块之后，同权重会被反杀——故整块一律 !important */
+  .reveal { opacity: 1 !important; transform: none !important; }
+  #door .door-plaque { filter: none !important; }
+  #door .door-quote { opacity: 1 !important; transform: rotate(-.6deg) !important; }
+  .verdict-strip img { opacity: 1 !important; }
+  [data-pivot][hidden], .join-letter[hidden], .join-cta[hidden] { display: block !important; }
+  .env-hotspot, #progress, .play-dots, .inspect-actions { display: none !important; }
+  /* 无 JS 的 play：五拍纵排全亮，避免空白钉屏 */
+  #play { height: auto !important; }
+  .play-sticky { height: auto !important; }
+  .beat { position: relative !important; opacity: 1 !important; }
+  .beat + .beat { margin-top: 28px; }
+  .beat-img { position: relative !important; height: 56vh; }
+  .beat-card { opacity: 1 !important; transform: none !important; }
+  .beat-img.beat-verdict { height: auto; padding: 26px 0; }
+  .beat-verdict + .beat-card { position: static; max-width: 92%; margin: 12px auto 0; }
+  .cork-photo, .verdict-stamp, .beat-stamp-final { opacity: 1 !important; }
+  /* M4 三件乐器与装置：追光句全亮、亮句提墨、页边注写完、剧场基线即终态 */
+  .lux { opacity: 1 !important; }
+  .lux-key { color: var(--ink-900) !important; }
+  .note { clip-path: none !important; }
+  .career-actions { display: none !important; }
+</style></noscript>
+  <script type="module" crossorigin="" src="./assets/index-C5MYyEfc.js"></script>
+  <link rel="stylesheet" crossorigin="" href="./assets/index-7s2WFEAx.css">
+</head>
+<body>
+
+<!-- 全页色温底层（ScrollTrigger 按滚动插值） -->
+<div id="bg" aria-hidden="true" style="background-color: rgb(10, 8, 6);"></div>
+<!-- 纸纹噪点覆层 -->
+<div id="grain" aria-hidden="true"></div>
+
+<!-- ▍导航 -->
+<header id="nav" class="nav">
+  <a class="brand" href="#top" aria-label="海龟汤事务所 顶部">
+    <img class="brand-seal" src="assets/img/brand-icon.webp" alt="" width="93" height="120" decoding="async">
+    <img class="brand-word" src="assets/img/brand-word.webp" alt="Turtle Soup Agency" width="492" height="88" decoding="async">
+  </a>
+  <div class="nav-right">
+    <!-- 2026-07-20：站点跳转（主页/摄影/博客）入顶栏，居技术报告左侧；窄屏折进项目菜单 .npm-foot -->
+    <a class="nav-doc nav-site" href="../../">主页</a>
+    <a class="nav-doc nav-site" href="../../photography/">摄影</a>
+    <a class="nav-doc nav-site" href="../../blog/">博客</a>
+    <span class="nav-sep" aria-hidden="true"></span>
+    <a class="nav-doc" href="../../blog/case-turtle-soup/">海龟汤游戏技术报告</a>
+    <div class="nav-proj" id="navProj">
+      <button class="nav-proj-btn" id="navProjBtn" type="button" aria-haspopup="true" aria-expanded="false" aria-controls="navProjMenu">
+        项目
+        <svg class="chev" width="12" height="12" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+      </button>
+      <!-- 2026-07-19 二审：条目=各 landing 缩影卡，品牌 icon+字标图（统一小图 /projects/_menu/，vite dev 下 404 仅影响本地预览）；圆点/左色带退役 -->
+      <div class="nav-proj-menu" id="navProjMenu" role="menu" aria-label="项目切换">
+        <!-- 当前项目置顶（与 EC/JP 页同一逻辑：本页项目排第一） -->
+        <a class="npm-item npm-ts is-current" role="menuitem" href="#top" aria-current="page">
+          <img class="npm-ico" src="../_menu/ts-icon.webp" alt="" width="74" height="96" loading="lazy" decoding="async">
+          <span class="npm-txt">
+            <img class="npm-word" src="../_menu/ts-word.webp" alt="海龟汤事务所" width="268" height="48" loading="lazy" decoding="async">
+            <i>AI 主持的海龟汤推理游戏</i>
+          </span>
+        </a>
+        <a class="npm-item npm-ec" role="menuitem" href="../easycode/">
+          <img class="npm-ico" src="../_menu/ec-icon.webp" alt="" width="78" height="80" loading="lazy" decoding="async">
+          <span class="npm-txt">
+            <img class="npm-word" src="../_menu/ec-word.webp" alt="EasyCode" width="236" height="40" loading="lazy" decoding="async">
+            <i>把刷题变成被指导的练习</i>
+          </span>
+        </a>
+        <a class="npm-item npm-jp" role="menuitem" href="../journeypilot/">
+          <img class="npm-ico" src="../_menu/jp-icon.webp" alt="" width="92" height="76" loading="lazy" decoding="async">
+          <span class="npm-txt">
+            <img class="npm-word" src="../_menu/jp-word.webp" alt="JourneyPilot" width="252" height="38" loading="lazy" decoding="async">
+            <i>一句话，变成一张登机牌</i>
+          </span>
+        </a>
+        <!-- 窄屏（≤860px）站点跳转折进菜单底行；桌面由顶栏 .nav-site 承担 -->
+        <div class="npm-foot">
+          <a href="../../">主页</a>
+          <a href="../../photography/">摄影</a>
+          <a href="../../blog/">博客</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- ▍案件进度带（五档，章节锚点驱动） -->
+<div id="progress" aria-hidden="true">
+  <span class="progress-label" data-progress-text="">迷雾重重</span>
+  <span class="progress-track"><i data-progress-fill="" style="transform: scaleX(0);"></i></span>
+</div>
+<span class="sr-only" data-progress-live="" aria-live="polite"></span>
+
+<main id="top">
+
+<!-- ═══ 第一幕 · 街头 ═══ -->
+<section id="hero" class="is-live">
+  <div class="hero-bg" data-parallax-bg="">
+    <video class="hero-media" src="assets/video/v1-street-loop.mp4" poster="assets/video/v1-street-loop.jpg" autoplay="" muted="" loop="" playsinline="" preload="auto" data-ambient-video="" role="img" aria-label="1932 年的雨夜街道，事务所楼上亮着一盏暖灯" style="translate: none; rotate: none; scale: none; transform: scale(1.06, 1.06);"></video>
+  </div>
+  <video class="hero-rain" src="assets/video/rain-overlay.mp4" poster="assets/video/rain-overlay.jpg" muted="" loop="" playsinline="" data-ambient-video="" aria-hidden="true"></video>
+  <div class="hero-vignette" aria-hidden="true"></div>
+
+  <div class="hero-sign" aria-hidden="true" data-sway="" style="--par: 0px;">
+    <img src="assets/img/l1-sign.webp" alt="">
+    <span class="sign-text">TURTLE SOUP<br>AGENCY</span>
+  </div>
+
+  <div class="hero-copy" style="translate: none; rotate: none; scale: none; transform: translate(0px, 0px);">
+    <h1><span class="h1-line">海龟汤</span><br><span class="h1-line">事务所</span></h1>
+    <p class="hero-sub">一人一桌一盏灯，AI 主持的海龟汤推理游戏。汤，永远新鲜。</p>
+  </div>
+</section>
+
+<!-- ═══ 迷你可玩局 ═══ -->
+<section id="case">
+  <div class="wrap-narrow">
+    <h2 class="reveal">先喝一口。</h2>
+
+    <figure class="case-soup reveal">
+      <video src="assets/video/vid-soup.mp4" poster="assets/video/vid-soup.jpg" muted="" loop="" playsinline="" preload="auto" data-ambient-video="" role="img" aria-label="灯下一碗热气升腾的海龟汤"></video>
+    </figure>
+
+    <div class="case-card paper" data-minisoup="" style="min-height: 838px;">
+      <div class="case-head">
+        <span class="case-tag">汤面</span>
+      </div>
+      <p class="case-surface" data-surface=""></p>
+
+      <div class="case-qa" data-qa-log="" aria-live="polite"></div>
+
+      <div class="case-questions is-waiting" data-questions=""><p class="case-hint">点击问题，获取答案。</p><button class="q-chip" data-i="0" data-a="no">这位客人是来求助的吗？</button><button class="q-chip" data-i="1" data-a="yes">侦探认得他吗？</button><button class="q-chip" data-i="2" data-a="yes">那杯茶另有用途吗？</button></div>
+
+      <div class="case-reveal-zone">
+        <button class="btn btn-primary case-reveal-btn" data-reveal-btn="" hidden="">拆封汤底</button>
+        <div class="case-truth" data-truth="" hidden="">
+          <p class="truth-label">短句背后的真相</p>
+          <p class="truth-text" data-truth-text=""></p>
+        </div>
+      </div>
+
+      <div class="case-controls" data-case-controls="" hidden="">
+        <button class="btn-paper" data-replay="">再演一遍</button>
+        <button class="btn-paper" data-switch="">再来一碗</button>
+      </div>
+    </div>
+
+    <div class="case-pivot reveal" data-pivot="" hidden="">
+      <p class="pivot-line">这，就是海龟汤。</p>
+      <p class="pivot-sub">通过一个个「是否问题」，探索出汤面背后的真相。</p>
+      <ul class="verdict-strip">
+        <li style="--i:0"><img src="assets/img/stamp-yes.webp" alt="判语：是"><span>问对了方向</span></li>
+        <li style="--i:1"><img src="assets/img/stamp-no.webp" alt="判语：不是"><span>此路不通</span></li>
+        <li style="--i:2"><img src="assets/img/stamp-rel.webp" alt="判语：是也不是"><span>沾边，但没问到点上</span></li>
+        <li style="--i:3"><img src="assets/img/stamp-unk.webp" alt="判语：无关"><span>与真相无关</span></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ▍电报纹理带（乐器二）：所内电报线，随案情走四道电文 -->
+<aside class="wire" data-wire="">
+  <p class="wire-tape" role="img" aria-label="这碗汤见了底，你却还没打算走。"><span class="wire-text" data-wire-text="" aria-hidden="true"></span></p>
+</aside>
+
+<!-- ═══ 好汤难求 ═══ -->
+<section id="why">
+  <img class="why-scene" src="assets/img/why-emptyseat.webp" alt="" aria-hidden="true" loading="lazy">
+  <div class="wrap-narrow why-copy">
+    <h2 class="reveal">好汤，一直是稀缺品。</h2>
+    <ul class="why-list">
+      <li class="lux" style="opacity: 0.25;">一位既知道答案、又愿意陪你熬夜的主持人，可遇不可求。</li>
+      <li class="lux" style="opacity: 0.25;">经典题库有限。玩一个，少一个。</li>
+      <li class="lux" style="opacity: 0.25;">被剧透过的汤，再也回不去了。</li>
+    </ul>
+    <p class="why-turn lux" style="opacity: 0.25;">如果出题人、主持人、裁判，<br><em>都永远在线呢？</em></p>
+  </div>
+</section>
+
+<!-- ═══ 推门 · 1932（门前长镜头，色温转折） ═══ -->
+<section id="door">
+  <div class="pin-spacer" style="order: 0; place-self: auto; grid-area: auto; z-index: auto; float: none; flex-shrink: 1; display: flex; margin: 0px; inset: 0px; position: relative; flex-basis: auto; overflow: visible; box-sizing: border-box; width: 1440px; height: 2520px; padding: 0px 0px 1620px;"><div class="door-stage" data-door-stage="" style="translate: none; rotate: none; scale: none; inset: 0px auto auto 0px; margin: 0px; max-width: 1440px; width: 1440px; max-height: 900px; height: 900px; padding: 0px; transform: translate(0px, 0px);">
+    <video class="door-video" src="assets/video/vid-01.mp4" poster="assets/video/vid-01.jpg" muted="" playsinline="" preload="auto" data-door-video="" style="translate: none; rotate: none; scale: none; transform-origin: 50% 60%; transform: scale(1.16, 1.16);"></video>
+    <div class="door-overlay">
+      <div class="door-plaque" data-door-plaque="" style="translate: none; rotate: none; scale: none; transform: translate(0px, 26px) scale(0.88, 0.88);">
+        <img src="assets/img/l3-plaque.webp" alt="" aria-hidden="true">
+        <span class="plaque-text">海龟汤事务所<small>TURTLE SOUP AGENCY, EST. 1932</small></span>
+      </div>
+      <blockquote class="door-quote paper-slip">进来吧，先生 / 女士。外头雨大，先在簿子上留个名。我们这儿，只接来历不明的怪谈。</blockquote>
+    </div>
+  </div></div>
+</section>
+
+<!-- ═══ 玩法巡礼 · 钉屏分镜 ═══ -->
+<section id="play" data-play="">
+  <div class="pin-spacer" style="order: 0; place-self: auto; grid-area: auto; z-index: auto; float: none; flex-shrink: 1; display: flex; margin: 0px; inset: auto; position: relative; flex-basis: auto; overflow: visible; box-sizing: border-box; width: 1440px; height: 900px; padding: 0px;"><div class="play-sticky" style="translate: none; rotate: none; scale: none; inset: 0px auto auto 0px; margin: 0px; max-width: 1440px; width: 1440px; max-height: 900px; height: 900px; padding: 84px 56px 40px; transform: translate(0px, 0px);">
+    <header class="play-head">
+      <p class="kicker kicker-ink">事务所办案手册</p>
+      <h2>在所里，办一件案子。</h2>
+    </header>
+
+    <div class="play-stage">
+      <figure class="beat" data-beat="0" style="opacity: 1; visibility: inherit;">
+        <div class="beat-img"><picture><source media="(max-width: 767px)" srcset="assets/img/s4-dossier-portrait.webp"><img src="assets/img/s4-dossier.webp" alt="摊开的空白卷宗" loading="lazy" style="translate: none; rotate: none; scale: none; transform: scale(1.05, 1.05);"></picture></div>
+        <figcaption class="beat-card paper">
+          <span class="beat-no">立案</span>
+          <p>写下一句灵感，后厨现场熬一锅新汤。汤面上桌，卷宗翻开。</p>
+          <span class="beat-quote">「落笔，开案」</span>
+        </figcaption>
+      </figure>
+
+      <figure class="beat" data-beat="1" style="opacity: 0; visibility: hidden;">
+        <div class="beat-img"><picture><source media="(max-width: 767px)" srcset="assets/img/m3-telegraph-portrait.webp"><img src="assets/img/m3-telegraph.webp" alt="电报机与空白电报纸" style="translate: none; rotate: none; scale: none; transform: scale(1.05, 1.05);"></picture></div>
+        <figcaption class="beat-card paper" style="translate: none; rotate: none; scale: none; transform: translate(0px, 18px); opacity: 0; visibility: hidden;">
+          <span class="beat-no">提问</span>
+          <p>只能问「是否问题」。跑题的问题会被退回，不耗回合。</p>
+          <span class="beat-quote beat-typed" data-typed=""></span>
+        </figcaption>
+      </figure>
+
+      <figure class="beat" data-beat="2" style="opacity: 0; visibility: hidden;">
+        <div class="beat-img beat-verdict">
+          <!-- 判语回执纸（真 DOM 盖章）：接住上一拍电报里的问题 -->
+          <div class="verdict-paper paper" data-verdict-paper="">
+            <p class="verdict-head">判语回执，第 7 轮</p>
+            <p class="verdict-q">问：他是自愿喝下那碗汤的吗？</p>
+            <img class="verdict-stamp" src="assets/img/stamp-yes.webp" alt="判语印章：是" data-verdict-stamp="" style="opacity: 0; visibility: hidden; translate: none; rotate: none; scale: none; transform: rotate(-12deg) scale(2.4, 2.4);">
+          </div>
+        </div>
+        <figcaption class="beat-card paper" style="translate: none; rotate: none; scale: none; transform: translate(0px, 18px); opacity: 0; visibility: hidden;">
+          <span class="beat-no">判语</span>
+          <p>主持人只盖四种章：是、不是、是也不是、无关。</p>
+        </figcaption>
+      </figure>
+
+      <figure class="beat" data-beat="3" style="opacity: 0; visibility: hidden;">
+        <div class="beat-img beat-cork">
+          <img class="cork-photo p1" src="assets/img/photo-key.webp" alt="证物照：钥匙" loading="lazy" style="opacity: 0; visibility: hidden;">
+          <img class="cork-photo p2" src="assets/img/photo-alley.webp" alt="证物照：小巷" loading="lazy" style="opacity: 0; visibility: hidden;">
+          <img class="cork-photo p3" src="assets/img/photo-clock.webp" alt="证物照：座钟" loading="lazy" style="opacity: 0; visibility: hidden;">
+        </div>
+        <figcaption class="beat-card paper" style="translate: none; rotate: none; scale: none; transform: translate(0px, 18px); opacity: 0; visibility: hidden;">
+          <span class="beat-no">线索</span>
+          <p>问过的每一轮都钉在软木板上。翻回去看，别放过矛盾。</p>
+          <span class="beat-quote">「钉牢，备查」</span>
+        </figcaption>
+      </figure>
+
+      <figure class="beat" data-beat="4" style="opacity: 0; visibility: hidden;">
+        <div class="beat-img beat-final"><picture><source media="(max-width: 767px)" srcset="assets/img/s4-dossier-portrait.webp"><img src="assets/img/s4-dossier.webp" alt="摊开的结案卷宗" loading="lazy" style="translate: none; rotate: none; scale: none; transform: scale(1.05, 1.05);"></picture><span class="beat-stamp beat-stamp-final" role="img" aria-label="印章：结案" data-final-stamp="" style="opacity: 0; visibility: hidden;"><!-- 结案官印（2026-07-19 终审走查·图4-2 重画）：双环+弧排所名+毛边磨损，SVG 手绘 --><svg viewBox="0 0 200 200" aria-hidden="true" focusable="false">
+            <defs>
+              <path id="seal-arc" d="M 37 100 A 63 63 0 0 1 163 100" fill="none"></path>
+              <filter id="seal-rough" x="-8%" y="-8%" width="116%" height="116%">
+                <feTurbulence type="fractalNoise" baseFrequency="0.82" numOctaves="2" seed="11" result="n"></feTurbulence>
+                <feDisplacementMap in="SourceGraphic" in2="n" scale="2.8"></feDisplacementMap>
+              </filter>
+              <mask id="seal-wear">
+                <rect width="200" height="200" fill="#fff"></rect>
+                <g fill="#000">
+                  <circle cx="58" cy="38" r="5" opacity=".55"></circle>
+                  <circle cx="150" cy="52" r="4" opacity=".4"></circle>
+                  <circle cx="172" cy="118" r="6" opacity=".5"></circle>
+                  <circle cx="42" cy="142" r="5" opacity=".45"></circle>
+                  <circle cx="112" cy="182" r="5" opacity=".5"></circle>
+                  <ellipse cx="96" cy="20" rx="9" ry="3.5" opacity=".4"></ellipse>
+                  <ellipse cx="26" cy="92" rx="4" ry="8" opacity=".4"></ellipse>
+                  <ellipse cx="136" cy="106" rx="7" ry="3" opacity=".3"></ellipse>
+                </g>
+              </mask>
+            </defs>
+            <g filter="url(#seal-rough)" mask="url(#seal-wear)" fill="currentColor" stroke="currentColor">
+              <circle cx="100" cy="100" r="90" fill="none" stroke-width="8"></circle>
+              <circle cx="100" cy="100" r="78" fill="none" stroke-width="2"></circle>
+              <text font-size="19" font-weight="700" letter-spacing="3.5" stroke="none" text-anchor="middle"><textPath href="#seal-arc" startOffset="50%">海龟汤事务所</textPath></text>
+              <text x="100" y="122" font-size="54" font-weight="700" letter-spacing="10" text-anchor="middle" stroke="none" style="text-indent:10px">结案</text>
+              <text x="100" y="153" font-size="12.5" font-weight="700" letter-spacing="3" text-anchor="middle" stroke="none">EST · 1932</text>
+              <rect x="56" y="141" width="7" height="7" rx="1" transform="rotate(45 59.5 144.5)" stroke="none"></rect>
+              <rect x="137" y="141" width="7" height="7" rx="1" transform="rotate(45 140.5 144.5)" stroke="none"></rect>
+            </g>
+          </svg></span></div>
+        <figcaption class="beat-card paper beat-card-final" style="translate: none; rotate: none; scale: none; transform: translate(0px, 18px); opacity: 0; visibility: hidden;">
+          <span class="beat-no">结案</span>
+          <p>线索攒够，进度带亮起「真相在握」。提交推理，说对即破案。</p>
+          <span class="beat-progressband" role="img" aria-label="进度带五档，从迷雾重重一路亮到真相在握"><i style="--bi:0">迷雾重重</i><i style="--bi:1">初见端倪</i><i style="--bi:2">渐入佳境</i><i style="--bi:3">胜券在望</i><i style="--bi:4">真相在握</i></span>
+        </figcaption>
+      </figure>
+    </div>
+
+    <div class="play-dots" aria-hidden="true">
+      <i data-dot="0"></i><i data-dot="1"></i><i data-dot="2"></i><i data-dot="3"></i><i data-dot="4"></i>
+    </div>
+  </div></div>
+</section>
+
+<!-- ═══ AI 后厨 ═══ -->
+<section id="kitchen">
+  <div class="wrap">
+    <p class="kicker kicker-ink reveal">后厨重地，闲人免进</p>
+    <h2 class="reveal">每碗汤上桌前，先过后厨。</h2>
+    <p class="section-sub reveal">六道工序熬一锅，送检三道关。<span class="lux-key">不过检，不上桌。</span></p>
+
+    <figure class="kitchen-wide reveal">
+      <img src="assets/img/s3-workshop.webp" alt="1932 年深夜的造汤工坊：六张工位一字排开" loading="lazy">
+    </figure>
+
+    <div class="pin-spacer" style="order: 0; place-self: auto; grid-area: auto; z-index: 41; float: none; flex-shrink: 1; display: block; margin: 72px 0px 0px -176px; inset: 0px; position: relative; flex-basis: auto; overflow: visible; box-sizing: border-box; width: 1440px; height: 1974px; padding: 0px 0px 1350px;"><div class="line-stage is-conveyor" data-line-stage="" style="translate: none; rotate: none; scale: none; inset: 0px auto auto 0px; margin: 0px; max-width: 1440px; width: 1440px; max-height: 624.094px; height: 624.094px; padding: 63px 72px; transform: translate(0px, 0px);">
+    <div class="line-scroller" data-line="" role="region" aria-label="后厨六道工序，随页面滚动逐一驶过">
+      <ol class="line-track" style="translate: none; rotate: none; scale: none; transform: translate(0px, 0px);">
+        <li class="station">
+          <img src="assets/img/b1-notebook.webp" alt="构思工位：空白笔记本与钢笔" loading="lazy">
+          <h3>构思</h3><p>想一个站得住的反转。</p>
+        </li>
+        <li class="station">
+          <img src="assets/img/b2-carddrawer.webp" alt="建档工位：卡片柜" loading="lazy">
+          <h3>建档</h3><p>把真相写成档案：时间线、人物、因果链。</p>
+        </li>
+        <li class="station">
+          <img src="assets/img/b3-typewriter.webp" alt="组装工位：打字机" loading="lazy" class="station-cutout">
+          <h3>组装</h3><p>只照档案下笔，打出汤面与汤底。</p>
+        </li>
+        <li class="station">
+          <img src="assets/img/b4-magnifier.webp" alt="质检工位：放大镜与红蜡笔" loading="lazy">
+          <h3>质检</h3><p>一位「完美逻辑玩家」逐条挑刺。</p>
+        </li>
+        <li class="station">
+          <img src="assets/img/b5-blindfold.webp" alt="盲解工位：蒙眼布与密封卷宗" loading="lazy">
+          <h3>盲解</h3><p>蒙住汤底独立重解三遍，专杀多解。</p>
+        </li>
+        <li class="station">
+          <img src="assets/img/b6-mended.webp" alt="修复工位：胶带补好的纸页" loading="lazy">
+          <h3>修复</h3><p>按挑刺靶向小修。修不好，整锅重造。</p>
+        </li>
+      </ol>
+    </div>
+    </div></div>
+
+    <!-- 送检三道关（装置 D4）：一锅汤的质检小剧场，固定结果，可重演 -->
+    <div class="inspection paper reveal" data-inspection="">
+      <div class="inspect-head">
+        <span class="case-tag">质检科</span>
+      </div>
+      <p class="inspect-soup">「雨夜，出租车司机看了一眼后视镜，随即把车开进了河里。」</p>
+      <ol class="inspect-gates">
+        <li class="gate">
+          <span class="gate-name">规则关</span>
+          <span class="gate-note">是否问题句句可答，四档判语不含糊</span>
+          <span class="gate-seal" data-gate-seal=""></span>
+        </li>
+        <li class="gate">
+          <span class="gate-name">审查关</span>
+          <span class="gate-note">完美逻辑玩家逐条挑刺</span>
+          <span class="gate-seal" data-gate-seal=""></span>
+        </li>
+        <li class="gate">
+          <span class="gate-name">盲解关</span>
+          <span class="gate-note">蒙住汤底，独立重解三遍</span>
+          <span class="gate-seal" data-gate-seal=""></span>
+        </li>
+      </ol>
+      <p class="inspect-log" data-inspect-log="" aria-live="polite">这锅汤刚熬好，还没送检。</p>
+      <div class="inspect-actions">
+        <button class="btn btn-primary" data-inspect-btn="">送检</button>
+      </div>
+      <span class="seal-pass" data-seal-pass="" hidden=""><b>合格</b><small>质检科验讫</small></span>
+    </div>
+
+    <p class="kitchen-hero reveal">就是盲解这一道关，把多解的检出率从 <em>7%</em> 提到了 <em>64%</em>。<span class="note" data-note="" aria-hidden="true">这道关，是我立的</span></p>
+
+    <div class="frontdesk">
+      <figure class="desk-card paper reveal">
+        <img src="assets/img/b7-telegraph-key.webp" alt="主持人的电报机" loading="lazy">
+        <figcaption><h3>主持人</h3><p>汤面、汤底、关键线索都在他手里，你问什么，他都照真相答你——<span class="lux-key">是、否，还是不相干，绝不含糊。</span></p></figcaption>
+      </figure>
+      <figure class="desk-card paper reveal">
+        <img src="assets/img/b8-scale.webp" alt="裁判的黄铜天平" loading="lazy">
+        <figcaption><h3>裁判</h3><p>他盯着你的推理一点点逼近汤底，覆盖到哪、还差多少都替你记着。<span class="lux-key">火候一到，就顺势推着这局往下走。</span></p></figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<aside class="wire" data-wire="">
+  <p class="wire-tape" role="img" aria-label="后厨的火没停过，夜夜都有新汤。"><span class="wire-text" data-wire-text="" aria-hidden="true"></span></p>
+</aside>
+
+<!-- ═══ 汤源 ═══ -->
+<section id="soups">
+  <div class="soups-band" data-parallax-band="">
+    <video class="band-media" src="assets/video/v4-archive-loop.mp4" poster="assets/video/v4-archive-loop.jpg" muted="" loop="" playsinline="" preload="none" data-ambient-video="" data-rate="0.6" role="img" aria-label="深夜档案室：一排排汤档案" style="translate: none; rotate: none; scale: none; transform: translate(0%, -7%);"></video>
+    <h2 style="translate: none; rotate: none; scale: none; transform: translate(0px, 13px);">汤，永远是新的。</h2>
+  </div>
+  <div class="wrap soups-grid">
+    <article class="soup-cell paper reveal" data-soup="news">
+      <img class="soup-news" src="assets/img/obj-11-newspaper.webp" alt="海龟晚报" loading="lazy">
+      <div class="soup-flip" data-flip="">
+        <div class="flip-inner">
+          <p class="flip-face flip-front paper-slip">今日头版<small>翻开看</small></p>
+          <p class="flip-face flip-back paper-slip">雨停了，全城的伞却少了一把</p>
+        </div>
+      </div>
+      <h3>每日一汤</h3>
+      <p><span class="lux-key">「海龟晚报」每天头版一桩新悬案。</span></p>
+    </article>
+    <article class="soup-cell paper reveal" data-soup="fan">
+      <div class="poster-fan">
+        <img src="assets/img/obj-03-poster-crime.webp" alt="专题海报：犯罪" loading="lazy">
+        <img src="assets/img/obj-04-poster-horror.webp" alt="专题海报：恐怖" loading="lazy">
+        <img src="assets/img/obj-05-poster-legend.webp" alt="专题海报：异闻" loading="lazy">
+        <span class="fan-tag fan-tag-1" aria-hidden="true">犯罪</span>
+        <span class="fan-tag fan-tag-2" aria-hidden="true">恐怖</span>
+        <span class="fan-tag fan-tag-3" aria-hidden="true">异闻</span>
+      </div>
+      <h3>专题书架</h3>
+      <p>犯罪、恐怖、异闻。<br><span class="lux-key">按你的口味归簇，每日上新。</span></p>
+    </article>
+    <article class="soup-cell paper reveal" data-soup="card">
+      <span class="note note-red" data-note="" aria-hidden="true">灵感一句就够，别啰嗦</span>
+      <img class="soup-card-img" src="assets/img/obj-10-card.webp" alt="自定义开案卡" loading="lazy">
+      <p class="soup-slip paper-slip"><span class="slip-text" data-soup-type=""></span></p>
+      <h3>落笔开案</h3>
+      <p><span class="lux-key">你给一句灵感，后厨现熬。</span></p>
+    </article>
+  </div>
+</section>
+
+<!-- ═══ 侦探生涯 ═══ -->
+<section id="career">
+  <div class="wrap">
+    <h2 class="reveal">你的生涯，记在人事档案里。</h2>
+    <div class="career-collage" data-career="">
+      <figure class="collage-license reveal">
+        <img src="assets/img/license.webp" alt="侦探证书" loading="lazy">
+        <figcaption class="license-face">
+          <p class="license-name"><small>侦探代号</small>夜行者</p>
+          <p class="license-date">EST. 1932</p>
+          <img class="license-seal" src="assets/img/stamp-office.webp" alt="" aria-hidden="true" loading="lazy">
+        </figcaption>
+      </figure>
+      <figure class="collage-remark paper reveal">
+        <p class="remark-label">主任评语</p>
+        <p class="remark-text" data-remark=""><span class="rk" style="translate: none; rotate: none; scale: none; transform: translate(0px, 6px); opacity: 0; visibility: hidden;">敢</span><span class="rk" style="translate: none; rotate: none; scale: none; transform: translate(0px, 6px); opacity: 0; visibility: hidden;">在</span><span class="rk" style="translate: none; rotate: none; scale: none; transform: translate(0px, 6px); opacity: 0; visibility: hidden;">第</span><span class="rk" style="translate: none; rotate: none; scale: none; transform: translate(0px, 6px); opacity: 0; visibility: hidden;">六</span><span class="rk" style="translate: none; rotate: none; scale: none; transform: translate(0px, 6px); opacity: 0; visibility: hidden;">轮</span><span class="rk" style="translate: none; rotate: none; scale: none; transform: translate(0px, 6px); opacity: 0; visibility: hidden;">就</span><span class="rk" style="translate: none; rotate: none; scale: none; transform: translate(0px, 6px); opacity: 0; visibility: hidden;">压</span><span class="rk" style="translate: none; rotate: none; scale: none; transform: translate(0px, 6px); opacity: 0; visibility: hidden;">结</span><span class="rk" style="translate: none; rotate: none; scale: none; transform: translate(0px, 6px); opacity: 0; visibility: hidden;">论</span><span class="rk" style="translate: none; rotate: none; scale: none; transform: translate(0px, 6px); opacity: 0; visibility: hidden;">，</span><span class="rk" style="translate: none; rotate: none; scale: none; transform: translate(0px, 6px); opacity: 0; visibility: hidden;">胆</span><span class="rk" style="translate: none; rotate: none; scale: none; transform: translate(0px, 6px); opacity: 0; visibility: hidden;">子</span><span class="rk" style="translate: none; rotate: none; scale: none; transform: translate(0px, 6px); opacity: 0; visibility: hidden;">不</span><span class="rk" style="translate: none; rotate: none; scale: none; transform: translate(0px, 6px); opacity: 0; visibility: hidden;">小</span><span class="rk" style="translate: none; rotate: none; scale: none; transform: translate(0px, 6px); opacity: 0; visibility: hidden;">。</span><br><span class="rk" style="translate: none; rotate: none; scale: none; transform: translate(0px, 6px); opacity: 0; visibility: hidden;">下</span><span class="rk" style="translate: none; rotate: none; scale: none; transform: translate(0px, 6px); opacity: 0; visibility: hidden;">次</span><span class="rk" style="translate: none; rotate: none; scale: none; transform: translate(0px, 6px); opacity: 0; visibility: hidden;">，</span><span class="rk" style="translate: none; rotate: none; scale: none; transform: translate(0px, 6px); opacity: 0; visibility: hidden;">先</span><span class="rk" style="translate: none; rotate: none; scale: none; transform: translate(0px, 6px); opacity: 0; visibility: hidden;">把</span><span class="rk" style="translate: none; rotate: none; scale: none; transform: translate(0px, 6px); opacity: 0; visibility: hidden;">烟</span><span class="rk" style="translate: none; rotate: none; scale: none; transform: translate(0px, 6px); opacity: 0; visibility: hidden;">灰</span><span class="rk" style="translate: none; rotate: none; scale: none; transform: translate(0px, 6px); opacity: 0; visibility: hidden;">缸</span><span class="rk" style="translate: none; rotate: none; scale: none; transform: translate(0px, 6px); opacity: 0; visibility: hidden;">问</span><span class="rk" style="translate: none; rotate: none; scale: none; transform: translate(0px, 6px); opacity: 0; visibility: hidden;">满</span><span class="rk" style="translate: none; rotate: none; scale: none; transform: translate(0px, 6px); opacity: 0; visibility: hidden;">。</span></p>
+        <p class="remark-sign">——主任 老K</p>
+      </figure>
+      <div class="collage-radar paper reveal">
+        <svg viewBox="0 0 200 200" role="img" aria-label="办案能力五维雷达：敏锐、洞察、专注、胆识、韧性">
+          <polygon class="radar-grid" points="100,16 180,74 149,170 51,170 20,74"></polygon>
+          <polygon class="radar-grid" points="100,44 153,83 132,147 68,147 47,83"></polygon>
+          <polygon class="radar-grid" points="100,72 127,92 116,124 84,124 73,92"></polygon>
+          <polygon class="radar-value" points="102.0,99.8 102.0,99.8 102.0,99.8 102.0,99.8 102.0,99.8" data-radar=""></polygon>
+          <text class="radar-axis" x="100" y="4" text-anchor="middle">敏锐</text>
+          <text class="radar-axis" x="189" y="72" text-anchor="start">洞察</text>
+          <text class="radar-axis" x="156" y="188" text-anchor="middle">专注</text>
+          <text class="radar-axis" x="44" y="188" text-anchor="middle">胆识</text>
+          <text class="radar-axis" x="11" y="72" text-anchor="end">韧性</text>
+        </svg>
+        <span class="rank-stamp" data-rank-stamp="" role="img" aria-label="段位印章：见习" style="opacity: 0; visibility: hidden;">见习</span>
+      </div>
+      <ul class="collage-clips" data-clips=""><li class="clip" style="transform: translate(0px, -30px) rotate(-0.99986deg); translate: none; rotate: none; scale: none; opacity: 0; visibility: hidden;">六轮破案，神速</li><li class="clip" style="transform: translate(0px, -30px) rotate(1.19986deg); translate: none; rotate: none; scale: none; opacity: 0; visibility: hidden;">三连胜</li><li class="clip" style="transform: translate(0px, -30px) rotate(-0.39993deg); translate: none; rotate: none; scale: none; opacity: 0; visibility: hidden;">百案名探</li></ul>
+      <figure class="collage-shop paper reveal">
+        <p class="shop-label">老程烟草铺的小票</p>
+        <p><span class="lux-key">每破一案，老程便往账本里添几枚铜币。</span>攒够了，就来柜台挑一件只属于侦探生涯的纪念。</p>
+      </figure>
+    </div>
+    <p class="career-actions"><button class="btn-paper" data-career-replay="" hidden="">换个角色</button></p>
+  </div>
+</section>
+
+<aside class="wire" data-wire="">
+  <p class="wire-tape" role="img" aria-label="卷宗合上了，还剩一封信等你拆。"><span class="wire-text" data-wire-text="" aria-hidden="true"></span></p>
+</aside>
+
+<!-- ═══ 入所邀请 ═══ -->
+<section id="join">
+  <div class="wrap-narrow" style="min-height: 944px;">
+    <p class="kicker reveal">挂号信，亲启</p>
+    <h2 class="reveal">一封等你拆的信。</h2>
+
+    <div class="join-envelope reveal" data-envelope="">
+      <img class="env-img env-sealed" src="assets/img/m2a-sealed.webp" alt="火漆封缄的牛皮纸信封，点击拆封">
+      <img class="env-img env-cracked" src="assets/img/m2b-cracked.webp" alt="火漆崩开的信封" aria-hidden="true">
+      <video class="env-video" data-cta-video="" src="assets/video/vcta-seal-crack.mp4" muted="" playsinline="" preload="none" aria-hidden="true"></video>
+      <button class="env-hotspot" data-crack="" aria-label="拆开火漆封印"><span class="env-hint" aria-hidden="true">亲启</span></button>
+    </div>
+
+    <div class="join-letter paper" data-letter="" tabindex="-1" hidden="">
+      <i class="letter-ribbon" aria-hidden="true"></i>
+      <p class="letter-text">雨还没停，你到得正好。<br><span class="lux-key">老板留了盏灯、一张空桌，从今晚起归你。</span><br>先办入职：登个记，领你的东西。</p>
+      <p class="letter-sign">事务所敬上</p>
+      <span class="note" data-note="" aria-hidden="true">桌子我挑过，靠窗</span>
+      <img class="letter-stamp" src="assets/img/stamp-onduty.webp" alt="印章：在职" data-letter-stamp="">
+    </div>
+
+    <div class="join-cta" data-join-cta="" hidden="">
+      <a class="btn btn-primary btn-lg" href="../../blog/case-turtle-soup/">阅读技术拆解</a>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- ▍页脚：左＝致谢款识，右＝回顶黄铜钮（电梯召唤钮语汇，仅图形不设字） -->
+<footer id="footer">
+  <div class="wrap footer-row">
+    <div class="footer-text">
+      <p>© 2026 Turtle Soup Agency，是由 Lagom 汤骜和硅基生命共同完成开发的项目。</p>
+      <p>感谢每一度电力和风扇的呼啸，他们帮助我将脑中的想法变成眼前的现实。</p>
+    </div>
+    <a class="foot-top" href="#top" aria-label="回到顶部">
+      <img class="foot-top-knob" src="assets/img/foot-top.webp" alt="" width="288" height="288" loading="lazy" decoding="async">
+    </a>
+  </div>
+</footer>
+
+<script type="module" src="https://static.cloudflareinsights.com/beacon.min.js/v4513226cdae34746b4dedf0b4dfa099e1781791509496" integrity="sha512-ZE9pZaUXND66v380QUtch/5sE9tPFh2zg45pR2PB0CVkCtOREv2AJKkSidISWkysEuQ0EH8faUU5du78bx87UQ==" data-cf-beacon="{&quot;version&quot;:&quot;2024.11.0&quot;,&quot;token&quot;:&quot;32de4bed94b74a8683460c52ad5d0369&quot;,&quot;r&quot;:1}" crossorigin="anonymous"></script>
+
+
+<div class="dim-veil" aria-hidden="true"></div></body></html>

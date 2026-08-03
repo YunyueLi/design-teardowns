@@ -1,0 +1,519 @@
+<!DOCTYPE html><html lang="zh-CN" class="lenis"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>EasyCode · 把刷题变成被指导的练习</title>
+<meta name="description" content="EasyCode 是一个 LLM 驱动的个人算法训练桌：五维评测、苏格拉底助教、AI 面试官、SRS 间隔复习。跟随一道真实的题，走完它的一生。">
+<!-- 社交分享卡。抓取器多不认相对路径,og/twitter 图用站点绝对 URL。 -->
+<meta property="og:type" content="website">
+<meta property="og:title" content="EasyCode · 把刷题变成被指导的练习">
+<meta property="og:description" content="通过/不通过只是最表层的信号。EasyCode 用 LLM 把「为什么慢、哪里该优化、思路卡在哪」显式化：五维评测、苏格拉底助教、AI 面试官、间隔复习。">
+<meta property="og:image" content="https://imlagom.com/projects/easycode/assets/og-cover.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="EasyCode · 把刷题变成被指导的练习">
+<meta name="twitter:description" content="用 LLM 把刷题的隐藏信号显式化：五维评测、苏格拉底助教、AI 面试官、间隔复习。">
+<meta name="twitter:image" content="https://imlagom.com/projects/easycode/assets/og-cover.png">
+<link rel="icon" type="image/png" sizes="180x180" href="assets/apple-touch-icon.png">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+<!-- 自托管资源:样式 + 动效底座(vendored,零外部请求)。
+     字体预载只留首屏所需:Bold(hero 大标题)与手写批注体;Regular 只服务折下内容(tutor 誊本/空态引导),按需加载 -->
+<link rel="preload" as="font" type="font/woff2" href="assets/fonts/NotoSerifSC-Bold-subset.woff2" crossorigin="">
+<link rel="preload" as="font" type="font/woff2" href="assets/fonts/MaShanZheng-subset.woff2" crossorigin="">
+<link rel="stylesheet" href="assets/css/main.css?v=20260718-1">
+<script>
+/* 预隐藏门:main.js 就绪前止闪;若脚本失效,3s 后自动揭幕保内容可读 */
+document.documentElement.classList.add('boot');
+setTimeout(function(){document.documentElement.classList.remove('boot')},3000);
+</script>
+<script defer="" src="vendor/gsap.min.js"></script>
+<script defer="" src="vendor/CustomEase.min.js"></script>
+<script defer="" src="vendor/ScrollTrigger.min.js"></script>
+<script defer="" src="vendor/SplitText.min.js"></script>
+<script defer="" src="vendor/lenis.min.js"></script>
+<script defer="" src="assets/js/main.js?v=20260717-6"></script>
+</head>
+<body>
+
+<noscript><div class="noscript-note">本页的过程回放、判题、雷达评级等六个装置由脚本驱动，当前浏览器未启用 JavaScript，只能阅读静态版式。EasyCode 产品本体是本地运行的桌面应用，不受影响。</div></noscript>
+
+<!-- 氛围层②:S-8 柔光慢层(纸面光影缓移,multiply 融纸;双时间尺度的慢层,素材单 §3.6) -->
+
+<!-- ================= 顶栏:品牌 + 技术拆解 + 项目切换(与 JourneyPilot 同构,校对红暖纸配色) ================= -->
+<header class="nav" id="topnav">
+  <a class="brand" href="#hero" aria-label="EasyCode 顶部">
+    <img class="brand-logo" src="assets/brand-icon.webp" alt="" width="117" height="120" decoding="async">
+    <img class="brand-word" src="assets/brand-word.webp" alt="EasyCode" width="378" height="64" decoding="async">
+  </a>
+  <div class="nav-right">
+    <!-- 2026-07-20：站点跳转（主页/摄影/博客）入顶栏，居技术拆解左侧；窄屏折进项目菜单 .npm-foot -->
+    <a class="nav-doc nav-site" href="../../">主页</a>
+    <a class="nav-doc nav-site" href="../../photography/">摄影</a>
+    <a class="nav-doc nav-site" href="../../blog/">博客</a>
+    <span class="nav-sep" aria-hidden="true"></span>
+    <a class="nav-doc" href="../../blog/case-easycode/">技术拆解</a>
+    <div class="nav-proj" id="navProj">
+      <button class="nav-proj-btn" id="navProjBtn" type="button">
+        项目
+        <svg class="chev" width="12" height="12" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+      </button>
+      <!-- 2026-07-19 二审：条目=各 landing 缩影卡，品牌 icon+字标图（统一小图 /projects/_menu/）；圆点/左色带退役 -->
+      <div class="nav-proj-menu" id="navProjMenu">
+        <a class="npm-item npm-ec is-current" href="#hero" aria-current="page">
+          <img class="npm-ico" src="../_menu/ec-icon.webp" alt="" width="78" height="80" loading="lazy" decoding="async">
+          <span class="npm-txt">
+            <img class="npm-word" src="../_menu/ec-word.webp" alt="EasyCode" width="236" height="40" loading="lazy" decoding="async">
+            <i>把刷题变成被指导的练习</i>
+          </span>
+        </a>
+        <a class="npm-item npm-jp" href="../journeypilot/">
+          <img class="npm-ico" src="../_menu/jp-icon.webp" alt="" width="92" height="76" loading="lazy" decoding="async">
+          <span class="npm-txt">
+            <img class="npm-word" src="../_menu/jp-word.webp" alt="JourneyPilot" width="252" height="38" loading="lazy" decoding="async">
+            <i>一句话，变成一张登机牌</i>
+          </span>
+        </a>
+        <a class="npm-item npm-ts" href="../turtle-soup/">
+          <img class="npm-ico" src="../_menu/ts-icon.webp" alt="" width="74" height="96" loading="lazy" decoding="async">
+          <span class="npm-txt">
+            <img class="npm-word" src="../_menu/ts-word.webp" alt="海龟汤事务所" width="268" height="48" loading="lazy" decoding="async">
+            <i>AI 主持的海龟汤推理游戏</i>
+          </span>
+        </a>
+        <!-- 窄屏（≤760px）站点跳转折进菜单底行；桌面由顶栏 .nav-site 承担 -->
+        <div class="npm-foot">
+          <a href="../../">主页</a>
+          <a href="../../photography/">摄影</a>
+          <a href="../../blog/">博客</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<main>
+
+<!-- ================= 序幕:头版即批改现场 =================
+     开场序列(load 驱动,滚动即跳过;回到顶部重演):
+     大标题落定 → 红笔慢慢划掉「刷题」→ 楷体眉批「这两个字,该改改了」一笔笔写出 → 副题/CTA/产品照升入。 -->
+<header class="hero" id="hero">
+  <div class="wrap hero-copy">
+    <h1 id="hero-h1" style="translate: none; rotate: none; scale: none; filter: blur(0px); transform: translate(0px, 0px); opacity: 1; visibility: inherit;">把<span class="hero-strike" id="hero-strike">刷题<svg class="strike-path mk-strokes" viewBox="0 0 200 100" preserveAspectRatio="none" aria-hidden="true"><path id="strike-line" d="M-11 59 C 22 51 50 54 82 56 C 110 58 130 61 158 55 C 182 50 194 52 213 43" stroke-width="7.5" style="stroke-dasharray: 226.346; stroke-dashoffset: 0;"></path><path id="strike-line-2" d="M-3 65 C 32 60 70 62 110 63 C 150 64 178 60 205 54" stroke-width="3.4" opacity="0.34" style="stroke-dasharray: 208.845; stroke-dashoffset: 0;"></path></svg><span class="hero-remark" id="hero-remark" aria-hidden="true" style="opacity: 1; visibility: inherit; clip-path: inset(-12% 0% -16%);">这两个字，该改改了</span></span>变成<br>被指导的练习</h1>
+    <p class="sub hero-sub" id="hero-sub" style="opacity: 1; visibility: inherit; translate: none; rotate: none; scale: none; transform: translate(0px, 0px);">通过或不通过，只是最表层的信号。<br>EasyCode 追踪并记录你的答题过程，<br>将其余的一切讲给你听，伴你直达巅峰。</p>
+    <div class="hero-cta" id="hero-cta" style="opacity: 1; visibility: inherit; translate: none; rotate: none; scale: none; transform: translate(0px, 0px);">
+      <a class="btn btn-primary" href="https://github.com/Dreamaker-TA/EasyCode" target="_blank" rel="noopener"><svg class="btn-icon" viewBox="0 0 16 16" aria-hidden="true" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82a7.6 7.6 0 0 1 2-.27c.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8z"></path></svg>开始刷题</a>
+    </div>
+  </div>
+  <figure class="hero-shot" id="hero-shot" style="opacity: 1; visibility: inherit; translate: none; rotate: none; scale: none; transform: translate(0px, 0px);">
+    <picture><source srcset="assets/pano-dark.avif" type="image/avif"><img src="assets/pano-dark.webp" alt="EasyCode 暗色模式下的本局复盘：五维雷达、A 级评测与 14 天后的下一次训练处方，其上有手绘批注笔迹" width="1600" height="1044" loading="eager" fetchpriority="high" decoding="async"></picture>
+    <!-- 批注层:与图源同坐标系(1600×1044),随图等比缩放。批注=导师的笔(暗底适配校对红)。
+         勾画与复盘内容对齐:①圈 A 级章 ②箭头指向「下一次复习」日期 ③圈五维雷达 ④划 O(log n) ⑤勾正确性。
+         错落描画由 JS 驱动(每笔 data-dur + 非匀速 stagger,双向重演)。 -->
+    <svg class="mk-strokes" id="hero-marks" viewBox="0 0 1600 1044" aria-hidden="true" focusable="false">
+      <path class="hm" data-dur="0.62" transform="rotate(-3 597 305)" d="M645 292 Q656 306 646 324 Q634 344 598 346 Q560 347 545 324 Q532 303 551 284 Q570 267 604 268 Q628 269 642 280" stroke-width="5" style="stroke-dasharray: 290.927; stroke-dashoffset: 290.927;"></path>
+      <path class="hm" data-dur="0.5" d="M648 280 Q672 246 697 216 M697 216 L679 219 M697 216 L697 238" stroke-width="5" style="stroke-dasharray: 120.874; stroke-dashoffset: 120.874;"></path>
+      <path class="hm" data-dur="0.82" d="M1245 350 C 1272 302 1418 294 1484 346 C 1526 382 1514 470 1446 506 C 1372 542 1282 526 1242 468 C 1212 426 1218 380 1252 352" stroke-width="4.5" style="stroke-dasharray: 802.29; stroke-dashoffset: 802.29;"></path>
+      <path class="hm" data-dur="0.42" d="M832 632 Q858 626 880 631 Q902 636 924 629" stroke-width="4" style="stroke-dasharray: 93.0062; stroke-dashoffset: 93.0062;"></path>
+      <path class="hm" data-dur="0.34" d="M752 590 L764 605 L790 570" stroke-width="4.5" style="stroke-dasharray: 62.8098; stroke-dashoffset: 62.8098;"></path>
+    </svg>
+  </figure>
+</header>
+
+<!-- ================= 一幕过场:红灯,绿灯(判定洗屏) ================= -->
+<section class="story" id="verdict-beat">
+  <div class="wrap-narrow center">
+    <div class="verdict-pills" aria-hidden="true">
+      <span class="pill tone-danger" data-pill="danger">✗ 未通过<span class="ripple"></span><span class="ripple"></span><span class="ripple"></span></span>
+      <span class="pill tone-ok" data-pill="ok">✓ 通过<span class="ripple"></span><span class="ripple"></span><span class="ripple"></span></span>
+    </div>
+    <h2 class="headline" data-split="" style="opacity: 1; visibility: inherit;" aria-label="红灯，绿灯。"><div aria-hidden="true" style="position: relative; display: block; text-align: center; overflow: clip;"><div aria-hidden="true" style="position: relative; display: block; text-align: center; translate: none; rotate: none; scale: none; opacity: 0; visibility: hidden; transform: translate(0px, 14px);">红灯，绿灯。</div></div></h2>
+    <p class="sub mx-auto" data-rv="" style="opacity: 0; visibility: hidden;">通过，或不通过。这几乎是传统刷题网站能告诉你的全部。</p>
+    <span class="mk-note" aria-hidden="true" style="clip-path: inset(-8% 100% -12% 0px);"><i class="sym">〇</i>红绿灯只判对错，不教你变强。</span>
+  </div>
+</section>
+
+<!-- ================= 主张:被批注的稿纸 ================= -->
+<section class="thesis">
+  <div class="wrap-narrow">
+    <h2 class="headline" data-split="" style="opacity: 1; visibility: inherit;" aria-label="EasyCode 想说的，是「其余的一切」。"><div aria-hidden="true" style="position: relative; display: block; text-align: center; overflow: clip;"><div aria-hidden="true" style="position: relative; display: block; text-align: center; translate: none; rotate: none; scale: none; opacity: 0; visibility: hidden; transform: translate(0px, 14px);">EasyCode 想说的，</div></div><div aria-hidden="true" style="position: relative; display: block; text-align: center; overflow: clip;"><div aria-hidden="true" style="position: relative; display: block; text-align: center; translate: none; rotate: none; scale: none; opacity: 0; visibility: hidden; transform: translate(0px, 14px);">是「其余的一切」。</div></div></h2>
+    <p class="sub mx-auto" id="thesis-lightup" aria-label="为什么慢、哪里该优化、思路卡在哪。EasyCode 默默帮助你记录并分析这些藏在红绿灯背后的信号。把刷题，变成被指导的练习。"><div aria-hidden="true" style="position: relative; display: block; text-align: center; color: rgb(111, 107, 97);">为什么慢、哪里该优化、思路卡在哪。</div><div aria-hidden="true" style="position: relative; display: block; text-align: center; color: rgb(111, 107, 97);">EasyCode 默默帮助你记录并分析这些藏在红绿灯背后的信号。</div><div aria-hidden="true" style="position: relative; display: block; text-align: center; color: rgb(111, 107, 97);"><strong>把刷题，变成被指导的练习。</strong></div></p>
+  </div>
+  <figure class="thesis-art">
+    <picture><source srcset="assets/art-annotations.avif" type="image/avif"><img class="sda-art" src="assets/art-annotations.webp" alt="一页折角的手稿，写满字迹，其上有校对红批注：圈选、插入符、双下划线、删除线、问号、对勾，页边一道回环箭头" width="836" height="941" loading="lazy" decoding="async"></picture>
+  </figure>
+</section>
+
+<!-- ================= 故事跨度:六阶段 stepper(产品自己的训练状态机) ================= -->
+<div class="stage-span">
+  <div class="stepper" aria-hidden="true">
+    <div class="wrap row">
+      <span class="step" data-step="准备"><i class="dot"></i><span>准备</span></span>
+      <span class="step" data-step="作答"><i class="dot"></i><span>作答</span></span>
+      <span class="step" data-step="测试"><i class="dot"></i><span>测试</span></span>
+      <span class="step" data-step="提交"><i class="dot"></i><span>提交</span></span>
+      <span class="step" data-step="评测"><i class="dot"></i><span>评测</span></span>
+      <span class="step" data-step="复盘"><i class="dot"></i><span>复盘</span></span>
+    </div>
+  </div>
+
+  <!-- ===== 第 1 章 · 开题(准备) ===== -->
+  <section class="story" id="meet" data-stage="准备">
+    <div class="wrap-stage">
+      <div class="story-head" data-rv="">
+        <h2 class="headline" data-split="" style="opacity: 1; visibility: inherit;" aria-label="开始刷题吧，但这次不必害怕。"><div aria-hidden="true" style="position: relative; display: block; text-align: start; overflow: clip;"><div aria-hidden="true" style="position: relative; display: block; text-align: start; translate: none; rotate: none; scale: none; opacity: 0; visibility: hidden; transform: translate(0px, 14px);">开始刷题吧，</div></div><div aria-hidden="true" style="position: relative; display: block; text-align: start; overflow: clip;"><div aria-hidden="true" style="position: relative; display: block; text-align: start; translate: none; rotate: none; scale: none; opacity: 0; visibility: hidden; transform: translate(0px, 14px);">但这次不必害怕。</div></div></h2>
+        <p class="sub" data-rv="" style="opacity: 0; visibility: hidden;">LeetCode 704，二分查找，一道经典的题目。<br>让我们在 EasyCode 中掌握它吧。<br><span class="mk-note" aria-hidden="true" style="clip-path: inset(-8% 100% -12% 0px);"><i class="sym">¶</i>每道题，都值得一次认真的对局。</span></p>
+      </div>
+      <div class="panel panel--narrow" data-rv="" style="opacity: 0; visibility: hidden;">
+        <div class="panel-head">
+          <span class="kicker kicker--zh">LeetCode 704 · 数组 <span class="star">★</span></span>
+          <span class="hint">核心题</span>
+        </div>
+        <div class="panel-body">
+          <h3 class="panel-title">二分查找</h3>
+          <p class="prose">给定一个 n 个元素有序的（升序）整型数组 nums 和一个目标值 target，写一个函数搜索 nums 中的 target，如果目标值存在返回下标，否则返回 -1。</p>
+          <div class="code plain"><span class="cl">输入：nums = [-1,0,3,5,9,12], target = 9</span><span class="cl">输出：4</span><span class="cl">解释：9 出现在 nums 中并且下标为 4</span></div>
+          <div class="code plain"><span class="cl">输入：nums = [-1,0,3,5,9,12], target = 2</span><span class="cl">输出：-1</span><span class="cl">解释：2 不存在 nums 中因此返回 -1</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 第 2 章 · 作答:快照回放(桌面 pin 分镜;窄屏按钮交互) ===== -->
+  <section class="story is-cine" id="code" data-stage="作答" data-cine="replay" style="--cine-scrub: 126svh;">
+    <div class="cine-track">
+      <div class="cine-stage">
+        <div class="wrap-stage">
+          <div class="duo">
+            <div class="duo-text">
+              <div class="story-head" data-rv="">
+                <h2 class="headline" data-split="" style="opacity: 1; visibility: inherit;" aria-label="它记得你每一步。"><div aria-hidden="true" style="position: relative; display: block; text-align: start; overflow: clip;"><div aria-hidden="true" style="position: relative; display: block; text-align: start; translate: none; rotate: none; scale: none; opacity: 0; visibility: hidden; transform: translate(0px, 14px);">它记得你每一步。</div></div></h2>
+                <p class="sub" data-rv="" style="opacity: 0; visibility: hidden;">EasyCode 每 30 秒自动对代码工作区进行一次快照，并以 diff 形式保存答题全过程。<br>思路什么时候成形？bug 什么时候埋下？<br>判题评委将在代码提交时，看到你的答题全过程，提供分钟级的指导。</p>
+              </div>
+            </div>
+            <div class="duo-demo" data-rv="">
+              <div class="panel">
+                <div class="panel-head">
+                  <span class="kicker kicker--zh">过程回放</span>
+                  <span class="hint mono" id="replay-meta">1 / 4 · 0:00</span>
+                </div>
+                <div class="panel-body">
+                  <div class="code" id="replay-code" style="min-height: calc(24.5em + 28px);"><span class="cl"><span class="tk-kw">from</span> typing <span class="tk-kw">import</span> <span class="tk-ty">List</span></span><span class="cl"> </span><span class="cl"><span class="tk-kw">class</span> Solution:</span><span class="cl">    <span class="tk-kw">def</span> search(self, nums: <span class="tk-ty">List</span>[<span class="tk-ty">int</span>], target: <span class="tk-ty">int</span>) -&gt; <span class="tk-ty">int</span>:</span><span class="cl">        <span class="tk-cm"># 在这里开始写你的代码</span></span><span class="cl">        <span class="tk-kw">pass</span></span></div>
+                </div>
+                <div class="panel-foot">
+                  <span class="cine-foot-interactive">
+                    <button class="btn btn-ghost" id="replay-play">播放</button>
+                    <input type="range" id="replay-slider" min="0" max="3" value="0" step="1" style="">
+                  </span>
+                  <span class="cine-scrub" aria-hidden="true"><i id="replay-scrub-fill"></i></span>
+                  <span class="hint cine-hint">滚动推进回放</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 过场 · 验证(静读速) ===== -->
+  <section class="story" id="verify-beat">
+    <div class="wrap-narrow center">
+      <h2 class="headline" data-split="" style="opacity: 1; visibility: inherit;" aria-label="写完最后一笔，是时候开始验证了。"><div aria-hidden="true" style="position: relative; display: block; text-align: center; overflow: clip;"><div aria-hidden="true" style="position: relative; display: block; text-align: center; translate: none; rotate: none; scale: none; opacity: 0; visibility: hidden; transform: translate(0px, 14px);">写完最后一笔，</div></div><div aria-hidden="true" style="position: relative; display: block; text-align: center; overflow: clip;"><div aria-hidden="true" style="position: relative; display: block; text-align: center; translate: none; rotate: none; scale: none; opacity: 0; visibility: hidden; transform: translate(0px, 14px);">是时候开始验证了。</div></div></h2>
+      <p class="sub mx-auto" data-rv="" style="opacity: 0; visibility: hidden;">不需要等待远程服务器的判题队列，<br>轻点运行，本地判题机将以毫秒级的速度给出答案。</p>
+    </div>
+  </section>
+
+  <!-- ===== 第 3 章 · 测试:那行 bug,你亲手改(全页最强参与感装置) ===== -->
+  <section class="story" id="test" data-stage="测试">
+    <div class="wrap-stage">
+      <div class="duo flip">
+        <div class="duo-text">
+          <div class="story-head" data-rv="">
+            <h2 class="headline" data-split="" style="opacity: 1; visibility: inherit;" aria-label="那行 bug,你亲手改。"><div aria-hidden="true" style="position: relative; display: block; text-align: start; overflow: clip;"><div aria-hidden="true" style="position: relative; display: block; text-align: start; translate: none; rotate: none; scale: none; opacity: 0; visibility: hidden; transform: translate(0px, 14px);">那行 bug,</div></div><div aria-hidden="true" style="position: relative; display: block; text-align: start; overflow: clip;"><div aria-hidden="true" style="position: relative; display: block; text-align: start; translate: none; rotate: none; scale: none; opacity: 0; visibility: hidden; transform: translate(0px, 14px);">你亲手改。</div></div></h2>
+            <p class="sub" data-rv="" style="opacity: 0; visibility: hidden;">判题机就跑在你的浏览器里：不排队、不上传，断网也能验。<br>先跑一次，看它挂在哪；然后把那一行改对的，是你。</p>
+          </div>
+          <figure class="chapter-art">
+            <picture><source srcset="assets/art-desk.avif" type="image/avif"><img class="sda-art" src="assets/art-desk.webp" alt="一张孤灯下的书桌，台灯照着一台打开的笔记本，屏幕上是一枚校对红对勾" width="1000" height="675" loading="lazy" decoding="async"></picture>
+          </figure>
+        </div>
+        <div class="duo-demo" data-rv="" style="opacity: 0; visibility: hidden;">
+          <div class="panel">
+            <div class="panel-head">
+              <span class="kicker kicker--zh">运行测试</span>
+              <span id="judge-verdict"></span>
+            </div>
+            <div class="panel-body" id="judge-body"><div class="code" id="fix-code"><span class="cl">            <span class="tk-kw">if</span> nums[mid] &lt; target:</span><span class="cl">                lo = mid + 1</span><span class="cl">            <span class="tk-kw">else</span>:</span><span class="cl">                hi = mid - 1</span><span class="cl">        <span class="tk-kw">return</span> lo</span></div><div id="judge-result"><p class="hint" style="margin-top:14px">点击「运行测试」，看看发生了什么？</p></div></div>
+            <div class="panel-foot">
+              <button class="btn btn-primary" id="judge-run">运行测试</button>
+              <span class="hint" id="judge-status"></span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 过场 · 卡壳(静读速) ===== -->
+  <section class="story" id="stuck-beat">
+    <div class="wrap-narrow center">
+      <h2 class="headline" data-split="" style="opacity: 1; visibility: inherit;" aria-label="在红线与绿灯之间，是思路的挣扎。"><div aria-hidden="true" style="position: relative; display: block; text-align: center; overflow: clip;"><div aria-hidden="true" style="position: relative; display: block; text-align: center; translate: none; rotate: none; scale: none; opacity: 0; visibility: hidden; transform: translate(0px, 14px);">在红线与绿灯之间，</div></div><div aria-hidden="true" style="position: relative; display: block; text-align: center; overflow: clip;"><div aria-hidden="true" style="position: relative; display: block; text-align: center; translate: none; rotate: none; scale: none; opacity: 0; visibility: hidden; transform: translate(0px, 14px);">是思路的挣扎。</div></div></h2>
+      <p class="sub mx-auto" data-rv="" style="opacity: 0; visibility: hidden;">如果测试一直红着，而你已经尝试了各种边界，<br>不要气馁，翻开校样的边缘，问问那个从不直接给答案的教练。</p>
+    </div>
+  </section>
+
+  <!-- ===== 第 4 章 · 求助:你来追问(左＝对话誊本·定高内滚 / 右＝可追问的台阶) ===== -->
+  <section class="story" id="help" data-stage="测试">
+    <div class="wrap">
+      <div class="story-head" data-rv="">
+        <h2 class="headline" data-split="" style="opacity: 1; visibility: inherit;" aria-label="它不给答案，它给台阶。"><div aria-hidden="true" style="position: relative; display: block; text-align: start; overflow: clip;"><div aria-hidden="true" style="position: relative; display: block; text-align: start; translate: none; rotate: none; scale: none; opacity: 0; visibility: hidden; transform: translate(0px, 14px);">它不给答案，</div></div><div aria-hidden="true" style="position: relative; display: block; text-align: start; overflow: clip;"><div aria-hidden="true" style="position: relative; display: block; text-align: start; translate: none; rotate: none; scale: none; opacity: 0; visibility: hidden; transform: translate(0px, 14px);">它给台阶。</div></div></h2>
+        <p class="sub" data-rv="" style="opacity: 0; visibility: hidden;">如果遇到困难，请放心求助，<br>EasyCode 帮你把思路一步步想通。<br>有的时候，一个高效的算法是在讨论中灵机一现的。</p>
+      </div>
+      <div data-rv="" style="opacity: 0; visibility: hidden;">
+        <div class="panel tutor-panel">
+          <div class="panel-head">
+            <span class="kicker kicker--zh">求助</span>
+            <span class="hint mono" id="tutor-tier">未求助</span>
+          </div>
+          <div class="tutor-cols">
+            <div class="tutor-transcript">
+              <div class="chat" id="tutor-chat"></div>
+            </div>
+            <div class="tutor-asks">
+              <div class="ask-options" id="ask-options">
+                <button class="ask-btn" data-ask="0"><span class="tier">第 1 层 · 思路方向</span>样例 c2 挂了：target 不存在时返回了 2 而不是 -1，我卡在返回值的思路上。</button>
+                <button class="ask-btn" data-ask="1" disabled=""><span class="tier">第 2 层 · 关键观察</span>while 退出的时候 lo 停在的位置意味着什么？为什么不能直接把 lo 当返回值？</button>
+                <button class="ask-btn" data-ask="2" disabled=""><span class="tier">第 3 层 · 伪代码骨架</span>给我一个骨架吧，我想对着骨架检查我自己的写法。</button>
+                <button class="ask-btn is-locked" disabled=""><span class="tier">第 4 层 · 完整代码</span><span class="lock-line">参考解——演示到骨架为止，这一层不给。</span></button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 过场 · 提交(满屏呼吸章) ===== -->
+  <section class="story" id="submit-beat" data-stage="提交">
+    <div class="wrap-narrow center">
+      <h2 class="headline" data-split="" style="opacity: 1; visibility: inherit;" aria-label="改掉一行，测试全绿。提交。"><div aria-hidden="true" style="position: relative; display: block; text-align: center; overflow: clip;"><div aria-hidden="true" style="position: relative; display: block; text-align: center; translate: none; rotate: none; scale: none; opacity: 0; visibility: hidden; transform: translate(0px, 14px);">改掉一行，</div></div><div aria-hidden="true" style="position: relative; display: block; text-align: center; overflow: clip;"><div aria-hidden="true" style="position: relative; display: block; text-align: center; translate: none; rotate: none; scale: none; opacity: 0; visibility: hidden; transform: translate(0px, 14px);">测试全绿。提交。</div></div></h2>
+      <p class="sub mx-auto" data-rv="" style="opacity: 0; visibility: hidden;">提交之后，EasyCode 会先把你的代码真正运行一遍，<br>反复评估、交叉核对，力求评级公正可靠。<br>几秒钟后，一份完整的复盘就送到你面前。</p>
+    </div>
+  </section>
+
+  <!-- ===== 第 5 章 · 评测:五维雷达(全页高潮) ===== -->
+  <section class="story" id="review" data-stage="评测">
+    <div class="wrap-stage">
+      <div class="story-head center" data-rv="">
+        <h2 class="headline" data-split="" style="opacity: 1; visibility: inherit;" aria-label="一次提交，五个维度。"><div aria-hidden="true" style="position: relative; display: block; text-align: center; overflow: clip;"><div aria-hidden="true" style="position: relative; display: block; text-align: center; translate: none; rotate: none; scale: none; opacity: 0; visibility: hidden; transform: translate(0px, 14px);">一次提交，五个维度。</div></div></h2>
+        <p class="sub mx-auto" data-rv="" style="opacity: 0; visibility: hidden;">正确性、复杂度、代码质量、过程、建议。<br>评级不是一个字母，是一份诊断。</p>
+      </div>
+      <div class="duo duo--middle">
+        <div class="duo-demo radar-wrap" data-rv="" style="opacity: 0; visibility: hidden;">
+          <svg class="radar-svg" id="radar" viewBox="0 0 220 220"><polygon class="rgrid" points="110,91.5 127.59454555146034,104.28318560406348 120.87402716741076,124.96681439593652 99.12597283258924,124.96681439593652 92.40545444853966,104.28318560406348"></polygon><polygon class="rgrid" points="110,73 145.18909110292068,98.56637120812695 131.74805433482152,139.93362879187305 88.2519456651785,139.93362879187305 74.81090889707932,98.56637120812695"></polygon><polygon class="rgrid" points="110,54.5 162.783636654381,92.84955681219041 142.62208150223228,154.90044318780957 77.37791849776775,154.90044318780957 57.21636334561897,92.84955681219043"></polygon><polygon class="rgrid" points="110,36 180.37818220584137,87.13274241625389 153.496108669643,169.8672575837461 66.50389133035699,169.8672575837461 39.62181779415863,87.1327424162539"></polygon><line class="raxis" x1="110" y1="110" x2="110" y2="36"></line><text class="rlabel" x="110" y="14" text-anchor="middle" dominant-baseline="middle" style="animation-delay:640ms">正确性</text><line class="raxis" x1="110" y1="110" x2="180.37818220584137" y2="87.13274241625389"></line><text class="rlabel" x="201.30142556433475" y="80.33436854000504" text-anchor="start" dominant-baseline="middle" style="animation-delay:760ms">复杂度</text><line class="raxis" x1="110" y1="110" x2="153.496108669643" y2="169.8672575837461"></line><text class="rlabel" x="166.4273842200774" y="187.66563145999496" text-anchor="start" dominant-baseline="middle" style="animation-delay:880ms">代码质量</text><line class="raxis" x1="110" y1="110" x2="66.50389133035699" y2="169.8672575837461"></line><text class="rlabel" x="53.572615779922586" y="187.66563145999496" text-anchor="end" dominant-baseline="middle" style="animation-delay:1000ms">过程</text><line class="raxis" x1="110" y1="110" x2="39.62181779415863" y2="87.1327424162539"></line><text class="rlabel" x="18.69857443566525" y="80.33436854000506" text-anchor="end" dominant-baseline="middle" style="animation-delay:1120ms">建议</text><polygon class="rfill" id="rfill" points="110,36 180.37818220584137,87.13274241625389 153.496108669643,169.8672575837461 66.50389133035699,169.8672575837461 39.62181779415863,87.1327424162539"></polygon><polyline class="rline" id="rline" points="110,36 180.37818220584137,87.13274241625389 153.496108669643,169.8672575837461 66.50389133035699,169.8672575837461 39.62181779415863,87.1327424162539 110,36"></polyline><circle class="rdot tone-ok" id="rdot-0" cx="110" cy="36" r="4" style="animation-delay:420ms"></circle><circle class="rdot tone-ok" id="rdot-1" cx="180.37818220584137" cy="87.13274241625389" r="4" style="animation-delay:620ms"></circle><circle class="rdot tone-ok" id="rdot-2" cx="153.496108669643" cy="169.8672575837461" r="4" style="animation-delay:820ms"></circle><circle class="rdot tone-ok" id="rdot-3" cx="66.50389133035699" cy="169.8672575837461" r="4" style="animation-delay:1020ms"></circle><circle class="rdot tone-ok" id="rdot-4" cx="39.62181779415863" cy="87.1327424162539" r="4" style="animation-delay:1220ms"></circle></svg>
+          <div class="stamp-row">
+            <span class="stamp tone-ok solid" id="stamp"><span class="letter">A</span></span>
+            <p class="hint" id="stamp-note">已用 04:24 / 2 个思考节点</p>
+          </div>
+        </div>
+        <div class="duo-text">
+          <!-- 高潮同屏分批(4.3):雷达+章先落,rail 滞后 0.45s,按钮再 0.25s,手写签收收尾 -->
+          <div class="review-rail" data-rv="" data-rv-lag="0.45" id="review-rail" style="opacity: 0; visibility: hidden;"><div class="review-sec"><span class="kicker kicker--zh">主诊断</span><p class="strong">代码通过所有测试用例，风格优秀，复杂度最优，解题过程流畅，无需进一步改进。</p></div><div class="review-sec"><span class="kicker kicker--zh">代码质量</span><div class="big">9<small> / 10</small></div><p>代码清晰规范，变量命名好，类型提示完整，包含主函数处理输入输出。</p></div><div class="review-sec"><span class="kicker kicker--zh">复杂度</span><div class="big">O(log n) · O(1)</div><p>每次循环缩小一半范围，对数级别时间；仅使用常数个变量。</p></div><div class="review-sec"><span class="kicker kicker--zh">过程复盘</span><p>首帧只写了部分逻辑，但很快在下一帧补全并添加主函数，体现了对循环不变量的理解，修改高效，思路连贯。</p></div><div class="review-sec"><span class="kicker kicker--zh">训练处方</span><p class="strong">复习安排已更新：评级 A，进入更长间隔。</p></div></div>
+          <div class="review-actions" data-rv="" data-rv-lag="0.7" style="opacity: 0; visibility: hidden;">
+            <button class="btn btn-ghost" id="universe-toggle">如果当时没抓住那个 bug?</button>
+          </div>
+          <!-- 导师签收:页面级手写评级(与 demo 内方形章分工;随平行宇宙切换) -->
+          <div class="review-note" data-rv="" data-rv-lag="1" style="opacity: 0; visibility: hidden;">
+            <span class="mk-grade" id="mk-grade" aria-hidden="true">
+              <b id="mk-grade-letter">A</b>
+              <svg viewBox="0 0 90 90"><path id="mk-grade-ring" d="M72 20 Q86 34 80 55 Q73 78 45 80 Q17 81 10 57 Q4 34 24 18 Q44 4 66 14"></path></svg>
+            </span>
+            <span class="mk-note" id="mk-grade-note" aria-hidden="true" style="clip-path: inset(-8% 100% -12% 0px);">批完。别骄傲，十四天后见。</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 第 6 章 · 面试:AI 面试官(桌面 pin 分镜;窄屏按钮交互) ===== -->
+  <section class="story is-cine" id="interview" data-stage="评测" data-cine="interview" style="--cine-scrub: 220svh;">
+    <div class="cine-track">
+      <div class="cine-stage">
+        <div class="wrap-stage">
+          <div class="duo flip">
+            <div class="duo-text">
+              <div class="story-head" data-rv="">
+                <h2 class="headline" data-split="" style="opacity: 1; visibility: inherit;" aria-label="写得出，更要讲得清。"><div aria-hidden="true" style="position: relative; display: block; text-align: start; overflow: clip;"><div aria-hidden="true" style="position: relative; display: block; text-align: start; translate: none; rotate: none; scale: none; opacity: 0; visibility: hidden; transform: translate(0px, 14px);">写得出，</div></div><div aria-hidden="true" style="position: relative; display: block; text-align: start; overflow: clip;"><div aria-hidden="true" style="position: relative; display: block; text-align: start; translate: none; rotate: none; scale: none; opacity: 0; visibility: hidden; transform: translate(0px, 14px);">更要讲得清。</div></div></h2>
+                <p class="sub" data-rv="" style="opacity: 0; visibility: hidden;">面试模式的问题围绕刚刚提交的代码展开，提问将进行三到五轮。<br>答得清楚，面试官会继续深挖；<br>答得含糊，它会追到你答不上来为止。</p>
+              </div>
+              <figure class="chapter-art">
+                <picture><source srcset="assets/art-chairs.avif" type="image/avif"><img class="sda-art" src="assets/art-chairs.webp" alt="两把面对面的木椅隔着一张小方桌，桌上摊着一页写满字迹的纸，一把椅子上方悬着校对红问号" width="1000" height="626" loading="lazy" decoding="async"></picture>
+              </figure>
+            </div>
+            <div class="duo-demo" data-rv="">
+              <div class="panel">
+                <div class="panel-head">
+                  <span class="kicker kicker--zh">面试模式</span>
+                  <span class="hint mono" id="iv-round">当前轮次 0/5</span>
+                </div>
+                <div class="panel-body chat-body">
+                  <div class="chat" id="iv-chat"><div class="msg tutor"><span class="tier-tag">面试官 · 第 1 轮</span>循环条件为什么是 while left &lt;= right？如果改成 left &lt; right，用长度为 1 的数组说明会发生什么。</div></div>
+                </div>
+                <div class="panel-foot">
+                  <span class="cine-foot-interactive">
+                    <button class="btn btn-primary" id="iv-next">开始面试</button>
+                  </span>
+                  <span class="cine-scrub" aria-hidden="true"><i id="iv-scrub-fill"></i></span>
+                  <span class="hint cine-hint">滚动推进对话</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 过场 · 沉淀(静读速) ===== -->
+  <section class="story" id="consolidate-beat">
+    <div class="wrap-narrow center">
+      <h2 class="headline" data-split="" style="opacity: 1; visibility: inherit;" aria-label="面试结束，但训练尚未完结。"><div aria-hidden="true" style="position: relative; display: block; text-align: center; overflow: clip;"><div aria-hidden="true" style="position: relative; display: block; text-align: center; translate: none; rotate: none; scale: none; opacity: 0; visibility: hidden; transform: translate(0px, 14px);">面试结束，</div></div><div aria-hidden="true" style="position: relative; display: block; text-align: center; overflow: clip;"><div aria-hidden="true" style="position: relative; display: block; text-align: center; translate: none; rotate: none; scale: none; opacity: 0; visibility: hidden; transform: translate(0px, 14px);">但训练尚未完结。</div></div></h2>
+      <p class="sub mx-auto" data-rv="" style="opacity: 0; visibility: hidden;">你的作答时间线、诊断报告和面试评语，<br>都将沉淀为下一次重逢的契约。</p>
+    </div>
+  </section>
+
+  <!-- ===== 第 7 章 · 复习:SRS 复利数轴 ===== -->
+  <section class="story" id="srs" data-stage="复盘">
+    <div class="wrap-narrow">
+      <div class="story-head" data-rv="">
+        <h2 class="headline" data-split="" style="opacity: 1; visibility: inherit;" aria-label="学会的，越来越远；薄弱的，越来越近。"><div aria-hidden="true" style="position: relative; display: block; text-align: start; overflow: clip;"><div aria-hidden="true" style="position: relative; display: block; text-align: start; translate: none; rotate: none; scale: none; opacity: 0; visibility: hidden; transform: translate(0px, 14px);">学会的，越来越远；</div></div><div aria-hidden="true" style="position: relative; display: block; text-align: start; overflow: clip;"><div aria-hidden="true" style="position: relative; display: block; text-align: start; translate: none; rotate: none; scale: none; opacity: 0; visibility: hidden; transform: translate(0px, 14px);">薄弱的，越来越近。</div></div></h2>
+        <p class="sub" data-rv="" style="opacity: 0; visibility: hidden;">评级直接决定下次复习的间隔：得 A，十四天后再见；连续得 A，间隔翻倍，最长可达一百八十天；一旦跌到 C，立刻拉回三天。</p>
+      </div>
+      <figure class="chapter-art axis-art mk-over-host" aria-hidden="true">
+        <picture><source srcset="assets/art-axis.avif" type="image/avif"><img class="sda-art" src="assets/art-axis.webp" alt="" width="1536" height="94" loading="lazy" decoding="async"></picture>
+        <span class="mk-note mk-over" aria-hidden="true" style="clip-path: inset(-8% 100% -12% 0px);"><i class="sym">↻</i>你的时间，自动流向薄弱题。</span>
+      </figure>
+      <div class="panel" data-rv="" style="opacity: 0; visibility: hidden;">
+        <div class="panel-head">
+          <span class="kicker kicker--zh">下次训练安排</span>
+          <span class="hint mono" id="srs-interval">14 天后</span>
+        </div>
+        <div class="panel-body">
+          <div class="srs-axis" id="srs-axis">
+            <div class="srs-line"></div>
+            <div class="srs-marker" id="srs-marker" style="left: 50.8199%;"></div>
+          <div class="srs-tick" data-d="1" style="left: 0%;"><i>1天</i></div><div class="srs-tick" data-d="3" style="left: 21.1558%;"><i>3天</i></div><div class="srs-tick" data-d="7" style="left: 37.4721%;"><i>7天</i></div><div class="srs-tick" data-d="14" style="left: 50.8199%;"><i>14天</i></div><div class="srs-tick" data-d="28" style="left: 64.1678%;"><i>28天</i></div><div class="srs-tick" data-d="56" style="left: 77.5156%;"><i>56天</i></div><div class="srs-tick" data-d="112" style="left: 90.8634%;"><i>112天</i></div><div class="srs-tick" data-d="180" style="left: 100%;"><i>180天</i></div></div>
+          <div class="srs-read tone-neutral" id="srs-read">评级 A 生成 14 天间隔，列入「可以顺手巩固」。<br>本次目标：快速复现核心思路，避免长期遗忘。</div>
+          <div class="srs-log">
+            <span class="kicker kicker--zh">评级历史</span>
+            <div class="srs-chips" id="srs-chips"><span class="srs-chip tone-ok">A</span></div>
+          </div>
+        </div>
+        <div class="panel-foot">
+          <span class="hint srs-lead">下一次做完，评：</span>
+          <span class="srs-grades">
+            <button class="btn btn-ghost tone-ok" data-srs="A">A</button>
+            <button class="btn btn-ghost tone-ok-soft" data-srs="B">B</button>
+            <button class="btn btn-ghost tone-warn" data-srs="C">C</button>
+            <button class="btn btn-ghost tone-danger" data-srs="D">D</button>
+          </span>
+          <button class="btn btn-ghost" id="srs-reset">重置</button>
+        </div>
+      </div>
+    </div>
+  </section>
+</div><!-- /stage-span -->
+
+<!-- ================= 尾花:一笔闭环 ================= -->
+<figure class="tailpiece" id="tailpiece">
+  <picture><source srcset="assets/art-loop.avif" type="image/avif"><img src="assets/art-loop.webp" alt="" width="908" height="1118" loading="lazy" decoding="async"></picture>
+  <figcaption class="hint">一场对局，至此闭环。</figcaption>
+</figure>
+
+<!-- ================= 三幕:一天的训练桌(真实界面) ================= -->
+<section class="story" id="daily">
+  <div class="wrap-stage">
+    <div class="story-head" data-rv="">
+      <h2 class="headline" data-split="" style="opacity: 1; visibility: inherit;" aria-label="查收你的练习工作台"><div aria-hidden="true" style="position: relative; display: block; text-align: start; overflow: clip;"><div aria-hidden="true" style="position: relative; display: block; text-align: start; translate: none; rotate: none; scale: none; opacity: 0; visibility: hidden; transform: translate(0px, 14px);">查收你的练习工作台</div></div></h2>
+      <p class="sub" data-rv="" style="opacity: 0; visibility: hidden;">进站先看今日处方：该复习什么、练哪道新题。</p>
+    </div>
+    <figure class="pano-hero sda-img">
+      <picture><source srcset="assets/pano-library.avif" type="image/avif"><img src="assets/pano-library.webp" alt="EasyCode 题库概览：今日训练处方、待复习计数、按章节分组的题库列表" loading="lazy" width="1600" height="1667"></picture>
+      <figcaption>进站先领一份「今日训练处方」：该先复习什么、推荐下一题是哪道、近七天练了多少。</figcaption>
+    </figure>
+    <div class="pano-trio">
+      <figure class="sda-img">
+        <picture><source srcset="assets/pano-queue.avif" type="image/avif"><img src="assets/pano-queue.webp" alt="EasyCode 今日待复习：五道题按优先级排好，低评级与逾期最久的在最前，每行标注本次目标" loading="lazy" width="1600" height="1044"></picture>
+        <figcaption>今日待复习。复习的一天从这里开始：<br>队列按优先级排好，低评级和逾期最久的排在最前。</figcaption>
+      </figure>
+      <figure class="sda-img">
+        <picture><source srcset="assets/pano-review.avif" type="image/avif"><img src="assets/pano-review.webp" alt="EasyCode 本局复盘：五维雷达、主诊断、代码质量评分与下一次训练安排" loading="lazy" width="1600" height="1044"></picture>
+        <figcaption>本局复盘。查看你刚刚作答题目的完整诊断。</figcaption>
+      </figure>
+      <figure class="sda-img">
+        <picture><source srcset="assets/pano-growth.avif" type="image/avif"><img src="assets/pano-growth.webp" alt="EasyCode 历史页：同一道题的历次提交时间线，从 B 到 A 的评级变化与完整诊断" loading="lazy" width="1600" height="1044"></picture>
+        <figcaption>历史页。同一道题的历次提交并排陈列，<br>你的进步，一目了然。</figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 四幕:你的桌子你做主 ================= -->
+<section class="story" id="yours">
+  <div class="wrap-stage">
+    <div class="story-head" data-rv="">
+      <span class="kicker kicker--zh">你的桌子你做主</span>
+      <h2 class="headline" data-split="" style="opacity: 1; visibility: inherit;" aria-label="代码不出你的机器。"><div aria-hidden="true" style="position: relative; display: block; text-align: start; overflow: clip;"><div aria-hidden="true" style="position: relative; display: block; text-align: start; translate: none; rotate: none; scale: none; opacity: 0; visibility: hidden; transform: translate(0px, 14px);">代码不出你的机器。</div></div></h2>
+    </div>
+    <div class="claims">
+      <div class="claim" data-rv="" style="opacity: 0; visibility: hidden;">
+        <span class="kicker kicker--zh">本地判题</span>
+        <h3>测试跑在你的浏览器里</h3>
+        <p>浏览器里的 Python 运行时直接执行测试。<br><strong>不排队、不上传，断网也能跑</strong>。你写的每一行代码，都留在本机。</p>
+      </div>
+      <div class="claim" data-rv="" style="opacity: 0; visibility: hidden;">
+        <span class="kicker kicker--zh">你的模型你的 key</span>
+        <h3>评委由你任命</h3>
+        <p>评测接任意 OpenAI 兼容端点：<br><strong>配一个本地 Ollama，就是一张完全离线的训练桌</strong>。换评委，只是换一行配置。</p>
+      </div>
+      <div class="claim" data-rv="" style="opacity: 0; visibility: hidden;">
+        <span class="kicker kicker--zh">MIT 开源</span>
+        <h3>数据永远是你的</h3>
+        <p>克隆即得，训练记录存在<strong>你自己机器上的 SQLite</strong> 里。<br>想备份、想搬家，拷一个文件的事。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 终章 ================= -->
+<section class="closing" id="closing">
+  <div class="wrap-narrow">
+    <figure class="seal" id="seal">
+      <picture><source srcset="assets/art-seal.avif" type="image/avif"><img src="assets/art-seal.webp" alt="校讫之印：方形校对红钤印，内为一枚对勾" width="600" height="623" loading="lazy" decoding="async" style="opacity: 0; visibility: hidden;"></picture>
+    </figure>
+    <h2 class="headline" data-split="" style="opacity: 1; visibility: inherit;" aria-label="你的题库，你的模型。今天开始，志逐算法之巅。"><div aria-hidden="true" style="position: relative; display: block; text-align: center; overflow: clip;"><div aria-hidden="true" style="position: relative; display: block; text-align: center; translate: none; rotate: none; scale: none; opacity: 0; visibility: hidden; transform: translate(0px, 14px);">你的题库，你的模型。</div></div><div aria-hidden="true" style="position: relative; display: block; text-align: center; overflow: clip;"><div aria-hidden="true" style="position: relative; display: block; text-align: center; translate: none; rotate: none; scale: none; opacity: 0; visibility: hidden; transform: translate(0px, 14px);">今天开始，志逐算法之巅。</div></div></h2>
+    <p class="sub closing-call" data-rv="" style="opacity: 0; visibility: hidden;">开始训练吧！</p>
+    <div class="steps3" data-rv="" style="opacity: 0; visibility: hidden;">
+      <div><span class="n">1</span>git clone <b>https://github.com/Dreamaker-TA/EasyCode</b></div>
+      <div><span class="n">2</span>cd EasyCode</div>
+      <div><span class="n">3</span>按仓库 README 启动项目</div>
+    </div>
+    <div class="cta" data-rv="" style="opacity: 0; visibility: hidden;">
+      <a class="btn btn-primary" href="https://github.com/Dreamaker-TA/EasyCode" target="_blank" rel="noopener"><svg class="btn-icon" viewBox="0 0 16 16" aria-hidden="true" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82a7.6 7.6 0 0 1 2-.27c.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8z"></path></svg>开始刷题</a>
+      <!-- 自嘲小注(2026-07 拍板):红笔纪律下终章屏唯一一组红笔动作 -->
+      <span class="mk-note" aria-hidden="true" style="clip-path: inset(-8% 100% -12% 0px);">行吧，这次算被指导的刷题。</span>
+    </div>
+  </div>
+  <div class="microfoot wrap">
+    <span class="foot-credit">© 2026 EasyCode，是由 Lagom 汤骜和硅基生命共同完成开发的项目。<br>感谢每一度电力和风扇的呼啸，他们帮助我将脑中的想法变成眼前的现实。</span>
+    <a class="foot-top" href="#hero" aria-label="回到顶部">
+      <img class="foot-top-stamp" src="assets/ec-top.webp" alt="" width="160" height="160" loading="lazy" decoding="async">
+    </a>
+  </div>
+</section>
+
+</main>
+
+<script type="module" src="https://static.cloudflareinsights.com/beacon.min.js/v4513226cdae34746b4dedf0b4dfa099e1781791509496" integrity="sha512-ZE9pZaUXND66v380QUtch/5sE9tPFh2zg45pR2PB0CVkCtOREv2AJKkSidISWkysEuQ0EH8faUU5du78bx87UQ==" data-cf-beacon="{&quot;version&quot;:&quot;2024.11.0&quot;,&quot;token&quot;:&quot;32de4bed94b74a8683460c52ad5d0369&quot;,&quot;r&quot;:1}" crossorigin="anonymous"></script>
+
+
+</body></html>

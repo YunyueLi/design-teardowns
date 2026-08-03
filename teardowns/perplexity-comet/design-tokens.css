@@ -1,0 +1,72 @@
+/* ============================================================
+   perplexity-comet — 从线上站点真实抽取的设计 token（实锤，非观感推断）
+   源:https://www.perplexity.ai/comet  · 抽取:playwright 计算样式 + 样式表文本
+   ============================================================ */
+:root{
+  /* —— 基底 / 文字（computed）—— */
+  --bg:rgb(251, 250, 244);
+  --ink:rgb(0, 0, 0);
+  /* 高频色值（样式表出现次数 top）:#000 #09f #fbfaf4 #f6f5ee #21808d #091717 #fff #e4e3d4 #3b4151 #efefef */
+
+  /* —— 字体（computed / fontsLoaded）—— */
+  --font-sans:sans-serif;
+  /* 实际加载字体:Newsreader, Spectral, Newsreader Variable, GT Standard VF Variable S Black, GT Canon VF Variable L Black, GT Standard Mono Regular, Berkeley Mono Regular, FK Grotesk Regular, Berkeley Mono Bold, FK Display Regular, FK Grotesk Neue Regular, FK Grotesk Neue Medium, Inter, Newsreader Variable Placeholder, Newsreader Placeholder, Spectral Placeholder, GT Standard Mono Regular Placeholder, Berkeley Mono Regular Placeholder, FK Grotesk Regular Placeholder, Berkeley Mono Bold Placeholder, FK Display Regular Placeholder, FK Grotesk Neue Regular Placeholder, FK Grotesk Neue Medium Placeholder, Inter Placeholder */
+
+  /* —— 动效（样式表实测）—— */
+  /* 时长梯:0.4s 800ms */
+
+  /* —— 圆角（实测 top）—— */
+  --radius-1:24px;
+  --radius-2:16px;
+  --radius-3:96px;
+  --radius-4:8px;
+  --radius-5:inherit;
+  --radius-6:50px;
+
+  /* 探测到的库:Framer/Motion */
+  /* 媒体清单:video 1 · canvas 0 · svg 19 · img 28 */
+}
+
+/* —— 站点原始 CSS 自定义变量(节选，复刻参考) —— */
+:root{
+  --token-8740f4aa-bb38-489d-9272-2825d8190d51:#091717;
+  --token-9a0f5a59-ec20-487a-8943-4f3bd5f221a2:#fbfaf4;
+  --token-8485c9fc-3c94-4c5b-8a47-1228e4929c0d:#e4e3d4;
+  --token-ef4bee2a-d325-4125-afb5-b49dc4c1f575:#60584d1a;
+  --token-71c8a3d1-1f1d-488b-af60-be22b1e203a8:#f6f5ee;
+  --framer-will-change-override:transform;
+  --framer-will-change-filter-override:filter;
+  --text-decoration-skip-ink:var(--framer-text-decoration-skip-ink);
+  --text-underline-offset:var(--framer-text-decoration-offset);
+  --font-family:var(--framer-font-family);
+  --font-style:var(--framer-font-style);
+  --font-weight:var(--framer-font-weight);
+  --text-color:var(--framer-text-color);
+  --letter-spacing:var(--framer-letter-spacing);
+  --font-size:var(--framer-font-size);
+  --text-transform:var(--framer-text-transform);
+  --line-height:var(--framer-line-height);
+  --overflow-clip-fallback:hidden;
+  --one-if-corner-shape-supported:1;
+  --framer-aspect-ratio-supported:auto;
+  --framer-link-text-color:#09f;
+  --framer-link-text-decoration:underline;
+  --border-bottom-width:1px;
+  --border-color:#60584d0a;
+  --border-left-width:1px;
+  --border-right-width:1px;
+  --border-style:solid;
+  --border-top-width:1px;
+  --framer-font-family:Inter,Inter Placeholder,sans-serif;
+  --framer-font-style:normal;
+  --framer-font-weight:500;
+  --framer-text-color:#000;
+  --framer-font-size:16px;
+  --framer-letter-spacing:0;
+  --framer-text-transform:none;
+  --framer-text-decoration:none;
+  --framer-text-decoration-style:none;
+  --framer-text-decoration-color:none;
+  --framer-text-decoration-thickness:none;
+  --framer-text-decoration-skip-ink:none;
+}

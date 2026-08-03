@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="166" height="166" viewBox="0 0 166 166" fill="none">
+  <g clip-path="url(#clip0_2643_124803)">
+    <path d="M23.7319 0.172852H142.053C155.064 0.173025 165.611 10.7201 165.611 23.7305V142.052C165.611 155.062 155.063 165.609 142.053 165.609H23.7319C10.7215 165.609 0.17449 155.062 0.174316 142.052V23.7305C0.174316 10.72 10.7214 0.172852 23.7319 0.172852Z" fill="black"/>
+    <path d="M23.7319 0.172852H142.053C155.064 0.173025 165.611 10.7201 165.611 23.7305V142.052C165.611 155.062 155.063 165.609 142.053 165.609H23.7319C10.7215 165.609 0.17449 155.062 0.174316 142.052V23.7305C0.174316 10.72 10.7214 0.172852 23.7319 0.172852Z" fill="url(#paint0_radial_2643_124803)"/>
+    <path d="M23.7319 0.172852H142.053C155.064 0.173025 165.611 10.7201 165.611 23.7305V142.052C165.611 155.062 155.063 165.609 142.053 165.609H23.7319C10.7215 165.609 0.17449 155.062 0.174316 142.052V23.7305C0.174316 10.72 10.7214 0.172852 23.7319 0.172852Z" stroke="black" stroke-width="0.251953"/>
+    <path d="M28.8762 21.6641H21.6681V28.8721H28.8762V21.6641Z" fill="#FFB800" fill-opacity="0.9"/>
+    <path d="M36.0843 28.8721L28.8762 28.8721L28.8762 36.0802H36.0843V28.8721Z" fill="#FFB800" fill-opacity="0.9"/>
+    <path d="M43.2924 36.0802L36.0843 36.0802L36.0843 43.2882H43.2924V36.0802Z" fill="#FFB800" fill-opacity="0.9"/>
+    <path d="M50.5004 43.2882L43.2924 43.2882L43.2924 50.4963H50.5004V43.2882Z" fill="#FFB800" fill-opacity="0.9"/>
+    <path d="M57.7085 50.4963L50.5004 50.4963L50.5004 57.7043H57.7085V50.4963Z" fill="#FFB800" fill-opacity="0.9"/>
+    <path d="M50.5004 57.7043L43.2924 57.7043V64.854H50.5004L50.5004 57.7043Z" fill="#FFB800" fill-opacity="0.9"/>
+    <path d="M43.2924 64.9124H36.0843V72.1204H43.2924V64.9124Z" fill="#FFB800" fill-opacity="0.9"/>
+    <path d="M36.0843 72.1204L28.8762 72.1204V79.3285H36.0843L36.0843 72.1204Z" fill="#FFB800" fill-opacity="0.9"/>
+    <path d="M28.8762 79.3285H21.668V86.087H28.8761L28.8762 79.3285Z" fill="#FFB800" fill-opacity="0.9"/>
+    <path d="M93.749 79.3285H57.7085V86.5365H93.749V79.3285Z" fill="#FFB800" fill-opacity="0.9"/>
+    <path d="M165.785 7.20703H0V14.4151H165.785V7.20703Z" fill="black" fill-opacity="0.25"/>
+    <path d="M165.785 21.625H0V28.8331H165.785V21.625Z" fill="black" fill-opacity="0.25"/>
+    <path d="M165.785 36.0391H0V43.2471H165.785V36.0391Z" fill="black" fill-opacity="0.25"/>
+    <path d="M165.785 50.4531H0V57.6612H165.785V50.4531Z" fill="black" fill-opacity="0.25"/>
+    <path d="M165.785 64.8711H0V72.0791H165.785V64.8711Z" fill="black" fill-opacity="0.25"/>
+    <path d="M165.785 79.2852H0V86.4932H165.785V79.2852Z" fill="black" fill-opacity="0.25"/>
+    <path d="M165.785 93.7031H0V100.911H165.785V93.7031Z" fill="black" fill-opacity="0.25"/>
+    <path d="M165.785 108.117H0V115.325H165.785V108.117Z" fill="black" fill-opacity="0.25"/>
+    <path d="M165.785 122.535H0V129.743H165.785V122.535Z" fill="black" fill-opacity="0.25"/>
+    <path d="M165.785 136.949H0V144.157H165.785V136.949Z" fill="black" fill-opacity="0.25"/>
+    <path d="M165.785 151.367H0V158.575H165.785V151.367Z" fill="black" fill-opacity="0.25"/>
+  </g>
+  <defs>
+    <radialGradient id="paint0_radial_2643_124803" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(82.8924 82.891) rotate(90) scale(82.8441)">
+      <stop stop-color="#463710"/>
+      <stop offset="1" stop-color="#463710" stop-opacity="0.5"/>
+    </radialGradient>
+    <clipPath id="clip0_2643_124803">
+      <rect width="165.785" height="165.785" rx="25.4473" fill="white"/>
+    </clipPath>
+  </defs>
+</svg>

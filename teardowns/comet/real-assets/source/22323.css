@@ -1,0 +1,105 @@
+/* Copyright 2025 The Perplexity Browser Authors. All rights reserved. */
+
+.b-import-profile-select__button {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 10px;
+
+  width: 100%;
+}
+
+.b-import-profile-select__display-option {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.b-import-profile-select__icon {
+  display: flex;
+}
+
+.b-import-profile-select__display-text {
+  color: var(--perplexity-text-primary-v2);
+  font-size: 13px;
+  line-height: 18px;
+  font-weight: 400;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 220px;
+  text-align: left;
+
+  margin: 0;
+}
+
+.b-import-profile-select__chevron {
+  transition: transform 150ms ease;
+  color: var(--perplexity-text-secondary-v2);
+}
+
+.b-import-profile-select__chevron--up {
+  transform: rotate(180deg);
+}
+
+.b-import-profile-select__popup {
+  top: unset;
+  scale: 0;
+  opacity: 0;
+  transform-origin: left;
+  transition: opacity 100ms ease-in-out;
+
+  margin-top: 4px;
+
+  max-height: 220px;
+  overflow-y: scroll;
+
+  box-shadow: 0 0 2px 0 var(--modal-overlay), 0 12px 16px 0 var(--modal-overlay);
+
+  z-index: 2;
+}
+
+.b-import-profile-select__popup--opened {
+  scale: 1;
+  opacity: 1;
+}
+
+.b-import-profile-select__button--active {
+  background-color: var(--perplexity-background-offset-plus);
+}
+
+.b-import-profile-select__popup-body {
+  padding: 6px 0;
+}
+
+.b-import-profile-select__menu-option {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+
+  gap: 6px;
+
+  width: 100%;
+
+  height: 32px;
+  padding: 8px 11px;
+  border-radius: 8px;
+
+  color: var(--perplexity-text-primary-v2);
+
+  cursor: pointer;
+
+  transition: background-color 150ms ease-in-out;
+}
+
+.b-import-profile-select__menu-text {
+  font-size: 13px;
+  font-weight: 400;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+
+.b-import-profile-select__menu-option:hover {
+  background-color: var(--perplexity-background-offset-plus);
+}

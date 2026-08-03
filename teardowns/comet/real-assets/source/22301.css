@@ -1,0 +1,113 @@
+/* Copyright 2025 The Perplexity Browser Authors. All rights reserved. */
+
+.b-button {
+  width: fit-content;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  white-space: nowrap;
+
+  font-family: 'FK Grotesk Neue', system-ui, sans-serif;
+  font-size: 13px;
+  line-height: 18px;
+  font-weight: 500;
+
+  border-radius: 8px;
+
+  border: 1px solid transparent;
+
+  transition: background-color 150ms ease, color 150ms ease, border-color 150ms ease;
+  cursor: pointer;
+}
+
+.b-button--shadowed {
+  box-shadow: 0 12px 16px 0 rgb(0 0 0 / 10%);
+}
+
+.b-button--size-default {
+  padding: 0 12px;
+  height: 32px;
+}
+
+.b-button--size-large {
+  padding: 0 12px;
+  height: 40px;
+}
+
+.b-button--size-small {
+  padding: 0 8px;
+  height: 24px;
+}
+
+.b-button[disabled] {
+  pointer-events: none;
+  user-select: none;
+  background-color: var(--perplexity-background-offset);
+  color: var(--perplexity-text-300-disabled);
+  border-color: transparent;
+}
+
+.b-button--primary {
+  background-color: var(--perplexity-brand-highlight);
+  color: var(--perplexity-text-primary-inverse);
+}
+
+.b-button--primary:hover {
+  background-color: var(--perplexity-brand-highlight-hover);
+}
+
+.b-button--primary[disabled] {
+  background-color: var(--perplexity-background-offset-plus);
+}
+
+.b-button--secondary {
+  background-color: var(--perplexity-surface-offset-dynamic);
+  color: var(--perplexity-text-primary-v2);
+}
+
+.b-button--secondary:hover {
+  color: var(--perplexity-text-secondary-v2);
+}
+
+.b-button--tonal {
+  background-color: rgba(var(--perplexity-brand-highlight-rgb), 0.1);
+  border: 1px solid rgba(var(--perplexity-brand-highlight-rgb), 0.2);
+  color: var(--perplexity-brand-highlight);
+}
+
+.b-button--tonal:hover {
+  background-color: rgba(var(--perplexity-brand-highlight-rgb), 0.2);
+  border: 1px solid rgba(var(--perplexity-brand-highlight-rgb), 0.3);
+  color: var(--perplexity-brand-highlight-hover);
+}
+
+.b-button--none {
+  background-color: transparent;
+  color: var(--perplexity-text-secondary-v2);
+}
+
+.b-button--none:hover {
+  background-color: var(--perplexity-surface-offset-dynamic);
+  color: var(--perplexity-brand-highlight);
+}
+
+.b-button--none[disabled] {
+  background-color: transparent;
+}
+
+.b-button--outline {
+  background-color: transparent;
+  color: var(--perplexity-text-primary-v2);
+  border: 1px solid var(--perplexity-border-offset-dynamic);
+}
+
+.b-button--outline:hover {
+  background-color: var(--perplexity-surface-offset-dynamic);
+}
+
+.b-button--outline[disabled] {
+  background-color: transparent;
+  border: 1px solid var(--perplexity-border-50-disabled);
+}

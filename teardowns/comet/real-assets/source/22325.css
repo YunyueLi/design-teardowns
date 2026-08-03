@@ -1,0 +1,96 @@
+/* Copyright 2026 The Perplexity Browser Authors. All rights reserved. */
+
+.b-privacy-popup__line {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  color: var(--perplexity-text-secondary-v2);
+
+  font-size: 12px;
+}
+
+.b-privacy-popup__link {
+  all: unset;
+  font-weight: 500;
+  cursor: pointer;
+
+  transition: opacity 0.2s ease;
+  padding: 0 4px;
+
+  color: var(--perplexity-text-secondary-v2);
+}
+
+.b-privacy-popup__link:hover {
+  opacity: 0.6;
+}
+
+.b-privacy-popup__backdrop {
+  display: block;
+
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: var(--perplexity-transparency-40);
+}
+
+.b-privacy-popup__popup {
+  top: 50%;
+  transform: translate(-50%, -50%);
+
+  padding: 24px;
+
+  box-shadow: 0 12px 16px 0 rgb(0 0 0 / 10%);
+}
+
+.b-privacy-popup__title {
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 24px;
+  letter-spacing: -0.04em;
+
+  margin: 0 0 16px;
+
+  color: var(--perplexity-text-primary-v2);
+}
+
+.b-privacy-popup__body {
+  font-size: 13px;
+  line-height: 18px;
+  letter-spacing: -0.04em;
+
+  margin: 0;
+
+  color: var(--perplexity-text-secondary-v2);
+}
+
+.b-privacy-popup__actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 24px;
+}
+
+/* The design uses a dark "action" button (#27251e); the design palette has no
+   tokens in global.css yet, so the colors are hardcoded with a dark-scheme
+   flip consistent with how the text tokens flip. */
+.b-privacy-popup__button {
+  min-width: 80px;
+
+  background-color: #27251e;
+  color: #faf8f5;
+}
+
+.b-privacy-popup__button:hover {
+  background-color: #27251e;
+  opacity: 0.85;
+}
+
+@media (prefers-color-scheme: dark) {
+  .b-privacy-popup__button,
+  .b-privacy-popup__button:hover {
+    background-color: #f5f5f5;
+    color: #191a1a;
+  }
+}

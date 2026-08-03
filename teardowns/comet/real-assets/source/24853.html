@@ -1,0 +1,21 @@
+<!-- Copyright 2024 The Perplexity Browser Authors. All rights reserved. -->
+
+<!doctype html>
+<html dir="$i18n{textdirection}" lang="$i18n{language}">
+<head>
+  <base href="chrome://sidebar/">
+
+  <meta charset="utf-8">
+  <meta name="color-scheme" content="light dark">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+  <!-- We explicitly inline importmap to keep CSP strict -->
+  $i18nRaw{injected}
+
+  <link rel="stylesheet" href="/popup_add.css" />
+  <script type="module" src="/popup_add.js"></script>
+</head>
+<body>
+  <div id="root"></div>
+</body>
+</html>

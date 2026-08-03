@@ -1,0 +1,24 @@
+<!-- Copyright 2025 The Perplexity Browser Authors. All rights reserved. -->
+
+<!doctype html>
+<html dir="$i18n{textdirection}" lang="$i18n{language}">
+<head>
+  <base href="chrome://wormhole">
+
+  <meta charset="utf-8">
+  <meta name="color-scheme" content="light dark">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+  <link rel="stylesheet" href="chrome://resources/perplexity/css/global.css">
+  <!-- We explicitly inline importmap to keep CSP strict -->
+  $i18nRaw{injected}
+
+  <title>Wormhole</title>
+</head>
+
+<div id=game>
+  <!-- Main game coordination -->
+  <script src="js/game/main.js" type="module"></script>
+</div>
+</body>
+</html>

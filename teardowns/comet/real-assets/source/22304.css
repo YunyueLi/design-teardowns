@@ -1,0 +1,124 @@
+/* Copyright 2025 The Perplexity Browser Authors. All rights reserved. */
+
+.b-onboarding-layout__root {
+  width: var(--screen-width);
+  height: var(--screen-height);
+
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+  background-color: var(--perplexity-onboarding-background);
+
+  overflow: hidden;
+}
+
+.b-onboarding-layout__main {
+  position: relative;
+
+  padding: 24px;
+
+  width: 100%;
+  height: 100%;
+
+  border-radius: 12px;
+  background-color: var(--step-bg-color);
+}
+
+.b-onboarding-layout__header {
+  display: grid;
+  align-items: center;
+
+  grid-template-columns: repeat(3, 1fr);
+
+  min-height: 32px;
+
+  color: var(--perplexity-text-secondary-v2);
+}
+
+.b-onboarding-layout__audio {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.b-onboarding-layout__backdrop {
+  position: absolute;
+  top: 0;
+  left: 0;
+
+  width: 100%;
+  height: 100%;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  isolation: isolate;
+}
+
+.b-onboarding-layout__orbs {
+  margin-top: 48px;
+}
+
+.b-onboarding-layout__background {
+  width: 1244px;
+  height: 700px;
+
+  background-image: url('../../assets/stardust.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+
+  object-fit: contain;
+}
+
+.b-onboarding-layout__background,
+.b-onboarding-layout__orbs {
+  position: absolute;
+  user-select: none;
+}
+
+.b-onboarding-layout__background,
+.b-onboarding-layout__orbs,
+.b-onboarding-layout__gradient {
+  will-change: opacity;
+}
+
+.b-onboarding-layout__content {
+  position: relative;
+
+  display: flex;
+  flex-direction: column;
+
+  width: 100%;
+  height: 100%;
+
+  will-change: transform, opacity;
+}
+
+.b-onboarding-layout__step {
+  flex: 1;
+}
+
+.b-onboarding-layout__gradient {
+  position: absolute;
+  top: 0;
+  left: 0;
+
+  width: 100%;
+  height: 100%;
+
+  background: radial-gradient(50% 50% at 50% 50%, var(--perplexity-onboarding-gradient-color) 0%, var(--perplexity-onboarding-gradient-color) 56.83%, rgba(251, 250, 244, 0) 100%);
+}
+
+@media (prefers-color-scheme: light) {
+  .b-onboarding-layout__background {
+    background-image: url('../../assets/heaven.png');
+  }
+
+  .b-onboarding-layout__orbs {
+    display: none;
+  }
+}

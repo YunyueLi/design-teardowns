@@ -1,0 +1,207 @@
+/* Copyright 2024 The Perplexity Browser Authors. All rights reserved. */
+
+@import '/common.css';
+
+* {
+  box-sizing: border-box;
+}
+
+:root {
+  --dropdown-button-background: #d9d9d9;
+  --dropdown-button-background-disabled: rgb(0 0 0 / 0.08);
+  --dropdown-button-background-hover: #ccc;
+}
+
+.file-input {
+  display: none;
+}
+
+.picker {
+  border-radius: 8px;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  position: relative;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  background-color: var(--perplexity-background-base);
+  border: 0.5px solid var(--perplexity-border-offset);
+  grid-area: picker;
+}
+
+.picker:hover {
+  background-color: var(--perplexity-background-offset-plus);
+}
+
+.clear-button {
+  --size: 16px;
+  --offset: -5px;
+
+  position: absolute;
+  background: none;
+  border: none;
+  margin: 0;
+  padding: 0;
+  top: var(--offset);
+  right: var(--offset);
+  width: var(--size);
+  height: var(--size);
+}
+
+.icon {
+  display: flex;
+  width: 32px;
+  height: 32px;
+  padding: 8px;
+  cursor: pointer;
+  justify-content: center;
+
+}
+
+.icon:hover::before {
+  opacity: 1;
+}
+
+.icon img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.no-icon {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  flex-grow: 1;
+  height: 100%;
+  align-items: center;
+  color: var(--text-primary-color);
+}
+
+.fallback {
+  width: 16px;
+  height: 16px;
+}
+
+/* popup */
+#root {
+  width: 280px;
+}
+
+.wrapper {
+  padding: 20px 12px 12px;
+  width: 100%;
+  height: 100%;
+  background-color: var(--perplexity-background-raised);
+  border-radius: 12px;
+  border: 0.5px solid var(--perplexity-border-offset);
+}
+
+.header {
+  color: var(--text-primary-color);
+  font-weight: 500;
+  font-size: 13px;
+  line-height: 20px;
+  margin-bottom: 16px;
+}
+
+.form {
+  display: flex;
+  row-gap: 8px;
+  flex-direction: column;
+}
+
+.input-block {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  row-gap: 8px;
+}
+
+.input-label {
+  font-size: 11px;
+  line-height: 20px;
+  color: var(--text-color-primary);
+}
+
+.app-form-input {
+  padding: 8.5px 8px;
+  background-color: var(--perplexity-background-base);
+  border-radius: 8px;
+  width: 100%;
+  border: 0.5px solid var(--perplexity-border-offset);
+  color: var(--perplexity-text-secondary);
+}
+
+.app-form-input::placeholder {
+  color: var(--perplexity-text-idle);
+  font-size: 12px;
+}
+
+.app-form-input:focus-within {
+  border-color: var(--perplexity-border-highlight);
+  outline: none;
+}
+
+.form-input-error {
+  border-color: var(--perplexity-error);
+}
+
+.input-with-picker {
+  display: flex;
+  column-gap: 8px;
+  width: 100%;
+}
+
+.footer-button {
+  width: 100%;
+  font-weight: 500;
+  margin-top: 12px;
+  background-color: var(--perplexity-brand-highlight);
+  color: var(--perplexity-text-primary-reverse);
+  font-size: 14px;
+  line-height: 24px;
+  border-radius: 8px;
+  border: none;
+  padding: 6px 0;
+  text-align: center;
+  cursor: pointer;
+  transition: color .1s linear, background-color .1s linear;
+}
+
+.footer-button:hover {
+  background-color: var(--perplexity-brand-highlight-hover);
+  color: var(--perplexity-text-primary-reverse);
+}
+
+.footer-button:active {
+  color: var(--perplexity-text-primary);
+  background-color: var(--perplexity-brand-highlight);
+}
+
+.secondary-button {
+  background-color: var(--perplexity-background-offset-plus);
+  color: var(--perplexity-text-secondary);
+}
+
+.secondary-button:hover {
+  background-color: var(--perplexity-background-idle);
+  color: var(--perplexity-brand-highlight);
+}
+
+.secondary-button:active {
+  background-color: var(--perplexity-background-offset-plus);
+  color: var(--perplexity-text-idle);
+}
+
+.input-error-text {
+  color: var(--perplexity-error);
+}
+
+
+.buttons-row {
+  display: flex;
+  align-items: center;
+  column-gap: 8px;
+}

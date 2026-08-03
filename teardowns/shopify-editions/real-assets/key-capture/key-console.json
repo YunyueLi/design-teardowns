@@ -1,0 +1,134 @@
+[
+ {
+  "type": "warning",
+  "text": "THREE.Material: 'width' is not a property of THREE.LineBasicMaterial."
+ },
+ {
+  "type": "log",
+  "text": "[GridPattern] Created with 26 lines"
+ },
+ {
+  "type": "log",
+  "text": "[Boids] Added boid 1 / 12"
+ },
+ {
+  "type": "log",
+  "text": "[Boids] Initialized with 1 boid, max: 12"
+ },
+ {
+  "type": "warning",
+  "text": "[.WebGL-0x13c004dd200]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels"
+ },
+ {
+  "type": "warning",
+  "text": "[.WebGL-0x13c004dd200]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels"
+ },
+ {
+  "type": "warning",
+  "text": "[.WebGL-0x13c004dd200]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels"
+ },
+ {
+  "type": "warning",
+  "text": "[.WebGL-0x13c004dd200]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels (this message will no longer repeat)"
+ },
+ {
+  "type": "log",
+  "text": "[Keyhole] Loaded"
+ },
+ {
+  "type": "log",
+  "text": "[SectionModel] Loaded: finance scale: 1.25 center: 0.00 -0.00 0.00 size: 2.40 0.36 0.68"
+ },
+ {
+  "type": "log",
+  "text": "[AnimatedModel] Shoppy animation 0: Armature"
+ },
+ {
+  "type": "log",
+  "text": "[AnimatedModel] Shoppy animation 1: Hat"
+ },
+ {
+  "type": "log",
+  "text": "[AnimatedModel] Shoppy playing animation 0"
+ },
+ {
+  "type": "log",
+  "text": "[AnimatedModel] Shoppy loaded with 2 animations"
+ },
+ {
+  "type": "log",
+  "text": "[SectionModel] Loaded: hero scale: 1.25 center: 0.00 -0.00 0.00 size: 2.40 0.36 0.68"
+ },
+ {
+  "type": "log",
+  "text": "[SectionModel] Loaded: developer scale: 1.2 center: 0.03 -0.00 0.00 size: 0.28 1.13 1.13"
+ },
+ {
+  "type": "log",
+  "text": "[SectionModel] Loaded: shop-app scale: 14 center: -0.03 0.63 -0.00 size: 1.28 1.26 1.14"
+ },
+ {
+  "type": "log",
+  "text": "[SectionModel] Loaded: shipping scale: 2.6 center: -0.01 -0.01 0.01 size: 0.21 2.34 0.92"
+ },
+ {
+  "type": "log",
+  "text": "[SectionModel] Loaded: sidekick scale: 0.7 center: 0.00 0.00 0.00 size: 1.34 1.35 0.36"
+ },
+ {
+  "type": "log",
+  "text": "[SectionModel] Loaded: operations scale: 0.7 center: 0.00 0.00 0.00 size: 1.34 1.35 0.36"
+ },
+ {
+  "type": "log",
+  "text": "[SectionModel] Loaded: marketing scale: 1.2 center: 0.00 -0.00 0.01 size: 1.03 2.32 1.11"
+ },
+ {
+  "type": "log",
+  "text": "[SectionModel] Loaded: online scale: 1.2 center: 0.00 0.01 0.00 size: 2.29 0.65 0.70"
+ },
+ {
+  "type": "log",
+  "text": "[SectionModel] Loaded: b2b scale: 14 center: 0.00 -0.00 0.03 size: 1.17 2.39 0.18"
+ },
+ {
+  "type": "log",
+  "text": "[SectionModel] Loaded: retail scale: 5 center: 0.00 0.27 -0.00 size: 1.99 0.56 1.37"
+ },
+ {
+  "type": "log",
+  "text": "[SectionModel] Loaded: checkout scale: 10 center: 0.05 -0.11 0.07 size: 1.02 0.54 1.94"
+ },
+ {
+  "type": "log",
+  "text": "[SectionModel] All models preloaded"
+ },
+ {
+  "type": "log",
+  "text": "[SectionModel] Generated spawn offset for hero : 1.42 1.66"
+ },
+ {
+  "type": "log",
+  "text": "[SectionModel] Model: hero at offset: 1.42 1.66 (animated)"
+ },
+ {
+  "type": "log",
+  "text": "[Boids] Added boid 2 / 12"
+ },
+ {
+  "type": "log",
+  "text": "[Boids] Discovered section: hero - Total boids: 2"
+ },
+ {
+  "type": "warning",
+  "text": "THREE.KTX2Loader: ETC1S and UASTC textures should use multiple-of-four dimensions."
+ },
+ {
+  "type": "log",
+  "text": "[GraffitiOverlay] KTX2 texture loaded"
+ },
+ {
+  "type": "log",
+  "text": "[KeyPopupApp] Graffiti ready - will show when object dropped"
+ }
+]

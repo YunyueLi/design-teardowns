@@ -1,0 +1,74 @@
+/* Copyright 2025 The Perplexity Browser Authors. All rights reserved. */
+
+.b-checkbox__root {
+  display: inline-block;
+  position: relative;
+  width: var(--size);
+  height: var(--size);
+  cursor: pointer;
+}
+
+.b-checkbox__root--disabled {
+  pointer-events: none;
+  opacity: 0.4;
+}
+
+.b-checkbox__root--hidden {
+  display: none;
+}
+
+.b-checkbox__root--s {
+  --size: 16px;
+  --radius: 6px;
+  --tick-icon-size: 12px;
+}
+
+.b-checkbox__root--m {
+  --size: 24px;
+  --radius: 8px;
+  --tick-icon-size: 16px;
+}
+
+.b-checkbox__input {
+  display: none;
+}
+
+.b-checkbox__custom {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  width: 100%;
+  height: 100%;
+  border-radius: var(--radius);
+  background-color: var(--perplexity-background-base);
+  border: 1px solid var(--perplexity-border-offset);
+
+  box-sizing: border-box;
+  position: relative;
+
+  transition: border-color 150ms ease, background-color 150ms ease;
+}
+
+.b-checkbox__tick {
+  display: flex;
+
+  color: var(--perplexity-background-raised);
+
+  opacity: 0;
+  transition: opacity 150ms ease;
+}
+
+.b-checkbox__tick-icon {
+  width: var(--tick-icon-size);
+  height: var(--tick-icon-size);
+}
+
+.b-checkbox__input:checked + .b-checkbox__custom > .b-checkbox__tick {
+  opacity: 1;
+}
+
+.b-checkbox__input:checked + .b-checkbox__custom {
+  border-color: transparent;
+  background-color: var(--perplexity-brand-highlight);
+}

@@ -1,0 +1,56 @@
+/* Copyright 2024 The Perplexity Browser Authors. All rights reserved. */
+
+@import '//resources/perplexity/css/global.css';
+
+body,
+html {
+  touch-action: none;
+  overflow: hidden;
+}
+
+body {
+  height: 100vh;
+  margin: 0;
+  padding: 0;
+
+  font-size: 14px;
+  font-family: var(--font-family);
+}
+
+/* Reset button styles */
+button {
+  align-items: center;
+  background: none;
+  border: none;
+  box-sizing: border-box;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  padding: 0;
+  text-align: center;
+  transition: var(--minor-animation-time);
+  white-space: nowrap;
+}
+
+/* popups */
+.popup-container {
+  z-index: 1;
+  display: flex;
+  position: relative;
+  flex-direction: column;
+  box-sizing: border-box;
+  max-height: 560px;
+  box-shadow: var(--popup-shadow, 0 5px 30px rgb(0 0 0 / 0.15));
+  font-size: 12px;
+  line-height: 16px;
+  color: var(--popup-text-color);
+}
+
+.new-shadow {
+  margin: 5px;
+  box-shadow: var(--popup-box-shadow);
+}
+
+::-webkit-scrollbar {
+  display: none;
+}

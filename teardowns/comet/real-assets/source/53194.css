@@ -1,0 +1,64 @@
+/* Copyright 2024 The Perplexity Browser Authors. All rights reserved. */
+
+@font-face {
+  font-family: 'FK Grotesk';
+  font-style: italic;
+  font-weight: 400;
+  src: local('FK Grotesk'), local('FKGrotesk-Italic'), url(//resources/perplexity_fonts/fkgrotesk-italic.woff2) format('woff2');
+}
+
+@font-face {
+  font-family: 'FK Grotesk';
+  font-style: italic;
+  font-weight: 700;
+  src: local('FK Grotesk'), local('FKGrotesk-BoldItalic'), url(//resources/perplexity_fonts/fkgrotesk-bolditalic.woff2) format('woff2');
+}
+
+@font-face {
+  font-family: 'FK Grotesk';
+  font-style: normal;
+  font-weight: 300;
+  src: local('FK Grotesk'), local('FKGrotesk-Light'), url(//resources/perplexity_fonts/fkgrotesk-light.woff2) format('woff2');
+}
+
+@font-face {
+  font-family: 'FK Grotesk Neue';
+  font-style: normal;
+  font-weight: 300;
+  src: local('FK Grotesk Neue'), local('FKGroteskNeue-Light'), url(//resources/perplexity_fonts/fkgroteskneue-light.woff2) format('woff2');
+}
+
+@font-face {
+  font-family: 'FK Grotesk';
+  font-style: normal;
+  font-weight: 400;
+  src: local('FK Grotesk'), local('FKGrotesk-Regular'), url(//resources/perplexity_fonts/fkgrotesk-regular.woff2) format('woff2');
+}
+
+@font-face {
+  font-family: 'FK Grotesk Neue';
+  font-style: normal;
+  font-weight: 400;
+  src: local('FK Grotesk Neue'), local('FKGroteskNeue-Regular'), url(//resources/perplexity_fonts/fkgroteskneue-regular.woff2) format('woff2');
+}
+
+@font-face {
+  font-family: 'FK Grotesk';
+  font-style: normal;
+  font-weight: 500;
+  src: local('FK Grotesk'), local('FKGrotesk-Medium'), url(//resources/perplexity_fonts/fkgrotesk-medium.woff2) format('woff2');
+}
+
+@font-face {
+  font-family: 'FK Grotesk Neue';
+  font-style: normal;
+  font-weight: 500;
+  src: local('FK Grotesk Neue'), local('FKGroteskNeue-Medium'), url(//resources/perplexity_fonts/fkgroteskneue-medium.woff2) format('woff2');
+}
+
+@font-face {
+  font-family: 'FK Grotesk';
+  font-style: normal;
+  font-weight: 700;
+  src: local('FK Grotesk'), local('FKGrotesk-Bold'), url(//resources/perplexity_fonts/fkgrotesk-bold.woff2) format('woff2');
+}

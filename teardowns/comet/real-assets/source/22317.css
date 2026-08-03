@@ -1,0 +1,97 @@
+/* Copyright 2025 The Perplexity Browser Authors. All rights reserved. */
+
+.b-profile-name-input__root {
+  display: flex;
+  width: 100%;
+
+  justify-content: center;
+
+  --b-profile-name-input-radius: 42px;
+  --b-profile-name-input-padding: 5px;
+
+  --b-profile-name-input-border-color: var(--perplexity-border-offset-dynamic);
+}
+
+.b-profile-name-input__input-wrapper {
+  width: 318px;
+
+  display: flex;
+  align-items: center;
+
+  padding: 8px;
+
+  border-radius: var(--b-profile-name-input-radius);
+
+  background-color: var(--perplexity-surface-raised);
+
+  transition: border-color 200ms ease-in-out;
+
+  border: 1px solid var(--perplexity-border-offset-dynamic);
+
+  box-shadow: 0 5px 6.7px 0 #FFFFFF24 inset;
+}
+
+.b-profile-name-input__input-wrapper:has(.b-profile-name-input__input:focus) {
+  border-color: var(--perplexity-text-secondary-v2);
+}
+
+.b-profile-name-input__input-wrapper--has-value {
+  border-color: var(--perplexity-text-secondary-v2);
+}
+
+.b-profile-name-input__input {
+  text-align: center;
+
+  color: var(--perplexity-text-primary-v2);
+  caret-color: currentColor;
+
+  outline: none;
+  border: none;
+  background-color: transparent;
+
+  font-size: 16px;
+  line-height: 24px;
+
+  font-weight: 400;
+
+  padding-left: 8px;
+  padding-right: 48px;
+
+  width: 100%;
+  height: 40px;
+}
+
+.b-profile-name-input__avatar {
+  width: 40px;
+  height: 40px;
+
+  border-radius: 50%;
+
+  object-fit: cover;
+}
+
+.b-profile-name-input__avatar--hidden {
+  visibility: hidden;
+}
+
+.b-profile-name-input__input:focus::placeholder {
+  color: transparent;
+  -webkit-font-smoothing: antialiased;
+}
+
+.b-profile-name-input__input::placeholder {
+  color: var(--perplexity-text-secondary-v2);
+  opacity: 0.5;
+}
+
+.b-profile-name-input__inner-outline {
+  border: 1px solid var(--b-profile-name-input-border-color);
+  padding: var(--b-profile-name-input-padding);
+  border-radius: var(--b-profile-name-input-radius);
+}
+
+.b-profile-name-input__outer-outline {
+  border: 1px solid var(--b-profile-name-input-border-color);
+  padding: var(--b-profile-name-input-padding);
+  border-radius: var(--b-profile-name-input-radius);
+}

@@ -1,0 +1,22 @@
+/* Copyright 2025 The Perplexity Browser Authors. All rights reserved. */
+
+.b-profile-avatar-picker__root {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  --b-planet-size: 73px;
+  --transition-func: cubic-bezier(.19,1,.22,1);
+  --transition-duration: 400ms;
+
+  will-change: contents;
+
+  height: var(--b-planet-size);
+}
+
+.b-profile-avatar-picker__avatar {
+  width: var(--b-planet-size);
+  height: var(--b-planet-size);
+
+  object-fit: cover;
+}

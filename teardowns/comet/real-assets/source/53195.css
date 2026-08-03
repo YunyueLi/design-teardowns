@@ -1,0 +1,15 @@
+/* Copyright 2025 The Perplexity Browser Authors. All rights reserved. */
+
+@font-face {
+  font-family: 'Noto Serif';
+  font-style: italic;
+  font-weight: 300;
+  src: local('Noto Serif'), local('NotoSerif-LightItalic'), url(//resources/perplexity_fonts/notoserif-lightitalic.woff2) format('woff2');
+}
+
+@font-face {
+  font-family: 'Noto Serif';
+  font-style: normal;
+  font-weight: 300;
+  src: local('Noto Serif'), local('NotoSerif-Light'), url(//resources/perplexity_fonts/notoserif-light.woff2) format('woff2');
+}

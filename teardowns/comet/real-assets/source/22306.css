@@ -1,0 +1,28 @@
+/* Copyright 2025 The Perplexity Browser Authors. All rights reserved. */
+
+.b-step-heading__root {
+  margin: 0;
+  font-family: 'PP Editorial New', system-ui, sans-serif;
+  font-weight: 200;
+  font-size: 64px;
+  line-height: 90%;
+  text-align: center;
+
+  user-select: none;
+
+  letter-spacing: -0.5px;
+  color: var(--perplexity-text-primary-v2);
+}
+
+.b-step-heading__root--cyrillic {
+  font-family: 'Noto Serif', system-ui, sans-serif;
+  letter-spacing: -2px;
+}
+
+.b-step-heading__letter {
+  font-style: normal;
+}
+
+.b-step-heading__letter--italic {
+  font-style: italic;
+}

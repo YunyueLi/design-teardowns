@@ -1,0 +1,127 @@
+/* Copyright 2025 The Perplexity Browser Authors. All rights reserved. */
+
+.b-welcome-step__video-container {
+  width: 400px;
+  height: 400px;
+
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, calc(-40% + 28px));
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 50%;
+  overflow: hidden;
+
+  will-change: opacity, transform;
+
+  transition: opacity 1300ms ease-in-out, transform 1300ms ease-in-out;
+  opacity: 0;
+}
+
+.b-welcome-step__video-container--visible {
+  opacity: 1;
+  transform: translate(-50%, calc(-50% + 28px));
+}
+
+.b-welcome-step__video-intro {
+  position: absolute;
+  top: 0;
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+
+  background: var(--perplexity-onboarding-background);
+
+  transition: opacity 1500ms ease-in-out;
+
+  will-change: opacity;
+}
+
+.b-welcome-step__video-intro--hidden {
+  opacity: 0;
+}
+
+.b-welcome-step__video-intro--removed {
+  display: none;
+}
+
+.b-welcome-step__video {
+  width: 436px;
+  height: 436px;
+}
+
+.b-welcome-step__overlay {
+  position: absolute;
+  width: 400px;
+  height: 400px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.b-welcome-step__blur {
+  opacity: 0.8;
+  mix-blend-mode: darken;
+
+  backdrop-filter: blur(50px);
+}
+
+.b-welcome-step__glow {
+  --glow-color: 253, 252, 249;
+
+  border-radius: 50%;
+  pointer-events: none;
+  box-shadow: 0 0 0 rgba(var(--glow-color), 0.3), inset 0 0 30px rgba(var(--glow-color), 0.5);
+}
+
+.b-welcome-step__button-overlay {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.b-welcome-step__button-container {
+  transition: transform 300ms ease-out;
+  transform: scale(0);
+
+  will-change: transform;
+}
+
+.b-welcome-step__button-container--visible {
+  transform: scale(1);
+}
+
+.b-welcome-step__footer {
+  min-height: 40px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+
+  opacity: 0;
+  transition: opacity 1000ms ease-out;
+}
+
+.b-welcome-step__legal-links {
+  height: auto;
+}
+
+.b-welcome-step__footer--visible {
+  opacity: 1;
+}
+
+.b-welcome-step__title {
+  opacity: 0;
+  transform: translateY(70%);
+  transition: opacity 400ms ease-out, transform 400ms ease-out;
+}
+
+.b-welcome-step__title--visible {
+  opacity: 1;
+  transform: translateY(0);
+}

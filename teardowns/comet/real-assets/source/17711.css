@@ -1,0 +1,13 @@
+/* Copyright 2025 The Perplexity Browser Authors. All rights reserved. */
+
+@import '//resources/perplexity/css/global.css';
+
+* {
+  box-sizing: border-box;
+  font-family: 'FK Grotesk Neue', 'FK Grotesk', system-ui, sans-serif;
+}
+
+body {
+  overscroll-behavior: none;
+  -webkit-font-smoothing: antialiased;
+}

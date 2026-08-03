@@ -1,0 +1,66 @@
+/* Copyright 2025 The Perplexity Browser Authors. All rights reserved. */
+
+.b-color-picker-button__root {
+  position: relative;
+}
+
+.b-color-picker-button__picker {
+  position: absolute;
+
+  visibility: hidden;
+
+  width: 236px;
+
+  top: 0;
+  left: 50%;
+  transform: translate(-50%, calc(-100% - 5px));
+
+
+  background: var(--perplexity-surface-raised);
+  border: 1px solid var(--perplexity-border-offset-dynamic);
+  border-radius: 12px;
+
+  cr-theme-color-picker {
+    --cr-theme-color-padding: 2.4px;
+    --cr-theme-color-picker-column-width: 1fr;
+    --cr-theme-color-picker-grid-gap: 3.6px;
+    --cr-theme-color-picker-grid-padding: 12px;
+  }
+ }
+
+.b-color-picker-button__picker--visible {
+  visibility: visible;
+}
+
+.b-color-picker-button__button {
+  color: var(--perplexity-text-secondary-v2);
+  width: 40px;
+  padding: 0;
+
+  background: var(--perplexity-surface-raised);
+  border: 1px solid var(--perplexity-border-offset-dynamic);
+}
+
+.b-color-picker-button__icon {
+  width: 26px;
+  height: 26px;
+
+  border-radius: 50%;
+
+  padding-bottom: 2px;
+  padding-left: 1px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.b-color-picker-button__icon--themed {
+  color: var(--perplexity-text-primary-inverse);
+  background: var(--perplexity-brand-highlight);
+}
+
+.b-color-picker-button__button--pressed {
+  background: var(--perplexity-surface-offset-dynamic);
+  color: var(--perplexity-text-primary-v2);
+}

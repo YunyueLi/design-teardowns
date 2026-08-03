@@ -1,0 +1,8 @@
+/* Copyright 2025 The Perplexity Browser Authors. All rights reserved. */
+
+.b-sound-toggle__root {
+  color: var(--perplexity-text-primary-v2);
+
+  width: 32px;
+  padding: 0;
+}

@@ -1,0 +1,83 @@
+{
+ "tag": "BODY",
+ "id": null,
+ "cls": "place-items-end",
+ "data": {
+  "duxInitialized": "1"
+ },
+ "kids": [
+  {
+   "tag": "DIV",
+   "id": "loader",
+   "cls": "loader hidden",
+   "data": {},
+   "kids": [
+    {
+     "tag": "DIV",
+     "id": null,
+     "cls": "spinner",
+     "data": {},
+     "kids": []
+    }
+   ]
+  },
+  {
+   "tag": "SCRIPT",
+   "id": null,
+   "cls": null,
+   "data": {},
+   "kids": []
+  },
+  {
+   "tag": "SCRIPT",
+   "id": null,
+   "cls": null,
+   "data": {},
+   "kids": []
+  },
+  {
+   "tag": "SCRIPT",
+   "id": null,
+   "cls": null,
+   "data": {},
+   "kids": []
+  },
+  {
+   "tag": "SCRIPT",
+   "id": null,
+   "cls": null,
+   "data": {},
+   "kids": []
+  },
+  {
+   "tag": "IFRAME",
+   "id": null,
+   "cls": null,
+   "data": {},
+   "kids": []
+  },
+  {
+   "tag": "SCRIPT",
+   "id": null,
+   "cls": null,
+   "data": {},
+   "kids": []
+  },
+  {
+   "tag": "CANVAS",
+   "id": null,
+   "cls": null,
+   "data": {
+    "engine": "three.js r159"
+   },
+   "kids": []
+  },
+  {
+   "tag": "VIDEO",
+   "id": null,
+   "cls": null,
+   "data": {},
+   "kids": []
+  }
+ ]
+}

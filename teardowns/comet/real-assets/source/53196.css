@@ -1,0 +1,44 @@
+/* Copyright 2025 The Perplexity Browser Authors. All rights reserved. */
+
+@font-face {
+  font-family: "PP Editorial New";
+  font-style: normal;
+  font-weight: 200;
+  src: local("PP Editorial New"), local("PPEditorialNew-Ultralight"),
+    url(//resources/perplexity_fonts/ppeditorialnew-ultralight.woff2)
+      format("woff2");
+}
+
+@font-face {
+  font-family: "PP Editorial New";
+  font-style: italic;
+  font-weight: 200;
+  src: local("PP Editorial New"), local("PPEditorialNew-UltralightItalic"),
+    url(//resources/perplexity_fonts/ppeditorialnew-ultralightitalic.woff2)
+      format("woff2");
+}
+
+@font-face {
+  font-family: "PP Editorial New";
+  font-style: normal;
+  font-weight: 400;
+  src: local("PP Editorial New"), local("PPEditorialNew-Light"),
+    url(//resources/perplexity_fonts/ppeditorialnew-light.woff2) format("woff2");
+}
+
+@font-face {
+  font-family: "PP Editorial New";
+  font-style: italic;
+  font-weight: 400;
+  src: local("PP Editorial New"), local("PPEditorialNew-LightItalic"),
+    url(//resources/perplexity_fonts/ppeditoralnew-lightitalic.woff2) format("woff2");
+}
+
+@font-face {
+  font-family: "PP Editorial New";
+  font-style: normal;
+  font-weight: 500;
+  src: local("PP Editorial New"), local("PPEditorialNew-Regular"),
+    url(//resources/perplexity_fonts/ppeditorialnew-regular.woff2)
+      format("woff2");
+}

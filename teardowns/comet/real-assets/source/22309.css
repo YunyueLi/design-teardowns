@@ -1,0 +1,31 @@
+/* Copyright 2025 The Perplexity Browser Authors. All rights reserved. */
+
+.b-default-browser-step__step {
+  --b-step-subtitle-width: 408px;
+}
+
+.b-default-browser-step__content {
+  display: flex;
+
+  justify-content: center;
+  margin-top: 64px;
+}
+
+.b-default-browser-step__footer {
+  --continue-button-width: 133px;
+
+  width: 100%;
+
+  display: flex;
+}
+
+.b-default-browser-step__continue-actions {
+  display: flex;
+  margin-left: auto;
+
+  gap: 8px;
+}
+
+.b-default-browser-step__button {
+  width: var(--continue-button-width);
+}

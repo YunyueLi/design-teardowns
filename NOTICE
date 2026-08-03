@@ -23,19 +23,20 @@ used for the purpose of commentary and illustration.
    any third-party mark is claimed or implied, and their appearance here does
    not indicate any endorsement, sponsorship, or partnership.
 
-3. No proprietary assets are redistributed.
-   This public repository contains only publishable material: factual design
-   tokens (such as color values, font-family names, easing curves, durations,
-   and corner radii), which are not themselves copyrightable; original
-   transformative analysis and commentary; CSS reimplemented by the Project's
-   contributors; and low-resolution screenshots used for commentary. It does
-   not redistribute any proprietary fonts, video, audio, or source code
-   belonging to the analyzed products. Where such assets were referenced during
-   the underlying analysis, they have been removed from what is published here.
-   Each teardown instead describes those assets by manifest and links to their
-   original source, so that a reader who needs them can obtain them from the
-   rights holder. Any such proprietary assets remain in a separate private
-   repository and are not part of this public distribution.
+3. Research materials and third-party assets.
+   In addition to publishable material -- factual design tokens (such as color
+   values, font-family names, easing curves, durations, and corner radii),
+   original transformative analysis and commentary, CSS reimplemented by the
+   Project's contributors, and screenshots used for commentary -- this
+   repository archives, under each teardown's real-assets/ directory, copies of
+   third-party materials referenced during the underlying analysis (such as
+   webfonts, media files, production source bundles, and captured geometry).
+   These are retained solely for design research, verification, and comparison
+   -- so that every claim in the teardowns remains checkable against its
+   primary source. They are the property of their respective owners, are NOT
+   covered by this Project's licenses (see section 4), and are not offered for
+   reuse. If you need any such asset, obtain it from the rights holder at its
+   original source, which each teardown's provenance document identifies.
 
 4. Licensing.
    The Project's code (the HTML, CSS, and JavaScript scaffolding, the gallery
@@ -72,12 +73,12 @@ used for the purpose of commentary and illustration.
 所有，此处仅作指名性使用，即用于标识分析对象，并服务于评论、批评、教育与研究目的；
 不主张也不暗示对任何第三方标识的所有权，其出现不代表任何背书、赞助或合作关系。
 
-三、不再分发任何专有素材。本公开仓库只收录可公开的材料：不受著作权保护的客观设计
-标记（如颜色值、字体名称、缓动曲线、时长、圆角值）、原创的转化性分析与评论、由项目
-贡献者重新实现的 CSS，以及用于评论的低分辨率截图；不再分发任何属于被分析产品的
-专有字体、视频、音频或源代码。凡分析过程中曾引用此类素材者，均已从公开内容中移除，
-每篇拆解改以清单方式描述这些素材并链接至其原始出处，供有需要的读者自行向权利人
-获取。此类专有素材保留在一个独立的私有仓库中，不属于本次公开分发的一部分。
+三、研究素材与第三方资产。除可公开材料（客观设计标记、原创分析与评论、贡献者重新
+实现的 CSS、用于评论的截图）外，本仓库在各拆解的 real-assets/ 目录下存档了分析过程
+中引用的第三方素材副本（如网页字体、媒体文件、生产源码包、捕获的几何数据）。这些
+素材仅为设计研究、核验与比对而保留——使拆解中的每一个结论都能对回第一手来源。它们
+的权利归各自所有者，不在本项目的开源许可范围内（见第四条），亦不供复用。如需此类
+素材，请按各拆解《出处与方法》所载的原始出处向权利人获取。
 
 四、许可。本项目的代码（HTML、CSS、JavaScript 脚手架、画廊引擎、提取脚本及配套
 技能）依 MIT 许可证授权，见 LICENSE-CODE 文件；本项目的原创内容（拆解文档、此处

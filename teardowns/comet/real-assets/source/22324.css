@@ -1,0 +1,33 @@
+/* Copyright 2025 The Perplexity Browser Authors. All rights reserved. */
+
+.b-legal-links__terms {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  width: 100%;
+  height: 100%;
+
+  color: var(--perplexity-text-secondary-v2);
+
+  font-size: 12px;
+}
+
+.b-legal-links__terms > :last-child {
+  padding-right: 0;
+}
+
+.b-legal-links__window-link {
+  all: unset;
+  font-weight: 500;
+  cursor: pointer;
+
+  transition: opacity 0.2s ease;
+  padding: 0 4px;
+
+  color: var(--perplexity-text-secondary-v2);
+}
+
+.b-legal-links__window-link:hover {
+  opacity: 0.6;
+}

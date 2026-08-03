@@ -1,0 +1,3558 @@
+[
+ {
+  "t": 1785689225410,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689225410,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689225410,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689225850,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689225850,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689225850,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689225959,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689225959,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689225959,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689226417,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689226417,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689226417,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689226420,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689226420,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689226420,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689226421,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689226421,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689226421,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689226421,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689226421,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689226421,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689226423,
+  "type": "webrtc-ready"
+ },
+ {
+  "t": 1785689226430,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689226430,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689226430,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689226439,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689226439,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689226439,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689226448,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689226449,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689226449,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689226455,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689226455,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689226455,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689226518,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689226518,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689226518,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689226522,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689226522,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689226522,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689226635,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689226635,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689226635,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689226639,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689226639,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689226639,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689227015,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689227015,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689227015,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689227015,
+  "type": "popup-position"
+ },
+ {
+  "t": 1785689227015,
+  "type": "popup-center"
+ },
+ {
+  "t": 1785689228061,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689228061,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689228061,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689228066,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689228066,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689228066,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689228394,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689228394,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689228394,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689228646,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689228646,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689228646,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689228650,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689228650,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689228650,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689228651,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689228651,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689228651,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689228656,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689228656,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689228656,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689228663,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689228664,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689228664,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689228674,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689228674,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689228674,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689228680,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689228680,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689228680,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689229127,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689229127,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689229127,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689229130,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689229130,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689229130,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689229569,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689229569,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689229569,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689229572,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689229572,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689229572,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689229683,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689229683,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689229683,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689229689,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689229689,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689229689,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689229796,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689229796,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689229796,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689229796,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689229796,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689229796,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689229805,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689229805,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689229805,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689229909,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689229909,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689229909,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689229913,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689229913,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689229913,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689230037,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689230037,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689230037,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689230038,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689230038,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689230038,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689230152,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689230152,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689230152,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689230155,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689230155,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689230155,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689230280,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689230280,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689230280,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689230280,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689230280,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689230280,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689230393,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689230393,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689230393,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689230397,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689230397,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689230397,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689230518,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689230518,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689230518,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689230522,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689230522,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689230522,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689230633,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689230633,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689230633,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689230639,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689230639,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689230639,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689230759,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689230759,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689230759,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689230764,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689230764,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689230764,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689230874,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689230874,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689230874,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689230881,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689230881,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689230881,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689230999,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689230999,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689230999,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689231113,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689231113,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689231113,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689231208,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689231208,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689231208,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689231324,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689231324,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689231324,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689231438,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689231438,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689231438,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689231554,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689231554,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689231554,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689231668,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689231668,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689231668,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689231782,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689231782,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689231782,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689231905,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689231905,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689231905,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689232021,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689232021,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689232021,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689232147,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689232147,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689232147,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689232147,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689232147,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689232147,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689232280,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689232280,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689232280,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689232402,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689232402,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689232402,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689232518,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689232518,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689232518,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689232633,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689232633,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689232633,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689232747,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689232747,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689232747,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689232863,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689232863,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689232863,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689232979,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689232979,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689232979,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689233098,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689233098,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689233098,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689233098,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689233098,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689233098,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689233212,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689233212,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689233212,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689233326,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689233326,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689233326,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689233442,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689233442,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689233442,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689233556,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689233556,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689233556,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689233557,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689233557,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689233557,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689233703,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689233703,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689233703,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689233831,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689233831,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689233831,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689233832,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689233832,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689233832,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689233958,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689233958,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689233958,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689234090,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689234090,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689234090,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689234090,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689234090,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689234090,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689234208,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689234208,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689234208,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689234331,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689234331,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689234331,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689234332,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689234332,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689234332,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689234576,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689234576,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689234576,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689234604,
+  "type": "popup-ripple"
+ },
+ {
+  "t": 1785689234987,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689234987,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689234987,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689234988,
+  "type": "popup-center"
+ },
+ {
+  "t": 1785689234990,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689234990,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689234990,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689234990,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689234990,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689234990,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689234996,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689234996,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689234996,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689235004,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689235004,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689235004,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689235014,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689235014,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689235014,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689235022,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689235022,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689235022,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689235349,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689235349,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689235349,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689235355,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689235355,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689235355,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689235492,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689235492,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689235492,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689235497,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689235497,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689235497,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689235608,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689235608,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689235608,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689235612,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689235612,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689235612,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689235724,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689235724,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689235724,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689235730,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689235730,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689235730,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689235843,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689235843,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689235843,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689235847,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689235847,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689235847,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689235975,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689235975,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689235975,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689235979,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689235979,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689235979,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689236094,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689236094,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689236094,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689236097,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689236097,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689236097,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689236229,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689236229,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689236229,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689236229,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689236229,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689236229,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689236348,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689236348,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689236348,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689236355,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689236355,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689236355,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689236480,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689236481,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689236481,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689236481,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689236481,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689236481,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689236488,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689236488,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689236488,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689236595,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689236595,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689236595,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689236596,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689236596,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689236596,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689236638,
+  "type": "popup-ripple"
+ },
+ {
+  "t": 1785689236731,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689236731,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689236731,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689236739,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689236739,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689236739,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689236853,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689236853,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689236853,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689236853,
+  "type": "popup-center"
+ },
+ {
+  "t": 1785689236855,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689236855,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689236855,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689236983,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689236983,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689236983,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689236989,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689236989,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689236989,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689237084,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689237084,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689237084,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689237089,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689237089,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689237089,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689237214,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689237214,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689237214,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689237214,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689237214,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689237214,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689237329,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689237329,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689237329,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689237330,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689237330,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689237330,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689237465,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689237465,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689237465,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689237465,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689237465,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689237465,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689237472,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689237472,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689237472,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689237580,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689237580,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689237580,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689237580,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689237580,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689237580,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689237710,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689237710,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689237710,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689237713,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689237713,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689237713,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689237825,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689237825,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689237825,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689237830,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689237830,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689237830,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689237963,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689237963,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689237963,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689237964,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689237964,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689237964,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689237972,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689237972,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689237972,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689238079,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689238079,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689238079,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689238080,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689238080,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689238080,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689238207,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689238207,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689238207,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689238214,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689238214,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689238214,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689238323,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689238323,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689238323,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689238452,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689238452,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689238452,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689238567,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689238567,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689238567,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689238666,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689238666,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689238666,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689238797,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689238797,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689238797,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689238798,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689238798,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689238798,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689238900,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689238900,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689238900,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689239034,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689239034,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689239034,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689239138,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689239138,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689239138,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689239270,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689239270,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689239270,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689239273,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689239273,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689239273,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689239373,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689239373,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689239373,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689239622,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689239622,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689239622,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689239622,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689239622,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689239622,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689239635,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689239635,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689239635,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689239769,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689239769,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689239769,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689239872,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689239872,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689239872,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689239872,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689239872,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689239872,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689240003,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689240003,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689240003,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689240103,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689240103,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689240103,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689240237,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689240237,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689240237,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689240339,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689240339,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689240339,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689240471,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689240471,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689240471,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689240573,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689240573,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689240573,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689240704,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689240704,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689240704,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689240806,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689240806,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689240806,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689240939,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689240939,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689240939,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689240940,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689240940,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689240940,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689241040,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689241040,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689241040,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689241172,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689241172,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689241172,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689241173,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689241173,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689241173,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689241273,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689241274,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689241274,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689241406,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689241406,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689241406,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689241406,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689241406,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689241406,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689241505,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689241505,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689241505,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689241638,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689241638,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689241638,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689241741,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689241741,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689241741,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689241872,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689241872,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689241872,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689241872,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689241872,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689241872,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689241975,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689241975,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689241975,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689242107,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689242107,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689242107,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689242218,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689242218,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689242218,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689242351,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689242351,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689242351,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689242452,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689242452,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689242452,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689242700,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689242700,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689242700,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689242710,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689242710,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689242710,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689242842,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689242842,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689242842,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689242944,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689242944,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689242944,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689243074,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689243074,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689243074,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689243179,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689243179,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689243179,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689243307,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689243307,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689243307,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689243406,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689243406,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689243406,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689243537,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689243537,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689243537,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689243638,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689243638,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689243638,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689243639,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689243639,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689243639,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689243769,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689243769,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689243769,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689243871,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689243871,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689243871,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689244000,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689244000,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689244000,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689244099,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689244099,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689244099,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689244229,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689244229,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689244229,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689244333,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689244333,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689244333,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689244465,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689244465,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689244465,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689244568,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689244569,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689244569,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689244696,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689244696,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689244696,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689244697,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689244697,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689244697,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689244800,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689244800,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689244800,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689244931,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689244931,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689244931,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689244931,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689244931,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689244931,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689245035,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689245035,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689245035,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689245167,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689245167,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689245167,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689245269,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689245269,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689245269,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689245398,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689245398,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689245398,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689245911,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689245911,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689245911,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689246107,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689246107,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689246107,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689246110,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689246110,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689246110,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689246112,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689246112,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689246112,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689246114,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689246114,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689246114,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689246122,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689246122,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689246122,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689246255,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689246255,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689246255,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689246283,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689246283,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689246283,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689246635,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689246635,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689246635,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689246639,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689246639,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689246639,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689246643,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689246643,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689246643,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689246648,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689246648,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689246648,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689247110,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689247110,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689247110,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689247112,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689247112,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689247112,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689247114,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689247114,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689247114,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689247123,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689247123,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689247123,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689247571,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689247571,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689247571,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689247907,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689247907,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689247907,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689247909,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689247909,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689247909,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689247916,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689247916,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689247916,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689247923,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689247923,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689247923,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689248353,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689248353,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689248353,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689248556,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689248556,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689248556,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689248606,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689248606,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689248606,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689248670,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689248670,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689248670,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689248936,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689248936,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689248936,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689249152,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689249152,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689249152,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689249356,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689249356,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689249356,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689249552,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689249552,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689249552,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689249814,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689249814,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689249814,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689250019,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689250019,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689250019,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689250232,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689250232,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689250232,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689250432,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689250432,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689250432,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689250659,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689250659,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689250659,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689250861,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689250861,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689250861,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689251047,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689251047,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689251047,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689251224,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689251224,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689251224,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689251422,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689251422,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689251422,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689251611,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689251611,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689251611,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689252793,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689252793,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689252793,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689253291,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689253291,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689253291,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689253294,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689253294,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689253294,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689253297,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689253297,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689253297,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689253305,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689253305,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689253305,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689253437,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689253437,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689253437,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689253622,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689253622,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689253622,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689253658,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689253658,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689253658,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689253697,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689253698,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689253698,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689253819,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689253819,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689253819,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689253949,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689253950,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689253950,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689254085,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689254085,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689254085,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689254216,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689254216,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689254216,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689254345,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689254346,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689254346,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689254474,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689254474,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689254474,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689254604,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689254604,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689254604,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689254739,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689254739,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689254739,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689254871,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689254871,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689254871,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689255000,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689255000,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689255000,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689255130,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689255130,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689255130,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689255259,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689255259,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689255259,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689255389,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689255389,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689255390,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689255521,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689255521,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689255521,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689255631,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689255631,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689255631,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689255742,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689255742,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689255742,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689255851,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689255851,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689255851,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689255963,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689255963,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689255963,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689256072,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689256072,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689256072,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689256183,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689256183,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689256183,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689256292,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689256292,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689256292,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689256400,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689256400,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689256400,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689256507,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689256507,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689256507,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689256615,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689256615,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689256615,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689256723,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689256723,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689256723,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689256834,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689256834,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689256834,
+  "type": "active-section"
+ },
+ {
+  "t": 1785689256943,
+  "type": "canvas-rect"
+ },
+ {
+  "t": 1785689256943,
+  "type": "main-window"
+ },
+ {
+  "t": 1785689256943,
+  "type": "active-section"
+ }
+]

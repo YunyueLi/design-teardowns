@@ -10,7 +10,7 @@
 
 Design Teardowns is two things in one repo:
 
-1. **A gallery of 11 in-depth teardowns** of famous AI-native products (Comet, Linear, Notion, ChatGPT, Gemini, and more). Each is a self-contained interactive page plus design docs, built in that product's own visual language.
+1. **A gallery of 17 in-depth teardowns** — famous AI-native products (Comet, Linear, Notion, ChatGPT, Gemini), flagship marketing sites (Shopify Editions, Arknights: Endfield), and indie work. Each is a self-contained interactive page plus design docs, built in that product's own visual language.
 2. **A reusable Claude Agent Skill** — [`design-teardown`](skills/design-teardown) — that produces one for any URL: it pulls real computed styles and design tokens with Playwright, then writes the teardown page, the replication docs, and an adversarial self-review.
 
 The principle throughout is **facts, not vibes**: every color, font, easing curve, and duration is measured from the live site, never eyeballed.
@@ -30,10 +30,16 @@ The principle throughout is **facts, not vibes**: every color, font, easing curv
 | Gemini | [`teardowns/gemini/`](teardowns/gemini/teardown.html) | Soft glow gradients, rounded chat entry |
 | Lovart | [`teardowns/lovart/`](teardowns/lovart/teardown.html) | Elegant serif, agent thinking-process visualized |
 | Latrix | [`teardowns/latrix/`](teardowns/latrix/teardown.html) | Off-white gallery wall, giant Playfair serif, twisting wordmark helix |
+| **Shopify Editions W26** | [`teardowns/shopify-editions/`](teardowns/shopify-editions/teardown.html) | Renaissance manuscript: da Vinci construction lines, Theatre.js-driven WebGL, a two-window WebRTC key easter egg |
+| **Arknights: Endfield** | [`teardowns/endfield/`](teardowns/endfield/teardown.html) | Industrial HUD, 218k-point E.P.S point-cloud ritual, luminance-keyed FX pipeline |
+| Lagom (imlagom) | [`teardowns/imlagom/`](teardowns/imlagom/teardown.html) | Paper viewfinder: travel photo annuals, quiet personal-site typography |
+| EasyCode | [`teardowns/easycode/`](teardowns/easycode/teardown.html) | White paper and red pen -- a graded-homework motif across sixteen screens |
+| JourneyPilot | [`teardowns/journeypilot/`](teardowns/journeypilot/teardown.html) | Retro-aviation cockpit: crew instrument-panel dashboards |
+| 海龟汤事务所 | [`teardowns/turtle-soup/`](teardowns/turtle-soup/teardown.html) | Rainy-night detective bureau, stamp-press physics on case files |
 
 Each folder holds: `teardown.html` (interactive), `设计解构.md` / `复刻指南.md` / `出处与方法.md` (deconstruction, replication guide, provenance), `事实核查.md` / `设计评审.md` (fact-check and design review), `design-tokens.css`, `tokens.json`, and as-seen screenshots. Docs are in Chinese; tokens and code are language-neutral.
 
-> **On assets.** To respect copyright, the original sites' fonts, video, and audio are **not** redistributed here (see [NOTICE](NOTICE)). The pages fall back gracefully where site media was removed, and the real look is preserved in the kept as-seen screenshots. Design tokens are factual measurements; the analysis and reimplemented CSS are original work.
+> **On assets.** This is the single archive repo: each teardown's `real-assets/` keeps copies of the third-party materials referenced during analysis (webfonts, media, production source bundles, captured geometry) strictly for design research, verification, and comparison (see [NOTICE](NOTICE)). Those materials belong to their owners and are excluded from this repo's licenses. Design tokens are factual measurements; the analysis and reimplemented CSS are original work.
 
 ## Use the skill
 

@@ -1,0 +1,62 @@
+/* Copyright 2025 The Perplexity Browser Authors. All rights reserved. */
+
+.b-onboarding-option__root {
+  display: flex;
+
+  align-items: center;
+
+  width: 100%;
+
+  gap: 16px;
+}
+
+.b-onboarding-option__text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+
+  max-width: 344px;
+}
+
+.b-onboarding-option__title,
+.b-onboarding-option__description {
+  margin: 0;
+  user-select: none;
+}
+
+.b-onboarding-option__title {
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 20px;
+
+  color: var(--perplexity-text-primary-v2);
+}
+
+.b-onboarding-option__action-wrapper {
+  margin-left: auto;
+}
+
+.b-onboarding-option__description {
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 16px;
+
+  color: var(--perplexity-text-secondary-v2);
+}
+
+.b-onboarding-option__icon-wrapper {
+  width: 48px;
+  height: 48px;
+
+  border-radius: 12px;
+  border: 1px solid var(--perplexity-border-offset);
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  flex-shrink: 0;
+
+  background-color: var(--perplexity-background-base);
+  color: var(--perplexity-brand-highlight);
+}

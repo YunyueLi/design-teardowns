@@ -1,0 +1,18 @@
+/* Copyright 2025 The Perplexity Browser Authors. All rights reserved. */
+
+.b-carousel__root {
+  display: flex;
+
+  gap: var(--gap);
+
+  width: 100%;
+  height: 100%;
+}
+
+.b-carousel__slide {
+  flex: 0 0 100%;
+  transition: transform var(--transition-duration) cubic-bezier(.19,1,.22,1);
+  transform: translateX(calc(calc(100% + var(--gap)) * -1 * var(--current-index)));
+  will-change: transform;
+  max-width: 100%;
+}

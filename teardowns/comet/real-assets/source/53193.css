@@ -1,0 +1,15 @@
+/* Copyright 2025 The Perplexity Browser Authors. All rights reserved. */
+
+@font-face {
+  font-family: 'Berkeley Mono';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Berkeley Mono'), local('BerkeleyMono-Regular'), url(//resources/perplexity_fonts/berkeleymono-regular.woff2) format('woff2');
+}
+
+@font-face {
+  font-family: 'Berkeley Mono';
+  font-style: normal;
+  font-weight: 700;
+  src: local('Berkeley Mono'), local('BerkeleyMono-Bold'), url(//resources/perplexity_fonts/berkeleymono-bold.woff2) format('woff2');
+}

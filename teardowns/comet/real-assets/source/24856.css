@@ -1,0 +1,113 @@
+/* Copyright 2024 The Perplexity Browser Authors. All rights reserved. */
+
+@import '/common.css';
+
+:root {
+  --sidebar-size: 44px;
+  --sidebar-icon-size: 18px;
+}
+
+/* component: sidebar */
+.b-sidebar {
+  overflow: hidden;
+
+  display: inline-block;
+  min-height: 100vh;
+  position: relative;
+
+  flex: none;
+}
+
+.b-sidebar_container {
+  will-change: width;
+  height: 100vh;
+  display: flex;
+  flex: 1 0 auto;
+  flex-direction: column;
+  transition: width var(--long-animation-time);
+}
+
+.b-sidebar_apps-list {
+  overflow-x: hidden;
+  overflow-y: auto;
+  width: inherit;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  padding-left: 5px; /* not sure if this is long term needed, but fixes alignment now  */
+  padding-right: 4px;
+}
+
+/* component: app */
+.b-app {
+  --app-icon-size: var(--sidebar-icon-size, 26px);
+
+  position: relative;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 2px;
+
+  box-sizing: border-box;
+  border: 0.5px solid transparent;
+  border-radius: 8px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.b-app,
+.add-button,
+.b-app .icon {
+  transition: all var(--minor-animation-time) var(--anim-ease);
+}
+
+.b-app:hover,
+.add-button:hover {
+  background-color: var(--perplexity-background-offset-plus);
+}
+
+.b-app:not(.is-active):not(:active):hover .icon {
+  transform: scale(1.08);
+}
+
+.b-app:active {
+  border-color: var(--perplexity-border-offset);
+  background-color: var(--perplexity-background-base);
+}
+
+.b-app.is-popup-active {
+  background-color: var(--perplexity-background-offset-plus);
+}
+
+.b-app.is-active {
+  border-color: var(--perplexity-border-offset);
+  background-color: var(--perplexity-background-base);
+}
+
+.b-app .icon {
+  width: var(--app-icon-size);
+  height: var(--app-icon-size);
+  pointer-events: none;
+}
+
+.sortable-fallback {
+  display: none;
+}
+
+/* component: add */
+.add-button {
+  border-radius: 8px;
+  width: 32px;
+  height: 32px;
+  user-select: none;
+  margin: 4px auto;
+  padding: 6px;
+  color: var(--perplexity-text-secondary);
+}
+
+.add-button:active {
+  background-color: var(--perplexity-background-base);
+  transform: scale(0.95);
+}

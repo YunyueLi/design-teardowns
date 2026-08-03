@@ -1,0 +1,529 @@
+/* Copyright 2024 The Perplexity Browser Authors. All rights reserved. */
+
+@import url(//resources/css/perplexity_fkgrotesk.css);
+@import url(//resources/css/perplexity_pp_editorial_new.css);
+@import url(//resources/css/perplexity_berkeley_mono.css);
+@import url(//resources/css/perplexity_notoserif.css);
+
+:root {
+  font-family: 'FK Grotesk', sans-serif, system-ui;
+  font-display: swap;
+  font-feature-settings: 'liga' 1, 'calt' 1; /* fix for Chrome */
+
+  /* Perplexity colors */
+  /* DESIGN SYSTEM COLORS
+   * @TODO[BRO-2786]: Migrate all webuis to use these colors. */
+  --perplexity-text-primary-v2: #13343b;
+  --perplexity-text-secondary-v2: #626C71;
+  --perplexity-text-secondary-v2-rgb: 98, 108, 113;
+  --perplexity-text-primary-inverse: #FFF;
+  --perplexity-surface-base: #FDFCF9;
+  --perplexity-surface-offset-dynamic: #60584D0F;
+  --perplexity-surface-raised: #FFFEFB;
+  --perplexity-surface-raised-rgb: 255, 254, 251;
+  --perplexity-surface-raised-plus-1: #FFFEFB;
+  --perplexity-surface-offset: #F4F2EF;
+  --perplexity-surface-offset-plus-1: #EBE9E5;
+  --perplexity-border-offset-dynamic: #60584D33;
+  --perplexity-divider-offset-dynamic: #60584D1A;
+  --perplexity-background-teal-super: #21808D;
+  --perplexity-background-teal-super-rgb: 33, 128, 141;
+  --perplexity-background-teal-super-hover: #18666F;
+  --perplexity-error-v2: #944454;
+  /* DESIGN SYSTEM COLORS */
+
+  --perplexity-background-base-rgb: 252, 252, 249;
+  --perplexity-background-base: #fcfcf9;
+  --perplexity-background-highlight-card-rgb: 213, 242, 246;
+  --perplexity-background-highlight-card: #d5f2f6;
+  --perplexity-background-idle-rgb: 224, 224, 220;
+  --perplexity-background-idle: #e0e0dc;
+  --perplexity-background-offset-plus-rgb: 232, 232, 227;
+  --perplexity-background-offset-plus: #e8e8e3;
+  --perplexity-background-offset-rgb: 243, 243, 238;
+  --perplexity-background-offset: #f3f3ee;
+  --perplexity-border-base-rgb: 178, 178, 171;
+  --perplexity-border-base: #b2b2ab;
+  --perplexity-border-highlight-rgb: 188, 226, 231;
+  --perplexity-border-highlight: #bce2e7;
+  --perplexity-border-offset-plus: rgba(178, 178, 171, 0.2);
+  --perplexity-border-offset-rgb: 217, 217, 208;
+  --perplexity-border-offset: #d9d9d0;
+  --perplexity-border-50-disabled: #ebebe5;
+  --perplexity-border-super-50-hover: #d6e3e1;
+  --perplexity-border-super-100: #ccdddb;
+  --perplexity-background-dynamic-300-rgb: 64, 64, 37;
+  --perplexity-background-raised: #fefefb;
+  --perplexity-background-super-50-hover: #e5eBe8;
+  --perplexity-background-super-100: #dfe7e4;
+  --perplexity-brand-highlight-rgb: 32, 128, 141;
+  --perplexity-brand-highlight: #20808d;
+  --perplexity-brand-highlight-hover: #2491A0;
+  --perplexity-error-rgb: 148, 68, 84;
+  --perplexity-error: #944454;
+  --perplexity-highlight-orange-rgb: 206, 102, 0;
+  --perplexity-highlight-orange: #ce6600;
+  --perplexity-highlight-yellow-rgb: 208, 150, 0;
+  --perplexity-highlight-yellow: #d09600;
+  --perplexity-notification-rgb: 255, 84, 89;
+  --perplexity-notification: #ff5459;
+  --perplexity-success-rgb: 32, 128, 141;
+  --perplexity-success: #20808d;
+  --perplexity-text-primary-reverse-rgb: 252, 252, 249;
+  --perplexity-text-primary-reverse: #fcfcf9;
+  --perplexity-text-primary-rgb: 19, 52, 59;
+  --perplexity-text-primary: #13343b;
+  --perplexity-text-secondary-reverse-rgb: 143, 143, 143;
+  --perplexity-text-secondary-reverse: #8f8f8f;
+  --perplexity-text-secondary-rgb: 100, 100, 95;
+  --perplexity-text-secondary: #64645f;
+  --perplexity-text-idle: #8c8c89;
+  --perplexity-text-100: #13343b;
+  --perplexity-text-300-disabled: #b0b0ac;
+  --perplexity-transparency-20: rgba(0, 0, 0, 0.2);
+  --perplexity-transparency-40: rgba(0, 0, 0, 0.4);
+  --perplexity-transparency-60: rgba(0, 0, 0, 0.6);
+  --perplexity-transparency-80: rgba(0, 0, 0, 0.8);
+  --perplexity-warning-rgb: 168, 75, 47;
+  --perplexity-warning: #a84b2f;
+
+  /* Colors */
+  --text-primary-color: #000;
+  --text-secondary-color: rgba(0, 0, 0, 0.5);
+  --primary-background-color: #fff;
+  --secondary-background-color: rgba(255, 255, 255, 0.16);
+  --border-color: #f0f0f0;
+  --field-background-color: rgba(207, 211, 217, 0.16);
+  --light-color: rgba(0, 0, 0, 0.08);
+  --accent-color: #1977f3;
+  --accent-light-color: rgba(25, 119, 243, 0.08);
+  --error-color: #f56b3d;
+  --error-light-color: rgba(245, 107, 61, 0.08);
+  --success-color: #59b64b;
+  --emoji-substrate-color: #f8e2b2;
+  --modal-overlay-color: rgba(255, 255, 255, 0.9);
+  --control-background-color: rgba(0, 0, 0, 0.08);
+  --notification-background-color: #ed5a4b;
+  --active-service-border: #fd5b57;
+  --background-alert-big-sur: #ffe289;
+  --border-alert-big-sur: #ffb155;
+
+  /*
+    animations can't be longer that interaction KPI 100ms.
+    check docs/100ms.superhuman.com.png
+  */
+  --anim-ease: ease-in-out;
+  --minor-animation-time: 120ms;
+  --long-animation-time: var(--minor-animation-time);
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    /* Colors */
+    --text-primary-color: #000;
+    --text-secondary-color: rgba(0, 0, 0, 0.5);
+    --svg-fill: #000;
+    --placeholder-color: rgba(0, 0, 0, 0.24);
+    --primary-background-color: #fff;
+    --secondary-background-color: rgba(0, 0, 0, 0.04);
+    --border-color: #f0f0f0;
+    --field-color: rgba(0, 0, 0, 0.7);
+    --field-background-color: rgba(207, 211, 217, 0.16);
+    --light-color: rgba(0, 0, 0, 0.08);
+    --accent-color: #1977f3;
+    --accent-light-color: rgba(25, 119, 243, 0.08);
+    --error-color: #f56b3d;
+    --error-light-color: rgba(245, 107, 61, 0.08);
+    --success-color: #59b64b;
+    --emoji-substrate-color: #f8e2b2;
+    --modal-overlay-color: rgba(255, 255, 255, 0.9);
+    --control-background-color: rgba(0, 0, 0, 0.08);
+    --notification-background-color: #ed5a4b;
+    --dropdown-item-hover-color: #d2d2d2;
+    --skeleton-loader-background-rgb: 255, 255, 255;
+    --yellow-section: rgba(244, 211, 49, 0.25);
+    --session-title-color: #000;
+    --add-session-btn-icon-bg: rgba(0, 0, 0, 0.08);
+    --add-session-btn-icon-bg-hover: rgba(0, 0, 0, 0.04);
+    --add-session-text-color: rgba(0, 0, 0, 1);
+    --add-session-text-color-hover: rgba(0, 0, 0, 0.7);
+    --session-link-text-color: rgba(0, 0, 0, 0.7);
+    --active-session-bg: rgba(26, 140, 255, 0.16);
+    --activate-session-btn-bg: #fff;
+    --activate-session-btn-border: var(--theme-8);
+    --activate-session-btn-border-hover: var(--theme-8);
+    --session-hover: var(--theme-10);
+    --session-count-color: rgba(0, 0, 0, 0.5);
+    --round-button-hover: var(--theme-8);
+    --round-button-active: var(--theme-12);
+    --session-hint-bg: transparent;
+
+    --shortcut-bg: #eff1f2;
+    --shortcut-border-color: #e6e8e9;
+
+    --import-history-button-on-ntp-bg: rgba(0, 0, 0, 0.05);
+
+    --theme-rgb: 0, 0, 0;
+    --theme-alpha-channel-multiplier: 1;
+
+    --modal-overlay: rgb(0 0 0 / 0.25);
+    --sidebar-border: #d9dce0;
+    --stroke-color: rgb(0, 0, 0);
+    --sidebar-separator-color: rgba(15, 20, 26, 0.15);
+    --strong-bg: #fafafa;
+    --mdc-theme-background: #fff;
+    --mdc-theme-surface: #e6e6e6;
+    --mdc-theme-surface-hover: #dadada;
+    --card-bg: #fff;
+    --card-hover: rgb(var(--stroke-color), 0.4);
+    --mdc-theme-text-secondary-on-background: rgba(var(--stroke-color), 0.54);
+    --them-divide-suggested: rgba(var(--stroke-color), 0.12);
+    --them-divide-active: rgba(var(--stroke-color), 0.54);
+    --text-color-primary: rgb(var(--stroke-color));
+    --smooth-text-color-primary: rgba(0, 0, 0, 0.85);
+    --background-primary: #fff;
+    --select-bg: #ebebeb;
+    --select-divider: #c2c2c2;
+    --input-bg: #eff1f4;
+    --input-new-collection: #eff1f4;
+    --icon-bg: #f8f8f8;
+    --icon-text: rgba(var(--stroke-color), 0.7);
+    --service-dots: var(--theme-4);
+    --onboarding-bg: #f4f3f1;
+    --onboarding-sidebar-icon-bg: #fff;
+    --popup-bg-color: #fff;
+    --popup-title-color: #a4a4a4;
+    --popup-text-color: #292929;
+    --popup-collection-text: #292929;
+    --popup-divider-color: #f0f0f0;
+    --popup-collection-divider: #ebebeb;
+    --popup-border-color: rgba(var(--stroke-color), 0.09);
+    --sidebar-popup-text: #4d4d4d;
+    --sidebar-element-hover-bg: rgba(0, 0, 0, 0.05);
+    --sidebar-element-click-bg: rgba(0, 0, 0, 0.1);
+    --sidebar-element-active-bg: rgba(0, 0, 0, 0.1);
+    --sidebar-element-popup-active-bg: rgba(0, 0, 0, 0.07);
+    --app-popup-block-bg: rgba(0, 0, 0, 0.1);
+    --app-popup-input-bg: rgba(0, 0, 0, 0.08);
+    --app-popup-input-border: rgba(0, 0, 0, 0.09);
+    --sidebar-apps-shadow-bg: linear-gradient(
+      180deg,
+      #fff 0%,
+      rgba(255, 255, 255, 0) 100%
+    );
+    --dragged-bg: #a4a4a4;
+    --switch-slider-color: rgba(var(--stroke-color), 0.08);
+    --icon-invert-filter: unset;
+    --hide-icon-invert-filter: invert(1);
+    --skeleton-loader-bg: 255, 255, 255;
+    --collection-empty-title: rgba(0, 0, 0, 0.7);
+    --collection-empty-text: rgba(0, 0, 0, 0.5);
+    --proposition-header: rgba(0, 0, 0, 0.85);
+
+    --link-icon-opacity: 0.3;
+
+    --extra-help-line: rgba(0, 0, 0, 0.1);
+    --kbd-bg-color: rgba(207, 211, 217, 0.32);
+    --kbd-border-color: rgba(0, 0, 0, 0.04);
+    --kbd-text-color: var(--text-color-primary);
+
+    --search-input-background: var(--input-bg);
+    --search-input-placeholder-color: rgba(0, 0, 0, 0.5);
+    --search-input-color: var(--text-color-primary);
+    --search-input-icon-filter: var(--icon-invert-filter);
+    --search-input-kbd-border-color: var(--theme-16);
+    --search-input-with-results-color: var(--search-input-color);
+    --search-input-with-results-icon-filter: var(--search-input-icon-filter);
+    --search-input-with-results-placeholder-color: var(
+      --search-input-placeholder-color
+    );
+    --search-result-item-color: var(--text-color-primary);
+    --search-privacy-policy-text-color: var(--text-color-primary);
+    --search-import-border-color: #e6e6e6;
+    --inverted-icon: var(--icon-invert-filter);
+    --workspace-dot-button-hover: var(--input-bg);
+    --workspace-border-color: var(--select-bg);
+    --workspace-add-input-background: var(--input-bg);
+    --workspace-add-input-placeholder-color: var(--text-color-primary);
+    --workspace-add-input-color: var(--text-color-primary);
+    --workspace-team-buttons-background: var(--select-bg);
+    --workspace-team-buttons-hover: var(--fade-blue);
+    --workspace-background-picker-text-color: var(--text-color-primary);
+    --workspace-info-icon-filter: var(--inverted-icon);
+    --service-title-color: var(--icon-text);
+    --service-background-color: var(--icon-bg);
+    --service-background-color-hover: var(--icon-bg);
+    --service-in-recipe-chooser-background-color: var(--icon-bg);
+    --service-action-button-background: rgba(0, 0, 0, 0.04);
+    --service-action-button-icon-filter: var(--icon-invert-filter);
+    --service-hide-button-border: none;
+    --service-hide-button-background: var(--service-action-button-background);
+    --inverted-text-color: var(--text-color-primary);
+
+    --help-bg-item: #f2f2f2;
+    --help-bg-item-hover: #e6e6e6;
+    --help-text-color: rgba(0, 0, 0, 0.85);
+    --help-secondary-text-color: #2e2e2e;
+    --help-shortcut-bg-link: rgba(0, 0, 0, 0.05);
+    --help-shortcut-bg-link-hover: rgba(0, 0, 0, 0.1);
+    --help-kbd-bg: rgba(0, 0, 0, 0.05);
+    --help-kbd-border: rgba(0, 0, 0, 0.05);
+
+    --badge-bg-color: #f2f2f2;
+    --badge-color: #1a1a1a;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    /* Perplexity colors */
+
+    /* DESIGN SYSTEM COLORS
+     * @TODO[BRO-2786]: Migrate all webuis to use these colors. */
+    --perplexity-text-primary-v2: #F5F5F5;
+    --perplexity-text-primary-inverse: #191A1A;
+    --perplexity-text-secondary-v2: #A7A9A9;
+    --perplexity-surface-offset-dynamic: #777C7C26;
+    --perplexity-surface-raised: #262929;
+    --perplexity-surface-raised-rgb: 38, 41, 41;
+    --perplexity-surface-raised-plus-1: #383C3C;
+    --perplexity-surface-offset: #262929;
+    --perplexity-surface-offset-plus-1: #2D2F2F;
+    --perplexity-surface-base: #1F2121;
+    --perplexity-border-offset-dynamic: #777C7C57;
+    --perplexity-divider-offset-dynamic: #777C7C2B;
+    --perplexity-background-teal-super: #32B8C6;
+    --perplexity-background-teal-super-rgb: 50, 184, 198;
+    --perplexity-background-teal-super-hover: #3ED3E3;
+    --perplexity-error-v2: #FFB3C9;
+    /* DESIGN SYSTEM COLORS */
+
+    --perplexity-background-base: #191a1a;
+    --perplexity-background-base-rgb: 25, 26, 26;
+    --perplexity-background-highlight-card: #13343b;
+    --perplexity-background-highlight-card-rgb: 19, 52, 59;
+    --perplexity-background-idle: #3b3d3d;
+    --perplexity-background-idle-rgb: 59, 61, 61;
+    --perplexity-background-offset-plus: #2d2f2f;
+    --perplexity-background-offset-plus-rgb: 45, 47, 47;
+    --perplexity-background-offset: #232525;
+    --perplexity-background-offset-rgb: 35, 37, 37;
+    --perplexity-background-raised: #373939;
+    --perplexity-background-super-50-hover: #142F34;
+    --perplexity-background-super-100: #13343b;
+    --perplexity-border-base: #626666;
+    --perplexity-border-highlight: #1b474d;
+    --perplexity-border-highlight-rgb: 27, 71, 77;
+    --perplexity-border-offset-plus: rgba(178, 178, 171, 0.2);
+    --perplexity-border-offset: #3d3f40;
+    --perplexity-border-50-disabled: #2b2c2d;
+    --perplexity-border-super-50-hover: #153940;
+    --perplexity-border-super-100: #14414a;
+    --perplexity-background-dynamic-300-rgb: 205, 217, 217;
+    --perplexity-brand-highlight: #1fb8cd;
+    --perplexity-brand-highlight-hover: #24C7DE;
+    --perplexity-brand-highlight-rgb: 31, 184, 205;
+    --perplexity-error: #ffbfc1;
+    --perplexity-error-rgb: 255, 191, 193;
+    --perplexity-highlight-orange: #ff7e00;
+    --perplexity-highlight-orange-rgb: 255, 126, 0;
+    --perplexity-highlight-yellow: #fff2a6;
+    --perplexity-highlight-yellow-rgb: 255, 242, 166;
+    --perplexity-notification-rgb: 255, 84, 89;
+    --perplexity-notification: #ff5459;
+    --perplexity-success: #badedd;
+    --perplexity-success-rgb-rgb: 186, 222, 221;
+    --perplexity-text-primary-reverse: #13343b;
+    --perplexity-text-primary-reverse-rgb: 19, 52, 59;
+    --perplexity-text-primary: #fcfcf9;
+    --perplexity-text-primary-rgb: 252, 252, 249;
+    --perplexity-text-secondary-reverse: #5f6364;
+    --perplexity-text-secondary-reverse-rgb: 95, 99, 100;
+    --perplexity-text-secondary: #8d9191;
+    --perplexity-text-secondary-rgb: 141, 145, 145;
+    --perplexity-text-idle: #80807d;
+    --perplexity-text-100: #e8e8e6;
+    --perplexity-text-300-disabled: #535656;
+    --perplexity-warning: #ffd2a6;
+    --perplexity-warning-rgb: 255, 210, 166;
+
+    /* Colors */
+    --text-primary-color: #fff;
+    --text-secondary-color: rgba(255, 255, 255, 0.5);
+    --svg-fill: #fff;
+    --placeholder-color: rgba(255, 255, 255, 0.24);
+    --primary-background-color: #141414;
+    --secondary-background-color: rgba(255, 255, 255, 0.16);
+    --border-color: rgba(255, 255, 255, 0.16);
+    --field-color: #ccc;
+    --field-background-color: rgba(93, 94, 97, 0.32);
+    --accent-light-color: rgba(26, 140, 255, 0.16);
+    --light-color: rgba(255, 255, 255, 0.08);
+    --modal-overlay-color: rgba(26, 26, 26, 0.9);
+    --control-background-color: rgba(255, 255, 255, 0.08);
+    --dropdown-item-hover-color: rgba(255, 255, 255, 0.16);
+    --skeleton-loader-background-rgb: 26, 26, 26;
+    --yellow-section: rgba(103, 105, 112, 0.48);
+    --session-title-color: #eee;
+    --add-session-btn-icon-bg: rgba(255, 255, 255, 0.1);
+    --add-session-btn-icon-bg-hover: rgba(255, 255, 255, 0.24);
+    --add-session-text-color: rgba(255, 255, 255, 0.7);
+    --add-session-text-color-hover: rgba(255, 255, 255, 1);
+    --session-link-text-color: rgba(255, 255, 255, 0.7);
+    --active-session-bg: rgba(26, 140, 255, 0.25);
+    --activate-session-btn-bg: var(--theme-8);
+    --activate-session-btn-border: var(--theme-8);
+    --activate-session-btn-border-hover: var(--theme-4);
+    --session-hover: var(--theme-4);
+    --session-count-color: rgba(255, 255, 255, 0.7);
+    --round-button-hover: var(--theme-4);
+    --round-button-active: rgba(255, 255, 255, 0.12);
+    --session-hint-bg: rgba(255, 255, 255, 0.24);
+
+    --shortcut-bg: #5f5f5f;
+    --shortcut-border-color: #858585;
+
+    --import-history-button-on-ntp-bg: rgba(255, 255, 255, 0.05);
+
+    --theme-rgb: 255, 255, 255;
+    --theme-alpha-channel-multiplier: 2;
+
+    --modal-overlay: rgba(26, 26, 26, 0.9);
+    --sidebar-border: #3e3e3e;
+    --stroke-color: rgb(255, 255, 255);
+    --sidebar-separator-color: rgba(255, 255, 255, 0.25);
+    --strong-bg: #191919;
+    --mdc-theme-background: #1a1a1a;
+    --mdc-theme-surface: #34363b;
+    --mdc-theme-surface-hover: #2a2b2f;
+    --card-bg: #34363b;
+    --card-hover: #2a2b2f;
+    --mdc-theme-text-secondary-on-background: rgba(var(--stroke-color), 0.54);
+    --them-divide-suggested: rgba(var(--stroke-color), 0.12);
+    --them-divide-active: rgba(var(--stroke-color), 0.54);
+    --text-color-primary: #fff;
+    --smooth-text-color-primary: #fff;
+    --background-primary: #1a1a1a;
+    --select-bg: #292929;
+    --select-divider: #3d3d3d;
+    --input-bg: #141414;
+    --input-new-collection: #303438;
+    --icon-bg: #292929;
+    --icon-text: #b2b2b2;
+    --service-dots: rgba(0, 0, 0, 0.24);
+    --onboarding-bg: #34363b;
+    --onboarding-sidebar-icon-bg: #292929;
+    --popup-bg-color: #292929;
+    --popup-title-color: #a4a4a4;
+    --popup-text-color: #b2b2b2;
+    --popup-collection-text: #d9d9d9;
+    --popup-divider-color: #141414;
+    --popup-collection-divider: #404040;
+    --popup-border-color: #353535;
+    --sidebar-popup-text: #b2b2b2;
+    --sidebar-element-hover-bg: rgba(255, 255, 255, 0.11);
+    --sidebar-element-click-bg: rgba(255, 255, 255, 0.2);
+    --sidebar-element-active-bg: rgba(255, 255, 255, 0.2);
+    --sidebar-element-popup-active-bg: rgba(255, 255, 255, 0.15);
+    --app-popup-block-bg: rgba(255, 255, 255, 0.1);
+    --app-popup-input-bg: rgba(255, 255, 255, 0.08);
+    --app-popup-input-border: rgba(255, 255, 255, 0.09);
+    --sidebar-apps-shadow-bg: linear-gradient(
+      180deg,
+      #191919 0%,
+      rgba(25, 25, 25, 0) 100%
+    );
+    --dragged-bg: #353535;
+    --switch-slider-color: #292929;
+    --icon-invert-filter: invert(1);
+    --hide-icon-invert-filter: unset;
+    --skeleton-loader-bg: 26, 26, 26;
+    --collection-edit-input-bg: #303438;
+    --collection-empty-title: rgba(255, 255, 255, 0.7);
+    --collection-empty-text: rgba(255, 255, 255, 0.5);
+    --proposition-header: rgba(255, 255, 255, 0.85);
+
+    --link-icon-opacity: 0.7;
+    --extra-help-line: #3d3d3d;
+    --kbd-bg-color: rgba(255, 255, 255, 0.24);
+    --kbd-border-color: rgba(255, 255, 255, 0.24);
+    --kbd-text-color: var(--text-color-primary);
+    --background-alert-big-sur: rgba(244, 157, 55, 0.7);
+    --border-alert-big-sur: #ff8a00;
+
+    --search-input-background: var(--input-bg);
+    --search-input-placeholder-color: rgba(255, 255, 255, 0.5);
+    --search-input-color: var(--text-color-primary);
+    --search-input-icon-filter: var(--icon-invert-filter);
+    --search-input-kbd-border-color: var(--theme-16);
+    --search-input-with-results-color: var(--search-input-color);
+    --search-input-with-results-icon-filter: var(--search-input-icon-filter);
+    --search-input-with-results-placeholder-color: var(
+      --search-input-placeholder-color
+    );
+    --search-result-item-color: var(--text-color-primary);
+    --search-privacy-policy-text-color: var(--text-color-primary);
+    --search-import-border-color: rgba(255, 255, 255, 0.1);
+    --inverted-icon: var(--icon-invert-filter);
+    --workspace-border-color: var(--select-bg);
+    --workspace-dot-button-hover: var(--input-bg);
+    --workspace-add-input-background: var(--input-bg);
+    --workspace-add-input-placeholder-color: var(--text-color-primary);
+    --workspace-add-input-color: var(--text-color-primary);
+    --workspace-team-buttons-background: var(--select-bg);
+    --workspace-team-buttons-hover: var(--fade-blue);
+    --workspace-background-picker-text-color: var(--text-color-primary);
+    --workspace-info-icon-filter: var(--inverted-icon);
+    --service-title-color: var(--icon-text);
+    --service-background-color: var(--icon-bg);
+    --service-background-color-hover: var(--icon-bg);
+    --service-in-recipe-chooser-background-color: var(--icon-bg);
+    --service-action-button-background: #292929;
+    --service-action-button-icon-filter: var(--icon-invert-filter);
+    --service-hide-button-background: var(--service-action-button-background);
+    --service-hide-button-border: none;
+    --inverted-text-color: var(--text-color-primary);
+
+    --help-bg-item: #2e2e2e;
+    --help-bg-item-hover: #3d3d3d;
+    --help-text-color: rgba(255, 255, 255, 0.85);
+    --help-secondary-text-color: #fff;
+    --help-shortcut-bg-link: rgba(255, 255, 255, 0.1);
+    --help-shortcut-bg-link-hover: rgba(255, 255, 255, 0.16);
+    --help-kbd-bg: #525252;
+    --help-kbd-border: #666;
+
+    --badge-bg-color: #1a1a1a;
+    --badge-color: #fafafa;
+  }
+}
+
+[hidden] {
+  display: none !important;
+}
+
+::-webkit-scrollbar-button {
+  display: none;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #ccc;
+}
+
+::-webkit-scrollbar {
+  background-color: transparent;
+  width: 2px;
+}
+
+::-webkit-resizer,
+::-webkit-scrollbar-corner,
+::-webkit-scrollbar-track-piece,
+::-webkit-scrollbar-track {
+  background-color: transparent;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+}

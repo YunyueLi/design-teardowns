@@ -1,0 +1,132 @@
+{
+  "site": "perplexity-comet",
+  "url": "https://www.perplexity.ai/comet",
+  "fonts": [],
+  "video": [
+    {
+      "url": "https://framerusercontent.com/assets/WWSEtVm3v0IJdNpE8ss9cqjlB6M.mp4",
+      "file": "perplexity-comet/real-assets/video/a2893a_WWSEtVm3v0IJdNpE8ss9cqjlB6M.mp4",
+      "bytes": 4116250,
+      "type": "video/mp4"
+    }
+  ],
+  "audio": [],
+  "image": [
+    {
+      "url": "https://framerusercontent.com/images/gIzwIp40XiQ2WjnJNpHRNJfZy0c.png",
+      "file": "perplexity-comet/real-assets/image/8a7c7f_gIzwIp40XiQ2WjnJNpHRNJfZy0c.png",
+      "bytes": 112845,
+      "type": "image/png"
+    },
+    {
+      "url": "https://framerusercontent.com/images/bnQ1gGSCHS8T2mb5FVI2rQnx5YI.png",
+      "file": "perplexity-comet/real-assets/image/b1d391_bnQ1gGSCHS8T2mb5FVI2rQnx5YI.png",
+      "bytes": 808,
+      "type": "image/png"
+    },
+    {
+      "url": "https://framerusercontent.com/images/V8vI3T9pgD4xoqrPbi4sRDUmE.svg?width=1119&height=1703",
+      "file": "perplexity-comet/real-assets/image/fc9388_V8vI3T9pgD4xoqrPbi4sRDUmE.svg",
+      "bytes": 91169,
+      "type": "image/svg+xml"
+    },
+    {
+      "url": "https://framerusercontent.com/images/gLMt8Cd89UAQlYcDC3AxS0vyY.svg?width=1154&height=1118",
+      "file": "perplexity-comet/real-assets/image/647e20_gLMt8Cd89UAQlYcDC3AxS0vyY.svg",
+      "bytes": 2303,
+      "type": "image/svg+xml"
+    },
+    {
+      "url": "https://framerusercontent.com/images/Kc4nPqxCY2jEIOKsvZgnANZHIFo.svg?width=1662&height=990",
+      "file": "perplexity-comet/real-assets/image/e01589_Kc4nPqxCY2jEIOKsvZgnANZHIFo.svg",
+      "bytes": 5061,
+      "type": "image/svg+xml"
+    },
+    {
+      "url": "https://framerusercontent.com/images/PgBms3xU4YEwhOV2VOytNqURU.svg?width=1662&height=990",
+      "file": "perplexity-comet/real-assets/image/b0d408_PgBms3xU4YEwhOV2VOytNqURU.svg",
+      "bytes": 5204,
+      "type": "image/svg+xml"
+    },
+    {
+      "url": "https://framerusercontent.com/images/bMdgun0DJXnkXnN6WQGxfYhjQ.png?width=1932&height=1467",
+      "file": "perplexity-comet/real-assets/image/c9930b_bMdgun0DJXnkXnN6WQGxfYhjQ.png",
+      "bytes": 780665,
+      "type": "image/png"
+    },
+    {
+      "url": "https://framerusercontent.com/images/zDO0ZxFXrxadSzqhNFpWxDOA74.png?width=1932&height=1288",
+      "file": "perplexity-comet/real-assets/image/eae5b3_zDO0ZxFXrxadSzqhNFpWxDOA74.png",
+      "bytes": 767539,
+      "type": "image/png"
+    },
+    {
+      "url": "https://framerusercontent.com/images/TvmuNZu7x8PstI45zSmeZCCB4.png?scale-down-to=2048&width=4464&height=2201",
+      "file": "perplexity-comet/real-assets/image/935fb4_TvmuNZu7x8PstI45zSmeZCCB4.png",
+      "bytes": 314580,
+      "type": "image/png"
+    },
+    {
+      "url": "https://framerusercontent.com/images/eReia3yfybtZ8P5576d6kF8NJIM.png?scale-down-to=1024&width=1080&height=1080",
+      "file": "perplexity-comet/real-assets/image/0fb015_eReia3yfybtZ8P5576d6kF8NJIM.png",
+      "bytes": 666051,
+      "type": "image/png"
+    },
+    {
+      "url": "https://framerusercontent.com/images/uLv11zAkHmH0OsHHzvtwocAQs.png?scale-down-to=1024&width=1052&height=1052",
+      "file": "perplexity-comet/real-assets/image/09cd98_uLv11zAkHmH0OsHHzvtwocAQs.png",
+      "bytes": 281569,
+      "type": "image/png"
+    },
+    {
+      "url": "https://framerusercontent.com/images/G3fmWXM0tTzqP7dXUIEV0Zb6g.png?scale-down-to=1024&width=1052&height=1052",
+      "file": "perplexity-comet/real-assets/image/618453_G3fmWXM0tTzqP7dXUIEV0Zb6g.png",
+      "bytes": 391977,
+      "type": "image/png"
+    },
+    {
+      "url": "https://framerusercontent.com/images/TcU3FGWkjcpr0YFFgLXeZ7x2M.png?scale-down-to=1024&width=1060&height=1052",
+      "file": "perplexity-comet/real-assets/image/2c08b3_TcU3FGWkjcpr0YFFgLXeZ7x2M.png",
+      "bytes": 121490,
+      "type": "image/png"
+    },
+    {
+      "url": "https://framerusercontent.com/images/7ddUJ9GVcq9qan1cdvTSXhcRBg.png?scale-down-to=1024&width=1052&height=1052",
+      "file": "perplexity-comet/real-assets/image/c019a7_7ddUJ9GVcq9qan1cdvTSXhcRBg.png",
+      "bytes": 209100,
+      "type": "image/png"
+    },
+    {
+      "url": "https://framerusercontent.com/images/PFBtNxxwJ9UerIdfEnzxLD2581E.png?scale-down-to=1024&width=1052&height=1052",
+      "file": "perplexity-comet/real-assets/image/0ff6c9_PFBtNxxwJ9UerIdfEnzxLD2581E.png",
+      "bytes": 271697,
+      "type": "image/png"
+    },
+    {
+      "url": "https://framerusercontent.com/images/YZWPZTXZtvH1iH4rCX0Uh48wmtQ.png?scale-down-to=1024&width=1080&height=1080",
+      "file": "perplexity-comet/real-assets/image/28e154_YZWPZTXZtvH1iH4rCX0Uh48wmtQ.png",
+      "bytes": 505459,
+      "type": "image/png"
+    },
+    {
+      "url": "https://framerusercontent.com/images/F4RKAKmFyoRYVlTsUWN51wD1dg.png?scale-down-to=512&width=1080&height=1080",
+      "file": "perplexity-comet/real-assets/image/af50fb_F4RKAKmFyoRYVlTsUWN51wD1dg.png",
+      "bytes": 115585,
+      "type": "image/png"
+    },
+    {
+      "url": "https://framerusercontent.com/images/SEp7QE3Bk6RclE0R7rhBgcGIOI.png?scale-down-to=512&width=1080&height=1080",
+      "file": "perplexity-comet/real-assets/image/49e260_SEp7QE3Bk6RclE0R7rhBgcGIOI.png",
+      "bytes": 131323,
+      "type": "image/png"
+    }
+  ],
+  "lottie": [],
+  "source": [
+    {
+      "url": "https://www.perplexity.ai/comet",
+      "file": "perplexity-comet/real-assets/source/index.html",
+      "bytes": 0
+    }
+  ]
+}

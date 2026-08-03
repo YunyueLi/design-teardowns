@@ -1,0 +1,27 @@
+<!-- Copyright 2025 The Perplexity Browser Authors. All rights reserved. -->
+
+<!doctype html>
+<html>
+<head>
+  <base href="chrome://perplexity-onboarding">
+
+  <meta charset="utf-8">
+  <meta name="color-scheme" content="light dark">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+  <!-- Preload heavy files -->
+  <link rel="preload" href="/assets/comet_intro.mp4" as="video" type="video/mp4">
+  <link rel="preload" href="/assets/sphere.mp4" as="video" type="video/mp4">
+  <link rel="preload" href="/assets/rotating_bubble.mp4" as="video" type="video/mp4">
+  <link rel="preload" href="/assets/ambient.mp3" as="audio" type="audio/mpeg">
+
+  <!-- We explicitly inline importmap to keep CSP strict -->
+  $i18nRaw{injected}
+
+  <link rel="stylesheet" href="/main.css" />
+</head>
+<body>
+  <div id="root"></div>
+  <script type="module" src="/main.js"></script>
+</body>
+</html>
