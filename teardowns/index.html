@@ -116,12 +116,19 @@ body.scrolled .bar{transform:none}
 body.scrolled .lang-fab{opacity:0;pointer-events:none}
 @media(max-width:720px){.bar-nav a:not(.gh){display:none}}
 
-/* ---------- portal: the etched hall ---------- */
+/* ---------- portal: the etched hall (pinned walk) ---------- */
+.walk{position:relative;height:380svh}
+@media(max-width:860px){.walk{height:320svh}}
 .portal{
-  position:relative;min-height:100svh;overflow:hidden;
+  position:sticky;top:0;height:100svh;overflow:hidden;
   display:grid;place-items:center;text-align:center;
   padding:clamp(60px,9vh,110px) 24px 96px;
 }
+.whiteout{position:absolute;inset:0;pointer-events:none;opacity:0;z-index:3;transform:scale(.6);will-change:transform,opacity;
+  background:radial-gradient(circle at 50% 46%, #fffdf4 0%, rgba(253,249,236,.97) 30%, rgba(253,249,236,.55) 52%, transparent 72%)}
+.whitefull{position:absolute;inset:0;pointer-events:none;opacity:0;z-index:4;
+  background:radial-gradient(120% 90% at 50% 62%, #fffdf4, #f8f2e0 55%, #f1e9d2)}
+.portal[data-deep] .hs .chip{opacity:0 !important}
 .hero-art{position:absolute;inset:0;transform-origin:50% 42%;will-change:transform,opacity;
   opacity:0;animation:heroin 1.8s var(--ease-out) .1s forwards}
 @keyframes heroin{from{opacity:0;transform:scale(1.07)}to{opacity:1;transform:scale(1)}}
@@ -438,6 +445,79 @@ html[data-lang="en"] .foreword .cap{font-family:"Cinzel",serif;font-weight:600}
 .colophon .fine span{font-family:var(--cjk);letter-spacing:.2em}
 .colophon .fine span .l-en{font-family:"EB Garamond",serif;letter-spacing:.12em}
 
+/* ---------- the reliquary: a chamber of light ---------- */
+.sanctum{
+  position:relative;min-height:100svh;overflow:hidden;
+  display:grid;place-items:center;text-align:center;
+  background:radial-gradient(120% 90% at 50% 30%, #fffdf4, #f8f2e0 55%, #f1e9d2);
+  color:#241f12;padding:clamp(80px,12vh,140px) 24px;
+  transition:background 1.2s ease,color 1.2s ease;
+}
+.sanctum .rays{
+  position:absolute;inset:-22%;pointer-events:none;opacity:.55;
+  background:repeating-conic-gradient(from 0deg at 50% 36%, rgba(195,160,84,.09) 0deg 5deg, transparent 5deg 16deg);
+  -webkit-mask:radial-gradient(closest-side at 50% 36%, #000, transparent 72%);
+  mask:radial-gradient(closest-side at 50% 36%, #000, transparent 72%);
+  transform-origin:50% 36%;
+  animation:rays 90s linear infinite;transition:opacity 1.2s ease;
+}
+@keyframes rays{to{transform:rotate(360deg)}}
+.sanct-in{position:relative;max-width:860px;z-index:2}
+.sanct-in .sealm{display:block;width:84px;margin:0 auto 26px;transition:background .8s}
+.s-kick{font-family:"Cinzel",serif;font-weight:600;font-size:12px;letter-spacing:.5em;text-indent:.5em;color:var(--rubric)}
+.s-kick .l-zh{font-family:var(--cjk);letter-spacing:.4em;text-indent:.4em}
+.s-h{font-family:"EB Garamond",serif;font-weight:600;font-size:clamp(30px,4.6vw,52px);letter-spacing:.04em;margin:18px 0 10px;color:inherit}
+.s-h .l-zh{font-family:var(--cjk);font-weight:700;letter-spacing:.14em;text-indent:.14em}
+.s-sub{font-family:var(--cjk);font-size:15.5px;letter-spacing:.04em;color:rgba(36,31,18,.66);max-width:44em;margin:0 auto;transition:color 1.2s}
+.s-sub .l-en{font-family:"EB Garamond",serif;font-size:17px;font-style:italic}
+/* the seventeen pigments, afloat */
+.motes{position:relative;height:110px;margin:44px auto 8px;max-width:720px}
+.mote{position:absolute;left:var(--x);top:var(--y);width:var(--s);height:var(--s);border-radius:50%;
+  background:var(--c);border:1px solid rgba(36,31,18,.25);display:block;
+  box-shadow:0 0 14px color-mix(in srgb,var(--c) 60%,transparent);
+  animation:mfloat 6s ease-in-out infinite alternate;animation-delay:var(--d);
+  transition:transform .3s var(--ease-out)}
+.mote:hover{transform:scale(1.7)}
+.mote:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
+@keyframes mfloat{from{translate:0 -7px}to{translate:0 7px}}
+/* measured curves, drawn in light */
+.curves{width:min(680px,86vw);margin:26px auto 0;display:block;overflow:visible}
+.curves path{fill:none;stroke:var(--gold);stroke-width:1.6;stroke-dasharray:520;stroke-dashoffset:520;transition:stroke 1.2s}
+.sanctum.in .curves path{animation:cdraw 2.2s var(--ease-out) forwards}
+.curves path:nth-of-type(2){animation-delay:.25s}
+.curves path:nth-of-type(3){animation-delay:.5s}
+@keyframes cdraw{to{stroke-dashoffset:0}}
+.curves circle{fill:var(--rubric)}
+.curves text{font-family:"Cinzel",serif;font-size:11px;letter-spacing:.14em;fill:rgba(36,31,18,.55);transition:fill 1.2s}
+.s-cap{font-family:var(--cjk);font-size:12.5px;letter-spacing:.1em;color:rgba(36,31,18,.45);margin-top:10px;transition:color 1.2s}
+.s-cap .l-en{font-family:"EB Garamond",serif;font-style:italic;font-size:13.5px}
+/* the golden key */
+.key{background:none;border:none;cursor:pointer;margin:40px auto 0;display:block;padding:10px;
+  filter:drop-shadow(0 4px 14px rgba(162,130,60,.45));transition:transform .5s var(--ease-out),filter .5s}
+.key:hover{transform:rotate(-14deg) scale(1.08)}
+.key:focus-visible{outline:2px solid var(--gold);outline-offset:4px}
+.key svg{display:block}
+.key{color:var(--gold)}
+.sanctum.uv .key{color:#88DDFF;filter:drop-shadow(0 0 16px rgba(136,221,255,.6))}
+.s-hint{font-family:var(--cjk);font-size:12.5px;letter-spacing:.14em;color:rgba(36,31,18,.4);margin-top:6px;transition:color 1.2s}
+.s-hint .l-en{font-family:"EB Garamond",serif;font-style:italic;font-size:13.5px}
+.s-go{display:inline-block;margin-top:46px}
+/* blacklight mode: the graffiti of measured values */
+.uvnotes{position:absolute;inset:0;pointer-events:none;z-index:1}
+.uvnotes i{position:absolute;left:var(--x);top:var(--y);transform:rotate(var(--r));
+  font-family:"EB Garamond",serif;font-style:italic;font-size:var(--fs,17px);letter-spacing:.06em;
+  color:#88DDFF;opacity:0;transition:opacity .9s ease var(--d,0s);text-shadow:0 0 18px rgba(136,221,255,.65)}
+.sanctum.uv{background:radial-gradient(120% 90% at 50% 30%, #221743, #150e2e 55%, #0d081f);color:#e9e3ff}
+.sanctum.uv .rays{opacity:.28;background:repeating-conic-gradient(from 0deg at 50% 36%, rgba(136,221,255,.08) 0deg 5deg, transparent 5deg 16deg)}
+.sanctum.uv .s-sub,.sanctum.uv .s-cap,.sanctum.uv .s-hint{color:rgba(233,227,255,.6)}
+.sanctum.uv .curves path{stroke:#88DDFF}
+.sanctum.uv .curves text{fill:rgba(233,227,255,.55)}
+.sanctum.uv .sealm{background:#88DDFF}
+.sanctum.uv .uvnotes i{opacity:.92}
+.sanctum.uv .mote{border-color:rgba(233,227,255,.3)}
+.sanctum.uv .s-go{color:rgba(233,227,255,.55);border-color:rgba(233,227,255,.35)}
+.sanctum.uv .s-kick{color:#c65b3d}
+
 /* ---------- spine ---------- */
 .spine{
   position:fixed;right:clamp(10px,2vw,26px);top:50%;transform:translateY(-50%);z-index:40;
@@ -464,6 +544,11 @@ body.scrolled .spine{opacity:1;pointer-events:auto}
 
 @media (prefers-reduced-motion: reduce){
   *,*::before,*::after{animation:none !important;transition:none !important}
+  .walk{height:auto}
+  .portal{position:relative;height:auto;min-height:100svh}
+  .whiteout,.whitefull{display:none}
+  .sanctum .curves path{stroke-dashoffset:0}
+  .uvnotes i{transition:none}
   .reveal,.reveal .salon-no,.reveal h2,.reveal .salon-sub,.reveal .salon-band,.reveal .filters{opacity:1;transform:none}
   .cat-row{opacity:1;transform:none}
   h1 .t{transform:none}
@@ -489,6 +574,7 @@ body.scrolled .spine{opacity:1;pointer-events:auto}
   </div>
 </nav>
 
+<div class="walk" id="walk">
 <header class="portal" id="top">
   <div class="hero-art" id="heroArt">
     <div class="hero-par" id="heroPar">
@@ -510,8 +596,8 @@ body.scrolled .spine{opacity:1;pointer-events:auto}
           <span class="chip"><b>Plate III</b><span>Comet</span></span></a>
         <a class="hs" data-for="turtle-soup" href="turtle-soup/teardown.html" style="left:39.19%;top:56.93%;width:1.76%;height:8.4%" aria-label="Turtle Soup Bureau">
           <span class="chip"><b>Plate XVII</b><span class="l-en">Turtle Soup Bureau</span><span class="l-zh">海龟汤事务所</span></span></a>
-        <a class="hs hs-door" href="#masters" style="left:47.9%;top:56%;width:4.4%;height:13.5%" aria-label="Enter the collection">
-          <span class="chip"><b>MMXXVI</b><span class="l-en">Enter the collection</span><span class="l-zh">步入藏品</span></span></a>
+        <a class="hs hs-door" href="#sanctum" style="left:47.9%;top:56%;width:4.4%;height:13.5%" aria-label="Walk through the door">
+          <span class="chip"><b>MMXXVI</b><span class="l-en">Through the door</span><span class="l-zh">穿门而入</span></span></a>
         <a class="hs" data-for="linear" href="linear/teardown.html" style="left:59.18%;top:57.42%;width:1.5%;height:8%" aria-label="Linear">
           <span class="chip"><b>Plate IV</b><span>Linear</span></span></a>
         <a class="hs" data-for="moonshot" href="moonshot/teardown.html" style="left:63.48%;top:52.25%;width:4.62%;height:12.89%" aria-label="Moonshot AI">
@@ -545,8 +631,74 @@ body.scrolled .spine{opacity:1;pointer-events:auto}
       <a href="#colophon"><i>✦</i><span class="l-en">Colophon</span><span class="l-zh">后记</span></a>
     </nav>
   </div>
-  <div class="cue" aria-hidden="true"><span class="l-en">Begin the tour</span><span class="l-zh">开始参观</span><i></i></div>
+  <div class="cue" aria-hidden="true"><span class="l-en">Walk in, scroll on</span><span class="l-zh">滚动前行</span><i></i></div>
+  <div class="whiteout" id="whiteout" aria-hidden="true"></div>
+  <div class="whitefull" id="whitefull" aria-hidden="true"></div>
 </header>
+</div>
+
+<!-- ================= THE RELIQUARY: through the door ================= -->
+<section class="sanctum" id="sanctum">
+  <div class="rays" aria-hidden="true"></div>
+  <div class="uvnotes" aria-hidden="true">
+    <i style="--x:12%;--y:22%;--r:-8deg;--d:.05s">#BF9852</i>
+    <i style="--x:78%;--y:18%;--r:6deg;--d:.15s">lerp .25</i>
+    <i style="--x:18%;--y:64%;--r:-5deg;--d:.25s">60 fps &times; 294</i>
+    <i style="--x:84%;--y:58%;--r:-10deg;--d:.1s">&plusmn;10</i>
+    <i style="--x:8%;--y:44%;--r:4deg;--d:.3s">fov 50</i>
+    <i style="--x:72%;--y:76%;--r:3deg;--d:.2s">r&sup2; &lt; .16</i>
+    <i style="--x:30%;--y:10%;--r:5deg;--d:.35s;--fs:21px">&phi; 1.618</i>
+    <i style="--x:58%;--y:8%;--r:-6deg;--d:.4s">coinRain &times; 150</i>
+    <i style="--x:26%;--y:84%;--r:7deg;--d:.45s">87 keyframes</i>
+    <i style="--x:87%;--y:38%;--r:8deg;--d:.5s">#88DDFF</i>
+  </div>
+  <div class="sanct-in">
+    <span class="sealm" aria-hidden="true"></span>
+    <p class="s-kick"><span class="l-en">The Reliquary</span><span class="l-zh">档案圣所</span></p>
+    <h2 class="s-h"><span class="l-en">Every value has a source</span><span class="l-zh">每个数值都有出处</span></h2>
+    <p class="s-sub">
+      <span class="l-en">Beyond the door, the gallery keeps its raw material: pigments, easing curves, and one golden key.</span>
+      <span class="l-zh">门后存放着画廊的原材料：颜料、缓动曲线，和一把金钥匙。</span>
+    </p>
+    <div class="motes" id="motes"></div>
+    <svg class="curves" viewBox="0 -80 680 345" aria-hidden="true">
+      <g transform="translate(0,60)">
+        <path d="M10,150 C71.2,-68.4 125.2,10 190,10"/>
+        <circle cx="10" cy="150" r="3"/><circle cx="190" cy="10" r="3"/>
+        <text x="100" y="182" text-anchor="middle">.34, 1.56, .64, 1</text>
+      </g>
+      <g transform="translate(240,60)">
+        <path d="M10,150 C139.6,127.6 44.2,15.6 190,10"/>
+        <circle cx="10" cy="150" r="3"/><circle cx="190" cy="10" r="3"/>
+        <text x="100" y="182" text-anchor="middle">.72, .16, .19, .96</text>
+      </g>
+      <g transform="translate(480,60)">
+        <path d="M10,150 C91,110.8 71.2,32.4 190,10"/>
+        <circle cx="10" cy="150" r="3"/><circle cx="190" cy="10" r="3"/>
+        <text x="100" y="182" text-anchor="middle">.45, .28, .34, .84</text>
+      </g>
+    </svg>
+    <p class="s-cap">
+      <span class="l-en">Pigments and curves above are measured values from the collection, keyframe handles included.</span>
+      <span class="l-zh">上面的颜料和曲线都是馆藏的实测值，关键帧手柄也在内。</span>
+    </p>
+    <button class="key" id="keyBtn" type="button" aria-label="A golden key">
+      <svg width="96" height="42" viewBox="0 0 96 42" aria-hidden="true">
+        <g fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round">
+          <circle cx="15" cy="21" r="9.5"/>
+          <path d="M25 21 H86"/>
+          <path d="M73 21 v9"/>
+          <path d="M83 21 v12"/>
+        </g>
+      </svg>
+    </button>
+    <p class="s-hint">
+      <span class="l-en">The key remembers the Shipping chapter.</span>
+      <span class="l-zh">这把钥匙记得船运章。</span>
+    </p>
+    <a class="quiet s-go" href="#masters"><span class="l-en">Salon I awaits below</span><span class="l-zh">第一展厅在下方</span></a>
+  </div>
+</section>
 
 <section class="foreword reveal">
   <p>
@@ -767,12 +919,19 @@ body.scrolled .spine{opacity:1;pointer-events:auto}
   catch(e){ setLang('en'); }
   setTimeout(annoUpdate, 60);
 
-  /* ---------- hero: mouse look-around ---------- */
+  /* ---------- hero: mouse look-around, composed with the walk ---------- */
   var heroArt = document.getElementById('heroArt');
   var heroPar = document.getElementById('heroPar');
   var heroInner = document.getElementById('heroInner');
+  var walkS = 1, lookDamp = 1, cx = 0, cy = 0;
+  if (heroPar) heroPar.style.transformOrigin = '50% 46%';
+  function applyHero(){
+    if (!heroPar) return;
+    heroPar.style.transform = 'translate3d(' + (-cx*16*lookDamp) + 'px,' + (-cy*11*lookDamp) + 'px,0) rotate(' + (cx*.35*lookDamp) + 'deg) scale(' + walkS + ')';
+    heroInner.style.transform = 'translate3d(' + (cx*6) + 'px,' + (cy*4) + 'px,0)';
+  }
   if (canHover && !rm) {
-    var mx=0,my=0,cx=0,cy=0,ir=null;
+    var mx=0,my=0,ir=null;
     document.querySelector('.portal').addEventListener('mousemove', function(e){
       mx = e.clientX/innerWidth - .5;
       my = e.clientY/innerHeight - .5;
@@ -780,8 +939,7 @@ body.scrolled .spine{opacity:1;pointer-events:auto}
     }, {passive:true});
     function look(){
       cx += (mx-cx)*.06; cy += (my-cy)*.06;
-      heroPar.style.transform = 'translate3d(' + (-cx*16) + 'px,' + (-cy*11) + 'px,0) rotate(' + (cx*.35) + 'deg)';
-      heroInner.style.transform = 'translate3d(' + (cx*6) + 'px,' + (cy*4) + 'px,0)';
+      applyHero();
       if (Math.abs(mx-cx) > .0004 || Math.abs(my-cy) > .0004) ir = requestAnimationFrame(look); else ir = null;
     }
   }
@@ -956,24 +1114,43 @@ body.scrolled .spine{opacity:1;pointer-events:auto}
     }, {passive:true});
   }
 
-  /* ---------- scroll: dolly out of the hall, parallax, progress ---------- */
+  /* ---------- the walk: scrolling advances into the hall ---------- */
   var plx = [].slice.call(document.querySelectorAll('[data-plx]'));
   var bar = document.getElementById('progress');
-  var hero = document.querySelector('.portal');
+  var walk = document.getElementById('walk');
+  var portalEl = document.querySelector('.portal');
+  var whiteout = document.getElementById('whiteout');
+  var whitefull = document.getElementById('whitefull');
+  var heroScrim = document.querySelector('.hero-scrim');
+  var beam = document.querySelector('.beam');
   var ticking = false;
+  function clamp01(v){ return v<0?0:(v>1?1:v); }
   function onScroll(){
     ticking = false;
     var d = document.documentElement;
     var max = d.scrollHeight - d.clientHeight;
     bar.style.transform = 'scaleX(' + (max ? d.scrollTop/max : 0) + ')';
-    document.body.classList.toggle('scrolled', scrollY > hero.offsetHeight*.6);
+    var vh = innerHeight;
+    var span = walk ? (walk.offsetHeight - vh) : vh;
+    document.body.classList.toggle('scrolled', scrollY > (walk ? walk.offsetHeight - vh*.6 : vh*.6));
     if (!rm) {
-      var p = Math.min(scrollY/innerHeight, 1);
-      if (p < 1.05) {
-        heroArt.style.transform = 'scale(' + (1+p*.16) + ') translateY(' + (p*7) + '%)';
-        heroArt.style.opacity = 1 - p*.85;
-      }
-      var vh = innerHeight;
+      var p = clamp01(span > 0 ? scrollY/span : 0);
+      walkS = Math.pow(3.5, p);
+      lookDamp = 1 - p*.72;
+      applyHero();
+      var to = 1 - clamp01(p/.16);
+      heroInner.style.opacity = to;
+      heroInner.style.pointerEvents = to < .05 ? 'none' : '';
+      var cueEl = portalEl.querySelector('.cue');
+      if (cueEl) cueEl.style.opacity = to;
+      portalEl.toggleAttribute('data-deep', p > .32);
+      var wo = clamp01((p-.56)/.44);
+      whiteout.style.opacity = wo;
+      whiteout.style.transform = 'scale(' + (.6 + wo*2.8) + ')';
+      whitefull.style.opacity = clamp01((p-.86)/.13);
+      if (heroScrim) heroScrim.style.opacity = 1 - clamp01((p-.4)/.35);
+      if (beam) beam.style.opacity = 1 - wo;
+      if (dc) dc.style.opacity = 1 - wo;
       plx.forEach(function(el){
         var r = el.getBoundingClientRect();
         if (r.bottom < -80 || r.top > vh+80) return;
@@ -987,6 +1164,50 @@ body.scrolled .spine{opacity:1;pointer-events:auto}
   }
   addEventListener('scroll', function(){ if(!ticking){ ticking=true; requestAnimationFrame(onScroll); } }, {passive:true});
   onScroll();
+
+  /* ---------- the reliquary ---------- */
+  var sanctum = document.getElementById('sanctum');
+  if (sanctum) {
+    var MOTES = [
+      ['shopify-editions','Shopify Editions Winter ’26','#8051ff'],
+      ['endfield','Arknights: Endfield','#fffa00'],
+      ['comet','Comet','#21808d'],
+      ['linear','Linear','#3b3d45'],
+      ['moonshot','Moonshot AI','#737373'],
+      ['tutti','tutti','#5b69e6'],
+      ['ojo','OJO','#5f86a8'],
+      ['converge','Converge AI','#0285ff'],
+      ['chatgpt','ChatGPT','#0d0d0d'],
+      ['notion','Notion','#03c1ba'],
+      ['gemini','Gemini','#0b57d0'],
+      ['lovart','Lovart','#3b82f6'],
+      ['latrix','Latrix','#e07a00'],
+      ['imlagom','Lagom','#b3402a'],
+      ['easycode','EasyCode','#1c1b18'],
+      ['journeypilot','JourneyPilot','#0d1f3c'],
+      ['turtle-soup','Turtle Soup Bureau','#b91c1c']
+    ];
+    var mw = document.getElementById('motes');
+    MOTES.forEach(function(m,i){
+      var a = document.createElement('a');
+      a.className = 'mote';
+      a.href = m[0] + '/teardown.html';
+      var t = MOTES.length > 1 ? i/(MOTES.length-1) : 0;
+      var x = 3 + t*92;
+      var y = 44 + Math.sin(t*6.283)*30 + ((i%2)? 12 : -12);
+      a.style.cssText = '--x:'+x.toFixed(1)+'%;--y:'+Math.round(y)+'px;--s:'+(10+(i%3)*3)+'px;--c:'+m[2]+';--d:'+((i%7)*.42).toFixed(2)+'s';
+      a.title = m[1] + '  ' + m[2];
+      a.setAttribute('aria-label', m[1]);
+      mw.appendChild(a);
+    });
+    document.getElementById('keyBtn').addEventListener('click', function(){
+      sanctum.classList.toggle('uv');
+    });
+    if (rm) sanctum.classList.add('in');
+    else new IntersectionObserver(function(es,o){
+      if (es[0].isIntersecting){ sanctum.classList.add('in'); o.disconnect(); }
+    }, {threshold:.25}).observe(sanctum);
+  }
 
   /* ---------- active section marks ---------- */
   var marks = [].slice.call(document.querySelectorAll('[data-mark]'));
