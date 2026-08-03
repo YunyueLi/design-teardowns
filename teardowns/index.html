@@ -1,119 +1,747 @@
 <!doctype html>
-<html lang="zh-CN"><head><meta charset="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Design Teardown</title>
-<link rel="preconnect" href="https://fonts.googleapis.com"/><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..700;1,9..144,400..600&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&family=Noto+Serif+SC:wght@600;700&family=Noto+Sans+SC:wght@400;500&display=swap" rel="stylesheet"/>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>拆解画廊 Design Teardowns</title>
+<meta name="description" content="拆解画廊：十七座顶级落地页的设计逆向。每一个颜色、每一个字号、每一条缓动曲线，都从原作里实际测量得来。"/>
+<link rel="canonical" href="https://yunyueli.github.io/design-teardowns/teardowns/index.html"/>
+<meta property="og:type" content="website"/>
+<meta property="og:title" content="拆解画廊 Design Teardowns"/>
+<meta property="og:description" content="十七座顶级落地页的设计逆向。每一个颜色、每一个字号、每一条缓动曲线，都从原作里实际测量得来。"/>
+<meta property="og:image" content="https://yunyueli.github.io/design-teardowns/teardowns/_gallery/og.jpg"/>
+<meta name="twitter:card" content="summary_large_image"/>
+<link rel="icon" href='data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" fill="%23241f12"/><path d="M50 18 L62 50 L50 82 L38 50 Z" fill="%23c3a054"/></svg>'/>
+<link rel="preload" href="_gallery/fonts/Cinzel-600.woff2" as="font" type="font/woff2" crossorigin/>
+<link rel="preload" href="_gallery/fonts/EBGaramond-400.woff2" as="font" type="font/woff2" crossorigin/>
+<link rel="preload" href="_gallery/fonts/EBGaramond-400i.woff2" as="font" type="font/woff2" crossorigin/>
+<link rel="preload" href="_gallery/fonts/GallerySerifSC-700.woff2" as="font" type="font/woff2" crossorigin/>
 <style>
- :root{--bg:#08090B;--panel:#101318;--ink:#F4F6F5;--ink2:rgba(244,246,245,.62);--ink3:rgba(244,246,245,.4);--line:rgba(255,255,255,.1);--line2:rgba(255,255,255,.18);--cyan:#1FB8CD;
-   --serif:"Fraunces","Noto Serif SC",Georgia,serif;--sans:"Inter","Noto Sans SC",-apple-system,sans-serif;--mono:"JetBrains Mono",ui-monospace,monospace;}
- *{box-sizing:border-box;margin:0;padding:0} body{background:var(--bg);color:var(--ink);font-family:var(--sans);line-height:1.6;-webkit-font-smoothing:antialiased}
- .wrap{max-width:1180px;margin:0 auto;padding:0 32px}
- header{padding:100px 0 40px;position:relative;overflow:hidden}
- header::before{content:"";position:absolute;inset:0;background:radial-gradient(60% 50% at 80% 0,rgba(31,184,205,.12),transparent 60%);pointer-events:none}
- .eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--cyan)}
- h1{font-family:var(--serif);font-weight:600;font-size:clamp(40px,6vw,80px);line-height:1.05;letter-spacing:-.01em;margin-top:18px}
- h1 .it{font-style:italic;color:var(--cyan)}
- .lede{color:var(--ink2);font-size:clamp(16px,1.4vw,19px);max-width:60ch;margin-top:22px}
- .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;padding:30px 0 90px}
- @media(max-width:900px){.grid{grid-template-columns:repeat(2,1fr)}} @media(max-width:600px){.grid{grid-template-columns:1fr}}
- .card{border:1px solid var(--line);border-radius:16px;overflow:hidden;background:var(--panel);transition:border-color .3s cubic-bezier(.19,1,.22,1),transform .3s cubic-bezier(.19,1,.22,1);display:block;color:inherit}
- .card:hover{border-color:var(--line2);transform:translateY(-3px)}
- .thumb{aspect-ratio:16/10;overflow:hidden;background:#000;border-bottom:1px solid var(--line)} .thumb img{width:100%;height:100%;object-fit:cover;display:block} .noimg{width:100%;height:100%}
- .cbody{padding:18px 20px 20px} .ctop{display:flex;align-items:center;justify-content:space-between;gap:10px}
- .ctop h3{font-family:var(--serif);font-weight:600;font-size:22px} .pal{display:flex;gap:5px} .dot{width:12px;height:12px;border-radius:50%;box-shadow:0 0 0 1px rgba(255,255,255,.14)}
- .tag{color:var(--ink2);font-size:13.5px;margin-top:8px}
- footer{border-top:1px solid var(--line);padding:40px 0 60px;color:var(--ink3);font-size:13px}
-</style></head><body>
-<header><div class="wrap"><div class="eyebrow">Design Teardown</div>
- <h1>把顶级产品,拆到<span class="it">可复刻</span>的每一个数值</h1>
- <p class="lede">对世界级产品落地页的设计逆向拆解。每份从线上真实抽取 token 与资产,配真实录屏与关键帧,针对该站自身设计语言拆解,给出可复刻的开发思路。</p>
-</div></header>
-<main class="wrap"><div class="grid">
-    <a class="card" href="chatgpt/teardown.html">
-      <div class="thumb"><img src="chatgpt/assets/actual-hero.jpg" alt="chatgpt 真实渲染" loading="lazy"/></div>
-      <div class="cbody"><div class="ctop"><h3>chatgpt</h3><span class="pal"><span class="dot" style="background:#888"></span><span class="dot" style="background:#888"></span><span class="dot" style="background:#888"></span></span></div>
-      <p class="tag"></p></div>
-    </a>
-    <a class="card" href="comet/teardown.html">
-      <div class="thumb"><img src="comet/assets/actual-hero.jpg" alt="Comet 真实渲染" loading="lazy"/></div>
-      <div class="cbody"><div class="ctop"><h3>Comet</h3><span class="pal"><span class="dot" style="background:#08090B"></span><span class="dot" style="background:#20808D"></span><span class="dot" style="background:#1FB8CD"></span><span class="dot" style="background:#3186ff"></span></span></div>
-      <p class="tag">原生应用逆向,拆到源码级的每一个数值</p></div>
-    </a>
-    <a class="card" href="converge/teardown.html">
-      <div class="thumb"><img src="converge/assets/actual-hero.jpg" alt="converge 真实渲染" loading="lazy"/></div>
-      <div class="cbody"><div class="ctop"><h3>converge</h3><span class="pal"><span class="dot" style="background:#888"></span><span class="dot" style="background:#888"></span><span class="dot" style="background:#888"></span></span></div>
-      <p class="tag"></p></div>
-    </a>
-    <a class="card" href="easycode/teardown.html">
-      <div class="thumb"><img src="easycode/screenshots/hero.jpg" alt="EasyCode 真实渲染" loading="lazy"/></div>
-      <div class="cbody"><div class="ctop"><h3>EasyCode</h3><span class="pal"><span class="dot" style="background:rgb(255, 255, 255)"></span><span class="dot" style="background:#c04a1a"></span><span class="dot" style="background:#b3402a"></span><span class="dot" style="background:#ffffff"></span></span></div>
-      <p class="tag">把刷题这两个字，该改改了变成被指导的练习</p></div>
-    </a>
-    <a class="card" href="endfield/teardown.html">
-      <div class="thumb"><img src="endfield/screenshots/hero.jpg" alt="Arknights Endfield 真实渲染" loading="lazy"/></div>
-      <div class="cbody"><div class="ctop"><h3>Arknights Endfield</h3><span class="pal"><span class="dot" style="background:rgba(0, 0, 0, 0)"></span><span class="dot" style="background:#191919"></span><span class="dot" style="background:#fffa00"></span><span class="dot" style="background:#d9d9d9"></span></span></div>
-      <p class="tag">核心章节版本向渊行武陵决战篇焕新相见 共赴新章</p></div>
-    </a>
-    <a class="card" href="gemini/teardown.html">
-      <div class="thumb"><img src="gemini/assets/actual-hero.jpg" alt="gemini 真实渲染" loading="lazy"/></div>
-      <div class="cbody"><div class="ctop"><h3>gemini</h3><span class="pal"><span class="dot" style="background:#888"></span><span class="dot" style="background:#888"></span><span class="dot" style="background:#888"></span></span></div>
-      <p class="tag"></p></div>
-    </a>
-    <a class="card" href="imlagom/teardown.html">
-      <div class="thumb"><img src="imlagom/screenshots/hero.jpg" alt="Lagom 真实渲染" loading="lazy"/></div>
-      <div class="cbody"><div class="ctop"><h3>Lagom</h3><span class="pal"><span class="dot" style="background:oklch(0.967 0.008 91.5)"></span><span class="dot" style="background:oklch(.58 .155 40)"></span><span class="dot" style="background:#b3402a"></span><span class="dot" style="background:#e4571f"></span></span></div>
-      <p class="tag">所有的偶遇与构建，都是时间的倒影。</p></div>
-    </a>
-    <a class="card" href="journeypilot/teardown.html">
-      <div class="thumb"><img src="journeypilot/screenshots/hero.jpg" alt="JourneyPilot 真实渲染" loading="lazy"/></div>
-      <div class="cbody"><div class="ctop"><h3>JourneyPilot</h3><span class="pal"><span class="dot" style="background:rgb(13, 31, 60)"></span><span class="dot" style="background:#071224"></span><span class="dot" style="background:#0d1f3c"></span><span class="dot" style="background:#12294b"></span></span></div>
-      <p class="tag">你的旅行，背后有一支机组。</p></div>
-    </a>
-    <a class="card" href="latrix/teardown.html">
-      <div class="thumb"><img src="latrix/screenshots/hero.jpg" alt="Latrix 真实渲染" loading="lazy"/></div>
-      <div class="cbody"><div class="ctop"><h3>Latrix</h3><span class="pal"><span class="dot" style="background:rgb(241, 241, 243)"></span><span class="dot" style="background:#1a1815"></span><span class="dot" style="background:#f1f1f3"></span><span class="dot" style="background:#e07a00"></span></span></div>
-      <p class="tag">We createdigital lives</p></div>
-    </a>
-    <a class="card" href="linear/teardown.html">
-      <div class="thumb"><img src="linear/assets/actual-hero.jpg" alt="linear 真实渲染" loading="lazy"/></div>
-      <div class="cbody"><div class="ctop"><h3>linear</h3><span class="pal"><span class="dot" style="background:#888"></span><span class="dot" style="background:#888"></span><span class="dot" style="background:#888"></span></span></div>
-      <p class="tag"></p></div>
-    </a>
-    <a class="card" href="lovart/teardown.html">
-      <div class="thumb"><img src="lovart/assets/actual-hero.jpg" alt="lovart 真实渲染" loading="lazy"/></div>
-      <div class="cbody"><div class="ctop"><h3>lovart</h3><span class="pal"><span class="dot" style="background:#888"></span><span class="dot" style="background:#888"></span><span class="dot" style="background:#888"></span></span></div>
-      <p class="tag"></p></div>
-    </a>
-    <a class="card" href="moonshot/teardown.html">
-      <div class="thumb"><img src="moonshot/assets/actual-hero.jpg" alt="moonshot 真实渲染" loading="lazy"/></div>
-      <div class="cbody"><div class="ctop"><h3>moonshot</h3><span class="pal"><span class="dot" style="background:#888"></span><span class="dot" style="background:#888"></span><span class="dot" style="background:#888"></span></span></div>
-      <p class="tag"></p></div>
-    </a>
-    <a class="card" href="notion/teardown.html">
-      <div class="thumb"><img src="notion/assets/actual-hero.jpg" alt="notion 真实渲染" loading="lazy"/></div>
-      <div class="cbody"><div class="ctop"><h3>notion</h3><span class="pal"><span class="dot" style="background:#888"></span><span class="dot" style="background:#888"></span><span class="dot" style="background:#888"></span></span></div>
-      <p class="tag"></p></div>
-    </a>
-    <a class="card" href="ojo/teardown.html">
-      <div class="thumb"><img src="ojo/assets/actual-hero.jpg" alt="ojo 真实渲染" loading="lazy"/></div>
-      <div class="cbody"><div class="ctop"><h3>ojo</h3><span class="pal"><span class="dot" style="background:#888"></span><span class="dot" style="background:#888"></span><span class="dot" style="background:#888"></span></span></div>
-      <p class="tag"></p></div>
-    </a>
-    <a class="card" href="shopify-editions/teardown.html">
-      <div class="thumb"><img src="shopify-editions/screenshots/hero.jpg" alt="Shopify Editions Winter 2026 真实渲染" loading="lazy"/></div>
-      <div class="cbody"><div class="ctop"><h3>Shopify Editions Winter 2026</h3><span class="pal"><span class="dot" style="background:rgb(0, 0, 0)"></span><span class="dot" style="background:#292919"></span><span class="dot" style="background:#f7f7ee"></span><span class="dot" style="background:#dcdcd0"></span></span></div>
-      <p class="tag">Shopify EditionsWinter '26</p></div>
-    </a>
-    <a class="card" href="turtle-soup/teardown.html">
-      <div class="thumb"><img src="turtle-soup/screenshots/hero.jpg" alt="海龟汤事务所 真实渲染" loading="lazy"/></div>
-      <div class="cbody"><div class="ctop"><h3>海龟汤事务所</h3><span class="pal"><span class="dot" style="background:rgb(10, 8, 6)"></span><span class="dot" style="background:#faf5e8"></span><span class="dot" style="background:#8b7a4e"></span><span class="dot" style="background:#b91c1c"></span></span></div>
-      <p class="tag">海龟汤事务所</p></div>
-    </a>
-    <a class="card" href="tutti/teardown.html">
-      <div class="thumb"><img src="tutti/assets/actual-hero.jpg" alt="tutti 真实渲染" loading="lazy"/></div>
-      <div class="cbody"><div class="ctop"><h3>tutti</h3><span class="pal"><span class="dot" style="background:#888"></span><span class="dot" style="background:#888"></span><span class="dot" style="background:#888"></span></span></div>
-      <p class="tag"></p></div>
-    </a>
-</div></main>
-<footer><div class="wrap">Design Teardown · 数值以真实抽取为准,营销层技术栈为公开资料推断 · 受版权素材仅限内部研究比对,务必私有。</div></footer>
-</body></html>
+/* ============================================================
+   拆解画廊 (Design Teardowns), the gallery wall.
+   Structure: portal, foreword, frontispiece, Salon I with two
+   grand plates, then the catalogue room that shelves all 17
+   with salon filters and a cursor-following preview frame.
+   New works are added as one row in the catalogue list.
+   ============================================================ */
+@font-face{font-family:"Cinzel";src:url("_gallery/fonts/Cinzel-400.woff2") format("woff2");font-weight:400;font-display:swap}
+@font-face{font-family:"Cinzel";src:url("_gallery/fonts/Cinzel-600.woff2") format("woff2");font-weight:600;font-display:swap}
+@font-face{font-family:"EB Garamond";src:url("_gallery/fonts/EBGaramond-400.woff2") format("woff2");font-weight:400;font-style:normal;font-display:swap}
+@font-face{font-family:"EB Garamond";src:url("_gallery/fonts/EBGaramond-600.woff2") format("woff2");font-weight:600;font-style:normal;font-display:swap}
+@font-face{font-family:"EB Garamond";src:url("_gallery/fonts/EBGaramond-400i.woff2") format("woff2");font-weight:400;font-style:italic;font-display:swap}
+@font-face{font-family:"EB Garamond";src:url("_gallery/fonts/EBGaramond-500i.woff2") format("woff2");font-weight:500;font-style:italic;font-display:swap}
+@font-face{font-family:"Gallery Serif SC";src:url("_gallery/fonts/GallerySerifSC-400.woff2") format("woff2");font-weight:400;font-display:swap}
+@font-face{font-family:"Gallery Serif SC";src:url("_gallery/fonts/GallerySerifSC-700.woff2") format("woff2");font-weight:700;font-display:swap}
+
+:root{
+  --wall:#f2ecdd; --wall-2:#ebe3cf; --card:#f8f3e7;
+  --ink:#241f12; --ink-2:rgba(36,31,18,.68); --ink-3:rgba(36,31,18,.46);
+  --line:rgba(36,31,18,.16); --line-2:rgba(36,31,18,.32);
+  --gold:#a2823c; --gold-2:#c3a054; --rubric:#93321b;
+  --cjk:"Gallery Serif SC","Songti SC","STSong","Noto Serif SC","Source Han Serif SC","SimSun",serif;
+  --garamond:"EB Garamond",var(--cjk);
+  --ease-out:cubic-bezier(.22,1,.36,1);
+}
+@media (prefers-color-scheme: dark){
+  :root{
+    --wall:#161209; --wall-2:#120f08; --card:#f4eedd;
+    --ink:#eae1c8; --ink-2:rgba(234,225,200,.72); --ink-3:rgba(234,225,200,.48);
+    --line:rgba(234,225,200,.16); --line-2:rgba(234,225,200,.34);
+    --gold:#b6934a; --gold-2:#cfa95c; --rubric:#c65b3d;
+  }
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  background:var(--wall); color:var(--ink);
+  font-family:var(--garamond); font-size:17px; line-height:1.9;
+  -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility;
+  overflow-x:hidden;
+}
+::selection{background:var(--gold-2);color:#241f12}
+a{color:inherit}
+img{max-width:100%;display:block}
+
+body::after{
+  content:""; position:fixed; inset:0; z-index:30; pointer-events:none;
+  opacity:.05; mix-blend-mode:multiply;
+  background-image:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="280" height="280"><filter id="n"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" stitchTiles="stitch"/></filter><rect width="280" height="280" filter="url(%23n)"/></svg>');
+}
+@media (prefers-color-scheme: dark){ body::after{opacity:.07; mix-blend-mode:screen} }
+
+.skip{position:absolute;left:-999px;top:0;z-index:99;background:var(--ink);color:var(--wall);padding:8px 16px}
+.skip:focus{left:12px;top:12px}
+
+/* ---------- reading progress ---------- */
+.progress{position:fixed;top:0;left:0;right:0;height:2px;z-index:60;background:transparent}
+.progress i{display:block;height:100%;background:var(--gold-2);transform-origin:0 50%;transform:scaleX(0)}
+
+/* ---------- top bar ---------- */
+.bar{
+  position:fixed;top:0;left:0;right:0;z-index:50;
+  display:flex;align-items:center;justify-content:space-between;gap:16px;
+  padding:12px clamp(18px,4vw,40px);
+  background:color-mix(in srgb,var(--wall) 84%,transparent);
+  -webkit-backdrop-filter:blur(12px) saturate(1.1); backdrop-filter:blur(12px) saturate(1.1);
+  border-bottom:1px solid var(--line);
+  transform:translateY(-110%); transition:transform .5s var(--ease-out);
+}
+body.scrolled .bar{transform:none}
+.bar-name{font-family:var(--cjk);font-weight:700;font-size:15px;letter-spacing:.14em;text-decoration:none}
+.bar-nav{display:flex;gap:clamp(12px,2.4vw,26px);align-items:center;font-family:"Cinzel",serif;font-size:11px;letter-spacing:.22em}
+.bar-nav a{text-decoration:none;color:var(--ink-3);transition:color .3s}
+.bar-nav a:hover,.bar-nav a.on{color:var(--gold)}
+.bar-nav .gh{color:var(--ink-2);border:1px solid var(--line-2);padding:5px 12px;transition:all .3s}
+.bar-nav .gh:hover{color:var(--wall);background:var(--ink);border-color:var(--ink)}
+@media(max-width:720px){.bar-nav a:not(.gh){display:none}}
+
+/* ---------- portal ---------- */
+.portal{
+  min-height:100svh; position:relative; overflow:hidden;
+  display:grid; place-items:center; text-align:center;
+  padding:clamp(60px,10vh,120px) 24px 110px;
+}
+.construct{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+.construct path,.construct circle,.construct line{
+  fill:none;stroke:var(--gold);stroke-width:1;opacity:.34;vector-effect:non-scaling-stroke;
+}
+.construct [pathLength]{stroke-dasharray:1;stroke-dashoffset:1;animation:draw 2.6s var(--ease-out) forwards}
+.construct .d1{animation-delay:.15s}.construct .d2{animation-delay:.3s}.construct .d3{animation-delay:.45s}
+.construct .d4{animation-delay:.6s}.construct .d5{animation-delay:.75s}.construct .d6{animation-delay:.9s}
+.construct .d7{animation-delay:1.05s}.construct .d8{animation-delay:1.2s}
+@keyframes draw{to{stroke-dashoffset:0}}
+.portal-inner{position:relative;max-width:900px}
+.fleur{display:inline-block;aspect-ratio:400/447;background:var(--gold);
+  -webkit-mask:url("_gallery/art/fleuron-mask.png") center/contain no-repeat;
+  mask:url("_gallery/art/fleuron-mask.png") center/contain no-repeat}
+.sealm{display:inline-block;aspect-ratio:1;background:var(--gold);
+  -webkit-mask:url("_gallery/art/seal-mask.png") center/contain no-repeat;
+  mask:url("_gallery/art/seal-mask.png") center/contain no-repeat}
+.cnr{position:absolute;width:clamp(46px,6vw,76px);aspect-ratio:320/361;background:var(--gold);opacity:.92;
+  -webkit-mask:url("_gallery/art/corner-mask.png") center/contain no-repeat;
+  mask:url("_gallery/art/corner-mask.png") center/contain no-repeat;
+  z-index:3;pointer-events:none}
+.cnr.c1{top:-12px;left:-12px}
+.cnr.c2{top:-12px;right:-12px;transform:scaleX(-1)}
+.cnr.c3{bottom:-12px;left:-12px;transform:scaleY(-1)}
+.cnr.c4{bottom:-12px;right:-12px;transform:scale(-1)}
+.portal .fleur{display:block;width:62px;margin:0 auto 28px;opacity:0;animation:fadein 1.2s ease .1s forwards}
+@keyframes fadein{to{opacity:1}}
+.kicker{
+  font-family:"Cinzel",serif;font-weight:600;font-size:clamp(11px,1.2vw,13px);
+  letter-spacing:.44em;text-indent:.44em;color:var(--rubric);
+  display:flex;align-items:center;justify-content:center;gap:18px;
+  opacity:0;animation:fadein 1s ease .3s forwards;
+}
+.kicker::before,.kicker::after{content:"";height:1px;width:clamp(28px,6vw,64px);background:var(--gold);opacity:.6}
+h1{
+  font-family:var(--cjk);font-weight:700;
+  font-size:clamp(58px,11vw,138px);line-height:1.14;letter-spacing:.08em;text-indent:.08em;
+  margin:24px 0 10px;overflow:hidden;
+}
+h1 span{display:inline-block;transform:translateY(112%);animation:riseup 1.1s var(--ease-out) forwards}
+h1 span:nth-child(1){animation-delay:.25s}h1 span:nth-child(2){animation-delay:.34s}
+h1 span:nth-child(3){animation-delay:.43s}h1 span:nth-child(4){animation-delay:.52s}
+@keyframes riseup{to{transform:none}}
+.sub-en{
+  font-family:"Cinzel",serif;font-size:clamp(12px,1.5vw,16px);letter-spacing:.34em;text-indent:.34em;
+  color:var(--ink-2);margin-bottom:34px;opacity:0;animation:fadein 1s ease .9s forwards;
+}
+.ded{font-style:italic;font-weight:500;font-size:clamp(16px,1.9vw,20px);color:var(--ink-2);max-width:56ch;margin:0 auto;opacity:0;animation:fadein 1.2s ease 1.1s forwards}
+.ded-zh{font-family:var(--cjk);font-style:normal;font-weight:400;font-size:clamp(14px,1.6vw,16.5px);letter-spacing:.06em;color:var(--ink-2);margin:10px auto 0;max-width:44em;opacity:0;animation:fadein 1.2s ease 1.25s forwards}
+.rooms-index{
+  margin-top:52px;display:flex;flex-wrap:wrap;justify-content:center;gap:12px clamp(22px,3.4vw,44px);
+  font-size:14.5px;letter-spacing:.1em;opacity:0;animation:fadein 1.2s ease 1.45s forwards;
+}
+.rooms-index a{text-decoration:none;color:var(--ink-2);display:inline-flex;align-items:baseline;gap:9px;transition:color .3s}
+.rooms-index a:hover{color:var(--rubric)}
+.rooms-index i{font-family:"Cinzel",serif;font-style:normal;font-size:11px;letter-spacing:.18em;color:var(--gold)}
+.cue{
+  position:absolute;bottom:30px;left:50%;transform:translateX(-50%);
+  display:flex;flex-direction:column;align-items:center;gap:10px;
+  font-family:var(--cjk);font-size:11px;letter-spacing:.4em;text-indent:.4em;color:var(--ink-3);
+}
+.cue i{width:1px;height:56px;background:var(--line-2);position:relative;overflow:hidden}
+.cue i::after{content:"";position:absolute;left:0;top:-40%;width:100%;height:40%;background:var(--gold-2);animation:cue 2.4s ease-in-out infinite}
+@keyframes cue{0%{top:-40%}70%,100%{top:110%}}
+
+/* ---------- foreword ---------- */
+.foreword{max-width:720px;margin:0 auto;padding:clamp(50px,9vh,110px) 28px 20px}
+.foreword p{font-family:var(--cjk);font-size:clamp(16px,1.8vw,18px);line-height:2.15;letter-spacing:.04em;color:var(--ink-2)}
+.foreword .cap{
+  float:left;font-family:var(--cjk);font-weight:700;font-size:74px;line-height:.92;
+  color:var(--rubric);margin:8px 18px 0 0;padding:10px 12px;
+  border:1px solid var(--gold);background:linear-gradient(135deg,color-mix(in srgb,var(--gold-2) 26%,transparent),transparent 70%);
+}
+.foreword .fine{margin-top:26px;font-size:14.5px;color:var(--ink-3);clear:both}
+.foreword .fine b{font-weight:400;color:var(--rubric)}
+
+/* ---------- frontispiece ---------- */
+.frontis{max-width:880px;margin:clamp(40px,7vh,80px) auto 0;padding:0 28px;text-align:center}
+.frontis .plate-art{position:relative;border:1px solid var(--line-2);padding:clamp(12px,1.6vw,20px);background:var(--card)}
+.frontis .cnr{width:clamp(40px,5vw,60px)}
+.frontis img{width:100%;mix-blend-mode:multiply;border:1px solid var(--line)}
+@media (prefers-color-scheme: dark){.frontis img{mix-blend-mode:normal}}
+.frontis figcaption{margin-top:14px;font-family:var(--cjk);font-size:14px;color:var(--ink-3);letter-spacing:.06em}
+.frontis figcaption em{font-family:"EB Garamond",serif;font-style:italic;letter-spacing:.02em}
+
+/* ---------- salon heads ---------- */
+.salon{padding-top:clamp(70px,12vh,150px)}
+.salon-head{max-width:820px;margin:0 auto;text-align:center;padding:0 28px}
+.salon-no{font-family:"Cinzel",serif;font-weight:600;font-size:12px;letter-spacing:.5em;text-indent:.5em;color:var(--rubric)}
+.salon-head h2{font-family:var(--cjk);font-weight:700;font-size:clamp(30px,4.4vw,46px);letter-spacing:.2em;text-indent:.2em;margin:14px 0 12px}
+.salon-sub{font-family:var(--cjk);font-size:15.5px;letter-spacing:.05em;color:var(--ink-2);max-width:40em;margin:0 auto}
+.salon-band{max-width:780px;margin:38px auto 0;padding:0 28px}
+.salon-band .band-in{border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:14px 0}
+.salon-band img{width:100%;height:clamp(150px,22vw,240px);object-fit:cover;mix-blend-mode:multiply;opacity:.92}
+@media (prefers-color-scheme: dark){.salon-band img{mix-blend-mode:normal;opacity:.9;border:1px solid var(--line)}}
+
+/* ---------- grand plates ---------- */
+.plate{position:relative;max-width:1160px;margin:0 auto;padding:clamp(64px,11vh,130px) clamp(20px,3.5vw,40px) 0;text-align:center}
+.ghost{
+  position:absolute;z-index:0;pointer-events:none;user-select:none;
+  font-family:"Cinzel",serif;font-weight:400;line-height:.8;
+  font-size:clamp(170px,24vw,330px);color:var(--ink);opacity:.05;
+  top:clamp(0px,2vh,20px);left:50%;transform:translateX(-50%);will-change:transform;
+}
+@media (prefers-color-scheme: dark){.ghost{opacity:.08}}
+.frame{
+  position:relative;z-index:1;display:block;text-decoration:none;
+  background:var(--card);padding:clamp(14px,1.8vw,24px);
+  border:1px solid var(--line-2);max-width:920px;margin:0 auto;
+  box-shadow:0 1px 2px rgba(36,31,18,.08),0 14px 38px -24px rgba(36,31,18,.45);
+  transition:box-shadow .7s var(--ease-out),transform .7s var(--ease-out);
+}
+.frame::before{content:"";position:absolute;inset:6px;border:1px solid var(--line);pointer-events:none}
+.frame::after{
+  content:"";position:absolute;bottom:calc(100% + 1px);left:50%;width:1px;height:clamp(26px,5vh,58px);
+  background:linear-gradient(to top,var(--line-2),transparent);
+}
+.frame .nail{
+  position:absolute;bottom:calc(100% + clamp(26px,5vh,58px) - 3px);left:50%;transform:translateX(-50%) rotate(45deg);
+  width:7px;height:7px;background:var(--gold);opacity:.9;
+}
+.frame .art{
+  display:block;position:relative;overflow:hidden;background:#0d0b07;
+  border:1px solid color-mix(in srgb,var(--gold) 60%,var(--line-2));
+}
+.frame .art img{width:100%;height:auto;transform:scale(1.09);will-change:transform}
+.frame .sheen{
+  position:absolute;inset:0;pointer-events:none;
+  background:linear-gradient(105deg,transparent 42%,rgba(255,252,240,.16) 50%,transparent 58%);
+  transform:translateX(-130%);
+}
+.frame:hover{transform:translateY(-3px);box-shadow:0 2px 3px rgba(36,31,18,.1),0 28px 56px -26px rgba(36,31,18,.55)}
+.frame:hover .sheen{transition:transform 1.1s ease;transform:translateX(130%)}
+.frame:focus-visible{outline:2px solid var(--gold);outline-offset:4px}
+
+.wall-label{position:relative;z-index:1;max-width:680px;margin:36px auto 0}
+.wall-label .plate-no{
+  font-family:"Cinzel",serif;font-weight:600;font-size:12px;letter-spacing:.46em;color:var(--rubric);
+  display:flex;align-items:center;justify-content:center;gap:14px;
+}
+.wall-label .plate-no::before,.wall-label .plate-no::after{content:"";width:30px;height:1px;background:var(--gold)}
+.wall-label h3{
+  font-family:var(--cjk);font-weight:700;font-size:clamp(25px,2.9vw,33px);line-height:1.3;letter-spacing:.03em;
+  margin:16px 0 4px;text-wrap:balance;
+}
+.wall-label .en{display:block;font-family:"EB Garamond",serif;font-style:italic;font-weight:500;font-size:17.5px;letter-spacing:.02em;color:var(--ink-2);margin-top:6px}
+.wall-label .medium{margin-top:16px;font-family:var(--cjk);font-size:13.5px;letter-spacing:.06em;color:var(--gold)}
+.wall-label .medium b{font-family:"Cinzel",serif;font-weight:600;font-size:10px;letter-spacing:.3em;color:var(--ink-3);margin-right:10px;font-variant:small-caps}
+.wall-label .desc{margin-top:14px;font-family:var(--cjk);font-size:15.5px;line-height:2.05;letter-spacing:.03em;color:var(--ink-2);max-width:36em;margin-left:auto;margin-right:auto;text-align:justify}
+.pigments{display:flex;align-items:center;justify-content:center;gap:7px;margin-top:20px}
+.pigments b{font-family:"Cinzel",serif;font-weight:400;font-size:9.5px;letter-spacing:.28em;color:var(--ink-3);margin-right:6px}
+.pigments i{width:13px;height:13px;border:1px solid var(--line-2);display:inline-block}
+.links{display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:14px 20px;margin-top:26px}
+.enter{
+  font-family:var(--cjk);font-weight:700;font-size:13.5px;letter-spacing:.24em;text-indent:.24em;
+  text-decoration:none;color:var(--ink);border:1px solid var(--ink);padding:11px 22px;
+  transition:all .35s var(--ease-out);white-space:nowrap;
+}
+.enter:hover{background:var(--ink);color:var(--wall)}
+@media (prefers-color-scheme: dark){.enter{border-color:var(--gold-2);color:var(--gold-2)}.enter:hover{background:var(--gold-2);color:#241f12}}
+.quiet{font-size:14.5px;letter-spacing:.04em;color:var(--ink-3);text-decoration:none;border-bottom:1px solid var(--line-2);padding-bottom:1px;transition:color .3s,border-color .3s}
+.quiet:hover{color:var(--rubric);border-color:var(--rubric)}
+
+@media(max-width:900px){
+  .plate{text-align:left}
+  .wall-label .plate-no{justify-content:flex-start}
+  .wall-label .plate-no::after{display:none}
+  .wall-label .desc{text-align:left}
+  .pigments,.links{justify-content:flex-start}
+  .ghost{font-size:clamp(120px,30vw,190px)}
+}
+
+/* ---------- the catalogue room ---------- */
+.catalogue{padding-top:clamp(80px,13vh,160px)}
+.filters{
+  display:flex;flex-wrap:wrap;justify-content:center;gap:10px 12px;margin-top:34px;
+}
+.filters button{
+  font-family:var(--cjk);font-size:13px;letter-spacing:.12em;text-indent:.12em;
+  color:var(--ink-2);background:transparent;border:1px solid var(--line-2);
+  padding:8px 18px;cursor:pointer;transition:all .3s var(--ease-out);
+}
+.filters button i{font-family:"Cinzel",serif;font-style:normal;font-size:10px;color:var(--gold);margin-left:8px;letter-spacing:.08em}
+.filters button:hover{border-color:var(--gold);color:var(--ink)}
+.filters button.on{background:var(--ink);color:var(--wall);border-color:var(--ink)}
+.filters button.on i{color:var(--gold-2)}
+@media (prefers-color-scheme: dark){
+  .filters button.on{background:var(--gold-2);color:#241f12;border-color:var(--gold-2)}
+  .filters button.on i{color:#241f12}
+}
+
+.cat-wrap{max-width:1080px;margin:clamp(40px,7vh,70px) auto 0;padding:0 clamp(20px,3.5vw,40px)}
+.cat-list{list-style:none;border-top:1px solid var(--line-2)}
+.cat-group{
+  display:flex;align-items:center;gap:18px;
+  padding:30px 6px 14px;
+}
+.cat-group img{width:92px;height:48px;object-fit:cover;mix-blend-mode:multiply;opacity:.85;border:1px solid var(--line)}
+@media (prefers-color-scheme: dark){.cat-group img{mix-blend-mode:normal;opacity:.8}}
+.cat-group b{font-family:"Cinzel",serif;font-weight:600;font-size:11px;letter-spacing:.4em;color:var(--rubric);white-space:nowrap}
+.cat-group span{font-family:var(--cjk);font-weight:700;font-size:16px;letter-spacing:.14em}
+.cat-group em{font-family:var(--cjk);font-style:normal;font-size:12.5px;color:var(--ink-3);letter-spacing:.08em;margin-left:auto}
+
+.cat-row{border-bottom:1px solid var(--line);opacity:0;transform:translateY(14px)}
+.cat-row.in{opacity:1;transform:none;transition:opacity .7s ease,transform .7s var(--ease-out)}
+.cat-row a{
+  display:grid;grid-template-columns:3.2em minmax(0,1.45fr) minmax(0,.9fr) auto 2em;
+  align-items:baseline;gap:clamp(12px,2.4vw,26px);
+  padding:clamp(16px,2.4vh,22px) 6px;text-decoration:none;position:relative;
+}
+.cat-row .c-no{font-family:"Cinzel",serif;font-weight:400;font-size:13px;letter-spacing:.14em;color:var(--ink-3);transition:color .3s}
+.cat-row .c-name{font-family:var(--cjk);font-weight:700;font-size:clamp(16px,1.9vw,19.5px);letter-spacing:.03em;transition:transform .45s var(--ease-out)}
+.cat-row .c-name em{font-family:"EB Garamond",serif;font-style:italic;font-weight:400;font-size:14.5px;color:var(--ink-3);margin-left:12px;letter-spacing:.02em}
+.cat-row .c-med{font-family:var(--cjk);font-size:13.5px;color:var(--ink-2);letter-spacing:.05em}
+.cat-row .c-pig{display:flex;gap:5px;align-self:center}
+.cat-row .c-pig i{width:10px;height:10px;border:1px solid var(--line-2);display:inline-block}
+.cat-row .c-go{font-family:"EB Garamond",serif;font-size:18px;color:var(--ink-3);justify-self:end;transform:translateX(-6px);opacity:0;transition:all .45s var(--ease-out);align-self:center}
+.cat-row a::after{
+  content:"";position:absolute;left:0;right:100%;bottom:-1px;height:1px;background:var(--gold);
+  transition:right .6s var(--ease-out);
+}
+.cat-row a:hover .c-no,.cat-row a:focus-visible .c-no{color:var(--rubric)}
+.cat-row a:hover .c-name{transform:translateX(8px)}
+.cat-row a:hover .c-go{transform:none;opacity:1}
+.cat-row a:hover::after{right:0}
+.cat-row a:focus-visible{outline:2px solid var(--gold);outline-offset:-2px}
+@media(max-width:860px){
+  .cat-row a{grid-template-columns:2.4em minmax(0,1fr) 2em}
+  .cat-row .c-med,.cat-row .c-pig{display:none}
+}
+
+/* cursor-following preview frame */
+.preview{
+  position:fixed;left:0;top:0;z-index:45;width:min(330px,26vw);pointer-events:none;
+  background:var(--card);padding:10px;border:1px solid var(--line-2);
+  box-shadow:0 18px 44px -18px rgba(36,31,18,.5);
+  opacity:0;transform:scale(.94);transition:opacity .35s ease,scale .35s var(--ease-out);
+  will-change:transform;
+}
+.preview.on{opacity:1;scale:1}
+.preview img{width:100%;aspect-ratio:16/10;object-fit:cover;border:1px solid var(--line-2);background:#0d0b07}
+.preview .p-cap{font-family:"Cinzel",serif;font-size:9.5px;letter-spacing:.3em;color:var(--ink-3);text-align:center;padding-top:8px}
+@media (hover:none),(max-width:860px){.preview{display:none !important}}
+
+/* ---------- colophon ---------- */
+.colophon{
+  margin-top:clamp(90px,16vh,190px);border-top:1px solid var(--line);
+  background:linear-gradient(var(--wall-2),var(--wall) 30%);
+  padding:clamp(70px,12vh,130px) 28px clamp(60px,9vh,90px);text-align:center;
+}
+.colophon .sealm{display:block;width:112px;margin:0 auto 30px}
+.colophon h2{font-family:var(--cjk);font-weight:700;font-size:clamp(24px,3.4vw,34px);letter-spacing:.2em;text-indent:.2em}
+.colophon .en-h{font-family:"Cinzel",serif;font-size:11px;letter-spacing:.5em;text-indent:.5em;color:var(--rubric);margin-top:12px}
+.colophon .body{max-width:600px;margin:34px auto 0;font-family:var(--cjk);font-size:15.5px;line-height:2.15;letter-spacing:.04em;color:var(--ink-2);text-align:justify}
+.colophon .body + .body{margin-top:18px}
+.colophon .gh-row{margin-top:44px;display:flex;justify-content:center;gap:22px;flex-wrap:wrap;align-items:center}
+.colophon .fine{margin-top:52px;font-family:"Cinzel",serif;font-size:10px;letter-spacing:.32em;line-height:2.4;color:var(--ink-3)}
+.colophon .fine span{font-family:var(--cjk);letter-spacing:.2em}
+
+/* ---------- spine ---------- */
+.spine{
+  position:fixed;right:clamp(10px,2vw,26px);top:50%;transform:translateY(-50%);z-index:40;
+  display:flex;flex-direction:column;gap:20px;align-items:center;
+  opacity:0;pointer-events:none;transition:opacity .5s;
+}
+body.scrolled .spine{opacity:1;pointer-events:auto}
+.spine a{
+  font-family:"Cinzel",serif;font-size:10.5px;letter-spacing:.14em;color:var(--ink-3);
+  text-decoration:none;padding:2px 4px;transition:color .3s;
+}
+.spine a.on{color:var(--gold)}
+.spine a:hover{color:var(--rubric)}
+.spine .tick{width:1px;height:26px;background:var(--line-2)}
+@media(max-width:1180px){.spine{display:none}}
+
+/* ---------- reveals ---------- */
+.reveal{opacity:0;transform:translateY(26px)}
+.reveal.in{opacity:1;transform:none;transition:opacity .95s ease,transform .95s var(--ease-out)}
+.reveal .salon-no,.reveal h2,.reveal .salon-sub,.reveal .salon-band,.reveal .filters{
+  opacity:0;transform:translateY(16px);
+}
+.reveal.in .salon-no,.reveal.in h2,.reveal.in .salon-sub,.reveal.in .salon-band,.reveal.in .filters{
+  opacity:1;transform:none;transition:opacity .8s ease,transform .8s var(--ease-out);
+}
+.reveal.in h2{transition-delay:.08s}
+.reveal.in .salon-sub{transition-delay:.16s}
+.reveal.in .salon-band,.reveal.in .filters{transition-delay:.26s}
+
+@media (prefers-reduced-motion: reduce){
+  *,*::before,*::after{animation:none !important;transition:none !important}
+  .reveal,.reveal .salon-no,.reveal h2,.reveal .salon-sub,.reveal .salon-band,.reveal .filters{opacity:1;transform:none}
+  .cat-row{opacity:1;transform:none}
+  h1 span{transform:none}
+  .kicker,.sub-en,.ded,.ded-zh,.rooms-index,.portal .fleur{opacity:1}
+  .construct [pathLength]{stroke-dashoffset:0}
+  .frame .art img{transform:none !important}
+  html{scroll-behavior:auto}
+}
+</style>
+</head>
+<body>
+<a class="skip" href="#catalogue">跳到藏品总目</a>
+<div class="progress" aria-hidden="true"><i id="progress"></i></div>
+
+<nav class="bar" aria-label="画廊导航">
+  <a class="bar-name" href="#top">拆解画廊</a>
+  <div class="bar-nav">
+    <a href="#masters">SALON I</a>
+    <a href="#catalogue">CATALOGUE</a>
+    <a href="#colophon">COLOPHON</a>
+    <a class="gh" href="https://github.com/YunyueLi/design-teardowns" target="_blank" rel="noopener">GITHUB</a>
+  </div>
+</nav>
+
+<header class="portal" id="top">
+  <svg class="construct" viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+    <circle class="d1" cx="720" cy="450" r="418" pathLength="1"/>
+    <circle class="d2" cx="720" cy="450" r="258" pathLength="1"/>
+    <circle class="d8" cx="720" cy="450" r="640" pathLength="1" opacity=".18"/>
+    <line class="d3" x1="0" y1="0" x2="1440" y2="900" pathLength="1"/>
+    <line class="d4" x1="1440" y1="0" x2="0" y2="900" pathLength="1"/>
+    <line class="d5" x1="550.6" y1="0" x2="550.6" y2="900" pathLength="1"/>
+    <line class="d6" x1="889.4" y1="0" x2="889.4" y2="900" pathLength="1"/>
+    <line class="d7" x1="0" y1="343.9" x2="1440" y2="343.9" pathLength="1"/>
+    <line class="d7" x1="0" y1="556.1" x2="1440" y2="556.1" pathLength="1"/>
+    <path class="d8" d="M 720 192 A 258 258 0 0 1 978 450" pathLength="1" opacity=".5"/>
+    <path class="d8" d="M 978 450 A 159.5 159.5 0 0 1 818.5 609.5" pathLength="1" opacity=".5"/>
+    <path class="d8" d="M 818.5 609.5 A 98.6 98.6 0 0 1 719.9 510.9" pathLength="1" opacity=".5"/>
+  </svg>
+  <div class="portal-inner">
+    <span class="fleur" aria-hidden="true"></span>
+    <p class="kicker">Design Teardowns MMXXVI</p>
+    <h1 aria-label="拆解画廊"><span>拆</span><span>解</span><span>画</span><span>廊</span></h1>
+    <p class="sub-en">A Gallery of Seventeen Studies</p>
+    <p class="ded">Seventeen studies of living pages, with every colour, every letterform<br/>and every easing curve measured from the work itself.</p>
+    <p class="ded-zh">十七件展品，每一个颜色、每一个字号、每一条缓动曲线，都从原作里实际测量得来。</p>
+    <nav class="rooms-index" aria-label="展厅索引">
+      <a href="#masters"><i>I</i>手稿与点云</a>
+      <a href="#catalogue" data-filter="s2"><i>II</i>应用之内</a>
+      <a href="#catalogue" data-filter="s3"><i>III</i>智能体群像</a>
+      <a href="#catalogue" data-filter="s4"><i>IV</i>独立工房</a>
+      <a href="#colophon"><i>✦</i>后记</a>
+    </nav>
+  </div>
+  <div class="cue" aria-hidden="true">开始参观<i></i></div>
+</header>
+
+<section class="foreword reveal">
+  <p><span class="cap">这</span>间画廊用数值说话。每一件展品都来自一次完整的设计逆向：用无头浏览器读取原站真实的计算样式，把资产和源代码全部存档，再用被拆对象自己的视觉语言，写成一页互动拆解和五份文档。</p>
+  <p class="fine">页面上写「实测」的数值都有出处，写「<b>推断</b>」的都有标注。每个数值可以回溯，每条结论可以复算。</p>
+</section>
+
+<figure class="frontis reveal">
+  <div class="plate-art"><b class="cnr c1"></b><b class="cnr c2"></b><b class="cnr c3"></b><b class="cnr c4"></b><img src="_gallery/art/frontis.jpg" alt="铜版蚀刻：一座一点透视的画廊长厅，两侧拱廊挂满画作" width="1400" height="933" loading="lazy"/></div>
+  <figcaption>本馆想象图，铜版蚀刻风格，生成于装帧时。<em>The Grand Gallery, an etching made for this catalogue.</em></figcaption>
+</figure>
+
+<main>
+  <!-- ================= SALON I: the two masterpieces ================= -->
+  <section class="salon" id="masters" data-mark="I">
+    <header class="salon-head reveal">
+      <p class="salon-no">Salon I</p>
+      <h2>手稿与点云</h2>
+      <p class="salon-sub">这个展厅只挂两件作品，但每件都带着完整档案：源代码逐行读过，资产全部存档，引用各有出处。</p>
+      <div class="salon-band"><div class="band-in"><img src="_gallery/art/salon-1.jpg" alt="" width="1400" height="480" loading="lazy"/></div></div>
+    </header>
+
+    <article class="plate reveal" id="plate-1">
+      <span class="ghost" aria-hidden="true" data-plx="0.1">I</span>
+      <a class="frame" href="shopify-editions/teardown.html" aria-label="进入 Shopify Editions Winter '26 拆解">
+        <span class="nail"></span>
+        <b class="cnr c1"></b><b class="cnr c2"></b><b class="cnr c3"></b><b class="cnr c4"></b>
+        <span class="art"><img src="_gallery/covers/shopify-editions.jpg" alt="Shopify Editions Winter '26 首屏实录：黑场上的文艺复兴手稿开篇" width="1400" height="875" fetchpriority="high" data-plx="-0.045"/><span class="sheen"></span></span>
+      </a>
+      <div class="wall-label">
+        <p class="plate-no">Plate I</p>
+        <h3>Shopify Editions Winter&nbsp;’26<span class="en">The Renaissance Edition</span></h3>
+        <p class="medium"><b>Medium</b>用 Theatre.js 时间轴驱动的 WebGL 手稿，藏着一把双窗联动的金钥匙</p>
+        <p class="desc">原作把一次产品发布写成了 32 章的手稿，构造线、罗马数字和金叶收藏品贯穿全卷。我们把它拆到了 87 个关键帧，还复原了隐藏章节：点击船运章的金钥匙会弹出一扇小窗，两扇窗口之间用 WebRTC 传着一路 60 帧的实时画面。</p>
+        <p class="pigments"><b>Pigments</b><i style="background:#292919" title="#292919"></i><i style="background:#f7f7ee" title="#f7f7ee"></i><i style="background:#dcdcd0" title="#dcdcd0"></i><i style="background:#BF9852" title="#BF9852 金漆"></i><i style="background:#8051ff" title="#8051ff"></i></p>
+        <p class="links"><a class="enter" href="shopify-editions/teardown.html">进入展厅</a><a class="quiet" href="https://github.com/YunyueLi/design-teardowns/tree/main/teardowns/shopify-editions" target="_blank" rel="noopener">档案</a><a class="quiet" href="https://www.shopify.com/editions/winter2026" target="_blank" rel="noopener">原作</a></p>
+      </div>
+    </article>
+
+    <article class="plate reveal" id="plate-2">
+      <span class="ghost" aria-hidden="true" data-plx="0.1">II</span>
+      <a class="frame" href="endfield/teardown.html" aria-label="进入 明日方舟：终末地 官网拆解">
+        <span class="nail"></span>
+        <b class="cnr c1"></b><b class="cnr c2"></b><b class="cnr c3"></b><b class="cnr c4"></b>
+        <span class="art"><img src="_gallery/covers/endfield.jpg" alt="明日方舟：终末地 官网首屏实录：向渊行泼墨主视觉与工业排版" width="1400" height="875" loading="lazy" data-plx="-0.045"/><span class="sheen"></span></span>
+      </a>
+      <div class="wall-label">
+        <p class="plate-no">Plate II</p>
+        <h3>明日方舟：终末地<span class="en">Arknights: Endfield</span></h3>
+        <p class="medium"><b>Medium</b>218,000 个点组成的 WebGL2 点云剧场，视频用亮度抠像上屏</p>
+        <p class="desc">原作是一座工业剧场，218,000 个点在激光之间列队成像。E.P.S 粒子装置已经按原着色器在拆解页里逐字重写，连故障抖动的 ±10 用的都是原值。</p>
+        <p class="pigments"><b>Pigments</b><i style="background:#191919" title="#191919"></i><i style="background:#fffa00" title="#fffa00 工业黄"></i><i style="background:#d9d9d9" title="#d9d9d9"></i><i style="background:#999999" title="#999"></i></p>
+        <p class="links"><a class="enter" href="endfield/teardown.html">进入展厅</a><a class="quiet" href="https://github.com/YunyueLi/design-teardowns/tree/main/teardowns/endfield" target="_blank" rel="noopener">档案</a><a class="quiet" href="https://endfield.hypergryph.com/" target="_blank" rel="noopener">原作</a></p>
+      </div>
+    </article>
+  </section>
+
+  <!-- ================= THE CATALOGUE ================= -->
+  <section class="salon catalogue" id="catalogue" data-mark="II">
+    <header class="salon-head reveal">
+      <p class="salon-no">The Catalogue</p>
+      <h2>藏品总目</h2>
+      <p class="salon-sub">全部 17 件展品按厅收纳，点击进入对应的拆解页；桌面端悬停行即可预览画面。</p>
+      <nav class="filters" aria-label="按展厅筛选">
+        <button type="button" data-f="all" class="on">全部<i>17</i></button>
+        <button type="button" data-f="s1">手稿与点云<i>2</i></button>
+        <button type="button" data-f="s2">应用之内<i>1</i></button>
+        <button type="button" data-f="s3">智能体群像<i>9</i></button>
+        <button type="button" data-f="s4">独立工房<i>5</i></button>
+      </nav>
+    </header>
+
+    <div class="cat-wrap reveal">
+      <ol class="cat-list">
+        <li class="cat-group" data-g="s1"><img src="_gallery/art/salon-1.jpg" alt=""/><b>Salon I</b><span>手稿与点云</span><em>2 件</em></li>
+        <li class="cat-row" data-g="s1" data-img="_gallery/covers/shopify-editions.jpg">
+          <a href="shopify-editions/teardown.html"><span class="c-no">I</span><span class="c-name">Shopify Editions Winter&nbsp;’26<em>The Renaissance Edition</em></span><span class="c-med">WebGL 手稿与双窗金钥匙</span><span class="c-pig"><i style="background:#292919"></i><i style="background:#f7f7ee"></i><i style="background:#BF9852"></i></span><span class="c-go">&rarr;</span></a>
+        </li>
+        <li class="cat-row" data-g="s1" data-img="_gallery/covers/endfield.jpg">
+          <a href="endfield/teardown.html"><span class="c-no">II</span><span class="c-name">明日方舟：终末地<em>Arknights: Endfield</em></span><span class="c-med">218,000 点的粒子剧场</span><span class="c-pig"><i style="background:#191919"></i><i style="background:#fffa00"></i><i style="background:#d9d9d9"></i></span><span class="c-go">&rarr;</span></a>
+        </li>
+
+        <li class="cat-group" data-g="s2"><img src="_gallery/art/salon-2.jpg" alt=""/><b>Salon II</b><span>应用之内</span><em>1 件</em></li>
+        <li class="cat-row" data-g="s2" data-img="_gallery/covers/comet.jpg">
+          <a href="comet/teardown.html"><span class="c-no">III</span><span class="c-name">Comet<em>Perplexity 的原生浏览器</em></span><span class="c-med">解包出来的原生界面</span><span class="c-pig"><i style="background:#091717"></i><i style="background:#21808d"></i><i style="background:#1FB8CD"></i></span><span class="c-go">&rarr;</span></a>
+        </li>
+
+        <li class="cat-group" data-g="s3"><img src="_gallery/art/salon-3.jpg" alt=""/><b>Salon III</b><span>智能体群像</span><em>9 件</em></li>
+        <li class="cat-row" data-g="s3" data-img="_gallery/covers/linear.jpg">
+          <a href="linear/teardown.html"><span class="c-no">IV</span><span class="c-name">Linear<em>The system for product development</em></span><span class="c-med">深色精密仪表盘</span><span class="c-pig"><i style="background:#08090a"></i><i style="background:#f7f8f8"></i><i style="background:#3b3d45"></i></span><span class="c-go">&rarr;</span></a>
+        </li>
+        <li class="cat-row" data-g="s3" data-img="_gallery/covers/moonshot.jpg">
+          <a href="moonshot/teardown.html"><span class="c-no">V</span><span class="c-name">Moonshot AI<em>月之暗面</em></span><span class="c-med">日食光环与色散字</span><span class="c-pig"><i style="background:#000000"></i><i style="background:#737373"></i><i style="background:#ffffff"></i></span><span class="c-go">&rarr;</span></a>
+        </li>
+        <li class="cat-row" data-g="s3" data-img="_gallery/covers/tutti.jpg">
+          <a href="tutti/teardown.html"><span class="c-no">VI</span><span class="c-name">tutti<em>Where people and agents build in tune</em></span><span class="c-med">电影黑场上的 macOS 窗</span><span class="c-pig"><i style="background:#05070d"></i><i style="background:#5b69e6"></i><i style="background:#f2f2f6"></i></span><span class="c-go">&rarr;</span></a>
+        </li>
+        <li class="cat-row" data-g="s3" data-img="_gallery/covers/ojo.jpg">
+          <a href="ojo/teardown.html"><span class="c-no">VII</span><span class="c-name">OJO<em>Design agent team workspace</em></span><span class="c-med">星夜叙事与打字机代码</span><span class="c-pig"><i style="background:#000000"></i><i style="background:#fff8eb"></i><i style="background:#5f86a8"></i></span><span class="c-go">&rarr;</span></a>
+        </li>
+        <li class="cat-row" data-g="s3" data-img="_gallery/covers/converge.jpg">
+          <a href="converge/teardown.html"><span class="c-no">VIII</span><span class="c-name">Converge AI<em>The gateway to AI-native business</em></span><span class="c-med">黑白双色与汇聚粒子球</span><span class="c-pig"><i style="background:#0f0f0f"></i><i style="background:#fafafa"></i><i style="background:#0285ff"></i></span><span class="c-go">&rarr;</span></a>
+        </li>
+        <li class="cat-row" data-g="s3" data-img="_gallery/covers/chatgpt.jpg">
+          <a href="chatgpt/teardown.html"><span class="c-no">IX</span><span class="c-name">ChatGPT<em>OpenAI overview</em></span><span class="c-med">白底提示卡海</span><span class="c-pig"><i style="background:#fcfcfc"></i><i style="background:#0d0d0d"></i><i style="background:#cecece"></i></span><span class="c-go">&rarr;</span></a>
+        </li>
+        <li class="cat-row" data-g="s3" data-img="_gallery/covers/notion.jpg">
+          <a href="notion/teardown.html"><span class="c-no">X</span><span class="c-name">Notion<em>The AI workspace</em></span><span class="c-med">白纸工作台与高亮胶囊</span><span class="c-pig"><i style="background:#ffffff"></i><i style="background:#03c1ba"></i><i style="background:#1a73e8"></i></span><span class="c-go">&rarr;</span></a>
+        </li>
+        <li class="cat-row" data-g="s3" data-img="_gallery/covers/gemini.jpg">
+          <a href="gemini/teardown.html"><span class="c-no">XI</span><span class="c-name">Gemini<em>Google Gemini</em></span><span class="c-med">柔光渐变的对话入口</span><span class="c-pig"><i style="background:#1f1f1f"></i><i style="background:#0b57d0"></i><i style="background:#a8c7fa"></i></span><span class="c-go">&rarr;</span></a>
+        </li>
+        <li class="cat-row" data-g="s3" data-img="_gallery/covers/lovart.jpg">
+          <a href="lovart/teardown.html"><span class="c-no">XII</span><span class="c-name">Lovart<em>AI design agent</em></span><span class="c-med">衬线标题与智能体画布</span><span class="c-pig"><i style="background:#100f09"></i><i style="background:#f5f4ef"></i><i style="background:#3b82f6"></i></span><span class="c-go">&rarr;</span></a>
+        </li>
+
+        <li class="cat-group" data-g="s4"><img src="_gallery/art/salon-4.jpg" alt=""/><b>Salon IV</b><span>独立工房</span><em>5 件</em></li>
+        <li class="cat-row" data-g="s4" data-img="_gallery/covers/latrix.jpg">
+          <a href="latrix/teardown.html"><span class="c-no">XIII</span><span class="c-name">Latrix<em>We create digital lives</em></span><span class="c-med">米白展墙与转体巨衬线</span><span class="c-pig"><i style="background:#1a1815"></i><i style="background:#e8dfd3"></i><i style="background:#e07a00"></i></span><span class="c-go">&rarr;</span></a>
+        </li>
+        <li class="cat-row" data-g="s4" data-img="_gallery/covers/imlagom.jpg">
+          <a href="imlagom/teardown.html"><span class="c-no">XIV</span><span class="c-name">Lagom<em>时间的倒影</em></span><span class="c-med">纸上相册与旅行取景</span><span class="c-pig"><i style="background:#f2e9d8"></i><i style="background:#b3402a"></i><i style="background:#0d1f3c"></i></span><span class="c-go">&rarr;</span></a>
+        </li>
+        <li class="cat-row" data-g="s4" data-img="_gallery/covers/easycode.jpg">
+          <a href="easycode/teardown.html"><span class="c-no">XV</span><span class="c-name">EasyCode<em>把刷题变成被指导的练习</em></span><span class="c-med">白纸红笔的批改作业</span><span class="c-pig"><i style="background:#ffffff"></i><i style="background:#b3402a"></i><i style="background:#1c1b18"></i></span><span class="c-go">&rarr;</span></a>
+        </li>
+        <li class="cat-row" data-g="s4" data-img="_gallery/covers/journeypilot.jpg">
+          <a href="journeypilot/teardown.html"><span class="c-no">XVI</span><span class="c-name">JourneyPilot<em>你的旅行，背后有一支机组</em></span><span class="c-med">复古航空仪表盘</span><span class="c-pig"><i style="background:#071224"></i><i style="background:#12294b"></i><i style="background:#f2e9d8"></i></span><span class="c-go">&rarr;</span></a>
+        </li>
+        <li class="cat-row" data-g="s4" data-img="_gallery/covers/turtle-soup.jpg">
+          <a href="turtle-soup/teardown.html"><span class="c-no">XVII</span><span class="c-name">海龟汤事务所<em>AI 主持的推理之夜</em></span><span class="c-med">雨夜事务所与印章物理</span><span class="c-pig"><i style="background:#0a0806"></i><i style="background:#faf5e8"></i><i style="background:#b91c1c"></i></span><span class="c-go">&rarr;</span></a>
+        </li>
+      </ol>
+    </div>
+  </section>
+</main>
+
+<div class="preview" aria-hidden="true"><img src="_gallery/covers/shopify-editions.jpg" alt=""/><p class="p-cap">Plate</p></div>
+
+<footer class="colophon" id="colophon" data-mark="C">
+  <span class="sealm" aria-hidden="true"></span>
+  <h2>后记</h2>
+  <p class="en-h">Colophon</p>
+  <p class="body">馆里所有展品都用同一套方法制作：无头浏览器读取原站真实的计算样式和设计 token；资产、样式和脚本源代码全部存档并逐行精读；再用被拆对象自己的视觉语言，写成互动拆解页和五份文档（设计解构、复刻指南、出处与方法、事实核查、设计评审）。</p>
+  <p class="body">代码以 MIT 授权，原创内容以 CC BY 4.0 授权。馆藏的第三方研究素材归各权利人所有，只用于研究比对；权利人可以按 NOTICE 里的流程要求撤下。</p>
+  <p class="gh-row">
+    <a class="enter" href="https://github.com/YunyueLi/design-teardowns" target="_blank" rel="noopener">GitHub 仓库</a>
+    <a class="quiet" href="https://github.com/YunyueLi/design-teardowns/blob/main/NOTICE" target="_blank" rel="noopener">NOTICE</a>
+    <a class="quiet" href="https://github.com/YunyueLi/design-teardowns/tree/main/skills/design-teardown" target="_blank" rel="noopener">拆解技能</a>
+  </p>
+  <p class="fine">Bound MMXXVI, set in Cinzel, EB Garamond and Source Han Serif<br/><span>每个数值都有出处，每条推断都有标注。</span></p>
+</footer>
+
+<nav class="spine" aria-label="快捷导航">
+  <a href="#masters">I</a>
+  <span class="tick"></span>
+  <a href="#catalogue">II</a>
+  <span class="tick"></span>
+  <a href="#colophon">✦</a>
+</nav>
+
+<script>
+(function(){
+  var rm = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* section reveals */
+  var reveals = [].slice.call(document.querySelectorAll('.reveal'));
+  if (rm || !('IntersectionObserver' in window)) {
+    reveals.forEach(function(el){ el.classList.add('in'); });
+  } else {
+    var io = new IntersectionObserver(function(es){
+      es.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+    }, {threshold:.12, rootMargin:'0px 0px -6% 0px'});
+    reveals.forEach(function(el){ io.observe(el); });
+  }
+
+  /* catalogue rows: staggered entrance per visible batch */
+  var rows = [].slice.call(document.querySelectorAll('.cat-row'));
+  function stagger(list){
+    list.forEach(function(r,i){
+      r.classList.remove('in');
+      r.style.transitionDelay = Math.min(i*36, 500) + 'ms';
+      requestAnimationFrame(function(){ requestAnimationFrame(function(){ r.classList.add('in'); }); });
+    });
+  }
+  if (rm) { rows.forEach(function(r){ r.classList.add('in'); }); }
+  else {
+    var ro = new IntersectionObserver(function(es){
+      es.forEach(function(e){
+        if(!e.isIntersecting) return;
+        ro.disconnect();
+        stagger(rows.filter(function(r){ return r.style.display !== 'none'; }));
+      });
+    }, {threshold:.05});
+    var wrap = document.querySelector('.cat-wrap');
+    if (wrap) ro.observe(wrap);
+  }
+
+  /* salon filters */
+  var buttons = [].slice.call(document.querySelectorAll('.filters button'));
+  var groups = [].slice.call(document.querySelectorAll('.cat-group'));
+  function applyFilter(f){
+    buttons.forEach(function(b){ b.classList.toggle('on', b.dataset.f === f); });
+    groups.forEach(function(g){ g.style.display = (f === 'all' || g.dataset.g === f) ? '' : 'none'; });
+    var visible = [];
+    rows.forEach(function(r){
+      var show = (f === 'all' || r.dataset.g === f);
+      r.style.display = show ? '' : 'none';
+      if (show) visible.push(r);
+    });
+    if (!rm) stagger(visible); else visible.forEach(function(r){ r.classList.add('in'); });
+  }
+  buttons.forEach(function(b){ b.addEventListener('click', function(){ applyFilter(b.dataset.f); }); });
+
+  /* hero index links can preselect a filter */
+  [].slice.call(document.querySelectorAll('[data-filter]')).forEach(function(a){
+    a.addEventListener('click', function(){ applyFilter(a.dataset.filter); });
+  });
+
+  /* cursor-following preview frame */
+  var pv = document.querySelector('.preview');
+  var pimg = pv.querySelector('img');
+  var pcap = pv.querySelector('.p-cap');
+  var canHover = matchMedia('(hover:hover)').matches && !rm;
+  if (canHover) {
+    var px = 0, py = 0, tx = 0, ty = 0, tilt = 0, lastX = 0, active = false, raf = null;
+    function move(){
+      var dx = tx - px;
+      px += dx * .14; py += (ty - py) * .14;
+      tilt += ((tx - lastX) * .05 - tilt) * .12;
+      lastX = tx;
+      if (tilt > 4) tilt = 4; if (tilt < -4) tilt = -4;
+      pv.style.transform = 'translate3d(' + px + 'px,' + py + 'px,0) rotate(' + tilt + 'deg)';
+      if (active || Math.abs(dx) > .3) raf = requestAnimationFrame(move); else raf = null;
+    }
+    rows.forEach(function(r){
+      var a = r.querySelector('a');
+      a.addEventListener('mouseenter', function(){
+        pimg.src = r.dataset.img;
+        pcap.textContent = 'Plate ' + r.querySelector('.c-no').textContent;
+        active = true; pv.classList.add('on');
+        if (!raf) raf = requestAnimationFrame(move);
+      });
+      a.addEventListener('mouseleave', function(){ active = false; pv.classList.remove('on'); });
+    });
+    document.addEventListener('mousemove', function(e){
+      var w = pv.offsetWidth || 330, h = pv.offsetHeight || 240;
+      tx = Math.min(e.clientX + 30, innerWidth - w - 16);
+      ty = Math.min(Math.max(e.clientY - h * .5, 12), innerHeight - h - 12);
+      if (active && !raf) raf = requestAnimationFrame(move);
+    }, {passive:true});
+  }
+
+  /* gentle scroll parallax for ghosts and grand plate art */
+  var plx = [].slice.call(document.querySelectorAll('[data-plx]'));
+  if (!rm && plx.length) {
+    var ticking = false;
+    function para(){
+      ticking = false;
+      var vh = innerHeight;
+      plx.forEach(function(el){
+        var r = el.getBoundingClientRect();
+        if (r.bottom < -80 || r.top > vh + 80) return;
+        var c = (r.top + r.height/2 - vh/2) / vh;
+        var y = c * parseFloat(el.dataset.plx) * 100;
+        var base = el.classList.contains('ghost') ? 'translateX(-50%) ' : '';
+        var scale = el.tagName === 'IMG' && el.closest('.art') ? ' scale(1.09)' : '';
+        el.style.transform = base + 'translate3d(0,' + y + 'px,0)' + scale;
+      });
+    }
+    addEventListener('scroll', function(){ if (!ticking){ ticking = true; requestAnimationFrame(para); } }, {passive:true});
+    para();
+  }
+
+  /* top bar, progress, active section */
+  var bar = document.getElementById('progress');
+  var hero = document.querySelector('.portal');
+  function onScroll(){
+    var d = document.documentElement;
+    var max = d.scrollHeight - d.clientHeight;
+    bar.style.transform = 'scaleX(' + (max ? d.scrollTop/max : 0) + ')';
+    document.body.classList.toggle('scrolled', window.scrollY > hero.offsetHeight * .6);
+  }
+  addEventListener('scroll', onScroll, {passive:true}); onScroll();
+
+  var marks = [].slice.call(document.querySelectorAll('[data-mark]'));
+  var so = new IntersectionObserver(function(es){
+    es.forEach(function(e){
+      if(!e.isIntersecting) return;
+      var id = e.target.id;
+      [].slice.call(document.querySelectorAll('.spine a, .bar-nav a')).forEach(function(a){
+        a.classList.toggle('on', (a.getAttribute('href')||'') === '#'+id);
+      });
+    });
+  }, {rootMargin:'-38% 0px -55% 0px'});
+  marks.forEach(function(s){ so.observe(s); });
+})();
+</script>
+</body>
+</html>

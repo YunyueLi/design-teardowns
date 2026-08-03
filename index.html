@@ -1,23 +1,28 @@
 <!doctype html>
 <html lang="zh-CN">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Design Teardown — 顶级产品设计逆向拆解</title>
-<meta http-equiv="refresh" content="0; url=teardowns/index.html" />
-<link rel="canonical" href="teardowns/index.html" />
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>拆解画廊 Design Teardowns</title>
+<meta http-equiv="refresh" content="0; url=teardowns/index.html"/>
+<link rel="canonical" href="teardowns/index.html"/>
 <style>
-  html,body{margin:0;height:100%;background:#08090B;color:#F4F6F5;
-    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif;
-    display:grid;place-items:center}
-  a{color:#1FB8CD;font-size:18px;text-decoration:none;border-bottom:1px solid rgba(31,184,205,.4);padding-bottom:2px}
-  p{color:rgba(244,246,245,.6);font-size:14px;margin-top:14px}
+  :root{--wall:#f2ecdd;--ink:#241f12;--ink2:rgba(36,31,18,.62);--gold:#a2823c;--rubric:#93321b}
+  @media (prefers-color-scheme: dark){:root{--wall:#161209;--ink:#eae1c8;--ink2:rgba(234,225,200,.62);--gold:#b6934a;--rubric:#c65b3d}}
+  html,body{margin:0;height:100%;background:var(--wall);color:var(--ink);
+    font-family:"Songti SC","STSong","Noto Serif SC",serif;display:grid;place-items:center;text-align:center}
+  .k{font-size:12px;letter-spacing:.4em;text-indent:.4em;color:var(--rubric);margin-bottom:16px}
+  a{color:var(--ink);font-size:20px;letter-spacing:.2em;text-decoration:none;
+    border:1px solid var(--ink);padding:14px 30px;display:inline-block;transition:all .3s}
+  a:hover{background:var(--ink);color:var(--wall)}
+  p{color:var(--ink2);font-size:13px;margin-top:18px;letter-spacing:.06em}
 </style>
 </head>
 <body>
-  <div style="text-align:center">
-    <a href="teardowns/index.html">进入设计拆解收藏馆 →</a>
-    <p>若未自动跳转,点上方链接。建议联网打开(标题字体经 CDN 加载,离线则回退系统字体)。</p>
+  <div>
+    <div class="k">DESIGN TEARDOWNS</div>
+    <a href="teardowns/index.html">进入拆解画廊</a>
+    <p>页面会自动跳转；未跳转时请点击上方按钮。</p>
   </div>
 </body>
 </html>

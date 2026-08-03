@@ -60,6 +60,11 @@ def main():
     ap.add_argument("--title", default="Design Teardown")
     a = ap.parse_args()
     root = pathlib.Path(a.dir)
+    existing = root / "index.html"
+    if existing.exists() and "the gallery wall" in existing.read_text(encoding="utf-8"):
+        print("teardowns/index.html 是手工维护的画廊页（拆解画廊），本脚本已停用。")
+        print("新增站点时，请在 index.html 里复制一个 <article class=\"plate\"> 区块并顺延编号。")
+        return
     sites = sorted([d for d in root.iterdir() if d.is_dir() and not d.name.startswith("_")
                     and (d / "teardown.html").exists()])
     cards = "\n".join(card(d) for d in sites)

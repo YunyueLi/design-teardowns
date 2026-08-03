@@ -1,102 +1,125 @@
-# Design Teardowns
+<div align="center">
 
-> Reverse-engineer world-class product landing pages into **source-level** design teardowns — real extracted design tokens, evidence-backed analysis, each rebuilt in the subject's own visual language.
->
-> 把顶级产品落地页拆到可复刻的每一个数值:真实抽取的设计 token 加逐值可回溯的分析,用被拆对象自己的视觉语言重建。
+<a href="https://yunyueli.github.io/design-teardowns/teardowns/index.html">
+<img src="teardowns/_gallery/art/banner.jpg" alt="Engraved gallery headpiece" width="760"/>
+</a>
 
-[![License: MIT (code)](https://img.shields.io/badge/code-MIT-blue.svg)](LICENSE-CODE) [![License: CC BY 4.0 (content)](https://img.shields.io/badge/content-CC%20BY%204.0-lightgrey.svg)](LICENSE) [![Claude Agent Skill](https://img.shields.io/badge/Claude-Agent%20Skill-8A3FFC.svg)](skills/design-teardown) ![No build](https://img.shields.io/badge/build-none-brightgreen.svg)
+# 拆解画廊
 
-**Live gallery:** https://yunyueli.github.io/design-teardowns/ — or clone and double-click `index.html`.
+### Design Teardowns
 
-Design Teardowns is two things in one repo:
+Seventeen studies of living pages, with every colour, every letterform<br/>and every easing curve measured from the work itself.
 
-1. **A gallery of 17 in-depth teardowns** — famous AI-native products (Comet, Linear, Notion, ChatGPT, Gemini), flagship marketing sites (Shopify Editions, Arknights: Endfield), and indie work. Each is a self-contained interactive page plus design docs, built in that product's own visual language.
-2. **A reusable Claude Agent Skill** — [`design-teardown`](skills/design-teardown) — that produces one for any URL: it pulls real computed styles and design tokens with Playwright, then writes the teardown page, the replication docs, and an adversarial self-review.
+十七座顶级落地页的设计逆向。每一个颜色、每一个字号、每一条缓动曲线，都从原作里实际测量得来。
 
-The principle throughout is **facts, not vibes**: every color, font, easing curve, and duration is measured from the live site, never eyeballed.
+<br/>
 
-## The teardowns
+<a href="https://yunyueli.github.io/design-teardowns/teardowns/index.html"><img src="https://img.shields.io/badge/%E8%BF%9B%E5%85%A5%E7%94%BB%E5%BB%8A-Enter%20the%20Gallery-93321b?style=for-the-badge&labelColor=241f12" alt="Enter the gallery"/></a>
 
-| Site | Teardown | Signature look |
-|---|---|---|
-| **Comet** (flagship, native app) | [`teardowns/comet/`](teardowns/comet/teardown.html) | Cosmic planet motif, source-level tokens, real CDP recording |
-| Linear | [`teardowns/linear/`](teardowns/linear/teardown.html) | Dark precision, animated agent dot-matrix |
-| Moonshot AI | [`teardowns/moonshot/`](teardowns/moonshot/teardown.html) | Pure black, eclipse halo, brand-type RGB glitch |
-| tutti | [`teardowns/tutti/`](teardowns/tutti/teardown.html) | Cinematic black, parallax hero, macOS window frame |
-| OJO | [`teardowns/ojo/`](teardowns/ojo/teardown.html) | Starry-night narrative, typewriter code, skill marquee |
-| Converge AI | [`teardowns/converge/`](teardowns/converge/teardown.html) | Minimal black-and-white, floating converging orbs |
-| ChatGPT | [`teardowns/chatgpt/`](teardowns/chatgpt/teardown.html) | Minimal white, prompt-card sea, watercolor base |
-| Notion | [`teardowns/notion/`](teardowns/notion/teardown.html) | Friendly white, highlight pills, hand-drawn avatars |
-| Gemini | [`teardowns/gemini/`](teardowns/gemini/teardown.html) | Soft glow gradients, rounded chat entry |
-| Lovart | [`teardowns/lovart/`](teardowns/lovart/teardown.html) | Elegant serif, agent thinking-process visualized |
-| Latrix | [`teardowns/latrix/`](teardowns/latrix/teardown.html) | Off-white gallery wall, giant Playfair serif, twisting wordmark helix |
-| **Shopify Editions W26** | [`teardowns/shopify-editions/`](teardowns/shopify-editions/teardown.html) | Renaissance manuscript: da Vinci construction lines, Theatre.js-driven WebGL, a two-window WebRTC key easter egg |
-| **Arknights: Endfield** | [`teardowns/endfield/`](teardowns/endfield/teardown.html) | Industrial HUD, 218k-point E.P.S point-cloud ritual, luminance-keyed FX pipeline |
-| Lagom (imlagom) | [`teardowns/imlagom/`](teardowns/imlagom/teardown.html) | Paper viewfinder: travel photo annuals, quiet personal-site typography |
-| EasyCode | [`teardowns/easycode/`](teardowns/easycode/teardown.html) | White paper and red pen -- a graded-homework motif across sixteen screens |
-| JourneyPilot | [`teardowns/journeypilot/`](teardowns/journeypilot/teardown.html) | Retro-aviation cockpit: crew instrument-panel dashboards |
-| 海龟汤事务所 | [`teardowns/turtle-soup/`](teardowns/turtle-soup/teardown.html) | Rainy-night detective bureau, stamp-press physics on case files |
+[![License: MIT (code)](https://img.shields.io/badge/code-MIT-blue.svg)](LICENSE-CODE)
+[![License: CC BY 4.0 (content)](https://img.shields.io/badge/content-CC%20BY%204.0-lightgrey.svg)](LICENSE)
+[![Claude Agent Skill](https://img.shields.io/badge/Claude-Agent%20Skill-8A3FFC.svg)](skills/design-teardown)
+![No build](https://img.shields.io/badge/build-none-brightgreen.svg)
 
-Each folder holds: `teardown.html` (interactive), `设计解构.md` / `复刻指南.md` / `出处与方法.md` (deconstruction, replication guide, provenance), `事实核查.md` / `设计评审.md` (fact-check and design review), `design-tokens.css`, `tokens.json`, and as-seen screenshots. Docs are in Chinese; tokens and code are language-neutral.
+</div>
 
-> **On assets.** This is the single archive repo: each teardown's `real-assets/` keeps copies of the third-party materials referenced during analysis (webfonts, media, production source bundles, captured geometry) strictly for design research, verification, and comparison (see [NOTICE](NOTICE)). Those materials belong to their owners and are excluded from this repo's licenses. Design tokens are factual measurements; the analysis and reimplemented CSS are original work.
+<br/>
 
-## Use the skill
+Every teardown here follows one rule: facts over vibes. A headless browser reads the live site's computed styles and design tokens, all assets and production source are archived, and the analysis is rebuilt in the subject's own visual language. Numbers are labeled measured or inferred, and each one can be traced back to its source.
 
-Ask in plain language — *"tear down the design of https://linear.app"*, *"reverse-engineer stripe.com's real colors, fonts and easing"*, *"扒出某站的真实配色、字体、缓动"* — and the skill runs the full pipeline.
+每份拆解都守同一条规矩：不凭感觉，只认实测。无头浏览器读取线上站点真实的计算样式和设计 token，资产与生产源码全部存档，分析用被拆对象自己的视觉语言重建。数值分「实测」与「推断」两种口径，每一个都能回溯到出处。
 
-**Install (Claude Code) — pick one:**
+## 馆内一瞥 A glimpse inside
 
-Plugin marketplace, two lines:
+<table>
+<tr>
+<td width="33%"><a href="https://yunyueli.github.io/design-teardowns/teardowns/shopify-editions/teardown.html"><img src="teardowns/_gallery/covers/shopify-editions.jpg" alt="Shopify Editions Winter '26"/></a><p align="center"><sub><b>Shopify Editions Winter ’26</b><br/>Renaissance manuscript, Theatre.js, a two-window WebRTC easter egg</sub></p></td>
+<td width="33%"><a href="https://yunyueli.github.io/design-teardowns/teardowns/endfield/teardown.html"><img src="teardowns/_gallery/covers/endfield.jpg" alt="Arknights: Endfield"/></a><p align="center"><sub><b>Arknights: Endfield</b><br/>Industrial HUD with a 218,000-point WebGL2 particle theatre</sub></p></td>
+<td width="33%"><a href="https://yunyueli.github.io/design-teardowns/teardowns/comet/teardown.html"><img src="teardowns/_gallery/covers/comet.jpg" alt="Comet"/></a><p align="center"><sub><b>Comet</b><br/>A native browser, unpacked from resources.pak and recorded frame by frame</sub></p></td>
+</tr>
+<tr>
+<td width="33%"><a href="https://yunyueli.github.io/design-teardowns/teardowns/moonshot/teardown.html"><img src="teardowns/_gallery/covers/moonshot.jpg" alt="Moonshot AI"/></a><p align="center"><sub><b>Moonshot AI</b><br/>An eclipse halo on pure black, with RGB-glitched brand type</sub></p></td>
+<td width="33%"><a href="https://yunyueli.github.io/design-teardowns/teardowns/journeypilot/teardown.html"><img src="teardowns/_gallery/covers/journeypilot.jpg" alt="JourneyPilot"/></a><p align="center"><sub><b>JourneyPilot</b><br/>Retro-aviation cockpit dashboards in midnight blue</sub></p></td>
+<td width="33%"><a href="https://yunyueli.github.io/design-teardowns/teardowns/turtle-soup/teardown.html"><img src="teardowns/_gallery/covers/turtle-soup.jpg" alt="海龟汤事务所"/></a><p align="center"><sub><b>海龟汤事务所</b><br/>A rainy-night detective bureau with stamp-press physics</sub></p></td>
+</tr>
+</table>
+
+<div align="center"><sub>更多展品在画廊里：<a href="https://yunyueli.github.io/design-teardowns/teardowns/index.html">yunyueli.github.io/design-teardowns</a></sub></div>
+
+## 藏品总目 The catalogue
+
+| Plate | 作品 | Signature | 进入 |
+|:--|:--|:--|:--|
+| I | **Shopify Editions Winter ’26** | Renaissance manuscript: construction lines, Theatre.js keyframes, a two-window WebRTC key easter egg | [Live](https://yunyueli.github.io/design-teardowns/teardowns/shopify-editions/teardown.html) / [档案](teardowns/shopify-editions/) |
+| II | **明日方舟：终末地** Arknights: Endfield | Industrial HUD, a 218,000-point E.P.S particle theatre, luminance-keyed video FX | [Live](https://yunyueli.github.io/design-teardowns/teardowns/endfield/teardown.html) / [档案](teardowns/endfield/) |
+| III | **Comet** | Native-app reverse engineering: resources.pak, source-level tokens, CDP frame capture | [Live](https://yunyueli.github.io/design-teardowns/teardowns/comet/teardown.html) / [档案](teardowns/comet/) |
+| IV | **Linear** | Dark precision dashboard with an animated agent dot matrix | [Live](https://yunyueli.github.io/design-teardowns/teardowns/linear/teardown.html) / [档案](teardowns/linear/) |
+| V | **Moonshot AI** | Pure black, an eclipse halo, RGB-glitched brand type | [Live](https://yunyueli.github.io/design-teardowns/teardowns/moonshot/teardown.html) / [档案](teardowns/moonshot/) |
+| VI | **tutti** | Cinematic black stage framed by a macOS window | [Live](https://yunyueli.github.io/design-teardowns/teardowns/tutti/teardown.html) / [档案](teardowns/tutti/) |
+| VII | **OJO** | Starry-night narrative with typewriter code and a skill marquee | [Live](https://yunyueli.github.io/design-teardowns/teardowns/ojo/teardown.html) / [档案](teardowns/ojo/) |
+| VIII | **Converge AI** | Minimal black and white around one slowly converging orb | [Live](https://yunyueli.github.io/design-teardowns/teardowns/converge/teardown.html) / [档案](teardowns/converge/) |
+| IX | **ChatGPT** | Restrained white, a sea of prompt cards on a watercolor base | [Live](https://yunyueli.github.io/design-teardowns/teardowns/chatgpt/teardown.html) / [档案](teardowns/chatgpt/) |
+| X | **Notion** | Friendly white with highlight pills and hand-drawn avatars | [Live](https://yunyueli.github.io/design-teardowns/teardowns/notion/teardown.html) / [档案](teardowns/notion/) |
+| XI | **Gemini** | Soft glow gradients around a rounded chat entry | [Live](https://yunyueli.github.io/design-teardowns/teardowns/gemini/teardown.html) / [档案](teardowns/gemini/) |
+| XII | **Lovart** | Elegant serif type over a visualized agent canvas | [Live](https://yunyueli.github.io/design-teardowns/teardowns/lovart/teardown.html) / [档案](teardowns/lovart/) |
+| XIII | **Latrix** | Off-white gallery wall with a twisting Playfair wordmark | [Live](https://yunyueli.github.io/design-teardowns/teardowns/latrix/teardown.html) / [档案](teardowns/latrix/) |
+| XIV | **Lagom** | Paper viewfinder: travel photo annuals in quiet serif type | [Live](https://yunyueli.github.io/design-teardowns/teardowns/imlagom/teardown.html) / [档案](teardowns/imlagom/) |
+| XV | **EasyCode** | White paper and red pen, a graded-homework motif across 16 screens | [Live](https://yunyueli.github.io/design-teardowns/teardowns/easycode/teardown.html) / [档案](teardowns/easycode/) |
+| XVI | **JourneyPilot** | Retro-aviation cockpit dashboards across 11 screens | [Live](https://yunyueli.github.io/design-teardowns/teardowns/journeypilot/teardown.html) / [档案](teardowns/journeypilot/) |
+| XVII | **海龟汤事务所** | Rainy-night detective bureau, stamp-press physics on case files | [Live](https://yunyueli.github.io/design-teardowns/teardowns/turtle-soup/teardown.html) / [档案](teardowns/turtle-soup/) |
+
+每个档案文件夹里有：`teardown.html`（互动拆解页）、五份中文文档（设计解构、复刻指南、出处与方法、事实核查、设计评审）、`design-tokens.css` 与 `tokens.json`（实测 token）、逐屏截图，以及 `real-assets/`（研究用第三方素材存档）。
+
+## 拆解技能 The skill
+
+这套拆解由一个可复用的 Claude Agent Skill 完成：[`design-teardown`](skills/design-teardown)。对任何网址说一句自然语言（例如 "tear down the design of https://linear.app" 或「扒出某站的真实配色、字体、缓动」），它会跑完整条流水线。
+
+**安装（Claude Code），三选一：**
+
+插件市场，两行命令：
 ```
 /plugin marketplace add YunyueLi/design-teardowns
 /plugin install design-teardown@design-teardowns
 ```
-Or copy the skill into your skills directory:
+或者把技能复制进技能目录：
 ```bash
 git clone https://github.com/YunyueLi/design-teardowns
 cp -r design-teardowns/skills/design-teardown ~/.claude/skills/
 ```
-Or grab the packaged skill: download [`design-teardown.skill`](design-teardown.skill) and drag it into Claude (Settings, then Skills), or unzip it into `~/.claude/skills/`.
+或者下载打包好的 [`design-teardown.skill`](design-teardown.skill)，拖进 Claude 的 Settings 里的 Skills 页，或解压到 `~/.claude/skills/`。
 
-**Run the pipeline directly** (needs Playwright: `pip install playwright && playwright install chromium`):
+**直接运行流水线**（需要 Playwright：`pip install playwright && playwright install chromium`）：
 ```bash
 python skills/design-teardown/scripts/capture_site.py --url https://example.com --out ./out/example --name Example
-python skills/design-teardown/scripts/build_index.py --dir ./out    # gallery cover for many sites
 ```
 
-## How it works
+## 方法 How it works
 
-The skill follows one pipeline, and every step leaves a verifiable artifact:
+流水线四步，每一步都留下可验证的产物：
 
-1. **Capture (real, not guessed).** Playwright reads computed styles; a server-side fetch pulls stylesheet text directly (bypassing CORS). Out come `tokens.json` and `design-tokens.css`.
-2. **Define the visual language.** Read the real base color, type, and motif; the teardown page is built in *that* language, never a shared template.
-3. **Build the page and docs.** An interactive teardown that reproduces at least one signature effect with the real easing and durations, plus the replication guide and provenance docs. Every number is tagged measured-vs-inferred.
-4. **Adversarial self-review.** A fact-check pass reconciles every number on the page against `tokens.json`, and a design review grades precision and completeness.
+1. **真实捕获。** Playwright 读取计算样式，服务端直连抓取样式表原文（绕开 CORS），产出 `tokens.json` 和 `design-tokens.css`。
+2. **定义视觉语言。** 读出原站真实的底色、字体与母题，拆解页用这套语言来做，从不套共用模板。
+3. **建页与写档。** 互动拆解页至少复刻一个署名级效果（用真实缓动与时长），配五份文档；每个数值标明实测或推断。
+4. **对抗性自审。** 事实核查把页面上每个数值与 `tokens.json` 对账，设计评审给精度与完整度打分。
 
-See [`skills/design-teardown/SKILL.md`](skills/design-teardown/SKILL.md) and its `references/` for the full method, including the native-app path (unpacking `resources.pak` and CDP frame capture) used for the Comet flagship.
+完整方法见 [`skills/design-teardown/SKILL.md`](skills/design-teardown/SKILL.md)，包括 Comet 用到的原生应用路径（解包 `resources.pak`、CDP 逐帧捕获）。
 
-## Open the examples
+## 目录结构 Repo layout
 
-- **Live:** the gallery deploys to GitHub Pages at https://yunyueli.github.io/design-teardowns/.
-- **Local, zero build:** clone, then double-click `index.html` (it redirects to the gallery). For full font fidelity, serve it locally — under `file://` the browser blocks local `@font-face`, so titles fall back to system fonts (content is unaffected):
-  ```bash
-  python3 -m http.server 8000    # then open http://localhost:8000
-  ```
-
-## Repo layout
-
-| Path | What |
+| 路径 | 内容 |
 |---|---|
-| `teardowns/` | The gallery `index.html` and one self-contained folder per site |
-| `skills/design-teardown/` | The reusable skill (SKILL.md, scripts, references) |
-| `tools/` | Extraction and recording scripts (web sites and native apps) |
-| `.claude-plugin/marketplace.json` | Makes the repo a one-command plugin marketplace |
+| `teardowns/` | 画廊 `index.html` 与每站一个独立文件夹 |
+| `teardowns/_gallery/` | 画廊页专用资源：封面、蚀刻画、字体子集 |
+| `skills/design-teardown/` | 可复用技能（SKILL.md、脚本、参考资料） |
+| `tools/` | 抓取与录制脚本（网页与原生应用） |
+| `.claude-plugin/marketplace.json` | 一条命令即可安装的插件市场配置 |
 
-## License
+## 素材与授权 Assets and licensing
 
-Code (the gallery, scripts, and the skill) is **MIT** — see [LICENSE-CODE](LICENSE-CODE). Original teardown content (docs, measured token values, our own screenshots) is **CC BY 4.0** — see [LICENSE](LICENSE). Third-party product names, logos, and any reproduced material are excluded from these grants and remain the property of their owners.
+代码（画廊、脚本、技能）以 **MIT** 授权，见 [LICENSE-CODE](LICENSE-CODE)。原创拆解内容（文档、实测 token 值、我们自己的截图）以 **CC BY 4.0** 授权，见 [LICENSE](LICENSE)。
 
-## Disclaimer
+本仓库是单一完整档案：每站 `real-assets/` 存有分析过程中引用的第三方素材（字体、媒体、生产源码、捕获的几何数据），只用于设计研究、验证与比对，见 [NOTICE](NOTICE)。这些素材归各自权利人所有，明确排除在上述授权之外。画廊页里的蚀刻装饰画为本仓库装帧时生成，作装饰用途。
 
-This is an independent educational and research design study. It is **not affiliated with, endorsed by, or sponsored by** any of the companies whose products are analyzed. All product names, logos, and trademarks belong to their respective owners and are used nominatively for identification and commentary. No proprietary fonts, video, audio, or source code from the analyzed products are redistributed here. Full terms in [NOTICE](NOTICE). If you hold rights in referenced material and want something changed, please open an issue and we will act in good faith.
+## 声明 Disclaimer
+
+这是一项独立的教学与研究性设计分析，与被分析产品的任何公司均无关联，也未获其认可或赞助。所有产品名称、标识与商标归各自所有者，仅作指称与评论之用。完整条款见 [NOTICE](NOTICE)。如果你持有其中素材的权利并希望我们做出调整，请提交 issue，我们会善意处理。
