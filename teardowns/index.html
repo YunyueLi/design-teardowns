@@ -117,8 +117,8 @@ body.scrolled .lang-fab{opacity:0;pointer-events:none}
 @media(max-width:720px){.bar-nav a:not(.gh){display:none}}
 
 /* ---------- portal: the etched hall (pinned walk) ---------- */
-.walk{position:relative;height:380svh}
-@media(max-width:860px){.walk{height:320svh}}
+.walk{position:relative;height:460svh}
+@media(max-width:860px){.walk{height:400svh}}
 .portal{
   position:sticky;top:0;height:100svh;overflow:hidden;
   display:grid;place-items:center;text-align:center;
@@ -1259,7 +1259,7 @@ body.scrolled .spine{opacity:1;pointer-events:auto}
 })();
 </script>
 <script type="importmap">
-{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js"}}
+{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"}}
 </script>
 <script type="module">
 /* The hall of measured points: ~200k gold-ink particles form the corridor,
@@ -1272,6 +1272,13 @@ body.scrolled .spine{opacity:1;pointer-events:auto}
   if (rm || !canvas) return;
   let THREE;
   try { THREE = await import('three'); } catch(e){ return; }
+  let EffectComposer, RenderPass, UnrealBloomPass, OutputPass;
+  try {
+    ({EffectComposer} = await import('three/addons/postprocessing/EffectComposer.js'));
+    ({RenderPass} = await import('three/addons/postprocessing/RenderPass.js'));
+    ({UnrealBloomPass} = await import('three/addons/postprocessing/UnrealBloomPass.js'));
+    ({OutputPass} = await import('three/addons/postprocessing/OutputPass.js'));
+  } catch(e){ EffectComposer = null; }
   let renderer;
   try {
     renderer = new THREE.WebGLRenderer({canvas, antialias:true, powerPreference:'high-performance'});
@@ -1285,7 +1292,7 @@ body.scrolled .spine{opacity:1;pointer-events:auto}
   renderer.setClearColor(NIGHT);
 
   const scene = new THREE.Scene();
-  scene.fog = new THREE.Fog(NIGHT, 18, 52);
+  scene.fog = new THREE.Fog(NIGHT, 16, 58);
   const camera = new THREE.PerspectiveCamera(55, 16/9, .1, 90);
   camera.position.set(0, 2.3, 18.5);
   scene.add(new THREE.AmbientLight(0xfff2d8, 1.1));
@@ -1331,16 +1338,17 @@ body.scrolled .spine{opacity:1;pointer-events:auto}
   /* ---------- build the point hall ---------- */
   const MOBILE = innerWidth < 700;
   const Q = MOBILE ? .3 : 1;
-  const COUNTS = { floor: 60000*Q, wall: 34000*Q, ceil: 30000*Q, frame: 4200*Q, arch: 9000*Q, air: 8000*Q };
-  const L = 40, W = 10.4, H = 7.4, Z0 = 21, Z1 = -17.4;
+  const COUNTS = { floor: 80000*Q, wall: 46000*Q, ceil: 42000*Q, frame: 3200*Q, arch: 9000*Q, air: 12000*Q };
+  const L = 62, W = 10.4, H = 7.4, Z0 = 21, Z1 = -39.4;
   const gold = new THREE.Color(0xd9b26a), goldHi = new THREE.Color(0xf3d68f);
-  const inkA = new THREE.Color(0x8a744a), dim = new THREE.Color(0x5e4e30);
-  const P = [], C = [], S = [], R = [];
-  function push(x, y, z, col, size){
+  const inkA = new THREE.Color(0x97815a), dim = new THREE.Color(0x6b5a38);
+  const P = [], C = [], S = [], R = [], T = [];
+  function push(x, y, z, col, size, tgt){
     P.push(x, y, z);
     C.push(col.r, col.g, col.b);
     S.push(size);
     R.push(Math.random(), Math.random(), Math.random(), Math.random());
+    if (tgt) T.push(tgt[0], tgt[1], tgt[2], tgt[3]); else T.push(0, 0, 0, -1);
   }
   /* floor: diamond checker, lit squares sparser */
   for (let i = 0; i < COUNTS.floor; i++){
@@ -1354,16 +1362,16 @@ body.scrolled .spine{opacity:1;pointer-events:auto}
   for (let side = -1; side <= 1; side += 2){
     for (let i = 0; i < COUNTS.wall; i++){
       const [u, v] = wallPick();
-      const bay = (Math.random()*5)|0;
+      const bay = (Math.random()*8)|0;
       const z = Z0 - 3 - bay*7.6 - u*7.6;
       const y = (1-v)*H;
-      push(side*(W/2), y, z, Math.random() < .12 ? gold : inkA, .026 + Math.random()*.012);
+      push(side*(W/2), y, z, Math.random() < .18 ? gold : inkA, .026 + Math.random()*.012);
     }
   }
   /* ceiling coffers */
   for (let i = 0; i < COUNTS.ceil; i++){
     const [u, v] = ceilPick();
-    const seg = (Math.random()*5)|0;
+    const seg = (Math.random()*8)|0;
     push((u-.5)*W, H, Z0 - 3 - seg*7.6 - v*7.6, inkA, .024 + Math.random()*.01);
   }
   /* the arch of the door */
@@ -1382,15 +1390,37 @@ body.scrolled .spine{opacity:1;pointer-events:auto}
       gold, .03 + Math.random()*.02);
   }
 
-  /* ---------- the six real paintings, framed in particles ---------- */
-  const FR = [
-    {slug:'shopify-editions', name:'Shopify Editions Winter ’26', plate:'Plate I',  side:-1, z:11.5, w:4.9,  h:3.15, video:'_gallery/live/shopify.webm'},
-    {slug:'comet',            name:'Comet',                        plate:'Plate III',side:-1, z:3.2,  w:3.9,  h:2.5},
-    {slug:'turtle-soup',      name:'Turtle Soup Bureau',           plate:'Plate XVII',side:-1,z:-3.8, w:3.15, h:2.05},
-    {slug:'endfield',         name:'Arknights: Endfield',          plate:'Plate II', side:1,  z:11.5, w:4.9,  h:3.15, video:'_gallery/live/endfield.webm'},
-    {slug:'moonshot',         name:'Moonshot AI',                  plate:'Plate V',  side:1,  z:3.2,  w:3.9,  h:2.5},
-    {slug:'linear',           name:'Linear',                       plate:'Plate IV', side:1,  z:-3.8, w:3.15, h:2.05},
+  /* ---------- all seventeen works, hung along the long corridor ---------- */
+  const WORKS = [
+    ['shopify-editions','Shopify Editions Winter ’26','I','_gallery/live/shopify.webm'],
+    ['endfield','Arknights: Endfield','II','_gallery/live/endfield.webm'],
+    ['comet','Comet','III'],
+    ['linear','Linear','IV'],
+    ['moonshot','Moonshot AI','V'],
+    ['tutti','tutti','VI'],
+    ['ojo','OJO','VII'],
+    ['converge','Converge AI','VIII'],
+    ['chatgpt','ChatGPT','IX'],
+    ['notion','Notion','X'],
+    ['gemini','Gemini','XI'],
+    ['lovart','Lovart','XII'],
+    ['latrix','Latrix','XIII'],
+    ['imlagom','Lagom','XIV'],
+    ['easycode','EasyCode','XV'],
+    ['journeypilot','JourneyPilot','XVI'],
+    ['turtle-soup','Turtle Soup Bureau','XVII'],
   ];
+  const SIZES = [[4.9,3.15],[4.9,3.15],[3.9,2.5],[3.6,2.3],[3.9,2.5],[3.5,2.25],[3.7,2.4],[3.5,2.25],[3.9,2.5],[3.6,2.3],[3.5,2.25],[3.7,2.4],[3.6,2.3],[3.9,2.5],[3.5,2.25],[3.7,2.4],[3.6,2.3]];
+  const FR = WORKS.map((wk, i) => {
+    const side = (i % 2) ? 1 : -1;
+    const row = (i / 2) | 0;
+    return {
+      slug: wk[0], name: wk[1], plate: 'Plate ' + wk[2], video: wk[3] || null,
+      side, z: 12.6 - row*5.9 - ((i % 2) ? 2.9 : 0),
+      w: SIZES[i][0], h: SIZES[i][1],
+      y: 3.35 + (((i*37) % 3) - 1) * .14,
+    };
+  });
   const loader = new Image();
   function sepiaFrom(img, w, h){
     const c = document.createElement('canvas'); c.width = 1024; c.height = Math.round(1024*h/w);
@@ -1405,13 +1435,14 @@ body.scrolled .spine{opacity:1;pointer-events:auto}
     return t;
   }
   const paintings = [];
-  FR.forEach(f => {
+  FR.forEach((f, fi) => {
     const g = new THREE.Group();
-    g.position.set(f.side*(W/2 - .1), 3.35, f.z);
+    g.position.set(f.side*(W/2 - .1), f.y, f.z);
     g.rotation.y = -f.side*Math.PI/2;
     const mat = new THREE.Mesh(new THREE.PlaneGeometry(f.w+.42, f.h+.42),
-      new THREE.MeshBasicMaterial({color:0x2a2416}));
-    const pm = new THREE.MeshBasicMaterial({color:0x161209});
+      new THREE.MeshBasicMaterial({color:0x4a3d24}));
+    /* an empty canvas glows parchment until its print arrives */
+    const pm = new THREE.MeshBasicMaterial({color:0xd8cdaf});
     const pl = new THREE.Mesh(new THREE.PlaneGeometry(f.w, f.h), pm);
     pl.position.z = .02; pl.renderOrder = 1;
     pl.userData = f; f.mesh = pl;
@@ -1419,8 +1450,8 @@ body.scrolled .spine{opacity:1;pointer-events:auto}
     paintings.push(pl);
     const img = new Image();
     img.onload = () => { f.img = img; f.sepia = sepiaFrom(img, f.w, f.h);
-      pm.map = f.sepia; pm.color.set(0xffffff); pm.needsUpdate = true; };
-    img.src = '_gallery/covers/' + f.slug + '.jpg';
+      pm.map = f.sepia; pm.color.set(0xbdbdbd); pm.needsUpdate = true; };
+    setTimeout(() => { img.src = '_gallery/covers/' + f.slug + '.jpg'; }, fi < 2 ? 0 : 150 + fi*90);
     /* particle frame: bands and corner clusters, in world coords */
     const fw = f.w+.42, fh = f.h+.42, bw = .3;
     for (let i = 0; i < COUNTS.frame; i++){
@@ -1438,8 +1469,10 @@ body.scrolled .spine{opacity:1;pointer-events:auto}
         else { u = (edge===2? -1:1)*(fw/2+bw/2) + o; v = t*(fh+bw); }
       }
       const wx = f.side*(W/2 - .1) - f.side*0.001;
-      const lz = f.z - f.side * u * (f.side>0? 1: 1) * 0 + u * (f.side>0? -1: 1);
-      push(wx, 3.35 + v, f.z + (f.side>0? -u : u), Math.random()<.3? goldHi: gold, .034 + Math.random()*.022);
+      /* on hover these points surge to a spot just before the artwork */
+      const tu = (Math.random()-.5)*f.w*.92, tv = (Math.random()-.5)*f.h*.92;
+      const tgt = [f.side*(W/2 - .1) - f.side*.14, f.y + tv, f.z + (f.side>0? -tu : tu), fi];
+      push(wx, f.y + v, f.z + (f.side>0? -u : u), Math.random()<.3? goldHi: gold, .034 + Math.random()*.022, tgt);
     }
   });
 
@@ -1449,14 +1482,17 @@ body.scrolled .spine{opacity:1;pointer-events:auto}
   geo.setAttribute('aColor', new THREE.Float32BufferAttribute(C, 3));
   geo.setAttribute('aSize', new THREE.Float32BufferAttribute(S, 1));
   geo.setAttribute('aRand', new THREE.Float32BufferAttribute(R, 4));
+  geo.setAttribute('aTarget', new THREE.Float32BufferAttribute(T, 4));
   const uni = { uTime:{value:0}, uForm:{value:0}, uScatter:{value:0}, uPix:{value:DPR},
-    uG0:{value:new THREE.Vector4(99,0,99,0)}, uG1:{value:new THREE.Vector4(99,0,99,0)} };
+    uG0:{value:new THREE.Vector4(99,0,99,0)}, uG1:{value:new THREE.Vector4(99,0,99,0)},
+    uHF:{value:-1}, uHA:{value:0} };
   const pmat = new THREE.ShaderMaterial({
     uniforms: uni, transparent: true, depthWrite: false, depthTest: true,
     blending: THREE.AdditiveBlending,
     vertexShader: `
-      attribute vec3 aColor; attribute float aSize; attribute vec4 aRand;
+      attribute vec3 aColor; attribute float aSize; attribute vec4 aRand; attribute vec4 aTarget;
       uniform float uTime, uForm, uScatter, uPix;
+      uniform float uHF, uHA;
       uniform vec4 uG0, uG1;
       varying vec3 vC; varying float vA; varying float vDA;
       void main(){
@@ -1467,21 +1503,31 @@ body.scrolled .spine{opacity:1;pointer-events:auto}
         p.x += sin(uTime*1.2 + aRand.x*6.283)*.014;
         p.y += cos(uTime*.9  + aRand.y*6.283)*.014;
         p += (aRand.xyz*2.-1.) * uScatter;
+        /* hover gravity: the frame surges toward its artwork */
+        float boost = 0.;
+        if (aTarget.w > -.5 && abs(aTarget.w - uHF) < .5 && uHA > .001){
+          float k = uHA * (0.5 + 0.5*aRand.y);
+          vec3 tp = aTarget.xyz;
+          tp.y += sin(uTime*2.4 + aRand.z*6.283) * .1 * (1.-uHA);
+          tp.z += cos(uTime*2.1 + aRand.w*6.283) * .1 * (1.-uHA);
+          p = mix(p, tp, k);
+          boost = uHA;
+        }
         vec4 mv = modelViewMatrix * vec4(p,1.);
         float viewZ = -mv.z;
         /* camera fade, per the E.P.S manner */
-        float dA = 1.0 - clamp((viewZ - 20.0) / (46.0 - 20.0), 0.0, 1.0);
+        float dA = 1.0 - clamp((viewZ - 24.0) / (58.0 - 24.0), 0.0, 1.0);
         /* glitch bands: +-10 view-space y, offset x20 in the original; scaled to our units */
         float gyR = .34, gxO = .62;
         if (abs(mv.y - uG0.x) < gyR) mv.x += gxO * uG0.y;
         if (abs(mv.y - uG0.z) < gyR) mv.x += gxO * uG0.w;
         if (abs(mv.y - uG1.x) < gyR) mv.x += gxO * uG1.y;
         if (abs(mv.y - uG1.z) < gyR) mv.x += gxO * uG1.w;
-        gl_PointSize = aSize * uPix * (340. / viewZ) * (0.35 + 0.65*dA) + 1.0;
+        gl_PointSize = (aSize * uPix * (340. / viewZ) * (0.35 + 0.65*dA) + 1.0) * (1. + boost*.6);
         gl_Position = projectionMatrix * mv;
         vC = aColor;
         vDA = dA;
-        vA = t * dA * (1. - uScatter*.28);
+        vA = t * dA * (1. - uScatter*.28) * (1. + boost*.8);
       }`,
     fragmentShader: `
       varying vec3 vC; varying float vA; varying float vDA;
@@ -1512,6 +1558,17 @@ body.scrolled .spine{opacity:1;pointer-events:auto}
   cloud.renderOrder = 2;
   scene.add(cloud);
 
+  /* bloom pipeline: the door and the gold truly glow */
+  let composer = null, bloom = null;
+  if (EffectComposer && RenderPass && UnrealBloomPass){
+    composer = new EffectComposer(renderer);
+    composer.setPixelRatio(DPR);
+    composer.addPass(new RenderPass(scene, camera));
+    bloom = new UnrealBloomPass(new THREE.Vector2(innerWidth, innerHeight), .6, .55, .8);
+    composer.addPass(bloom);
+    if (OutputPass) composer.addPass(new OutputPass());
+  }
+
   /* door light: a core and a halo */
   const glowTex = (()=>{ const c=document.createElement('canvas'); c.width=c.height=256;
     const x=c.getContext('2d');
@@ -1520,10 +1577,10 @@ body.scrolled .spine{opacity:1;pointer-events:auto}
     x.fillStyle=g; x.fillRect(0,0,256,256);
     const t=new THREE.CanvasTexture(c); t.colorSpace=THREE.SRGBColorSpace; return t; })();
   const doorGlow = new THREE.Mesh(new THREE.PlaneGeometry(3.1, 5.5),
-    new THREE.MeshBasicMaterial({color:0xfff6dd, transparent:true, opacity:.92}));
+    new THREE.MeshBasicMaterial({color:0xfff6dd, transparent:true, opacity:.92, fog:false}));
   doorGlow.position.set(0, 2.75, Z1 - .2); scene.add(doorGlow);
   const halo = new THREE.Sprite(new THREE.SpriteMaterial({map:glowTex, transparent:true,
-    opacity:.9, depthWrite:false, blending:THREE.AdditiveBlending}));
+    opacity:.9, depthWrite:false, blending:THREE.AdditiveBlending, fog:false}));
   halo.scale.set(11, 11, 1); halo.position.set(0, 2.8, Z1 + .4); scene.add(halo);
 
   /* ---------- interaction ---------- */
@@ -1585,6 +1642,7 @@ body.scrolled .spine{opacity:1;pointer-events:auto}
   function size(){
     const w = canvas.clientWidth || innerWidth, h = canvas.clientHeight || innerHeight;
     renderer.setSize(w, h, false);
+    if (composer) composer.setSize(w, h);
     camera.aspect = w/h; camera.updateProjectionMatrix();
   }
   size(); addEventListener('resize', size, {passive:true});
@@ -1620,7 +1678,7 @@ body.scrolled .spine{opacity:1;pointer-events:auto}
     glitchTick(performance.now(), p);
     const lx = window.__lookX || 0, ly = window.__lookY || 0;
     const ease = p*p*(3-2*p);
-    camera.position.z = 18.5 + (-13.9 - 18.5) * ease;
+    camera.position.z = 18.5 + (-35.9 - 18.5) * ease;
     camera.position.x = lx * 1.15;
     camera.position.y = 2.3 - ly * .45;
     camera.rotation.set(-ly*.09, -lx*.16, 0);
@@ -1632,6 +1690,17 @@ body.scrolled .spine{opacity:1;pointer-events:auto}
     const hits = ray.intersectObjects(paintings, false);
     setHover(hits.length ? hits[0].object : null);
     doorHover = !hits.length && ray.intersectObject(doorGlow, false).length > 0;
+    /* hover gravity driver */
+    if (hovered){
+      const id = FR.indexOf(hovered.userData);
+      if (id !== -1 && uni.uHF.value !== id && uni.uHA.value < .25) uni.uHF.value = id;
+      if (uni.uHF.value === id) uni.uHA.value += (1 - uni.uHA.value)*.075;
+      else uni.uHA.value += (0 - uni.uHA.value)*.12;
+    } else {
+      uni.uHA.value += (0 - uni.uHA.value)*.09;
+      if (uni.uHA.value < .01) uni.uHF.value = -1;
+    }
+    if (bloom) bloom.strength = .5 + p*.75 + uni.uHA.value*.15;
     if (hovered){
       hovered.getWorldPosition(v3); v3.y += hovered.userData.h/2 + .4;
       v3.project(camera);
@@ -1639,7 +1708,7 @@ body.scrolled .spine{opacity:1;pointer-events:auto}
       chip.style.left = (r.left + (v3.x*.5+.5)*r.width) + 'px';
       chip.style.top = (r.top + (-v3.y*.5+.5)*r.height) + 'px';
     }
-    renderer.render(scene, camera);
+    if (composer) composer.render(); else renderer.render(scene, camera);
   });
 })();
 </script>
