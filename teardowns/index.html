@@ -1575,9 +1575,11 @@ body.scrolled .spine{opacity:1;pointer-events:auto}
     }
   }
   let t = 0;
+  let pSm = 0;
   renderer.setAnimationLoop(() => {
     if (document.hidden || scrollY > walkEl.offsetHeight + 60) return;
-    const p = window.__walkP || 0;
+    pSm += ((window.__walkP || 0) - pSm) * .07;
+    const p = pSm;
     t += .016;
     uni.uTime.value = t;
     uni.uForm.value = Math.min((performance.now() - born) / 2100, 1);
