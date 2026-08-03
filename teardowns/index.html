@@ -598,7 +598,6 @@ body.scrolled .spine{opacity:1;pointer-events:auto}
 <nav class="bar" aria-label="Gallery navigation">
   <a class="bar-name" href="#top"><span class="l-en">Design Teardowns</span><span class="l-zh">拆解画廊</span></a>
   <div class="bar-nav">
-    <a href="#masters">SALON I</a>
     <a href="#catalogue">CATALOGUE</a>
     <a href="#colophon">COLOPHON</a>
     <a class="gh" href="https://github.com/YunyueLi/design-teardowns" target="_blank" rel="noopener">GITHUB</a>
@@ -657,7 +656,7 @@ body.scrolled .spine{opacity:1;pointer-events:auto}
       <span class="l-zh">十七件展品，每一个颜色、每一个字号、每一条缓动曲线，都从原作里实际测量得来。</span>
     </p>
     <nav class="rooms-index" aria-label="Salon index">
-      <a href="#masters"><i>I</i><span class="l-en">Manuscripts and Point Clouds</span><span class="l-zh">手稿与点云</span></a>
+      <a href="#catalogue" data-filter="s1"><i>I</i><span class="l-en">Manuscripts and Point Clouds</span><span class="l-zh">手稿与点云</span></a>
       <a href="#catalogue" data-filter="s2"><i>II</i><span class="l-en">Inside the Binary</span><span class="l-zh">应用之内</span></a>
       <a href="#catalogue" data-filter="s3"><i>III</i><span class="l-en">Portraits of the Agentic Age</span><span class="l-zh">智能体群像</span></a>
       <a href="#catalogue" data-filter="s4"><i>IV</i><span class="l-en">Independent Ateliers</span><span class="l-zh">独立工房</span></a>
@@ -671,7 +670,7 @@ body.scrolled .spine{opacity:1;pointer-events:auto}
 </div>
 
 <!-- ================= THE RELIQUARY: through the door ================= -->
-<section class="sanctum" id="sanctum">
+<section class="sanctum" id="sanctum" data-mark="S">
   <div class="rays" aria-hidden="true"></div>
   <div class="uvnotes" aria-hidden="true">
     <i style="--x:12%;--y:22%;--r:-8deg;--d:.05s">#BF9852</i>
@@ -729,74 +728,14 @@ body.scrolled .spine{opacity:1;pointer-events:auto}
       <span class="l-en">The key remembers the Shipping chapter.</span>
       <span class="l-zh">这把钥匙记得船运章。</span>
     </p>
-    <a class="quiet s-go" href="#masters"><span class="l-en">Salon I awaits below</span><span class="l-zh">第一展厅在下方</span></a>
+    <a class="quiet s-go" href="#catalogue"><span class="l-en">The catalogue awaits below</span><span class="l-zh">藏品总目在下方</span></a>
   </div>
 </section>
 
-<section class="foreword reveal">
-  <p>
-    <span class="l-en"><span class="cap">T</span>his gallery speaks in measured values. Every exhibit comes from a full design reverse-engineering pass: a headless browser reads the live site's computed styles, all assets and source code are archived, and the study is written in the subject's own visual language, as one interactive page and five companion documents.</span>
-    <span class="l-zh"><span class="cap">这</span>间画廊用数值说话。每一件展品都来自一次完整的设计逆向：用无头浏览器读取原站真实的计算样式，把资产和源代码全部存档，再用被拆对象自己的视觉语言，写成一页互动拆解和五份文档。</span>
-  </p>
-  <p class="fine">
-    <span class="l-en">Values marked <b>measured</b> carry their sources; values marked <b>inferred</b> are labeled as such. Everything can be traced, and everything can be recomputed.</span>
-    <span class="l-zh">页面上写「实测」的数值都有出处，写「<b>推断</b>」的都有标注。每个数值可以回溯，每条结论可以复算。</span>
-  </p>
-</section>
+
 
 <main>
-  <!-- ================= SALON I: the two masterpieces ================= -->
-  <section class="salon" id="masters" data-mark="I">
-    <header class="salon-head reveal">
-      <p class="salon-no">Salon I</p>
-      <h2><span class="l-en">Manuscripts and Point Clouds</span><span class="l-zh">手稿与点云</span></h2>
-      <p class="salon-sub">
-        <span class="l-en">Only two works hang in this salon, but each carries its complete archive: source read line by line, assets fully preserved, every citation traceable.</span>
-        <span class="l-zh">这个展厅只挂两件作品，但每件都带着完整档案：源代码逐行读过，资产全部存档，引用各有出处。</span>
-      </p>
-      <div class="salon-band"><div class="band-in"><img src="_gallery/art/salon-1.jpg" alt="" width="1400" height="480" loading="lazy"/></div></div>
-    </header>
-
-    <article class="plate reveal" id="plate-1">
-      <span class="ghost" aria-hidden="true" data-plx="0.1">I</span>
-      <a class="frame" href="shopify-editions/teardown.html" aria-label="Enter the Shopify Editions Winter '26 teardown">
-        <span class="nail"></span>
-        <b class="cnr c1"></b><b class="cnr c2"></b><b class="cnr c3"></b><b class="cnr c4"></b>
-        <span class="art"><img src="_gallery/covers/shopify-editions.jpg" alt="Shopify Editions Winter '26 hero as captured: a renaissance manuscript opening on black" width="1400" height="875" data-plx="-0.045"/><span class="sheen"></span></span>
-      </a>
-      <div class="wall-label">
-        <p class="plate-no">Plate I</p>
-        <h3>Shopify Editions Winter&nbsp;’26<span class="en">The Renaissance Edition</span></h3>
-        <p class="medium"><b>Medium</b><span class="l-en">A WebGL manuscript driven by a Theatre.js timeline, hiding a two-window golden key</span><span class="l-zh">用 Theatre.js 时间轴驱动的 WebGL 手稿，藏着一把双窗联动的金钥匙</span></p>
-        <p class="desc">
-          <span class="l-en">The original writes a product release as a 32-chapter manuscript, with construction lines, roman numerals and gilded collectibles running through the whole scroll. We took it down to 87 keyframes and restored the hidden chapter: clicking the golden key in the Shipping chapter opens a popup, and a live 60-frame stream flows between the two windows over WebRTC.</span>
-          <span class="l-zh">原作把一次产品发布写成了 32 章的手稿，构造线、罗马数字和金叶收藏品贯穿全卷。我们把它拆到了 87 个关键帧，还复原了隐藏章节：点击船运章的金钥匙会弹出一扇小窗，两扇窗口之间用 WebRTC 传着一路 60 帧的实时画面。</span>
-        </p>
-        <p class="pigments"><b>Pigments</b><i style="background:#292919" title="#292919"></i><i style="background:#f7f7ee" title="#f7f7ee"></i><i style="background:#dcdcd0" title="#dcdcd0"></i><i style="background:#BF9852" title="#BF9852"></i><i style="background:#8051ff" title="#8051ff"></i></p>
-        <p class="links"><a class="enter" href="shopify-editions/teardown.html"><span class="l-en">Enter the salon</span><span class="l-zh">进入展厅</span></a><a class="quiet" href="https://github.com/YunyueLi/design-teardowns/tree/main/teardowns/shopify-editions" target="_blank" rel="noopener"><span class="l-en">Archive</span><span class="l-zh">档案</span></a><a class="quiet" href="https://www.shopify.com/editions/winter2026" target="_blank" rel="noopener"><span class="l-en">Original</span><span class="l-zh">原作</span></a></p>
-      </div>
-    </article>
-
-    <article class="plate reveal" id="plate-2">
-      <span class="ghost" aria-hidden="true" data-plx="0.1">II</span>
-      <a class="frame" href="endfield/teardown.html" aria-label="Enter the Arknights: Endfield teardown">
-        <span class="nail"></span>
-        <b class="cnr c1"></b><b class="cnr c2"></b><b class="cnr c3"></b><b class="cnr c4"></b>
-        <span class="art"><img src="_gallery/covers/endfield.jpg" alt="Arknights: Endfield hero as captured: ink-splash key visual and industrial typography" width="1400" height="875" loading="lazy" data-plx="-0.045"/><span class="sheen"></span></span>
-      </a>
-      <div class="wall-label">
-        <p class="plate-no">Plate II</p>
-        <h3><span class="l-en">Arknights: Endfield</span><span class="l-zh">明日方舟：终末地</span><span class="en"><span class="l-en">明日方舟：终末地</span><span class="l-zh">Arknights: Endfield</span></span></h3>
-        <p class="medium"><b>Medium</b><span class="l-en">A WebGL2 point-cloud theatre of 218,000 points, video keyed by luminance</span><span class="l-zh">218,000 个点组成的 WebGL2 点云剧场，视频用亮度抠像上屏</span></p>
-        <p class="desc">
-          <span class="l-en">The original is an industrial theatre where 218,000 points fall into formation between lasers. The E.P.S particle piece has been rewritten inside our teardown page from the original shaders, down to the ±10 glitch jitter taken verbatim.</span>
-          <span class="l-zh">原作是一座工业剧场，218,000 个点在激光之间列队成像。E.P.S 粒子装置已经按原着色器在拆解页里逐字重写，连故障抖动的 ±10 用的都是原值。</span>
-        </p>
-        <p class="pigments"><b>Pigments</b><i style="background:#191919" title="#191919"></i><i style="background:#fffa00" title="#fffa00"></i><i style="background:#d9d9d9" title="#d9d9d9"></i><i style="background:#999999" title="#999"></i></p>
-        <p class="links"><a class="enter" href="endfield/teardown.html"><span class="l-en">Enter the salon</span><span class="l-zh">进入展厅</span></a><a class="quiet" href="https://github.com/YunyueLi/design-teardowns/tree/main/teardowns/endfield" target="_blank" rel="noopener"><span class="l-en">Archive</span><span class="l-zh">档案</span></a><a class="quiet" href="https://endfield.hypergryph.com/" target="_blank" rel="noopener"><span class="l-en">Original</span><span class="l-zh">原作</span></a></p>
-      </div>
-    </article>
-  </section>
+  
 
   <!-- ================= THE CATALOGUE ================= -->
   <section class="salon catalogue" id="catalogue" data-mark="II">
@@ -804,8 +743,8 @@ body.scrolled .spine{opacity:1;pointer-events:auto}
       <p class="salon-no">The Catalogue</p>
       <h2><span class="l-en">The Catalogue</span><span class="l-zh">藏品总目</span></h2>
       <p class="salon-sub">
-        <span class="l-en">All seventeen works, shelved by salon. Click a row to enter its teardown; on desktop, hovering a row previews the work.</span>
-        <span class="l-zh">全部 17 件展品按厅收纳，点击进入对应的拆解页；桌面端悬停行即可预览画面。</span>
+        <span class="l-en">All seventeen works, shelved by salon; every exhibit is a full reverse-engineering pass with its sources kept. Click a row to enter its teardown; on desktop, hovering a row previews the work.</span>
+        <span class="l-zh">全部 17 件展品按厅收纳，每件都来自一次留有出处的完整设计逆向。点击进入对应的拆解页；桌面端悬停行即可预览画面。</span>
       </p>
       <nav class="filters" aria-label="Filter by salon">
         <button type="button" data-f="all" class="on"><span class="l-en">All</span><span class="l-zh">全部</span><i>17</i></button>
@@ -904,7 +843,7 @@ body.scrolled .spine{opacity:1;pointer-events:auto}
 </footer>
 
 <nav class="spine" aria-label="Quick navigation">
-  <a href="#masters">I</a>
+  <a href="#sanctum">I</a>
   <span class="tick"></span>
   <a href="#catalogue">II</a>
   <span class="tick"></span>
