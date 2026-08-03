@@ -591,7 +591,7 @@ body.scrolled .spine{opacity:1;pointer-events:auto}
 </style>
 </head>
 <body>
-<a class="skip" href="#catalogue"><span class="l-en">Skip to the catalogue</span><span class="l-zh">跳到藏品总目</span></a>
+<a class="skip" href="#catalogue"><span class="l-en">Skip to the catalogue</span><span class="l-zh">跳到馆藏目录</span></a>
 <button class="lang-fab" id="langFab" type="button" aria-label="Switch language">中文</button>
 <div class="progress" aria-hidden="true"><i id="progress"></i></div>
 
@@ -653,7 +653,7 @@ body.scrolled .spine{opacity:1;pointer-events:auto}
     </span>
     <p class="ded">
       <span class="l-en">Seventeen studies of living pages, with every colour, every letterform and every easing curve measured from the work itself.</span>
-      <span class="l-zh">十七件展品，每一个颜色、每一个字号、每一条缓动曲线，都从原作里实际测量得来。</span>
+      <span class="l-zh">这里有十七件展品。每一个颜色、每一个字号、每一条缓动曲线，都是从原作里量出来的。</span>
     </p>
     <nav class="rooms-index" aria-label="Salon index">
       <a href="#catalogue" data-filter="s1"><i>I</i><span class="l-en">Manuscripts and Point Clouds</span><span class="l-zh">手稿与点云</span></a>
@@ -686,11 +686,11 @@ body.scrolled .spine{opacity:1;pointer-events:auto}
   </div>
   <div class="sanct-in">
     <span class="sealm" aria-hidden="true"></span>
-    <p class="s-kick"><span class="l-en">The Reliquary</span><span class="l-zh">档案圣所</span></p>
+    <p class="s-kick"><span class="l-en">The Reliquary</span><span class="l-zh">珍藏室</span></p>
     <h2 class="s-h"><span class="l-en">Every value has a source</span><span class="l-zh">每个数值都有出处</span></h2>
     <p class="s-sub">
       <span class="l-en">Beyond the door, the gallery keeps its raw material: pigments, easing curves, and one golden key.</span>
-      <span class="l-zh">门后存放着画廊的原材料：颜料、缓动曲线和一把金钥匙。</span>
+      <span class="l-zh">门后是这座画廊的家底：十七件作品的用色、三条实测的缓动曲线，还有一把金钥匙。</span>
     </p>
     <div class="pigrow" id="motes"></div>
     <svg class="curves" viewBox="0 -80 680 345" aria-hidden="true">
@@ -712,7 +712,7 @@ body.scrolled .spine{opacity:1;pointer-events:auto}
     </svg>
     <p class="s-cap">
       <span class="l-en">Pigments and curves above are measured values from the collection, keyframe handles included.</span>
-      <span class="l-zh">上面的颜料和曲线都是馆藏的实测值，关键帧手柄也包括在内。</span>
+      <span class="l-zh">颜色取自 17 个站点的实测色值；曲线取自 Shopify 关键帧的贝塞尔手柄，数值原样保留。</span>
     </p>
     <button class="key" id="keyBtn" type="button" aria-label="A golden key">
       <svg width="96" height="42" viewBox="0 0 96 42" aria-hidden="true">
@@ -726,9 +726,9 @@ body.scrolled .spine{opacity:1;pointer-events:auto}
     </button>
     <p class="s-hint">
       <span class="l-en">The key remembers the Shipping chapter.</span>
-      <span class="l-zh">这把钥匙记得船运章。</span>
+      <span class="l-zh">钥匙来自船运章，不妨按一下。</span>
     </p>
-    <a class="quiet s-go" href="#catalogue"><span class="l-en">The catalogue awaits below</span><span class="l-zh">藏品总目在下方</span></a>
+    <a class="quiet s-go" href="#catalogue"><span class="l-en">The catalogue awaits below</span><span class="l-zh">往下是全部馆藏的目录</span></a>
   </div>
 </section>
 
@@ -741,10 +741,10 @@ body.scrolled .spine{opacity:1;pointer-events:auto}
   <section class="salon catalogue" id="catalogue" data-mark="II">
     <header class="salon-head reveal">
       <p class="salon-no">The Catalogue</p>
-      <h2><span class="l-en">The Catalogue</span><span class="l-zh">藏品总目</span></h2>
+      <h2><span class="l-en">The Catalogue</span><span class="l-zh">馆藏目录</span></h2>
       <p class="salon-sub">
         <span class="l-en">All seventeen works, shelved by salon; every exhibit is a full reverse-engineering pass with its sources kept. Click a row to enter its teardown; on desktop, hovering a row previews the work.</span>
-        <span class="l-zh">全部 17 件展品按展厅收纳，每件都来自一次完整的设计逆向，所有数值都保留出处。点击进入对应的拆解页；桌面端把光标悬停在某一行上即可预览画面。</span>
+        <span class="l-zh">十七件展品都在这里，按展厅分组。点开任意一行进入拆解页；用鼠标的话，悬停就能先看到画面。</span>
       </p>
       <nav class="filters" aria-label="Filter by salon">
         <button type="button" data-f="all" class="on"><span class="l-en">All</span><span class="l-zh">全部</span><i>17</i></button>
@@ -828,7 +828,7 @@ body.scrolled .spine{opacity:1;pointer-events:auto}
   <p class="en-h"><span class="l-en">拆解画廊</span><span class="l-zh">Colophon</span></p>
   <p class="body">
     <span class="l-en">Every exhibit in this gallery is made the same way: a headless browser reads the live site's computed styles and design tokens; assets, stylesheets and script sources are archived in full and read line by line; the study is then written in the subject's own visual language, as an interactive teardown and five companion documents (deconstruction, replication guide, sources and methods, fact check, design review).</span>
-    <span class="l-zh">馆里所有展品都用同一套方法制作：无头浏览器读取原站真实的计算样式和设计 token；资产、样式和脚本源代码全部存档并逐行精读；再用被拆对象自己的视觉语言，写成互动拆解页和五份文档（设计解构、复刻指南、出处与方法、事实核查、设计评审）。</span>
+    <span class="l-zh">馆里所有展品都用同一套方法制作：无头浏览器读取原站真实的计算样式和设计 token；资产、样式和脚本源代码全部存档并逐行精读；再按原作自己的视觉语言，写成互动拆解页和五份文档（设计解构、复刻指南、出处与方法、事实核查、设计评审）。</span>
   </p>
   <p class="body">
     <span class="l-en">Code is MIT licensed; original content is CC BY 4.0. Third-party research materials in the archive belong to their owners, are kept solely for study and comparison, and will be removed in good faith on request via NOTICE.</span>
