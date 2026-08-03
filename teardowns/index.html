@@ -127,7 +127,7 @@ body.scrolled .lang-fab{opacity:0;pointer-events:none}
 .whiteout{position:absolute;inset:0;pointer-events:none;opacity:0;z-index:3;transform:scale(.6);will-change:transform,opacity;
   background:radial-gradient(circle at 50% 46%, #ffffff 0%, rgba(251,250,246,.97) 30%, rgba(251,250,246,.55) 52%, transparent 72%)}
 .whitefull{position:absolute;inset:0;pointer-events:none;opacity:0;z-index:4;
-  background:radial-gradient(120% 90% at 50% 62%, #fbfaf6, #f6f4ef 55%, #efece4)}
+  background:radial-gradient(120% 70% at 50% 36%, #ffffff 0%, #fbfaf6 38%, #f6f4ef 70%, #f6f4ef 100%)}
 .portal[data-deep] .hs .chip{opacity:0 !important}
 .hero-art{position:absolute;inset:0;transform-origin:50% 42%;will-change:transform,opacity;
   opacity:0;animation:heroin 1.8s var(--ease-out) .1s forwards}
@@ -476,7 +476,7 @@ html[data-lang="en"] .foreword .cap{font-family:"Cinzel",serif;font-weight:600}
 
 /* ---------- the reliquary: a chamber of light ---------- */
 .sanctum{
-  position:relative;min-height:100svh;overflow:hidden;
+  position:relative;min-height:100svh;overflow:hidden;margin-top:-28svh;
   display:grid;place-items:center;text-align:center;
   background:#f6f4ef;color:#1c1c1c;padding:clamp(80px,12vh,140px) 24px;
   transition:background 1.2s ease,color 1.2s ease;
@@ -489,7 +489,8 @@ html[data-lang="en"] .foreword .cap{font-family:"Cinzel",serif;font-weight:600}
   border:1px solid rgba(28,28,28,.14);border-radius:50%}
 .sanctum .rays::before{width:min(56vw,620px);aspect-ratio:1}
 .sanctum .rays::after{width:min(80vw,920px);aspect-ratio:1;border-color:rgba(28,28,28,.08)}
-.s-curtain{position:absolute;inset:0;pointer-events:none;background:url('_gallery/brand/moon.jpg') center/cover no-repeat;mix-blend-mode:multiply;opacity:.6}
+.s-curtain{position:absolute;inset:0;pointer-events:none;background:url('_gallery/brand/moon.jpg') center/cover no-repeat;mix-blend-mode:multiply;opacity:.6;
+  -webkit-mask-image:linear-gradient(to bottom,transparent 0,#000 26%,#000 94%,transparent 100%);mask-image:linear-gradient(to bottom,transparent 0,#000 26%,#000 94%,transparent 100%)}
 @media (prefers-color-scheme: dark){.s-curtain{filter:invert(1);mix-blend-mode:screen;opacity:.5}}
 .sanctum.uv .s-curtain{opacity:.14}
 .sanct-in{position:relative;max-width:860px;z-index:2}
