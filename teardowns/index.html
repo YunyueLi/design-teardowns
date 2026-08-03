@@ -133,6 +133,34 @@ body.scrolled .lang-fab{opacity:0;pointer-events:none}
   opacity:0;animation:heroin 1.8s var(--ease-out) .1s forwards}
 @keyframes heroin{from{opacity:0;transform:scale(1.07)}to{opacity:1;transform:scale(1)}}
 .hero-par{position:absolute;inset:-24px;will-change:transform}
+#hall3d{position:absolute;inset:0;width:100%;height:100%;display:none}
+.portal.gl #hall3d{display:block}
+.portal.gl .hero-par{visibility:hidden}
+.portal.gl .beam,.portal.gl #dust{display:none}
+/* particle-hall night hero: overlay colors switch to luminous ink */
+.portal.nite .hero-scrim{background:
+  radial-gradient(62% 52% at 50% 44%, rgba(20,16,9,0), rgba(20,16,9,.26) 80%),
+  linear-gradient(to bottom, rgba(20,16,9,.42), transparent 18%, transparent 64%, var(--wall) 99%)}
+.portal.nite h1,.portal.nite .ded{color:#f0e9d4}
+.portal.nite .kicker{color:#d06a48}
+.portal.nite .kicker::before,.portal.nite .kicker::after{background:#c3a054;opacity:.8}
+.portal.nite .rooms-index a{color:rgba(240,233,212,.72)}
+.portal.nite .rooms-index a:hover{color:#d06a48}
+.portal.nite .rooms-index i{color:#c3a054}
+.portal.nite .cue{color:rgba(240,233,212,.5)}
+.portal.nite .cue i{background:rgba(240,233,212,.3)}
+.portal.nite .anno{color:rgba(240,233,212,.6)}
+.portal.nite .anno i{background:#c3a054}
+.portal.nite .fleur{background:#c3a054}
+.glchip{
+  position:fixed;left:0;top:0;z-index:6;pointer-events:none;opacity:0;
+  transform:translate(-50%,-130%);transition:opacity .3s ease;
+  background:var(--card);border:1px solid var(--line-2);padding:8px 16px 7px;white-space:nowrap;
+  font-family:var(--cjk);font-size:12.5px;letter-spacing:.1em;color:#241f12;
+  box-shadow:0 10px 26px -12px rgba(36,31,18,.5);
+}
+.glchip.on{opacity:1}
+.glchip b{display:block;font-family:"Cinzel",serif;font-weight:600;font-size:8.5px;letter-spacing:.34em;color:var(--rubric);margin-bottom:1px;text-align:center}
 .hero-fit{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);
   width:max(100%,calc(150svh + 48px));height:max(100%,66.667vw)}
 .hero-fit>img{width:100%;height:100%;object-fit:fill;
@@ -454,14 +482,13 @@ html[data-lang="en"] .foreword .cap{font-family:"Cinzel",serif;font-weight:600}
   transition:background 1.2s ease,color 1.2s ease;
 }
 .sanctum .rays{
-  position:absolute;inset:-22%;pointer-events:none;opacity:.55;
-  background:repeating-conic-gradient(from 0deg at 50% 36%, rgba(195,160,84,.09) 0deg 5deg, transparent 5deg 16deg);
-  -webkit-mask:radial-gradient(closest-side at 50% 36%, #000, transparent 72%);
-  mask:radial-gradient(closest-side at 50% 36%, #000, transparent 72%);
-  transform-origin:50% 36%;
-  animation:rays 90s linear infinite;transition:opacity 1.2s ease;
+  position:absolute;inset:0;pointer-events:none;transition:opacity 1.2s ease;
+  background:radial-gradient(46% 34% at 50% 30%, rgba(255,252,238,.9), transparent 70%);
 }
-@keyframes rays{to{transform:rotate(360deg)}}
+.sanctum .rays::before,.sanctum .rays::after{content:"";position:absolute;left:50%;top:30%;transform:translate(-50%,-50%);
+  border:1px solid rgba(162,130,60,.16);border-radius:50%}
+.sanctum .rays::before{width:min(56vw,620px);aspect-ratio:1}
+.sanctum .rays::after{width:min(80vw,920px);aspect-ratio:1;border-color:rgba(162,130,60,.09)}
 .sanct-in{position:relative;max-width:860px;z-index:2}
 .sanct-in .sealm{display:block;width:84px;margin:0 auto 26px;transition:background .8s}
 .s-kick{font-family:"Cinzel",serif;font-weight:600;font-size:12px;letter-spacing:.5em;text-indent:.5em;color:var(--rubric)}
@@ -470,16 +497,18 @@ html[data-lang="en"] .foreword .cap{font-family:"Cinzel",serif;font-weight:600}
 .s-h .l-zh{font-family:var(--cjk);font-weight:700;letter-spacing:.14em;text-indent:.14em}
 .s-sub{font-family:var(--cjk);font-size:15.5px;letter-spacing:.04em;color:rgba(36,31,18,.66);max-width:44em;margin:0 auto;transition:color 1.2s}
 .s-sub .l-en{font-family:"EB Garamond",serif;font-size:17px;font-style:italic}
-/* the seventeen pigments, afloat */
-.motes{position:relative;height:110px;margin:44px auto 8px;max-width:720px}
-.mote{position:absolute;left:var(--x);top:var(--y);width:var(--s);height:var(--s);border-radius:50%;
-  background:var(--c);border:1px solid rgba(36,31,18,.25);display:block;
-  box-shadow:0 0 14px color-mix(in srgb,var(--c) 60%,transparent);
-  animation:mfloat 6s ease-in-out infinite alternate;animation-delay:var(--d);
-  transition:transform .3s var(--ease-out)}
-.mote:hover{transform:scale(1.7)}
-.mote:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
-@keyframes mfloat{from{translate:0 -7px}to{translate:0 7px}}
+/* the pigment cabinet: seventeen specimens in one row */
+.pigrow{display:flex;justify-content:center;align-items:flex-end;gap:clamp(6px,1.1vw,14px);margin:46px auto 4px;flex-wrap:wrap;max-width:780px}
+.pig{position:relative;display:flex;flex-direction:column;align-items:center;gap:8px;text-decoration:none;transition:transform .35s var(--ease-out)}
+.pig i{width:clamp(18px,2.2vw,26px);height:clamp(36px,4.4vw,54px);display:block;background:var(--c);
+  border:1px solid var(--line-2);box-shadow:inset 0 1px 0 rgba(255,255,255,.22), 0 1px 0 rgba(36,31,18,.18)}
+.pig b{font-family:"Cinzel",serif;font-weight:400;font-size:9px;letter-spacing:.06em;color:var(--ink-3)}
+.pig:hover{transform:translateY(-5px)}
+.pig .pl{position:absolute;bottom:calc(100% + 8px);left:50%;transform:translateX(-50%) translateY(4px);opacity:0;
+  transition:opacity .3s,transform .3s var(--ease-out);white-space:nowrap;background:var(--card);border:1px solid var(--line-2);
+  padding:5px 11px;font-size:11.5px;letter-spacing:.08em;color:#241f12;font-family:"EB Garamond",serif;pointer-events:none;z-index:2}
+.pig:hover .pl{opacity:1;transform:translateX(-50%)}
+.pig:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
 /* measured curves, drawn in light */
 .curves{width:min(680px,86vw);margin:26px auto 0;display:block;overflow:visible}
 .curves path{fill:none;stroke:var(--gold);stroke-width:1.6;stroke-dasharray:520;stroke-dashoffset:520;transition:stroke 1.2s}
@@ -508,13 +537,16 @@ html[data-lang="en"] .foreword .cap{font-family:"Cinzel",serif;font-weight:600}
   font-family:"EB Garamond",serif;font-style:italic;font-size:var(--fs,17px);letter-spacing:.06em;
   color:#88DDFF;opacity:0;transition:opacity .9s ease var(--d,0s);text-shadow:0 0 18px rgba(136,221,255,.65)}
 .sanctum.uv{background:radial-gradient(120% 90% at 50% 30%, #221743, #150e2e 55%, #0d081f);color:#e9e3ff}
-.sanctum.uv .rays{opacity:.28;background:repeating-conic-gradient(from 0deg at 50% 36%, rgba(136,221,255,.08) 0deg 5deg, transparent 5deg 16deg)}
+.sanctum.uv .rays{background:radial-gradient(46% 34% at 50% 30%, rgba(136,221,255,.1), transparent 70%)}
+.sanctum.uv .rays::before{border-color:rgba(136,221,255,.2)}
+.sanctum.uv .rays::after{border-color:rgba(136,221,255,.1)}
 .sanctum.uv .s-sub,.sanctum.uv .s-cap,.sanctum.uv .s-hint{color:rgba(233,227,255,.6)}
 .sanctum.uv .curves path{stroke:#88DDFF}
 .sanctum.uv .curves text{fill:rgba(233,227,255,.55)}
 .sanctum.uv .sealm{background:#88DDFF}
 .sanctum.uv .uvnotes i{opacity:.92}
-.sanctum.uv .mote{border-color:rgba(233,227,255,.3)}
+.sanctum.uv .pig i{border-color:rgba(233,227,255,.35);box-shadow:0 0 12px color-mix(in srgb,var(--c) 55%,transparent)}
+.sanctum.uv .pig b{color:rgba(233,227,255,.5)}
 .sanctum.uv .s-go{color:rgba(233,227,255,.55);border-color:rgba(233,227,255,.35)}
 .sanctum.uv .s-kick{color:#c65b3d}
 
@@ -577,6 +609,7 @@ body.scrolled .spine{opacity:1;pointer-events:auto}
 <div class="walk" id="walk">
 <header class="portal" id="top">
   <div class="hero-art" id="heroArt">
+    <canvas id="hall3d" aria-hidden="true"></canvas>
     <div class="hero-par" id="heroPar">
       <div class="hero-fit" id="heroFit">
         <img src="_gallery/art/hero-hall.jpg" alt="An etched grand gallery hall with blank gilt frames waiting on both walls" width="2304" height="1536" fetchpriority="high"/>
@@ -660,7 +693,7 @@ body.scrolled .spine{opacity:1;pointer-events:auto}
       <span class="l-en">Beyond the door, the gallery keeps its raw material: pigments, easing curves, and one golden key.</span>
       <span class="l-zh">门后存放着画廊的原材料：颜料、缓动曲线，和一把金钥匙。</span>
     </p>
-    <div class="motes" id="motes"></div>
+    <div class="pigrow" id="motes"></div>
     <svg class="curves" viewBox="0 -80 680 345" aria-hidden="true">
       <g transform="translate(0,60)">
         <path d="M10,150 C71.2,-68.4 125.2,10 190,10"/>
@@ -939,6 +972,7 @@ body.scrolled .spine{opacity:1;pointer-events:auto}
     }, {passive:true});
     function look(){
       cx += (mx-cx)*.06; cy += (my-cy)*.06;
+      window.__lookX = cx; window.__lookY = cy;
       applyHero();
       if (Math.abs(mx-cx) > .0004 || Math.abs(my-cy) > .0004) ir = requestAnimationFrame(look); else ir = null;
     }
@@ -1135,6 +1169,7 @@ body.scrolled .spine{opacity:1;pointer-events:auto}
     document.body.classList.toggle('scrolled', scrollY > (walk ? walk.offsetHeight - vh*.6 : vh*.6));
     if (!rm) {
       var p = clamp01(span > 0 ? scrollY/span : 0);
+      window.__walkP = p;
       walkS = Math.pow(3.5, p);
       lookDamp = 1 - p*.72;
       applyHero();
@@ -1188,15 +1223,15 @@ body.scrolled .spine{opacity:1;pointer-events:auto}
       ['turtle-soup','Turtle Soup Bureau','#b91c1c']
     ];
     var mw = document.getElementById('motes');
-    MOTES.forEach(function(m,i){
+    var ROMAN = ['I','II','III','IV','V','VI','VII','VIII','IX','X','XI','XII','XIII','XIV','XV','XVI','XVII'];
+    MOTES.forEach(function(m, i){
       var a = document.createElement('a');
-      a.className = 'mote';
+      a.className = 'pig';
       a.href = m[0] + '/teardown.html';
-      var t = MOTES.length > 1 ? i/(MOTES.length-1) : 0;
-      var x = 3 + t*92;
-      var y = 44 + Math.sin(t*6.283)*30 + ((i%2)? 12 : -12);
-      a.style.cssText = '--x:'+x.toFixed(1)+'%;--y:'+Math.round(y)+'px;--s:'+(10+(i%3)*3)+'px;--c:'+m[2]+';--d:'+((i%7)*.42).toFixed(2)+'s';
-      a.title = m[1] + '  ' + m[2];
+      a.style.setProperty('--c', m[2]);
+      a.innerHTML = '<span class="pl"></span><i></i><b></b>';
+      a.querySelector('.pl').textContent = m[1] + '  ' + m[2];
+      a.querySelector('b').textContent = ROMAN[i];
       a.setAttribute('aria-label', m[1]);
       mw.appendChild(a);
     });
@@ -1221,6 +1256,391 @@ body.scrolled .spine{opacity:1;pointer-events:auto}
     });
   }, {rootMargin:'-38% 0px -55% 0px'});
   marks.forEach(function(s){ so.observe(s); });
+})();
+</script>
+<script type="importmap">
+{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js"}}
+</script>
+<script type="module">
+/* The hall of measured points: ~200k gold-ink particles form the corridor,
+   only the artworks are real. Shader manner is our own E.P.S teardown homage
+   (formation stagger, additive blending, feathered sprites, a ±10 farewell).
+   Falls back to the baked etching when WebGL or the CDN is unavailable. */
+(async () => {
+  const rm = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const canvas = document.getElementById('hall3d');
+  if (rm || !canvas) return;
+  let THREE;
+  try { THREE = await import('three'); } catch(e){ return; }
+  let renderer;
+  try {
+    renderer = new THREE.WebGLRenderer({canvas, antialias:true, powerPreference:'high-performance'});
+  } catch(e){ return; }
+
+  const portal = document.querySelector('.portal');
+  const walkEl = document.getElementById('walk');
+  const DPR = Math.min(devicePixelRatio || 1, 2);
+  renderer.setPixelRatio(DPR);
+  const NIGHT = 0x14100a;
+  renderer.setClearColor(NIGHT);
+
+  const scene = new THREE.Scene();
+  scene.fog = new THREE.Fog(NIGHT, 18, 52);
+  const camera = new THREE.PerspectiveCamera(55, 16/9, .1, 90);
+  camera.position.set(0, 2.3, 18.5);
+  scene.add(new THREE.AmbientLight(0xfff2d8, 1.1));
+
+  /* ---------- sampling masks drawn as line art ---------- */
+  function maskCanvas(w, h, draw){
+    const c = document.createElement('canvas'); c.width = w; c.height = h;
+    const x = c.getContext('2d');
+    x.fillStyle = '#000'; x.fillRect(0,0,w,h);
+    x.strokeStyle = '#fff'; x.fillStyle = '#fff';
+    draw(x, w, h);
+    return x.getImageData(0, 0, w, h).data;
+  }
+  const MW = 512, MH = 512;
+  const wallMask = maskCanvas(MW, MH, (x,w,h)=>{
+    x.lineWidth = 3; x.strokeRect(40, 46, w-80, h*.56);
+    x.lineWidth = 1.5; x.strokeRect(56, 62, w-112, h*.56-32);
+    const wy = h*.74;
+    x.lineWidth = 4; x.strokeRect(-4, wy, w+8, h-wy+4);
+    x.lineWidth = 2; x.strokeRect(34, wy+18, w-68, h-wy-40);
+    x.lineWidth = 1; x.strokeRect(46, wy+28, w-92, h-wy-60);
+  });
+  const ceilMask = maskCanvas(MW, MH, (x,w,h)=>{
+    x.lineWidth = 3;
+    for (let i = 0; i <= 4; i++){
+      x.beginPath(); x.moveTo(i*w/4, 0); x.lineTo(i*w/4, h); x.stroke();
+      x.beginPath(); x.moveTo(0, i*h/4); x.lineTo(w, i*h/4); x.stroke();
+    }
+    x.lineWidth = 1.2;
+    for (let cx = 0; cx < 4; cx++) for (let cy = 0; cy < 4; cy++){
+      x.strokeRect(cx*w/4+16, cy*h/4+16, w/4-32, h/4-32);
+      x.beginPath(); x.arc(cx*w/4+w/8, cy*h/4+h/8, 5, 0, 7); x.fill();
+    }
+  });
+  function maskSampler(mask){
+    const pts = [];
+    for (let i = 0; i < MW*MH; i++) if (mask[i*4] > 100) pts.push(i);
+    return () => { const i = pts[(Math.random()*pts.length)|0]; return [(i%MW)/MW, ((i/MW)|0)/MH]; };
+  }
+  const wallPick = maskSampler(wallMask);
+  const ceilPick = maskSampler(ceilMask);
+
+  /* ---------- build the point hall ---------- */
+  const MOBILE = innerWidth < 700;
+  const Q = MOBILE ? .3 : 1;
+  const COUNTS = { floor: 60000*Q, wall: 34000*Q, ceil: 30000*Q, frame: 4200*Q, arch: 9000*Q, air: 8000*Q };
+  const L = 40, W = 10.4, H = 7.4, Z0 = 21, Z1 = -17.4;
+  const gold = new THREE.Color(0xd9b26a), goldHi = new THREE.Color(0xf3d68f);
+  const inkA = new THREE.Color(0x8a744a), dim = new THREE.Color(0x5e4e30);
+  const P = [], C = [], S = [], R = [];
+  function push(x, y, z, col, size){
+    P.push(x, y, z);
+    C.push(col.r, col.g, col.b);
+    S.push(size);
+    R.push(Math.random(), Math.random(), Math.random(), Math.random());
+  }
+  /* floor: diamond checker, lit squares sparser */
+  for (let i = 0; i < COUNTS.floor; i++){
+    const x = (Math.random()-.5)*W, z = Z1 + Math.random()*(Z0-Z1+4);
+    const u = (x+z)/1.3, v = (x-z)/1.3;
+    const par = ((Math.floor(u)+Math.floor(v))%2+2)%2;
+    if (par === 0 && Math.random() < .72) continue;
+    push(x, .02, z, par ? inkA : dim, .028 + Math.random()*.014);
+  }
+  /* walls: panel line art, one bay every 9.2m */
+  for (let side = -1; side <= 1; side += 2){
+    for (let i = 0; i < COUNTS.wall; i++){
+      const [u, v] = wallPick();
+      const bay = (Math.random()*5)|0;
+      const z = Z0 - 3 - bay*7.6 - u*7.6;
+      const y = (1-v)*H;
+      push(side*(W/2), y, z, Math.random() < .12 ? gold : inkA, .026 + Math.random()*.012);
+    }
+  }
+  /* ceiling coffers */
+  for (let i = 0; i < COUNTS.ceil; i++){
+    const [u, v] = ceilPick();
+    const seg = (Math.random()*5)|0;
+    push((u-.5)*W, H, Z0 - 3 - seg*7.6 - v*7.6, inkA, .024 + Math.random()*.01);
+  }
+  /* the arch of the door */
+  for (let i = 0; i < COUNTS.arch; i++){
+    const t = Math.random();
+    let x, y;
+    if (t < .55){ const a = Math.random()*Math.PI; x = Math.cos(a)*1.62; y = 3.6 + Math.sin(a)*1.62; }
+    else if (t < .78){ x = -1.62; y = Math.random()*3.6; }
+    else { x = 1.62; y = Math.random()*3.6; }
+    const jitter = (Math.random()-.5)*.16;
+    push(x + jitter, y + (Math.random()-.5)*.16, Z1 + (Math.random()-.5)*.3, goldHi, .04 + Math.random()*.02);
+  }
+  /* drifting air motes */
+  for (let i = 0; i < COUNTS.air; i++){
+    push((Math.random()-.5)*(W-1), .3 + Math.random()*(H-.8), Z1 + Math.random()*(Z0-Z1),
+      gold, .03 + Math.random()*.02);
+  }
+
+  /* ---------- the six real paintings, framed in particles ---------- */
+  const FR = [
+    {slug:'shopify-editions', name:'Shopify Editions Winter ’26', plate:'Plate I',  side:-1, z:11.5, w:4.9,  h:3.15, video:'_gallery/live/shopify.webm'},
+    {slug:'comet',            name:'Comet',                        plate:'Plate III',side:-1, z:3.2,  w:3.9,  h:2.5},
+    {slug:'turtle-soup',      name:'Turtle Soup Bureau',           plate:'Plate XVII',side:-1,z:-3.8, w:3.15, h:2.05},
+    {slug:'endfield',         name:'Arknights: Endfield',          plate:'Plate II', side:1,  z:11.5, w:4.9,  h:3.15, video:'_gallery/live/endfield.webm'},
+    {slug:'moonshot',         name:'Moonshot AI',                  plate:'Plate V',  side:1,  z:3.2,  w:3.9,  h:2.5},
+    {slug:'linear',           name:'Linear',                       plate:'Plate IV', side:1,  z:-3.8, w:3.15, h:2.05},
+  ];
+  const loader = new Image();
+  function sepiaFrom(img, w, h){
+    const c = document.createElement('canvas'); c.width = 1024; c.height = Math.round(1024*h/w);
+    const x = c.getContext('2d');
+    if ('filter' in x) x.filter = 'saturate(.3) sepia(.42) contrast(.97) brightness(1.04)';
+    const ar = w/h, ia = img.width/img.height;
+    let sw = img.width, sh = img.height, sx = 0, sy = 0;
+    if (ia > ar){ sw = img.height*ar; sx = (img.width-sw)/2; } else { sh = img.width/ar; sy = (img.height-sh)/2; }
+    x.drawImage(img, sx, sy, sw, sh, 0, 0, c.width, c.height);
+    const t = new THREE.CanvasTexture(c); t.colorSpace = THREE.SRGBColorSpace;
+    t.anisotropy = renderer.capabilities.getMaxAnisotropy();
+    return t;
+  }
+  const paintings = [];
+  FR.forEach(f => {
+    const g = new THREE.Group();
+    g.position.set(f.side*(W/2 - .1), 3.35, f.z);
+    g.rotation.y = -f.side*Math.PI/2;
+    const mat = new THREE.Mesh(new THREE.PlaneGeometry(f.w+.42, f.h+.42),
+      new THREE.MeshBasicMaterial({color:0x2a2416}));
+    const pm = new THREE.MeshBasicMaterial({color:0x161209});
+    const pl = new THREE.Mesh(new THREE.PlaneGeometry(f.w, f.h), pm);
+    pl.position.z = .02; pl.renderOrder = 1;
+    pl.userData = f; f.mesh = pl;
+    g.add(mat, pl); scene.add(g);
+    paintings.push(pl);
+    const img = new Image();
+    img.onload = () => { f.img = img; f.sepia = sepiaFrom(img, f.w, f.h);
+      pm.map = f.sepia; pm.color.set(0xffffff); pm.needsUpdate = true; };
+    img.src = '_gallery/covers/' + f.slug + '.jpg';
+    /* particle frame: bands and corner clusters, in world coords */
+    const fw = f.w+.42, fh = f.h+.42, bw = .3;
+    for (let i = 0; i < COUNTS.frame; i++){
+      let u, v;
+      const corner = Math.random() < .3;
+      if (corner){
+        const cxs = [[-fw/2, fh/2],[fw/2, fh/2],[-fw/2,-fh/2],[fw/2,-fh/2]];
+        const cc = cxs[(Math.random()*4)|0];
+        const a = Math.random()*6.283, r = Math.random()*.34;
+        u = cc[0] + Math.cos(a)*r; v = cc[1] + Math.sin(a)*r*1.1;
+      } else {
+        const edge = (Math.random()*4)|0;
+        const t = Math.random()-.5, o = (Math.random()-.5)*bw + (Math.random()<.5?-.06:.06);
+        if (edge < 2){ u = t*(fw+bw); v = (edge? -1:1)*(fh/2+bw/2) + o; }
+        else { u = (edge===2? -1:1)*(fw/2+bw/2) + o; v = t*(fh+bw); }
+      }
+      const wx = f.side*(W/2 - .1) - f.side*0.001;
+      const lz = f.z - f.side * u * (f.side>0? 1: 1) * 0 + u * (f.side>0? -1: 1);
+      push(wx, 3.35 + v, f.z + (f.side>0? -u : u), Math.random()<.3? goldHi: gold, .034 + Math.random()*.022);
+    }
+  });
+
+  /* ---------- point cloud object ---------- */
+  const geo = new THREE.BufferGeometry();
+  geo.setAttribute('position', new THREE.Float32BufferAttribute(P, 3));
+  geo.setAttribute('aColor', new THREE.Float32BufferAttribute(C, 3));
+  geo.setAttribute('aSize', new THREE.Float32BufferAttribute(S, 1));
+  geo.setAttribute('aRand', new THREE.Float32BufferAttribute(R, 4));
+  const uni = { uTime:{value:0}, uForm:{value:0}, uScatter:{value:0}, uPix:{value:DPR},
+    uG0:{value:new THREE.Vector4(99,0,99,0)}, uG1:{value:new THREE.Vector4(99,0,99,0)} };
+  const pmat = new THREE.ShaderMaterial({
+    uniforms: uni, transparent: true, depthWrite: false, depthTest: true,
+    blending: THREE.AdditiveBlending,
+    vertexShader: `
+      attribute vec3 aColor; attribute float aSize; attribute vec4 aRand;
+      uniform float uTime, uForm, uScatter, uPix;
+      uniform vec4 uG0, uG1;
+      varying vec3 vC; varying float vA; varying float vDA;
+      void main(){
+        vec3 sc = (aRand.xyz*2.-1.)*9.;
+        float t = clamp(uForm*1.55 - aRand.w*.55, 0., 1.);
+        t = t*t*(3.-2.*t);
+        vec3 p = mix(position + sc, position, t);
+        p.x += sin(uTime*1.2 + aRand.x*6.283)*.014;
+        p.y += cos(uTime*.9  + aRand.y*6.283)*.014;
+        p += (aRand.xyz*2.-1.) * uScatter;
+        vec4 mv = modelViewMatrix * vec4(p,1.);
+        float viewZ = -mv.z;
+        /* camera fade, per the E.P.S manner */
+        float dA = 1.0 - clamp((viewZ - 20.0) / (46.0 - 20.0), 0.0, 1.0);
+        /* glitch bands: +-10 view-space y, offset x20 in the original; scaled to our units */
+        float gyR = .34, gxO = .62;
+        if (abs(mv.y - uG0.x) < gyR) mv.x += gxO * uG0.y;
+        if (abs(mv.y - uG0.z) < gyR) mv.x += gxO * uG0.w;
+        if (abs(mv.y - uG1.x) < gyR) mv.x += gxO * uG1.y;
+        if (abs(mv.y - uG1.z) < gyR) mv.x += gxO * uG1.w;
+        gl_PointSize = aSize * uPix * (340. / viewZ) * (0.35 + 0.65*dA) + 1.0;
+        gl_Position = projectionMatrix * mv;
+        vC = aColor;
+        vDA = dA;
+        vA = t * dA * (1. - uScatter*.28);
+      }`,
+    fragmentShader: `
+      varying vec3 vC; varying float vA; varying float vDA;
+      void main(){
+        /* verbatim manner of the E.P.S sprite: core, feather, inner glow, Reinhard mix */
+        float featherWidth = .1, coreRadius = .1, innerGlowStrength = .6, compressStrength = .5;
+        vec2 center = gl_PointCoord - vec2(.5);
+        float dist = length(center);
+        float radius = .5;
+        if (dist > radius) discard;
+        float alpha = vA;
+        if (dist > coreRadius * vDA){
+          float fadeOut1 = smoothstep(radius, coreRadius, dist);
+          float fadeOut2 = smoothstep(radius*.8, coreRadius, dist);
+          float featherAlpha = mix(fadeOut1, fadeOut2, clamp(featherWidth, .1, 1.));
+          float distanceFade = 1. - pow(dist/radius, 2.);
+          float additionalFeather = 1. - pow(dist/radius, 1. + featherWidth*2.);
+          alpha = vA * featherAlpha * distanceFade * additionalFeather;
+        }
+        if (alpha < .015) discard;
+        float innerGlow = 1. - smoothstep(0., coreRadius*3., dist);
+        vec3 finalColor = vC + vC * innerGlow * innerGlowStrength;
+        vec3 compressed = finalColor / (finalColor + vec3(1.));
+        gl_FragColor = vec4(mix(finalColor, compressed, compressStrength), alpha);
+      }`
+  });
+  const cloud = new THREE.Points(geo, pmat);
+  cloud.renderOrder = 2;
+  scene.add(cloud);
+
+  /* door light: a core and a halo */
+  const glowTex = (()=>{ const c=document.createElement('canvas'); c.width=c.height=256;
+    const x=c.getContext('2d');
+    const g=x.createRadialGradient(128,128,6,128,128,128);
+    g.addColorStop(0,'rgba(255,250,232,1)'); g.addColorStop(.4,'rgba(255,244,208,.42)'); g.addColorStop(1,'rgba(255,244,208,0)');
+    x.fillStyle=g; x.fillRect(0,0,256,256);
+    const t=new THREE.CanvasTexture(c); t.colorSpace=THREE.SRGBColorSpace; return t; })();
+  const doorGlow = new THREE.Mesh(new THREE.PlaneGeometry(3.1, 5.5),
+    new THREE.MeshBasicMaterial({color:0xfff6dd, transparent:true, opacity:.92}));
+  doorGlow.position.set(0, 2.75, Z1 - .2); scene.add(doorGlow);
+  const halo = new THREE.Sprite(new THREE.SpriteMaterial({map:glowTex, transparent:true,
+    opacity:.9, depthWrite:false, blending:THREE.AdditiveBlending}));
+  halo.scale.set(11, 11, 1); halo.position.set(0, 2.8, Z1 + .4); scene.add(halo);
+
+  /* ---------- interaction ---------- */
+  const chip = document.createElement('div');
+  chip.className = 'glchip';
+  chip.innerHTML = '<b></b><span></span>';
+  document.body.appendChild(chip);
+  const ray = new THREE.Raycaster();
+  ray.params.Points = {threshold: 0};
+  const nmouse = new THREE.Vector2(9, 9);
+  let hovered = null, doorHover = false;
+  canvas.addEventListener('pointermove', e => {
+    const r = canvas.getBoundingClientRect();
+    nmouse.set(((e.clientX-r.left)/r.width)*2-1, -((e.clientY-r.top)/r.height)*2+1);
+  }, {passive:true});
+  canvas.addEventListener('click', () => {
+    if (hovered) location.href = hovered.userData.slug + '/teardown.html';
+    else if (doorHover) scrollTo({top: walkEl.offsetHeight - innerHeight + 2, behavior:'smooth'});
+  });
+  function setHover(pl){
+    if (hovered === pl) return;
+    if (hovered){
+      const f = hovered.userData;
+      if (f.sepia) hovered.material.map = f.sepia;
+      if (f.videoEl) f.videoEl.pause();
+      hovered.material.needsUpdate = true;
+    }
+    hovered = pl;
+    if (pl){
+      const f = pl.userData;
+      if (f.video){
+        if (!f.videoTex){
+          f.videoEl = document.createElement('video');
+          f.videoEl.muted = true; f.videoEl.loop = true; f.videoEl.playsInline = true;
+          f.videoEl.src = f.video;
+          f.videoTex = new THREE.VideoTexture(f.videoEl);
+          f.videoTex.colorSpace = THREE.SRGBColorSpace;
+        }
+        f.videoEl.play().catch(()=>{});
+        pl.material.map = f.videoTex;
+      } else if (f.img){
+        if (!f.colorTex){
+          f.colorTex = new THREE.Texture(f.img);
+          f.colorTex.colorSpace = THREE.SRGBColorSpace; f.colorTex.needsUpdate = true;
+        }
+        pl.material.map = f.colorTex;
+      }
+      pl.material.needsUpdate = true;
+      chip.querySelector('b').textContent = f.plate;
+      chip.querySelector('span').textContent = f.name;
+    }
+    chip.classList.toggle('on', !!pl);
+    canvas.style.cursor = (pl || doorHover) ? 'pointer' : '';
+  }
+
+  /* ---------- go live ---------- */
+  portal.classList.add('gl', 'nite');
+  window.__hall3d = true;
+  function size(){
+    const w = canvas.clientWidth || innerWidth, h = canvas.clientHeight || innerHeight;
+    renderer.setSize(w, h, false);
+    camera.aspect = w/h; camera.updateProjectionMatrix();
+  }
+  size(); addEventListener('resize', size, {passive:true});
+  const v3 = new THREE.Vector3();
+  const born = performance.now();
+  let gUntil = 0, gNext = 2500;
+  function glitchTick(now, p){
+    if (now > gNext){
+      const bursts = 3 + (Math.random()*4|0);
+      gUntil = now + bursts*80;
+      gNext = now + 2600 + Math.random()*3800 * (1 - p*.5);
+    }
+    if (now < gUntil){
+      if (((now/80)|0) % 1 === 0){
+        const amp = .5 + p*1.1;
+        uni.uG0.value.set((Math.random()*2-1)*3.4, (Math.random()*2-1)*amp,
+                          (Math.random()*2-1)*3.4, (Math.random()*2-1)*amp);
+        uni.uG1.value.set((Math.random()*2-1)*3.4, (Math.random()*2-1)*amp,
+                          (Math.random()*2-1)*3.4, (Math.random()*2-1)*amp);
+      }
+    } else {
+      uni.uG0.value.set(99,0,99,0); uni.uG1.value.set(99,0,99,0);
+    }
+  }
+  let t = 0;
+  renderer.setAnimationLoop(() => {
+    if (document.hidden || scrollY > walkEl.offsetHeight + 60) return;
+    const p = window.__walkP || 0;
+    t += .016;
+    uni.uTime.value = t;
+    uni.uForm.value = Math.min((performance.now() - born) / 2100, 1);
+    uni.uScatter.value = Math.max(0, (p - .68) / .32) * 2.4;
+    glitchTick(performance.now(), p);
+    const lx = window.__lookX || 0, ly = window.__lookY || 0;
+    const ease = p*p*(3-2*p);
+    camera.position.z = 18.5 + (-13.9 - 18.5) * ease;
+    camera.position.x = lx * 1.15;
+    camera.position.y = 2.3 - ly * .45;
+    camera.rotation.set(-ly*.09, -lx*.16, 0);
+    window.__camZ = camera.position.z;
+    halo.material.opacity = .7 + p*.3 + Math.sin(t*1.4)*.05;
+    const hs = 11 + p*10;
+    halo.scale.set(hs, hs, 1);
+    ray.setFromCamera(nmouse, camera);
+    const hits = ray.intersectObjects(paintings, false);
+    setHover(hits.length ? hits[0].object : null);
+    doorHover = !hits.length && ray.intersectObject(doorGlow, false).length > 0;
+    if (hovered){
+      hovered.getWorldPosition(v3); v3.y += hovered.userData.h/2 + .4;
+      v3.project(camera);
+      const r = canvas.getBoundingClientRect();
+      chip.style.left = (r.left + (v3.x*.5+.5)*r.width) + 'px';
+      chip.style.top = (r.top + (-v3.y*.5+.5)*r.height) + 'px';
+    }
+    renderer.render(scene, camera);
+  });
 })();
 </script>
 </body>
