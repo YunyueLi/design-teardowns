@@ -1,7 +1,7 @@
 <div align="center">
 
 <a href="https://yunyueli.github.io/design-teardowns/teardowns/index.html">
-<img src="teardowns/_gallery/art/banner.jpg" alt="Engraved gallery headpiece" width="760"/>
+<img src="teardowns/_gallery/art/banner.jpg" alt="The gallery corridor, with seventeen studies hung along its walls" width="820"/>
 </a>
 
 # 拆解画廊
@@ -14,7 +14,7 @@ Seventeen studies of living pages, with every colour, every letterform<br/>and e
 
 <br/>
 
-<a href="https://yunyueli.github.io/design-teardowns/teardowns/index.html"><img src="https://img.shields.io/badge/%E8%BF%9B%E5%85%A5%E7%94%BB%E5%BB%8A-Enter%20the%20Gallery-93321b?style=for-the-badge&labelColor=241f12" alt="Enter the gallery"/></a>
+<a href="https://yunyueli.github.io/design-teardowns/teardowns/index.html"><img src="https://img.shields.io/badge/%E8%BF%9B%E5%85%A5%E7%94%BB%E5%BB%8A-Enter%20the%20Gallery-9a3524?style=for-the-badge&labelColor=1c1c1c" alt="Enter the gallery"/></a>
 
 [![License: MIT (code)](https://img.shields.io/badge/code-MIT-blue.svg)](LICENSE-CODE)
 [![License: CC BY 4.0 (content)](https://img.shields.io/badge/content-CC%20BY%204.0-lightgrey.svg)](LICENSE)
