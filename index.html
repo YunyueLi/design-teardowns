@@ -1,28 +1,34 @@
 <!doctype html>
-<html lang="zh-CN">
+<html lang="en">
 <head>
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>拆解画廊 Design Teardowns</title>
+<title>Design Teardowns</title>
 <meta http-equiv="refresh" content="0; url=teardowns/index.html"/>
 <link rel="canonical" href="teardowns/index.html"/>
 <style>
-  :root{--wall:#f2ecdd;--ink:#241f12;--ink2:rgba(36,31,18,.62);--gold:#a2823c;--rubric:#93321b}
-  @media (prefers-color-scheme: dark){:root{--wall:#161209;--ink:#eae1c8;--ink2:rgba(234,225,200,.62);--gold:#b6934a;--rubric:#c65b3d}}
+  :root{--wall:#f6f4ef;--ink:#1c1c1c;--ink2:rgba(28,28,28,.6);--rubric:#9a3524}
+  @media (prefers-color-scheme: dark){:root{--wall:#121212;--ink:#e8e6e0;--ink2:rgba(232,230,224,.6);--rubric:#c4573f}}
   html,body{margin:0;height:100%;background:var(--wall);color:var(--ink);
-    font-family:"Songti SC","STSong","Noto Serif SC",serif;display:grid;place-items:center;text-align:center}
-  .k{font-size:12px;letter-spacing:.4em;text-indent:.4em;color:var(--rubric);margin-bottom:16px}
-  a{color:var(--ink);font-size:20px;letter-spacing:.2em;text-decoration:none;
-    border:1px solid var(--ink);padding:14px 30px;display:inline-block;transition:all .3s}
-  a:hover{background:var(--ink);color:var(--wall)}
-  p{color:var(--ink2);font-size:13px;margin-top:18px;letter-spacing:.06em}
+    font-family:"EB Garamond","Songti SC","Noto Serif SC",serif;display:grid;place-items:center;text-align:center}
+  body::before{content:"";position:fixed;inset:0;pointer-events:none;
+    background:url('teardowns/_gallery/brand/moon.jpg') center/cover no-repeat;
+    mix-blend-mode:multiply;opacity:.5}
+  @media (prefers-color-scheme: dark){body::before{filter:invert(1);mix-blend-mode:screen;opacity:.42}}
+  .in{position:relative;z-index:1}
+  .k{font-size:11px;letter-spacing:.5em;text-indent:.5em;color:var(--rubric);margin-bottom:20px}
+  a{color:var(--ink);font-size:19px;letter-spacing:.18em;text-decoration:none;
+    border:1px solid rgba(28,28,28,.3);padding:14px 32px;display:inline-block;transition:all .4s ease}
+  @media (prefers-color-scheme: dark){a{border-color:rgba(232,230,224,.3)}}
+  a:hover{background:var(--ink);color:var(--wall);border-color:var(--ink)}
+  p{color:var(--ink2);font-size:12.5px;margin-top:20px;letter-spacing:.05em}
 </style>
 </head>
 <body>
-  <div>
+  <div class="in">
     <div class="k">DESIGN TEARDOWNS</div>
-    <a href="teardowns/index.html">进入拆解画廊</a>
-    <p>页面会自动跳转；未跳转时请点击上方按钮。</p>
+    <a href="teardowns/index.html">Enter the gallery</a>
+    <p>Redirecting. Use the link above if nothing happens.</p>
   </div>
 </body>
 </html>

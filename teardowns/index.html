@@ -440,8 +440,17 @@ html[data-lang="en"] .foreword .cap{font-family:"Cinzel",serif;font-weight:600}
 .cat-row a:hover::after{right:0}
 .cat-row a:focus-visible{outline:2px solid var(--gold);outline-offset:-2px}
 @media(max-width:860px){
-  .cat-row a{grid-template-columns:2.4em minmax(0,1fr) 2em}
+  .cat-row a{grid-template-columns:2.2em minmax(0,1fr) 1.6em;gap:10px;align-items:start}
   .cat-row .c-med,.cat-row .c-pig{display:none}
+  .cat-row .c-no{font-size:12px;padding-top:3px}
+  .cat-row .c-name{font-size:17.5px;line-height:1.45}
+  .cat-row .c-name em{display:block;margin:5px 0 0;font-size:13px;line-height:1.5}
+  .cat-row .c-go{align-self:start;padding-top:1px}
+  .cat-group{flex-wrap:wrap;gap:8px 12px;padding:26px 6px 12px}
+  .cat-group img{width:64px;height:34px}
+  .cat-group b{font-size:10px;letter-spacing:.3em}
+  .cat-group span{flex:0 0 100%;order:3;font-size:15px;line-height:1.5}
+  .cat-group em{margin-left:auto;white-space:nowrap;font-size:11.5px}
 }
 .preview{
   position:fixed;left:0;top:0;z-index:45;width:min(330px,26vw);pointer-events:none;
@@ -1067,6 +1076,25 @@ body.scrolled .spine{opacity:1;pointer-events:auto}
   var beam = document.querySelector('.beam');
   var ticking = false;
   function clamp01(v){ return v<0?0:(v>1?1:v); }
+  /* the title answers the wheel at once; the light layers belong to the 3D scene
+     and follow the camera's smoothed progress so they never run ahead of it. */
+  var cueEl = portalEl ? portalEl.querySelector('.cue') : null;
+  window.__applyWalkP = function(p){
+    var to = 1 - clamp01(p/.16);
+    heroInner.style.opacity = to;
+    heroInner.style.pointerEvents = to < .05 ? 'none' : '';
+    if (cueEl) cueEl.style.opacity = to;
+    portalEl.toggleAttribute('data-deep', p > .32);
+  };
+  window.__applyWalkLight = function(p){
+    var wo = clamp01((p-.56)/.44);
+    whiteout.style.opacity = wo;
+    whiteout.style.transform = 'scale(' + (.6 + wo*2.8) + ')';
+    whitefull.style.opacity = clamp01((p-.86)/.13);
+    if (heroScrim) heroScrim.style.opacity = 1 - clamp01((p-.4)/.35);
+    if (beam) beam.style.opacity = 1 - wo;
+    if (dc) dc.style.opacity = 1 - wo;
+  };
   function onScroll(){
     ticking = false;
     var d = document.documentElement;
@@ -1081,19 +1109,8 @@ body.scrolled .spine{opacity:1;pointer-events:auto}
       walkS = Math.pow(3.5, p);
       lookDamp = 1 - p*.72;
       applyHero();
-      var to = 1 - clamp01(p/.16);
-      heroInner.style.opacity = to;
-      heroInner.style.pointerEvents = to < .05 ? 'none' : '';
-      var cueEl = portalEl.querySelector('.cue');
-      if (cueEl) cueEl.style.opacity = to;
-      portalEl.toggleAttribute('data-deep', p > .32);
-      var wo = clamp01((p-.56)/.44);
-      whiteout.style.opacity = wo;
-      whiteout.style.transform = 'scale(' + (.6 + wo*2.8) + ')';
-      whitefull.style.opacity = clamp01((p-.86)/.13);
-      if (heroScrim) heroScrim.style.opacity = 1 - clamp01((p-.4)/.35);
-      if (beam) beam.style.opacity = 1 - wo;
-      if (dc) dc.style.opacity = 1 - wo;
+      window.__applyWalkP(p);
+      window.__applyWalkLight(p);
       plx.forEach(function(el){
         var r = el.getBoundingClientRect();
         if (r.bottom < -80 || r.top > vh+80) return;
@@ -1477,15 +1494,27 @@ body.scrolled .spine{opacity:1;pointer-events:auto}
     if (OutputPass) composer.addPass(new OutputPass());
   }
 
-  /* door light: a core and a halo */
+  /* door light: an arch with a feathered rim, and a halo */
   const glowTex = (()=>{ const c=document.createElement('canvas'); c.width=c.height=256;
     const x=c.getContext('2d');
     const g=x.createRadialGradient(128,128,6,128,128,128);
     g.addColorStop(0,'rgba(246,249,252,1)'); g.addColorStop(.4,'rgba(230,238,246,.42)'); g.addColorStop(1,'rgba(230,238,246,0)');
     x.fillStyle=g; x.fillRect(0,0,256,256);
     const t=new THREE.CanvasTexture(c); t.colorSpace=THREE.SRGBColorSpace; return t; })();
+  const doorTex = (()=>{ const W=256, H=448, c=document.createElement('canvas');
+    c.width=W; c.height=H; const x=c.getContext('2d');
+    const r=W/2-14, top=r+30;
+    x.fillStyle='#ffffff'; x.beginPath();
+    x.moveTo(14,H-6); x.lineTo(14,top); x.arc(W/2, top, r, Math.PI, 0); x.lineTo(W-14,H-6);
+    x.closePath(); x.fill();
+    x.globalCompositeOperation='destination-in';
+    const g=x.createRadialGradient(W/2, H*.5, 12, W/2, H*.5, H*.58);
+    g.addColorStop(0,'rgba(0,0,0,1)'); g.addColorStop(.5,'rgba(0,0,0,.94)');
+    g.addColorStop(.82,'rgba(0,0,0,.34)'); g.addColorStop(1,'rgba(0,0,0,0)');
+    x.fillStyle=g; x.fillRect(0,0,W,H);
+    const t=new THREE.CanvasTexture(c); t.colorSpace=THREE.SRGBColorSpace; return t; })();
   const doorGlow = new THREE.Mesh(new THREE.PlaneGeometry(3.1, 5.5),
-    new THREE.MeshBasicMaterial({color:0xf4f7fa, transparent:true, opacity:.92, fog:false}));
+    new THREE.MeshBasicMaterial({map:doorTex, color:0xf4f7fa, transparent:true, opacity:.92, fog:false, depthWrite:false}));
   doorGlow.position.set(0, 2.75, Z1 - .2); scene.add(doorGlow);
   const halo = new THREE.Sprite(new THREE.SpriteMaterial({map:glowTex, transparent:true,
     opacity:.9, depthWrite:false, blending:THREE.AdditiveBlending, fog:false}));
@@ -1581,6 +1610,7 @@ body.scrolled .spine{opacity:1;pointer-events:auto}
     if (document.hidden || scrollY > walkEl.offsetHeight + 60) return;
     pSm += ((window.__walkP || 0) - pSm) * .07;
     const p = pSm;
+    if (window.__applyWalkLight) window.__applyWalkLight(p);
     t += .016;
     uni.uTime.value = t;
     uni.uForm.value = Math.min((performance.now() - born) / 2100, 1);
