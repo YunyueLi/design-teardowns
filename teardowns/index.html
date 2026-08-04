@@ -127,7 +127,7 @@ body.scrolled .lang-fab{opacity:0;pointer-events:none}
 .whiteout{position:absolute;inset:0;pointer-events:none;opacity:0;z-index:3;transform:scale(.6);will-change:transform,opacity;
   background:radial-gradient(circle at 50% 46%, #ffffff 0%, rgba(251,250,246,.97) 30%, rgba(251,250,246,.55) 52%, transparent 72%)}
 .whitefull{position:absolute;inset:0;pointer-events:none;opacity:0;z-index:4;
-  background:radial-gradient(120% 70% at 50% 36%, #ffffff 0%, #fbfaf6 38%, #f6f4ef 70%, #f6f4ef 100%)}
+  background:radial-gradient(120% 70% at 50% 36%, #ffffff 0%, #fbfaf6 26%, #f6f4ef 48%, #f6f4ef 100%)}
 .portal[data-deep] .hs .chip{opacity:0 !important}
 .hero-art{position:absolute;inset:0;transform-origin:50% 42%;will-change:transform,opacity;
   opacity:0;animation:heroin 1.8s var(--ease-out) .1s forwards}
@@ -1076,8 +1076,9 @@ body.scrolled .spine{opacity:1;pointer-events:auto}
   var beam = document.querySelector('.beam');
   var ticking = false;
   function clamp01(v){ return v<0?0:(v>1?1:v); }
-  /* the title answers the wheel at once; the light layers belong to the 3D scene
-     and follow the camera's smoothed progress so they never run ahead of it. */
+  /* the title and the closing white answer the wheel at once: the white must never
+     lag behind the layout, or the hall shows above the reliquary. the blooming
+     light belongs to the 3D scene and follows the camera's smoothed progress. */
   var cueEl = portalEl ? portalEl.querySelector('.cue') : null;
   window.__applyWalkP = function(p){
     var to = 1 - clamp01(p/.16);
@@ -1085,12 +1086,12 @@ body.scrolled .spine{opacity:1;pointer-events:auto}
     heroInner.style.pointerEvents = to < .05 ? 'none' : '';
     if (cueEl) cueEl.style.opacity = to;
     portalEl.toggleAttribute('data-deep', p > .32);
+    whitefull.style.opacity = clamp01((p-.86)/.13);
   };
   window.__applyWalkLight = function(p){
     var wo = clamp01((p-.56)/.44);
     whiteout.style.opacity = wo;
     whiteout.style.transform = 'scale(' + (.6 + wo*2.8) + ')';
-    whitefull.style.opacity = clamp01((p-.86)/.13);
     if (heroScrim) heroScrim.style.opacity = 1 - clamp01((p-.4)/.35);
     if (beam) beam.style.opacity = 1 - wo;
     if (dc) dc.style.opacity = 1 - wo;
