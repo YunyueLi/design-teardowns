@@ -252,6 +252,9 @@
         bevelSegments: 3,
         curveSegments: 6,
       });
+      group.userData.dock = new T.Object3D();
+      group.userData.dock.position.z = geometry.parameters.options.depth / 2;
+      group.add(group.userData.dock);
       const body = new T.Mesh(geometry, [this.metal, this.dark]);
       body.castShadow = body.receiveShadow = true;
       group.add(body);
@@ -950,9 +953,13 @@
       const raw = p * 4,
         index = Math.min(3, Math.floor(raw)),
         t = raw - index;
-      const stops = [-3.5, -14.5, -25.5, -36.5, -47.5];
+      // Dock at the centre of the actual gantry depth, never a separate stop list.
+      const stops = this.gates.map(
+        (gate) => gate.position.z + gate.userData.dock.position.z,
+      );
       this.carriage.position.z = mix(stops[index], stops[index + 1], t);
       const travel = this.carriage.position.z - stops[0];
+      const cameraTravel = this.carriage.position.z + 3.5;
       this.driveConveyor(travel);
       this.specimen.rotation.y =
         0.04939 + Math.sin((p - 0.75) * Math.PI * 2) * 0.035;
@@ -982,12 +989,13 @@
         this.camera.position.set(
           this.phone ? 13.6 : 16,
           8.9,
-          (this.phone ? 17.9 : 20.5) + travel * (this.phone ? 0.83 : 0.94),
+          (this.phone ? 17.9 : 20.5) +
+            cameraTravel * (this.phone ? 0.83 : 0.94),
         );
         this.camera.lookAt(
           this.phone ? -0.4 : -0.6,
           this.phone ? -0.5 : -1.3,
-          -3.5 + travel * (this.phone ? 0.83 : 0.94),
+          -3.5 + cameraTravel * (this.phone ? 0.83 : 0.94),
         );
         this.world.scale.setScalar(this.phone ? 0.83 : 0.94);
         this.world.position.set(
@@ -1001,9 +1009,9 @@
         this.camera.position.set(
           17.289 + this.pointer.x * 0.09 * motion,
           9 + this.pointer.y * 0.045 * motion,
-          18.3325 + travel,
+          18.3325 + cameraTravel,
         );
-        this.camera.lookAt(-0.72, 0, -4.65 + travel);
+        this.camera.lookAt(-0.72, 0, -4.65 + cameraTravel);
       }
       this.scene.updateMatrixWorld(true);
       this.camera.updateMatrixWorld(true);
@@ -1099,7 +1107,13 @@
         }),
         calls: this.sceneStats?.calls,
         triangles: this.sceneStats?.triangles,
-        beltPhase: this.carriage.position.z + 3.5,
+        beltPhase:
+          this.carriage.position.z -
+          (this.gates[0].position.z + this.gates[0].userData.dock.position.z),
+        sampleWorldZ: this.specimenBacking.getWorldPosition(new T.Vector3()).z,
+        gantryWorldZ: this.gates.map(
+          (gate) => gate.userData.dock.getWorldPosition(new T.Vector3()).z,
+        ),
         rollerAngle: this.rollers[0].rotation.x,
         canvas: { width: this.width, height: this.height },
       };

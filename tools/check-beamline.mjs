@@ -888,6 +888,67 @@ for (const [label, viewport] of [
     },
     { viewport },
   );
+for (const [label, viewport] of [
+  ["desktop", { width: 1586, height: 992 }],
+  ["tablet", { width: 768, height: 1024 }],
+  ["phone", { width: 390, height: 844 }],
+])
+  test(
+    `gantry-docking-${label}`,
+    async ({ page, note }) => {
+      await start(page);
+      await page.waitForFunction(
+        () => window.BEAMLINE.inspect().scene?.sampleReady,
+      );
+      for (const i of [0, 1, 2, 3, 4, 0]) {
+        await page.locator(`[data-station="${i}"]`).click();
+        await settled(page, i / 4);
+        await page.waitForFunction(
+          (i) =>
+            Math.abs(window.BEAMLINE.inspect().scene.progress - i / 4) < 1e-7,
+          i,
+        );
+        const scene = await page.evaluate(
+          () => window.BEAMLINE.inspect().scene,
+        );
+        const error = Math.abs(scene.sampleWorldZ - scene.gantryWorldZ[i]);
+        assert.ok(
+          error < 1e-7,
+          `Sample misses gantry ${i + 1} by ${error} world units`,
+        );
+        assert.equal(scene.gantryWorldZ.length, 5);
+        assert.ok(
+          scene.sampleWorldZ <= scene.gantryWorldZ[0] + 1e-7 &&
+            scene.sampleWorldZ >= scene.gantryWorldZ[4] - 1e-7,
+        );
+        note({
+          station: i + 1,
+          sampleWorldZ: scene.sampleWorldZ,
+          gantryWorldZ: scene.gantryWorldZ[i],
+          error,
+        });
+        if (i === 0 || i === 4)
+          await page.screenshot({
+            path: join(artifacts, `docked-${label}-${i + 1}.png`),
+          });
+      }
+      for (const edge of [1, 0]) {
+        await nativeScroll(page, edge);
+        await settled(page, edge);
+        await page.waitForFunction(
+          (p) => Math.abs(window.BEAMLINE.inspect().scene.progress - p) < 1e-7,
+          edge,
+        );
+        const scene = await page.evaluate(
+          () => window.BEAMLINE.inspect().scene,
+        );
+        assert.ok(
+          Math.abs(scene.sampleWorldZ - scene.gantryWorldZ[edge * 4]) < 1e-7,
+        );
+      }
+    },
+    { viewport },
+  );
 try {
   for (const entry of cases.filter(
     (t) =>
