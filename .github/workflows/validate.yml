@@ -11,6 +11,10 @@ jobs:
   gallery:
     runs-on: ubuntu-latest
     timeout-minutes: 15
+    strategy:
+      fail-fast: false
+      matrix:
+        shard: [1, 2, 3]
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -33,6 +37,7 @@ jobs:
         env:
           PLAYWRIGHT_ROOT: ${{ runner.temp }}/beamline-devtest/node_modules/playwright
           BEAMLINE_ARTIFACT_DIR: artifacts/ci
+          BEAMLINE_SHARD: ${{ matrix.shard }}/3
         run: |
           python3 -m http.server 4174 --bind 127.0.0.1 > "$RUNNER_TEMP/beamline-server.log" 2>&1 &
           server_pid=$!
@@ -46,7 +51,7 @@ jobs:
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: beamline-acceptance
+          name: beamline-acceptance-${{ matrix.shard }}
           path: artifacts/ci/
           if-no-files-found: ignore
           retention-days: 14

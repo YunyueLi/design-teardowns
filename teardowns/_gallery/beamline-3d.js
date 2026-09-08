@@ -4,6 +4,36 @@
   const T = window.THREE;
   const clamp = (v, a, b) => Math.min(b, Math.max(a, v));
   const mix = (a, b, t) => a + (b - a) * t;
+  function rendererInfo(gl) {
+    const debug = gl?.getExtension("WEBGL_debug_renderer_info");
+    const name = gl
+      ? String(
+          gl.getParameter(
+            debug ? debug.UNMASKED_RENDERER_WEBGL : gl.RENDERER,
+          ) || "unknown",
+        )
+      : "unknown";
+    // Only explicit driver evidence opts into the reduced profile. A privacy-masked
+    // renderer, low frame rate or device type is not evidence of software rendering.
+    return {
+      name,
+      software: /swiftshader|llvmpipe|softpipe|software rasterizer/i.test(name),
+    };
+  }
+  function softwareAntialiasFallback() {
+    // Context antialiasing is immutable. Probe a tiny, disposable context before
+    // creating the visible one so hardware keeps its original antialiasing.
+    const probe = document.createElement("canvas");
+    probe.width = probe.height = 1;
+    const options = { antialias: false, powerPreference: "high-performance" };
+    const gl =
+      probe.getContext("webgl2", options) || probe.getContext("webgl", options);
+    try {
+      return rendererInfo(gl).software;
+    } finally {
+      gl?.getExtension("WEBGL_lose_context")?.loseContext();
+    }
+  }
   class BeamlineScene {
     constructor(canvas, onFallback) {
       if (!T) throw new Error("The local Three.js runtime could not load.");
@@ -14,14 +44,18 @@
       this.reduced = matchMedia("(prefers-reduced-motion: reduce)");
       this.renderer = new T.WebGLRenderer({
         canvas,
-        antialias: true,
+        antialias: !softwareAntialiasFallback(),
         alpha: false,
         powerPreference: "high-performance",
       });
+      this.gpu = rendererInfo(this.renderer.getContext());
+      this.qualityProfile = this.gpu.software ? "software" : "hardware";
+      this.environment = null;
+      this.sceneTarget = this.glowA = this.glowB = null;
       this.renderer.outputColorSpace = T.SRGBColorSpace;
       this.renderer.toneMapping = T.ACESFilmicToneMapping;
       this.renderer.toneMappingExposure = 1.05;
-      this.renderer.shadowMap.enabled = true;
+      this.renderer.shadowMap.enabled = !this.gpu.software;
       this.renderer.shadowMap.type = T.PCFSoftShadowMap;
       this.scene = new T.Scene();
       this.scene.background = new T.Color(0x050606);
@@ -40,6 +74,7 @@
       this.makeEmitter();
       this.makeSpecimen();
       this.makeLighting();
+      if (this.gpu.software) this.simplifySoftwareMaterials();
       this.makePostProcessing();
       this.raycaster = new T.Raycaster();
       this.hitPoint = new T.Vector3();
@@ -58,7 +93,7 @@
         this.lost = false;
         this.onFallback(!this.sampleReady);
         // Render-target contents are GPU resources and must be regenerated after loss.
-        this.environment.dispose();
+        this.environment?.dispose();
         this.makeEnvironment();
         this.resize();
         this.requestRender();
@@ -116,6 +151,11 @@
       this.onFallback(true);
     }
     makeEnvironment() {
+      if (this.gpu.software) {
+        this.environment = null;
+        this.scene.environment = null;
+        return;
+      }
       // A studio environment provides broad, physically based reflections on the metal.
       // These meshes are baked into an environment map; they are not a backdrop image.
       const studio = new T.Scene();
@@ -214,6 +254,26 @@
         roughness: 0.8,
       });
       this.labelPainters = [];
+    }
+    simplifySoftwareMaterials() {
+      // Retain geometry, albedo/sample maps, lights and animated emissive strips.
+      // Without studio reflections, use more diffuse metal and avoid per-fragment
+      // bump derivatives and roughness sampling on the CPU rasterizer.
+      const materials = new Set();
+      this.scene.traverse((object) => {
+        if (object.material) {
+          for (const material of Array.isArray(object.material)
+            ? object.material
+            : [object.material])
+            materials.add(material);
+        }
+      });
+      for (const material of materials) {
+        if (!material.isMeshStandardMaterial) continue;
+        material.metalness = Math.min(material.metalness, 0.35);
+        material.bumpMap = null;
+        material.roughnessMap = null;
+      }
     }
     box(w, h, d, x, y, z, material, parent = this.world) {
       const mesh = new T.Mesh(new T.BoxGeometry(w, h, d), material);
@@ -807,6 +867,7 @@
       this.scene.add(emitterLight, emitterLight.target);
     }
     makePostProcessing() {
+      if (this.gpu.software) return;
       // A small HDR bloom pass belongs to the optical lights, not to the HTML interface.
       const options = {
         type: T.HalfFloatType,
@@ -868,12 +929,13 @@
     }
     draw() {
       const r = this.renderer;
-      r.setRenderTarget(this.sceneTarget);
+      r.setRenderTarget(this.sceneTarget ?? null);
       r.render(this.scene, this.camera);
       this.sceneStats = {
         calls: r.info.render.calls,
         triangles: r.info.render.triangles,
       };
+      if (!this.sceneTarget) return;
       this.quad.material = this.brightMaterial;
       r.setRenderTarget(this.glowA);
       r.render(this.postScene, this.postCamera);
@@ -907,10 +969,16 @@
       this.phone = window.innerWidth <= 600;
       const ratio = Math.min(
         devicePixelRatio || 1,
-        this.compact ? 1.5 : 1.7,
-        Math.sqrt(4000000 / (this.width * this.height)),
+        this.gpu.software ? 0.75 : this.compact ? 1.5 : 1.7,
+        Math.sqrt(
+          (this.gpu.software ? 196608 : 4000000) / (this.width * this.height),
+        ),
       );
-      this.renderer.setPixelRatio(Math.max(0.75, ratio));
+      // Software must obey the pixel budget even on very large/HiDPI displays;
+      // the hardware profile retains its original minimum pixel ratio.
+      this.renderer.setPixelRatio(
+        this.gpu.software ? ratio : Math.max(0.75, ratio),
+      );
       this.renderer.setSize(this.width, this.height, false);
       if (this.sceneTarget) {
         const size = this.renderer.getDrawingBufferSize(new T.Vector2());
@@ -1093,6 +1161,22 @@
     }
     inspect() {
       return {
+        renderer: {
+          name: this.gpu.name,
+          software: this.gpu.software,
+          profile: this.qualityProfile,
+          pixelRatio: this.renderer.getPixelRatio(),
+          drawingBuffer: {
+            width: this.canvas.width,
+            height: this.canvas.height,
+          },
+          antialias:
+            this.renderer.getContext().getContextAttributes()?.antialias ??
+            false,
+          bloom: Boolean(this.sceneTarget),
+          shadows: this.renderer.shadowMap.enabled,
+          environment: Boolean(this.environment),
+        },
         ready: this.ready,
         sampleReady: this.sampleReady,
         lost: this.lost,

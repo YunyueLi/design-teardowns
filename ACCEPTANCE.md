@@ -86,4 +86,6 @@ WebGL 恢复检查使用真正的 `WEBGL_lose_context`：覆盖直接恢复、�
 
 关闭弹窗后按暂停位置就近停靠；减弱动态时直接对齐整站，样本与文字保持一致。键盘接管等待真实原生滚动，避免 Home 松键先触发吸附而取消回到开头。根入口保留查询参数和阶段锚点。
 
-扩展回归覆盖上述交互及原生事件的兼容路径，最终本地报告写入 `artifacts/beamline-release-final-20260908/results.json`，记录源文件哈希；测试期间源码变更会令检查失败。PR CI 在 Ubuntu 与 Playwright Chromium 上重复验证并保存 `beamline-acceptance` 产物。GitHub Pages 发布依赖同一套验证通过；发布状态及对应提交以 [Actions](https://github.com/YunyueLi/design-teardowns/actions/workflows/pages.yml) 为准。
+扩展回归覆盖上述交互及原生事件的兼容路径，最终本地报告写入 `artifacts/beamline-release-final-20260908/results.json`，记录源文件哈希；测试期间源码变更会令检查失败。PR CI 在 Ubuntu 与 Playwright Chromium 上重复验证并分三组保存 `beamline-acceptance-*` 产物。GitHub Pages 发布依赖同一套验证通过；发布状态及对应提交以 [Actions](https://github.com/YunyueLi/design-teardowns/actions/workflows/pages.yml) 为准。
+
+首次 Ubuntu CI 显示全质量软件绘制导致数秒级响应，未作为通过结果发布。后续增加实际软件后端的渲染降级，并保留原有运动时长阈值。CI 报告记录真实 WebGL 后端，三组检查合计覆盖完整套件；本机硬件与强制 SwiftShader 的检查分别留证。软件模式的画面细节预算较低，几何停靠、导航、输入与故障恢复仍使用相同实现。

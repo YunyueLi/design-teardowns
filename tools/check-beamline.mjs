@@ -41,6 +41,14 @@ const expect = baseExpect.configure({ timeout: 6000 });
 const repo = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const base =
   process.env.BEAMLINE_URL || "http://127.0.0.1:4174/teardowns/index.html";
+const shard = (process.env.BEAMLINE_SHARD || "1/1").split("/").map(Number);
+assert.ok(
+  shard.length === 2 &&
+    shard.every(Number.isInteger) &&
+    shard[0] >= 1 &&
+    shard[0] <= shard[1],
+  "BEAMLINE_SHARD must be index/count, e.g. 1/3",
+);
 const stamp = new Date().toISOString().replace(/[:.]/g, "-");
 const artifacts = resolve(
   process.env.BEAMLINE_ARTIFACT_DIR ||
@@ -75,6 +83,21 @@ try {
     executablePath: macChrome,
   });
 }
+const probe = await browser.newPage();
+const gpu = await probe.evaluate(() => {
+  const canvas = document.createElement("canvas");
+  const gl = canvas.getContext("webgl2") || canvas.getContext("webgl");
+  if (!gl) return null;
+  const info = gl.getExtension("WEBGL_debug_renderer_info");
+  return {
+    renderer: gl.getParameter(
+      info ? info.UNMASKED_RENDERER_WEBGL : gl.RENDERER,
+    ),
+    vendor: gl.getParameter(info ? info.UNMASKED_VENDOR_WEBGL : gl.VENDOR),
+  };
+});
+await probe.close();
+console.log("WebGL backend:", JSON.stringify(gpu));
 const names = ["capture", "measure", "reconstruct", "verify", "archive"];
 const report = {
   startedAt: new Date().toISOString(),
@@ -82,6 +105,8 @@ const report = {
   browser: browser.version(),
   launchSource,
   headless: true,
+  gpu,
+  shard: { index: shard[0], count: shard[1] },
   sourceHashes: {},
   tests: [],
 };
@@ -1308,11 +1333,13 @@ for (const [label, viewport] of [
     { viewport },
   );
 try {
-  for (const entry of cases.filter(
-    (t) =>
-      !process.env.BEAMLINE_TEST_FILTER ||
-      t.name.includes(process.env.BEAMLINE_TEST_FILTER),
-  )) {
+  for (const entry of cases
+    .filter(
+      (t) =>
+        !process.env.BEAMLINE_TEST_FILTER ||
+        t.name.includes(process.env.BEAMLINE_TEST_FILTER),
+    )
+    .filter((_, index) => index % shard[1] === shard[0] - 1)) {
     const context = await browser.newContext({
       viewport: { width: 1440, height: 1000 },
       serviceWorkers: "block",
