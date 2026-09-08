@@ -18,7 +18,10 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  validate:
+    uses: ./.github/workflows/validate.yml
   deploy:
+    needs: validate
     runs-on: ubuntu-latest
     environment:
       name: github-pages

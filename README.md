@@ -1,125 +1,82 @@
-<div align="center">
+# Design Teardowns
 
-<a href="https://yunyueli.github.io/design-teardowns/teardowns/index.html">
-<img src="teardowns/_gallery/art/banner.jpg" alt="The gallery corridor, with seventeen studies hung along its walls" width="820"/>
-</a>
+把优秀界面拆成可验证、可复用的设计知识。
 
-# 拆解画廊
+![实时 Three.js 光束线画廊：样本随传送带经过五个研究工位](teardowns/_gallery/beamline-readme.jpg)
 
-### Design Teardowns
+[浏览画廊](https://yunyueli.github.io/design-teardowns/teardowns/index.html) · [研究方法](skills/design-teardown/references/method.md) · [实现说明](DESIGN.md) · [授权与出处](NOTICE)
 
-Seventeen studies of living pages, with every colour, every letterform<br/>and every easing curve measured from the work itself.
+## 一件界面，五步拆解
 
-十七座顶级落地页的设计逆向。每一个颜色、每一个字号、每一条缓动曲线，都从原作里实际测量得来。
+**Capture → Measure → Reconstruct → Verify → Archive**
 
-<br/>
+从真实页面开始，记录素材与状态，测量样式和动效，重建关键体验，再将结论与出处逐项对照。每份研究区分实测与推断，保留没有拿到的证据和复现边界。
 
-<a href="https://yunyueli.github.io/design-teardowns/teardowns/index.html"><img src="https://img.shields.io/badge/%E8%BF%9B%E5%85%A5%E7%94%BB%E5%BB%8A-Enter%20the%20Gallery-9a3524?style=for-the-badge&labelColor=1c1c1c" alt="Enter the gallery"/></a>
+画廊把这五步做成一条可探索的光束线。滚动或点击工位，传送带、滚轮和样本同步移动，相机跟随样本前进。滚动停止后保留当前位置，点击工位才精确停靠；阶段文字在样本实际到站后切换。场景由本地 Three.js 实时渲染；金属、灯光、光束和样本拥有共同的空间与遮挡关系。它是一种研究过程的视觉表达，研究本身仍由各作品中的证据与分析完成。
 
-[![License: MIT (code)](https://img.shields.io/badge/code-MIT-blue.svg)](LICENSE-CODE)
-[![License: CC BY 4.0 (content)](https://img.shields.io/badge/content-CC%20BY%204.0-lightgrey.svg)](LICENSE)
-[![Claude Agent Skill](https://img.shields.io/badge/Claude-Agent%20Skill-8A3FFC.svg)](skills/design-teardown)
-![No build](https://img.shields.io/badge/build-none-brightgreen.svg)
+馆藏目前有 **17 份研究**。首页展示六件作品，支持搜索、分类、排序和分页；展开 Archive 可以继续浏览。馆藏增加时，五站旅程和每页六项的布局保持不变。手机、横屏、键盘访问和减弱动态偏好均有对应路径；三维场景不可用时仍可通过静态入口进入研究。
 
-</div>
+## 当前展览
 
-<br/>
+| 作品                                                                    | 研究对象                               |
+| ----------------------------------------------------------------------- | -------------------------------------- |
+| [Latrix](teardowns/latrix/teardown.html)                                | AI Beings 品牌页面的古典排版与字母螺旋 |
+| [ChatGPT](teardowns/chatgpt/teardown.html)                              | OpenAI overview 页面的留白与产品叙事   |
+| [EasyCode](teardowns/easycode/teardown.html)                            | 编程练习、指导与反馈页面               |
+| [Gemini](teardowns/gemini/teardown.html)                                | 捕获时的签出状态入口与柔光界面         |
+| [Notion](teardowns/notion/teardown.html)                                | 英文首页的团队与 Agent 协作叙事        |
+| [Shopify Editions Winter ’26](teardowns/shopify-editions/teardown.html) | The Renaissance Edition 的发布系统     |
 
-Every teardown here follows one rule: facts over vibes. A headless browser reads the live site's computed styles and design tokens, all assets and production source are archived, and the analysis is rebuilt in the subject's own visual language. Numbers are labeled measured or inferred, and each one can be traced back to its source.
+完整目录见 [catalogue.js](teardowns/_gallery/catalogue.js)。点击作品进入对应研究页，三维台车中的示例固定为 Latrix。
 
-每份拆解都守同一条规矩：不凭感觉，只认实测。无头浏览器读取线上站点真实的计算样式和设计 token，资产与生产源码全部存档，分析用被拆对象自己的视觉语言重建。数值分「实测」与「推断」两种口径，每一个都能回溯到出处。
+## 本地运行
 
-## 馆内一瞥 A glimpse inside
+在仓库根目录运行：
 
-<table>
-<tr>
-<td width="33%"><a href="https://yunyueli.github.io/design-teardowns/teardowns/shopify-editions/teardown.html"><img src="teardowns/_gallery/covers/shopify-editions.jpg" alt="Shopify Editions Winter '26"/></a><p align="center"><sub><b>Shopify Editions Winter ’26</b><br/>Renaissance manuscript, Theatre.js, a two-window WebRTC easter egg</sub></p></td>
-<td width="33%"><a href="https://yunyueli.github.io/design-teardowns/teardowns/endfield/teardown.html"><img src="teardowns/_gallery/covers/endfield.jpg" alt="Arknights: Endfield"/></a><p align="center"><sub><b>Arknights: Endfield</b><br/>Industrial HUD with a 218,000-point WebGL2 particle theatre</sub></p></td>
-<td width="33%"><a href="https://yunyueli.github.io/design-teardowns/teardowns/comet/teardown.html"><img src="teardowns/_gallery/covers/comet.jpg" alt="Comet"/></a><p align="center"><sub><b>Comet</b><br/>A native browser, unpacked from resources.pak and recorded frame by frame</sub></p></td>
-</tr>
-<tr>
-<td width="33%"><a href="https://yunyueli.github.io/design-teardowns/teardowns/moonshot/teardown.html"><img src="teardowns/_gallery/covers/moonshot.jpg" alt="Moonshot AI"/></a><p align="center"><sub><b>Moonshot AI</b><br/>An eclipse halo on pure black, with RGB-glitched brand type</sub></p></td>
-<td width="33%"><a href="https://yunyueli.github.io/design-teardowns/teardowns/journeypilot/teardown.html"><img src="teardowns/_gallery/covers/journeypilot.jpg" alt="JourneyPilot"/></a><p align="center"><sub><b>JourneyPilot</b><br/>Retro-aviation cockpit dashboards in midnight blue</sub></p></td>
-<td width="33%"><a href="https://yunyueli.github.io/design-teardowns/teardowns/turtle-soup/teardown.html"><img src="teardowns/_gallery/covers/turtle-soup.jpg" alt="海龟汤事务所"/></a><p align="center"><sub><b>海龟汤事务所</b><br/>A rainy-night detective bureau with stamp-press physics</sub></p></td>
-</tr>
-</table>
-
-<div align="center"><sub>更多展品在画廊里：<a href="https://yunyueli.github.io/design-teardowns/teardowns/index.html">yunyueli.github.io/design-teardowns</a></sub></div>
-
-## 藏品总目 The catalogue
-
-| Plate | 作品 | Signature | 进入 |
-|:--|:--|:--|:--|
-| I | **Shopify Editions Winter ’26** | Renaissance manuscript: construction lines, Theatre.js keyframes, a two-window WebRTC key easter egg | [Live](https://yunyueli.github.io/design-teardowns/teardowns/shopify-editions/teardown.html) / [档案](teardowns/shopify-editions/) |
-| II | **明日方舟：终末地** Arknights: Endfield | Industrial HUD, a 218,000-point E.P.S particle theatre, luminance-keyed video FX | [Live](https://yunyueli.github.io/design-teardowns/teardowns/endfield/teardown.html) / [档案](teardowns/endfield/) |
-| III | **Comet** | Native-app reverse engineering: resources.pak, source-level tokens, CDP frame capture | [Live](https://yunyueli.github.io/design-teardowns/teardowns/comet/teardown.html) / [档案](teardowns/comet/) |
-| IV | **Linear** | Dark precision dashboard with an animated agent dot matrix | [Live](https://yunyueli.github.io/design-teardowns/teardowns/linear/teardown.html) / [档案](teardowns/linear/) |
-| V | **Moonshot AI** | Pure black, an eclipse halo, RGB-glitched brand type | [Live](https://yunyueli.github.io/design-teardowns/teardowns/moonshot/teardown.html) / [档案](teardowns/moonshot/) |
-| VI | **tutti** | Cinematic black stage framed by a macOS window | [Live](https://yunyueli.github.io/design-teardowns/teardowns/tutti/teardown.html) / [档案](teardowns/tutti/) |
-| VII | **OJO** | Starry-night narrative with typewriter code and a skill marquee | [Live](https://yunyueli.github.io/design-teardowns/teardowns/ojo/teardown.html) / [档案](teardowns/ojo/) |
-| VIII | **Converge AI** | Minimal black and white around one slowly converging orb | [Live](https://yunyueli.github.io/design-teardowns/teardowns/converge/teardown.html) / [档案](teardowns/converge/) |
-| IX | **ChatGPT** | Restrained white, a sea of prompt cards on a watercolor base | [Live](https://yunyueli.github.io/design-teardowns/teardowns/chatgpt/teardown.html) / [档案](teardowns/chatgpt/) |
-| X | **Notion** | Friendly white with highlight pills and hand-drawn avatars | [Live](https://yunyueli.github.io/design-teardowns/teardowns/notion/teardown.html) / [档案](teardowns/notion/) |
-| XI | **Gemini** | Soft glow gradients around a rounded chat entry | [Live](https://yunyueli.github.io/design-teardowns/teardowns/gemini/teardown.html) / [档案](teardowns/gemini/) |
-| XII | **Lovart** | Elegant serif type over a visualized agent canvas | [Live](https://yunyueli.github.io/design-teardowns/teardowns/lovart/teardown.html) / [档案](teardowns/lovart/) |
-| XIII | **Latrix** | Off-white gallery wall with a twisting Playfair wordmark | [Live](https://yunyueli.github.io/design-teardowns/teardowns/latrix/teardown.html) / [档案](teardowns/latrix/) |
-| XIV | **Lagom** | Paper viewfinder: travel photo annuals in quiet serif type | [Live](https://yunyueli.github.io/design-teardowns/teardowns/imlagom/teardown.html) / [档案](teardowns/imlagom/) |
-| XV | **EasyCode** | White paper and red pen, a graded-homework motif across 16 screens | [Live](https://yunyueli.github.io/design-teardowns/teardowns/easycode/teardown.html) / [档案](teardowns/easycode/) |
-| XVI | **JourneyPilot** | Retro-aviation cockpit dashboards across 11 screens | [Live](https://yunyueli.github.io/design-teardowns/teardowns/journeypilot/teardown.html) / [档案](teardowns/journeypilot/) |
-| XVII | **海龟汤事务所** | Rainy-night detective bureau, stamp-press physics on case files | [Live](https://yunyueli.github.io/design-teardowns/teardowns/turtle-soup/teardown.html) / [档案](teardowns/turtle-soup/) |
-
-每个档案文件夹里有：`teardown.html`（互动拆解页）、五份中文文档（设计解构、复刻指南、出处与方法、事实核查、设计评审）、`design-tokens.css` 与 `tokens.json`（实测 token）、逐屏截图，以及 `real-assets/`（研究用第三方素材存档）。
-
-## 拆解技能 The skill
-
-这套拆解由一个可复用的 Claude Agent Skill 完成：[`design-teardown`](skills/design-teardown)。对任何网址说一句自然语言（例如 "tear down the design of https://linear.app" 或「扒出某站的真实配色、字体、缓动」），它会跑完整条流水线。
-
-**安装（Claude Code），三选一：**
-
-插件市场，两行命令：
+```bash
+python3 -m http.server 4174 --bind 127.0.0.1
 ```
+
+打开 [本地画廊](http://127.0.0.1:4174/teardowns/index.html)。画廊不需要安装 npm 依赖、构建或后端服务；运行时、字体和图像均随仓库提供。请通过 HTTP 预览，避免 `file://` 对图片纹理的限制。
+
+## 维护馆藏
+
+先在 [catalogue.js](teardowns/_gallery/catalogue.js) 中添加经过出处核对的记录、研究页和封面，再运行：
+
+```bash
+node tools/build-gallery-featured.mjs
+node tools/build-gallery-featured.mjs --check
+node tools/check-gallery.mjs
+```
+
+这两个工具只使用 Node.js 内置模块。生成器同步精选数据与数量；检查器核对数据一致性、研究入口、封面、文档和许可路径。精选六项的元数据从完整目录派生，默认顺序在加载完整目录、筛选后返回及展开弹窗时保持一致。旧的 `tools/generate_index.py` 兼容入口也只更新数据，不再覆盖首页布局。
+
+## 研究产物
+
+| 文件                                                            | 用途                           |
+| --------------------------------------------------------------- | ------------------------------ |
+| `teardown.html`                                                 | 可交互的研究页与复现示例       |
+| `设计解构.md`                                                   | 视觉系统、布局与交互分析       |
+| `复刻指南.md`                                                   | 实现步骤与工程取舍             |
+| `出处与方法.md`                                                 | 捕获来源、测量方法、推断和局限 |
+| `事实核查.md`、`设计评审.md`                                    | 逐项核对与研究复盘             |
+| `tokens.json`、`design-tokens.css`、`real-assets/manifest.json` | 已采集的结构化证据与资产出处   |
+
+具体产物以每份研究为准。可复用的捕获与研究流程位于 [design-teardown Skill](skills/design-teardown/SKILL.md)。通过 Claude Code 插件市场安装：
+
+```text
 /plugin marketplace add YunyueLi/design-teardowns
 /plugin install design-teardown@design-teardowns
 ```
-或者把技能复制进技能目录：
-```bash
-git clone https://github.com/YunyueLi/design-teardowns
-cp -r design-teardowns/skills/design-teardown ~/.claude/skills/
-```
-或者下载打包好的 [`design-teardown.skill`](design-teardown.skill)，拖进 Claude 的 Settings 里的 Skills 页，或解压到 `~/.claude/skills/`。
 
-**直接运行流水线**（需要 Playwright：`pip install playwright && playwright install chromium`）：
-```bash
-python skills/design-teardown/scripts/capture_site.py --url https://example.com --out ./out/example --name Example
-```
+也可使用仓库中的 [design-teardown.skill](design-teardown.skill)。捕获工具的浏览器依赖与画廊运行依赖分开管理。
 
-## 方法 How it works
+## 验证与交付
 
-流水线四步，每一步都留下可验证的产物：
+浏览器验收覆盖五站停靠、连续滚动、阶段切换、搜索分页、键盘、横竖屏及真实 WebGL 故障恢复；馆藏专项检查 **18/18 通过**。README 上图来自本次实际运行的页面。命令、实测数据和验证边界见 [验收记录](ACCEPTANCE.md)。发布前由 CI 重跑数据与浏览器检查，通过后部署到 GitHub Pages；线上版本以 [发布记录](https://github.com/YunyueLi/design-teardowns/actions/workflows/pages.yml) 为准。
 
-1. **真实捕获。** Playwright 读取计算样式，服务端直连抓取样式表原文（绕开 CORS），产出 `tokens.json` 和 `design-tokens.css`。
-2. **定义视觉语言。** 读出原站真实的底色、字体与母题，拆解页用这套语言来做，从不套共用模板。
-3. **建页与写档。** 互动拆解页至少复刻一个署名级效果（用真实缓动与时长），配五份文档；每个数值标明实测或推断。
-4. **对抗性自审。** 事实核查把页面上每个数值与 `tokens.json` 对账，设计评审给精度与完整度打分。
+## 授权
 
-完整方法见 [`skills/design-teardown/SKILL.md`](skills/design-teardown/SKILL.md)，包括 Comet 用到的原生应用路径（解包 `resources.pak`、CDP 逐帧捕获）。
+项目代码采用 [MIT](LICENSE-CODE)，项目有权许可的原创内容采用 [CC BY 4.0](LICENSE)。第三方商标、截图内容、字体、媒体和原站素材保留原权利人的权利；素材的研究用途与使用边界见 [NOTICE](NOTICE) 及各研究的出处文档。
 
-## 目录结构 Repo layout
-
-| 路径 | 内容 |
-|---|---|
-| `teardowns/` | 画廊 `index.html` 与每站一个独立文件夹 |
-| `teardowns/_gallery/` | 画廊页专用资源：封面、蚀刻画、字体子集 |
-| `skills/design-teardown/` | 可复用技能（SKILL.md、脚本、参考资料） |
-| `tools/` | 抓取与录制脚本（网页与原生应用） |
-| `.claude-plugin/marketplace.json` | 一条命令即可安装的插件市场配置 |
-
-## 素材与授权 Assets and licensing
-
-代码（画廊、脚本、技能）以 **MIT** 授权，见 [LICENSE-CODE](LICENSE-CODE)。原创拆解内容（文档、实测 token 值、我们自己的截图）以 **CC BY 4.0** 授权，见 [LICENSE](LICENSE)。
-
-本仓库是单一完整档案：每站 `real-assets/` 存有分析过程中引用的第三方素材（字体、媒体、生产源码、捕获的几何数据），只用于设计研究、验证与比对，见 [NOTICE](NOTICE)。这些素材归各自权利人所有，明确排除在上述授权之外。画廊页里的蚀刻装饰画为本仓库装帧时生成，作装饰用途。
-
-## 声明 Disclaimer
-
-这是一项独立的教学与研究性设计分析，与被分析产品的任何公司均无关联，也未获其认可或赞助。所有产品名称、标识与商标归各自所有者，仅作指称与评论之用。完整条款见 [NOTICE](NOTICE)。如果你持有其中素材的权利并希望我们做出调整，请提交 issue，我们会善意处理。
+Three.js 与内置字体的许可随仓库保存。本项目独立于所研究产品，无隶属、赞助或背书关系。

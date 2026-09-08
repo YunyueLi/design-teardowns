@@ -22,3 +22,6 @@ __pycache__/
 # third-party copyrighted material kept strictly for design research and
 # comparison; it is not covered by this repo's MIT/CC licenses.
 # ---------------------------------------------------------------------------
+
+# Local browser acceptance screenshots, traces and measurements.
+/artifacts/
