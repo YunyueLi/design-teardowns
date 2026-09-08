@@ -205,16 +205,19 @@ async function start(page, station = "capture") {
   }, expected);
 }
 async function nativeScroll(page, p) {
-  await page.evaluate(
-    (p) =>
-      scrollTo({
-        top:
-          (document.querySelector("#experience").offsetHeight - innerHeight) *
-          p,
-        behavior: "instant",
-      }),
-    p,
-  );
+  await page.evaluate((p) => {
+    const top =
+      (document.querySelector("#experience").offsetHeight - innerHeight) * p;
+    const run = window.__motionObservation;
+    if (run && !run.done && run.event === "scroll") {
+      // An ongoing navigation may emit its own scroll before this protocol call
+      // arrives. Anchor the observation to this actual native input invocation.
+      window.removeEventListener(run.event, run.listener, true);
+      run.triggeredAt = performance.now();
+      run.record();
+    }
+    scrollTo({ top, behavior: "instant" });
+  }, p);
 }
 async function docked(page, index) {
   await settled(page, index / 4);
@@ -748,29 +751,25 @@ test("wheel-takes-over-click", async ({ page, note }) => {
   await page.mouse.move(20, 350);
   await observeTakeover(page, ["wheel"]);
   await page.mouse.wheel(0, -240);
-  await page.waitForFunction(() => {
-    const input = window.__takeoverInput;
-    const d = window.BEAMLINE.inspect();
-    return (
-      input &&
-      !d.navigating &&
-      scrollY < input.scroll &&
-      !document.body.hasAttribute("data-moving")
-    );
-  });
+  await page.waitForFunction(() => window.__takeoverInput);
   const input = await page.evaluate(() => window.__takeoverInput);
   note({ input });
   assert.equal(input.trusted, true);
-  assert.equal(
-    input.navigating,
-    true,
-    "Wheel must interrupt active navigation",
-  );
+  // The compositor can apply the default scroll before passive wheel delivery;
+  // readScroll may already have cancelled navigation by the capture observation.
+  await page.waitForFunction(() => {
+    const d = window.BEAMLINE.inspect();
+    return (
+      window.__takeoverInput &&
+      !d.navigating &&
+      !document.body.hasAttribute("data-moving")
+    );
+  });
   assert.ok(input.deltaY < 0);
   const s = await state(page);
   assert.ok(
-    s.p < input.p,
-    "Reverse wheel must finish before its actual input progress",
+    s.p <= input.p + 1 / s.range,
+    "Reverse wheel must not advance beyond actual input progress (one native pixel tolerance)",
   );
   assert.equal(s.diagnostics.navigating, false);
   assert.ok(Math.abs(s.p - s.scroll / s.range) < 0.00001);

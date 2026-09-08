@@ -84,8 +84,11 @@
       this.lastTime = 0;
       this.resize();
       // compile() also traverses hidden materials in the bundled Three.js runtime.
-      // Lights and the software material profile are final before the first draw.
-      if (this.gpu.software) this.renderer.compile(this.scene, this.camera);
+      // Match the real scene target so the first moving frame does not compile
+      // hidden grid/glass shader variants, on either rendering backend.
+      this.renderer.setRenderTarget(this.sceneTarget);
+      this.renderer.compile(this.scene, this.camera);
+      this.renderer.setRenderTarget(null);
       this.render(performance.now());
       this.ready = true;
       this.canvas.addEventListener("webglcontextlost", (event) => {
