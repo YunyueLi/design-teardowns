@@ -47,13 +47,13 @@
 
 ## 一个归档面板
 
-canonical `catalogue.js` 当前包含 **17** 项。初始 `featured.js` 固定顺序为 `latrix,chatgpt,easycode,gemini,notion,shopify-editions`，每项由 canonical 全字段派生。生成与检查命令、数量同步的维护方式见 [README](README.md#维护馆藏)。
+canonical `catalogue.js` 当前包含 **19** 项。初始 `featured.js` 固定顺序为 `shopify-editions,pear,shopify-editions-spring26,moonshot,comet,latrix`，每项由 canonical 全字段派生。生成与检查命令、数量同步的维护方式见 [README](README.md#维护馆藏)。
 
 `ensureCatalogue()` 通过动态 script 加载 `_gallery/catalogue.js`，缓存已加载数据和进行中的 Promise。打开 Archive 弹窗，或操作搜索、分类、排序、分页会触发加载；滚动到第五站只改变站点。失败会清理加载 Promise，并提供可重试错误状态。
 
 `renderArchive()` 先用六项 featured 展示初始展览。完整目录加载后，Curated order 仍按 featured 的 slug 顺序取 canonical 中的六项，再追加 catalogue 中其余项目，保留其原序；元数据始终取自 canonical。默认第一页因此在初始加载、完整目录载入及面板展开之间保持一致。标题排序是单独选项，按标题字母顺序排列全部匹配项。
 
-搜索覆盖标题、中文标题、简介、类型和类别，分类及搜索变化重置到第一页。`pageSize = 6`，只为当前页创建结果节点，页码最多五个；17 项无筛选时为 6、6、5 三页。首页长度固定，完整目录数据的下载量、内存和筛选计算仍随馆藏增长。
+搜索覆盖标题、中文标题、简介、类型和类别，分类及搜索变化重置到第一页。`pageSize = 6`，只为当前页创建结果节点，页码最多五个；19 项无筛选时为 6、6、6、1 四页。首页长度固定，完整目录数据的下载量、内存和筛选计算仍随馆藏增长。
 
 原位 `#archive-panel` 与弹窗内的面板是同一个元素。打开时将它移入 `#archive-slot`，关闭时通过原位置的注释锚点放回；query、category、sort、page 都由同一控制器持有。使用原生 dialog，支持关闭按钮、对话框外点击、初始焦点与关闭后焦点回归。
 

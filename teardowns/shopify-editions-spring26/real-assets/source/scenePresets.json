@@ -1,0 +1,5685 @@
+[
+ {
+  "name": "prod-8-shopapp",
+  "preset": {
+   "id": "metaobject-cs-8-shopapp",
+   "title": "cs-8-shopapp",
+   "camera": {
+    "position": [
+     -0.1255631874823379,
+     0.3839453387019899,
+     1.8639385670947057
+    ],
+    "target": [
+     -0.12562184948372315,
+     0.3688432091825727,
+     -0.05621516804191149
+    ],
+    "fov": 50,
+    "animation": "scrollDrift",
+    "positionOffset": [
+     0,
+     0,
+     0
+    ],
+    "mobilePositionOffset": [
+     0,
+     0,
+     0
+    ],
+    "rotationOffset": [
+     0,
+     0,
+     0
+    ],
+    "mobileRotationOffset": [
+     0,
+     0,
+     0
+    ],
+    "pointerInfluence": [
+     [
+      0.1,
+      -0.1
+     ],
+     [
+      0.05,
+      -0.05
+     ]
+    ],
+    "scrollDrift": {
+     "up": 0.2,
+     "back": 0.2
+    }
+   },
+   "environment": {
+    "url": "https://cdn.shopify.com/s/files/1/0647/5176/3550/files/shopapp-office.hdr",
+    "background": true,
+    "blur": 1,
+    "darken": 0.8354430379746833
+   },
+   "pointcloud": {
+    "sources": [
+     {
+      "src": "https://cdn.shopify.com/s/files/1/0647/5176/3550/files/shopappb-256-df9.mdpc?v=1781551496",
+      "resolution": 512
+     },
+     {
+      "src": "https://cdn.shopify.com/s/files/1/0647/5176/3550/files/shopappb-256-df9.mdpc?v=1781551496",
+      "resolution": 256
+     }
+    ],
+    "flow": {
+     "enabled": true,
+     "type": "curl",
+     "layout": "off",
+     "strength": 0.05063291139240506,
+     "speed": 1.5101392405063279,
+     "scale": 3.4884810126582244,
+     "gridEnabled": false,
+     "gridSize": 0.22100000000000014,
+     "gridStrength": 1,
+     "gridMix": {
+      "x": 1,
+      "y": 1,
+      "z": 1
+     },
+     "gridRotation": {
+      "x": 0,
+      "y": 0,
+      "z": 0
+     },
+     "conveyorEnabled": true,
+     "conveyorSpeed": -2,
+     "conveyorDepth": 4.49367088607595,
+     "conveyorRotation": {
+      "x": 0,
+      "y": 0.43999999999999984,
+      "z": 0
+     },
+     "conveyorDistance": {
+      "near": 1.20253164556962,
+      "far": 20
+     },
+     "randomnessExponent": 205,
+     "distanceNear": 1.20253164556962,
+     "distanceFar": 3,
+     "layoutRadius": 0.05100000000000024,
+     "layoutThickness": 0,
+     "layoutPreserveY": 0.35,
+     "layoutTwist": -2.0000000000000013,
+     "layoutAmplitude": -2,
+     "layoutFrequency": 0,
+     "layoutSpokes": 75,
+     "layoutRadialSpacing": 0.98,
+     "layoutTurns": -9.899999999999999,
+     "layoutHeight": 12
+    },
+    "fluid": {
+     "enabled": true,
+     "influence": 0.4,
+     "curl": 3,
+     "velocityDissipation": 0.96,
+     "densityDissipation": 0.98,
+     "pressure": 0.9,
+     "splatRadius": 1,
+     "splatForce": 0.3,
+     "simSize": 128,
+     "dyeSize": 256
+    },
+    "caustics": {
+     "enabled": true,
+     "strength": 5,
+     "scale": 0.15822784810126628,
+     "axisScale": {
+      "x": 1.2500000000000002,
+      "y": 1.09,
+      "z": 2.4000000000000012
+     },
+     "speed": {
+      "x": -0.11000000000000001,
+      "y": -0.040000000000000015,
+      "z": -0.04
+     },
+     "power": 5.443037974683543,
+     "sparkle": 0,
+     "color": {
+      "r": 0.37254901960784315,
+      "g": 0.29411764705882354,
+      "b": 1
+     }
+    },
+    "colorCorrections": {
+     "enabled": false,
+     "amount": 0,
+     "reds": {
+      "h": 0,
+      "s": -1,
+      "l": 0
+     },
+     "yellows": {
+      "h": 0,
+      "s": -1,
+      "l": 0
+     },
+     "greens": {
+      "h": 0,
+      "s": -1,
+      "l": 0
+     },
+     "cyans": {
+      "h": 0,
+      "s": -1,
+      "l": 0
+     },
+     "blues": {
+      "h": 0,
+      "s": -0.4999999999999999,
+      "l": 0
+     },
+     "magentas": {
+      "h": 0,
+      "s": 0,
+      "l": 0
+     },
+     "whites": {
+      "h": 0,
+      "s": -0.9800000000000001,
+      "l": 0
+     },
+     "neutrals": {
+      "h": -3,
+      "s": 0.7900000000000001,
+      "l": 0
+     },
+     "blacks": {
+      "h": -180,
+      "s": 1.6306400674181987e-16,
+      "l": 0
+     }
+    },
+    "pointSize": 0.118,
+    "distanceSizeInfluence": 1,
+    "distanceSizeNear": 4,
+    "distanceSizeFar": 18,
+    "distanceSizeMax": 1.5,
+    "maxPointSize": 2.1253164556962023,
+    "maxPoints": 161001,
+    "position": {
+     "x": -1.369999999999999,
+     "y": 2.410000000000005,
+     "z": -12.689999999999994
+    },
+    "rotation": {
+     "x": 0,
+     "y": 200,
+     "z": 178
+    },
+    "scale": 4,
+    "mobile": {
+     "position": {
+      "x": 0,
+      "y": 0,
+      "z": 0
+     },
+     "rotation": {
+      "x": 0,
+      "y": 0,
+      "z": 0
+     }
+    },
+    "opacity": 0.44999999999999973,
+    "transparent": true,
+    "blendMode": "additive",
+    "randomize": {
+     "x": 1.2600000000000005,
+     "y": 1.6900000000000006,
+     "z": 2
+    },
+    "cameraFade": {
+     "enabled": true,
+     "near": 0,
+     "far": 14.049999999999994
+    },
+    "densityFill": {
+     "enabled": false,
+     "opacity": 0.35,
+     "pointSizeScale": 0.75,
+     "jitter": 0.01
+    },
+    "particleScalars": {
+     "source512": 1.25,
+     "source256": 1
+    }
+   },
+   "postprocessing": {
+    "bloom": {
+     "enabled": true,
+     "intensity": 0.4,
+     "opacity": 0.13924050632911394,
+     "threshold": 0,
+     "softness": 0,
+     "radius": 0.4810126582278476,
+     "tint": [
+      1,
+      1,
+      1
+     ],
+     "rgbShift": 0,
+     "rgbAngle": 0
+    },
+    "chromatic": {
+     "enabled": true,
+     "amount": 0.0079113924050633,
+     "angle": 0.6362719298409707
+    },
+    "vignette": {
+     "enabled": true,
+     "amount": 0.32911392405063267,
+     "radius": 1.189303797468355,
+     "softness": 0.7128797468354431
+    },
+    "afterimage": {
+     "enabled": true,
+     "strength": 0.99,
+     "damp": 0.99,
+     "threshold": 0
+    },
+    "noise": {
+     "enabled": false,
+     "amount": 0.06,
+     "scale": 1
+    },
+    "toneMapping": "neutral",
+    "toneMappingExposure": 1
+   },
+   "behindContent": {
+    "darken": 0.29999999999999993,
+    "speed": 0.10000000000000002,
+    "saturation": 0.8000000000000002,
+    "pointerInfluence": 0,
+    "reduceQuality": true,
+    "offset": 0
+   },
+   "volumetric": null,
+   "videoLightVolume": {
+    "videoUrl": "https://cdn.shopify.com/videos/c/o/v/15de67fa52a247e9805165ba4417e3b7.mp4",
+    "ktx2Url": "https://cdn.shopify.com/s/files/1/0647/5176/3550/files/shopapp_50f_427x240_etc1s.ktx2?v=1781615183",
+    "visible": true,
+    "layer": "background",
+    "source": "vf-source",
+    "width": 1,
+    "depth": 2.61,
+    "opacity": 2,
+    "brightness": 2.300000000000001,
+    "threshold": 0.025,
+    "softness": 0.061000000000000006,
+    "edgeFade": 0,
+    "blendMode": "additive",
+    "renderBehindPointCloud": true,
+    "loopCount": 1.2,
+    "grid": {
+     "enabled": false,
+     "columns": 1,
+     "rows": 1,
+     "spacing": [
+      1.1,
+      1.1
+     ],
+     "randomTimeOffset": 0,
+     "outerOpacity": 1
+    },
+    "nearFade": 0,
+    "playbackSpeed": -1,
+    "fluidStrength": [
+     -0.05,
+     0.05
+    ],
+    "fluidDepthStrength": [
+     4,
+     -4
+    ],
+    "fluidDistanceRange": [
+     0,
+     1000
+    ],
+    "raymarchSteps": 100,
+    "centerFade": [
+     0.5,
+     0,
+     0
+    ],
+    "position": [
+     -0.0899999999999995,
+     0.34000000000000197,
+     2.8102520310824275e-16
+    ],
+    "rotation": [
+     0,
+     0,
+     0
+    ],
+    "scale": [
+     2.9999999999999885,
+     2.9999999999999885,
+     1
+    ],
+    "hsl": [
+     0.03,
+     2,
+     -0.16999999999999998
+    ],
+    "noiseScale": [
+     0,
+     0,
+     0
+    ],
+    "noiseMovement": [
+     0,
+     0,
+     0
+    ],
+    "noiseStrength": 0
+   },
+   "foregroundVideoLightVolume": null
+  }
+ },
+ {
+  "name": "prod-10-finance",
+  "preset": {
+   "id": "metaobject-cs-10-finance",
+   "title": "cs-10-finance",
+   "camera": {
+    "position": [
+     -0.3047772913518115,
+     0.025351934661357444,
+     0.9090432030993345
+    ],
+    "target": [
+     -0.3491091846373982,
+     0.02882983727812112,
+     -0.5426586847654913
+    ],
+    "fov": 50,
+    "animation": "scrollDrift",
+    "positionOffset": [
+     0,
+     0,
+     0
+    ],
+    "mobilePositionOffset": [
+     0,
+     0,
+     0
+    ],
+    "rotationOffset": [
+     0,
+     0,
+     0
+    ],
+    "mobileRotationOffset": [
+     0,
+     0,
+     0
+    ],
+    "pointerInfluence": [
+     [
+      0.1,
+      -0.1
+     ],
+     [
+      0.05,
+      -0.05
+     ]
+    ],
+    "scrollDrift": {
+     "up": 0.2,
+     "back": 0.2
+    }
+   },
+   "environment": {
+    "url": "",
+    "background": false,
+    "blur": 0,
+    "darken": 0,
+    "bgMode": "linear",
+    "bgColor1": "#000000",
+    "bgColor2": "#000000",
+    "bgColor3": "#002435",
+    "bgAngle": 126,
+    "bgSpread": 100,
+    "bgBias1": 0.3799999999999999
+   },
+   "pointcloud": {
+    "sources": [
+     {
+      "src": "https://cdn.shopify.com/s/files/1/0647/5176/3550/files/minipointcloud-512-df9.mdpc?v=1781551491",
+      "resolution": 512
+     },
+     {
+      "src": "https://cdn.shopify.com/s/files/1/0647/5176/3550/files/minipointcloud-256-df9.mdpc?v=1781551490",
+      "resolution": 256
+     }
+    ],
+    "flow": {
+     "enabled": true,
+     "type": "curl",
+     "layout": "dots",
+     "strength": 1,
+     "speed": 1.860759493670887,
+     "scale": 10,
+     "gridEnabled": true,
+     "gridSize": 0.03699999999999995,
+     "gridStrength": 0.09999999999999999,
+     "gridMix": {
+      "x": 0.09999999999999999,
+      "y": 0.09999999999999999,
+      "z": 0.09999999999999999
+     },
+     "gridRotation": {
+      "x": 0,
+      "y": 0,
+      "z": 0
+     },
+     "conveyorEnabled": true,
+     "conveyorSpeed": 0.44303797468354517,
+     "conveyorDepth": 1.2025316455696209,
+     "conveyorRotation": {
+      "x": 0,
+      "y": 0,
+      "z": 0
+     },
+     "conveyorDistance": {
+      "near": 3.60759493670886,
+      "far": 0.7594936708860782
+     },
+     "randomnessExponent": 99,
+     "distanceNear": 3.60759493670886,
+     "distanceFar": 0.7594936708860782,
+     "layoutRadius": 10,
+     "layoutThickness": 0.8299999999999998,
+     "layoutPreserveY": 0.75,
+     "layoutTwist": 0.7500000000000002,
+     "layoutAmplitude": 0.16,
+     "layoutFrequency": 24.10000000000001,
+     "layoutSpokes": 24,
+     "layoutRadialSpacing": 0,
+     "layoutTurns": 12,
+     "layoutHeight": 9.999999999999998
+    },
+    "fluid": {
+     "enabled": true,
+     "influence": 0.8,
+     "curl": 3,
+     "velocityDissipation": 0.96,
+     "densityDissipation": 0.98,
+     "pressure": 0.9,
+     "splatRadius": 0.7,
+     "splatForce": 0.3,
+     "simSize": 128,
+     "dyeSize": 256
+    },
+    "caustics": {
+     "enabled": true,
+     "strength": 5,
+     "scale": 2,
+     "axisScale": {
+      "x": 1,
+      "y": 2,
+      "z": 2.4
+     },
+     "speed": {
+      "x": 0.1,
+      "y": -0.5,
+      "z": -0.05
+     },
+     "power": 8,
+     "sparkle": 0,
+     "color": {
+      "r": 0.11372549019607843,
+      "g": 0.6274509803921569,
+      "b": 1
+     }
+    },
+    "colorCorrections": {
+     "enabled": true,
+     "amount": 1,
+     "reds": {
+      "h": 0,
+      "s": 0,
+      "l": 0
+     },
+     "yellows": {
+      "h": 0,
+      "s": 0,
+      "l": 0
+     },
+     "greens": {
+      "h": 0,
+      "s": 0,
+      "l": 0
+     },
+     "cyans": {
+      "h": 0,
+      "s": 0,
+      "l": 0
+     },
+     "blues": {
+      "h": 0,
+      "s": 0,
+      "l": 0
+     },
+     "magentas": {
+      "h": -126,
+      "s": 1,
+      "l": 0
+     },
+     "whites": {
+      "h": 24,
+      "s": -1,
+      "l": 0
+     },
+     "neutrals": {
+      "h": 180,
+      "s": -1,
+      "l": -0.2999999999999998
+     },
+     "blacks": {
+      "h": 0,
+      "s": -1,
+      "l": 0
+     }
+    },
+    "pointSize": 0.06800000000000003,
+    "distanceSizeInfluence": 0.25,
+    "distanceSizeNear": 4,
+    "distanceSizeFar": 18,
+    "distanceSizeMax": 1.5,
+    "maxPointSize": 1.8037974683544302,
+    "maxPoints": 284001,
+    "position": {
+     "x": 0.6400000000000011,
+     "y": -0.2400000000000001,
+     "z": -0.0899999999999998
+    },
+    "rotation": {
+     "x": 183,
+     "y": 226,
+     "z": 0
+    },
+    "scale": 1.5,
+    "mobile": {
+     "position": {
+      "x": 0,
+      "y": 0,
+      "z": 0
+     },
+     "rotation": {
+      "x": 0,
+      "y": 0,
+      "z": 0
+     }
+    },
+    "opacity": 0.5599999999999997,
+    "transparent": true,
+    "blendMode": "normal",
+    "randomize": {
+     "x": 0,
+     "y": 0,
+     "z": 0
+    },
+    "cameraFade": {
+     "enabled": true,
+     "near": 0,
+     "far": 5.799999999999994
+    },
+    "densityFill": {
+     "enabled": false,
+     "opacity": 0.35,
+     "pointSizeScale": 0.75,
+     "jitter": 0.01
+    },
+    "particleScalars": {
+     "source512": 1.25,
+     "source256": 1
+    }
+   },
+   "postprocessing": {
+    "bloom": {
+     "enabled": true,
+     "intensity": 0.0949367088607595,
+     "opacity": 0.17721518987341767,
+     "threshold": 0,
+     "softness": 0,
+     "radius": 0.4303797468354431,
+     "tint": [
+      1,
+      1,
+      1
+     ],
+     "rgbShift": 0,
+     "rgbAngle": 0
+    },
+    "chromatic": {
+     "enabled": false,
+     "amount": 0,
+     "angle": 1
+    },
+    "vignette": {
+     "enabled": true,
+     "amount": 0.5,
+     "radius": 0.895,
+     "softness": 0.441
+    },
+    "afterimage": {
+     "enabled": true,
+     "strength": 0.99,
+     "damp": 0.95,
+     "threshold": 0.2
+    },
+    "noise": {
+     "enabled": false,
+     "amount": 0.06,
+     "scale": 1
+    },
+    "toneMapping": "neutral",
+    "toneMappingExposure": 1
+   },
+   "behindContent": {
+    "darken": 0.5,
+    "speed": 0.2,
+    "saturation": 0.7000000000000001,
+    "pointerInfluence": 0,
+    "reduceQuality": true,
+    "offset": 0
+   },
+   "volumetric": null,
+   "videoLightVolume": null,
+   "foregroundVideoLightVolume": {
+    "videoUrl": "https://cdn.shopify.com/videos/c/o/v/15de67fa52a247e9805165ba4417e3b7.mp4",
+    "ktx2Url": "https://cdn.shopify.com/s/files/1/0647/5176/3550/files/finance_50f_429x239_etc1s.ktx2?v=1781616742",
+    "visible": true,
+    "layer": "foreground",
+    "source": "vf-source",
+    "width": 1,
+    "depth": 0.26,
+    "opacity": 2,
+    "brightness": 1.65,
+    "threshold": 0.025,
+    "softness": 1,
+    "edgeFade": 0,
+    "blendMode": "additive",
+    "renderBehindPointCloud": false,
+    "loopCount": 1,
+    "grid": {
+     "enabled": false,
+     "columns": 1,
+     "rows": 1,
+     "spacing": [
+      3.0500000000000003,
+      1.1
+     ],
+     "randomTimeOffset": 0,
+     "outerOpacity": 1
+    },
+    "nearFade": 0,
+    "playbackSpeed": 4,
+    "fluidStrength": [
+     -0.25,
+     0.25
+    ],
+    "fluidDepthStrength": [
+     1,
+     0
+    ],
+    "fluidDistanceRange": [
+     0,
+     1000
+    ],
+    "raymarchSteps": 100,
+    "centerFade": [
+     0.5,
+     0,
+     0
+    ],
+    "position": [
+     -0.31000000000000005,
+     0,
+     0
+    ],
+    "rotation": [
+     0,
+     0.4014257279586958,
+     0
+    ],
+    "scale": [
+     2.300000000000016,
+     2.300000000000016,
+     0.4800000000000001
+    ],
+    "hsl": [
+     0.32999999999999996,
+     0.9200000000000002,
+     0
+    ],
+    "noiseScale": [
+     0,
+     0,
+     0
+    ],
+    "noiseMovement": [
+     0,
+     0,
+     0
+    ],
+    "noiseStrength": 0
+   }
+  }
+ },
+ {
+  "name": "prod-6-marketing",
+  "preset": {
+   "id": "metaobject-prod-6-marketing-4",
+   "title": "prod-6-marketing",
+   "camera": {
+    "position": [
+     0.5343611082329741,
+     0.23023294547841394,
+     -0.6527483374124545
+    ],
+    "target": [
+     0.052179802664548,
+     0.3069667675084373,
+     1.4822617308393833
+    ],
+    "fov": 50,
+    "animation": "scrollDrift",
+    "positionOffset": [
+     0,
+     0.07,
+     0.23999999999999977
+    ],
+    "mobilePositionOffset": [
+     0,
+     0,
+     0
+    ],
+    "rotationOffset": [
+     0,
+     0,
+     0
+    ],
+    "mobileRotationOffset": [
+     0,
+     0,
+     0
+    ],
+    "pointerInfluence": [
+     [
+      0.1,
+      -0.1
+     ],
+     [
+      0.1,
+      -0.1
+     ]
+    ],
+    "scrollDrift": {
+     "up": 0.2,
+     "back": 0.2
+    }
+   },
+   "environment": {
+    "url": "https://cdn.shopify.com/s/files/1/0647/5176/3550/files/autumnField.hdr",
+    "background": true,
+    "blur": 0.6772151898734171,
+    "darken": 0.8670886075949373
+   },
+   "pointcloud": {
+    "sources": [
+     {
+      "src": "https://cdn.shopify.com/s/files/1/0647/5176/3550/files/minipointcloud-256-df9.mdpc?v=1781551490",
+      "resolution": 512
+     },
+     {
+      "src": "https://cdn.shopify.com/s/files/1/0647/5176/3550/files/minipointcloud-256-df9.mdpc?v=1781551490",
+      "resolution": 256
+     }
+    ],
+    "flow": {
+     "enabled": true,
+     "type": "rise",
+     "layout": "dots",
+     "strength": 0.3734177215189873,
+     "speed": 0,
+     "scale": 2,
+     "gridEnabled": true,
+     "gridSize": 0.39900000000000013,
+     "gridStrength": 0.5399999999999996,
+     "gridMix": {
+      "x": 0.5399999999999996,
+      "y": 0.18999999999999945,
+      "z": 0.38999999999999946
+     },
+     "gridRotation": {
+      "x": 0,
+      "y": 3.470000000000005,
+      "z": 0
+     },
+     "conveyorEnabled": true,
+     "conveyorSpeed": -0.4,
+     "conveyorDepth": 4.544303797468353,
+     "conveyorRotation": {
+      "x": 0,
+      "y": 0,
+      "z": 0
+     },
+     "conveyorDistance": {
+      "near": 0,
+      "far": 7.974683544303791
+     },
+     "randomnessExponent": 300,
+     "distanceNear": 0,
+     "distanceFar": 2.4746835443037964,
+     "layoutRadius": 10,
+     "layoutThickness": 1,
+     "layoutPreserveY": 0,
+     "layoutTwist": 0,
+     "layoutAmplitude": 0,
+     "layoutFrequency": 0,
+     "layoutSpokes": 3,
+     "layoutRadialSpacing": 0,
+     "layoutTurns": 3,
+     "layoutHeight": 5
+    },
+    "fluid": {
+     "enabled": true,
+     "influence": 0.6,
+     "curl": 1.5,
+     "velocityDissipation": 0.965,
+     "densityDissipation": 0.9,
+     "pressure": 0.6,
+     "splatRadius": 0.25,
+     "splatForce": 0.125,
+     "simSize": 128,
+     "dyeSize": 256
+    },
+    "caustics": {
+     "enabled": true,
+     "strength": 0.41139240506329117,
+     "scale": 1,
+     "axisScale": {
+      "x": 2,
+      "y": 1,
+      "z": 1
+     },
+     "speed": {
+      "x": 0,
+      "y": 0,
+      "z": 0.5
+     },
+     "power": 8,
+     "sparkle": 0,
+     "color": {
+      "r": 1,
+      "g": 0.9725490196078431,
+      "b": 0.9333333333333333
+     }
+    },
+    "colorCorrections": {
+     "enabled": true,
+     "amount": 1,
+     "reds": {
+      "h": 0,
+      "s": 0,
+      "l": 0
+     },
+     "yellows": {
+      "h": 0,
+      "s": 0,
+      "l": 0
+     },
+     "greens": {
+      "h": 0,
+      "s": 0,
+      "l": 0
+     },
+     "cyans": {
+      "h": 0,
+      "s": 0,
+      "l": 0
+     },
+     "blues": {
+      "h": 0,
+      "s": 0,
+      "l": 0
+     },
+     "magentas": {
+      "h": 0,
+      "s": 0,
+      "l": 0
+     },
+     "whites": {
+      "h": 0,
+      "s": 0,
+      "l": 0
+     },
+     "neutrals": {
+      "h": 0,
+      "s": -0.5800000000000002,
+      "l": 0
+     },
+     "blacks": {
+      "h": 0,
+      "s": 0,
+      "l": 0
+     }
+    },
+    "pointSize": 0.034599999999999874,
+    "distanceSizeInfluence": 0.25,
+    "distanceSizeNear": 4,
+    "distanceSizeFar": 18,
+    "distanceSizeMax": 1.55,
+    "maxPointSize": 2,
+    "maxPoints": 252000,
+    "position": {
+     "x": -0.22000000000000042,
+     "y": -0.3200000000000002,
+     "z": 1.3700000000000023
+    },
+    "rotation": {
+     "x": 0,
+     "y": 0,
+     "z": 0
+    },
+    "scale": 1,
+    "mobile": {
+     "position": {
+      "x": 0,
+      "y": 0,
+      "z": 0
+     },
+     "rotation": {
+      "x": 0,
+      "y": 0,
+      "z": 0
+     }
+    },
+    "opacity": 0.5,
+    "transparent": true,
+    "blendMode": "additive",
+    "randomize": {
+     "x": 0,
+     "y": 0,
+     "z": 0
+    },
+    "cameraFade": {
+     "enabled": true,
+     "near": 0,
+     "far": 4.200000000000007
+    },
+    "densityFill": {
+     "enabled": false,
+     "opacity": 0.35,
+     "pointSizeScale": 0.75,
+     "jitter": 0.01
+    },
+    "particleScalars": {
+     "source512": 1.25,
+     "source256": 1
+    }
+   },
+   "postprocessing": {
+    "bloom": {
+     "enabled": true,
+     "intensity": 0.15822784810126583,
+     "opacity": 0.13924050632911392,
+     "threshold": 0,
+     "softness": 0,
+     "radius": 0.46835443037974667,
+     "tint": [
+      1,
+      1,
+      1
+     ],
+     "rgbShift": 0,
+     "rgbAngle": 0
+    },
+    "chromatic": {
+     "enabled": true,
+     "amount": 0.004,
+     "angle": 1.5111458333723045
+    },
+    "vignette": {
+     "enabled": true,
+     "amount": 0.5316455696202527,
+     "radius": 0.8285443037974682,
+     "softness": 0.441
+    },
+    "afterimage": {
+     "enabled": true,
+     "strength": 0.99,
+     "damp": 0.999,
+     "threshold": 0
+    },
+    "noise": {
+     "enabled": false,
+     "amount": 0.010443037974683544,
+     "scale": 1
+    },
+    "toneMapping": "neutral",
+    "toneMappingExposure": 1
+   },
+   "behindContent": {
+    "darken": 0.4999999999999999,
+    "speed": 0.060000000000000005,
+    "saturation": 0.6,
+    "pointerInfluence": 0.1,
+    "reduceQuality": true,
+    "offset": 0
+   },
+   "volumetric": null,
+   "videoLightVolume": {
+    "videoUrl": "https://cdn.shopify.com/videos/c/o/v/15de67fa52a247e9805165ba4417e3b7.mp4",
+    "ktx2Url": "https://cdn.shopify.com/s/files/1/0647/5176/3550/files/marketing-back_50f_480x480_etc1s.ktx2?v=1781548653",
+    "visible": true,
+    "layer": "background",
+    "source": "vf-source",
+    "width": 1,
+    "depth": 4,
+    "opacity": 2,
+    "brightness": 1.6,
+    "threshold": 0.025,
+    "softness": 0.001,
+    "edgeFade": 0,
+    "blendMode": "additive",
+    "renderBehindPointCloud": true,
+    "loopCount": 1.5,
+    "grid": {
+     "enabled": true,
+     "columns": 3,
+     "rows": 3,
+     "spacing": [
+      0.7350000000000012,
+      0.8150000000000007
+     ],
+     "randomTimeOffset": 0.3900000000000001,
+     "outerOpacity": 0.6100000000000001
+    },
+    "nearFade": 0,
+    "playbackSpeed": 0.5,
+    "fluidStrength": [
+     0.5,
+     0.5
+    ],
+    "fluidDepthStrength": [
+     3,
+     0
+    ],
+    "fluidDistanceRange": [
+     0,
+     1000
+    ],
+    "raymarchSteps": 80,
+    "centerFade": [
+     0.5,
+     0,
+     0
+    ],
+    "position": [
+     -0.32999999999999985,
+     0.26300000000000007,
+     2.1940000000000035
+    ],
+    "rotation": [
+     0,
+     0,
+     0
+    ],
+    "scale": [
+     1.7099999999999989,
+     1.5999999999999988,
+     1
+    ],
+    "hsl": [
+     -0.02,
+     0.05,
+     0
+    ],
+    "noiseScale": [
+     0,
+     0,
+     0
+    ],
+    "noiseMovement": [
+     0,
+     0,
+     0
+    ],
+    "noiseStrength": 0
+   },
+   "foregroundVideoLightVolume": null
+  }
+ },
+ {
+  "name": "prod-2-agentic",
+  "preset": {
+   "id": "metaobject-prod-2-agentic-2",
+   "title": "prod-2-agentic",
+   "camera": {
+    "position": [
+     0.2585086923136385,
+     -0.1231601940356207,
+     -0.02457442056502157
+    ],
+    "target": [
+     0.2057636663094521,
+     -0.09650587252705707,
+     0.5073804838572582
+    ],
+    "fov": 50,
+    "animation": "scrollDrift",
+    "positionOffset": [
+     0,
+     0.07,
+     0.23999999999999977
+    ],
+    "mobilePositionOffset": [
+     0,
+     0,
+     0
+    ],
+    "rotationOffset": [
+     0,
+     0,
+     0
+    ],
+    "mobileRotationOffset": [
+     0,
+     0,
+     0
+    ],
+    "pointerInfluence": [
+     [
+      0.15,
+      -0.15
+     ],
+     [
+      0.05,
+      -0.05
+     ]
+    ],
+    "scrollDrift": {
+     "up": 0.2,
+     "back": 0.2
+    }
+   },
+   "environment": {
+    "url": "https://cdn.shopify.com/s/files/1/0647/5176/3550/files/apartment.hdr",
+    "background": true,
+    "blur": 0.6708860759493668,
+    "darken": 0.9240506329113923
+   },
+   "pointcloud": {
+    "sources": [
+     {
+      "src": "https://cdn.shopify.com/s/files/1/0647/5176/3550/files/1ea414f2be20f9c91d05f0ba3cc1fa70-df9.mdpc?v=1781551474",
+      "resolution": 512
+     },
+     {
+      "src": "https://cdn.shopify.com/s/files/1/0647/5176/3550/files/1ea414f2be20f9c91d05f0ba3cc1fa70-df9.mdpc?v=1781551474",
+      "resolution": 256
+     }
+    ],
+    "flow": {
+     "enabled": false,
+     "type": "rise",
+     "layout": "dots",
+     "strength": 0.028481012658227847,
+     "speed": 0.46012658227848,
+     "scale": 2,
+     "gridEnabled": true,
+     "gridSize": 0.015000000000000003,
+     "gridStrength": 1,
+     "gridMix": {
+      "x": 1,
+      "y": 1,
+      "z": 1
+     },
+     "gridRotation": {
+      "x": 0,
+      "y": 0,
+      "z": 0
+     },
+     "conveyorEnabled": true,
+     "conveyorSpeed": -0.2,
+     "conveyorDepth": 4.544303797468353,
+     "conveyorRotation": {
+      "x": 0,
+      "y": 0,
+      "z": 0
+     },
+     "conveyorDistance": {
+      "near": 0,
+      "far": 7.974683544303791
+     },
+     "randomnessExponent": 300,
+     "distanceNear": 0,
+     "distanceFar": 2.4746835443037964,
+     "layoutRadius": 10,
+     "layoutThickness": 1,
+     "layoutPreserveY": 0,
+     "layoutTwist": 0,
+     "layoutAmplitude": 0,
+     "layoutFrequency": 0,
+     "layoutSpokes": 3,
+     "layoutRadialSpacing": 0,
+     "layoutTurns": 3,
+     "layoutHeight": 5
+    },
+    "fluid": {
+     "enabled": true,
+     "influence": 0.6,
+     "curl": 1.5,
+     "velocityDissipation": 0.965,
+     "densityDissipation": 0.9,
+     "pressure": 0.6,
+     "splatRadius": 0.25,
+     "splatForce": 0.125,
+     "simSize": 128,
+     "dyeSize": 256
+    },
+    "caustics": {
+     "enabled": true,
+     "strength": 0.41139240506329117,
+     "scale": 1,
+     "axisScale": {
+      "x": 2,
+      "y": 1,
+      "z": 1
+     },
+     "speed": {
+      "x": 0,
+      "y": 0,
+      "z": 0.5
+     },
+     "power": 8,
+     "sparkle": 0,
+     "color": {
+      "r": 1,
+      "g": 0.9725490196078431,
+      "b": 0.9333333333333333
+     }
+    },
+    "colorCorrections": {
+     "enabled": false,
+     "amount": 1,
+     "reds": {
+      "h": 0,
+      "s": 0,
+      "l": 0
+     },
+     "yellows": {
+      "h": 0,
+      "s": 0,
+      "l": 0
+     },
+     "greens": {
+      "h": 0,
+      "s": 0,
+      "l": 0
+     },
+     "cyans": {
+      "h": 0,
+      "s": 0,
+      "l": 0
+     },
+     "blues": {
+      "h": 0,
+      "s": 0,
+      "l": 0
+     },
+     "magentas": {
+      "h": 0,
+      "s": 0,
+      "l": 0
+     },
+     "whites": {
+      "h": 0,
+      "s": 0,
+      "l": 0
+     },
+     "neutrals": {
+      "h": 0,
+      "s": 0,
+      "l": 0
+     },
+     "blacks": {
+      "h": 0,
+      "s": 0,
+      "l": 0
+     }
+    },
+    "pointSize": 0.005,
+    "distanceSizeInfluence": 0.25,
+    "distanceSizeNear": 4,
+    "distanceSizeFar": 18,
+    "distanceSizeMax": 1.55,
+    "maxPointSize": 2,
+    "maxPoints": 169001,
+    "position": {
+     "x": -0.5100000000000002,
+     "y": 0.1299999999999999,
+     "z": 0.6699999999999995
+    },
+    "rotation": {
+     "x": 0,
+     "y": 0,
+     "z": 0
+    },
+    "scale": 0.5,
+    "mobile": {
+     "position": {
+      "x": 0,
+      "y": 0,
+      "z": 0
+     },
+     "rotation": {
+      "x": 0,
+      "y": 0,
+      "z": 0
+     }
+    },
+    "opacity": 0.5299999999999996,
+    "transparent": true,
+    "blendMode": "additive",
+    "randomize": {
+     "x": 0.19799999999999998,
+     "y": 0.002,
+     "z": 0.004
+    },
+    "cameraFade": {
+     "enabled": true,
+     "near": 0,
+     "far": 1.9499999999999982
+    },
+    "densityFill": {
+     "enabled": false,
+     "opacity": 0.35,
+     "pointSizeScale": 0.75,
+     "jitter": 0.01
+    },
+    "particleScalars": {
+     "source512": 1.25,
+     "source256": 0.8
+    }
+   },
+   "postprocessing": {
+    "bloom": {
+     "enabled": true,
+     "intensity": 0.22151898734177217,
+     "opacity": 0.15189873417721517,
+     "threshold": 0,
+     "softness": 0,
+     "radius": 0.46835443037974667,
+     "tint": [
+      1,
+      1,
+      1
+     ],
+     "rgbShift": 0,
+     "rgbAngle": 0
+    },
+    "chromatic": {
+     "enabled": true,
+     "amount": 0.0015822784810126582,
+     "angle": 1.5509128289873633
+    },
+    "vignette": {
+     "enabled": true,
+     "amount": 0.23417721518987358,
+     "radius": 0.895,
+     "softness": 0.441
+    },
+    "afterimage": {
+     "enabled": true,
+     "strength": 0.99,
+     "damp": 0.99,
+     "threshold": 0
+    },
+    "noise": {
+     "enabled": true,
+     "amount": 0.010443037974683544,
+     "scale": 1
+    },
+    "toneMapping": "neutral",
+    "toneMappingExposure": 1
+   },
+   "behindContent": {
+    "darken": 0.35,
+    "speed": 0.020000000000000004,
+    "saturation": 0.7999999999999998,
+    "pointerInfluence": 0.1,
+    "reduceQuality": true,
+    "offset": 0
+   },
+   "volumetric": null,
+   "videoLightVolume": {
+    "videoUrl": "https://cdn.shopify.com/videos/c/o/v/15de67fa52a247e9805165ba4417e3b7.mp4",
+    "ktx2Url": "https://cdn.shopify.com/s/files/1/0647/5176/3550/files/Test_Grid_Video_2_2_50f_640x360_etc1s.ktx2?v=1780962544",
+    "visible": true,
+    "layer": "background",
+    "source": "vf-source",
+    "width": 1,
+    "depth": 3.4999999999999987,
+    "opacity": 2,
+    "brightness": 2.1000000000000005,
+    "threshold": 0.025,
+    "softness": 0.44099999999999995,
+    "edgeFade": 0,
+    "blendMode": "additive",
+    "renderBehindPointCloud": true,
+    "loopCount": 2.5,
+    "grid": {
+     "enabled": true,
+     "columns": 3,
+     "rows": 3,
+     "spacing": [
+      0.815000000000001,
+      0.9000000000000008
+     ],
+     "randomTimeOffset": 0.8699999999999999,
+     "outerOpacity": 0.24000000000000027
+    },
+    "nearFade": 0,
+    "playbackSpeed": 1,
+    "fluidStrength": [
+     -0.25,
+     0.25
+    ],
+    "fluidDepthStrength": [
+     3,
+     -2
+    ],
+    "fluidDistanceRange": [
+     0,
+     1000
+    ],
+    "raymarchSteps": 100,
+    "centerFade": [
+     0.5,
+     0,
+     0
+    ],
+    "position": [
+     0,
+     -0.093,
+     1.3000000000000063
+    ],
+    "rotation": [
+     0,
+     0.017453292519943295,
+     0
+    ],
+    "scale": [
+     1.5999999999999988,
+     1.5999999999999988,
+     1
+    ],
+    "hsl": [
+     0.02149999999999997,
+     0.1,
+     0
+    ],
+    "noiseScale": [
+     0,
+     0,
+     0
+    ],
+    "noiseMovement": [
+     0,
+     0,
+     0
+    ],
+    "noiseStrength": 0
+   },
+   "foregroundVideoLightVolume": null
+  }
+ },
+ {
+  "name": "prod-5-retail",
+  "preset": {
+   "id": "metaobject-prod-5-retail-2",
+   "title": "prod-5-retail",
+   "camera": {
+    "position": [
+     -0.4835062043538099,
+     -0.6893220808734261,
+     0.8835300763264444
+    ],
+    "target": [
+     -0.2805900024671887,
+     -0.6723672448209076,
+     0.4206165999465406
+    ],
+    "fov": 50,
+    "animation": "scrollDrift",
+    "positionOffset": [
+     0,
+     0,
+     0
+    ],
+    "mobilePositionOffset": [
+     0,
+     0,
+     0
+    ],
+    "rotationOffset": [
+     0,
+     0,
+     0
+    ],
+    "mobileRotationOffset": [
+     0,
+     0,
+     0
+    ],
+    "pointerInfluence": [
+     [
+      0.1,
+      -0.1
+     ],
+     [
+      0.05,
+      -0.05
+     ]
+    ],
+    "scrollDrift": {
+     "up": 0.2,
+     "back": 0.2
+    }
+   },
+   "environment": {
+    "url": "https://cdn.shopify.com/s/files/1/0647/5176/3550/files/studio.hdr",
+    "background": false,
+    "blur": 1,
+    "darken": 0.9430379746835437,
+    "bgMode": "linear",
+    "bgColor1": "#ffffff",
+    "bgColor2": "#bababa",
+    "bgColor3": "#afeeff",
+    "bgSpread": 30,
+    "bgBias1": -0.029999999999999975
+   },
+   "pointcloud": {
+    "sources": [
+     {
+      "src": "https://cdn.shopify.com/s/files/1/0647/5176/3550/files/retaila-512_2_d822ff50-b555-475c-a34a-52d453fa5653-df9.mdpc?v=1781551495",
+      "resolution": 512
+     },
+     {
+      "src": "https://cdn.shopify.com/s/files/1/0647/5176/3550/files/retaila-256-df9.mdpc?v=1781551493",
+      "resolution": 256
+     }
+    ],
+    "flow": {
+     "enabled": true,
+     "type": "curl",
+     "layout": "off",
+     "strength": 0.06799999999999995,
+     "speed": 0.719,
+     "scale": 1.21,
+     "gridEnabled": false,
+     "gridSize": 0.001,
+     "gridStrength": 1,
+     "gridMix": {
+      "x": 1,
+      "y": 1,
+      "z": 1
+     },
+     "gridRotation": {
+      "x": 0,
+      "y": 0,
+      "z": 0
+     },
+     "conveyorEnabled": true,
+     "conveyorSpeed": 0.08734177215189873,
+     "conveyorDepth": 0.07594936708860761,
+     "conveyorRotation": {
+      "x": 0,
+      "y": 0,
+      "z": 0
+     },
+     "conveyorDistance": {
+      "near": 0.5253164556962031,
+      "far": 0.8227848101265816
+     },
+     "randomnessExponent": 0,
+     "distanceNear": 0.5253164556962031,
+     "distanceFar": 0.8227848101265816,
+     "layoutRadius": 4.5,
+     "layoutThickness": 0.9,
+     "layoutPreserveY": 0.35,
+     "layoutTwist": -3.45,
+     "layoutAmplitude": 0.16,
+     "layoutFrequency": 11.5,
+     "layoutSpokes": 24,
+     "layoutRadialSpacing": 0,
+     "layoutTurns": 3,
+     "layoutHeight": 5
+    },
+    "fluid": {
+     "enabled": true,
+     "influence": 0.5,
+     "curl": 1.5,
+     "velocityDissipation": 0.965,
+     "densityDissipation": 0.9,
+     "pressure": 0.6,
+     "splatRadius": 0.25,
+     "splatForce": 0.125,
+     "simSize": 128,
+     "dyeSize": 256
+    },
+    "caustics": {
+     "enabled": true,
+     "strength": 0.4,
+     "scale": 1.5189873417721516,
+     "axisScale": {
+      "x": 0.5,
+      "y": 1,
+      "z": 0.5
+     },
+     "speed": {
+      "x": 0.1,
+      "y": -0.1,
+      "z": -0.1
+     },
+     "power": 2.5,
+     "sparkle": 0,
+     "color": {
+      "r": 0.8901960784313725,
+      "g": 0.8470588235294118,
+      "b": 0.7372549019607844
+     }
+    },
+    "colorCorrections": {
+     "enabled": true,
+     "amount": 1,
+     "reds": {
+      "h": 0,
+      "s": 0,
+      "l": 0
+     },
+     "yellows": {
+      "h": 0,
+      "s": 0,
+      "l": 0
+     },
+     "greens": {
+      "h": 0,
+      "s": 0,
+      "l": 0
+     },
+     "cyans": {
+      "h": 0,
+      "s": 0,
+      "l": 0
+     },
+     "blues": {
+      "h": 0,
+      "s": 0,
+      "l": 0
+     },
+     "magentas": {
+      "h": 0,
+      "s": 0,
+      "l": 0
+     },
+     "whites": {
+      "h": 0,
+      "s": 0,
+      "l": 0
+     },
+     "neutrals": {
+      "h": 0,
+      "s": 0,
+      "l": 0
+     },
+     "blacks": {
+      "h": 0,
+      "s": 0,
+      "l": 0.019999999999999983
+     }
+    },
+    "pointSize": 0.2,
+    "distanceSizeInfluence": 0.25,
+    "distanceSizeNear": 4,
+    "distanceSizeFar": 18,
+    "distanceSizeMax": 1.5,
+    "maxPointSize": 2.6879746835443035,
+    "maxPoints": 241000,
+    "position": {
+     "x": 0,
+     "y": -0.5930000000000002,
+     "z": 0.1
+    },
+    "rotation": {
+     "x": 0,
+     "y": -9.900000000000002,
+     "z": 0
+    },
+    "scale": 0.43999999999999984,
+    "mobile": {
+     "position": {
+      "x": 0,
+      "y": 0,
+      "z": 0
+     },
+     "rotation": {
+      "x": 0,
+      "y": 0,
+      "z": 0
+     }
+    },
+    "opacity": 0.8299999999999998,
+    "transparent": true,
+    "blendMode": "normal",
+    "randomize": {
+     "x": 0.014000000000000002,
+     "y": 0.009000000000000001,
+     "z": 0.055999999999999994
+    },
+    "cameraFade": {
+     "enabled": true,
+     "near": 0.2,
+     "far": 2.5
+    },
+    "densityFill": {
+     "enabled": true,
+     "opacity": 0.8299999999999998,
+     "pointSizeScale": 1.0000000000000002,
+     "jitter": 0.02200000000000002
+    },
+    "particleScalars": {
+     "source512": 1.25,
+     "source256": 1.1
+    }
+   },
+   "postprocessing": {
+    "bloom": {
+     "enabled": true,
+     "intensity": 0.42405063291139217,
+     "opacity": 0.05063291139240507,
+     "threshold": 0.08,
+     "softness": 0,
+     "radius": 0.23544303797468333,
+     "tint": [
+      1,
+      1,
+      1
+     ],
+     "rgbShift": 0,
+     "rgbAngle": 0
+    },
+    "chromatic": {
+     "enabled": true,
+     "amount": 0.003797468354430381,
+     "angle": 1
+    },
+    "vignette": {
+     "enabled": false,
+     "amount": 0,
+     "radius": 0,
+     "softness": 0.001
+    },
+    "afterimage": {
+     "enabled": true,
+     "strength": 0.8354430379746836,
+     "damp": 0.3287341772151899,
+     "threshold": 0.2
+    },
+    "noise": {
+     "enabled": false,
+     "amount": 0.06,
+     "scale": 1
+    },
+    "toneMapping": "neutral",
+    "toneMappingExposure": 1
+   },
+   "behindContent": {
+    "darken": 0.25,
+    "speed": 0.14999999999999997,
+    "saturation": 0.9100000000000001,
+    "pointerInfluence": 0.6,
+    "reduceQuality": true,
+    "offset": 0
+   },
+   "volumetric": null,
+   "videoLightVolume": {
+    "videoUrl": "https://cdn.shopify.com/videos/c/o/v/15de67fa52a247e9805165ba4417e3b7.mp4",
+    "ktx2Url": "https://cdn.shopify.com/s/files/1/0647/5176/3550/files/2b0e36f8e43e405e8e691fe1d8b18478_50f_643x358_etc1s.ktx2?v=1780889282",
+    "visible": true,
+    "layer": "background",
+    "source": "vf-source",
+    "width": 1,
+    "depth": 3.1999999999999944,
+    "opacity": 2,
+    "brightness": 2.7,
+    "threshold": 0.075,
+    "softness": 0.3,
+    "edgeFade": 0,
+    "blendMode": "additive",
+    "renderBehindPointCloud": true,
+    "loopCount": 2.5,
+    "grid": {
+     "enabled": false,
+     "columns": 1,
+     "rows": 1,
+     "spacing": [
+      1.1,
+      1.1
+     ],
+     "randomTimeOffset": 0,
+     "outerOpacity": 1
+    },
+    "nearFade": 0,
+    "playbackSpeed": -0.1,
+    "fluidStrength": [
+     0.2,
+     0.2
+    ],
+    "fluidDepthStrength": [
+     1,
+     0
+    ],
+    "fluidDistanceRange": [
+     0,
+     1000
+    ],
+    "raymarchSteps": 50,
+    "centerFade": [
+     0.5,
+     0,
+     0
+    ],
+    "position": [
+     -0.6550000000000005,
+     -0.6949999999999998,
+     0.23999999999999502
+    ],
+    "rotation": [
+     -0.02687807048071266,
+     0.4694935687864749,
+     -3.141592653589793
+    ],
+    "scale": [
+     1.1439999999999984,
+     1.1160000000000003,
+     1
+    ],
+    "hsl": [
+     0.01,
+     -0.26,
+     0
+    ],
+    "noiseScale": [
+     0,
+     0,
+     0
+    ],
+    "noiseMovement": [
+     0,
+     0,
+     0
+    ],
+    "noiseStrength": 0
+   },
+   "foregroundVideoLightVolume": {
+    "videoUrl": "https://cdn.shopify.com/videos/c/o/v/15de67fa52a247e9805165ba4417e3b7.mp4",
+    "ktx2Url": "https://cdn.shopify.com/s/files/1/0647/5176/3550/files/SpatialVideo1_50f_427x240_etc1s.ktx2?v=1781547429",
+    "visible": true,
+    "layer": "foreground",
+    "source": "vf-source",
+    "width": 1,
+    "depth": 8.30999999999999,
+    "opacity": 1.7099999999999997,
+    "brightness": 1,
+    "threshold": 0.025,
+    "softness": 0.5910000000000002,
+    "edgeFade": 0.06,
+    "blendMode": "additive",
+    "renderBehindPointCloud": false,
+    "loopCount": 1,
+    "grid": {
+     "enabled": false,
+     "columns": 1,
+     "rows": 1,
+     "spacing": [
+      1.1,
+      1.1
+     ],
+     "randomTimeOffset": 0,
+     "outerOpacity": 1
+    },
+    "nearFade": 0,
+    "playbackSpeed": -0.1,
+    "fluidStrength": [
+     0.5,
+     0.5
+    ],
+    "fluidDepthStrength": [
+     1,
+     0
+    ],
+    "fluidDistanceRange": [
+     0,
+     1000
+    ],
+    "raymarchSteps": 30,
+    "centerFade": [
+     0.5,
+     0,
+     0
+    ],
+    "position": [
+     0.369999999999999,
+     0.29000000000000026,
+     -2.1000000000000054
+    ],
+    "rotation": [
+     -0.0523598775598299,
+     0.3141592653589793,
+     0.5410520681182421
+    ],
+    "scale": [
+     3.150000000000002,
+     3.150000000000002,
+     0.7210000000000011
+    ],
+    "hsl": [
+     0,
+     0,
+     0
+    ],
+    "noiseScale": [
+     0,
+     0,
+     0
+    ],
+    "noiseMovement": [
+     0,
+     0,
+     0
+    ],
+    "noiseStrength": 0
+   }
+  }
+ },
+ {
+  "name": "prod-7-operations",
+  "preset": {
+   "id": "metaobject-prod-7-operations-1",
+   "title": "prod-7-operations",
+   "camera": {
+    "position": [
+     -1.7214371325352724,
+     -0.030320499697867133,
+     -0.3687436135923534
+    ],
+    "target": [
+     -0.33503243455430554,
+     -0.00807213161991234,
+     -0.39640560621847987
+    ],
+    "fov": 50,
+    "animation": "scrollDrift",
+    "positionOffset": [
+     0,
+     0,
+     0
+    ],
+    "mobilePositionOffset": [
+     0,
+     0,
+     0
+    ],
+    "rotationOffset": [
+     0,
+     0,
+     0
+    ],
+    "mobileRotationOffset": [
+     0,
+     0,
+     0
+    ],
+    "pointerInfluence": [
+     [
+      0.1,
+      -0.1
+     ],
+     [
+      0.1,
+      -0.1
+     ]
+    ],
+    "scrollDrift": {
+     "up": 0.2,
+     "back": 0.2
+    }
+   },
+   "environment": {
+    "url": "",
+    "background": false,
+    "blur": 0,
+    "darken": 0,
+    "bgMode": "linear",
+    "bgColor1": "#19182d",
+    "bgColor2": "#000000",
+    "bgColor3": "#998ad7",
+    "bgAngle": 86,
+    "bgSpread": 100,
+    "bgBias1": 0.07999999999999978
+   },
+   "pointcloud": {
+    "sources": [
+     {
+      "src": "https://cdn.shopify.com/s/files/1/0647/5176/3550/files/globecomp-512-df9.mdpc?v=1781551488",
+      "resolution": 512
+     },
+     {
+      "src": "https://cdn.shopify.com/s/files/1/0647/5176/3550/files/globecomp-256-df9.mdpc?v=1781551486",
+      "resolution": 256
+     }
+    ],
+    "flow": {
+     "enabled": true,
+     "type": "curl",
+     "layout": "off",
+     "strength": 1,
+     "speed": 2,
+     "scale": 2,
+     "gridEnabled": false,
+     "gridSize": 0.5,
+     "gridStrength": 0.09999999999999999,
+     "gridMix": {
+      "x": 0.09999999999999999,
+      "y": 0.09999999999999999,
+      "z": 0.09999999999999999
+     },
+     "gridRotation": {
+      "x": 0,
+      "y": 0,
+      "z": 0
+     },
+     "conveyorEnabled": true,
+     "conveyorSpeed": 0.44303797468354517,
+     "conveyorDepth": 1.2025316455696209,
+     "conveyorRotation": {
+      "x": 0,
+      "y": 0,
+      "z": 0
+     },
+     "conveyorDistance": {
+      "near": 0,
+      "far": 1.1772151898734204
+     },
+     "randomnessExponent": 99,
+     "distanceNear": 0,
+     "distanceFar": 6.075949367088609,
+     "layoutRadius": 10,
+     "layoutThickness": 0.8299999999999998,
+     "layoutPreserveY": 0.75,
+     "layoutTwist": 0.7500000000000002,
+     "layoutAmplitude": 0.16,
+     "layoutFrequency": 24.10000000000001,
+     "layoutSpokes": 24,
+     "layoutRadialSpacing": 0,
+     "layoutTurns": 12,
+     "layoutHeight": 9.999999999999998
+    },
+    "fluid": {
+     "enabled": true,
+     "influence": 0.4,
+     "curl": 1.5,
+     "velocityDissipation": 0.965,
+     "densityDissipation": 0.9,
+     "pressure": 0.6,
+     "splatRadius": 0.25,
+     "splatForce": 0.125,
+     "simSize": 128,
+     "dyeSize": 256
+    },
+    "caustics": {
+     "enabled": true,
+     "strength": 2,
+     "scale": 3,
+     "axisScale": {
+      "x": 2,
+      "y": 2.2,
+      "z": 2
+     },
+     "speed": {
+      "x": 0.1,
+      "y": -0.1,
+      "z": -0.05
+     },
+     "power": 10,
+     "sparkle": 0,
+     "color": {
+      "r": 0.5254901960784314,
+      "g": 0.7450980392156863,
+      "b": 0.6784313725490196
+     }
+    },
+    "colorCorrections": {
+     "enabled": true,
+     "amount": 0.8481012658227847,
+     "reds": {
+      "h": 0,
+      "s": 0,
+      "l": 0
+     },
+     "yellows": {
+      "h": 0,
+      "s": 0,
+      "l": 0
+     },
+     "greens": {
+      "h": 0,
+      "s": 0,
+      "l": 0
+     },
+     "cyans": {
+      "h": 0,
+      "s": 0,
+      "l": 0
+     },
+     "blues": {
+      "h": 0,
+      "s": 0,
+      "l": 0
+     },
+     "magentas": {
+      "h": -126,
+      "s": 1,
+      "l": 0
+     },
+     "whites": {
+      "h": 24,
+      "s": -1,
+      "l": 0
+     },
+     "neutrals": {
+      "h": 180,
+      "s": -1,
+      "l": -0.2999999999999998
+     },
+     "blacks": {
+      "h": 0,
+      "s": -1,
+      "l": 0
+     }
+    },
+    "pointSize": 0.009600000000000011,
+    "distanceSizeInfluence": 0.25,
+    "distanceSizeNear": 4,
+    "distanceSizeFar": 18,
+    "distanceSizeMax": 1.5,
+    "maxPointSize": 2.2860759493670884,
+    "position": {
+     "x": -0.0010000000000011241,
+     "y": -0.09600000000000003,
+     "z": -0.3750000000000001
+    },
+    "rotation": {
+     "x": 183,
+     "y": -11.69999999999999,
+     "z": 38
+    },
+    "scale": 0.2599999999999992,
+    "mobile": {
+     "position": {
+      "x": 0,
+      "y": 0,
+      "z": 0
+     },
+     "rotation": {
+      "x": 0,
+      "y": 0,
+      "z": 0
+     }
+    },
+    "opacity": 0.6500000000000001,
+    "transparent": true,
+    "blendMode": "normal",
+    "randomize": {
+     "x": 0.2,
+     "y": 0.2,
+     "z": 0.2
+    },
+    "cameraFade": {
+     "enabled": false,
+     "near": 0,
+     "far": 5.799999999999994
+    },
+    "densityFill": {
+     "enabled": true,
+     "opacity": 0.58,
+     "pointSizeScale": 2,
+     "jitter": 0.007899999999999999
+    },
+    "particleScalars": {
+     "source512": 1.25,
+     "source256": 1.4999999999999998
+    }
+   },
+   "postprocessing": {
+    "bloom": {
+     "enabled": true,
+     "intensity": 0.569620253164557,
+     "opacity": 0.22658227848101267,
+     "threshold": 0,
+     "softness": 0,
+     "radius": 0.43670886075949394,
+     "tint": [
+      1,
+      1,
+      1
+     ],
+     "rgbShift": 0,
+     "rgbAngle": 0
+    },
+    "chromatic": {
+     "enabled": false,
+     "amount": 0,
+     "angle": 1
+    },
+    "vignette": {
+     "enabled": true,
+     "amount": 0.5,
+     "radius": 0.895,
+     "softness": 0.441
+    },
+    "afterimage": {
+     "enabled": true,
+     "strength": 0.99,
+     "damp": 0.99,
+     "threshold": 0
+    },
+    "noise": {
+     "enabled": false,
+     "amount": 0.06,
+     "scale": 1
+    },
+    "toneMapping": "neutral",
+    "toneMappingExposure": 1
+   },
+   "behindContent": {
+    "darken": 0.3,
+    "speed": 0.15,
+    "saturation": 0.8800000000000002,
+    "pointerInfluence": 0,
+    "reduceQuality": true,
+    "offset": 0
+   },
+   "volumetric": null,
+   "videoLightVolume": {
+    "videoUrl": "https://cdn.shopify.com/videos/c/o/v/15de67fa52a247e9805165ba4417e3b7.mp4",
+    "ktx2Url": "https://cdn.shopify.com/s/files/1/0647/5176/3550/files/07-operations-globe_50f_427x240_etc1s.ktx2?v=1781616912",
+    "visible": true,
+    "layer": "background",
+    "source": "vf-source",
+    "width": 1,
+    "depth": 4.8999999999999915,
+    "opacity": 2,
+    "brightness": 2,
+    "threshold": 0.025,
+    "softness": 0.001,
+    "edgeFade": 0,
+    "blendMode": "additive",
+    "renderBehindPointCloud": true,
+    "loopCount": 1,
+    "grid": {
+     "enabled": false,
+     "columns": 1,
+     "rows": 1,
+     "spacing": [
+      1.1,
+      1.1
+     ],
+     "randomTimeOffset": 0,
+     "outerOpacity": 1
+    },
+    "nearFade": 0,
+    "playbackSpeed": -0.2,
+    "fluidStrength": [
+     0.25,
+     0.25
+    ],
+    "fluidDepthStrength": [
+     2,
+     0
+    ],
+    "fluidDistanceRange": [
+     0,
+     1000
+    ],
+    "raymarchSteps": 100,
+    "centerFade": [
+     0.5,
+     0,
+     0
+    ],
+    "position": [
+     -1.8299999999999892,
+     -0.10999999999999999,
+     -0.243
+    ],
+    "rotation": [
+     0,
+     -1.5707963267948966,
+     0
+    ],
+    "scale": [
+     2.1799999999999993,
+     1.9900000000000009,
+     1.5
+    ],
+    "hsl": [
+     0,
+     -0.12,
+     0.8599999999999999
+    ],
+    "noiseScale": [
+     0,
+     0,
+     0
+    ],
+    "noiseMovement": [
+     0,
+     0,
+     0
+    ],
+    "noiseStrength": 0
+   },
+   "foregroundVideoLightVolume": {
+    "videoUrl": "https://cdn.shopify.com/videos/c/o/v/15de67fa52a247e9805165ba4417e3b7.mp4",
+    "ktx2Url": "https://cdn.shopify.com/s/files/1/0647/5176/3550/files/07-operations-globe_50f_427x240_etc1s.ktx2?v=1781616912",
+    "visible": true,
+    "layer": "foreground",
+    "source": "vf-source",
+    "width": 1,
+    "depth": 0.07000000000000003,
+    "opacity": 2,
+    "brightness": 1.8499999999999992,
+    "threshold": 0.025,
+    "softness": 0.501,
+    "edgeFade": 0.4,
+    "blendMode": "additive",
+    "renderBehindPointCloud": false,
+    "loopCount": 12,
+    "grid": {
+     "enabled": false,
+     "columns": 3,
+     "rows": 3,
+     "spacing": [
+      3.0500000000000003,
+      1.1
+     ],
+     "randomTimeOffset": 0,
+     "outerOpacity": 1
+    },
+    "nearFade": 0,
+    "playbackSpeed": -0.2,
+    "fluidStrength": [
+     0.25,
+     0.25
+    ],
+    "fluidDepthStrength": [
+     4,
+     0
+    ],
+    "fluidDistanceRange": [
+     0,
+     1000
+    ],
+    "raymarchSteps": 100,
+    "centerFade": [
+     0.5,
+     0,
+     0
+    ],
+    "position": [
+     -0.41800000000000054,
+     -0.0899999999999996,
+     -0.37100000000000255
+    ],
+    "rotation": [
+     0,
+     1.6580627893946132,
+     0
+    ],
+    "scale": [
+     2.300000000000016,
+     2.300000000000016,
+     1
+    ],
+    "hsl": [
+     -0.3370000000000002,
+     -0.12999999999999995,
+     0.16000000000000003
+    ],
+    "noiseScale": [
+     0,
+     0,
+     0
+    ],
+    "noiseMovement": [
+     0,
+     0,
+     0
+    ],
+    "noiseStrength": 0
+   }
+  }
+ },
+ {
+  "name": "prod-11-dev",
+  "preset": {
+   "id": "metaobject-prod-11-dev",
+   "title": "prod-11-dev",
+   "camera": {
+    "position": [
+     0.3755909276618289,
+     -0.05254072389519207,
+     0.8088493144877085
+    ],
+    "target": [
+     0.10993537857467459,
+     -0.01873380665576996,
+     -0.16776611653655255
+    ],
+    "fov": 75.44303797468363,
+    "animation": "scrollDrift",
+    "positionOffset": [
+     0,
+     0,
+     0
+    ],
+    "mobilePositionOffset": [
+     0,
+     0,
+     0
+    ],
+    "rotationOffset": [
+     0,
+     0,
+     0
+    ],
+    "mobileRotationOffset": [
+     0,
+     0,
+     0
+    ],
+    "pointerInfluence": [
+     [
+      0.15,
+      -0.15
+     ],
+     [
+      0.1,
+      -0.1
+     ]
+    ],
+    "scrollDrift": {
+     "up": 0.2,
+     "back": 0.2
+    }
+   },
+   "environment": {
+    "url": "",
+    "background": false,
+    "blur": 0.5886075949367081,
+    "darken": 0.5632911392405063,
+    "bgMode": "linear",
+    "bgColor1": "#2b2b2b",
+    "bgColor2": "#000000",
+    "bgColor3": "#323131"
+   },
+   "pointcloud": {
+    "sources": [
+     {
+      "src": "https://cdn.shopify.com/s/files/1/0647/5176/3550/files/minipointcloud-512-df9.mdpc?v=1781551491",
+      "resolution": 512
+     },
+     {
+      "src": "https://cdn.shopify.com/s/files/1/0647/5176/3550/files/minipointcloud-256-df9.mdpc?v=1781551490",
+      "resolution": 256
+     }
+    ],
+    "flow": {
+     "enabled": true,
+     "type": "rise",
+     "layout": "dots",
+     "strength": 0.9430379746835441,
+     "speed": 0.22151898734177217,
+     "scale": 5.443037974683544,
+     "gridEnabled": true,
+     "gridSize": 0.0411999999999995,
+     "gridStrength": 1,
+     "gridMix": {
+      "x": 1,
+      "y": 1,
+      "z": 1
+     },
+     "gridRotation": {
+      "x": 0,
+      "y": 0,
+      "z": 0
+     },
+     "conveyorEnabled": true,
+     "conveyorSpeed": 0.5,
+     "conveyorDepth": 10,
+     "conveyorRotation": {
+      "x": -0.060000000000000005,
+      "y": -0.6200000000000003,
+      "z": 0
+     },
+     "conveyorDistance": {
+      "near": 0.12658227848101267,
+      "far": 4.126582278481013
+     },
+     "randomnessExponent": 310,
+     "distanceNear": 0.12658227848101267,
+     "distanceFar": 4.126582278481013,
+     "layoutRadius": 5.1,
+     "layoutThickness": 0,
+     "layoutPreserveY": 0.35,
+     "layoutTwist": -10,
+     "layoutAmplitude": 0,
+     "layoutFrequency": 0,
+     "layoutSpokes": 3,
+     "layoutRadialSpacing": 0,
+     "layoutTurns": 0,
+     "layoutHeight": 0.001
+    },
+    "fluid": {
+     "enabled": true,
+     "influence": 0.6,
+     "curl": 3,
+     "velocityDissipation": 0.96,
+     "densityDissipation": 0.98,
+     "pressure": 0.9,
+     "splatRadius": 0.6,
+     "splatForce": 0.3,
+     "simSize": 128,
+     "dyeSize": 256
+    },
+    "caustics": {
+     "enabled": true,
+     "strength": 2,
+     "scale": 0.9810126582278489,
+     "axisScale": {
+      "x": 1,
+      "y": 1,
+      "z": 1
+     },
+     "speed": {
+      "x": 0.1,
+      "y": -0.05,
+      "z": -0.05
+     },
+     "power": 10,
+     "sparkle": 0,
+     "color": {
+      "r": 1,
+      "g": 1,
+      "b": 1
+     }
+    },
+    "colorCorrections": {
+     "enabled": false,
+     "amount": 0,
+     "reds": {
+      "h": 0,
+      "s": -1,
+      "l": 0
+     },
+     "yellows": {
+      "h": 0,
+      "s": -1,
+      "l": 0
+     },
+     "greens": {
+      "h": 0,
+      "s": -1,
+      "l": 0
+     },
+     "cyans": {
+      "h": 0,
+      "s": -1,
+      "l": 0
+     },
+     "blues": {
+      "h": 0,
+      "s": -1,
+      "l": 0
+     },
+     "magentas": {
+      "h": 0,
+      "s": -1,
+      "l": 0
+     },
+     "whites": {
+      "h": 0,
+      "s": -1,
+      "l": 0
+     },
+     "neutrals": {
+      "h": -88,
+      "s": -1,
+      "l": 1
+     },
+     "blacks": {
+      "h": 130,
+      "s": -1,
+      "l": 0
+     }
+    },
+    "pointSize": 0.02000000000000001,
+    "distanceSizeInfluence": 0.25,
+    "distanceSizeNear": 4.3999999999999995,
+    "distanceSizeFar": 18,
+    "distanceSizeMax": 1.5,
+    "maxPointSize": 1.5,
+    "maxPoints": 240001,
+    "position": {
+     "x": 0,
+     "y": -0.07,
+     "z": 0.1
+    },
+    "rotation": {
+     "x": -33,
+     "y": 13,
+     "z": 91
+    },
+    "scale": 1,
+    "mobile": {
+     "position": {
+      "x": 0,
+      "y": 0,
+      "z": 0
+     },
+     "rotation": {
+      "x": 0,
+      "y": 0,
+      "z": 0
+     }
+    },
+    "opacity": 0.6300000000000003,
+    "transparent": true,
+    "blendMode": "normal",
+    "randomize": {
+     "x": 0.008,
+     "y": 0.002,
+     "z": 0
+    },
+    "cameraFade": {
+     "enabled": true,
+     "near": 1,
+     "far": 5
+    },
+    "densityFill": {
+     "enabled": true,
+     "opacity": 1,
+     "pointSizeScale": 2,
+     "jitter": 0.08
+    },
+    "particleScalars": {
+     "source512": 1.25,
+     "source256": 1.2
+    }
+   },
+   "postprocessing": {
+    "bloom": {
+     "enabled": true,
+     "intensity": 1.0664556962025311,
+     "opacity": 0.24,
+     "threshold": 0,
+     "softness": 0,
+     "radius": 1,
+     "tint": [
+      1,
+      1,
+      1
+     ],
+     "rgbShift": 0,
+     "rgbAngle": 0
+    },
+    "chromatic": {
+     "enabled": false,
+     "amount": 0,
+     "angle": 1
+    },
+    "vignette": {
+     "enabled": false,
+     "amount": 0,
+     "radius": 0,
+     "softness": 0.441
+    },
+    "afterimage": {
+     "enabled": true,
+     "strength": 0.95,
+     "damp": 0.99,
+     "threshold": 0
+    },
+    "noise": {
+     "enabled": false,
+     "amount": 0.06,
+     "scale": 1
+    },
+    "toneMapping": "neutral",
+    "toneMappingExposure": 1
+   },
+   "behindContent": {
+    "darken": 0.2,
+    "speed": 0.1,
+    "saturation": 1,
+    "pointerInfluence": 0.1,
+    "reduceQuality": true,
+    "offset": 0
+   },
+   "volumetric": null,
+   "videoLightVolume": {
+    "videoUrl": "https://cdn.shopify.com/videos/c/o/v/15de67fa52a247e9805165ba4417e3b7.mp4",
+    "ktx2Url": "https://cdn.shopify.com/s/files/1/0647/5176/3550/files/Dev_50f_427x240_etc1s.ktx2?v=1781617053",
+    "visible": true,
+    "layer": "foreground",
+    "source": "vf-source",
+    "width": 1,
+    "depth": 1.2600000000000007,
+    "opacity": 2,
+    "brightness": 4,
+    "threshold": 0.025,
+    "softness": 0.22999999999999932,
+    "edgeFade": 0,
+    "blendMode": "normal",
+    "renderBehindPointCloud": true,
+    "loopCount": 1,
+    "grid": {
+     "enabled": false,
+     "columns": 1,
+     "rows": 1,
+     "spacing": [
+      1.1,
+      4
+     ],
+     "randomTimeOffset": 1,
+     "outerOpacity": 0
+    },
+    "nearFade": 3.3000000000000034,
+    "playbackSpeed": -1.5,
+    "fluidStrength": [
+     -0.2,
+     0.2
+    ],
+    "fluidDepthStrength": [
+     4,
+     0
+    ],
+    "fluidDistanceRange": [
+     0,
+     1000
+    ],
+    "raymarchSteps": 128,
+    "centerFade": [
+     0.5,
+     0,
+     0
+    ],
+    "position": [
+     0.17,
+     0,
+     -0.14999999999999947
+    ],
+    "rotation": [
+     0,
+     0.22689280275926285,
+     0
+    ],
+    "scale": [
+     3.0000000000000004,
+     3.0000000000000004,
+     1
+    ],
+    "hsl": [
+     0,
+     -1,
+     1
+    ],
+    "noiseScale": [
+     0,
+     0,
+     0
+    ],
+    "noiseMovement": [
+     0,
+     0,
+     0
+    ],
+    "noiseStrength": 0
+   },
+   "foregroundVideoLightVolume": {
+    "videoUrl": "https://cdn.shopify.com/videos/c/o/v/15de67fa52a247e9805165ba4417e3b7.mp4",
+    "ktx2Url": "https://cdn.shopify.com/s/files/1/0647/5176/3550/files/Test_Grid_Video_2_2_50f_640x360_etc1s.ktx2?v=1780962544",
+    "visible": true,
+    "layer": "foreground",
+    "source": "vf-source",
+    "width": 1,
+    "depth": 3.500000000000002,
+    "opacity": 2,
+    "brightness": 1.2999999999999983,
+    "threshold": 0.36000000000000004,
+    "softness": 0.45100000000000007,
+    "edgeFade": 0.06,
+    "blendMode": "additive",
+    "renderBehindPointCloud": false,
+    "loopCount": 5,
+    "grid": {
+     "enabled": true,
+     "columns": 3,
+     "rows": 3,
+     "spacing": [
+      1.0499999999999998,
+      1.3500000000000003
+     ],
+     "randomTimeOffset": 0,
+     "outerOpacity": 0.4
+    },
+    "nearFade": 0,
+    "playbackSpeed": 0.8500000000000005,
+    "fluidStrength": [
+     0.4,
+     0.4
+    ],
+    "fluidDepthStrength": [
+     1,
+     0
+    ],
+    "fluidDistanceRange": [
+     0,
+     1000
+    ],
+    "raymarchSteps": 100,
+    "centerFade": [
+     0.5,
+     0,
+     0
+    ],
+    "position": [
+     1.0300000000000027,
+     -0.010000000000002883,
+     -0.7900000000000017
+    ],
+    "rotation": [
+     0.0523598775598299,
+     -2.8623399732707004,
+     3.141592653589793
+    ],
+    "scale": [
+     2.6500000000000012,
+     2,
+     1
+    ],
+    "hsl": [
+     0,
+     -1,
+     0
+    ],
+    "noiseScale": [
+     0,
+     0,
+     0
+    ],
+    "noiseMovement": [
+     0,
+     0,
+     0
+    ],
+    "noiseStrength": 0
+   }
+  }
+ },
+ {
+  "name": "prod-9-payments",
+  "preset": {
+   "id": "metaobject-prod-9-payments-1",
+   "title": "prod-9-payments",
+   "camera": {
+    "position": [
+     -0.5971477768841159,
+     -0.44278547432259857,
+     0.5324462916553814
+    ],
+    "target": [
+     -0.6850738568413309,
+     -0.3971792496260924,
+     -0.3502068113197193
+    ],
+    "fov": 120,
+    "animation": "scrollDrift",
+    "positionOffset": [
+     0,
+     0,
+     0
+    ],
+    "mobilePositionOffset": [
+     0,
+     0,
+     0
+    ],
+    "rotationOffset": [
+     0,
+     0,
+     0
+    ],
+    "mobileRotationOffset": [
+     0,
+     0,
+     0
+    ],
+    "pointerInfluence": [
+     [
+      0.1,
+      -0.1
+     ],
+     [
+      0.05,
+      -0.05
+     ]
+    ],
+    "scrollDrift": {
+     "up": 0.2,
+     "back": 0.2
+    }
+   },
+   "environment": {
+    "url": "https://cdn.shopify.com/s/files/1/0647/5176/3550/files/shopapp-office.hdr",
+    "background": true,
+    "blur": 0.7974683544303794,
+    "darken": 0.7848101265822782
+   },
+   "pointcloud": {
+    "sources": [
+     {
+      "src": "https://cdn.shopify.com/s/files/1/0647/5176/3550/files/minipointcloud-512-df9.mdpc?v=1781551491",
+      "resolution": 512
+     },
+     {
+      "src": "https://cdn.shopify.com/s/files/1/0647/5176/3550/files/minipointcloud-256-df9.mdpc?v=1781551490",
+      "resolution": 256
+     }
+    ],
+    "flow": {
+     "enabled": true,
+     "type": "rise",
+     "layout": "dots",
+     "strength": 0,
+     "speed": 0,
+     "scale": 0,
+     "gridEnabled": true,
+     "gridSize": 0.49600000000000005,
+     "gridStrength": 0.94,
+     "gridMix": {
+      "x": 0.58,
+      "y": 0.15999999999999995,
+      "z": 0.94
+     },
+     "gridRotation": {
+      "x": 0,
+      "y": 0.9400000000000007,
+      "z": 1.760000000000001
+     },
+     "conveyorEnabled": true,
+     "conveyorSpeed": 0.08,
+     "conveyorDepth": 1,
+     "conveyorRotation": {
+      "x": 0,
+      "y": 0.37000000000000016,
+      "z": 0
+     },
+     "conveyorDistance": {
+      "near": 0,
+      "far": 0
+     },
+     "randomnessExponent": 0,
+     "distanceNear": 1.772151898734179,
+     "distanceFar": 7.0886075949367,
+     "layoutRadius": 3.050000000000002,
+     "layoutThickness": 0.62,
+     "layoutPreserveY": 1,
+     "layoutTwist": 1.3000000000000014,
+     "layoutAmplitude": 0,
+     "layoutFrequency": 0,
+     "layoutSpokes": 25,
+     "layoutRadialSpacing": 0.4850000000000001,
+     "layoutTurns": 0,
+     "layoutHeight": 0.001
+    },
+    "fluid": {
+     "enabled": true,
+     "influence": 0.5,
+     "curl": 1.5,
+     "velocityDissipation": 0.965,
+     "densityDissipation": 0.9,
+     "pressure": 0.6,
+     "splatRadius": 0.25,
+     "splatForce": 0.125,
+     "simSize": 128,
+     "dyeSize": 256
+    },
+    "caustics": {
+     "enabled": true,
+     "strength": 1.2,
+     "scale": 3,
+     "axisScale": {
+      "x": 2,
+      "y": 3.1399999999999966,
+      "z": 2.4
+     },
+     "speed": {
+      "x": -0.1,
+      "y": -0.1,
+      "z": -0.2
+     },
+     "power": 5,
+     "sparkle": 0.31645569620253167,
+     "color": {
+      "r": 0.38823529411764707,
+      "g": 0.6352941176470588,
+      "b": 1
+     }
+    },
+    "colorCorrections": {
+     "enabled": false,
+     "amount": 1,
+     "reds": {
+      "h": 0,
+      "s": 0,
+      "l": 0
+     },
+     "yellows": {
+      "h": 0,
+      "s": 0,
+      "l": 0
+     },
+     "greens": {
+      "h": 0,
+      "s": 0,
+      "l": 0
+     },
+     "cyans": {
+      "h": 0,
+      "s": 0,
+      "l": 0
+     },
+     "blues": {
+      "h": 0,
+      "s": 0,
+      "l": 0
+     },
+     "magentas": {
+      "h": 0,
+      "s": 0,
+      "l": 0
+     },
+     "whites": {
+      "h": 180,
+      "s": -0.4200000000000001,
+      "l": -1
+     },
+     "neutrals": {
+      "h": 0,
+      "s": -1,
+      "l": -1
+     },
+     "blacks": {
+      "h": 0,
+      "s": 0,
+      "l": 0
+     }
+    },
+    "pointSize": 0.006,
+    "distanceSizeInfluence": 0.25,
+    "distanceSizeNear": 4,
+    "distanceSizeFar": 18,
+    "distanceSizeMax": 1.5,
+    "maxPointSize": 2,
+    "maxPoints": 207001,
+    "position": {
+     "x": -0.5900000000000014,
+     "y": -0.46299999999999963,
+     "z": 0.37
+    },
+    "rotation": {
+     "x": -190,
+     "y": 134.1,
+     "z": 6
+    },
+    "scale": 0.31,
+    "mobile": {
+     "position": {
+      "x": 0,
+      "y": 0,
+      "z": 0
+     },
+     "rotation": {
+      "x": 0,
+      "y": 0,
+      "z": 0
+     }
+    },
+    "opacity": 0.45000000000000007,
+    "transparent": true,
+    "blendMode": "normal",
+    "randomize": {
+     "x": 0.19000000000000003,
+     "y": 2,
+     "z": 2
+    },
+    "cameraFade": {
+     "enabled": false,
+     "near": 0,
+     "far": 1.0500000000000003
+    },
+    "densityFill": {
+     "enabled": false,
+     "opacity": 0.35,
+     "pointSizeScale": 0.75,
+     "jitter": 0.01
+    },
+    "particleScalars": {
+     "source512": 1.25,
+     "source256": 1.2
+    }
+   },
+   "postprocessing": {
+    "bloom": {
+     "enabled": true,
+     "intensity": 1.4873417721518978,
+     "opacity": 0.05063291139240506,
+     "threshold": 0.5569620253164556,
+     "softness": 0,
+     "radius": 0,
+     "tint": [
+      1,
+      1,
+      1
+     ],
+     "rgbShift": 0,
+     "rgbAngle": 0
+    },
+    "chromatic": {
+     "enabled": true,
+     "amount": 0,
+     "angle": 1
+    },
+    "vignette": {
+     "enabled": true,
+     "amount": 0.24050632911392422,
+     "radius": 1.0089240506329114,
+     "softness": 0.7128797468354431
+    },
+    "afterimage": {
+     "enabled": true,
+     "strength": 0.98,
+     "damp": 0.95,
+     "threshold": 0.2
+    },
+    "noise": {
+     "enabled": false,
+     "amount": 0.06,
+     "scale": 1
+    },
+    "toneMapping": "neutral",
+    "toneMappingExposure": 1
+   },
+   "behindContent": {
+    "darken": 0.35,
+    "speed": 0.1,
+    "saturation": 0.8,
+    "pointerInfluence": 0.1,
+    "reduceQuality": true,
+    "offset": 0
+   },
+   "volumetric": null,
+   "videoLightVolume": {
+    "videoUrl": "https://cdn.shopify.com/videos/c/o/v/15de67fa52a247e9805165ba4417e3b7.mp4",
+    "ktx2Url": "https://cdn.shopify.com/s/files/1/0647/5176/3550/files/Payments-2-modified_50f_853x480_etc1s.ktx2?v=1781213244",
+    "visible": true,
+    "layer": "foreground",
+    "source": "vf-source",
+    "width": 1,
+    "depth": 1.34,
+    "opacity": 2,
+    "brightness": 2,
+    "threshold": 0.034999999999999996,
+    "softness": 0.161,
+    "edgeFade": 0,
+    "blendMode": "additive",
+    "renderBehindPointCloud": true,
+    "loopCount": 2,
+    "grid": {
+     "enabled": false,
+     "columns": 3,
+     "rows": 6,
+     "spacing": [
+      0.49999999999999994,
+      0.9000000000000004
+     ],
+     "randomTimeOffset": 1,
+     "outerOpacity": 0.27999999999999997
+    },
+    "nearFade": 0.7999999999999999,
+    "playbackSpeed": -1,
+    "fluidStrength": [
+     -0.4,
+     0.4
+    ],
+    "fluidDepthStrength": [
+     1,
+     0
+    ],
+    "fluidDistanceRange": [
+     0,
+     1000
+    ],
+    "raymarchSteps": 128,
+    "centerFade": [
+     0.5,
+     0,
+     0
+    ],
+    "position": [
+     -0.7100000000000005,
+     -0.47999999999999965,
+     -0.32000000000000006
+    ],
+    "rotation": [
+     -0.4014257279586958,
+     0.4363323129985824,
+     0
+    ],
+    "scale": [
+     3,
+     3,
+     1.4000000000000004
+    ],
+    "hsl": [
+     0.5,
+     -0.3,
+     1
+    ],
+    "noiseScale": [
+     0,
+     0,
+     0
+    ],
+    "noiseMovement": [
+     0,
+     0,
+     0
+    ],
+    "noiseStrength": 0
+   },
+   "foregroundVideoLightVolume": {
+    "videoUrl": "https://cdn.shopify.com/videos/c/o/v/15de67fa52a247e9805165ba4417e3b7.mp4",
+    "ktx2Url": "https://cdn.shopify.com/s/files/1/0647/5176/3550/files/SpatialVideo4_50f_368x278_etc1s.ktx2?v=1781547429",
+    "visible": true,
+    "layer": "foreground",
+    "source": "vf-source",
+    "width": 1,
+    "depth": 5.860000000000007,
+    "opacity": 2,
+    "brightness": 2.6500000000000017,
+    "threshold": 0.025,
+    "softness": 0.10099999999999935,
+    "edgeFade": 0.4,
+    "blendMode": "additive",
+    "renderBehindPointCloud": false,
+    "loopCount": 1,
+    "grid": {
+     "enabled": false,
+     "columns": 1,
+     "rows": 1,
+     "spacing": [
+      1.1,
+      1.1
+     ],
+     "randomTimeOffset": 0,
+     "outerOpacity": 1
+    },
+    "nearFade": 0.9999999999999999,
+    "playbackSpeed": -0.5,
+    "fluidStrength": [
+     -0.4,
+     0.4
+    ],
+    "fluidDepthStrength": [
+     1,
+     0
+    ],
+    "fluidDistanceRange": [
+     0,
+     1000
+    ],
+    "raymarchSteps": 100,
+    "centerFade": [
+     0.5,
+     0,
+     0
+    ],
+    "position": [
+     -0.92,
+     -0.31000000000000044,
+     0.2700000000000001
+    ],
+    "rotation": [
+     0,
+     0.33161255787892263,
+     1.1519173063162575
+    ],
+    "scale": [
+     1,
+     4.029999999999996,
+     1
+    ],
+    "hsl": [
+     -0.01499999999999974,
+     0.6,
+     -0.09999999999999999
+    ],
+    "noiseScale": [
+     0,
+     0,
+     0
+    ],
+    "noiseMovement": [
+     0,
+     0,
+     0
+    ],
+    "noiseStrength": 0
+   }
+  }
+ },
+ {
+  "name": "prod-3-sidekick",
+  "preset": {
+   "id": "metaobject-prod-3-sidekick-2",
+   "title": "prod-3-sidekick",
+   "camera": {
+    "position": [
+     -0.06529842694898869,
+     -0.8382708806791748,
+     1.385315364440076
+    ],
+    "target": [
+     -0.7625028751251123,
+     -0.6982143291912241,
+     0.08578020035017547
+    ],
+    "fov": 50,
+    "mobileFov": 90,
+    "animation": "scrollDrift",
+    "positionOffset": [
+     0,
+     0,
+     0
+    ],
+    "mobilePositionOffset": [
+     0,
+     0,
+     0
+    ],
+    "rotationOffset": [
+     0,
+     0,
+     -0.04
+    ],
+    "mobileRotationOffset": [
+     0,
+     0,
+     0
+    ],
+    "pointerInfluence": [
+     [
+      0.15,
+      -0.15
+     ],
+     [
+      0.1,
+      -0.1
+     ]
+    ],
+    "scrollDrift": {
+     "up": 0.2,
+     "back": 0.2
+    }
+   },
+   "environment": {
+    "url": "https://cdn.shopify.com/s/files/1/0647/5176/3550/files/autumnField.hdr",
+    "background": true,
+    "blur": 0.6078481012658238,
+    "darken": 0.6075949367088608,
+    "rotation": {
+     "x": 0,
+     "y": 0,
+     "z": 3.141592653589793
+    }
+   },
+   "pointcloud": {
+    "sources": [
+     {
+      "src": "https://cdn.shopify.com/s/files/1/0647/5176/3550/files/0521_Submerged_Arches_and_Verdant_Ruins-512-df9.mdpc?v=1781551479",
+      "resolution": 512
+     },
+     {
+      "src": "https://cdn.shopify.com/s/files/1/0647/5176/3550/files/0521_Submerged_Arches_and_Verdant_Ruins-256-df9.mdpc?v=1781551477",
+      "resolution": 256
+     }
+    ],
+    "flow": {
+     "enabled": true,
+     "type": "curl",
+     "layout": "off",
+     "strength": 0.1772151898734178,
+     "speed": 1,
+     "scale": 3.8607594936708822,
+     "gridEnabled": false,
+     "gridSize": 0.03299999999999998,
+     "gridStrength": 1,
+     "gridMix": {
+      "x": 1,
+      "y": 1,
+      "z": 1
+     },
+     "gridRotation": {
+      "x": 0,
+      "y": -0.25999999999999973,
+      "z": 0
+     },
+     "conveyorEnabled": true,
+     "conveyorSpeed": 0.3,
+     "conveyorDepth": 6,
+     "conveyorRotation": {
+      "x": 0,
+      "y": 0.7460000000000027,
+      "z": 0
+     },
+     "conveyorDistance": {
+      "near": 0.06329113924050633,
+      "far": 3
+     },
+     "randomnessExponent": 142,
+     "distanceNear": 0.25316455696202533,
+     "distanceFar": 1.2658227848101267,
+     "layoutRadius": 0.001,
+     "layoutThickness": 0.9,
+     "layoutPreserveY": 0.35,
+     "layoutTwist": -3.45,
+     "layoutAmplitude": 0.16,
+     "layoutFrequency": 11.5,
+     "layoutSpokes": 24,
+     "layoutRadialSpacing": 0,
+     "layoutTurns": 3,
+     "layoutHeight": 5
+    },
+    "fluid": {
+     "enabled": true,
+     "influence": 0.6,
+     "curl": 1.5,
+     "velocityDissipation": 0.965,
+     "densityDissipation": 0.9,
+     "pressure": 0.6,
+     "splatRadius": 0.25,
+     "splatForce": 0.125,
+     "simSize": 128,
+     "dyeSize": 256
+    },
+    "caustics": {
+     "enabled": true,
+     "strength": 5,
+     "scale": 2,
+     "axisScale": {
+      "x": 1,
+      "y": 1,
+      "z": 10
+     },
+     "speed": {
+      "x": -0.15000000000000002,
+      "y": -0.1,
+      "z": -0.2
+     },
+     "power": 10,
+     "sparkle": 0,
+     "color": {
+      "r": 0.5019607843137255,
+      "g": 0.3058823529411765,
+      "b": 0.8705882352941177
+     }
+    },
+    "colorCorrections": {
+     "enabled": true,
+     "amount": 1,
+     "reds": {
+      "h": 180,
+      "s": -1,
+      "l": 0.17999999999999988
+     },
+     "yellows": {
+      "h": 0,
+      "s": 0,
+      "l": 0
+     },
+     "greens": {
+      "h": 4,
+      "s": 0.15,
+      "l": 0
+     },
+     "cyans": {
+      "h": 0,
+      "s": 0,
+      "l": 0
+     },
+     "blues": {
+      "h": 0,
+      "s": 0,
+      "l": 0
+     },
+     "magentas": {
+      "h": 0,
+      "s": -1,
+      "l": 0.06999999999999992
+     },
+     "whites": {
+      "h": 0,
+      "s": -0.41000000000000025,
+      "l": -0.5099999999999995
+     },
+     "neutrals": {
+      "h": 180,
+      "s": 0,
+      "l": -0.32
+     },
+     "blacks": {
+      "h": 81,
+      "s": -0.049999999999999795,
+      "l": 0.2199999999999999
+     }
+    },
+    "pointSize": 0.015000000000000006,
+    "distanceSizeInfluence": 0.19000000000000003,
+    "distanceSizeNear": 4,
+    "distanceSizeFar": 18,
+    "distanceSizeMax": 1.5,
+    "maxPointSize": 1.8037974683544302,
+    "maxPoints": 230000,
+    "position": {
+     "x": -2.6999999999999926,
+     "y": 1.9600000000000017,
+     "z": -2.4399999999999897
+    },
+    "rotation": {
+     "x": 0,
+     "y": -21.900000000000006,
+     "z": -2.900000000000001
+    },
+    "scale": 5.189999999999995,
+    "mobile": {
+     "position": {
+      "x": 0,
+      "y": 0,
+      "z": 0
+     },
+     "rotation": {
+      "x": 0,
+      "y": 0,
+      "z": 0
+     }
+    },
+    "opacity": 0.8899999999999999,
+    "transparent": true,
+    "blendMode": "additive",
+    "randomize": {
+     "x": 0.04999999999999996,
+     "y": 0,
+     "z": 0
+    },
+    "cameraFade": {
+     "enabled": true,
+     "near": 0,
+     "far": 4.5
+    },
+    "densityFill": {
+     "enabled": true,
+     "opacity": 1,
+     "pointSizeScale": 2,
+     "jitter": 0.002
+    },
+    "particleScalars": {
+     "source512": 1.45,
+     "source256": 1
+    }
+   },
+   "postprocessing": {
+    "bloom": {
+     "enabled": true,
+     "intensity": 0.8860759493670889,
+     "opacity": 0.05063291139240506,
+     "threshold": 0.35848101265822796,
+     "softness": 0,
+     "radius": 0.23544303797468333,
+     "tint": [
+      1,
+      1,
+      1
+     ],
+     "rgbShift": 0,
+     "rgbAngle": 0
+    },
+    "chromatic": {
+     "enabled": true,
+     "amount": 0.005221518987341728,
+     "angle": 0.35790296053554593
+    },
+    "vignette": {
+     "enabled": true,
+     "amount": 0.6265822784810127,
+     "radius": 1.0089240506329114,
+     "softness": 0.7128797468354431
+    },
+    "afterimage": {
+     "enabled": true,
+     "strength": 0.8354430379746836,
+     "damp": 0.3287341772151899,
+     "threshold": 0.2
+    },
+    "noise": {
+     "enabled": false,
+     "amount": 0.06,
+     "scale": 1
+    },
+    "toneMapping": "neutral",
+    "toneMappingExposure": 1
+   },
+   "behindContent": {
+    "darken": 0,
+    "speed": 0.2,
+    "saturation": 1,
+    "pointerInfluence": 0.6,
+    "reduceQuality": true,
+    "offset": 0
+   },
+   "volumetric": null,
+   "videoLightVolume": {
+    "videoUrl": "https://cdn.shopify.com/videos/c/o/v/15de67fa52a247e9805165ba4417e3b7.mp4",
+    "ktx2Url": "https://cdn.shopify.com/s/files/1/0647/5176/3550/files/sidekick-voice_50f_429x239_etc1s.ktx2?v=1781616593",
+    "visible": true,
+    "layer": "background",
+    "source": "vf-source",
+    "width": 1,
+    "depth": 1.2100000000000017,
+    "opacity": 1.5799999999999996,
+    "brightness": 1.6,
+    "threshold": 0.05500000000000001,
+    "softness": 0.96,
+    "edgeFade": 0.27999999999999997,
+    "blendMode": "additive",
+    "renderBehindPointCloud": true,
+    "loopCount": 2,
+    "grid": {
+     "enabled": false,
+     "columns": 1,
+     "rows": 1,
+     "spacing": [
+      1.1,
+      1.1
+     ],
+     "randomTimeOffset": 0,
+     "outerOpacity": 1
+    },
+    "nearFade": 1.5,
+    "playbackSpeed": -0.6,
+    "fluidStrength": [
+     0.1,
+     0.1
+    ],
+    "fluidDepthStrength": [
+     3,
+     0
+    ],
+    "fluidDistanceRange": [
+     0,
+     1000
+    ],
+    "raymarchSteps": 50,
+    "centerFade": [
+     0.5,
+     0,
+     0
+    ],
+    "position": [
+     -0.239,
+     -0.6849999999999997,
+     0.9699999999999995
+    ],
+    "rotation": [
+     0.06038839211900395,
+     0.47647488579445135,
+     3.0770154712660025
+    ],
+    "scale": [
+     2,
+     3,
+     2.01
+    ],
+    "hsl": [
+     0.025499999999999967,
+     -0.1799999999999993,
+     0
+    ],
+    "noiseScale": [
+     0,
+     0,
+     0
+    ],
+    "noiseMovement": [
+     0,
+     0,
+     0
+    ],
+    "noiseStrength": 0
+   },
+   "foregroundVideoLightVolume": {
+    "videoUrl": "https://cdn.shopify.com/videos/c/o/v/15de67fa52a247e9805165ba4417e3b7.mp4",
+    "ktx2Url": "https://cdn.shopify.com/s/files/1/0647/5176/3550/files/sidekickuiartifact_50f_427x539_etc1s.ktx2?v=1781049049",
+    "visible": true,
+    "layer": "background",
+    "source": "vf-source",
+    "width": 1,
+    "depth": 3.8,
+    "opacity": 1.1299999999999997,
+    "brightness": 4,
+    "threshold": 0.025,
+    "softness": 0.001,
+    "edgeFade": 0,
+    "blendMode": "normal",
+    "renderBehindPointCloud": false,
+    "loopCount": 2,
+    "grid": {
+     "enabled": false,
+     "columns": 4,
+     "rows": 3,
+     "spacing": [
+      0.35,
+      0.10000000000000002
+     ],
+     "randomTimeOffset": 1,
+     "outerOpacity": 1
+    },
+    "nearFade": 5.5000000000000115,
+    "playbackSpeed": -0.5,
+    "fluidStrength": [
+     -0.2,
+     0.2
+    ],
+    "fluidDepthStrength": [
+     2,
+     0
+    ],
+    "fluidDistanceRange": [
+     0,
+     1000
+    ],
+    "raymarchSteps": 30,
+    "centerFade": [
+     0.5,
+     0,
+     0
+    ],
+    "position": [
+     1.996999999999999,
+     -0.5839999999999999,
+     4
+    ],
+    "rotation": [
+     -0.0523598775598299,
+     0.6021385919380453,
+     0
+    ],
+    "scale": [
+     5.879999999999999,
+     6,
+     4
+    ],
+    "hsl": [
+     -0.015000000000000218,
+     0.25,
+     0
+    ],
+    "noiseScale": [
+     0,
+     0,
+     0
+    ],
+    "noiseMovement": [
+     0,
+     0,
+     0
+    ],
+    "noiseStrength": 0
+   }
+  }
+ },
+ {
+  "name": "prod-12-merch",
+  "preset": {
+   "id": "metaobject-cs-merch-bw-1",
+   "title": "cs-merch-bw-1",
+   "camera": {
+    "position": [
+     0.4066266461934184,
+     0.05230458309588076,
+     0.800841991785529
+    ],
+    "target": [
+     0.10552507006899567,
+     -0.0009157553947498522,
+     -0.1645589171404114
+    ],
+    "fov": 75.44303797468363,
+    "animation": "scrollDrift",
+    "positionOffset": [
+     0,
+     0,
+     0
+    ],
+    "mobilePositionOffset": [
+     0,
+     0,
+     0
+    ],
+    "rotationOffset": [
+     0,
+     0,
+     0
+    ],
+    "mobileRotationOffset": [
+     0,
+     0,
+     0
+    ],
+    "pointerInfluence": [
+     [
+      0.15,
+      -0.15
+     ],
+     [
+      0.1,
+      -0.1
+     ]
+    ],
+    "scrollDrift": {
+     "up": 0.2,
+     "back": 0.2
+    }
+   },
+   "environment": {
+    "url": "https://cdn.shopify.com/s/files/1/0647/5176/3550/files/night.hdr",
+    "background": false,
+    "blur": 0.5886075949367081,
+    "darken": 0.5632911392405063,
+    "bgMode": "linear",
+    "bgColor1": "#2b2b2b",
+    "bgColor2": "#000000",
+    "bgColor3": "#323131"
+   },
+   "pointcloud": {
+    "sources": [
+     {
+      "src": "https://cdn.shopify.com/s/files/1/0647/5176/3550/files/minipointcloud-256-df9.mdpc?v=1781551490",
+      "resolution": 512
+     },
+     {
+      "src": "https://cdn.shopify.com/s/files/1/0647/5176/3550/files/minipointcloud-256-df9.mdpc?v=1781551490",
+      "resolution": 256
+     }
+    ],
+    "flow": {
+     "enabled": true,
+     "type": "rise",
+     "layout": "dots",
+     "strength": 0.9430379746835441,
+     "speed": 0.22151898734177217,
+     "scale": 5.443037974683544,
+     "gridEnabled": true,
+     "gridSize": 0.0411999999999995,
+     "gridStrength": 1,
+     "gridMix": {
+      "x": 1,
+      "y": 1,
+      "z": 1
+     },
+     "gridRotation": {
+      "x": 0,
+      "y": 0,
+      "z": 0
+     },
+     "conveyorEnabled": true,
+     "conveyorSpeed": 0.15,
+     "conveyorDepth": 0.8860759493670886,
+     "conveyorRotation": {
+      "x": -0.060000000000000005,
+      "y": -0.6200000000000003,
+      "z": 0
+     },
+     "conveyorDistance": {
+      "near": 0.12658227848101267,
+      "far": 4.126582278481013
+     },
+     "randomnessExponent": 310,
+     "distanceNear": 0.12658227848101267,
+     "distanceFar": 4.126582278481013,
+     "layoutRadius": 5.1,
+     "layoutThickness": 0,
+     "layoutPreserveY": 0.35,
+     "layoutTwist": -10,
+     "layoutAmplitude": 0,
+     "layoutFrequency": 0,
+     "layoutSpokes": 3,
+     "layoutRadialSpacing": 0,
+     "layoutTurns": 0,
+     "layoutHeight": 0.001
+    },
+    "fluid": {
+     "enabled": true,
+     "influence": 1,
+     "curl": 3,
+     "velocityDissipation": 0.96,
+     "densityDissipation": 0.98,
+     "pressure": 0.9,
+     "splatRadius": 0.7,
+     "splatForce": 0.3,
+     "simSize": 128,
+     "dyeSize": 256
+    },
+    "caustics": {
+     "enabled": true,
+     "strength": 2,
+     "scale": 0.9810126582278489,
+     "axisScale": {
+      "x": 1,
+      "y": 1,
+      "z": 1
+     },
+     "speed": {
+      "x": 0.1,
+      "y": -0.05,
+      "z": -0.05
+     },
+     "power": 10,
+     "sparkle": 0,
+     "color": {
+      "r": 1,
+      "g": 1,
+      "b": 1
+     }
+    },
+    "colorCorrections": {
+     "enabled": false,
+     "amount": 0,
+     "reds": {
+      "h": 0,
+      "s": -1,
+      "l": 0
+     },
+     "yellows": {
+      "h": 0,
+      "s": -1,
+      "l": 0
+     },
+     "greens": {
+      "h": 0,
+      "s": -1,
+      "l": 0
+     },
+     "cyans": {
+      "h": 0,
+      "s": -1,
+      "l": 0
+     },
+     "blues": {
+      "h": 0,
+      "s": -1,
+      "l": 0
+     },
+     "magentas": {
+      "h": 0,
+      "s": -1,
+      "l": 0
+     },
+     "whites": {
+      "h": 0,
+      "s": -1,
+      "l": 0
+     },
+     "neutrals": {
+      "h": -88,
+      "s": -1,
+      "l": 1
+     },
+     "blacks": {
+      "h": 130,
+      "s": -1,
+      "l": 0
+     }
+    },
+    "pointSize": 0.006999999999999997,
+    "distanceSizeInfluence": 0.25,
+    "distanceSizeNear": 4.3999999999999995,
+    "distanceSizeFar": 18,
+    "distanceSizeMax": 1.5,
+    "maxPointSize": 1.2,
+    "position": {
+     "x": -0.18999999999999995,
+     "y": 0.08000000000000003,
+     "z": 0.20999999999999974
+    },
+    "rotation": {
+     "x": -33,
+     "y": 29,
+     "z": 91
+    },
+    "scale": 1,
+    "mobile": {
+     "position": {
+      "x": 0,
+      "y": 0,
+      "z": 0
+     },
+     "rotation": {
+      "x": 0,
+      "y": 0,
+      "z": 0
+     }
+    },
+    "opacity": 0.4800000000000001,
+    "transparent": true,
+    "blendMode": "normal",
+    "randomize": {
+     "x": 0.008,
+     "y": 0.002,
+     "z": 0
+    },
+    "cameraFade": {
+     "enabled": true,
+     "near": 1.2000000000000006,
+     "far": 4.250000000000022
+    },
+    "densityFill": {
+     "enabled": true,
+     "opacity": 1,
+     "pointSizeScale": 2,
+     "jitter": 0.08
+    },
+    "particleScalars": {
+     "source512": 1.25,
+     "source256": 1.75
+    }
+   },
+   "postprocessing": {
+    "bloom": {
+     "enabled": true,
+     "intensity": 1.0664556962025311,
+     "opacity": 0.24,
+     "threshold": 0,
+     "softness": 0,
+     "radius": 1,
+     "tint": [
+      1,
+      1,
+      1
+     ],
+     "rgbShift": 0,
+     "rgbAngle": 0
+    },
+    "chromatic": {
+     "enabled": false,
+     "amount": 0,
+     "angle": 1
+    },
+    "vignette": {
+     "enabled": false,
+     "amount": 0,
+     "radius": 0,
+     "softness": 0.441
+    },
+    "afterimage": {
+     "enabled": true,
+     "strength": 0.99,
+     "damp": 0.9,
+     "threshold": 0
+    },
+    "noise": {
+     "enabled": false,
+     "amount": 0.06,
+     "scale": 1
+    },
+    "toneMapping": "neutral",
+    "toneMappingExposure": 1
+   },
+   "behindContent": {
+    "darken": 0.40000000000000013,
+    "speed": 0.1,
+    "saturation": 1,
+    "pointerInfluence": 0.1,
+    "reduceQuality": true,
+    "offset": 0
+   },
+   "volumetric": null,
+   "videoLightVolume": {
+    "videoUrl": "https://cdn.shopify.com/videos/c/o/v/15de67fa52a247e9805165ba4417e3b7.mp4",
+    "ktx2Url": "https://cdn.shopify.com/s/files/1/0647/5176/3550/files/merchhat_50f_427x240_etc1s.ktx2?v=1781616578",
+    "visible": true,
+    "layer": "foreground",
+    "source": "vf-source",
+    "width": 1,
+    "depth": 0.51,
+    "opacity": 2,
+    "brightness": 1.4999999999999996,
+    "threshold": 0.2849999999999999,
+    "softness": 0.26100000000000007,
+    "edgeFade": 0.18500000000000005,
+    "blendMode": "normal",
+    "renderBehindPointCloud": true,
+    "loopCount": 1,
+    "grid": {
+     "enabled": false,
+     "columns": 1,
+     "rows": 1,
+     "spacing": [
+      1.1,
+      1.1
+     ],
+     "randomTimeOffset": 0,
+     "outerOpacity": 1
+    },
+    "nearFade": 0,
+    "playbackSpeed": -1.7500000000000002,
+    "fluidStrength": [
+     0.4,
+     0.4
+    ],
+    "fluidDepthStrength": [
+     1,
+     0
+    ],
+    "fluidDistanceRange": [
+     0,
+     1000
+    ],
+    "raymarchSteps": 100,
+    "centerFade": [
+     0.5,
+     0,
+     0
+    ],
+    "position": [
+     -0.27,
+     0.02999999999999975,
+     -1.2400000000000002
+    ],
+    "rotation": [
+     0,
+     0.3839724354387525,
+     0
+    ],
+    "scale": [
+     6,
+     6,
+     6
+    ],
+    "hsl": [
+     0,
+     -1,
+     0
+    ],
+    "noiseScale": [
+     0,
+     0,
+     0
+    ],
+    "noiseMovement": [
+     0,
+     0,
+     0
+    ],
+    "noiseStrength": 0
+   },
+   "foregroundVideoLightVolume": {
+    "videoUrl": "https://cdn.shopify.com/s/files/1/0647/5176/3550/files/HatHero_Still.png?v=1781288850",
+    "depthMapUrl": "https://cdn.shopify.com/s/files/1/0647/5176/3550/files/image-depth-map-generator_62b59268.png?v=1781288849",
+    "visible": true,
+    "layer": "foreground",
+    "source": "vf-source",
+    "width": 1,
+    "depth": 0.31,
+    "opacity": 2,
+    "brightness": 4,
+    "threshold": 0.025,
+    "softness": 0.001,
+    "edgeFade": 0,
+    "blendMode": "additive",
+    "renderBehindPointCloud": false,
+    "loopCount": 1,
+    "grid": {
+     "enabled": false,
+     "columns": 3,
+     "rows": 3,
+     "spacing": [
+      1.0499999999999998,
+      1.3500000000000003
+     ],
+     "randomTimeOffset": 0,
+     "outerOpacity": 0.4
+    },
+    "nearFade": 2.299999999999999,
+    "playbackSpeed": -0.65,
+    "fluidStrength": [
+     0.4,
+     0.4
+    ],
+    "fluidDepthStrength": [
+     1,
+     0
+    ],
+    "fluidDistanceRange": [
+     0,
+     1000
+    ],
+    "raymarchSteps": 100,
+    "centerFade": [
+     0.5,
+     0,
+     0
+    ],
+    "position": [
+     0.17000000000000004,
+     -0.07999999999999999,
+     0
+    ],
+    "rotation": [
+     0,
+     0.29670597283903605,
+     0
+    ],
+    "scale": [
+     3,
+     3,
+     3
+    ],
+    "hsl": [
+     0,
+     0,
+     0
+    ],
+    "noiseScale": [
+     0,
+     0,
+     0
+    ],
+    "noiseMovement": [
+     0,
+     0,
+     0
+    ],
+    "noiseStrength": 0
+   }
+  }
+ },
+ {
+  "name": "race-track",
+  "preset": {
+   "id": "metaobject-race-track",
+   "title": "race-track",
+   "camera": {
+    "position": [
+     -0.07175529821054716,
+     -0.003435584509488494,
+     0.001325598651980897
+    ],
+    "target": [
+     0,
+     0,
+     2
+    ],
+    "fov": 70,
+    "mobileFov": 75,
+    "animation": "scrollDrift",
+    "positionOffset": [
+     0,
+     0.07,
+     0.23999999999999977
+    ],
+    "mobilePositionOffset": [
+     0,
+     0,
+     0
+    ],
+    "rotationOffset": [
+     0,
+     0,
+     0
+    ],
+    "mobileRotationOffset": [
+     0,
+     0,
+     0
+    ],
+    "pointerInfluence": [
+     [
+      0.5,
+      -0.5
+     ],
+     [
+      -0.04,
+      0.04
+     ]
+    ],
+    "scrollDrift": {
+     "up": 0.2,
+     "back": 0.2
+    }
+   },
+   "environment": {
+    "url": "https://cdn.shopify.com/s/files/1/0647/5176/3550/files/apartment.hdr",
+    "background": false,
+    "blur": 0.6708860759493668,
+    "darken": 0.8987341772151897
+   },
+   "pointcloud": {
+    "sources": [
+     {
+      "src": "https://cdn.shopify.com/b/shopify-brochure2-assets/1ea414f2be20f9c91d05f0ba3cc1fa70.mdpc",
+      "resolution": 512
+     },
+     {
+      "src": "https://cdn.shopify.com/b/shopify-brochure2-assets/1ea414f2be20f9c91d05f0ba3cc1fa70.mdpc",
+      "resolution": 256
+     }
+    ],
+    "flow": {
+     "enabled": false,
+     "type": "curl",
+     "layout": "off",
+     "strength": 0.5,
+     "speed": 1,
+     "scale": 0.5,
+     "gridEnabled": false,
+     "gridSize": 0.08500000000000005,
+     "gridStrength": 1,
+     "gridMix": {
+      "x": 1,
+      "y": 1,
+      "z": 1
+     },
+     "gridRotation": {
+      "x": 0,
+      "y": 0,
+      "z": 0
+     },
+     "conveyorEnabled": true,
+     "conveyorSpeed": -0.2,
+     "conveyorDepth": 10,
+     "conveyorRotation": {
+      "x": 0.010000000000000002,
+      "y": 0.011000000000000003,
+      "z": 0
+     },
+     "conveyorDistance": {
+      "near": 0,
+      "far": 20
+     },
+     "randomnessExponent": 300,
+     "distanceNear": 0,
+     "distanceFar": 10,
+     "layoutRadius": 10,
+     "layoutThickness": 1,
+     "layoutPreserveY": 0,
+     "layoutTwist": 0,
+     "layoutAmplitude": 0,
+     "layoutFrequency": 0,
+     "layoutSpokes": 3,
+     "layoutRadialSpacing": 0,
+     "layoutTurns": 3,
+     "layoutHeight": 5
+    },
+    "fluid": {
+     "enabled": true,
+     "influence": 0.25,
+     "curl": 6,
+     "velocityDissipation": 0.96,
+     "densityDissipation": 0.95,
+     "pressure": 0.8,
+     "splatRadius": 0.4,
+     "splatForce": 0.5,
+     "simSize": 128,
+     "dyeSize": 256
+    },
+    "caustics": {
+     "enabled": true,
+     "strength": 0.8544303797468353,
+     "scale": 1,
+     "axisScale": {
+      "x": 1,
+      "y": 1,
+      "z": 1
+     },
+     "speed": {
+      "x": 0,
+      "y": 0,
+      "z": 1
+     },
+     "power": 2,
+     "sparkle": 0,
+     "color": {
+      "r": 1,
+      "g": 0.9725490196078431,
+      "b": 0.9333333333333333
+     }
+    },
+    "colorCorrections": {
+     "enabled": false,
+     "amount": 1,
+     "reds": {
+      "h": 0,
+      "s": 0,
+      "l": 0
+     },
+     "yellows": {
+      "h": 0,
+      "s": 0,
+      "l": 0
+     },
+     "greens": {
+      "h": 0,
+      "s": 0,
+      "l": 0
+     },
+     "cyans": {
+      "h": 0,
+      "s": 0,
+      "l": 0
+     },
+     "blues": {
+      "h": 0,
+      "s": 0,
+      "l": 0
+     },
+     "magentas": {
+      "h": 0,
+      "s": 0,
+      "l": 0
+     },
+     "whites": {
+      "h": 0,
+      "s": 0,
+      "l": 0
+     },
+     "neutrals": {
+      "h": 0,
+      "s": 0,
+      "l": 0
+     },
+     "blacks": {
+      "h": 0,
+      "s": 0,
+      "l": 0
+     }
+    },
+    "pointSize": 0.01510000000000002,
+    "distanceSizeInfluence": 0.25,
+    "distanceSizeNear": 4,
+    "distanceSizeFar": 18,
+    "distanceSizeMax": 1.55,
+    "maxPointSize": 5,
+    "position": {
+     "x": -2,
+     "y": 0.00999999999999992,
+     "z": 5.3999999999999915
+    },
+    "rotation": {
+     "x": 0,
+     "y": 0,
+     "z": 0
+    },
+    "scale": 1.5,
+    "mobile": {
+     "position": {
+      "x": 0,
+      "y": 0,
+      "z": 0
+     },
+     "rotation": {
+      "x": 0,
+      "y": 0,
+      "z": 0
+     }
+    },
+    "opacity": 0.8300000000000003,
+    "transparent": true,
+    "blendMode": "additive",
+    "randomize": {
+     "x": 0.19799999999999998,
+     "y": 0.002,
+     "z": 0.004
+    },
+    "cameraFade": {
+     "enabled": true,
+     "near": 0,
+     "far": 5
+    },
+    "densityFill": {
+     "enabled": false,
+     "opacity": 0.35,
+     "pointSizeScale": 0.75,
+     "jitter": 0.01
+    },
+    "particleScalars": {
+     "source512": 1.25,
+     "source256": 1.75
+    }
+   },
+   "postprocessing": {
+    "bloom": {
+     "enabled": true,
+     "intensity": 1.316455696202533,
+     "opacity": 0.3037974683544312,
+     "threshold": 0,
+     "softness": 0,
+     "radius": 0.291139240506329,
+     "tint": [
+      1,
+      1,
+      1
+     ],
+     "rgbShift": 0,
+     "rgbAngle": 0
+    },
+    "chromatic": {
+     "enabled": false,
+     "amount": 0.0015822784810126582,
+     "angle": 1.0737088816066356
+    },
+    "vignette": {
+     "enabled": true,
+     "amount": 0.23417721518987358,
+     "radius": 0.895,
+     "softness": 0.441
+    },
+    "afterimage": {
+     "enabled": true,
+     "strength": 0.999,
+     "damp": 0.7,
+     "threshold": 0
+    },
+    "noise": {
+     "enabled": true,
+     "amount": 0.010443037974683544,
+     "scale": 1
+    },
+    "toneMapping": "neutral",
+    "toneMappingExposure": 1
+   },
+   "behindContent": {
+    "darken": 0.5000000000000001,
+    "speed": 0.020000000000000004,
+    "saturation": 0.6,
+    "pointerInfluence": 0.1,
+    "reduceQuality": true,
+    "offset": 0
+   },
+   "volumetric": null,
+   "videoLightVolume": null,
+   "foregroundVideoLightVolume": {
+    "videoUrl": "https://cdn.shopify.com/s/files/1/0647/5176/3550/files/combined_13sources_92f_480x480_etc1s.ktx2?v=1781659440",
+    "visible": true,
+    "layer": "foreground",
+    "source": "vf-source",
+    "width": 1,
+    "depth": 5,
+    "opacity": 2,
+    "brightness": 3,
+    "threshold": 0.025,
+    "softness": 0.001,
+    "edgeFade": 0,
+    "blendMode": "additive",
+    "renderBehindPointCloud": false,
+    "loopCount": 0.14,
+    "grid": {
+     "enabled": false,
+     "columns": 3,
+     "rows": 3,
+     "spacing": [
+      1,
+      1.5500000000000003
+     ],
+     "randomTimeOffset": 0.7099999999999997,
+     "outerOpacity": 0.4899999999999999
+    },
+    "nearFade": 0,
+    "playbackSpeed": 0.025,
+    "fluidStrength": [
+     0,
+     0
+    ],
+    "fluidDepthStrength": [
+     1,
+     0
+    ],
+    "fluidDistanceRange": [
+     0,
+     1000
+    ],
+    "raymarchSteps": 120,
+    "centerFade": [
+     0,
+     0,
+     0
+    ],
+    "position": [
+     0,
+     0,
+     4
+    ],
+    "rotation": [
+     0,
+     0,
+     0
+    ],
+    "scale": [
+     4,
+     4,
+     4
+    ],
+    "hsl": [
+     0,
+     0,
+     0
+    ],
+    "noiseScale": [
+     0,
+     0,
+     0
+    ],
+    "noiseMovement": [
+     0,
+     0,
+     0
+    ],
+    "noiseStrength": 0
+   }
+  }
+ },
+ {
+  "name": "prod-1-hero",
+  "preset": {
+   "id": "metaobject-cs-prod-1-hero-june16",
+   "title": "cs-prod-1-hero-june16",
+   "camera": {
+    "position": [
+     0.024187084345067028,
+     -0.5111115956604885,
+     0.9953671381009417
+    ],
+    "target": [
+     -0.1933254540409659,
+     -0.5035614663782814,
+     0.9104980909031087
+    ],
+    "fov": 55,
+    "animation": "none",
+    "positionOffset": [
+     0.03,
+     -1.734723475976807e-17,
+     0
+    ],
+    "mobilePositionOffset": [
+     0,
+     0,
+     0
+    ],
+    "rotationOffset": [
+     0,
+     0,
+     0
+    ],
+    "mobileRotationOffset": [
+     0,
+     0,
+     0
+    ],
+    "pointerInfluence": [
+     [
+      0.1,
+      -0.1
+     ],
+     [
+      0.08,
+      -0.08
+     ]
+    ],
+    "scrollDrift": {
+     "up": 0.2,
+     "back": 0.2
+    }
+   },
+   "environment": {
+    "url": "https://cdn.shopify.com/s/files/1/0647/5176/3550/files/park.hdr",
+    "background": false,
+    "blur": 0,
+    "darken": 0,
+    "rotation": {
+     "x": -1.1136764227350355,
+     "y": 0.19900015770402713,
+     "z": -0.39753427288415644
+    },
+    "bgMode": "linear",
+    "bgColor1": "#8040c1",
+    "bgColor2": "#c478db",
+    "bgColor3": "#0d2b1f",
+    "bgAngle": 180,
+    "bgSpread": 59,
+    "bgGradientPoints": 3,
+    "bgBias1": 0.2400000000000002,
+    "bgBias2": -0.1700000000000001
+   },
+   "pointcloud": {
+    "sources": [
+     {
+      "src": "https://cdn.shopify.com/s/files/1/0647/5176/3550/files/forest-1024-v3-moretrees-512_3.mdpc?v=1781721545",
+      "resolution": 512
+     },
+     {
+      "src": "https://cdn.shopify.com/s/files/1/0647/5176/3550/files/forest-1024-v3-moretrees-256_2.mdpc?v=1781722260",
+      "resolution": 256
+     }
+    ],
+    "flow": {
+     "enabled": false,
+     "type": "rise",
+     "layout": "off",
+     "strength": 0.4,
+     "speed": 1,
+     "scale": 2,
+     "gridEnabled": false,
+     "gridSize": 0.004,
+     "gridStrength": 1,
+     "gridMix": {
+      "x": 1,
+      "y": 1,
+      "z": 1
+     },
+     "gridRotation": {
+      "x": 0,
+      "y": 0,
+      "z": 0
+     },
+     "conveyorEnabled": true,
+     "conveyorSpeed": 0.02,
+     "conveyorDepth": 0.06,
+     "conveyorRotation": {
+      "x": 0.04,
+      "y": 0.8,
+      "z": 0
+     },
+     "conveyorDistance": {
+      "near": 1,
+      "far": 4
+     },
+     "randomnessExponent": 283,
+     "distanceNear": 1,
+     "distanceFar": 3,
+     "layoutRadius": 5.4499999999999975,
+     "layoutThickness": 0.37999999999999956,
+     "layoutPreserveY": 0.24000000000000007,
+     "layoutTwist": 4.65,
+     "layoutAmplitude": 0.1999999999999999,
+     "layoutFrequency": 16.19999999999999,
+     "layoutSpokes": 24,
+     "layoutRadialSpacing": 0,
+     "layoutTurns": 3,
+     "layoutHeight": 5
+    },
+    "fluid": {
+     "enabled": true,
+     "influence": 0.4,
+     "curl": 3,
+     "velocityDissipation": 0.96,
+     "densityDissipation": 0.98,
+     "pressure": 0.9,
+     "splatRadius": 0.6,
+     "splatForce": 0.3,
+     "simSize": 128,
+     "dyeSize": 256
+    },
+    "caustics": {
+     "enabled": true,
+     "strength": 0.5696202531645564,
+     "scale": 4.050632911392401,
+     "axisScale": {
+      "x": 1.5,
+      "y": 1,
+      "z": 2
+     },
+     "speed": {
+      "x": 0,
+      "y": 0.05,
+      "z": -0.15
+     },
+     "power": 6,
+     "sparkle": 0,
+     "color": {
+      "r": 0.5764705882352941,
+      "g": 0.7372549019607844,
+      "b": 0.5843137254901961
+     }
+    },
+    "colorCorrections": {
+     "enabled": true,
+     "amount": 1,
+     "reds": {
+      "h": 0,
+      "s": 0,
+      "l": 0
+     },
+     "yellows": {
+      "h": 0,
+      "s": 0,
+      "l": 0
+     },
+     "greens": {
+      "h": 0,
+      "s": 0,
+      "l": -3.469446951953614e-18
+     },
+     "cyans": {
+      "h": 0,
+      "s": 0,
+      "l": 0
+     },
+     "blues": {
+      "h": 0,
+      "s": 0,
+      "l": 0
+     },
+     "magentas": {
+      "h": 0,
+      "s": 0,
+      "l": 0
+     },
+     "whites": {
+      "h": 0,
+      "s": -0.1399999999999999,
+      "l": -0.6799999999999997
+     },
+     "neutrals": {
+      "h": -54.7,
+      "s": -0.44100000000000017,
+      "l": 0
+     },
+     "blacks": {
+      "h": 25,
+      "s": -0.13099999999999962,
+      "l": 0.05299999999999997
+     }
+    },
+    "pointSize": 0.03400000000000003,
+    "distanceSizeInfluence": 0.25,
+    "distanceSizeNear": 2,
+    "distanceSizeFar": 18,
+    "distanceSizeMax": 1.5,
+    "maxPointSize": 2.758860759493671,
+    "maxPoints": 629000,
+    "position": {
+     "x": -1.0370000000000004,
+     "y": 0.07700000000000021,
+     "z": 0.4970000000000003
+    },
+    "rotation": {
+     "x": 0,
+     "y": 35,
+     "z": 0
+    },
+    "scale": 1.05,
+    "mobile": {
+     "position": {
+      "x": 0,
+      "y": 0,
+      "z": 0
+     },
+     "rotation": {
+      "x": 0,
+      "y": 0,
+      "z": 0
+     }
+    },
+    "opacity": 1,
+    "transparent": false,
+    "blendMode": "normal",
+    "randomize": {
+     "x": 0,
+     "y": 0.002,
+     "z": 0.001
+    },
+    "cameraFade": {
+     "enabled": false,
+     "near": 1,
+     "far": 1.6850000000000023
+    },
+    "densityFill": {
+     "enabled": true,
+     "opacity": 1,
+     "pointSizeScale": 0.3400000000000002,
+     "jitter": 0.0107
+    },
+    "particleScalars": {
+     "source512": 1.25,
+     "source256": 1.2
+    }
+   },
+   "postprocessing": {
+    "bloom": {
+     "enabled": true,
+     "intensity": 0.33,
+     "opacity": 0.1746835443037975,
+     "threshold": 0.3101265822784816,
+     "softness": 0,
+     "radius": 0.715189873417721,
+     "tint": [
+      1,
+      1,
+      1
+     ],
+     "rgbShift": 0,
+     "rgbAngle": 0
+    },
+    "chromatic": {
+     "enabled": false,
+     "amount": 0,
+     "angle": 1
+    },
+    "vignette": {
+     "enabled": false,
+     "amount": 0,
+     "radius": 0,
+     "softness": 0.001
+    },
+    "afterimage": {
+     "enabled": true,
+     "strength": 0.9,
+     "damp": 0.8,
+     "threshold": 0.2
+    },
+    "noise": {
+     "enabled": false,
+     "amount": 0.06,
+     "scale": 1
+    },
+    "toneMapping": "neutral",
+    "toneMappingExposure": 1
+   },
+   "behindContent": {
+    "darken": 0,
+    "speed": 1,
+    "saturation": 1,
+    "pointerInfluence": 1,
+    "reduceQuality": true,
+    "offset": 0
+   },
+   "volumetric": null,
+   "videoLightVolume": {
+    "videoUrl": "https://cdn.shopify.com/videos/c/o/v/4396d38b5ba744f8aab63ed520071bd6.mp4",
+    "ktx2Url": "https://cdn.shopify.com/s/files/1/0647/5176/3550/files/heroforest_1_14f_643x358_etc1s.ktx2?v=1781636421",
+    "visible": true,
+    "layer": "background",
+    "source": "vf-source",
+    "width": 1,
+    "depth": 20,
+    "opacity": 1.7400000000000002,
+    "brightness": 2.6499999999999995,
+    "threshold": 0.025,
+    "softness": 0.001,
+    "edgeFade": 0,
+    "blendMode": "normal",
+    "renderBehindPointCloud": true,
+    "loopCount": 12,
+    "grid": {
+     "enabled": false,
+     "columns": 1,
+     "rows": 1,
+     "spacing": [
+      1,
+      1
+     ],
+     "randomTimeOffset": 0.2799999999999998,
+     "outerOpacity": 1
+    },
+    "nearFade": 0,
+    "playbackSpeed": -1.0000000000000002,
+    "fluidStrength": [
+     0.1,
+     0.1
+    ],
+    "fluidDepthStrength": [
+     3,
+     0
+    ],
+    "fluidDistanceRange": [
+     0,
+     1000
+    ],
+    "raymarchSteps": 100,
+    "centerFade": [
+     0.5,
+     0,
+     0
+    ],
+    "position": [
+     1.5299999999999985,
+     -0.13999999999999335,
+     1.4499999999999997
+    ],
+    "rotation": [
+     2.705260340591211,
+     1.9345229429105149,
+     -1.6057029118347834
+    ],
+    "scale": [
+     5.890000000000001,
+     6,
+     1.7700000000000002
+    ],
+    "hsl": [
+     0.16999999999999998,
+     -0.5600000000000002,
+     -0.21000000000000055
+    ],
+    "noiseScale": [
+     0,
+     0,
+     0
+    ],
+    "noiseMovement": [
+     0,
+     0,
+     0
+    ],
+    "noiseStrength": 0
+   },
+   "foregroundVideoLightVolume": {
+    "videoUrl": "https://cdn.shopify.com/videos/c/o/v/33de6200b962468fa7b58e50836eb729.mp4",
+    "ktx2Url": "https://cdn.shopify.com/s/files/1/0647/5176/3550/files/SpatialVideo3_50f_239x429_etc1s.ktx2?v=1781547429",
+    "visible": true,
+    "layer": "foreground",
+    "source": "vf-source",
+    "width": 1,
+    "depth": 2.3000000000000047,
+    "opacity": 1.2,
+    "brightness": 4,
+    "threshold": 0.025,
+    "softness": 0.001,
+    "edgeFade": 0,
+    "blendMode": "normal",
+    "renderBehindPointCloud": false,
+    "loopCount": 1,
+    "grid": {
+     "enabled": false,
+     "columns": 1,
+     "rows": 1,
+     "spacing": [
+      1.1,
+      1.1
+     ],
+     "randomTimeOffset": 0,
+     "outerOpacity": 1
+    },
+    "nearFade": 0,
+    "playbackSpeed": -0.30000000000000016,
+    "fluidStrength": [
+     0,
+     0
+    ],
+    "fluidDepthStrength": [
+     1,
+     0
+    ],
+    "fluidDistanceRange": [
+     0,
+     1000
+    ],
+    "raymarchSteps": 128,
+    "centerFade": [
+     0.5,
+     0,
+     0
+    ],
+    "position": [
+     -0.530000000000005,
+     -1.1300000000000006,
+     -2.310000000000001
+    ],
+    "rotation": [
+     -2.4609142453120048,
+     1.6057029118347832,
+     0.19198621771937624
+    ],
+    "scale": [
+     4.55,
+     6,
+     2.5
+    ],
+    "hsl": [
+     -0.2599999999999999,
+     -0.8099999999999998,
+     -0.5500000000000005
+    ],
+    "noiseScale": [
+     0,
+     0,
+     0
+    ],
+    "noiseMovement": [
+     0,
+     0,
+     0
+    ],
+    "noiseStrength": 0
+   }
+  }
+ },
+ {
+  "name": "prod-4-online-3",
+  "preset": {
+   "id": "metaobject-prod-4-online-3-6",
+   "title": "prod-4-online-3",
+   "camera": {
+    "position": [
+     -0.042700931389877156,
+     -0.24639655603089522,
+     0.5199181483916457
+    ],
+    "target": [
+     -0.08457056355564505,
+     -0.1611088179930727,
+     0.014854705614628438
+    ],
+    "fov": 60,
+    "animation": "scrollDrift",
+    "positionOffset": [
+     0,
+     0,
+     0
+    ],
+    "mobilePositionOffset": [
+     0,
+     0,
+     0
+    ],
+    "rotationOffset": [
+     0,
+     0,
+     0
+    ],
+    "mobileRotationOffset": [
+     0,
+     0,
+     0
+    ],
+    "pointerInfluence": [
+     [
+      0.1,
+      -0.1
+     ],
+     [
+      0.1,
+      -0.1
+     ]
+    ],
+    "scrollDrift": {
+     "up": 0.2,
+     "back": 0.2
+    }
+   },
+   "environment": {
+    "url": "https://cdn.shopify.com/s/files/1/0647/5176/3550/files/park.hdr",
+    "background": false,
+    "blur": 0.5506329113924047,
+    "darken": 0.3924050632911388,
+    "bgMode": "linear",
+    "bgColor1": "#203d27",
+    "bgColor2": "#496f85",
+    "bgColor3": "#3d7fd6",
+    "bgAngle": 11,
+    "bgSpread": 100,
+    "bgGradientPoints": 3,
+    "bgBias1": 0.09199999999999992,
+    "bgBias2": -0.05000000000000034
+   },
+   "pointcloud": {
+    "sources": [
+     {
+      "src": "https://cdn.shopify.com/s/files/1/0647/5176/3550/files/x_mj-10-pointcloud-512_2.mdpc?v=1782064808",
+      "resolution": 512
+     },
+     {
+      "src": "https://cdn.shopify.com/s/files/1/0647/5176/3550/files/41d83cddce952a216b8e3d5d221e9a16-df9.mdpc?v=1781551476",
+      "resolution": 256
+     }
+    ],
+    "flow": {
+     "enabled": true,
+     "type": "curl",
+     "layout": "off",
+     "strength": 0.5,
+     "speed": 0.5,
+     "scale": 2,
+     "gridEnabled": false,
+     "gridSize": 0.02000000000000001,
+     "gridStrength": 0.6000000000000002,
+     "gridMix": {
+      "x": 0.6000000000000002,
+      "y": 0.6000000000000002,
+      "z": 0.6000000000000002
+     },
+     "gridRotation": {
+      "x": 0,
+      "y": 0,
+      "z": 0
+     },
+     "conveyorEnabled": true,
+     "conveyorSpeed": 0.06,
+     "conveyorDepth": 0.05063291139240506,
+     "conveyorRotation": {
+      "x": 0,
+      "y": 0,
+      "z": 0
+     },
+     "conveyorDistance": {
+      "near": 0,
+      "far": 2.5316455696202524
+     },
+     "randomnessExponent": 300,
+     "distanceNear": 0,
+     "distanceFar": 5,
+     "layoutRadius": 4.5,
+     "layoutThickness": 0.9,
+     "layoutPreserveY": 0.35,
+     "layoutTwist": -3.45,
+     "layoutAmplitude": 0.16,
+     "layoutFrequency": 11.5,
+     "layoutSpokes": 24,
+     "layoutRadialSpacing": 0,
+     "layoutTurns": 3,
+     "layoutHeight": 5
+    },
+    "fluid": {
+     "enabled": true,
+     "influence": 0.5,
+     "curl": 1.5,
+     "velocityDissipation": 0.965,
+     "densityDissipation": 0.9,
+     "pressure": 0.6,
+     "splatRadius": 0.25,
+     "splatForce": 0.125,
+     "simSize": 128,
+     "dyeSize": 256
+    },
+    "caustics": {
+     "enabled": true,
+     "strength": 0.6,
+     "scale": 3,
+     "axisScale": {
+      "x": 1,
+      "y": 1,
+      "z": 1
+     },
+     "speed": {
+      "x": 0.1,
+      "y": -0.1,
+      "z": -0.05
+     },
+     "power": 10,
+     "sparkle": 0,
+     "color": {
+      "r": 0.7764705882352941,
+      "g": 0.7215686274509804,
+      "b": 0.6392156862745098
+     }
+    },
+    "colorCorrections": {
+     "enabled": true,
+     "amount": 0.531645569620254,
+     "reds": {
+      "h": 0,
+      "s": 0,
+      "l": 0
+     },
+     "yellows": {
+      "h": 0,
+      "s": 0,
+      "l": 0
+     },
+     "greens": {
+      "h": 0,
+      "s": 0,
+      "l": 0
+     },
+     "cyans": {
+      "h": 0,
+      "s": 0,
+      "l": 0
+     },
+     "blues": {
+      "h": 0,
+      "s": 0,
+      "l": 0
+     },
+     "magentas": {
+      "h": 0,
+      "s": 0,
+      "l": 0
+     },
+     "whites": {
+      "h": 0,
+      "s": 0,
+      "l": 0
+     },
+     "neutrals": {
+      "h": 0,
+      "s": 0,
+      "l": 0
+     },
+     "blacks": {
+      "h": 0,
+      "s": 0,
+      "l": 0.15000000000000002
+     }
+    },
+    "pointSize": 0.010600000000000004,
+    "distanceSizeInfluence": 0.25,
+    "distanceSizeNear": 4,
+    "distanceSizeFar": 18,
+    "distanceSizeMax": 1.5,
+    "maxPointSize": 3,
+    "maxPoints": 274000,
+    "position": {
+     "x": -0.07499999999999975,
+     "y": 0.3260000000000004,
+     "z": -0.7120000000000004
+    },
+    "rotation": {
+     "x": 370.40000000000134,
+     "y": 7.399999999999999,
+     "z": 0
+    },
+    "scale": 1,
+    "mobile": {
+     "position": {
+      "x": 0,
+      "y": 0,
+      "z": 0
+     },
+     "rotation": {
+      "x": 0,
+      "y": 0,
+      "z": 0
+     }
+    },
+    "opacity": 1,
+    "transparent": false,
+    "blendMode": "normal",
+    "randomize": {
+     "x": 0.001,
+     "y": 0.001,
+     "z": 0.001
+    },
+    "cameraFade": {
+     "enabled": false,
+     "near": 1.8999999999999992,
+     "far": 8.250000000000004
+    },
+    "densityFill": {
+     "enabled": true,
+     "opacity": 1,
+     "pointSizeScale": 2,
+     "jitter": 0.008
+    },
+    "particleScalars": {
+     "source512": 1.25,
+     "source256": 1.1
+    }
+   },
+   "postprocessing": {
+    "bloom": {
+     "enabled": true,
+     "intensity": 0.34177215189873406,
+     "opacity": 0.08860759493670887,
+     "threshold": 0.17088607594936706,
+     "softness": 0,
+     "radius": 1,
+     "tint": [
+      1,
+      1,
+      1
+     ],
+     "rgbShift": 0,
+     "rgbAngle": 0
+    },
+    "chromatic": {
+     "enabled": false,
+     "amount": 0.05,
+     "angle": 1
+    },
+    "vignette": {
+     "enabled": false,
+     "amount": 0.5,
+     "radius": 0.895,
+     "softness": 0.441
+    },
+    "afterimage": {
+     "enabled": true,
+     "strength": 0.99,
+     "damp": 0.99,
+     "threshold": 0
+    },
+    "noise": {
+     "enabled": false,
+     "amount": 0.06,
+     "scale": 1
+    },
+    "toneMapping": "neutral",
+    "toneMappingExposure": 1
+   },
+   "behindContent": {
+    "darken": 0.3999999999999998,
+    "speed": 0.1,
+    "saturation": 0.8700000000000002,
+    "pointerInfluence": 0,
+    "reduceQuality": true,
+    "offset": 0
+   },
+   "volumetric": null,
+   "videoLightVolume": {
+    "videoUrl": "https://cdn.shopify.com/videos/c/o/v/15de67fa52a247e9805165ba4417e3b7.mp4",
+    "ktx2Url": "https://cdn.shopify.com/s/files/1/0647/5176/3550/files/online-back_50f_640x360_etc1s.ktx2?v=1781548146",
+    "visible": true,
+    "layer": "background",
+    "source": "vf-source",
+    "width": 1,
+    "depth": 4.3000000000000025,
+    "opacity": 1.3700000000000008,
+    "brightness": 3.95,
+    "threshold": 0.23499999999999996,
+    "softness": 0.161,
+    "edgeFade": 0,
+    "blendMode": "normal",
+    "renderBehindPointCloud": true,
+    "loopCount": 3,
+    "grid": {
+     "enabled": false,
+     "columns": 3,
+     "rows": 1,
+     "spacing": [
+      0.2750000000000001,
+      0
+     ],
+     "randomTimeOffset": 0,
+     "outerOpacity": 0
+    },
+    "nearFade": 0.4099999999999997,
+    "playbackSpeed": -0.5,
+    "fluidStrength": [
+     0.2,
+     0.2
+    ],
+    "fluidDepthStrength": [
+     4,
+     0
+    ],
+    "fluidDistanceRange": [
+     0,
+     1000
+    ],
+    "raymarchSteps": 45,
+    "centerFade": [
+     0.5,
+     0,
+     0
+    ],
+    "position": [
+     -0.010999999999999819,
+     -0.15,
+     -0.06899999999999983
+    ],
+    "rotation": [
+     -0.10821041362364843,
+     0.10122909661567119,
+     2.8536133270107285
+    ],
+    "scale": [
+     1.4900000000000004,
+     1.1769999999999996,
+     1
+    ],
+    "hsl": [
+     0.25,
+     -0.5999999999999999,
+     -0.3379999999999999
+    ],
+    "noiseScale": [
+     0,
+     0,
+     0
+    ],
+    "noiseMovement": [
+     0,
+     0,
+     0
+    ],
+    "noiseStrength": 0
+   },
+   "foregroundVideoLightVolume": {
+    "videoUrl": "https://cdn.shopify.com/videos/c/o/v/15de67fa52a247e9805165ba4417e3b7.mp4",
+    "ktx2Url": "https://cdn.shopify.com/s/files/1/0647/5176/3550/files/06-marketing-frontback.ktx2?v=1780871582",
+    "visible": true,
+    "layer": "foreground",
+    "source": "vf-source",
+    "width": 1,
+    "depth": 4.5,
+    "opacity": 2,
+    "brightness": 1.6,
+    "threshold": 0.025,
+    "softness": 0.001,
+    "edgeFade": 0,
+    "blendMode": "normal",
+    "renderBehindPointCloud": false,
+    "loopCount": 2.5,
+    "grid": {
+     "enabled": true,
+     "columns": 3,
+     "rows": 3,
+     "spacing": [
+      0.2899999999999999,
+      0.6449999999999999
+     ],
+     "randomTimeOffset": 0.64,
+     "outerOpacity": 0.2
+    },
+    "nearFade": 0.7,
+    "playbackSpeed": -0.7,
+    "fluidStrength": [
+     -0.8,
+     0.8
+    ],
+    "fluidDepthStrength": [
+     4,
+     0
+    ],
+    "fluidDistanceRange": [
+     0,
+     1000
+    ],
+    "raymarchSteps": 60,
+    "centerFade": [
+     0.5,
+     0,
+     0
+    ],
+    "position": [
+     -0.1279999999999994,
+     -0.1949999999999993,
+     -0.22500000000000053
+    ],
+    "rotation": [
+     0.012217304763960234,
+     0.12566370614359176,
+     0.006981317007977282
+    ],
+    "scale": [
+     0.2,
+     0.2,
+     0.2830000000000001
+    ],
+    "hsl": [
+     -0.008,
+     2,
+     1
+    ],
+    "noiseScale": [
+     0,
+     0,
+     0
+    ],
+    "noiseMovement": [
+     0,
+     0,
+     0
+    ],
+    "noiseStrength": 0
+   }
+  }
+ }
+]

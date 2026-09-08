@@ -1,0 +1,34 @@
+{
+  "sheetsById": {
+    "shop-app": {
+      "staticOverrides": {
+        "byObject": {
+          "Scene": {
+            "preset": "prod-8-shopapp",
+            "fboDpr": {
+              "background": 0.5
+            }
+          },
+          "Camera": {
+            "scrollDrift": {
+              "up": 0.6,
+              "back": 0.4,
+              "backgroundVolumeScrollScrub": -0.5,
+              "foregroundVolumeScrollScrub": -0.5
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitionVersion": "0.4.0",
+  "revisionHistory": [
+    "QlNyYhiZc7DDap7r",
+    "Q1GuzweBR3su7WVY",
+    "H1rt-z_rqa8ptWzZ",
+    "0oN0SLA0C0mzyIDN",
+    "YTewFDFRgxNezxzn",
+    "MSESANKaj1g_PEzW",
+    "jwVzygJMof3xwDZy"
+  ]
+}

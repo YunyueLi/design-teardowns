@@ -1,5 +1,5 @@
 // Generated from catalogue.js by tools/build-gallery-featured.mjs. Do not edit metadata here.
-window.DESIGN_TEARDOWNS_TOTAL = 17;
+window.DESIGN_TEARDOWNS_TOTAL = 19;
 window.DESIGN_TEARDOWNS_FEATURED = Object.freeze([
   {
     "slug": "shopify-editions",
@@ -13,6 +13,34 @@ window.DESIGN_TEARDOWNS_FEATURED = Object.freeze([
       "#292919",
       "#f7f7ee",
       "#bf9852"
+    ]
+  },
+  {
+    "slug": "pear",
+    "title": "Pear",
+    "subtitle": "Pear makes you appear",
+    "category": "independent",
+    "kind": "Web · Scroll film",
+    "cover": "_gallery/covers/pear.jpg",
+    "href": "pear/teardown.html",
+    "accent": [
+      "#0b0a09",
+      "#f2f1ed",
+      "#015186"
+    ]
+  },
+  {
+    "slug": "shopify-editions-spring26",
+    "title": "Shopify Editions Spring ’26",
+    "subtitle": "The Everywhere Edition",
+    "category": "reference",
+    "kind": "Web · Launch system",
+    "cover": "_gallery/covers/shopify-editions-spring26.jpg",
+    "href": "shopify-editions-spring26/teardown.html",
+    "accent": [
+      "#090909",
+      "#ffffff",
+      "#adf0ff"
     ]
   },
   {
@@ -56,34 +84,6 @@ window.DESIGN_TEARDOWNS_FEATURED = Object.freeze([
       "#1a1815",
       "#e8dfd3",
       "#e07a00"
-    ]
-  },
-  {
-    "slug": "chatgpt",
-    "title": "ChatGPT",
-    "subtitle": "OpenAI overview",
-    "category": "agent",
-    "kind": "Web · AI product",
-    "cover": "_gallery/covers/chatgpt.jpg",
-    "href": "chatgpt/teardown.html",
-    "accent": [
-      "#fcfcfc",
-      "#0d0d0d",
-      "#cecece"
-    ]
-  },
-  {
-    "slug": "easycode",
-    "title": "EasyCode",
-    "subtitle": "Practice with a tutor's pen",
-    "category": "independent",
-    "kind": "Web · Learning product",
-    "cover": "_gallery/covers/easycode.jpg",
-    "href": "easycode/teardown.html",
-    "accent": [
-      "#ffffff",
-      "#b3402a",
-      "#1c1b18"
     ]
   }
 ]);

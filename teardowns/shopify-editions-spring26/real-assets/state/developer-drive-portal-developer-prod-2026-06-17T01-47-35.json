@@ -1,0 +1,34 @@
+{
+  "sheetsById": {
+    "developer-drive-portal-developer": {
+      "staticOverrides": {
+        "byObject": {
+          "Section": {
+            "hero": {
+              "outlineStrength": 0,
+              "spread": 0.5,
+              "glowStrength": 1.5000000000000004,
+              "zoomStrength": 0.2,
+              "noiseStrength": 0.1
+            }
+          },
+          "Scene": {
+            "fboDpr": {
+              "foreground": 0.5,
+              "background": 0.1,
+              "main": 1
+            },
+            "lightVolumes": {
+              "foregroundOpacity": 1.5
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitionVersion": "0.4.0",
+  "revisionHistory": [
+    "-yiW67X7nbZavloC",
+    "FrCzdCqKmLaPfP1O"
+  ]
+}

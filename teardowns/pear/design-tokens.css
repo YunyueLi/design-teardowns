@@ -1,0 +1,53 @@
+/* Pear（pear.no）设计 token —— 全部来自线上样式表与脚本原文，实锤；推断项已注明 */
+/* 源：https://pear.no/  ·  assets/index-Bd_JnIbr.css  ·  assets/index-BhJdAf8K.js  ·  2026-09-08 */
+:root{
+  /* 色 */
+  --press:#0b0a09;            /* html/body 底、theme-color、CTA 面 */
+  --paper:#f2f1ed;            /* 主 CTA 底、按钮文字 */
+  --ink:#1d1c19;              /* on-light 态文字 */
+  --ink-soft:#33322d;
+  --rule:#1d1c1924;           /* 主题层 rule；覆盖层实际用 #ffffff39 / #1d1c192a */
+  --sky:#015186;              /* 主题层声明，未见使用（推断） */
+  --cream:#fffaea;            /* 「Asked before」与暗底 fin 文字 */
+  --fin-brown:#2e2109;        /* 纸面 fin 文字 */
+  --paper-shader:#e2d0b1;     /* 着色器纸色 rgb(226,208,177) */
+  --seam:#e5e1d6;             /* 撕裂缝的米色遮盖 */
+  --glass-tint:rgb(190 220 255);
+  --glow-core:#fffae8; --glow-mid:#ffecba; --glow-edge:#ffd682;
+  --cta-grad:linear-gradient(158deg,#14161b 0%,#090a0d 52%,#05060a 100%);
+  --send-grad:linear-gradient(163deg,#d9be86 0%,#c2a365 46%,#a98a4e 100%);  /* CSS 中存在，当前 DOM 未用 */
+  --fly-sky:radial-gradient(120% 90% at 50% 42%,#fff 0%,#eff4fa 55%,#dce6f2 100%);
+  --nav-scrim:#062e5c94;
+
+  /* 字 */
+  --title:"Flecha M","Flecha S","Iowan Old Style",Georgia,serif;
+  --text:"GT Standard L",ui-sans-serif,-apple-system,Arial,sans-serif;
+  --code:"GT Standard Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+  --sign:"Flecha L","Flecha M","Flecha S",var(--title);
+
+  /* 缓动与时长 */
+  --ease:cubic-bezier(.22,1,.36,1);        /* 全站唯一曲线（--ease-press 同值） */
+  --ease-tw:cubic-bezier(.4,0,.2,1);
+  --t-rule:1.15s; --t-cross:.72s; --t-hdr:.7s; --t-draw:1.4s; --t-shine:7s; --t-rim:7.5s; --t-rim2:11s; --t-nav:.62s;
+
+  /* 栅格（覆盖层） */
+  --v1:5.3%; --v2:85.6%; --h1:5.3vw; --h2:calc(65.3% + 50px); --colA:7.98%; --colB:23.7%;
+
+  /* 字阶 */
+  --fs-h1:clamp(30px,5.357vw,96px);
+  --fs-subhead:clamp(14px,1.68vw,30px);
+  --fs-beat:clamp(26px,3.32vw,60px);
+  --fs-lead:clamp(28px,4.6vw,82px);
+  --fs-stand:clamp(13px,1.068vw,19px);
+  --fs-label:clamp(9px,.72vw,11px);
+  --fs-cta:clamp(9px,.66vw,12px);
+  --fs-tag:clamp(8px,.534vw,10px);
+  --fs-sign:clamp(30px,8.11vw,177px);
+  --fs-display:clamp(1.875rem,3.4vw,3.25rem);
+  --tracking-press:-.018em;
+
+  /* 圆角 */
+  --r-pill:999px; --r-btn:4px; --r-arw:3px; --r-chip:5.25px; --r-glass:22px; --bev:6px;
+}
+@media (width<=900px){:root{--h1:64px}}
+@media (width<=720px){:root{--v1:4.75%;--v2:95.25%;--h1:60px;--mx:calc(var(--v1) + 14.5px)}}

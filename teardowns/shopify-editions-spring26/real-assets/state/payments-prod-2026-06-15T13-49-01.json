@@ -1,0 +1,35 @@
+{
+  "sheetsById": {
+    "payments": {
+      "staticOverrides": {
+        "byObject": {
+          "Camera": {
+            "fov": 115,
+            "pointerInfluence": 0,
+            "lookAtTarget": {
+              "z": 0
+            },
+            "scrollDrift": {
+              "up": 0.3,
+              "back": 0.1
+            }
+          },
+          "Scene": {
+            "preset": "prod-9-payments",
+            "fboDpr": {
+              "background": 0.5
+            }
+          },
+          "Section": {
+            "lerpCameraWithPrevious": false
+          }
+        }
+      }
+    }
+  },
+  "definitionVersion": "0.4.0",
+  "revisionHistory": [
+    "vsh8MQTpb6FSOUzf",
+    "yZYNEa6keSSp5rS0"
+  ]
+}

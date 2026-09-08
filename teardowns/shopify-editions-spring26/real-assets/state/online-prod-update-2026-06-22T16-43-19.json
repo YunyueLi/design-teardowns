@@ -1,0 +1,51 @@
+{
+  "sheetsById": {
+    "online": {
+      "staticOverrides": {
+        "byObject": {
+          "Scene": {
+            "preset": "prod-4-online-3",
+            "fboDpr": {
+              "foreground": 0.4,
+              "background": 0.2
+            },
+            "lightVolumes": {
+              "foregroundOpacity": 0.7699999999999997,
+              "backgroundOpacity": 1
+            }
+          },
+          "Camera": {
+            "fov": 60,
+            "scrollDrift": {
+              "up": 0.15,
+              "back": 0.05,
+              "backgroundVolumeScrollScrub": -0.5,
+              "foregroundVolumeScrollScrub": -1
+            },
+            "positionOffset": {
+              "z": 0.04100000000000001,
+              "x": 0,
+              "y": 0.008
+            }
+          }
+        }
+      },
+      "sequence": {
+        "subUnitsPerUnit": 30,
+        "length": 10,
+        "type": "PositionalSequence",
+        "tracksByObject": {
+          "Camera": {
+            "trackData": {},
+            "trackIdByPropPath": {}
+          }
+        }
+      }
+    }
+  },
+  "definitionVersion": "0.4.0",
+  "revisionHistory": [
+    "qR5U9-ityKxOpiap",
+    "ytM7CnBxI4S7o_aA"
+  ]
+}

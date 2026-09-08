@@ -1,0 +1,101 @@
+{
+  "sheetsById": {
+    "developer": {
+      "staticOverrides": {
+        "byObject": {
+          "Scene": {
+            "preset": "prod-11-dev",
+            "fboDpr": {
+              "background": 0.25,
+              "foreground": 0.25
+            },
+            "portal": "race-track"
+          },
+          "developerKey": {
+            "position": {
+              "z": -0.3600000000000001
+            }
+          },
+          "key": {
+            "position": {
+              "z": 0.23000000000000004,
+              "x": 0.45400000000000007,
+              "y": -0.15399999999999997
+            },
+            "scale": {
+              "x": 0.07200000000000006,
+              "y": 0.10599999999999948,
+              "z": 2.7939999999999996
+            },
+            "rotation": {
+              "y": 0.2719999999999999,
+              "z": 0.0009999999999999445,
+              "x": 0
+            },
+            "popup": {
+              "openWithTheatre": false,
+              "theatreSheetSrc": "https://cdn.shopify.com/s/files/1/0647/5176/3550/files/SpringPopupCar.theatre-project-state_24.json?v=1781661130",
+              "targetScene": "race-track"
+            },
+            "opacity": 0.15000000000000002,
+            "visual": {
+              "color": {
+                "r": 1,
+                "g": 1,
+                "b": 1,
+                "a": 1
+              },
+              "borderWidth": 0.07499999999999998,
+              "bottomFadeMix": 0.29000000000000004,
+              "pulseSpeed": 0.5,
+              "glowStrength": 0.2,
+              "borderBlur": 0.08179999999999998,
+              "glowSize": 0.04,
+              "noiseScale": 1,
+              "noiseSpeed": 2,
+              "noiseAmount": 0.2
+            },
+            "driveCamera": {
+              "positionOffset": {
+                "x": -0.25999999999999995
+              }
+            }
+          },
+          "Section": {
+            "hero": {
+              "spread": 0.5,
+              "wipe": {
+                "swayFreq": 0,
+                "sharpness": 3.5,
+                "swaySpeed": 0.5
+              },
+              "zoomStrength": 0.15999999999999995,
+              "angleDeg": -3,
+              "outlineStrength": 0
+            },
+            "reveal": {
+              "softness": 0.2,
+              "zoom": 0.1
+            },
+            "transition": "bend"
+          },
+          "speedOverlay": {
+            "velocityMultiplier": 1,
+            "speed": 0.5,
+            "dpr": 0.5
+          }
+        }
+      }
+    }
+  },
+  "definitionVersion": "0.4.0",
+  "revisionHistory": [
+    "JArcG1abJuqlBRod",
+    "bg9-Pf3onqaVQuHL",
+    "0tChXzWw76CCTyoa",
+    "6BDWnKvyAVKQOJH7",
+    "sMkHZwBB7GJcsr3z",
+    "Sa4RxbUgz-Bs3gyq",
+    "XYdidWld1V6Fa_0o"
+  ]
+}

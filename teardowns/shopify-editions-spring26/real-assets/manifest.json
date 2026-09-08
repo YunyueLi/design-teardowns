@@ -1,0 +1,288 @@
+{
+  "site": "Shopify Editions Spring 2026",
+  "url": "https://www.shopify.com/editions/spring2026",
+  "fonts": [
+    {
+      "url": "https://cdn.shopify.com/b/shopify-brochure2-assets/9cfbc7721dcccb956b85f632f175962a.woff2",
+      "file": "e80d9c_9cfbc7721dcccb956b85f632f175962a.woff2",
+      "bytes": 35180,
+      "type": "application/octet-stream"
+    },
+    {
+      "url": "https://cdn.shopify.com/b/shopify-brochure2-assets/b0f3be75aaf69a9c184619c9091d33b1.woff2",
+      "file": "9b44f8_b0f3be75aaf69a9c184619c9091d33b1.woff2",
+      "bytes": 21872,
+      "type": "application/octet-stream"
+    },
+    {
+      "url": "https://cdn.shopify.com/s/files/1/0711/3431/4719/files/5949cd393a8375a896fd0a9b74307666.woff2?v=1738959228",
+      "file": "1bbc03_5949cd393a8375a896fd0a9b74307666.woff2",
+      "bytes": 67188,
+      "type": "font/woff2"
+    },
+    {
+      "url": "https://cdn.shopify.com/s/files/1/0711/3431/4719/files/5949cd393a8375a896fd0a9b74307666.woff2",
+      "file": "17e851_5949cd393a8375a896fd0a9b74307666.woff2",
+      "bytes": 67188,
+      "type": "font/woff2"
+    },
+    {
+      "url": "https://cdn.shopify.com/b/shopify-brochure2-assets/c22ab11abbfde87dc8a66a1d0e97c4bb.ttf",
+      "file": "1986b3_c22ab11abbfde87dc8a66a1d0e97c4bb.ttf",
+      "bytes": 44860,
+      "type": "font/woff2"
+    },
+    {
+      "url": "https://cdn.shopify.com/b/shopify-brochure2-assets/47f310faf7749ece996890ac191d90a5.ttf",
+      "file": "abb977_47f310faf7749ece996890ac191d90a5.ttf",
+      "bytes": 21848,
+      "type": "font/woff2"
+    }
+  ],
+  "video": [
+    {
+      "url": "https://editions-spring-2026.myshopify.com/cdn/shop/videos/c/vp/0028ea4b62ed4b419a6959483bca6f82/0028ea4b62ed4b419a6959483bca6f82.HD-720p-1.6Mbps-86306909.mp4",
+      "file": "b68540_0028ea4b62ed4b419a6959483bca6f82.HD-720p-1.6Mbps-86306909.mp4",
+      "bytes": 730144,
+      "type": "video/mp4"
+    },
+    {
+      "url": "https://editions-spring-2026.myshopify.com/cdn/shop/videos/c/vp/744a0dc565394d169befe4bb03c22565/744a0dc565394d169befe4bb03c22565.HD-720p-1.6Mbps-86306911.mp4",
+      "file": "5f4fae_744a0dc565394d169befe4bb03c22565.HD-720p-1.6Mbps-86306911.mp4",
+      "bytes": 1063063,
+      "type": "video/mp4"
+    },
+    {
+      "url": "https://editions-spring-2026.myshopify.com/cdn/shop/videos/c/vp/9ec279e2e833435baa39393b3f6676f1/9ec279e2e833435baa39393b3f6676f1.HD-720p-1.6Mbps-86713745.mp4",
+      "file": "63e2da_9ec279e2e833435baa39393b3f6676f1.HD-720p-1.6Mbps-86713745.mp4",
+      "bytes": 765243,
+      "type": "video/mp4"
+    }
+  ],
+  "audio": [],
+  "image": [
+    {
+      "url": "https://cdn.shopify.com/s/files/1/0647/5176/3550/files/ShopifyEditions_S26_SocialShareCard_1200x630_EN_d827b4c8-631a-491e-8df9-cf3f561bbc3f.webp?v=1781705353",
+      "file": "de89ed_ShopifyEditions_S26_SocialShareCard_1200x630_EN_d827b4c8-631a-491e-8df9-cf3f561b",
+      "bytes": 328464,
+      "type": "image/jpeg"
+    },
+    {
+      "url": "https://cdn.shopify.com/s/files/1/0647/5176/3550/files/fav-16_a5618e5f-bd5c-468b-8420-6da0076976b5.png?v=1780498479",
+      "file": "8ae0dc_fav-16_a5618e5f-bd5c-468b-8420-6da0076976b5.png",
+      "bytes": 806,
+      "type": "image/png"
+    },
+    {
+      "url": "https://cdn.shopify.com/s/files/1/0647/5176/3550/files/fav-32_6a6f91e7-131c-49e1-9d44-adfb98fb9797.png?v=1780498479",
+      "file": "ed7c7b_fav-32_6a6f91e7-131c-49e1-9d44-adfb98fb9797.png",
+      "bytes": 1731,
+      "type": "image/png"
+    },
+    {
+      "url": "https://cdn.shopify.com/s/files/1/0647/5176/3550/files/prod-2-agentic-optimized.webp?v=1782472287",
+      "file": "d94f0e_prod-2-agentic-optimized.webp",
+      "bytes": 166189,
+      "type": "image/jpeg"
+    },
+    {
+      "url": "https://cdn.shopify.com/s/files/1/0647/5176/3550/files/prod-1-hero-optimized.webp?v=1782472369",
+      "file": "20ab3d_prod-1-hero-optimized.webp",
+      "bytes": 467437,
+      "type": "image/jpeg"
+    },
+    {
+      "url": "https://cdn.shopify.com/b/shopify-brochure2-assets/3b005b6be5fa9a10cfd5c9b11462cd02.png?width=1800&crop=center",
+      "file": "076115_3b005b6be5fa9a10cfd5c9b11462cd02.png",
+      "bytes": 300339,
+      "type": "image/png"
+    },
+    {
+      "url": "https://cdn.shopify.com/b/shopify-brochure2-assets/91c43550318219a1d4393cb8d5062fd4.png?width=1800&crop=center",
+      "file": "1c5047_91c43550318219a1d4393cb8d5062fd4.png",
+      "bytes": 367449,
+      "type": "image/png"
+    },
+    {
+      "url": "https://cdn.shopify.com/s/files/1/0647/5176/3550/files/u64_poster_desktop_en.webp?v=1781643211&width=2720&height=1530&crop=center",
+      "file": "531dce_u64_poster_desktop_en.webp",
+      "bytes": 819969,
+      "type": "image/png"
+    },
+    {
+      "url": "https://cdn.shopify.com/s/files/1/0647/5176/3550/files/u41_poster_desktop_en.webp?v=1781643178&width=2720&height=1530&crop=center",
+      "file": "a11492_u41_poster_desktop_en.webp",
+      "bytes": 1230835,
+      "type": "image/png"
+    },
+    {
+      "url": "https://cdn.shopify.com/s/files/1/0647/5176/3550/files/u178_poster_desktop_en.webp?v=1781643280&width=2760&height=1532&crop=center",
+      "file": "cfe1f1_u178_poster_desktop_en.webp",
+      "bytes": 385315,
+      "type": "image/png"
+    },
+    {
+      "url": "https://cdn.shopify.com/b/shopify-brochure2-assets/480f30658908cf6a18c9cd27dcd881e8.png?width=200&crop=center",
+      "file": "75ccf0_480f30658908cf6a18c9cd27dcd881e8.png",
+      "bytes": 15244,
+      "type": "image/png"
+    },
+    {
+      "url": "https://cdn.shopify.com/b/shopify-brochure2-assets/e6eea170fb75d40c585bb3f193dbc8b8.png?width=200&crop=center",
+      "file": "f08979_e6eea170fb75d40c585bb3f193dbc8b8.png",
+      "bytes": 10266,
+      "type": "image/png"
+    },
+    {
+      "url": "https://cdn.shopify.com/s/files/1/0647/5176/3550/files/u293_poster_desktop_en.webp?v=1781643345&width=2720&height=1530&crop=center",
+      "file": "6699af_u293_poster_desktop_en.webp",
+      "bytes": 492452,
+      "type": "image/png"
+    },
+    {
+      "url": "https://cdn.shopify.com/s/files/1/0647/5176/3550/files/u131_poster_desktop_en.webp?v=1781643245&width=2720&height=1530&crop=center",
+      "file": "c24abb_u131_poster_desktop_en.webp",
+      "bytes": 300036,
+      "type": "image/png"
+    },
+    {
+      "url": "https://cdn.shopify.com/s/files/1/0647/5176/3550/files/u8_poster_desktop_en.webp?v=1781643138&width=2720&height=1530&crop=center",
+      "file": "917b6f_u8_poster_desktop_en.webp",
+      "bytes": 414759,
+      "type": "image/png"
+    },
+    {
+      "url": "https://cdn.shopify.com/s/files/1/0647/5176/3550/files/u267_poster_desktop_en.webp?v=1781643308&width=2720&height=1530&crop=center",
+      "file": "96d7bf_u267_poster_desktop_en.webp",
+      "bytes": 338902,
+      "type": "image/png"
+    },
+    {
+      "url": "https://cdn.shopify.com/s/files/1/0647/5176/3550/files/u328_poster_desktop_en.webp?v=1781643381&width=2720&height=1530&crop=center",
+      "file": "7f473c_u328_poster_desktop_en.webp",
+      "bytes": 257772,
+      "type": "image/png"
+    },
+    {
+      "url": "https://cdn.shopify.com/s/files/1/0647/5176/3550/files/U164_GraphQL_and_bulk_operations.png?v=1780958262&width=100&height=75&crop=center",
+      "file": "75ecae_U164_GraphQL_and_bulk_operations.png",
+      "bytes": 5712,
+      "type": "image/png"
+    }
+  ],
+  "lottie": [],
+  "source": [
+    {
+      "url": "https://cdn.shopify.com/oxygen-v2/51271/91735/189252/4379242/assets/tailwind-vOc3OfBK.css",
+      "file": "9f4638_tailwind-vOc3OfBK.css",
+      "bytes": 118403
+    },
+    {
+      "url": "https://cdn.shopify.com/oxygen-v2/51271/91735/189252/4379242/assets/fonts-latin-Hwnc9bw-.css",
+      "file": "57bba7_fonts-latin-Hwnc9bw-.css",
+      "bytes": 716
+    }
+  ],
+  "state": [
+    {
+      "file": "agentic-prod-2026-06-15T14-54-12.json",
+      "note": "Theatre.js project state (CMS-hosted), downloaded manually"
+    },
+    {
+      "file": "developer-drive-portal-developer-prod-2026-06-17T01-47-35.json",
+      "note": "Theatre.js project state (CMS-hosted), downloaded manually"
+    },
+    {
+      "file": "developer-prod-2026-06-17T03-24-43.json",
+      "note": "Theatre.js project state (CMS-hosted), downloaded manually"
+    },
+    {
+      "file": "finance-prod-2026-06-17T03-34-38.json",
+      "note": "Theatre.js project state (CMS-hosted), downloaded manually"
+    },
+    {
+      "file": "hero-prod-2026-06-23T06-22-06.json",
+      "note": "Theatre.js project state (CMS-hosted), downloaded manually"
+    },
+    {
+      "file": "marketing-prod-2026-06-17T03-23-40.json",
+      "note": "Theatre.js project state (CMS-hosted), downloaded manually"
+    },
+    {
+      "file": "online-prod-update-2026-06-22T16-43-19.json",
+      "note": "Theatre.js project state (CMS-hosted), downloaded manually"
+    },
+    {
+      "file": "operations-prod-2026-06-15T14-48-15.json",
+      "note": "Theatre.js project state (CMS-hosted), downloaded manually"
+    },
+    {
+      "file": "payments-prod-2026-06-15T13-49-01.json",
+      "note": "Theatre.js project state (CMS-hosted), downloaded manually"
+    },
+    {
+      "file": "retail-merch-merchbw-2026-06-14T13-24-51.json",
+      "note": "Theatre.js project state (CMS-hosted), downloaded manually"
+    },
+    {
+      "file": "retail-prod-2026-06-17T03-27-20.json",
+      "note": "Theatre.js project state (CMS-hosted), downloaded manually"
+    },
+    {
+      "file": "shop-app-prod-2026-06-15T14-46-28.json",
+      "note": "Theatre.js project state (CMS-hosted), downloaded manually"
+    },
+    {
+      "file": "sidekick-prod-2026-06-17T00-12-04.json",
+      "note": "Theatre.js project state (CMS-hosted), downloaded manually"
+    }
+  ],
+  "pointcloud": [
+    {
+      "file": "forest-1024-v3-moretrees-256_2.mdpc",
+      "note": "MDPC-2 point cloud sample (deflate), downloaded manually"
+    },
+    {
+      "file": "forest-1024-v3-moretrees-512_3.mdpc",
+      "note": "MDPC-2 point cloud sample (deflate), downloaded manually"
+    },
+    {
+      "file": "minipointcloud-256-df9.mdpc",
+      "note": "MDPC-2 point cloud sample (deflate), downloaded manually"
+    }
+  ],
+  "sourcePretty": [
+    "(_locale).editions.spring2026-B3VpKf45.pretty.js",
+    "AssetSdf-BrECqyB9.pretty.js",
+    "DeveloperDriveSceneReveal-B7IUXXuj.pretty.js",
+    "DeveloperKeyEasterEgg-CDjp_g9R.pretty.js",
+    "DriveEasterEgg-CQkTRRaJ.pretty.js",
+    "Environment-Wa--bW_7.pretty.js",
+    "FluidField-CPsolzcx.pretty.js",
+    "HeroRingObject-Co7PP3aB.pretty.js",
+    "Media-rC-WqwU8.pretty.js",
+    "POS-DjjnM_9Z.pretty.js",
+    "POSConstants-DDVeyt7I.pretty.js",
+    "PopupChannel-CKEOmnbs.pretty.js",
+    "RendererPipeline-DbLnqP4D.pretty.js",
+    "ScrollerSpeedLinesEffect-DMyCV-sm.pretty.js",
+    "SdfRegistry-CLZaosgv.pretty.js",
+    "SectionScene-CdHDCaCs.pretty.js",
+    "TierResolver-DuxfxUac.pretty.js",
+    "cameraAnimations-dhQqw_sV.pretty.js",
+    "colorAndNoise-DY6zB3P7.pretty.js",
+    "heroRingTheatreControls-Cya-WCRd.pretty.js",
+    "lenisManager-BuYlhEBR.pretty.js",
+    "logConsoleArt-DYddukWN.pretty.js",
+    "popupHandlerSingleton-Coaw9Etl.pretty.js",
+    "popupWindow-BQxEzWgS.pretty.js",
+    "presets-BdwQB_Rb.pretty.js",
+    "root-Bqs1FIk6.pretty.js",
+    "sectionModels-CqSyktdl.pretty.js",
+    "useSceneReveal-DVRqdvj3.pretty.js",
+    "useSectionRegistry-BcvkvUON.pretty.js",
+    "useSectionStore-Sy0UOQiX.pretty.js",
+    "useTheatreObject-H4ZAcMv1.pretty.js",
+    "useTierStore-edsQsT8s.pretty.js"
+  ]
+}

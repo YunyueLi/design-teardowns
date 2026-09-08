@@ -1,0 +1,125 @@
+{
+  "sheetsById": {
+    "sidekick": {
+      "staticOverrides": {
+        "byObject": {
+          "Scene": {
+            "preset": "prod-3-sidekick",
+            "fboDpr": {
+              "background": 0.5
+            }
+          },
+          "Camera": {
+            "scrollDrift": {
+              "backgroundVolumeScrollScrub": -0.4,
+              "foregroundVolumeScrollScrub": -0.2,
+              "up": 0.4
+            }
+          }
+        }
+      },
+      "sequence": {
+        "subUnitsPerUnit": 30,
+        "length": 10,
+        "type": "PositionalSequence",
+        "tracksByObject": {
+          "Camera": {
+            "trackData": {
+              "mGcw-FCVUP": {
+                "type": "BasicKeyframedTrack",
+                "__debugName": "Camera:[\"positionOffset\",\"x\"]",
+                "keyframes": []
+              },
+              "Ysub2UxshT": {
+                "type": "BasicKeyframedTrack",
+                "__debugName": "Camera:[\"positionOffset\",\"y\"]",
+                "keyframes": []
+              },
+              "n7LYwqegmB": {
+                "type": "BasicKeyframedTrack",
+                "__debugName": "Camera:[\"positionOffset\",\"z\"]",
+                "keyframes": []
+              },
+              "NzJTWJ32uE": {
+                "type": "BasicKeyframedTrack",
+                "__debugName": "Camera:[\"rotationOffset\",\"x\"]",
+                "keyframes": []
+              },
+              "TRxLsKwLgi": {
+                "type": "BasicKeyframedTrack",
+                "__debugName": "Camera:[\"rotationOffset\",\"y\"]",
+                "keyframes": []
+              },
+              "RllKkgZbtp": {
+                "type": "BasicKeyframedTrack",
+                "__debugName": "Camera:[\"rotationOffset\",\"z\"]",
+                "keyframes": []
+              }
+            },
+            "trackIdByPropPath": {
+              "[\"positionOffset\",\"x\"]": "mGcw-FCVUP",
+              "[\"positionOffset\",\"y\"]": "Ysub2UxshT",
+              "[\"positionOffset\",\"z\"]": "n7LYwqegmB",
+              "[\"rotationOffset\",\"x\"]": "NzJTWJ32uE",
+              "[\"rotationOffset\",\"y\"]": "TRxLsKwLgi",
+              "[\"rotationOffset\",\"z\"]": "RllKkgZbtp"
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitionVersion": "0.4.0",
+  "revisionHistory": [
+    "aiYqPMzIiaoBCb9T",
+    "glrS9kGPxxnVTs8H",
+    "wM7ZPpfIkgPqraVh",
+    "ubFw918I-P5-jbWG",
+    "-bM4443nEkbSLldH",
+    "vglV4Jr4EHnb4OJS",
+    "yHrgmio99bhh2H2U",
+    "iBnCteYb5__0g9s2",
+    "QRjekPIMrHaJF2Gg",
+    "lW-WUSWwrntJ1QDc",
+    "nsA5oiJDQdpcO-QO",
+    "qoSP4R5U-He1FlUj",
+    "4FWOW_g816wN_7eS",
+    "xWX1V07hj0v1kBc0",
+    "8-y-Atj7sFHAWg4Z",
+    "IUMTW5wa9SHH1Xka",
+    "yFGe9ok-q7R2YpGx",
+    "YFRyWnuF52zvOEI5",
+    "4LrL0Qhf8JOZVis3",
+    "jreOjJenYtBqxO8K",
+    "wkOAWXib1zOUImbg",
+    "MLgW9vMi2xvqCZSg",
+    "H7cUg7aPe7JtO_O2",
+    "efNyO6S-rsSAYOg2",
+    "pYRlpxWT8P5DtK88",
+    "At_9184RgkxwN8q8",
+    "I51DJTNDe7WLLYja",
+    "TDz466JRvflzSOmC",
+    "bRj2vVaRVazuR7Im",
+    "sUtRUDsWwxC5kVss",
+    "kw9Z-krW2C_m0Eui",
+    "oeTIN2-h_5sUax01",
+    "knzgH-u6BC5S5TBG",
+    "-A0vpZ59qNy9S9YT",
+    "VdiajPJt9TL5zpXb",
+    "3k-cK4QRZXofE233",
+    "DkLWJ8qN_Bvhs6b5",
+    "RIAObVmk9SKVaz0s",
+    "y7dPlDeZWX_vJRXC",
+    "oo_i-XUoZ3li80CW",
+    "c9OqzelZBKTwEub9",
+    "aZ0msxd_bggGOGAg",
+    "2ZEfWY6yu18E0wpd",
+    "msO8bNAG70xkp36V",
+    "bMXB2KJXewGPG1Vt",
+    "M8qA3mEHVUpj0nNc",
+    "XodHerdMbD59iI6X",
+    "wcfHO1pbODnFw-97",
+    "kuUaa3UpxeEpB105",
+    "SXd7hXwE1HqWlM32"
+  ]
+}

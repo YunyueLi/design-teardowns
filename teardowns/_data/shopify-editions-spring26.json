@@ -1,0 +1,1020 @@
+{
+  "site": "Shopify Editions Spring 2026",
+  "url": "https://www.shopify.com/editions/spring2026",
+  "probe": {
+    "title": "Shopify Editions | Spring ’26",
+    "lang": "en",
+    "body": {
+      "background-color": "rgb(9, 9, 9)",
+      "color": "rgb(255, 255, 255)",
+      "font-family": "National2, Helvetica, Arial, sans-serif"
+    },
+    "h1": {
+      "text": "Shopify EditionsSpring ’26",
+      "font-family": "National2, Helvetica, Arial, sans-serif",
+      "font-size": "14px",
+      "font-weight": "400",
+      "letter-spacing": "normal",
+      "line-height": "21px",
+      "font-style": "normal",
+      "color": "rgb(255, 255, 255)"
+    },
+    "nav": {
+      "background-color": "rgba(0, 0, 0, 0)",
+      "backdrop-filter": "none",
+      "font-family": "National2, Helvetica, Arial, sans-serif"
+    },
+    "btn": {
+      "background-color": "rgba(0, 0, 0, 0)",
+      "color": "rgb(255, 255, 255)",
+      "border-radius": "4px",
+      "transition": "color 0.3s cubic-bezier(0.4, 0, 0.2, 1), background-color 0.3s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.3s cubic-bezier(0.4, 0, 0.2, 1), outline-color 0.3s cubic-bezier(0.4, 0, 0.2, 1), text-decoration-color 0.3s cubic-bezier(0.4, 0, 0.2, 1), fill 0.3s cubic-bezier(0.4, 0, 0.2, 1), stroke 0.3s cubic-bezier(0.4, 0, 0.2, 1), --tw-gradient-from 0.3s cubic-bezier(0.4, 0, 0.2, 1), --tw-gradient-via 0.3s cubic-bezier(0.4, 0, 0.2, 1), --tw-gradient-to 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
+      "font-family": "Inter-Variable, Helvetica, sans-serif"
+    },
+    "accentGuess": "",
+    "libs": [
+      "Lenis"
+    ],
+    "scriptHints": [],
+    "media": {
+      "video": 13,
+      "canvas": 0,
+      "svg": 19,
+      "img": 86,
+      "preloadVideo": 0,
+      "preloadFont": 3
+    },
+    "fontsLoaded": [
+      "Inter-Variable",
+      "National2",
+      "ShopifyInter"
+    ]
+  },
+  "tokens": {
+    "customProps": {
+      "--scroll-reveal": "0",
+      "--tw-translate-x": "0",
+      "--tw-translate-y": "0",
+      "--tw-translate-z": "0",
+      "--tw-scale-x": "1",
+      "--tw-scale-y": "1",
+      "--tw-scale-z": "1",
+      "--tw-rotate-x": "initial",
+      "--tw-rotate-y": "initial",
+      "--tw-rotate-z": "initial",
+      "--tw-skew-x": "initial",
+      "--tw-skew-y": "initial",
+      "--tw-scroll-snap-strictness": "proximity",
+      "--tw-space-y-reverse": "0",
+      "--tw-border-style": "solid",
+      "--tw-gradient-position": "initial",
+      "--tw-gradient-from": "#0000",
+      "--tw-gradient-via": "#0000",
+      "--tw-gradient-to": "#0000",
+      "--tw-gradient-stops": "initial",
+      "--tw-gradient-via-stops": "initial",
+      "--tw-gradient-from-position": "0%",
+      "--tw-gradient-via-position": "50%",
+      "--tw-gradient-to-position": "100%",
+      "--tw-font-weight": "initial",
+      "--tw-leading": "initial",
+      "--tw-tracking": "initial",
+      "--tw-ordinal": "initial",
+      "--tw-slashed-zero": "initial",
+      "--tw-numeric-figure": "initial",
+      "--tw-numeric-spacing": "initial",
+      "--tw-numeric-fraction": "initial",
+      "--tw-shadow": "0 0 #0000",
+      "--tw-shadow-color": "initial",
+      "--tw-shadow-alpha": "100%",
+      "--tw-inset-shadow": "0 0 #0000",
+      "--tw-inset-shadow-color": "initial",
+      "--tw-inset-shadow-alpha": "100%",
+      "--tw-ring-color": "initial",
+      "--tw-ring-shadow": "0 0 #0000",
+      "--tw-inset-ring-color": "initial",
+      "--tw-inset-ring-shadow": "0 0 #0000",
+      "--tw-ring-inset": "initial",
+      "--tw-ring-offset-width": "0px",
+      "--tw-ring-offset-color": "#fff",
+      "--tw-ring-offset-shadow": "0 0 #0000",
+      "--tw-outline-style": "solid",
+      "--tw-blur": "initial",
+      "--tw-brightness": "initial",
+      "--tw-contrast": "initial",
+      "--tw-grayscale": "initial",
+      "--tw-hue-rotate": "initial",
+      "--tw-invert": "initial",
+      "--tw-opacity": "initial",
+      "--tw-saturate": "initial",
+      "--tw-sepia": "initial",
+      "--tw-drop-shadow": "initial",
+      "--tw-drop-shadow-color": "initial",
+      "--tw-drop-shadow-alpha": "100%",
+      "--tw-drop-shadow-size": "initial",
+      "--tw-backdrop-blur": "initial",
+      "--tw-backdrop-brightness": "initial",
+      "--tw-backdrop-contrast": "initial",
+      "--tw-backdrop-grayscale": "initial",
+      "--tw-backdrop-hue-rotate": "initial",
+      "--tw-backdrop-invert": "initial",
+      "--tw-backdrop-opacity": "initial",
+      "--tw-backdrop-saturate": "initial",
+      "--tw-backdrop-sepia": "initial",
+      "--tw-duration": "initial",
+      "--tw-ease": "initial",
+      "--tw-contain-size": "initial",
+      "--tw-contain-layout": "initial",
+      "--tw-contain-paint": "initial",
+      "--tw-contain-style": "initial",
+      "--tw-content": "\"\"",
+      "--color-red-50": "oklch(97.1% .013 17.38)",
+      "--color-red-400": "oklch(70.4% .191 22.216)",
+      "--color-red-600": "oklch(57.7% .245 27.325)",
+      "--color-red-700": "oklch(50.5% .213 27.518)",
+      "--color-red-900": "oklch(39.6% .141 25.723)",
+      "--color-orange-500": "oklch(70.5% .213 47.604)",
+      "--color-amber-500": "oklch(76.9% .188 70.08)",
+      "--color-yellow-400": "oklch(85.2% .199 91.936)",
+      "--color-lime-500": "oklch(76.8% .233 130.85)",
+      "--color-green-50": "oklch(98.2% .018 155.826)",
+      "--color-green-300": "oklch(87.1% .15 154.449)",
+      "--color-green-400": "oklch(79.2% .209 151.711)",
+      "--color-green-600": "oklch(62.7% .194 149.214)",
+      "--color-emerald-500": "oklch(69.6% .17 162.48)",
+      "--color-cyan-500": "oklch(71.5% .143 215.221)",
+      "--color-blue-500": "oklch(62.3% .214 259.815)",
+      "--color-indigo-500": "oklch(58.5% .233 277.117)",
+      "--color-violet-500": "oklch(60.6% .25 292.717)",
+      "--color-purple-500": "oklch(62.7% .265 303.9)",
+      "--color-pink-500": "oklch(65.6% .241 354.308)",
+      "--color-rose-500": "oklch(64.5% .246 16.439)",
+      "--color-gray-50": "oklch(98.5% .002 247.839)",
+      "--color-gray-100": "oklch(96.7% .003 264.542)",
+      "--color-gray-200": "oklch(92.8% .006 264.531)",
+      "--color-gray-300": "oklch(87.2% .01 258.338)",
+      "--color-gray-500": "oklch(55.1% .027 264.364)",
+      "--color-gray-700": "oklch(37.3% .034 259.733)",
+      "--color-gray-900": "oklch(21% .034 264.665)",
+      "--color-black": "#000",
+      "--color-white": "#fff",
+      "--spacing": ".25rem",
+      "--container-2xl": "42rem",
+      "--container-3xl": "48rem",
+      "--container-6xl": "72rem",
+      "--text-xs": ".75rem",
+      "--text-xs--line-height": "calc(1 / .75)",
+      "--text-sm": ".875rem",
+      "--text-sm--line-height": "calc(1.25 / .875)",
+      "--text-base": "1rem",
+      "--text-base--line-height": "calc(1.5 / 1)",
+      "--text-2xl": "1.5rem",
+      "--text-2xl--line-height": "calc(2 / 1.5)",
+      "--font-weight-normal": "400",
+      "--font-weight-medium": "500"
+    },
+    "topHex": [
+      {
+        "hex": "#fff",
+        "n": 27
+      },
+      {
+        "hex": "#090909",
+        "n": 13
+      },
+      {
+        "hex": "#000",
+        "n": 10
+      },
+      {
+        "hex": "#0062d3",
+        "n": 4
+      },
+      {
+        "hex": "#2a2a2a",
+        "n": 4
+      },
+      {
+        "hex": "#f4f4f4",
+        "n": 4
+      },
+      {
+        "hex": "#e21c1c",
+        "n": 2
+      },
+      {
+        "hex": "#ececec",
+        "n": 2
+      },
+      {
+        "hex": "#0094d5",
+        "n": 2
+      },
+      {
+        "hex": "#eaf4ff",
+        "n": 2
+      },
+      {
+        "hex": "#cdfed4",
+        "n": 2
+      },
+      {
+        "hex": "#fefdcd",
+        "n": 2
+      },
+      {
+        "hex": "#739bff",
+        "n": 1
+      },
+      {
+        "hex": "#c9c9c9",
+        "n": 1
+      },
+      {
+        "hex": "#8c8c8c",
+        "n": 1
+      },
+      {
+        "hex": "#424242",
+        "n": 1
+      }
+    ],
+    "cubicBezier": [
+      {
+        "v": "cubic-bezier(.215, .61, .355, 1)",
+        "n": 4
+      },
+      {
+        "v": "cubic-bezier(.4, 0, .2, 1)",
+        "n": 3
+      },
+      {
+        "v": "cubic-bezier(.33,1,.68,1)",
+        "n": 3
+      },
+      {
+        "v": "cubic-bezier(.16, 1, .3, 1)",
+        "n": 2
+      },
+      {
+        "v": "cubic-bezier(0, 0, .2, 1)",
+        "n": 1
+      },
+      {
+        "v": "cubic-bezier(.33, 1, .68, 1)",
+        "n": 1
+      },
+      {
+        "v": "cubic-bezier(.13,.46,.15,.92)",
+        "n": 1
+      },
+      {
+        "v": "cubic-bezier(.2, .9, .3, .986)",
+        "n": 1
+      },
+      {
+        "v": "cubic-bezier(.14,1,.34,1)",
+        "n": 1
+      },
+      {
+        "v": "cubic-bezier(.66,0,.86,0)",
+        "n": 1
+      },
+      {
+        "v": "cubic-bezier(.32, .72, 0, 1)",
+        "n": 1
+      },
+      {
+        "v": "cubic-bezier(.25, 1, .5, 1)",
+        "n": 1
+      },
+      {
+        "v": "cubic-bezier(.215,.61,.355,1)",
+        "n": 1
+      }
+    ],
+    "fontFamily": [
+      {
+        "v": "ShopifyInter,Helvetica,Arial,sans-serif",
+        "n": 10
+      },
+      {
+        "v": "Inter-Variable,Helvetica,sans-serif",
+        "n": 7
+      },
+      {
+        "v": "NotoSansJP,Hiragino Sans,Meiryo,sans-serif",
+        "n": 7
+      },
+      {
+        "v": "National2,Helvetica,Arial,sans-serif",
+        "n": 6
+      },
+      {
+        "v": "var(--font-sans)",
+        "n": 2
+      },
+      {
+        "v": "var(--font-mono)",
+        "n": 2
+      },
+      {
+        "v": "var(--default-font-family,ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\")",
+        "n": 1
+      },
+      {
+        "v": "var(--default-mono-font-family,ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, \"Liberation Mono\", \"Courier New\", monospace)",
+        "n": 1
+      },
+      {
+        "v": "var(--font-mono)!important",
+        "n": 1
+      },
+      {
+        "v": "Inter-Variable",
+        "n": 1
+      },
+      {
+        "v": "National2",
+        "n": 1
+      },
+      {
+        "v": "ShopifyInter",
+        "n": 1
+      }
+    ],
+    "durations": [
+      {
+        "v": "3s",
+        "n": 14
+      },
+      {
+        "v": "0s",
+        "n": 13
+      },
+      {
+        "v": "2s",
+        "n": 3
+      },
+      {
+        "v": "5s",
+        "n": 3
+      },
+      {
+        "v": "6s",
+        "n": 3
+      },
+      {
+        "v": "18s",
+        "n": 3
+      },
+      {
+        "v": "15s",
+        "n": 2
+      },
+      {
+        "v": "22s",
+        "n": 2
+      },
+      {
+        "v": "4s",
+        "n": 2
+      },
+      {
+        "v": "1s",
+        "n": 1
+      },
+      {
+        "v": "65s",
+        "n": 1
+      },
+      {
+        "v": "966s",
+        "n": 1
+      },
+      {
+        "v": "11s",
+        "n": 1
+      },
+      {
+        "v": "90ms",
+        "n": 1
+      },
+      {
+        "v": "80ms",
+        "n": 1
+      },
+      {
+        "v": "12s",
+        "n": 1
+      }
+    ],
+    "radii": [
+      {
+        "v": "0",
+        "n": 6
+      },
+      {
+        "v": "4px",
+        "n": 5
+      },
+      {
+        "v": "3px",
+        "n": 4
+      },
+      {
+        "v": "3.40282e38px",
+        "n": 3
+      },
+      {
+        "v": "8px",
+        "n": 2
+      },
+      {
+        "v": "100%",
+        "n": 1
+      },
+      {
+        "v": ".25rem",
+        "n": 1
+      },
+      {
+        "v": "6px",
+        "n": 1
+      },
+      {
+        "v": "4%",
+        "n": 1
+      },
+      {
+        "v": "5%",
+        "n": 1
+      },
+      {
+        "v": "10px",
+        "n": 1
+      },
+      {
+        "v": "12px",
+        "n": 1
+      },
+      {
+        "v": "18px",
+        "n": 1
+      },
+      {
+        "v": "75px 100px 100px 20px",
+        "n": 1
+      }
+    ],
+    "keyframes": [
+      {
+        "v": "word-slide-out",
+        "n": 2
+      },
+      {
+        "v": "word-slide-in",
+        "n": 2
+      },
+      {
+        "v": "scene-text-word-in",
+        "n": 2
+      },
+      {
+        "v": "scene-text-word-out",
+        "n": 2
+      },
+      {
+        "v": "error-scene-fade-in",
+        "n": 1
+      },
+      {
+        "v": "link-march",
+        "n": 1
+      },
+      {
+        "v": "hero-ring-intro",
+        "n": 1
+      },
+      {
+        "v": "hero-ring-ambient",
+        "n": 1
+      },
+      {
+        "v": "hero-letter-slide",
+        "n": 1
+      },
+      {
+        "v": "hero-letter-wipe",
+        "n": 1
+      },
+      {
+        "v": "hero-letter-fade",
+        "n": 1
+      },
+      {
+        "v": "pill-item-underline-in",
+        "n": 1
+      },
+      {
+        "v": "pill-item-underline-out",
+        "n": 1
+      },
+      {
+        "v": "hero-background-scale-down",
+        "n": 1
+      },
+      {
+        "v": "section-background-parallax",
+        "n": 1
+      },
+      {
+        "v": "scroll-reveal-trigger",
+        "n": 1
+      },
+      {
+        "v": "video-play-arrow",
+        "n": 1
+      },
+      {
+        "v": "video-play-ring",
+        "n": 1
+      },
+      {
+        "v": "video-modal-fade-in",
+        "n": 1
+      },
+      {
+        "v": "video-modal-fade-out",
+        "n": 1
+      }
+    ],
+    "cssBytes": 119121
+  },
+  "capturedAt": "2026-09-08",
+  "mined": {
+    "note": "以下数值来自 tailwind-vOc3OfBK.css、fonts-latin css、102 个 JS chunk 美化精读、13 份 Theatre 状态 JSON、loaderData（CMS）与截图实测，均为实锤；推断项单独标注。",
+    "stack": {
+      "framework": "Hydrogen（React Router v7，__reactRouterContext，v8_middleware）+ Oxygen（powered-by 头）",
+      "bundler": "Vite + rolldown（rolldown-runtime chunk）",
+      "react": "19",
+      "css": "Tailwind CSS v4.3.3",
+      "scroll": "Lenis {duration 1, easeOutExpo, smoothWheel, wheelMultiplier 1}；wheel 事件率 >50/s 时 duration .1，否则 .75",
+      "webgl": "three.js（three.core 371,210 B）+ react-three-fiber",
+      "orchestration": "Theatre.js（@theatre/core）：13 份 sheet 状态 JSON 由 CMS 下发",
+      "state": "zustand",
+      "gpu": "detect-gpu 分级 0–3",
+      "textures": "KTX2（ETC1S）帧序列纹理 18 个、HDR 6 张、GLB 2 个、Rive 1 个",
+      "pointcloud": "MDPC-2 自定义点云格式（deflate/brotli）"
+    },
+    "colors": {
+      "bg": "#090909",
+      "white": "#fff",
+      "black": "#000",
+      "g2": "#f4f4f4",
+      "g3": "#ececec",
+      "g4": "#c9c9c9",
+      "g5": "#8c8c8c",
+      "g6": "#2a2a2a",
+      "focus": "#0062d3",
+      "error": "#e21c1c",
+      "misc": [
+        "#0094d5",
+        "#eaf4ff",
+        "#cdfed4",
+        "#fefdcd",
+        "#739bff",
+        "#424242"
+      ],
+      "theme-dark": {
+        "heading": "#ffffffe6",
+        "body": "#fff9",
+        "link": "#fff",
+        "link-underline": "#fff9",
+        "cta-bg": "#fff",
+        "cta-bg-hover": "#ffffffe6",
+        "cta-bg-pressed": "#fffc",
+        "cta-bg-disabled": "#fff3",
+        "cta-text": "#090909",
+        "cta-text-disabled": "#fff6"
+      },
+      "theme-light": {
+        "heading": "#090909e6",
+        "body": "#09090999",
+        "link": "#090909e6",
+        "link-underline": "#09090966",
+        "cta-bg": "#090909",
+        "cta-bg-hover": "#090909e6",
+        "cta-bg-pressed": "#090909cc",
+        "cta-text": "#fff"
+      },
+      "alpha-white": {
+        "w10": "#ffffff1a",
+        "w20": "#fff3",
+        "w60": "#fff9",
+        "w70": "#ffffffb3",
+        "w90": "#ffffffe6"
+      },
+      "alpha-black": {
+        "b5": "#0909090d",
+        "b10": "#0909091a",
+        "b20": "#09090933",
+        "b40": "#09090966",
+        "b60": "#09090999",
+        "b80": "#090909cc",
+        "b90": "#090909e6"
+      },
+      "easter-egg-portal": "#adf0ff",
+      "intro-bg": "#040404 → #000",
+      "hero-bottom-gradient": "#090909"
+    },
+    "fonts": {
+      "National2": {
+        "weight": 400,
+        "features": "liga kern ss01",
+        "woff2": 35180,
+        "ttf": 44860,
+        "role": "t1–t3、hero-t1、body 默认"
+      },
+      "ShopifyInter": {
+        "weight": 400,
+        "woff2": 21872,
+        "ttf": 21848,
+        "role": "t4–t6、hero-t2、button-small"
+      },
+      "Inter-Variable": {
+        "weight": "100–900",
+        "woff2": 67188,
+        "role": "text-label-*、全局导航、搜索"
+      },
+      "NotoSansJP": "日文覆写"
+    },
+    "typeScale": {
+      "hero-t1": "66px → clamp(4rem,27.33px+4.769vw,6rem)/.9 ls -.08em National2",
+      "t1": "80px → clamp(5rem,34.16px+5.961vw,7.5rem)/.96 ls -.06em→-.08em",
+      "t2": "64px → clamp(4rem,27.33px+4.769vw,6rem)/.96 ls -.06em",
+      "t3": "40px → clamp(2.5rem,12.49px+3.577vw,4rem)/.96 ls -.03em→-.04em",
+      "t4": "18px → 16px /1.1 ls -.03em ShopifyInter",
+      "t5": "15px → 14px /1.3 ls -.01em→-.04em",
+      "t6": "10px /1.2 ls -.03em→-.01em",
+      "hero-t2": "22px → clamp(1rem,9.12px+.894vw,1.375rem)/1.3 ls -.04em",
+      "button-small": "13px/1.3 ls -.03em 500",
+      "text-label-1": "14px/100% 500 ls -1%",
+      "text-label-2": "16px→14px/120%",
+      "text-label-3": "12px/100%",
+      "text-label-4-uc": "11px/100% 500 uppercase",
+      "text-label-menu": "16px/100% 500",
+      "trim": "text-box: trim-both cap alphabetic；text-wrap: pretty"
+    },
+    "grid": {
+      "container": "max 105rem；margin 16px → 32px(≥768) → 120px(≥1440) → 0(≥1920)",
+      "gutter": "16px / 32px(sm)",
+      "columns": "6 → 12 (md)",
+      "card": "col-span-6 → sm 3 → md 4，subgrid rows，gap-y 44/40",
+      "textCards": "gap-y 48/64",
+      "sectionHeader": "t3 col 7 (xl 5) + t5 col 5 start 8 (lg 4/9, xl 3/10)",
+      "heroScroll": "160lvh",
+      "breakpoints": [
+        "375",
+        "768 (48rem)",
+        "940 (58.75rem global-lg)",
+        "1024",
+        "1280",
+        "1440 (90rem)",
+        "1920 (120rem)"
+      ]
+    },
+    "motion": {
+      "ease-snappy": "cubic-bezier(.16,1,.3,1)",
+      "ease-out-cubic": "cubic-bezier(.215,.61,.355,1)",
+      "scene-text-in": ".966s cubic-bezier(.14,1,.34,1)",
+      "scene-text-out": ".5s cubic-bezier(.66,0,.86,0)",
+      "pill-open": ".24s cubic-bezier(.32,.72,0,1)",
+      "pill-close": ".18s ease-out +90ms",
+      "pill-item-stagger": "34ms",
+      "pill-shell": "show .36s / hide .26s ease-snappy",
+      "ring-intro": "4.5s cubic-bezier(.2,.9,.3,.986)",
+      "ring-ambient": "150s linear",
+      "letter-slide": ".65s ease-out",
+      "letter-wipe": ".3s ease-out",
+      "scroll-reveal": "opacity .5s linear, translate 1s cubic-bezier(.215,.61,.355,1), index ×.1s；animation-timeline: view() entry 75%–100%",
+      "video-play": ".7s cubic-bezier(.215,.61,.355,1) intent .15s",
+      "video-modal": "in .22s / out .18s（View Transitions）",
+      "signup-modal": ".3s cubic-bezier(.33,1,.68,1) scale .96",
+      "merch-card": ".56s ease-snappy rotateY -90→0",
+      "link-march": ".6s linear infinite (3px 虚线行进)",
+      "tooltip": "fade .3s, follow .12s, morph .36s cubic-bezier(.16,1,.3,1)",
+      "tailwind-default": ".15s cubic-bezier(.4,0,.2,1)",
+      "durations-css": [
+        "3s×14",
+        "2s",
+        "5s",
+        "6s",
+        "18s",
+        "15s",
+        "22s",
+        "65s",
+        "966ms",
+        "90ms",
+        "80ms"
+      ]
+    },
+    "heroRing": {
+      "webgl": {
+        "text": "Everywhere ×3（30 字形），GPU 矢量字形（Slug 式 band/curve 光线求交），National2 曲线烘入 4096 宽 Float32 纹理",
+        "letterTracking": "-.08em（r -.03，y -.04）",
+        "letterSize": ".35 × radius",
+        "radius": "45 单位 ≈ 37vmin",
+        "tilt": "18deg",
+        "perspective": "5400px",
+        "spin": "102° → -295° 4500ms cubic-bezier(.2,.9,.3,.986)，随后 150000ms 一周",
+        "reveal": "词错位 600ms、字母 55ms、滑入 650ms（-14° 扫入）、擦出 300ms",
+        "scroll": ".12°/px（Theatre 覆写 .08），y .01/px（覆写 .025）",
+        "pointer": "排斥 2.5（覆写 1，半径 1，衰减 5，阻尼 10，保持 131ms）；X 倾斜 18°（覆写 30）",
+        "depthCutoff": "arcWidth 182° front 55°",
+        "sdf": "torus strength .35 falloff .5 R .34 r .14 —— 粒子被环推开",
+        "fluid": "字形随流场位移 ×.02（深度衰减 1/(1+.3z)）"
+      },
+      "cssFallback": {
+        "--ring-tilt": "18deg",
+        "--ring-from": "102deg",
+        "--ring-to": "-295deg",
+        "--intro-duration": "4.5s",
+        "--ambient-duration": "150s",
+        "letter": "slide .65s + clip-path inset 擦入 .3s；减弱动态改为 rotateY(60deg) 静止 + fade .6s",
+        "when": "仅 tier 0"
+      },
+      "console": "控制台输出同一环的 SVG（560×300，内嵌子集字体 Spring2026ConsoleNational2，120s 自转）；Safari 改为 ASCII 横幅"
+    },
+    "theatreHero": {
+      "sheet": "hero-prod-2026-06-23T06-22-06.json",
+      "length": 10,
+      "subUnitsPerUnit": 30,
+      "objects": 14,
+      "trackedObjects": 8,
+      "tracks": 27,
+      "keyframes": 50,
+      "intro": {
+        "sceneTransform": "(.594,-.09,.028)/rot(.2,.726,-.132) → 0 @0→3.867",
+        "backgroundDarken": ".92 → 0 @1.7→3.867",
+        "lightVolumes": "bg 0→1 @.467→3.067，fg 0→1 @0→4.133",
+        "particleExposure": "-3 → 0 @.433→3.3",
+        "particleRandomizeY": ".06 → 0",
+        "backdropOpacity": "0 → .6 @.667→3.833",
+        "ringOpacity": "0→1 @1.3→2.633；1→0 @7.933→9.067",
+        "introTransition": "progress 0→1 @.033→2.933，pixelSize 14，dotMaxRadius .75，feather 150，blendRange 160，bg #040404→#000，center y .52"
+      },
+      "scroll": {
+        "camera": "pos x .3798→.2998，y -.4951→-.6551 @5→10；z .8293；target (-.1695,-.4523,.8769)",
+        "heroWipe": "translate y 0→-.076 @6.8→7.967"
+      },
+      "sectionTransition": {
+        "mode": "wipe",
+        "angleDeg": -25,
+        "spread": 0.3,
+        "bend": -0.25,
+        "glow": 1,
+        "wipe": {
+          "sway": [
+            0.095,
+            0.4,
+            0.1
+          ],
+          "waveAmp": 0.102,
+          "waveSpeed": 0.025,
+          "sharpness": 3,
+          "waveFreq": -0.5,
+          "waveScroll": 2,
+          "scrollBend": -2,
+          "distortY": 3,
+          "translateY": -0.076
+        },
+        "swipeDirection": [
+          -1,
+          0
+        ],
+        "zoomBlurStrength": 2,
+        "crossfadeAngle": 107
+      },
+      "camera": {
+        "animation": "scrollDrift",
+        "up": 0.09,
+        "back": 0.1
+      },
+      "postprocessing": {
+        "heroBottomGradient": {
+          "fade": [
+            0.1,
+            1
+          ],
+          "height": 0.34,
+          "width": 0.38,
+          "rounded": 1,
+          "blur": 0.371,
+          "color": "#090909"
+        }
+      }
+    },
+    "scenePresets": 13,
+    "pointcloud": {
+      "format": "MDPC-2：4B 头长 + JSON 头 {N, qpPos 12, bbox, chromaSub, codec} + 4 段 deflate（Morton 交织 varint 位置增量；Y + 子采样 Cb/Cr）",
+      "decoder": "Worker + DecompressionStream；br 时懒加载 brotli-wasm@3.0.1",
+      "counts": {
+        "256²": 65536,
+        "512²": 262144
+      },
+      "samples": {
+        "minipointcloud-256": 127635,
+        "forest-256": 137491,
+        "forest-512": 508600
+      },
+      "pointSizeRange": [
+        0.005,
+        0.2
+      ],
+      "fluidInfluence": [
+        0.25,
+        1
+      ],
+      "curl": [
+        1.5,
+        6.56
+      ],
+      "sim": "128 / dye 256；velocityDissipation .96–.98，densityDissipation .9–.97，pressure .6–.8，splat .25–.5，force .08–.125",
+      "post": {
+        "bloom": "intensity .09–1.49，threshold 0–.557，tint 白（兜底场景 (1,.86,.6)）",
+        "afterimage": "strength .999 damp .999 threshold .2 scrollFadeLerp 4",
+        "vignette": ".5 radius .895 softness .441",
+        "chromatic": "off .0025",
+        "noise": "off .06",
+        "toneMapping": "neutral"
+      },
+      "fboDpr": {
+        "background": 0.25,
+        "main": 1,
+        "foreground": 0.25
+      },
+      "pointSizeFormula": "uPointSize × scale × mix(.6,1.6,rand⁴) × (1+.3(splat−1)) × distSize × flow × opacity × DPR × 120/dist，clamp uMaxPointSize；片元圆形 splat，最小投影 .55px",
+      "sdfShapes": [
+        "sphere",
+        "cube",
+        "torus",
+        "cylinder",
+        "octahedron",
+        "dodeca"
+      ],
+      "maxSdf": 8,
+      "flowTypes": [
+        "curl",
+        "rise"
+      ],
+      "layouts": [
+        "off",
+        "dots",
+        "xLines",
+        "yLines",
+        "zLines",
+        "floorGrid",
+        "sphere",
+        "ripple",
+        "spokes",
+        "spiral"
+      ]
+    },
+    "sections": {
+      "count": 10,
+      "cards": 219,
+      "perSection": {
+        "agentic": 11,
+        "sidekick": 9,
+        "online": 25,
+        "retail": 19,
+        "marketing": 12,
+        "operations": 51,
+        "shop-app": 9,
+        "payments": 22,
+        "finance": 7,
+        "developer": 54
+      },
+      "nested": {
+        "agentic": [
+          "Discovery 4",
+          "Development 7"
+        ],
+        "online": [
+          "Online store 17",
+          "B2B 8"
+        ],
+        "retail": [
+          "Retail Merch 0",
+          "POS XXL 1"
+        ],
+        "operations": [
+          "Plugins 3",
+          "Admin 21",
+          "Inventory 9",
+          "Shipping 11",
+          "Global 7"
+        ],
+        "developer": [
+          "Platform 25",
+          "Apps + Extensions 29"
+        ]
+      },
+      "heights1440x900tier0": {
+        "hero": 1440,
+        "agentic": 3968,
+        "sidekick": 2555,
+        "online": 4035,
+        "retail": 3006,
+        "marketing": 2688,
+        "operations": 7238,
+        "shop-app": 2591,
+        "payments": 3111,
+        "finance": 2459,
+        "developer": 5683,
+        "page": 38865
+      },
+      "progress": "clamp((vh − top)/(vh + height))；transition ∈[-1,1]，exit-scale 1.5（hero），center-progress .4"
+    },
+    "pill": {
+      "breakpoint": "≥58.75rem",
+      "width": "190px",
+      "closedHeight": "35px",
+      "radius": "17.5px",
+      "shadow": "0 0 0 1px #0000001a",
+      "open": "grid-template-rows 0fr→1fr .24s cubic-bezier(.32,.72,0,1)",
+      "close": ".18s ease-out delay 90ms",
+      "items": "opacity 80ms / translate .11s，stagger 34ms×(last−idx)+40ms",
+      "underline": "scale .32s in / .24s out",
+      "summary": "逐字 type-in（show 18ms/字，hide 9ms/字，延迟 90ms）",
+      "visibility": "data-hero-exited 后显示；merch 打开时隐藏"
+    },
+    "media": {
+      "videoSources": "mov(quicktime) → webm → mp4 av01 → mp4 hvc1 → mp4 avc1，按 (max-width:767px)/(min-width:768px) 双档",
+      "widths": {
+        "desktop": [
+          "W500",
+          "W1000",
+          "W1250",
+          "W2500"
+        ],
+        "mobile": [
+          "W720",
+          "W1440"
+        ]
+      },
+      "lazy": "preload metadata；IntersectionObserver rootMargin 30%（或 100%）；离屏移除 source 并 load()",
+      "play": "video-play-circle 48→80px；ring/arrow .7s；modal 走 View Transitions（old contain → new cover）",
+      "ktx2": "18 个 _50f_… ETC1S 帧序列纹理（427×240 到 853×480），heroforest_1_14f，combined_13sources_92f",
+      "hdr": [
+        "apartment",
+        "autumnField",
+        "night",
+        "park",
+        "shopapp-office",
+        "studio"
+      ],
+      "rive": "u28_pos_6_15_v3.riv，State Machine 1，触发 goToAddProduct/goToAddDiscount/goToAddCustomer/goToSplitPayment",
+      "glb": [
+        "Tablet_Simplified_v3_silver5.glb",
+        "iPad-Only-placeholder.glb"
+      ]
+    },
+    "easterEggs": {
+      "console": "SVG 环或 ASCII EVERYWHERE",
+      "developerKey": {
+        "where": "Developer 场景中的门户平面 1.65×.92 @(.8,-.2,1.2)，颜色 #adf0ff，边宽 .16，脉冲 1.2Hz",
+        "click": "window.open('/editions/spring2026/drive','spring_car_popup') 尺寸 min(vw,vh)×.424，4:3，居中于点击点",
+        "channel": "BroadcastChannel spring-popup-sync（localStorage 兜底），12 种消息",
+        "webrtc": "captureStream(60) 主画面 → 弹窗；信令 spring-webrtc-signaling；STUN stun.l.google.com:19302",
+        "mainEffects": "ScrollerSpeedLinesEffect（阈值 .08）、sceneTimeScale −8…12（750ms 复位）、外部指针 gaze、DeveloperDriveSceneReveal 700/760ms 切到 race-track 场景",
+        "flags": "driveEasterEggEnabled true，easterEggKillswitch false，URL 参数 popup-studio / theatre-src / drive-scene / drive-section / drive-session"
+      },
+      "debug": [
+        "?tier=0–3",
+        "?theatre（非 production）",
+        "?debug_shopify_merchant",
+        "window.__S26_FORCE_TIER_0__",
+        "s26:force-tier-0 事件"
+      ]
+    },
+    "editions": [
+      "Spring ’26 Everywhere",
+      "Winter '26 Renaissance",
+      "Summer ’25 Horizons",
+      "Winter '25 Boring",
+      "Summer '24 Unified",
+      "Winter '24 Foundations",
+      "Summer '23 Imagine My Business",
+      "Winter '23 Built to Last",
+      "Summer '22 Connect to Consumer"
+    ],
+    "inferred": {
+      "foundries": "National 2 出自 Klim Type Foundry；ShopifyInter 为 Inter 定制版——按字族名推断",
+      "aiSourcedClouds": "x_mj-10-pointcloud 等文件名暗示部分点云由 AI 生成图像提升为 3D——仅据文件名，中等置信",
+      "loadTimeout": "强制 tier 0 的超时毫秒数 T 未在 chunk 中定位到具体值",
+      "knockout": "knockout 卡片通过 LayerKnockoutPass 让三维层与 DOM 媒体互相挖空合成——机制名实锤，视觉效果未逐帧核验"
+    }
+  }
+}

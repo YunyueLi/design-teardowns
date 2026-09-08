@@ -1,0 +1,19 @@
+{
+  "sheetsById": {
+    "retail-merch": {
+      "staticOverrides": {
+        "byObject": {
+          "Scene": {
+            "preset": "prod-12-merch"
+          }
+        }
+      }
+    }
+  },
+  "definitionVersion": "0.4.0",
+  "revisionHistory": [
+    "9pxHQruBy_Reidrl",
+    "u9WohEm7JsLQKyf5",
+    "0d41BnXXJrYarMSe"
+  ]
+}
