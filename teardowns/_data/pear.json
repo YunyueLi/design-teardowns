@@ -1,0 +1,922 @@
+{
+  "site": "Pear",
+  "url": "https://pear.no/",
+  "probe": {
+    "title": "Pear — not an agency on the clock, a partner in the upside",
+    "lang": "en",
+    "body": {
+      "background-color": "rgb(11, 10, 9)",
+      "color": "rgb(0, 0, 0)",
+      "font-family": "\"GT Standard L\", \"Helvetica Neue\", Arial, sans-serif"
+    },
+    "h1": {
+      "text": "Pear makes you appear.",
+      "font-family": "\"Flecha M\", \"Flecha S\", \"Iowan Old Style\", Georgia, serif",
+      "font-size": "77.1408px",
+      "font-weight": "300",
+      "letter-spacing": "normal",
+      "line-height": "77.1408px",
+      "font-style": "normal",
+      "color": "rgb(255, 255, 255)"
+    },
+    "nav": {
+      "background-color": "rgba(0, 0, 0, 0)",
+      "backdrop-filter": "none",
+      "font-family": "\"GT Standard Mono\", ui-monospace, SFMono-Regular, Menlo, monospace"
+    },
+    "btn": {
+      "background-color": "rgba(0, 0, 0, 0)",
+      "color": "rgb(242, 241, 237)",
+      "border-radius": "999px",
+      "transition": "all",
+      "font-family": "\"GT Standard Mono\", ui-monospace, SFMono-Regular, Menlo, monospace"
+    },
+    "accentGuess": "",
+    "libs": [],
+    "scriptHints": [],
+    "media": {
+      "video": 2,
+      "canvas": 5,
+      "svg": 31,
+      "img": 1,
+      "preloadVideo": 0,
+      "preloadFont": 0
+    },
+    "fontsLoaded": [
+      "Flecha S",
+      "GT Standard L",
+      "GT Standard Mono",
+      "Flecha L",
+      "Flecha M"
+    ]
+  },
+  "tokens": {
+    "customProps": {
+      "--tw-translate-x": "0",
+      "--tw-translate-y": "0",
+      "--tw-translate-z": "0",
+      "--tw-rotate-x": "initial",
+      "--tw-rotate-y": "initial",
+      "--tw-rotate-z": "initial",
+      "--tw-skew-x": "initial",
+      "--tw-skew-y": "initial",
+      "--tw-border-style": "solid",
+      "--tw-leading": "initial",
+      "--tw-font-weight": "initial",
+      "--tw-tracking": "initial",
+      "--tw-shadow": "0 0 #0000",
+      "--tw-shadow-color": "initial",
+      "--tw-shadow-alpha": "100%",
+      "--tw-inset-shadow": "0 0 #0000",
+      "--tw-inset-shadow-color": "initial",
+      "--tw-inset-shadow-alpha": "100%",
+      "--tw-ring-color": "initial",
+      "--tw-ring-shadow": "0 0 #0000",
+      "--tw-inset-ring-color": "initial",
+      "--tw-inset-ring-shadow": "0 0 #0000",
+      "--tw-ring-inset": "initial",
+      "--tw-ring-offset-width": "0px",
+      "--tw-ring-offset-color": "#fff",
+      "--tw-ring-offset-shadow": "0 0 #0000",
+      "--tw-outline-style": "solid",
+      "--tw-blur": "initial",
+      "--tw-brightness": "initial",
+      "--tw-contrast": "initial",
+      "--tw-grayscale": "initial",
+      "--tw-hue-rotate": "initial",
+      "--tw-invert": "initial",
+      "--tw-opacity": "initial",
+      "--tw-saturate": "initial",
+      "--tw-sepia": "initial",
+      "--tw-drop-shadow": "initial",
+      "--tw-drop-shadow-color": "initial",
+      "--tw-drop-shadow-alpha": "100%",
+      "--tw-drop-shadow-size": "initial",
+      "--tw-backdrop-blur": "initial",
+      "--tw-backdrop-brightness": "initial",
+      "--tw-backdrop-contrast": "initial",
+      "--tw-backdrop-grayscale": "initial",
+      "--tw-backdrop-hue-rotate": "initial",
+      "--tw-backdrop-invert": "initial",
+      "--tw-backdrop-opacity": "initial",
+      "--tw-backdrop-saturate": "initial",
+      "--tw-backdrop-sepia": "initial",
+      "--tw-duration": "initial",
+      "--tw-ease": "initial",
+      "--font-sans": "\"GT Standard L\", \"Helvetica Neue\", Arial, sans-serif",
+      "--font-serif": "\"Flecha S\", \"Source Serif 4\", \"Iowan Old Style\", Georgia, serif",
+      "--font-mono": "\"GT Standard Mono\", ui-monospace, \"SF Mono\", Menlo, monospace",
+      "--spacing": ".25rem",
+      "--font-weight-normal": "400",
+      "--font-weight-medium": "500",
+      "--leading-snug": "1.375",
+      "--leading-relaxed": "1.625",
+      "--ease-out": "cubic-bezier(0, 0, .2, 1)",
+      "--ease-in-out": "cubic-bezier(.4, 0, .2, 1)",
+      "--default-transition-duration": ".15s",
+      "--default-transition-timing-function": "cubic-bezier(.4, 0, .2, 1)",
+      "--default-font-family": "var(--font-sans)",
+      "--default-mono-font-family": "var(--font-mono)",
+      "--color-press": "#0b0a09",
+      "--color-paper": "#f2f1ed",
+      "--color-ink": "#1d1c19",
+      "--color-ink-soft": "#33322d",
+      "--color-rule": "#1d1c1924",
+      "--color-sky": "#015186",
+      "--ease-press": "cubic-bezier(.22, 1, .36, 1)",
+      "--tracking-press": "-.018em",
+      "--text-display": "clamp(1.875rem, 3.4vw, 3.25rem)",
+      "--text-display--line-height": "1.12",
+      "--lightningcss-light": "initial",
+      "--lightningcss-dark": "",
+      "--press": "#0b0a09",
+      "--paper": "#f2f1ed",
+      "--ink": "#1d1c19",
+      "--title": "\"Flecha M\",\"Flecha S\",\"Iowan Old Style\",Georgia,serif",
+      "--text": "\"GT Standard L\",ui-sans-serif,-apple-system,Arial,sans-serif",
+      "--code": "\"GT Standard Mono\",ui-monospace,SFMono-Regular,Menlo,monospace",
+      "--ease": "cubic-bezier(.22,1,.36,1)",
+      "--v1": "5.3%",
+      "--v2": "85.6%",
+      "--h1": "5.3vw",
+      "--h2": "calc(65.3% + 50px)",
+      "--colA": "7.98%",
+      "--colB": "23.7%",
+      "--fill": ".13",
+      "--ra": "0deg",
+      "--r": "999px",
+      "--bev": "6px",
+      "--rim": ".86",
+      "--spec": ".46",
+      "--fin-c": "#2e2109",
+      "--fin-chip-c": "#2e2109",
+      "--fin-chip": "#2e200f1f",
+      "--rule": "#ffffff39",
+      "--cross": "#ffffff86",
+      "--mark": "#fff",
+      "--mx": "calc(var(--v1) + 14.5px)"
+    },
+    "topHex": [
+      {
+        "hex": "#fff",
+        "n": 27
+      },
+      {
+        "hex": "#000",
+        "n": 16
+      },
+      {
+        "hex": "#f2f1ed",
+        "n": 3
+      },
+      {
+        "hex": "#fffaea",
+        "n": 3
+      },
+      {
+        "hex": "#0b0a09",
+        "n": 2
+      },
+      {
+        "hex": "#1d1c19",
+        "n": 2
+      },
+      {
+        "hex": "#2e2109",
+        "n": 2
+      },
+      {
+        "hex": "#33322d",
+        "n": 1
+      },
+      {
+        "hex": "#015186",
+        "n": 1
+      },
+      {
+        "hex": "#14161b",
+        "n": 1
+      },
+      {
+        "hex": "#090a0d",
+        "n": 1
+      },
+      {
+        "hex": "#05060a",
+        "n": 1
+      },
+      {
+        "hex": "#3a2c10",
+        "n": 1
+      },
+      {
+        "hex": "#d9be86",
+        "n": 1
+      },
+      {
+        "hex": "#c2a365",
+        "n": 1
+      },
+      {
+        "hex": "#a98a4e",
+        "n": 1
+      },
+      {
+        "hex": "#eff4fa",
+        "n": 1
+      },
+      {
+        "hex": "#dce6f2",
+        "n": 1
+      }
+    ],
+    "cubicBezier": [
+      {
+        "v": "cubic-bezier(.22,1,.36,1)",
+        "n": 3
+      },
+      {
+        "v": "cubic-bezier(.4, 0, .2, 1)",
+        "n": 2
+      },
+      {
+        "v": "cubic-bezier(0, 0, .2, 1)",
+        "n": 1
+      },
+      {
+        "v": "cubic-bezier(.22, 1, .36, 1)",
+        "n": 1
+      }
+    ],
+    "fontFamily": [
+      {
+        "v": "var(--code)",
+        "n": 11
+      },
+      {
+        "v": "var(--text)",
+        "n": 5
+      },
+      {
+        "v": "\"Flecha S\",var(--title)",
+        "n": 5
+      },
+      {
+        "v": "Flecha S",
+        "n": 4
+      },
+      {
+        "v": "var(--font-mono)",
+        "n": 3
+      },
+      {
+        "v": "GT Standard L",
+        "n": 3
+      },
+      {
+        "v": "var(--font-sans)",
+        "n": 2
+      },
+      {
+        "v": "GT Standard Mono",
+        "n": 2
+      },
+      {
+        "v": "Flecha L",
+        "n": 2
+      },
+      {
+        "v": "Flecha M",
+        "n": 2
+      },
+      {
+        "v": "\"Flecha M\",\"Flecha S\",var(--title)",
+        "n": 2
+      },
+      {
+        "v": "var(--default-font-family,-apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, \"Helvetica Neue\", \"Noto Sans\", Arial, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\")",
+        "n": 1
+      },
+      {
+        "v": "var(--default-mono-font-family,ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, \"Liberation Mono\", \"Courier New\", monospace)",
+        "n": 1
+      },
+      {
+        "v": "var(--font-serif)",
+        "n": 1
+      },
+      {
+        "v": "\"Flecha L\",\"Flecha M\",\"Flecha S\",var(--title)",
+        "n": 1
+      },
+      {
+        "v": "Flecha L,Flecha M,Iowan Old Style,Georgia,serif",
+        "n": 1
+      }
+    ],
+    "durations": [
+      {
+        "v": "7s",
+        "n": 6
+      },
+      {
+        "v": "2s",
+        "n": 3
+      },
+      {
+        "v": "38s",
+        "n": 3
+      },
+      {
+        "v": "3s",
+        "n": 2
+      },
+      {
+        "v": "5s",
+        "n": 2
+      },
+      {
+        "v": "6s",
+        "n": 2
+      },
+      {
+        "v": "7.5s",
+        "n": 2
+      },
+      {
+        "v": "11s",
+        "n": 2
+      },
+      {
+        "v": "62s",
+        "n": 2
+      },
+      {
+        "v": "42s",
+        "n": 2
+      },
+      {
+        "v": "1.15s",
+        "n": 2
+      },
+      {
+        "v": "26s",
+        "n": 2
+      },
+      {
+        "v": "15s",
+        "n": 1
+      },
+      {
+        "v": "52s",
+        "n": 1
+      },
+      {
+        "v": "45s",
+        "n": 1
+      },
+      {
+        "v": "9s",
+        "n": 1
+      }
+    ],
+    "radii": [
+      {
+        "v": "999px",
+        "n": 4
+      },
+      {
+        "v": "5.25px",
+        "n": 3
+      },
+      {
+        "v": "4px",
+        "n": 3
+      },
+      {
+        "v": "0",
+        "n": 2
+      },
+      {
+        "v": "50%",
+        "n": 2
+      },
+      {
+        "v": "inherit",
+        "n": 2
+      },
+      {
+        "v": "3px",
+        "n": 2
+      },
+      {
+        "v": "var(--r,22px)",
+        "n": 1
+      },
+      {
+        "v": "calc(var(--r,22px) - var(--bev,5px))",
+        "n": 1
+      }
+    ],
+    "keyframes": [
+      {
+        "v": "cfArc",
+        "n": 1
+      },
+      {
+        "v": "cfGlow",
+        "n": 1
+      },
+      {
+        "v": "cfRim",
+        "n": 1
+      },
+      {
+        "v": "cfRimP",
+        "n": 1
+      },
+      {
+        "v": "ruleV",
+        "n": 1
+      },
+      {
+        "v": "ruleH",
+        "n": 1
+      },
+      {
+        "v": "shine",
+        "n": 1
+      },
+      {
+        "v": "cross",
+        "n": 1
+      },
+      {
+        "v": "hdrIn",
+        "n": 1
+      },
+      {
+        "v": "draw",
+        "n": 1
+      },
+      {
+        "v": "menuIn",
+        "n": 1
+      },
+      {
+        "v": "settle",
+        "n": 1
+      },
+      {
+        "v": "settleFull",
+        "n": 1
+      }
+    ],
+    "cssBytes": 61949
+  },
+  "capturedAt": "2026-09-08",
+  "mined": {
+    "note": "以下数值来自 assets/index-BhJdAf8K.js 与 index-Bd_JnIbr.css 原文精读，均为实锤；推断项单独标注。",
+    "stack": {
+      "bundler": "Vite（/assets/index-*.js 单 chunk 323,793 B）",
+      "react": "19.2.8（仅用于一次性渲染覆盖层 DOM）",
+      "css": "Tailwind CSS v4（@layer theme 结构）+ 手写 CSS",
+      "webgl": "两支原生 WebGL1 program，无 three.js",
+      "scroll": "自研 wheel 拦截 + rAF lerp .085（触屏与减弱动态回退原生滚动 lerp .3）"
+    },
+    "colors": {
+      "press": "#0b0a09",
+      "paper": "#f2f1ed",
+      "ink": "#1d1c19",
+      "ink-soft": "#33322d",
+      "rule": "#1d1c1924",
+      "sky": "#015186",
+      "cream": "#fffaea",
+      "fin-brown": "#2e2109",
+      "paper-shader": "#e2d0b1",
+      "seam": "#e5e1d6",
+      "scrim-source": "#595551 (hard-light, baked as multiply .698/.667/.635)",
+      "cta-gradient": [
+        "#14161b",
+        "#090a0d",
+        "#05060a"
+      ],
+      "send-gold": [
+        "#d9be86",
+        "#c2a365",
+        "#a98a4e",
+        "#3a2c10"
+      ],
+      "fly-sky": [
+        "#fff",
+        "#eff4fa",
+        "#dce6f2"
+      ],
+      "nav-scrim": "#062e5c94",
+      "glow": [
+        "#fffae8",
+        "#ffecba",
+        "#ffd682"
+      ],
+      "orbit": "#e2eeff4d",
+      "ember": "rgb(255,158,66)",
+      "char-tint": [
+        "rgb(184,140,102)",
+        "rgb(36,26,23)"
+      ]
+    },
+    "fonts": {
+      "title": "Flecha M 300 (Flecha S fallback)",
+      "text": "GT Standard L 400/500",
+      "code": "GT Standard Mono 400",
+      "sign": "Flecha L 300",
+      "files": 11
+    },
+    "typeScale": {
+      "h1": "clamp(30px,5.357vw,96px)/1 300",
+      "subhead": "clamp(14px,1.68vw,30px)/1.02",
+      "beat": "clamp(26px,3.32vw,60px)/.977",
+      "lead": "clamp(28px,4.6vw,82px)/1",
+      "stand": "clamp(13px,1.068vw,19px)/1.3 ls -.005em max 27.4em",
+      "label": "clamp(9px,.72vw,11px) ls .2em upper",
+      "cta": "clamp(9px,.66vw,12px) ls .16em upper",
+      "tag": "clamp(8px,.534vw,10px) ls .2em",
+      "rail": "9px ls .2em",
+      "sign": "clamp(30px,8.11vw,177px)/1.04 ls -.024em",
+      "fin-h": "77.872px/68.541px ls -1.5574px 300",
+      "fin-l": "23.903px/27.542px",
+      "fin-s": "15.8px/19.853px",
+      "pf-h": "23.222px/24.453px ls -.4644px",
+      "pf-chip": "9.16px ls .3664px upper",
+      "fq-h3": "26.222px/24.453px ls -.5244px",
+      "fq-p": "12.8px/16.853px",
+      "ft-tag": "26.57px/30.62px",
+      "ft-meta": "12.16px/20.46px ls .4864px 500 upper",
+      "cf-lead": "20px/24.5px",
+      "cf-input": "14px/20px",
+      "cf-cta": "11px ls .18em 500 upper",
+      "nvm-em": "clamp(34px,4.6vw,86px)/.98 300",
+      "nvm-b": "clamp(9px,.62vw,11px) ls .24em",
+      "tw-display": "clamp(1.875rem,3.4vw,3.25rem)/1.12 ls -.018em"
+    },
+    "grid": {
+      "v1": "5.3%",
+      "v2": "85.6%",
+      "h1": "5.3vw (64px ≤900px, 60px ≤720px)",
+      "h2": "calc(65.3% + 50px)",
+      "colA": "7.98%",
+      "colB": "23.7%",
+      "mobile": {
+        "v1": "4.75%",
+        "v2": "95.25%",
+        "mx": "calc(var(--v1) + 14.5px)"
+      },
+      "cross": "16px 四芒星 M12 0Q13.1 10.9 24 12Q13.1 13.1 12 24Q10.9 13.1 0 12Q10.9 10.9 12 0Z",
+      "ruleColors": {
+        "dark": [
+          "#ffffff39",
+          "#ffffff86",
+          "#fff"
+        ],
+        "light": [
+          "#1d1c192a",
+          "#1d1c1957",
+          "#1d1c19"
+        ]
+      }
+    },
+    "motion": {
+      "ease": "cubic-bezier(.22,1,.36,1)",
+      "keyframes": {
+        "ruleV/ruleH": "1.15s",
+        "cross": ".72s",
+        "hdrIn": ".7s +.42s",
+        "menuIn": ".7s +1.1s",
+        "draw": "1.4s +.15s (pathLength=1)",
+        "shine": "7s infinite (+2.4s) / 6s footer",
+        "cfRim": "7.5s linear / 11s reverse (@property --ra)",
+        "cfRimP": "4.3s / 6.7s",
+        "cfGlow": "1.9s + .42s×(i%7)",
+        "cfArc": "7.5s + 2.6s×i"
+      },
+      "jsEasings": [
+        "smooth x²(3-2x)",
+        "smoother 6x⁵-15x⁴+10x³",
+        "out-quart 1-(1-x)⁴",
+        "out-expo 1-2^(-9x)",
+        "out-back",
+        "in-out cubic",
+        "linear",
+        "rule-draw 1-(1-x)³"
+      ],
+      "scroll": {
+        "lerpDesktop": 0.085,
+        "lerpNative": 0.3,
+        "keyStep": "90px, .9vh page",
+        "syncTolerance": "2px"
+      }
+    },
+    "road": {
+      "stageHeight": "5350vh",
+      "segmentsVh": {
+        "hero": 1200,
+        "work": 600,
+        "coda": 300,
+        "terms": 900,
+        "ringout": 300,
+        "questions": 600,
+        "flysky": 500,
+        "form": 250,
+        "footer": 700
+      },
+      "railAt": {
+        "The Model": 0.012,
+        "The Work": 0.232,
+        "The Terms": 0.4,
+        "Questions": 0.628
+      },
+      "applyAt": 0.8365,
+      "heroInner": {
+        "film": "0–.04",
+        "reel": ".04–.76",
+        "burn": ".775–.915",
+        "beats": [
+          [
+            0,
+            0.045
+          ],
+          [
+            0.26,
+            0.4
+          ],
+          [
+            0.44,
+            0.55
+          ],
+          [
+            0.56,
+            0.65
+          ]
+        ],
+        "tags": [
+          "At your service",
+          "Custom software",
+          "Search and links",
+          "Revenue share"
+        ]
+      }
+    },
+    "media": {
+      "films": {
+        "signal.mp4": 11289195,
+        "colossus.mp4": 5603291,
+        "reveal.mp4": 13714356,
+        "footer-loop.mp4": 7557188
+      },
+      "filmSpec": "1920×1080, 10s, muted loop",
+      "posters": "960×540 jpg",
+      "frames": {
+        "model/<bridge>": "121 × 1440×810 (768 tier alt)",
+        "model/renaissance": "362 × 1440×810",
+        "plan": "121 × 1112×834",
+        "coda": "89 × 1664×1248",
+        "tree": "121 × 1920×1080",
+        "flysky": "121 × 1920×1080",
+        "trans": "121 × 1920×1080",
+        "total": 1056,
+        "format": "webp ?r=13"
+      },
+      "plate": "/art/scaffold_expand.jpg 1520×4023"
+    },
+    "loader": {
+      "concurrency": 8,
+      "order": "二分步长 32→1",
+      "scanRadius": 24,
+      "retries": 3,
+      "hotLanes": "aim 500ms 内 ×2",
+      "window": "±.1 road",
+      "decodeWarm": "±3 帧",
+      "tiers": [
+        "1440",
+        "768 (≤820px)"
+      ]
+    },
+    "shader": {
+      "samplers": [
+        "uA film",
+        "uB reel",
+        "uC plate",
+        "uE coda",
+        "uG tree",
+        "uP plan"
+      ],
+      "uniformCount": 61,
+      "modes": [
+        "breathe",
+        "slice",
+        "halftone",
+        "displace",
+        "static",
+        "ring (default)"
+      ],
+      "treatments": [
+        "none",
+        "slabs",
+        "halftone",
+        "warp",
+        "tear",
+        "fine (in use)",
+        "mosaic",
+        "dither",
+        "shred",
+        "ditherblock"
+      ],
+      "ring": {
+        "W": 0.3,
+        "lobes": "fbm(ang·1.9)+fbm(ang·5.3)·.55",
+        "rings": "sin(r·46−t·1.1)",
+        "rowTear": "7px rows @15Hz",
+        "blocks": "uBlk 11 (fine ×.28)",
+        "ascii": "uAsc 9px, 5×5 bitmap ramp ' .:-+=*%#@'",
+        "chroma": "13px×brk",
+        "flare": "(1,.94,.80)·band²·uGlow .62",
+        "heat": 1
+      },
+      "burn": {
+        "at": 0.775,
+        "len": 0.14,
+        "origin": ".48+20px, .57+75px",
+        "shape": "L∞ (square)",
+        "aniso": [
+          2.35,
+          1.1
+        ],
+        "fields": {
+          "noise": 0.295,
+          "grain": 0.125,
+          "dither": 0.052,
+          "hash": 0.15
+        },
+        "edge": [
+          -0.16,
+          1.3
+        ],
+        "seam": {
+          "amount": 0.85,
+          "w": 0.2,
+          "h": 0.62,
+          "soft": 0.055
+        },
+        "push": {
+          "reelZ": "1+2·p",
+          "drift": [
+            0.03,
+            -0.018
+          ],
+          "mblur": 0.012,
+          "spin": 0.13,
+          "edgeBlur": ".01 from .55",
+          "split": ".05 lag .58"
+        },
+        "zoomPan": 0.34,
+        "scrim": ".18 over .26–.34"
+      },
+      "paper": {
+        "rgb": [
+          226,
+          208,
+          177
+        ],
+        "pulp": 0.115,
+        "fibre": 0.055,
+        "tooth": 0.038,
+        "fleck": 0.55,
+        "rays": {
+          "speed": 2.6,
+          "drift": 1.65,
+          "jiggle": 2.25,
+          "scale": 2.6,
+          "depth": 0.085,
+          "breathe": 2.5,
+          "rake": 0.35,
+          "cycle": 1.85
+        },
+        "plan": {
+          "keyX": 0.255,
+          "keyY": 0.5,
+          "keyS": 0.46
+        },
+        "close": {
+          "noise": 0.06,
+          "grain": 0.17,
+          "dither": 0.01,
+          "hash": 0.1,
+          "charW": 0.055,
+          "charBack": 1.5,
+          "char": 0.62,
+          "glowW": 0.01
+        },
+        "drag": {
+          "lag": 0.055,
+          "lagD": 0.16,
+          "smear": 0.3
+        }
+      },
+      "footerGL": {
+        "mode": 1,
+        "noise": 74,
+        "scaleB": 1.018,
+        "radius": 0.9,
+        "width": 0.35,
+        "gradeCurve": "[0,1,4,9,10]s → [.955,.757,.714,.533,.515]"
+      },
+      "dpr": "min(devicePixelRatio, 2) 桌面 / 1.5 手机（自适应降级 .25 步）",
+      "phone": "PHONE define：fbmQ 2 octaves"
+    },
+    "overlays": {
+      "lines": "2D canvas，规则线与十字以 destination-in 用蓝天键控蒙版：alpha=(B−max(R,G)−8)/34，320px 分析宽，40ms 刷新",
+      "light": "8×5 亮度采样 >168（回差 132）切 .on-light，160ms",
+      "faq": {
+        "cards": 5,
+        "size": "259.756×330",
+        "radius": "min(360px,.26vw) / .36vw 手机",
+        "spacing": "72°",
+        "top": "60.2%",
+        "blur": "≤4.2px",
+        "lead": "SVG line + 8×8 rect"
+      },
+      "form": {
+        "stage": "980×760 perspective 1700px",
+        "fields": [
+          [
+            452,
+            148,
+            236,
+            62
+          ],
+          [
+            712,
+            148,
+            236,
+            62
+          ],
+          [
+            452,
+            226,
+            496,
+            226
+          ]
+        ],
+        "button": [
+          452,
+          486,
+          262,
+          40
+        ],
+        "glass": {
+          "blur": 9.5,
+          "fill": 0.1,
+          "rim": 0.41,
+          "bev": 2.5,
+          "bev2": 0.35,
+          "spec": 0.4,
+          "sat": 1.1,
+          "ins": 0.475
+        },
+        "hover": {
+          "pop": 64,
+          "push": 26
+        },
+        "glows": 17,
+        "orbits": 3,
+        "turnstile": "invisible execute → POST /api/apply"
+      },
+      "footer": {
+        "design": "1920×1080",
+        "rules": [
+          125,
+          982,
+          675,
+          1262
+        ],
+        "box": "587×857 @675,125 dash 2884",
+        "mark": "524.211×180 @720,165 #EBEBEB"
+      }
+    },
+    "urlSwitches": [
+      "?hero=signal|colossus|reveal",
+      "?t=breathe|slice|halftone|displace|static|ring",
+      "?hud",
+      "?drive=N",
+      "?nowarm",
+      "?nogl",
+      "?nofin",
+      "?noscrub"
+    ],
+    "inferred": {
+      "foundries": "Flecha（R-Typography）与 GT Standard（Grilli Type）为商业字体——按字族名推断",
+      "artwork": "新古典油画风格静帧与影片的制作方式未披露，不作 AI 生成判断",
+      "sky-token": "--color-sky #015186 在主题层声明，未见使用"
+    }
+  }
+}

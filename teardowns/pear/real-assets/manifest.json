@@ -1,0 +1,121 @@
+{
+  "site": "Pear",
+  "url": "https://pear.no/",
+  "fonts": [
+    {
+      "url": "https://pear.no/fonts/FlechaS-Light.woff2",
+      "file": "cf0a84_FlechaS-Light.woff2",
+      "bytes": 41740,
+      "type": "font/woff2"
+    },
+    {
+      "url": "https://pear.no/fonts/FlechaS-Regular.woff2",
+      "file": "b8bdec_FlechaS-Regular.woff2",
+      "bytes": 39720,
+      "type": "font/woff2"
+    },
+    {
+      "url": "https://pear.no/fonts/GTStandardL-Regular.woff2",
+      "file": "97481a_GTStandardL-Regular.woff2",
+      "bytes": 62732,
+      "type": "font/woff2"
+    },
+    {
+      "url": "https://pear.no/fonts/GTStandardL-Medium.woff2",
+      "file": "d23f57_GTStandardL-Medium.woff2",
+      "bytes": 62772,
+      "type": "font/woff2"
+    },
+    {
+      "url": "https://pear.no/fonts/GTStandardMono-Regular.woff2",
+      "file": "7c37df_GTStandardMono-Regular.woff2",
+      "bytes": 32976,
+      "type": "font/woff2"
+    },
+    {
+      "url": "https://pear.no/fonts/FlechaL-Light.woff2",
+      "file": "984e5b_FlechaL-Light.woff2",
+      "bytes": 39056,
+      "type": "font/woff2"
+    },
+    {
+      "url": "https://pear.no/fonts/FlechaL-Regular.woff2",
+      "file": "25d245_FlechaL-Regular.woff2",
+      "bytes": 37728,
+      "type": "font/woff2"
+    },
+    {
+      "url": "https://pear.no/fonts/FlechaM-Light.woff2",
+      "file": "51f233_FlechaM-Light.woff2",
+      "bytes": 41272,
+      "type": "font/woff2"
+    },
+    {
+      "url": "https://pear.no/fonts/FlechaM-Light.woff",
+      "file": "c3bebc_FlechaM-Light.woff",
+      "bytes": 54896,
+      "type": "font/woff"
+    },
+    {
+      "url": "https://pear.no/fonts/FlechaM-Regular.woff2",
+      "file": "fc592e_FlechaM-Regular.woff2",
+      "bytes": 39240,
+      "type": "font/woff2"
+    },
+    {
+      "url": "https://pear.no/fonts/FlechaM-Regular.woff",
+      "file": "e444c5_FlechaM-Regular.woff",
+      "bytes": 52260,
+      "type": "font/woff"
+    }
+  ],
+  "video": [
+    {
+      "url": "https://pear.no/films/footer-loop.mp4",
+      "file": "c0abc6_footer-loop.mp4",
+      "bytes": 7557188,
+      "type": "video/mp4"
+    },
+    {
+      "url": "https://pear.no/films/colossus.mp4",
+      "file": "289c44_colossus.mp4",
+      "bytes": 5603291,
+      "type": "video/mp4"
+    }
+  ],
+  "audio": [],
+  "image": [
+    {
+      "url": "https://pear.no/og.jpg",
+      "file": "e37e5d_og.jpg",
+      "bytes": 155403,
+      "type": "image/jpeg"
+    },
+    {
+      "url": "https://pear.no/favicon.svg",
+      "file": "04caa2_favicon.svg",
+      "bytes": 778,
+      "type": "image/svg+xml"
+    },
+    {
+      "url": "https://pear.no/favicon-32.png",
+      "file": "ecf7a6_favicon-32.png",
+      "bytes": 750,
+      "type": "image/png"
+    },
+    {
+      "url": "https://pear.no/films/colossus-poster.jpg",
+      "file": "057bee_colossus-poster.jpg",
+      "bytes": 42516,
+      "type": "image/jpeg"
+    }
+  ],
+  "lottie": [],
+  "source": [
+    {
+      "url": "https://pear.no/assets/index-Bd_JnIbr.css",
+      "file": "930324_index-Bd_JnIbr.css",
+      "bytes": 61948
+    }
+  ]
+}

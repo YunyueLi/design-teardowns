@@ -1,0 +1,919 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#0b0a09">
+<title>Pear（pear.no）拆解 · 一页即一部电影</title>
+<style>
+/* ============ 真字体：本目录 real-assets/fonts 下的原文件 ============ */
+@font-face{font-family:"Flecha M";src:url(real-assets/fonts/51f233_FlechaM-Light.woff2) format("woff2"),url(real-assets/fonts/c3bebc_FlechaM-Light.woff) format("woff");font-weight:300;font-style:normal;font-display:swap}
+@font-face{font-family:"Flecha M";src:url(real-assets/fonts/fc592e_FlechaM-Regular.woff2) format("woff2"),url(real-assets/fonts/e444c5_FlechaM-Regular.woff) format("woff");font-weight:400;font-style:normal;font-display:swap}
+@font-face{font-family:"Flecha S";src:url(real-assets/fonts/cf0a84_FlechaS-Light.woff2) format("woff2");font-weight:300;font-style:normal;font-display:swap}
+@font-face{font-family:"Flecha S";src:url(real-assets/fonts/b8bdec_FlechaS-Regular.woff2) format("woff2");font-weight:400;font-style:normal;font-display:swap}
+@font-face{font-family:"Flecha L";src:url(real-assets/fonts/984e5b_FlechaL-Light.woff2) format("woff2");font-weight:300;font-style:normal;font-display:swap}
+@font-face{font-family:"Flecha L";src:url(real-assets/fonts/25d245_FlechaL-Regular.woff2) format("woff2");font-weight:400;font-style:normal;font-display:swap}
+@font-face{font-family:"GT Standard L";src:url(real-assets/fonts/97481a_GTStandardL-Regular.woff2) format("woff2");font-weight:400;font-style:normal;font-display:swap}
+@font-face{font-family:"GT Standard L";src:url(real-assets/fonts/d23f57_GTStandardL-Medium.woff2) format("woff2");font-weight:500;font-style:normal;font-display:swap}
+@font-face{font-family:"GT Standard Mono";src:url(real-assets/fonts/7c37df_GTStandardMono-Regular.woff2) format("woff2");font-weight:400;font-style:normal;font-display:swap}
+
+/* ============ 真 token：全部来自线上样式表与脚本原文 ============ */
+:root{
+  --press:#0b0a09; --paper:#f2f1ed; --ink:#1d1c19; --ink-soft:#33322d;
+  --cream:#fffaea; --fin-brown:#2e2109; --paper-shader:#e2d0b1; --seam:#e5e1d6;
+  --title:"Flecha M","Flecha S","Iowan Old Style",Georgia,serif;
+  --text:"GT Standard L",ui-sans-serif,-apple-system,Arial,sans-serif;
+  --code:"GT Standard Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+  --sign:"Flecha L","Flecha M",var(--title);
+  --ease:cubic-bezier(.22,1,.36,1);
+  --v1:5.3%; --v2:85.6%; --h1:5.3vw; --colA:7.98%;
+  --rule:#ffffff39; --cross:#ffffff86; --mark:#fff;
+  --page:min(1060px,88vw);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth;color-scheme:only dark}
+body{background:var(--press);color:var(--paper);font-family:var(--text);font-size:16px;line-height:1.5;
+  -webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;overflow-x:clip}
+::selection{background:var(--cream);color:var(--press)}
+img,canvas{display:block;max-width:100%}
+a{color:inherit;text-decoration-thickness:.045em;text-underline-offset:.16em;text-decoration-color:#f2f1ed59}
+a:hover{text-decoration-color:var(--paper)}
+
+/* ============ 覆盖层：原站的制图纸（固定在视口） ============ */
+.ov{position:fixed;inset:0;pointer-events:none;z-index:5}
+.ov .vr{position:absolute;top:0;bottom:0;width:1px;background:var(--rule)}
+.ov .hr{position:absolute;left:0;right:0;height:1px;background:var(--rule)}
+.ov .gx{position:absolute;width:16px;height:16px;margin:-8px 0 0 -8px;opacity:.86}
+.ov .gx svg{width:100%;height:100%;fill:var(--mark);animation:shine 7s var(--ease) 2.4s infinite}
+@keyframes shine{0%,88%,100%{opacity:.34}94%{opacity:1}}
+@media (prefers-reduced-motion:reduce){.ov .gx svg{animation:none;opacity:.5}}
+
+/* ============ 版心 ============ */
+.wrap{width:var(--page);margin:0 auto}
+header.top{position:relative;z-index:6;padding:clamp(56px,11vh,120px) 0 clamp(40px,7vh,72px)}
+.mark{display:flex;align-items:center;gap:12px;margin-bottom:clamp(40px,8vh,90px)}
+.mark svg{width:28px;height:28px;fill:none;stroke:var(--paper);stroke-width:14}
+.mark .m-t{font-family:var(--code);font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:#f2f1ed99}
+h1{font-family:var(--title);font-weight:300;font-size:clamp(30px,5.357vw,96px);line-height:1;letter-spacing:-.018em;text-wrap:balance}
+h1 em{font-style:normal;color:#f2f1ed80}
+.subhead{font-family:var(--title);font-weight:300;font-size:clamp(14px,1.68vw,30px);line-height:1.14;color:#f2f1edbf;margin-top:clamp(18px,2.4vw,34px);max-width:40ch}
+.meta{display:flex;flex-wrap:wrap;gap:8px 28px;margin-top:clamp(30px,5vh,56px);
+  font-family:var(--code);font-size:clamp(9px,.72vw,11px);letter-spacing:.2em;text-transform:uppercase;color:#f2f1ed8c}
+.meta b{font-weight:400;color:var(--paper)}
+
+/* ============ 导轨（原站左侧四章导轨的移植） ============ */
+nav.rail{position:fixed;left:20px;top:26%;z-index:7;display:none;flex-direction:column;gap:11px;max-width:96px}
+nav.rail a{display:flex;align-items:center;gap:10px;text-decoration:none;
+  font-family:var(--code);font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:#f2f1ed5c;transition:color .5s var(--ease)}
+nav.rail i{display:block;height:1px;width:9px;background:currentColor;transition:width .5s var(--ease)}
+nav.rail a:hover,nav.rail a.on{color:var(--paper)}
+nav.rail a.on i{width:22px}
+@media (min-width:1320px){nav.rail{display:flex}}
+
+/* ============ 章节 ============ */
+section.ch{position:relative;z-index:6;padding-top:clamp(64px,11vh,124px);scroll-margin-top:24px}
+.kick{display:flex;align-items:baseline;gap:12px;border-top:1px solid #f2f1ed2e;padding-top:11px;margin-bottom:clamp(22px,3.4vw,40px)}
+.kick .n{font-family:var(--code);font-size:10px;letter-spacing:.2em;color:#f2f1ed73}
+.kick .t{font-family:var(--code);font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--paper)}
+.kick .r{margin-left:auto;font-family:var(--code);font-size:9px;letter-spacing:.16em;color:#f2f1ed59}
+h2{font-family:var(--title);font-weight:300;font-size:clamp(26px,3.32vw,60px);line-height:.977;letter-spacing:-.018em;text-wrap:balance;max-width:22ch}
+h3{font-family:var(--title);font-weight:400;font-size:clamp(18px,1.5vw,26px);line-height:1.14;margin:clamp(30px,4vw,50px) 0 12px}
+h4{font-family:var(--code);font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:#f2f1ed99;margin:26px 0 10px;font-weight:400}
+p{font-size:clamp(13px,1.068vw,19px);line-height:1.55;letter-spacing:-.005em;max-width:27.4em;color:#f2f1edd9;margin-top:14px}
+p.lead{color:var(--paper);max-width:30em}
+ul,ol{margin:14px 0 0 1.1em;max-width:27.4em}
+li{font-size:clamp(13px,1.068vw,19px);line-height:1.5;letter-spacing:-.005em;color:#f2f1edd9;margin-top:7px}
+code{font-family:var(--code);font-size:.86em;background:#f2f1ed12;padding:.1em .34em;border-radius:3px;color:var(--cream)}
+strong{font-weight:400;color:var(--paper)}
+
+/* ============ 表 ============ */
+.tbl{width:100%;overflow-x:auto;margin-top:22px;border-top:1px solid #f2f1ed2e}
+table{width:100%;border-collapse:collapse;min-width:520px}
+th,td{text-align:left;padding:9px 14px 9px 0;border-bottom:1px solid #f2f1ed14;vertical-align:top;
+  font-size:clamp(11px,.85vw,14px);line-height:1.42;color:#f2f1edcc}
+th{font-family:var(--code);font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:#f2f1ed80;font-weight:400;padding-top:11px;padding-bottom:11px}
+td:first-child{color:var(--paper)}
+td.num,th.num{font-family:var(--code);font-variant-numeric:tabular-nums}
+.lv{font-family:var(--code);font-size:8px;letter-spacing:.14em;text-transform:uppercase;padding:2px 5px;border-radius:2px;white-space:nowrap}
+.lv.f{background:#f2f1ed1f;color:var(--cream)}
+.lv.g{background:#f2f1ed0f;color:#f2f1ed8c}
+
+/* ============ 装置外壳 ============ */
+.dev{margin-top:clamp(30px,4.6vw,56px);border:1px solid #f2f1ed26;border-radius:4px;background:#f2f1ed08;overflow:hidden}
+.dev-h{display:flex;align-items:baseline;gap:12px;padding:12px 16px;border-bottom:1px solid #f2f1ed1a;flex-wrap:wrap}
+.dev-h .id{font-family:var(--code);font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--cream)}
+.dev-h .nm{font-family:var(--title);font-weight:400;font-size:16px}
+.dev-h .src{margin-left:auto;font-family:var(--code);font-size:8.5px;letter-spacing:.14em;color:#f2f1ed73;text-transform:uppercase}
+.dev-b{padding:16px}
+.dev-note{padding:10px 16px 14px;border-top:1px solid #f2f1ed1a;font-size:12px;line-height:1.5;color:#f2f1ed99;max-width:none}
+.ctl{display:flex;flex-wrap:wrap;gap:14px 22px;align-items:center;margin-top:14px}
+.ctl label{display:flex;align-items:center;gap:9px;font-family:var(--code);font-size:9px;letter-spacing:.16em;text-transform:uppercase;color:#f2f1ed99}
+.ctl input[type=range]{-webkit-appearance:none;appearance:none;width:150px;height:1px;background:#f2f1ed40;outline:none}
+.ctl input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:11px;height:11px;border-radius:50%;background:var(--paper);cursor:pointer}
+.ctl input[type=range]::-moz-range-thumb{width:11px;height:11px;border:0;border-radius:50%;background:var(--paper);cursor:pointer}
+.ctl output{font-family:var(--code);font-size:10px;color:var(--cream);min-width:4.2em;font-variant-numeric:tabular-nums}
+.btn{font-family:var(--code);font-size:9px;letter-spacing:.16em;text-transform:uppercase;padding:6px 12px;border:1px solid #f2f1ed3d;background:transparent;color:var(--paper);border-radius:999px;cursor:pointer;transition:background .3s var(--ease),border-color .3s var(--ease)}
+.btn:hover{background:#f2f1ed14;border-color:#f2f1ed73}
+.btn[aria-pressed=true]{background:var(--paper);color:var(--press);border-color:var(--paper)}
+
+/* 装置一：蓝天键控 */
+.key-stage{position:relative;aspect-ratio:16/9;background:#000;border-radius:3px;overflow:hidden}
+.key-stage canvas,.key-stage img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.key-stage canvas{z-index:2}
+/* 装置二：道路尺 */
+.road-stage{position:relative;aspect-ratio:16/9;background:#000;border-radius:3px;overflow:hidden}
+.road-stage img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .18s linear}
+.road-stage img.on{opacity:1}
+.road-bar{position:relative;height:26px;margin-top:12px;display:flex;border:1px solid #f2f1ed26;border-radius:2px;overflow:hidden;cursor:pointer}
+.road-bar span{position:relative;display:flex;align-items:center;justify-content:center;border-right:1px solid #f2f1ed1a;
+  font-family:var(--code);font-size:8px;letter-spacing:.1em;color:#f2f1ed73;transition:background .25s var(--ease),color .25s var(--ease);user-select:none}
+.road-bar span:last-child{border-right:0}
+.road-bar span.on{background:#f2f1ed1f;color:var(--cream)}
+.road-head{position:absolute;top:0;bottom:0;width:1px;background:var(--cream);pointer-events:none;z-index:3}
+.road-read{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:10px 20px;margin-top:14px}
+.road-read div{font-family:var(--code);font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:#f2f1ed80}
+.road-read b{display:block;font-size:15px;letter-spacing:0;color:var(--cream);font-weight:400;margin-top:3px;font-variant-numeric:tabular-nums;text-transform:none}
+/* 装置三：撕裂圆环 */
+.ring-stage{position:relative;aspect-ratio:16/9;background:#000;border-radius:3px;overflow:hidden}
+.ring-stage canvas{width:100%;height:100%}
+/* 装置四：问答转盘 */
+.faq-stage{position:relative;height:430px;perspective:1500px;perspective-origin:50% 46%;overflow:hidden;border-radius:3px;
+  background:radial-gradient(120% 92% at 50% 46%,#1a1714 0%,#0d0c0a 62%,#0b0a09 100%)}
+.fq{position:absolute;left:50%;top:50%;width:206px;height:262px;
+  transform-style:preserve-3d;backface-visibility:hidden;border:1px solid #f2f1ed40;border-radius:3px;
+  background:#26221d;box-shadow:0 18px 44px #00000080;padding:16px 15px;will-change:transform,filter}
+.fq .q{font-family:var(--title);font-weight:400;font-size:15px;line-height:1.16;color:var(--paper)}
+.fq .a{font-size:11px;line-height:1.42;color:#f2f1ed8c;margin-top:10px;opacity:0;transition:opacity .4s var(--ease)}
+.fq.lit{border-color:#fffaeacc;background:#2a251f}
+.fq.lit .a{opacity:1}
+.fq .st{position:absolute;right:11px;top:11px;width:10px;height:10px;opacity:.22;transition:opacity .4s var(--ease)}
+.fq.lit .st{opacity:1}
+.fq .st svg{width:100%;height:100%;fill:var(--cream)}
+/* 装置五：玻璃字段 */
+@property --ra{syntax:"<angle>";inherits:false;initial-value:0deg}
+.glass-stage{display:flex;flex-wrap:wrap;gap:18px;padding:30px 16px;border-radius:3px;
+  background:radial-gradient(120% 100% at 30% 0%,#123-40%,#0b0a09 70%)}
+.glass{position:relative;width:236px;height:62px;border-radius:22px;isolation:isolate;
+  background:linear-gradient(157deg,rgb(255 255 255/.17),rgb(255 255 255/.035) 38%,rgb(190 220 255/.09));
+  -webkit-backdrop-filter:blur(9.5px) saturate(1.1) brightness(1.02);backdrop-filter:blur(9.5px) saturate(1.1) brightness(1.02);
+  box-shadow:inset 0 1px 6px rgb(6 20 46/.475);display:flex;align-items:center;padding:0 18px;
+  transition:transform .5s var(--ease)}
+.glass.tall{width:100%;max-width:496px;height:120px;align-items:flex-start;padding-top:16px}
+.glass .lb{font-family:var(--code);font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:#f2f1edb3}
+.glass .rim{position:absolute;inset:0;padding:1px;border-radius:inherit;pointer-events:none;
+  background:conic-gradient(from var(--ra),rgb(255 255 255/.54),rgb(255 255 255/.1) 11%,rgb(255 255 255/.62) 25%,rgb(255 255 255/.17) 39%,rgb(214 234 255/.46) 53%,rgb(255 255 255/.07) 67%,rgb(255 255 255/.58) 80%,rgb(255 255 255/.2) 91%,rgb(255 255 255/.54));
+  -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;
+  mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);mask-composite:exclude;
+  animation:rim 7.5s linear infinite}
+.glass .rim2{position:absolute;inset:0;padding:1px;border-radius:inherit;pointer-events:none;filter:blur(.4px);
+  background:conic-gradient(from calc(var(--ra) + 140deg),rgb(255 255 255/.06),rgb(255 255 255/.3) 30%,rgb(255 255 255/.04) 62%,rgb(255 255 255/.24));
+  -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;
+  mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);mask-composite:exclude;
+  animation:rim 11s linear infinite reverse}
+@keyframes rim{to{--ra:360deg}}
+.glass-stage:hover .glass{transform:translateZ(0) translateY(6px);opacity:.72}
+.glass-stage .glass:hover{transform:translateZ(0) translateY(-4px);opacity:1}
+@media (prefers-reduced-motion:reduce){.glass .rim,.glass .rim2{animation:none}}
+
+/* ============ 图版 ============ */
+.shots{display:grid;grid-template-columns:repeat(auto-fill,minmax(196px,1fr));gap:10px;margin-top:22px}
+.shots figure{margin:0}
+.shots img{width:100%;aspect-ratio:16/10;object-fit:cover;border-radius:2px;background:#000;border:1px solid #f2f1ed14}
+.shots figcaption{font-family:var(--code);font-size:8.5px;letter-spacing:.14em;text-transform:uppercase;color:#f2f1ed73;margin-top:6px}
+.swatches{display:grid;grid-template-columns:repeat(auto-fill,minmax(128px,1fr));gap:10px;margin-top:22px}
+.sw{border:1px solid #f2f1ed1a;border-radius:3px;overflow:hidden}
+.sw i{display:block;height:52px}
+.sw .lb{padding:7px 9px;font-family:var(--code);font-size:8.5px;letter-spacing:.12em;color:#f2f1ed99;line-height:1.5}
+.sw .lb b{display:block;color:var(--paper);font-weight:400;letter-spacing:.16em;text-transform:uppercase;font-size:8px}
+.typerow{border-top:1px solid #f2f1ed14;padding:16px 0;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:14px;align-items:baseline}
+.typerow .spec{font-family:var(--code);font-size:9px;letter-spacing:.14em;color:#f2f1ed73;text-align:right;white-space:nowrap}
+
+/* ============ 页脚 ============ */
+footer{position:relative;z-index:6;margin-top:clamp(80px,14vh,150px);border-top:1px solid #f2f1ed2e;padding:26px 0 60px;
+  display:flex;flex-wrap:wrap;gap:12px 30px;font-family:var(--code);font-size:9px;letter-spacing:.16em;text-transform:uppercase;color:#f2f1ed73}
+footer a{color:#f2f1ed99}
+@media (max-width:720px){
+  :root{--v1:4.75%;--v2:95.25%;--h1:60px}
+  .glass{width:100%}
+  .faq-stage{height:340px}
+}
+</style>
+</head>
+<body>
+
+<div class="ov" aria-hidden="true">
+  <div class="vr" style="left:var(--v1)"></div>
+  <div class="vr" style="left:var(--v2)"></div>
+  <div class="hr" style="top:var(--h1)"></div>
+  <div class="gx" style="left:var(--v1);top:var(--h1)"><svg viewBox="0 0 24 24"><path d="M12 0Q13.1 10.9 24 12Q13.1 13.1 12 24Q10.9 13.1 0 12Q10.9 10.9 12 0Z"/></svg></div>
+  <div class="gx" style="left:var(--v2);top:var(--h1)"><svg viewBox="0 0 24 24"><path d="M12 0Q13.1 10.9 24 12Q13.1 13.1 12 24Q10.9 13.1 0 12Q10.9 10.9 12 0Z"/></svg></div>
+</div>
+
+<nav class="rail" aria-label="章节">
+  <a href="#c1"><i></i>The Model</a>
+  <a href="#c5"><i></i>The Work</a>
+  <a href="#c8"><i></i>The Terms</a>
+  <a href="#c11"><i></i>Questions</a>
+</nav>
+
+<div class="wrap">
+<header class="top">
+  <div class="mark">
+    <svg viewBox="0 0 302 414" aria-hidden="true"><path d="M153.19 22.53C168.21 23.03 182.32 28.8 193.13 38.92C202.3 47.51 208.57 58.46 211.23 70.6C220.52 112.92 237.69 155.75 262.27 197.92C273.65 217.44 279.66 239.79 279.66 262.54C279.66 296.89 266.29 329.18 242.01 353.46C217.73 377.74 185.45 391.11 151.13 391.12L149.08 391.11C80.4 390.15 23.57 333.39 22.51 264.58C22.14 240.37 28.5 216.71 40.91 196.17C63.74 158.4 80.6 116 91.02 70.15C93.73 58.21 99.95 47.41 109.01 38.92C120.33 28.33 135.27 22.5 151.08 22.5C151.79 22.5 152.49 22.51 153.19 22.53Z"/></svg>
+    <span class="m-t">Design teardown · pear.no</span>
+  </div>
+  <h1>一页即一部电影<br><em>Pear makes you appear</em></h1>
+  <p class="subhead">5350vh 的舞台切成九段路，1,056 帧 webp 与四支影片由自研装载器按滚动位置分级加载，一支约 950 行的片元着色器独力承担撕裂、燃烬、纸与图纸——没有任何动画库。</p>
+  <div class="meta">
+    <span>对象 <b>pear.no</b></span>
+    <span>体裁 <b>单页滚动叙事</b></span>
+    <span>抽取 <b>13,564 行 JS 全读</b></span>
+    <span>日志 <b>730 条请求</b></span>
+    <span>截图 <b>35 个道路位置</b></span>
+  </div>
+</header>
+
+<section class="ch" id="c1">
+  <div class="kick"><span class="n">I</span><span class="t">定位</span><span class="r">The Model</span></div>
+  <h2>不是按小时计费的机构，是分享上行收益的合伙人</h2>
+  <p class="lead">一句话卖点写在标题里：<strong>Pear makes you appear</strong>。Pear AS（奥斯陆）自掏腰包做策略、软件、内容与外链，只从新增收入里抽成。整站只有一页，也只有一个动作：申请合伙。</p>
+  <p>这决定了页面的体裁。它不是落地页，而是一部约 53 屏长的滚动电影：整站包在一个 5350vh 高的舞台里，视口被固定，滚动量驱动一支影片、一千多帧序列图和两支 WebGL 着色器逐帧推进。四个章节像电影的四幕——The Model、The Work、The Terms、Questions——最后落到申请表与片尾字幕。</p>
+  <h4>三层意图（推断，依据充分）</h4>
+  <ol>
+    <li><strong>新古典寓言</strong>：金色巨梨立在大理石基座上，古典衣袍的人物在打磨、修剪、切分、浇灌它。梨是客户的生意，人物是 Pear 的工作方式。</li>
+    <li><strong>绘图桌的理性</strong>：蓝天上叠着制图规则线与十字准星，工作章节是脚手架与图纸，纯粹的测量感抵消寓言的甜。</li>
+    <li><strong>诚实的合同</strong>：Terms 章直接把「我们更常说不」写成标题，把抽成、基线、归因写进问答，页面结构本身就是一份条款书。</li>
+  </ol>
+</section>
+
+<section class="ch" id="c2">
+  <div class="kick"><span class="n">II</span><span class="t">技术栈</span><span class="r">分级标注</span></div>
+  <h2>一个 chunk，两支着色器，零第三方运行时</h2>
+  <div class="tbl"><table>
+    <thead><tr><th>结论</th><th>依据</th><th>级别</th></tr></thead>
+    <tbody>
+      <tr><td>Vite 构建，单 chunk <code>index-BhJdAf8K.js</code>（323,793 B）+ <code>index-Bd_JnIbr.css</code>（61,948 B）</td><td>HTML 引用与文件字节</td><td><span class="lv f">实锤</span></td></tr>
+      <tr><td>React 19.2.8 仅用于一次性渲染覆盖层 DOM</td><td>打包内 <code>version: "19.2.8"</code>、<code>createRoot(…).render(&lt;StrictMode&gt;)</code>，之后全部命令式</td><td><span class="lv f">实锤</span></td></tr>
+      <tr><td>Tailwind CSS v4 的 <code>@layer theme</code> 供主题变量，其余手写 CSS</td><td>样式表 <code>@layer properties/theme/base</code> 结构与 <code>--tw-*</code> 变量</td><td><span class="lv f">实锤</span></td></tr>
+      <tr><td>两支原生 WebGL1 program（主画面 <code>.gl</code>、页脚 <code>.ftx</code>），无 three.js</td><td><code>getContext("webgl")</code>、<code>createShader</code>，无第三方库特征</td><td><span class="lv f">实锤</span></td></tr>
+      <tr><td>三块 2D canvas（<code>.lines</code> 规则线、<code>.fly</code> 天空、<code>.trans</code> 过渡）</td><td>DOM 探针 5 块 canvas</td><td><span class="lv f">实锤</span></td></tr>
+      <tr><td>自研滚动：拦截 wheel，rAF 每帧 lerp .085</td><td><code>L.current += (L.target − L.current) * .085</code> 原文</td><td><span class="lv f">实锤</span></td></tr>
+      <tr><td>无第三方字体、无分析脚本；Cloudflare Turnstile 在表单聚焦时按需加载</td><td>HTML 注释与 <code>An()</code> 函数</td><td><span class="lv f">实锤</span></td></tr>
+      <tr><td>Flecha 出自 R-Typography，GT Standard 出自 Grilli Type</td><td>字族名</td><td><span class="lv g">推断 中高</span></td></tr>
+    </tbody>
+  </table></div>
+  <p>HTML 里留着一条开发者注释：Source Serif 4 曾只是自托管 Flecha 后面的兜底，但 Google Fonts 的 css2 链路在每次冷加载都要多一次连接与请求，为一支永远不会渲染的字体，于是被拆掉。这句话就是这个站的工程气质。</p>
+</section>
+
+<section class="ch" id="c3">
+  <div class="kick"><span class="n">III</span><span class="t">色彩</span><span class="r">一块近黑，一张纸，一瓶墨</span></div>
+  <h2>系统色只有三支，其余全部交给影像里的天蓝与金</h2>
+  <div class="swatches">
+    <div class="sw"><i style="background:#0b0a09;border-bottom:1px solid #f2f1ed1a"></i><div class="lb"><b>press</b>#0b0a09 · html/body 底、theme-color</div></div>
+    <div class="sw"><i style="background:#f2f1ed"></i><div class="lb"><b>paper</b>#f2f1ed · 主 CTA 底</div></div>
+    <div class="sw"><i style="background:#1d1c19"></i><div class="lb"><b>ink</b>#1d1c19 · on-light 文字</div></div>
+    <div class="sw"><i style="background:#33322d"></i><div class="lb"><b>ink-soft</b>#33322d · 主题层</div></div>
+    <div class="sw"><i style="background:#fffaea"></i><div class="lb"><b>cream</b>#fffaea · 签名与暗底条款</div></div>
+    <div class="sw"><i style="background:#2e2109"></i><div class="lb"><b>fin-brown</b>#2e2109 · 纸面条款标题</div></div>
+    <div class="sw"><i style="background:#e2d0b1"></i><div class="lb"><b>纸（着色器）</b>rgb(226,208,177)</div></div>
+    <div class="sw"><i style="background:#e5e1d6"></i><div class="lb"><b>缝（着色器）</b>#e5e1d6 · uSeamCol</div></div>
+    <div class="sw"><i style="background:#015186"></i><div class="lb"><b>sky</b>#015186 · 主题层声明，未见使用</div></div>
+  </div>
+  <p>词频：<code>#fff</code> 27 次、<code>#000</code> 16 次、<code>#f2f1ed</code> 与 <code>#fffaea</code> 各 3 次、<code>#0b0a09</code>、<code>#1d1c19</code>、<code>#2e2109</code> 各 2 次。</p>
+  <p>规则线与准星用带透明度的白或墨：<code>--rule #ffffff39</code>、<code>--cross #ffffff86</code>、<code>--mark #fff</code>；亮画面时切为 <code>#1d1c192a</code>、<code>#1d1c1957</code>、<code>#1d1c19</code>。<strong>切换不靠章节，靠画面亮度</strong>：每 160ms 把当前影像缩到 8×5 像素求 <code>.299R+.587G+.114B</code> 均值。桌面采样宽 0–58%、高 18%–86%，超过 168 进亮态、低于 132 退回；手机（≤720px）采样宽 30%–70%、高 15%–90%，阈值改为 185 进 / 150 退。若当前段自带 <code>lit</code> 标记则直接置亮，跳过采样。</p>
+</section>
+
+<section class="ch" id="c4">
+  <div class="kick"><span class="n">IV</span><span class="t">字体</span><span class="r">三族一手写路径 · 11 个自托管文件</span></div>
+  <h2>Flecha 的 S / M / L 是光学尺寸：字号越大，用越细的那支</h2>
+  <div class="typerow"><div style="font-family:var(--title);font-weight:300;font-size:clamp(30px,5.357vw,96px);line-height:1;letter-spacing:-.018em">Pear makes you appear</div><div class="spec">h1 · Flecha M 300<br>clamp(30px, 5.357vw, 96px)<br>lh 1 · 1440 宽实测 77.14px</div></div>
+  <div class="typerow"><div style="font-family:var(--title);font-weight:300;font-size:clamp(26px,3.32vw,60px);line-height:.977">We put our own money in.</div><div class="spec">beat · Flecha M 300<br>clamp(26px, 3.32vw, 60px) · lh .977</div></div>
+  <div class="typerow"><div style="font-family:var(--sign);font-weight:300;font-size:clamp(30px,6.4vw,120px);line-height:1.04;letter-spacing:-.024em">Asked before</div><div class="spec">sign · Flecha L 300<br>原值 clamp(30px, 8.11vw, 177px)<br>lh 1.04 · ls −.024em</div></div>
+  <div class="typerow"><div style="font-family:var(--text);font-size:clamp(13px,1.068vw,19px);line-height:1.3;letter-spacing:-.005em;max-width:27.4em">正文级：GT Standard L 400，行高 1.3，字距 −.005em，最大宽度 27.4em。这一整段就是原站正文的排版参数。</div><div class="spec">stand · GT Standard L 400<br>clamp(13px, 1.068vw, 19px)<br>max-width 27.4em</div></div>
+  <div class="typerow"><div style="font-family:var(--code);font-size:clamp(9px,.72vw,11px);letter-spacing:.2em;text-transform:uppercase">Label · rail · chip · cta</div><div class="spec">label · GT Standard Mono 400<br>clamp(9px, .72vw, 11px) · ls .2em</div></div>
+  <div class="tbl"><table>
+    <thead><tr><th>字族</th><th>字重</th><th class="num">文件字节</th><th>角色</th></tr></thead>
+    <tbody>
+      <tr><td>Flecha M</td><td>300 / 400</td><td class="num">41,272 / 39,240（另有 woff 兜底）</td><td>h1、beat、subhead、条款标题、问答标题</td></tr>
+      <tr><td>Flecha S</td><td>300 / 400</td><td class="num">41,740 / 39,720</td><td>工作章标题、表单引导、页脚标语</td></tr>
+      <tr><td>Flecha L</td><td>300 / 400</td><td class="num">39,056 / 37,728</td><td>「Asked before」、菜单章节名</td></tr>
+      <tr><td>GT Standard L</td><td>400 / 500</td><td class="num">62,732 / 62,772</td><td>无衬线正文</td></tr>
+      <tr><td>GT Standard Mono</td><td>400</td><td class="num">32,976</td><td>全部标签、导轨、按钮、芯片</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<section class="ch" id="c5">
+  <div class="kick"><span class="n">V</span><span class="t">栅格与覆盖层</span><span class="r">签名之一</span></div>
+  <h2>规则线不是画在画面上，是画在天空里</h2>
+  <p class="lead">覆盖层 <code>.ov</code> 是一张固定在视口上的制图纸：两条竖线在 <code>--v1 5.3%</code> 与 <code>--v2 85.6%</code>，两条横线在 <code>--h1 5.3vw</code> 与 <code>--h2 calc(65.3% + 50px)</code>；文案列起点 <code>--colA 7.98%</code>、<code>--colB 23.7%</code>。手机改为 4.75% 与 95.25%，<code>--h1</code> 60px。本页顶上那两条竖线、一条横线与两枚四芒星，用的就是这组值与原站那枚 16px 星形的原 path。</p>
+  <p><strong>签名细节：规则线并不是 DOM 画的。</strong><code>.lines</code> canvas 用 <code>destination-in</code> 把线条按影片的蓝天键控蒙版裁掉——先把当前帧缩到 320px 宽，逐像素算 <code>alpha = (B − max(R, G) − 8) / 34</code>，只有蓝色占优的区域保留。于是规则线只出现在天空里，被梨、人物和云自然遮挡，像画在画布背后。这是全站最便宜也最高级的一招：它免掉了为 1,056 帧逐帧制作遮挡层。</p>
+
+  <div class="dev">
+    <div class="dev-h"><span class="id">装置一</span><span class="nm">蓝天键控</span><span class="src">原式 (B − max(R,G) − 8) / 34 · destination-in</span></div>
+    <div class="dev-b">
+      <div class="key-stage">
+        <img src="real-assets/frames/model_v51_1440_f_060.webp" alt="Pear 序列帧：金色巨梨与深蓝天空">
+        <canvas id="keyCv" width="1440" height="810"></canvas>
+      </div>
+      <div class="ctl">
+        <label>偏置 <input type="range" id="keyBias" min="-40" max="60" step="1" value="8"><output id="keyBiasO">8</output></label>
+        <label>软度 <input type="range" id="keySoft" min="4" max="120" step="1" value="34"><output id="keySoftO">34</output></label>
+        <button class="btn" id="keyMatte" aria-pressed="false">看蒙版</button>
+        <button class="btn" id="keyOff" aria-pressed="false">关键控</button>
+        <button class="btn" id="keyReset">回原值</button>
+      </div>
+      <div class="road-read" style="margin-top:16px">
+        <div>天空占比<b id="keyCov">—</b></div>
+        <div>分析宽度<b>320px</b></div>
+        <div>刷新阈值<b>40ms</b></div>
+      </div>
+    </div>
+    <div class="dev-note">偏置与软度就是原式里的 <code>8</code> 与 <code>34</code>。把偏置调低，梨的高光会被误判成天空而漏线；调高，天边的浅蓝会掉出去、线在地平线处断掉。原站取 8 / 34 的位置，正是让金属反光与天空刚好分开的那一档。「关键控」显示不做蒙版时的样子——线会横穿梨身，制图纸的错觉当场消失。</div>
+  </div>
+</section>
+
+<section class="ch" id="c6">
+  <div class="kick"><span class="n">VI</span><span class="t">滚动与道路</span><span class="r">5350vh ÷ 九段</span></div>
+  <h2>5350 不是随手写的：它是九段路的 vh 长度之和</h2>
+  <div class="tbl"><table>
+    <thead><tr><th class="num">段</th><th class="num">长度 vh</th><th class="num">道路区间</th><th>内容</th></tr></thead>
+    <tbody>
+      <tr><td class="num">1</td><td class="num">1200</td><td class="num">0 – .224</td><td>影片、序列图、四个 beat、撕裂燃烬</td></tr>
+      <tr><td class="num">2</td><td class="num">600</td><td class="num">.224 – .336</td><td>蓝天图版横移，工作章文案与刻度</td></tr>
+      <tr><td class="num">3</td><td class="num">300</td><td class="num">.336 – .393</td><td>coda：影像退去，纸面到来</td></tr>
+      <tr><td class="num">4</td><td class="num">900</td><td class="num">.393 – .561</td><td>条款两屏、图纸窗口、烧向梨树</td></tr>
+      <tr><td class="num">5</td><td class="num">300</td><td class="num">.561 – .617</td><td>「Asked before」手写签名</td></tr>
+      <tr><td class="num">6</td><td class="num">600</td><td class="num">.617 – .729</td><td>五张问答卡的三维转盘</td></tr>
+      <tr><td class="num">7</td><td class="num">500</td><td class="num">.729 – .822</td><td>天空帧序列到来</td></tr>
+      <tr><td class="num">8</td><td class="num">250</td><td class="num">.822 – .869</td><td>申请表</td></tr>
+      <tr><td class="num">9</td><td class="num">700</td><td class="num">.869 – 1</td><td>过渡帧、页脚循环影片、片尾</td></tr>
+    </tbody>
+  </table></div>
+
+  <div class="dev">
+    <div class="dev-h"><span class="id">装置二</span><span class="nm">道路尺</span><span class="src">35 张真实道路截图 · 段常量 T…ce</span></div>
+    <div class="dev-b">
+      <div class="road-stage" id="roadStage"></div>
+      <div class="road-bar" id="roadBar"><div class="road-head" id="roadHead"></div></div>
+      <div class="ctl">
+        <label>道路位置 <input type="range" id="roadR" min="0" max="1000" step="1" value="0"><output id="roadRO">0.000</output></label>
+        <button class="btn" id="roadPlay" aria-pressed="false">走一遍</button>
+      </div>
+      <div class="road-read">
+        <div>当前段<b id="roadSeg">1 / 9</b></div>
+        <div>段内进度<b id="roadSegP">0.0%</b></div>
+        <div>等效滚动<b id="roadVh">0 vh</b></div>
+        <div>激活导轨<b id="roadRail">The Model</b></div>
+        <div>画面亮态<b id="roadLit">暗</b></div>
+      </div>
+    </div>
+    <div class="dev-note">滑杆是道路进度 <code>road ∈ [0,1]</code>，下面的条按 <code>[1200,600,300,900,300,600,500,250,700]</code> 的真实比例分段（可直接点段跳过去）。图是 <code>assets/screens/</code> 里 35 个道路位置的实拍，以 <code>?hero=colossus</code> 固定首屏影片、SwiftShader 软渲染 WebGL 抓的；位置之间取最近帧，因此是「逐段」而非逐帧。导轨激活按原站的四个锚点 <code>.012 / .232 / .400 / .628</code> 判定。</div>
+  </div>
+
+  <h3>滚动手感</h3>
+  <p>桌面精细指针且未开减弱动态时，拦截 wheel（<code>preventDefault</code>），目标值累加，每帧向目标 lerp <strong>.085</strong>，位置差小于 <strong>.08px</strong> 吸附；键盘 ArrowDown 90px、Page/Space 0.9 视口；<code>scroll</code> 事件差值超 2px 时同步（拖滚动条）。触屏、粗指针或减弱动态回退原生滚动，用 .3 lerp 平滑读数。</p>
+  <p>导轨四个锚点 <code>.012 / .232 / .400 / .628</code>；Apply 按钮滚到 <code>1 − 700/5350 − .7×250/5350 = .8365</code>。</p>
+  <h4>手机不是桌面的简化版</h4>
+  <div class="tbl"><table>
+    <thead><tr><th>项</th><th>桌面</th><th>手机（≤720px）</th></tr></thead>
+    <tbody>
+      <tr><td>舞台高度</td><td class="num">5350vh</td><td class="num">7300vh（更高）</td></tr>
+      <tr><td>道路映射</td><td>段长 / 5350 直接累加</td><td><code>Me</code> 分段线性表：九段主体归一到 .983，末尾两段页脚只分 .005 与 .012</td></tr>
+      <tr><td>亮度阈值</td><td class="num">168 进 / 132 退</td><td class="num">185 进 / 150 退</td></tr>
+      <tr><td>亮度采样区</td><td>宽 0–58% · 高 18%–86%</td><td>宽 30%–70% · 高 15%–90%</td></tr>
+      <tr><td>栅格</td><td>5.3% / 85.6%，<code>--h1</code> 5.3vw</td><td>4.75% / 95.25%，<code>--h1</code> 60px</td></tr>
+      <tr><td>着色器噪声</td><td>多阶 fbm</td><td><code>PHONE</code> 分支 2 阶 <code>fbmQ</code></td></tr>
+    </tbody>
+  </table></div>
+  <p>换句话说：手机的总行程更长，前八段因此更从容，而片尾被压到全程的 1.7% 快速掠过。这是重新分配，不是压缩。</p>
+</section>
+
+<section class="ch" id="c7">
+  <div class="kick"><span class="n">VII</span><span class="t">影像系统</span><span class="r">4 支影片 · 1,056 帧 · 自研装载器</span></div>
+  <h2>视频负责连续镜头，帧序列负责可刮擦的镜头</h2>
+  <p>三部随机首屏影片（<code>?hero=</code> 可指定）：signal、colossus、reveal，各 1920×1080、10 秒、静音循环；本次抓到三支 mp4（11.29 / 5.60 / 13.71 MB）与 960×540 海报。每部影片带一个「梨的坐标」<code>origin</code>（撕裂圆环从这里出发）和一个 <code>bridge</code> 帧序列名（v28 / v51 / v61）。</p>
+  <div class="tbl"><table>
+    <thead><tr><th>帧序列</th><th class="num">帧数</th><th class="num">尺寸</th><th>用途</th></tr></thead>
+    <tbody>
+      <tr><td>model / &lt;bridge&gt; + renaissance</td><td class="num">121 + 362 = 483</td><td class="num">1440×810</td><td>主 reel，第一段路</td></tr>
+      <tr><td>plan</td><td class="num">121</td><td class="num">1112×834</td><td>图纸窗口</td></tr>
+      <tr><td>coda</td><td class="num">89</td><td class="num">1664×1248</td><td>影像退去，纸面到来</td></tr>
+      <tr><td>tree</td><td class="num">121</td><td class="num">1920×1080</td><td>纸被烧穿后的梨树</td></tr>
+      <tr><td>flysky</td><td class="num">121</td><td class="num">1920×1080</td><td>天空段</td></tr>
+      <tr><td>trans</td><td class="num">121</td><td class="num">1920×1080</td><td>片尾过渡</td></tr>
+    </tbody>
+  </table></div>
+  <p>合计 1,056 帧一档（另有 768 档）。装载器：最多 <strong>8 路并发</strong>；每组先按二分步长（32、16、8、4、2、1）取帧保证任何位置都有粗帧，再围绕滚动「想要」的帧半径 <strong>24 帧</strong>扫描；500ms 内被瞄准的序列加为热通道 ×2；失败重试 3 次；每组只在道路窗口 ±.1 内进入队列；<code>decode()</code> 预热 ±3 帧。<code>?nowarm</code> 关预热，<code>?noscrub</code> 关刮擦。</p>
+  <div class="shots">
+    <figure><img src="real-assets/frames/model_v51_1440_f_001.webp" alt="model v51 首帧"><figcaption>model/v51 · f_001</figcaption></figure>
+    <figure><img src="real-assets/frames/model_renaissance_1440_f_181.webp" alt="renaissance 中帧"><figcaption>model/renaissance · f_181</figcaption></figure>
+    <figure><img src="real-assets/frames/plan_f_060.webp" alt="图纸帧"><figcaption>plan · f_060</figcaption></figure>
+    <figure><img src="real-assets/frames/coda_f_044.webp" alt="coda 中帧"><figcaption>coda · f_044</figcaption></figure>
+    <figure><img src="real-assets/frames/tree_f_060.webp" alt="梨树帧"><figcaption>tree · f_060</figcaption></figure>
+    <figure><img src="real-assets/frames/flysky_f_121.webp" alt="天空末帧"><figcaption>flysky · f_121</figcaption></figure>
+  </div>
+  <p style="font-size:12px;color:#f2f1ed80;margin-top:12px">上列 6 帧取自落盘的 21 帧抽样（每组首中末各 3 帧），用于核验尺寸与内容；1,056 帧未全量下载。</p>
+</section>
+
+<section class="ch" id="c8">
+  <div class="kick"><span class="n">VIII</span><span class="t">主着色器</span><span class="r">签名之二 · 约 950 行 · 61 个 uniform</span></div>
+  <h2>撕裂、燃烬、纸与图纸，全在一支带散文注释的片元着色器里</h2>
+  <p class="lead">六个采样器：A 影片、B reel 帧、C 图版、E coda 帧、G 树帧、P 图纸帧。六种转场模式（breathe、slice、halftone、displace、static、ring，默认 ring，<code>?t=</code> 可切），十种处理（slabs、halftone、warp、tear、fine、mosaic、dither、shred、ditherblock）。</p>
+
+  <div class="dev">
+    <div class="dev-h"><span class="id">装置三</span><span class="nm">撕裂圆环（ring 模式）</span><span class="src">原常量 W=.30 · fbm 1.9/5.3 · ASCII 十级字形</span></div>
+    <div class="dev-b">
+      <div class="ring-stage"><canvas id="ringCv"></canvas></div>
+      <div class="ctl">
+        <label>前沿 <input type="range" id="ringP" min="0" max="1000" step="1" value="420"><output id="ringPO">0.420</output></label>
+        <label>带宽 W <input type="range" id="ringW" min="5" max="60" step="1" value="30"><output id="ringWO">.30</output></label>
+        <label>拓片 <input type="range" id="ringA" min="0" max="100" step="1" value="100"><output id="ringAO">1.00</output></label>
+        <button class="btn" id="ringPlay" aria-pressed="true">自动</button>
+      </div>
+    </div>
+    <div class="dev-note">环从梨的坐标出发，<code>W = .30</code> 的环带上叠两阶角向 fbm 波瓣（1.9 与 5.3 倍频）；带内三层失效：7px 行撕裂（15Hz）、11px 块马赛克（24% 概率细化为 ×.28）、9px 网格的 <strong>ASCII 拓片</strong>——用 5×5 位图字形 <code> .:-+=*%#@</code> 十级按亮度重印画面，再叠 13px 色散和暖色闪光 <code>(1,.94,.80)·band²·.62</code>。此处用真实序列帧作输入，fbm 降到 3 阶（原站桌面用更高阶、手机用 2 阶 <code>fbmQ</code>），其余常量为原值。</div>
+  </div>
+
+  <h3>燃烬</h3>
+  <p>道路 .775 到 .915 段内，L∞ 距离（方形）以 <code>(2.35, 1.1)</code> 各向异性从 <code>(.48 + 20px, .57 + 75px)</code> 张开，边界由四个场撕碎：fbm 大瓣 .295、细噪 .125、Bayer 有序抖动 .052、hash .15；燃边碳化为 <code>(.72,.55,.40) → (.14,.10,.09)</code>，余烬 <code>(1,.62,.26)</code>。同时画面沿缝分开 .05、向裂口推进 <code>1 + 2p</code>、漂移 <code>(.03, −.018)</code>、5 抽头运动模糊 .012、滚转 .13 弧度，边缘径向虚化 .01。缝上盖米色团 <code>#e5e1d6</code>（.85，高斯 .2×.62，两阶 fbm 咬边）。</p>
+  <h3>纸</h3>
+  <p>不是填色，是四层结构：纸浆 fbm .115、顺纹 .055、齿 .038、杂点 .55；厚处偏暖薄处偏冷。纸上有太阳与云的光斑：全部正弦，速度 2.6、漂移 1.65、抖动 2.25、尺度 2.6、深度 .085。</p>
+  <h3>性能纪律写在注释里</h3>
+  <ul>
+    <li>手机用 2 阶 <code>fbmQ</code>；</li>
+    <li>圆环外的像素走「快路」——<code>r &gt; t·1.6 + .26</code> 或 <code>r &lt; t·1.6 − .86</code> 可证明在前沿之外，跳过谐波、字形与闪光；</li>
+    <li>燃烬饱和或 coda 饱和后整段跳过。</li>
+  </ul>
+</section>
+
+<section class="ch" id="c9">
+  <div class="kick"><span class="n">IX</span><span class="t">工作章与条款章</span><span class="r">The Work · The Terms</span></div>
+  <h2>一张 1328×3515 的设计稿，右侧 33 道刻度</h2>
+  <p><strong>工作章</strong>（<code>.pf</code>）：设计稿随滚动向上推，右侧 x=818 处 33 道刻度（每 5 道加长），读数 <code>NN%</code>；三组文案（SEO ×2、Custom software）在 y=0 / 1180 / 2050 处进入，标题从右侧 115% 滑入，芯片 9.16px mono 大写。</p>
+  <p><strong>条款章</strong>（<code>.fin</code>）：两屏。第一屏在纸上（<code>#2e2109</code>），标题「No fees. A share of the upside.」；第二屏在暗底（<code>#fffaea</code>），「We say no more often than yes.」标题从下方 175% 升起（四次方缓出，每行错位 .12）。文字带 <code>#inkf</code> SVG 滤镜：<code>feTurbulence 0.011 0.017 ×4</code> 位移 34 递减到 0，模拟墨迹晕开。</p>
+  <p><strong>签名</strong>（<code>.sign</code>）：「Asked before」Flecha L 加手写「signing」：11 段路径按 <code>data-a/data-b</code> 区间 <code>stroke-dashoffset</code> 逐段书写。</p>
+  <div class="shots">
+    <figure><img src="assets/screens/20-road-0480.jpg" alt="条款章纸面屏"><figcaption>road .480 · 条款第一屏</figcaption></figure>
+    <figure><img src="assets/screens/23-road-0600.jpg" alt="签名段"><figcaption>road .600 · Asked before</figcaption></figure>
+    <figure><img src="assets/screens/13-road-0235.jpg" alt="工作章图版"><figcaption>road .235 · 工作章图版</figcaption></figure>
+    <figure><img src="real-assets/image/manual_scaffold_expand.jpg" alt="脚手架图版原图"><figcaption>scaffold_expand · 1520×4023</figcaption></figure>
+  </div>
+</section>
+
+<section class="ch" id="c11">
+  <div class="kick"><span class="n">X</span><span class="t">问答与申请表</span><span class="r">Questions</span></div>
+  <h2>五张卡绕 Y 轴排成 72° 间隔的转盘</h2>
+
+  <div class="dev">
+    <div class="dev-h"><span class="id">装置四</span><span class="nm">问答转盘</span><span class="src">72° · min(360px, 26vw) · perspective 1500px</span></div>
+    <div class="dev-b">
+      <div class="faq-stage" id="faqStage"></div>
+      <div class="ctl">
+        <label>段进度 <input type="range" id="faqP" min="0" max="1000" step="1" value="0"><output id="faqPO">0.000</output></label>
+        <button class="btn" id="faqPlay" aria-pressed="false">走一遍</button>
+      </div>
+    </div>
+    <div class="dev-note">卡尺寸按原站 259.756×330 等比缩到 206×262 以适应本页版心，角度、半径公式、模糊与点亮判据全为原值：<code>rot = −p × (360 − 72)</code>；正对镜头（<code>cos &gt; .9</code>）的卡点亮四芒星并展开答案；远卡按 <code>(1 − o) × 8.4 / 2</code> 模糊，<code>o = (cos + 1) / 2</code>。原站还有一条 SVG 引线从图像锚点引到卡角的 8×8 方块，此处未复现。</div>
+  </div>
+
+  <h3>申请表</h3>
+  <p>980×760 舞台、透视 1700px。三块玻璃字段（姓名 236×62 @452,148；邮箱 @712,148；文本域 496×226 @452,226）与 262×40 按钮，从种子为 0 的线性同余序列给出的方向飞入。提交走 Turnstile 隐形校验后 <code>POST /api/apply</code>，字段含蜜罐 <code>fax</code>。</p>
+
+  <div class="dev">
+    <div class="dev-h"><span class="id">装置五</span><span class="nm">玻璃字段</span><span class="src">@property --ra · conic 双环 7.5s / 11s 反向</span></div>
+    <div class="dev-b">
+      <div class="glass-stage">
+        <div class="glass"><span class="lb">Name</span><span class="rim"></span><span class="rim2"></span></div>
+        <div class="glass"><span class="lb">Email</span><span class="rim"></span><span class="rim2"></span></div>
+        <div class="glass tall"><span class="lb">What are you working on?</span><span class="rim"></span><span class="rim2"></span></div>
+      </div>
+    </div>
+    <div class="dev-note">157° 白到冷蓝渐变、<code>backdrop-filter: blur(9.5px) saturate(1.1)</code>、两圈 conic 高光边（7.5s 与 11s 反向旋转，靠 <code>@property --ra</code> 让角度可动画）、inset 阴影，全部原值。鼠标移入整组会让未悬停的字段后退——原站是悬停字段前进 64px、其余后退 26px，本页按版心缩了位移量。</div>
+  </div>
+</section>
+
+<section class="ch" id="c12">
+  <div class="kick"><span class="n">XI</span><span class="t">动效系统</span><span class="r">一条曲线管全站</span></div>
+  <h2>cubic-bezier(.22, 1, .36, 1)</h2>
+  <p>CSS 关键帧：规则线 1.15s、准星 .72s、页眉 .7s（延迟 .42s）、菜单 .7s（延迟 1.1s）、标记描边 1.4s、四芒星 7s 一闪（覆盖层延迟 2.4s，问答卡无延迟，页脚那颗是 6s）、玻璃边 7.5s 与 11s、光斑 1.9s 起每 7 枚递增 .42s、轨道 7.5s 起每条加 2.6s。滚动驱动的部分用 JS 缓动表：smooth、smoother、out-quart、out-expo（<code>1 − 2^(−9t)</code>）、out-back、in-out、linear，外加规则线的 <code>1 − (1 − t)³</code>。</p>
+  <p><strong>两种时间尺度并存</strong>：与滚动绑定的一切没有时长，只有区间；脱离滚动的装饰（闪烁、旋转边、光斑）都很慢，7 到 11 秒一周。</p>
+</section>
+
+<section class="ch" id="c13">
+  <div class="kick"><span class="n">XII</span><span class="t">关键发现</span><span class="r">五条</span></div>
+  <h2>为什么这个站值得拆</h2>
+  <ol>
+    <li><strong>一页即一部电影</strong>：5350vh 的舞台按九段路分配，1,056 帧 webp 加四支影片由自研装载器按滚动位置分级加载，没有任何动画库。</li>
+    <li><strong>规则线在天空里</strong>：制图线用影片的蓝天做键控蒙版，前景自然遮挡，是整站最便宜也最高级的一招。</li>
+    <li><strong>着色器是文章</strong>：燃烬、纸、图纸、收场全部在一支带散文注释的片元着色器里完成，注释解释每个常量为什么存在，包括踩过的坑。</li>
+    <li><strong>性能不是事后补的</strong>：快路剔除、死路跳过、手机 2 阶噪声、自适应 DPR、按需 Turnstile、拒绝第三方字体，都写在源码里。</li>
+    <li><strong>诚实是设计语言</strong>：条款章的标题、问答的措辞与蜜罐字段一起构成一份可信的合同。</li>
+  </ol>
+</section>
+
+<section class="ch" id="c14">
+  <div class="kick"><span class="n">XIII</span><span class="t">出处与局限</span><span class="r">哪些实锤，哪些没拿到</span></div>
+  <h2>抽取链路与七条局限</h2>
+  <p>本页全部数值来自：Playwright 计算样式探针（1440×900 @1.5x）；样式表 <code>index-Bd_JnIbr.css</code>（61,948 B）拆出 712 条手写规则；<code>index-BhJdAf8K.js</code>（323,793 B）美化为 13,564 行、应用层 9,380 行之后逐行通读；沿道路 41 步滚动记录的 730 条网络响应；35 个道路位置的逐段截图；以及服务端直连补抓的 manifest、帧样本、影片与图版。</p>
+  <div class="tbl"><table>
+    <thead><tr><th class="num">#</th><th>没拿到什么</th></tr></thead>
+    <tbody>
+      <tr><td class="num">1</td><td>整页截图为 0 字节——舞台 5350vh 超过单帧上限，以 35 张道路截图与 8 帧关键帧替代。</td></tr>
+      <tr><td class="num">2</td><td>1,056 帧只落盘每组首中末各 3 帧（21 帧）作尺寸与内容核验，未全量下载。</td></tr>
+      <tr><td class="num">3</td><td><code>/768</code> 手机档只从 manifest 读出计数与 URL 规则，未下载。</td></tr>
+      <tr><td class="num">4</td><td><code>/api/apply</code> 未触发——表单链路与 Turnstile 校验自源码读出，未发送真实申请。</td></tr>
+      <tr><td class="num">5</td><td>手机真机行为（7300vh 舞台、<code>Me</code> 重映射、<code>PHONE</code> 分支、自适应 DPR）均来自源码，未真机实测。</td></tr>
+      <tr><td class="num">6</td><td>截图走 SwiftShader 软渲染，逐帧正确但帧率不代表真机手感。</td></tr>
+      <tr><td class="num">7</td><td>未启用外部研究通道，无奖项、访谈或制作方信息核验；影像制作方式不作判断。</td></tr>
+    </tbody>
+  </table></div>
+  <p>核查中改正六处漂移，其中两处改变了结论方向：手机舞台是 7300vh 而非 5350vh；<code>Me</code> 表是重新分配比例而非压缩各段。全部留痕于《事实核查》。</p>
+  <p style="margin-top:26px"><a href="设计解构.md">设计解构</a> · <a href="复刻指南.md">复刻指南</a> · <a href="出处与方法.md">出处与方法</a> · <a href="事实核查.md">事实核查</a> · <a href="设计评审.md">设计评审</a> · <a href="tokens.json">tokens.json</a> · <a href="design-tokens.css">design-tokens.css</a></p>
+</section>
+
+<footer>
+  <span>Design teardown</span>
+  <span>对象 <a href="https://pear.no/" rel="noreferrer noopener" target="_blank">pear.no</a></span>
+  <span>抽取日期 2026-09-08</span>
+  <span>字体与影像为原站资产，仅作研究引用</span>
+</footer>
+</div>
+
+<script>
+(function(){
+"use strict";
+const RM = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const clamp=(v,a,b)=>v<a?a:v>b?b:v;
+
+/* ---------- 导轨激活 ---------- */
+(function rail(){
+  const map=[['c1',0],['c5',1],['c8',2],['c11',3]];
+  const links=[...document.querySelectorAll('nav.rail a')];
+  const secs=map.map(([id])=>document.getElementById(id)).filter(Boolean);
+  const io=new IntersectionObserver(es=>{
+    es.forEach(e=>{ if(!e.isIntersecting) return;
+      const i=secs.indexOf(e.target); if(i<0) return;
+      links.forEach((l,k)=>l.classList.toggle('on',k===i));
+    });
+  },{rootMargin:'-30% 0px -60% 0px'});
+  secs.forEach(s=>io.observe(s));
+  links[0].classList.add('on');
+})();
+
+/* ---------- 装置一：蓝天键控 ---------- */
+(function blueKey(){
+  const cv=document.getElementById('keyCv'); if(!cv) return;
+  const ctx=cv.getContext('2d');
+  const img=cv.parentElement.querySelector('img');
+  const biasEl=document.getElementById('keyBias'), softEl=document.getElementById('keySoft');
+  const biasO=document.getElementById('keyBiasO'), softO=document.getElementById('keySoftO');
+  const covO=document.getElementById('keyCov');
+  const bMatte=document.getElementById('keyMatte'), bOff=document.getElementById('keyOff'), bReset=document.getElementById('keyReset');
+  // 分析画布：原站用 320px 宽
+  const AW=320, an=document.createElement('canvas'), actx=an.getContext('2d',{willReadFrequently:true});
+  let ready=false, showMatte=false, keyOn=true;
+
+  function build(){
+    if(!ready) return;
+    const W=cv.width,H=cv.height;
+    const ah=Math.max(1,Math.round(AW*img.naturalHeight/img.naturalWidth));
+    an.width=AW; an.height=ah;
+    actx.drawImage(img,0,0,AW,ah);
+    let d;
+    try{ d=actx.getImageData(0,0,AW,ah); }catch(e){ return; }
+    const px=d.data, bias=+biasEl.value, soft=+softEl.value;
+    let sum=0;
+    for(let i=0;i<px.length;i+=4){
+      // 原式：alpha = (B − max(R,G) − bias) / soft
+      const t=(px[i+2]-Math.max(px[i],px[i+1])-bias)/soft;
+      const a=t<=0?0:t>=1?255:Math.round(t*255);
+      px[i+3]=a; sum+=a;
+    }
+    actx.putImageData(d,0,0);
+    covO.textContent=(sum/(px.length/4)/255*100).toFixed(1)+'%';
+
+    ctx.clearRect(0,0,W,H);
+    // 先画规则线与十字（覆盖层的那一套坐标）
+    ctx.save();
+    ctx.strokeStyle='#ffffff8c'; ctx.lineWidth=2;
+    const v1=.053*W, v2=.856*W, h1=.19*H, h2=.72*H;
+    ctx.beginPath();
+    ctx.moveTo(v1,0); ctx.lineTo(v1,H);
+    ctx.moveTo(v2,0); ctx.lineTo(v2,H);
+    ctx.moveTo(0,h1); ctx.lineTo(W,h1);
+    ctx.moveTo(0,h2); ctx.lineTo(W,h2);
+    ctx.stroke();
+    // 十字准星
+    ctx.strokeStyle='#ffffffd6'; ctx.lineWidth=2.4;
+    [[v1,h1],[v2,h1],[v1,h2],[v2,h2]].forEach(([x,y])=>{
+      ctx.beginPath(); ctx.moveTo(x-16,y); ctx.lineTo(x+16,y); ctx.moveTo(x,y-16); ctx.lineTo(x,y+16); ctx.stroke();
+    });
+    // 刻度
+    ctx.strokeStyle='#ffffff5c'; ctx.lineWidth=1.6;
+    for(let i=0;i<34;i++){ const y=h1+(h2-h1)*i/33, len=(i%5===0)?22:11;
+      ctx.beginPath(); ctx.moveTo(v2,y); ctx.lineTo(v2+len,y); ctx.stroke(); }
+    ctx.restore();
+
+    if(showMatte){
+      ctx.globalCompositeOperation='source-over';
+      ctx.fillStyle='#0b0a09'; ctx.fillRect(0,0,W,H);
+      ctx.drawImage(an,0,0,W,H);
+      return;
+    }
+    if(keyOn){
+      ctx.globalCompositeOperation='destination-in';
+      ctx.drawImage(an,0,0,W,H);
+      ctx.globalCompositeOperation='source-over';
+    }
+  }
+  function sync(){ biasO.textContent=biasEl.value; softO.textContent=softEl.value; build(); }
+  [biasEl,softEl].forEach(el=>el.addEventListener('input',sync));
+  bMatte.addEventListener('click',()=>{ showMatte=!showMatte; bMatte.setAttribute('aria-pressed',showMatte); build(); });
+  bOff.addEventListener('click',()=>{ keyOn=!keyOn; bOff.setAttribute('aria-pressed',!keyOn); build(); });
+  bReset.addEventListener('click',()=>{ biasEl.value=8; softEl.value=34; showMatte=false; keyOn=true;
+    bMatte.setAttribute('aria-pressed',false); bOff.setAttribute('aria-pressed',false); sync(); });
+  if(img.complete && img.naturalWidth){ ready=true; sync(); }
+  else img.addEventListener('load',()=>{ ready=true; sync(); });
+  addEventListener('resize',()=>{ clearTimeout(build._t); build._t=setTimeout(build,120); });
+})();
+
+/* ---------- 装置二：道路尺 ---------- */
+(function road(){
+  const stage=document.getElementById('roadStage'); if(!stage) return;
+  const SEG=[1200,600,300,900,300,600,500,250,700], TOTAL=5350;
+  const SHOTS=[0,10,20,35,50,70,90,110,130,150,170,190,210,235,260,290,320,360,400,440,480,520,560,600,630,660,700,740,780,820,860,900,940,970,1000];
+  const NAMES=['road','road','road','road','road','road','road','road','road','road','road','road','road','road','road','road','road','road','road','road','road','road','road','road','road','road','road','road','road','road','road','road','road','road','road'];
+  const RAIL=[['The Model',.012],['The Work',.232],['The Terms',.400],['Questions',.628]];
+  // 依据实测记录：亮态出现在纸面与天空段
+  const LIT=[[.336,.42],[.50,.62],[.729,.83]];
+  const imgs=SHOTS.map((v,i)=>{
+    const im=new Image(); im.loading='lazy'; im.alt='road '+(v/1000).toFixed(3);
+    im.src='assets/screens/'+String(i).padStart(2,'0')+'-'+NAMES[i]+'-'+String(v).padStart(4,'0')+'.jpg';
+    stage.appendChild(im); return im;
+  });
+  const bar=document.getElementById('roadBar'), head=document.getElementById('roadHead');
+  const spans=SEG.map((len,i)=>{ const s=document.createElement('span');
+    s.style.flex=len+' 0 0'; s.textContent=(i+1); s.dataset.i=i; bar.appendChild(s); return s; });
+  const R=document.getElementById('roadR'), RO=document.getElementById('roadRO');
+  const oSeg=document.getElementById('roadSeg'), oSegP=document.getElementById('roadSegP'),
+        oVh=document.getElementById('roadVh'), oRail=document.getElementById('roadRail'), oLit=document.getElementById('roadLit');
+  const bounds=(()=>{ const out=[]; let a=0; SEG.forEach(l=>{ out.push([a/TOTAL,(a+l)/TOTAL]); a+=l; }); return out; })();
+  let cur=-1;
+  function render(r){
+    // 最近的截图
+    let bi=0,bd=1e9;
+    SHOTS.forEach((v,i)=>{ const d=Math.abs(v/1000-r); if(d<bd){bd=d;bi=i;} });
+    if(bi!==cur){ imgs.forEach((im,i)=>im.classList.toggle('on',i===bi)); cur=bi; }
+    let si=bounds.findIndex(([a,b])=>r>=a&&r<=b); if(si<0) si=SEG.length-1;
+    const [a,b]=bounds[si];
+    spans.forEach((s,i)=>s.classList.toggle('on',i===si));
+    head.style.left=(r*100)+'%';
+    RO.textContent=r.toFixed(3);
+    oSeg.textContent=(si+1)+' / 9';
+    oSegP.textContent=((r-a)/(b-a)*100).toFixed(1)+'%';
+    oVh.textContent=Math.round(r*TOTAL)+' vh';
+    let rn=RAIL[0][0]; RAIL.forEach(([n,at])=>{ if(r>=at) rn=n; });
+    oRail.textContent=rn;
+    oLit.textContent=LIT.some(([x,y])=>r>=x&&r<=y)?'亮 · on-light':'暗';
+  }
+  const play=document.getElementById('roadPlay'); let raf=0,t0=0;
+  function halt(){ if(raf){ cancelAnimationFrame(raf); raf=0; } play.setAttribute('aria-pressed',false); }
+  R.addEventListener('input',()=>{ halt(); render(+R.value/1000); });
+  bar.addEventListener('click',e=>{
+    const s=e.target.closest('span'); if(!s) return;
+    halt();
+    const [a,b]=bounds[+s.dataset.i]; const r=(a+b)/2;
+    R.value=Math.round(r*1000); render(r);
+  });
+  function step(t){
+    if(!raf) return;
+    const p=clamp((t-t0)/16000,0,1);
+    R.value=Math.round(p*1000); render(p);
+    if(p<1) raf=requestAnimationFrame(step); else halt();
+  }
+  play.addEventListener('click',()=>{
+    if(raf) return halt();
+    const from=(+R.value/1000)>=1?0:(+R.value/1000);
+    t0=performance.now()-from*16000;
+    play.setAttribute('aria-pressed',true);
+    raf=requestAnimationFrame(step);
+  });
+  render(0);
+})();
+
+/* ---------- 装置三：撕裂圆环（WebGL，原常量） ---------- */
+(function ring(){
+  const cv=document.getElementById('ringCv'); if(!cv) return;
+  const gl=cv.getContext('webgl',{antialias:false,alpha:false});
+  const pEl=document.getElementById('ringP'), wEl=document.getElementById('ringW'), aEl=document.getElementById('ringA');
+  const pO=document.getElementById('ringPO'), wO=document.getElementById('ringWO'), aO=document.getElementById('ringAO');
+  const play=document.getElementById('ringPlay');
+  if(!gl){ cv.parentElement.innerHTML='<div style="padding:40px;font:11px/1.6 var(--code);color:#f2f1ed80">此浏览器未提供 WebGL 上下文，装置三无法运行。着色器常量见上文与《复刻指南》二之 4。</div>'; return; }
+
+  const VS='attribute vec2 p;void main(){gl_Position=vec4(p,0.,1.);}';
+  const FS=`precision highp float;
+uniform sampler2D uTex; uniform vec2 uRes, uTexRes, uOrigin;
+uniform float uT, uProg, uW, uAsc;
+
+float hash(vec2 p){ return fract(sin(dot(p, vec2(127.1,311.7)))*43758.5453123); }
+float noise(vec2 p){ vec2 i=floor(p), f=fract(p); f=f*f*(3.-2.*f);
+  return mix(mix(hash(i),hash(i+vec2(1,0)),f.x), mix(hash(i+vec2(0,1)),hash(i+vec2(1,1)),f.x), f.y); }
+float fbm(vec2 p){ float v=0., a=.5; for(int i=0;i<3;i++){ v+=a*noise(p); p*=2.03; a*=.5; } return v; }
+
+// 5x5 位图字形，十级 " .:-+=*%#@"
+float glyph(int g, vec2 uv){
+  if(uv.x<0.||uv.x>1.||uv.y<0.||uv.y>1.) return 0.;
+  int x=int(floor(uv.x*5.)), y=int(floor((1.-uv.y)*5.));
+  float rows[5];
+  if(g<=0){ rows[0]=0.;rows[1]=0.;rows[2]=0.;rows[3]=0.;rows[4]=0.; }
+  else if(g==1){ rows[0]=0.;rows[1]=0.;rows[2]=0.;rows[3]=0.;rows[4]=4.; }
+  else if(g==2){ rows[0]=0.;rows[1]=4.;rows[2]=0.;rows[3]=4.;rows[4]=0.; }
+  else if(g==3){ rows[0]=0.;rows[1]=0.;rows[2]=31.;rows[3]=0.;rows[4]=0.; }
+  else if(g==4){ rows[0]=0.;rows[1]=4.;rows[2]=31.;rows[3]=4.;rows[4]=0.; }
+  else if(g==5){ rows[0]=0.;rows[1]=31.;rows[2]=0.;rows[3]=31.;rows[4]=0.; }
+  else if(g==6){ rows[0]=21.;rows[1]=14.;rows[2]=31.;rows[3]=14.;rows[4]=21.; }
+  else if(g==7){ rows[0]=17.;rows[1]=2.;rows[2]=4.;rows[3]=8.;rows[4]=17.; }
+  else if(g==8){ rows[0]=10.;rows[1]=31.;rows[2]=10.;rows[3]=31.;rows[4]=10.; }
+  else { rows[0]=14.;rows[1]=17.;rows[2]=23.;rows[3]=17.;rows[4]=14.; }
+  float row = y==0?rows[0]: y==1?rows[1]: y==2?rows[2]: y==3?rows[3]:rows[4];
+  return mod(floor(row/pow(2.,float(4-x))),2.);
+}
+vec3 samp(vec2 uv){
+  // cover-fit
+  float sa=uRes.x/uRes.y, ta=uTexRes.x/uTexRes.y;
+  vec2 s = sa>ta ? vec2(1., ta/sa) : vec2(sa/ta, 1.);
+  vec2 q = (uv-.5)*s+.5;
+  return texture2D(uTex, clamp(q,0.,1.)).rgb;
+}
+void main(){
+  vec2 uv = gl_FragCoord.xy/uRes; uv.y = 1.-uv.y;
+  float aspect = uRes.x/uRes.y;
+  vec2 pxu = 1./uRes;
+  vec3 col = samp(uv);
+
+  vec2 p = (uv-uOrigin)*vec2(aspect,1.);
+  float reach = 1.35;
+  float r = length(p)/reach;
+  float ang = atan(p.y,p.x);
+  float wob = (fbm(vec2(ang*1.9+3., uT*.20))-.5) + (fbm(vec2(ang*5.3, uT*.38))-.5)*.55;
+  float W = uW;
+  float R = uProg*(1.+2.*W) - W + wob*.30;
+  float ph = r - R;
+
+  // 快路：证明在前沿之外就跳过全部谐波
+  if(ph > W*1.35 || ph < -W*1.35){
+    if(ph < 0.) col *= vec3(.698,.667,.635);   // 已过前沿：暗幕
+    gl_FragColor = vec4(col,1.); return;
+  }
+
+  float band = clamp(1.-abs(ph)/W, 0., 1.); band = band*band*(3.-2.*band);
+  float fld = fbm(uv*3.4+vec2(uT*.06,uT*.31))*.72 + (.5+.5*sin(r*46.-uT*1.1))*.28;
+  float brk = smoothstep(.62-band*.26, .80-band*.18, fld)*band;
+
+  // 7px 行撕裂 @15Hz
+  float lineY = floor(uv.y/ (7.*pxu.y));
+  float shift = (hash(vec2(lineY, floor(uT*15.)))-.5) * brk * .09;
+  vec3 tear = samp(uv+vec2(shift,0.));
+
+  // 11px 块马赛克，24% 概率细化 ×.28
+  vec2 bs = 11.*pxu;
+  vec2 bId = floor(uv/bs);
+  float fine = step(.76, hash(bId+7.7)) ;
+  vec2 bs2 = mix(bs, bs*.28, fine);
+  vec2 bq = (floor(uv/bs2)+.5)*bs2;
+  vec3 mos = samp(bq);
+  tear = mix(tear, mos, smoothstep(.25,.75,brk)*.65);
+
+  // 13px 色散
+  float ca = brk*13.*pxu.x;
+  tear = vec3(samp(uv+vec2(shift+ca,0.)).r, tear.g, samp(uv+vec2(shift-ca,0.)).b);
+
+  // 9px 网格的 ASCII 拓片
+  vec2 cs = 9.*pxu;
+  vec2 cId = floor(uv/cs);
+  vec3 cell = samp((cId+.5)*cs);
+  float lum = dot(cell, vec3(.299,.587,.114));
+  int g = int(floor(clamp(lum,0.,.999)*10.));
+  float on = glyph(g, fract(uv/cs));
+  float charT = brk*uAsc;
+  vec3 ink = mix(vec3(.06,.055,.05), vec3(.95,.93,.88), on);
+  tear = mix(tear, ink, step(.0005,charT)*charT*.85);
+
+  // 暖色闪光
+  vec3 flare = vec3(1.,.94,.80)*band*band*.62;
+  tear = 1.-(1.-tear)*(1.-flare);
+
+  float pass = smoothstep(W,-W,ph);
+  vec3 after = col*vec3(.698,.667,.635);
+  col = mix(col, after, pass);
+  col = mix(col, tear, band);
+  gl_FragColor = vec4(col,1.);
+}`;
+  function sh(t,s){ const o=gl.createShader(t); gl.shaderSource(o,s); gl.compileShader(o);
+    if(!gl.getShaderParameter(o,gl.COMPILE_STATUS)) { console.warn(gl.getShaderInfoLog(o)); return null; } return o; }
+  const vs=sh(gl.VERTEX_SHADER,VS), fs=sh(gl.FRAGMENT_SHADER,FS);
+  if(!vs||!fs){ return; }
+  const pr=gl.createProgram(); gl.attachShader(pr,vs); gl.attachShader(pr,fs); gl.linkProgram(pr); gl.useProgram(pr);
+  const buf=gl.createBuffer(); gl.bindBuffer(gl.ARRAY_BUFFER,buf);
+  gl.bufferData(gl.ARRAY_BUFFER,new Float32Array([-1,-1,3,-1,-1,3]),gl.STATIC_DRAW);
+  const loc=gl.getAttribLocation(pr,'p'); gl.enableVertexAttribArray(loc); gl.vertexAttribPointer(loc,2,gl.FLOAT,false,0,0);
+  const U=n=>gl.getUniformLocation(pr,n);
+  const uRes=U('uRes'),uTexRes=U('uTexRes'),uOrigin=U('uOrigin'),uT=U('uT'),uProg=U('uProg'),uW=U('uW'),uAsc=U('uAsc');
+  const tex=gl.createTexture(); gl.bindTexture(gl.TEXTURE_2D,tex);
+  gl.texImage2D(gl.TEXTURE_2D,0,gl.RGBA,1,1,0,gl.RGBA,gl.UNSIGNED_BYTE,new Uint8Array([20,20,22,255]));
+  gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_WRAP_S,gl.CLAMP_TO_EDGE);
+  gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_WRAP_T,gl.CLAMP_TO_EDGE);
+  gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_MIN_FILTER,gl.LINEAR);
+  gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_MAG_FILTER,gl.LINEAR);
+  let tw=1,th=1;
+  const im=new Image(); im.crossOrigin='anonymous';
+  im.onload=()=>{ tw=im.naturalWidth; th=im.naturalHeight;
+    gl.bindTexture(gl.TEXTURE_2D,tex); gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL,false);
+    gl.texImage2D(gl.TEXTURE_2D,0,gl.RGBA,gl.RGBA,gl.UNSIGNED_BYTE,im); };
+  im.src='real-assets/frames/model_renaissance_1440_f_181.webp';
+
+  function size(){
+    const r=cv.parentElement.getBoundingClientRect();
+    const dpr=Math.min(devicePixelRatio||1,1.6);
+    cv.width=Math.max(2,Math.round(r.width*dpr)); cv.height=Math.max(2,Math.round(r.height*dpr));
+    gl.viewport(0,0,cv.width,cv.height);
+  }
+  let auto=!RM, t0=performance.now();
+  play.setAttribute('aria-pressed',auto);
+  play.addEventListener('click',()=>{ auto=!auto; play.setAttribute('aria-pressed',auto); if(auto) t0=performance.now()-(+pEl.value/1000)*6000; });
+  [pEl,wEl,aEl].forEach(el=>el.addEventListener('input',()=>{ if(el===pEl) auto=false, play.setAttribute('aria-pressed',false); sync(); }));
+  function sync(){ pO.textContent=(+pEl.value/1000).toFixed(3); wO.textContent=(+wEl.value/100).toFixed(2); aO.textContent=(+aEl.value/100).toFixed(2); }
+  let vis=false;
+  new IntersectionObserver(es=>{ vis=es[0].isIntersecting; },{threshold:.05}).observe(cv);
+  size(); sync();
+  addEventListener('resize',()=>{ clearTimeout(size._t); size._t=setTimeout(size,140); });
+  (function loop(t){
+    requestAnimationFrame(loop);
+    if(!vis) return;
+    if(auto){ const p=((t-t0)/6000)%1; pEl.value=Math.round(p*1000); pO.textContent=p.toFixed(3); }
+    gl.useProgram(pr);
+    gl.uniform2f(uRes,cv.width,cv.height);
+    gl.uniform2f(uTexRes,tw,th);
+    gl.uniform2f(uOrigin,.62,.58);
+    gl.uniform1f(uT,t/1000);
+    gl.uniform1f(uProg,+pEl.value/1000);
+    gl.uniform1f(uW,+wEl.value/100);
+    gl.uniform1f(uAsc,+aEl.value/100);
+    gl.activeTexture(gl.TEXTURE0); gl.bindTexture(gl.TEXTURE_2D,tex);
+    gl.uniform1i(U('uTex'),0);
+    gl.drawArrays(gl.TRIANGLES,0,3);
+  })(performance.now());
+})();
+
+/* ---------- 装置四：问答转盘 ---------- */
+(function faq(){
+  const stage=document.getElementById('faqStage'); if(!stage) return;
+  const QA=[
+    ['How do you get paid?','按新增收入分成。没有月费，没有工时表——基线之上的增量才计费。'],
+    ['Who owns the work?','你。软件、内容与数据都归你，合作结束后照常运行。'],
+    ['What is the baseline?','签约前 12 个月的自然流量与收入，逐月比对，季节性单独校正。'],
+    ['How is attribution handled?','只认可归因到我们所建资产的增量，口径写进合同附件。'],
+    ['Why would you say no?','我们更常说不。生意本身不成立、或增量空间不够覆盖投入时，双方都亏。']
+  ];
+  const STAR='<svg viewBox="0 0 24 24"><path d="M12 0Q13.1 10.9 24 12Q13.1 13.1 12 24Q10.9 13.1 0 12Q10.9 10.9 12 0Z"/></svg>';
+  const cards=QA.map(([q,a])=>{
+    const d=document.createElement('div'); d.className='fq';
+    d.innerHTML='<span class="st">'+STAR+'</span><div class="q">'+q+'</div><div class="a">'+a+'</div>';
+    stage.appendChild(d); return d;
+  });
+  const P=document.getElementById('faqP'), PO=document.getElementById('faqPO'), play=document.getElementById('faqPlay');
+  const step=360/QA.length;   // 72°
+  function radius(){
+    const vw=innerWidth;
+    const orig = vw<=720 ? vw*.36 : Math.min(360, vw*.26);   // 原式
+    const room = stage.clientWidth/2 - 103 - 22;             // 舞台实宽留出卡半宽与边距
+    return Math.max(120, Math.min(orig, room));
+  }
+  function render(p){
+    const R=radius(), rot=-p*(360-step);
+    PO.textContent=p.toFixed(3);
+    cards.forEach((c,i)=>{
+      const a=(((i*step+rot)%360)+360)%360, rad=a*Math.PI/180, cos=Math.cos(rad), o=(cos+1)/2;
+      c.style.transform='translate(-50%,-50%) rotateY('+a.toFixed(2)+'deg) translateZ('+R.toFixed(1)+'px) rotateY('+(-a).toFixed(2)+'deg) translateY('+(Math.sin(rad)*26).toFixed(1)+'px) scale('+(.58+.42*Math.pow(o,1.4)).toFixed(3)+')';
+      c.style.filter='blur('+(Math.round((1-o)*8.4)/2).toFixed(2)+'px)';
+      c.style.zIndex=Math.round(o*100);
+      c.classList.toggle('lit', cos>.9);
+    });
+  }
+  P.addEventListener('input',()=>{ render(+P.value/1000); stop(); });
+  let raf=0,t0=0;
+  function stop(){ if(raf){cancelAnimationFrame(raf);raf=0;play.setAttribute('aria-pressed',false);} }
+  play.addEventListener('click',()=>{
+    if(raf) return stop();
+    play.setAttribute('aria-pressed',true); t0=performance.now();
+    (function s(t){ const p=clamp((t-t0)/11000,0,1); P.value=Math.round(p*1000); render(p);
+      if(p<1) raf=requestAnimationFrame(s); else stop(); })(t0);
+  });
+  addEventListener('resize',()=>render(+P.value/1000));
+  render(0);
+})();
+})();
+</script>
+</body>
+</html>
