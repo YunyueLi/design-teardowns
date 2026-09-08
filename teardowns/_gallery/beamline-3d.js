@@ -83,6 +83,9 @@
       this.lost = false;
       this.lastTime = 0;
       this.resize();
+      // compile() also traverses hidden materials in the bundled Three.js runtime.
+      // Lights and the software material profile are final before the first draw.
+      if (this.gpu.software) this.renderer.compile(this.scene, this.camera);
       this.render(performance.now());
       this.ready = true;
       this.canvas.addEventListener("webglcontextlost", (event) => {
@@ -256,24 +259,53 @@
       this.labelPainters = [];
     }
     simplifySoftwareMaterials() {
-      // Retain geometry, albedo/sample maps, lights and animated emissive strips.
-      // Without studio reflections, use more diffuse metal and avoid per-fragment
-      // bump derivatives and roughness sampling on the CPU rasterizer.
-      const materials = new Set();
+      // Diffuse-only lighting avoids the PBR specular work on CPU renderers.
+      // Share each replacement across meshes and keep the authored render state;
+      // albedo and emissive maps survive, but normal/bump/roughness work is omitted.
+      const replacements = new Map();
+      const replace = (material) => {
+        if (!material.isMeshStandardMaterial) return material;
+        if (replacements.has(material)) return replacements.get(material);
+        const diffuse = new T.MeshLambertMaterial();
+        T.Material.prototype.copy.call(diffuse, material);
+        diffuse.color.copy(material.color);
+        diffuse.emissive.copy(material.emissive);
+        for (const key of [
+          "map",
+          "lightMap",
+          "lightMapIntensity",
+          "aoMap",
+          "aoMapIntensity",
+          "emissiveMap",
+          "emissiveIntensity",
+          "alphaMap",
+          "wireframe",
+          "wireframeLinewidth",
+          "wireframeLinecap",
+          "wireframeLinejoin",
+          "flatShading",
+          "fog",
+        ])
+          diffuse[key] = material[key];
+        replacements.set(material, diffuse);
+        return diffuse;
+      };
       this.scene.traverse((object) => {
         if (object.material) {
-          for (const material of Array.isArray(object.material)
-            ? object.material
-            : [object.material])
-            materials.add(material);
+          object.material = Array.isArray(object.material)
+            ? object.material.map(replace)
+            : replace(object.material);
         }
       });
-      for (const material of materials) {
-        if (!material.isMeshStandardMaterial) continue;
-        material.metalness = Math.min(material.metalness, 0.35);
-        material.bumpMap = null;
-        material.roughnessMap = null;
+      // Animation must update the material actually used by the gantry strips.
+      for (const gate of this.gates) {
+        gate.userData.light = replace(gate.userData.light);
       }
+      for (const [key, value] of Object.entries(this)) {
+        if (replacements.has(value)) this[key] = replacements.get(value);
+      }
+      // Material disposal leaves the shared textures available to replacements.
+      for (const material of replacements.keys()) material.dispose();
     }
     box(w, h, d, x, y, z, material, parent = this.world) {
       const mesh = new T.Mesh(new T.BoxGeometry(w, h, d), material);
@@ -702,10 +734,9 @@
         ctx.drawImage(image, 0, 0, sw, sh, 48, 110, targetW, targetH);
         this.sampleTexture = new T.CanvasTexture(canvas);
         this.sampleTexture.colorSpace = T.SRGBColorSpace;
-        this.sampleTexture.anisotropy = Math.min(
-          8,
-          this.renderer.capabilities.getMaxAnisotropy(),
-        );
+        this.sampleTexture.anisotropy = this.gpu.software
+          ? 1
+          : Math.min(8, this.renderer.capabilities.getMaxAnisotropy());
         this.surfaceMaterial.map = this.sampleTexture;
         this.surfaceMaterial.needsUpdate = true;
         this.sampleReady = true;

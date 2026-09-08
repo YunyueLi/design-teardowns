@@ -172,6 +172,26 @@
     document.body.removeAttribute("data-moving");
   }
   function tick(now) {
+    if (
+      scrollGeometry.width !== innerWidth ||
+      scrollGeometry.height !== innerHeight
+    )
+      resize();
+    // Native coordinates can change before the queued scroll event is delivered.
+    // Consume that input before an old navigation frame can overwrite it.
+    if (
+      navigation &&
+      Math.abs(
+        scrollY -
+          (writtenScroll ??
+            scrollGeometry.top + scrollGeometry.range * progress),
+      ) >= 1
+    ) {
+      navigation = null;
+      targetProgress = scrollProgress();
+      velocity = 0;
+      writtenScroll = null;
+    }
     // Integrate in seconds, including missed frames, without a second easing curve.
     const dt = Math.max(0, (now - lastFrameTime) / 1000);
     lastFrameTime = now;
