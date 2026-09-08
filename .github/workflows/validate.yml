@@ -1,0 +1,52 @@
+name: Validate gallery
+
+on:
+  pull_request:
+  workflow_call:
+
+permissions:
+  contents: read
+
+jobs:
+  gallery:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Validate catalogue and maintenance
+        run: |
+          node tools/build-gallery-featured.mjs --check
+          node tools/check-gallery.mjs
+          node tools/test-gallery-maintenance.mjs
+          python3 tools/generate_index.py --check
+      - name: Install isolated browser test dependencies
+        run: |
+          npm install --prefix "$RUNNER_TEMP/beamline-devtest" playwright@1.62.1
+          node "$RUNNER_TEMP/beamline-devtest/node_modules/playwright/cli.js" install --with-deps chromium
+      - name: Check browser interactions
+        env:
+          PLAYWRIGHT_ROOT: ${{ runner.temp }}/beamline-devtest/node_modules/playwright
+          BEAMLINE_ARTIFACT_DIR: artifacts/ci
+        run: |
+          python3 -m http.server 4174 --bind 127.0.0.1 > "$RUNNER_TEMP/beamline-server.log" 2>&1 &
+          server_pid=$!
+          trap 'kill "$server_pid"' EXIT
+          for attempt in {1..30}; do
+            if curl --fail --silent http://127.0.0.1:4174/teardowns/index.html > /dev/null; then break; fi
+            sleep 1
+          done
+          node tools/check-beamline.mjs
+      - name: Save browser acceptance evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: beamline-acceptance
+          path: artifacts/ci/
+          if-no-files-found: ignore
+          retention-days: 14

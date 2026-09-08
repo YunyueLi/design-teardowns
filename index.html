@@ -4,7 +4,13 @@
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
 <title>Design Teardowns</title>
-<meta http-equiv="refresh" content="0; url=teardowns/index.html"/>
+<script>
+  const gallery = new URL("teardowns/index.html", location.href);
+  gallery.search = location.search;
+  gallery.hash = location.hash;
+  location.replace(gallery.href);
+</script>
+<noscript><meta http-equiv="refresh" content="0; url=teardowns/index.html"/></noscript>
 <link rel="canonical" href="teardowns/index.html"/>
 <style>
   :root{--wall:#f6f4ef;--ink:#1c1c1c;--ink2:rgba(28,28,28,.6);--rubric:#9a3524}

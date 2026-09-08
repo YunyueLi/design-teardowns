@@ -86,6 +86,8 @@ const report = {
   tests: [],
 };
 for (const path of [
+  "tools/check-beamline.mjs",
+  "index.html",
   "teardowns/index.html",
   "teardowns/_gallery/beamline.js",
   "teardowns/_gallery/beamline.css",
@@ -145,6 +147,62 @@ async function nativeScroll(page, p) {
       }),
     p,
   );
+}
+async function docked(page, index) {
+  await settled(page, index / 4);
+  await expect(page.locator("body")).toHaveAttribute(
+    "data-station",
+    names[index],
+  );
+  await expect(page.locator("#readout-word")).toHaveText(
+    new RegExp(`^${names[index]}$`, "i"),
+  );
+  await expect(
+    page.locator('[data-station][aria-current="step"]'),
+  ).toHaveAttribute("href", "#" + names[index]);
+  await page.waitForFunction(
+    (p) =>
+      Math.abs(
+        scrollY -
+          (document.querySelector("#experience").offsetHeight - innerHeight) *
+            p,
+      ) < 2,
+    index / 4,
+  );
+  const s = await state(page);
+  assert.equal(s.diagnostics.navigating, false);
+  assert.equal(s.diagnostics.velocity, 0);
+  return s;
+}
+// Observe a bounded run of rendered frames to expose stale scrollend callbacks or
+// resumed transport, rather than accepting a single transient idle sample.
+async function stableFrames(page, expected, count = 30) {
+  const rows = await page.evaluate(
+    ({ count }) =>
+      new Promise((resolve) => {
+        const rows = [];
+        function frame() {
+          rows.push({
+            p: window.BEAMLINE.inspect().progress,
+            moving: document.body.hasAttribute("data-moving"),
+            station: document.body.dataset.station,
+          });
+          if (rows.length >= count) resolve(rows);
+          else requestAnimationFrame(frame);
+        }
+        requestAnimationFrame(frame);
+      }),
+    { count },
+  );
+  for (const row of rows) {
+    assert.ok(
+      Math.abs(row.p - expected.p) < 0.000002,
+      "Unexpected transport after settling / modal suspension",
+    );
+    assert.equal(row.moving, false);
+    assert.equal(row.station, expected.station);
+  }
+  return rows;
 }
 async function sample(page, action, end, event = "scroll") {
   await page.evaluate((event) => {
@@ -229,6 +287,14 @@ function motionMetrics(
     if (dt > 0.004) speeds.push(Math.abs(step / dt));
     assert.equal(rows[i].currentLink, "#" + rows[i].station);
     assert.equal(rows[i].readout.toLowerCase(), rows[i].station);
+    if (rows[i].station !== rows[i - 1].station) {
+      const reached = names.indexOf(rows[i].station) / 4;
+      assert.ok(
+        reached >= Math.min(rows[i - 1].p, rows[i].p) - 1e-7 &&
+          reached <= Math.max(rows[i - 1].p, rows[i].p) + 1e-7,
+        `Label changed without crossing its station: ${rows[i - 1].p} -> ${rows[i].p}, ${rows[i].station}`,
+      );
+    }
   }
   const last = rows.at(-1),
     durationMs = last.t - observation.triggeredAt;
@@ -265,6 +331,44 @@ function motionMetrics(
     overshoot: false,
   };
 }
+for (const mode of ["query", "hash"])
+  test(`root-redirect-preserves-${mode}-and-revision`, async ({
+    page,
+    note,
+  }) => {
+    const root = new URL("../", base);
+    root.searchParams.set("revision", "release-final-20260908");
+    if (mode === "query") root.searchParams.set("station", "4");
+    else root.hash = "archive";
+    const galleryRequest = page.waitForRequest(
+      (request) =>
+        request.isNavigationRequest() &&
+        new URL(request.url()).pathname === new URL(base).pathname,
+    );
+    await page.goto(root.href);
+    const redirected = new URL((await galleryRequest).url());
+    assert.equal(
+      redirected.searchParams.get("revision"),
+      "release-final-20260908",
+    );
+    if (mode === "query")
+      assert.equal(redirected.searchParams.get("station"), "4");
+    await page.waitForURL(
+      (destination) => destination.pathname === new URL(base).pathname,
+    );
+    const s = await docked(page, 4);
+    assert.equal(s.hash, "#archive");
+    assert.equal(
+      new URL(page.url()).searchParams.get("revision"),
+      "release-final-20260908",
+    );
+    note({
+      entry: root.href,
+      redirected: redirected.href,
+      final: page.url(),
+      state: s,
+    });
+  });
 for (const name of names)
   test(`direct-${name}`, async ({ page }) => {
     await start(page, name);
@@ -319,6 +423,224 @@ for (const [name, from, index] of [
     });
     assert.equal(new URL(page.url()).hash, "#" + names[index]);
   });
+// Release positions intentionally lie on both sides of each half-station boundary.
+// Browser-generated scroll/scrollend events exercise the real controller; none are dispatched by the test.
+for (const [from, release, index] of [
+  ["capture", 0.11, 0],
+  ["capture", 0.14, 1],
+  ["capture", 0.36, 1],
+  ["capture", 0.39, 2],
+  ["archive", 0.61, 2],
+  ["archive", 0.64, 3],
+  ["archive", 0.86, 3],
+  ["archive", 0.89, 4],
+])
+  test(`release-snap-${release}-to-${names[index]}`, async ({ page, note }) => {
+    await start(page, from);
+    await page.evaluate(() => {
+      window.__releaseEnds = [];
+      window.addEventListener("scrollend", (event) => {
+        window.__releaseEnds.push({
+          trusted: event.isTrusted,
+          scroll: scrollY,
+        });
+      });
+    });
+    await nativeScroll(page, release);
+    await page.waitForFunction(() => window.__releaseEnds.length > 0);
+    const s = await docked(page, index);
+    assert.equal(s.hash, "#" + names[index]);
+    const events = await page.evaluate(() => window.__releaseEnds);
+    assert.ok(
+      events.some((event) => event.trusted),
+      "Must observe native scrollend",
+    );
+    note({ release, events, settled: s, stable: await stableFrames(page, s) });
+  });
+for (const [from, index] of [
+  ["capture", 1],
+  ["archive", 3],
+])
+  test(`stage-label-only-at-arrival-${from}`, async ({ page, note }) => {
+    await start(page, from);
+    const observation = await sample(
+      page,
+      () => page.locator(`[data-station="${index}"]`).click(),
+      index / 4,
+      "click",
+    );
+    note({ observation });
+    const origin = names.indexOf(from) / 4;
+    const enRoute = observation.rows.filter((row) => {
+      const fraction = (row.p - origin) / (index / 4 - origin);
+      return fraction > 0.52 && fraction < 0.95;
+    });
+    assert.ok(enRoute.length >= 3, "Must sample beyond halfway before arrival");
+    for (const row of enRoute) {
+      assert.equal(
+        row.station,
+        from,
+        "Stage label advanced before actual arrival",
+      );
+      assert.equal(row.readout.toLowerCase(), from);
+      assert.equal(row.currentLink, "#" + from);
+    }
+    await docked(page, index);
+  });
+for (const [from, release, index] of [
+  ["capture", 0.14, 1],
+  ["archive", 0.86, 3],
+])
+  test(`release-snap-waits-for-held-input-${from}`, async ({ page, note }) => {
+    await start(page, from);
+    await page.mouse.move(20, 350);
+    await page.mouse.down();
+    let held;
+    try {
+      await page.evaluate(() => {
+        window.__heldScrollEnded = false;
+        document.addEventListener(
+          "scrollend",
+          () => {
+            window.__heldScrollEnded = true;
+          },
+          { once: true },
+        );
+      });
+      await nativeScroll(page, release);
+      await page.waitForFunction(
+        () =>
+          window.__heldScrollEnded &&
+          !document.body.hasAttribute("data-moving"),
+      );
+      held = await state(page);
+      assert.ok(
+        Math.abs(held.p - release) < 0.001,
+        "Held input must retain the native position",
+      );
+      assert.equal(
+        held.station,
+        from,
+        "Native halfway motion must not announce the next station",
+      );
+      assert.equal(held.diagnostics.navigating, false);
+      note({ held, stableHeld: await stableFrames(page, held) });
+    } finally {
+      await page.mouse.up();
+    }
+    const released = await docked(page, index);
+    note({ released, stableReleased: await stableFrames(page, released) });
+  });
+for (const [from, release, station] of [
+  ["capture", 0.14, 1],
+  ["archive", 0.86, 3],
+])
+  test(`reduced-motion-label-scene-consistency-${from}`, async ({
+    page,
+    note,
+  }) => {
+    await page.emulateMedia({ reducedMotion: "reduce" });
+    await start(page, from);
+    await page.waitForFunction(
+      () => window.BEAMLINE.inspect().scene?.sampleReady,
+    );
+    await page.mouse.move(20, 350);
+    await page.mouse.down();
+    try {
+      await nativeScroll(page, release);
+      await settled(page, station / 4);
+      const s = await state(page);
+      assert.equal(
+        s.station,
+        names[station],
+        "Reduced motion must publish the same quantized arrival as the scene",
+      );
+      await page.waitForFunction((station) => {
+        const scene = window.BEAMLINE.inspect().scene;
+        return (
+          Math.abs(scene.sampleWorldZ - scene.gantryWorldZ[station]) < 1e-7
+        );
+      }, station);
+      note(s);
+    } finally {
+      await page.mouse.up();
+    }
+    note({ released: await docked(page, Math.round(release * 4)) });
+  });
+test("release-snap-zero-scroll-interruption", async ({ page, note }) => {
+  await start(page);
+  await page.locator('[data-station="4"]').click();
+  await page.waitForFunction(() => window.BEAMLINE.inspect().progress > 0.15);
+  await page.mouse.move(20, 350);
+  await page.mouse.down();
+  let interrupted;
+  try {
+    await page.waitForFunction(
+      () => !document.body.hasAttribute("data-moving"),
+    );
+    interrupted = await state(page);
+    assert.equal(interrupted.diagnostics.navigating, false);
+    assert.ok(interrupted.p > 0 && interrupted.p < 0.5);
+    note({ interrupted, stableHeld: await stableFrames(page, interrupted) });
+  } finally {
+    await page.mouse.up();
+  }
+  const s = await docked(page, Math.round(interrupted.p * 4));
+  assert.notEqual(s.hash, "#archive");
+  note({ released: s, stableReleased: await stableFrames(page, s) });
+});
+test("release-snap-native-interruption", async ({ page, note }) => {
+  await start(page);
+  await nativeScroll(page, 0.64);
+  await page.waitForFunction(
+    () =>
+      window.BEAMLINE.inspect().navigating &&
+      window.BEAMLINE.inspect().targetProgress === 0.75,
+  );
+  await nativeScroll(page, 0.36);
+  const s = await docked(page, 1);
+  assert.equal(s.hash, "#measure");
+  note({ settled: s, stable: await stableFrames(page, s) });
+});
+test("release-snap-resize-preserves-destination", async ({ page, note }) => {
+  await start(page);
+  await nativeScroll(page, 0.64);
+  await page.waitForFunction(
+    () =>
+      window.BEAMLINE.inspect().navigating &&
+      window.BEAMLINE.inspect().targetProgress === 0.75,
+  );
+  await page.setViewportSize({ width: 390, height: 844 });
+  const s = await docked(page, 3);
+  assert.equal(s.hash, "#verify");
+  note({ settled: s, stable: await stableFrames(page, s) });
+});
+test("release-snap-modal-suspends-and-next-input-recovers", async ({
+  page,
+  note,
+}) => {
+  await start(page);
+  await nativeScroll(page, 0.64);
+  await page.waitForFunction(
+    () =>
+      window.BEAMLINE.inspect().navigating &&
+      window.BEAMLINE.inspect().targetProgress === 0.75,
+  );
+  await page.locator('[data-dialog="method-dialog"]').click();
+  await expect(page.locator("#method-dialog")).toBeVisible();
+  const frozen = await state(page);
+  assert.equal(frozen.diagnostics.navigating, false);
+  note({ frozen, stableOpen: await stableFrames(page, frozen) });
+  await page.setViewportSize({ width: 390, height: 844 });
+  note({ stableResized: await stableFrames(page, frozen) });
+  await page.keyboard.press("Escape");
+  await expect(page.locator("#method-dialog")).toBeHidden();
+  // Closing resumes docking from the frozen position, not the cancelled destination.
+  const closed = await docked(page, Math.round(frozen.p * 4));
+  note({ closed, stableClosed: await stableFrames(page, closed) });
+  await nativeScroll(page, 0.36);
+  note({ recovered: await docked(page, 1) });
+});
 test("click-retarget-no-rebound", async ({ page, note }) => {
   await start(page);
   await page.locator('[data-station="4"]').click();
@@ -347,7 +669,14 @@ test("wheel-takes-over-click", async ({ page, note }) => {
   );
   await page.mouse.move(20, 350);
   await page.mouse.wheel(0, -240);
-  await page.waitForFunction(() => !document.body.hasAttribute("data-moving"));
+  await page.waitForFunction(
+    () =>
+      !document.body.hasAttribute("data-moving") &&
+      Math.abs(
+        window.BEAMLINE.inspect().progress * 4 -
+          Math.round(window.BEAMLINE.inspect().progress * 4),
+      ) < 0.000008,
+  );
   const s = await state(page);
   assert.ok(s.p < 0.4);
   assert.equal(s.diagnostics.navigating, false);
@@ -394,7 +723,12 @@ test(
       touchPoints: [],
     });
     await page.waitForFunction(
-      () => !document.body.hasAttribute("data-moving"),
+      () =>
+        !document.body.hasAttribute("data-moving") &&
+        Math.abs(
+          window.BEAMLINE.inspect().progress * 4 -
+            Math.round(window.BEAMLINE.inspect().progress * 4),
+        ) < 0.000008,
     );
     const s = await state(page);
     assert.equal(s.diagnostics.navigating, false);
@@ -412,9 +746,33 @@ test("keyboard-takes-over-click", async ({ page, note }) => {
     () =>
       parseFloat(document.querySelector("#track-progress").style.width) > 15,
   );
-  await page.keyboard.press("Home");
-  await settled(page, 0);
-  note(await state(page));
+  await page.evaluate(() => {
+    window.__keyboardMotion = [];
+    for (const type of ["keydown", "keyup", "scroll", "scrollend"])
+      window.addEventListener(type, (event) => {
+        const d = window.BEAMLINE.inspect();
+        window.__keyboardMotion.push({
+          type,
+          key: event.key,
+          trusted: event.isTrusted,
+          t: performance.now(),
+          scroll: scrollY,
+          p: d.progress,
+          target: d.targetProgress,
+          kind: d.transportKind,
+          release: d.release,
+        });
+      });
+  });
+  try {
+    await page.keyboard.press("Home");
+    await settled(page, 0);
+    note(await state(page));
+  } finally {
+    note({
+      keyboardMotion: await page.evaluate(() => window.__keyboardMotion),
+    });
+  }
 });
 test("resize-preserves-progress-and-destination", async ({ page, note }) => {
   await start(page, "verify");
@@ -1005,6 +1363,14 @@ try {
   await browser.close();
 }
 report.finishedAt = new Date().toISOString();
+report.sourceChangesDuringRun = [];
+for (const [path, initialHash] of Object.entries(report.sourceHashes)) {
+  const finalHash = createHash("sha256")
+    .update(await readFile(join(repo, path)))
+    .digest("hex");
+  if (initialHash !== finalHash)
+    report.sourceChangesDuringRun.push({ path, initialHash, finalHash });
+}
 report.summary = {
   passed: report.tests.filter((t) => t.status === "PASS").length,
   failed: report.tests.filter((t) => t.status === "FAIL").length,
@@ -1015,4 +1381,11 @@ await writeFile(
   JSON.stringify(report, null, 2),
 );
 console.log(JSON.stringify({ artifacts, ...report.summary }));
-if (report.summary.failed) process.exitCode = 1;
+if (report.sourceChangesDuringRun.length) {
+  console.error(
+    "Source changed during acceptance; this run cannot certify the final files:",
+    report.sourceChangesDuringRun.map(({ path }) => path).join(", "),
+  );
+}
+if (report.summary.failed || report.sourceChangesDuringRun.length)
+  process.exitCode = 1;
