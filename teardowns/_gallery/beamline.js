@@ -49,74 +49,7 @@
     navigation = null;
   let scrollGeometry = null,
     writtenScroll = null;
-  const nativeScrollEnd = "onscrollend" in document;
-  const heldPointers = new Set(),
-    heldKeys = new Set();
-  let heldTouches = 0,
-    releaseTimer = 0,
-    nativeScrollPending = false,
-    modalDockPending = false,
-    interruptedDockPending = false,
-    releaseReady = false;
-  const scrollKeys = [
-    "ArrowDown",
-    "ArrowUp",
-    "PageDown",
-    "PageUp",
-    "Home",
-    "End",
-    " ",
-  ];
   const modalOpen = () => Boolean(document.querySelector("dialog[open]"));
-  const inputHeld = () =>
-    heldPointers.size > 0 || heldTouches > 0 || heldKeys.size > 0;
-  function clearRelease() {
-    clearTimeout(releaseTimer);
-    releaseTimer = 0;
-    nativeScrollPending = false;
-    modalDockPending = false;
-    interruptedDockPending = false;
-    releaseReady = false;
-  }
-  function releaseScroll() {
-    clearTimeout(releaseTimer);
-    releaseTimer = 0;
-    if (
-      (!nativeScrollPending && !modalDockPending && !interruptedDockPending) ||
-      navigation ||
-      modalOpen()
-    )
-      return;
-    releaseReady = true;
-    if (inputHeld()) return;
-    // Native position chooses the destination, even while the scene is catching up.
-    // Do not pull the document back into the experience from surrounding content.
-    if (
-      scrollY < scrollGeometry.top - 1 ||
-      scrollY > scrollGeometry.top + scrollGeometry.range + 1
-    ) {
-      clearRelease();
-      return;
-    }
-    goToStation(
-      Math.round(scrollProgress() * (stations.length - 1)),
-      false,
-      "snap",
-    );
-  }
-  function deferRelease() {
-    if (nativeScrollEnd) return;
-    clearTimeout(releaseTimer);
-    releaseTimer = setTimeout(releaseScroll, 160);
-  }
-  function finishInput() {
-    if (inputHeld() || modalOpen()) return;
-    // A pointer/touch can interrupt transport without causing any scroll event.
-    // Keyboard defaults may start scrolling after keyup: never dock ahead of them.
-    if (releaseReady || (interruptedDockPending && !nativeScrollPending))
-      releaseScroll();
-    else if (nativeScrollPending) deferRelease();
-  }
   // One critically damped controller drives both the readout and the scene.
   // Native scrolling supplies its target; station navigation adds a speed limit.
   const response = 38,
@@ -207,7 +140,6 @@
     if (scene) scene.setProgress(progress);
   }
   function stopTransport() {
-    clearRelease();
     cancelAnimationFrame(transportFrame);
     transportFrame = 0;
     navigation = null;
@@ -223,9 +155,8 @@
     history.replaceState(null, "", url);
   }
   function finishTransport() {
-    // The reduced-motion scene renders only whole stations. Quantize its native
-    // target too, so the readout and specimen always describe the same arrival.
-    // Leave native scroll coordinates alone until release; do not fight input.
+    // The reduced-motion scene renders only whole stations. Quantize its target
+    // so the readout and specimen describe the same arrival without moving native scroll.
     if (reduced.matches)
       targetProgress =
         Math.round(targetProgress * (stations.length - 1)) /
@@ -253,9 +184,7 @@
     const next = targetProgress + (offset + coefficient * dt) * decay;
     let nextVelocity = (velocity - response * coefficient * dt) * decay;
     let step = clamp((next - progress) * direction, 0, Math.abs(distance));
-    // Release can precede scene catch-up: snapping must retain the native
-    // critically damped response, not slow the remaining travel to click speed.
-    if (navigation && navigation.kind !== "snap") {
+    if (navigation) {
       step = Math.min(step, navigation.maxSpeed * dt);
       nextVelocity = clamp(
         nextVelocity,
@@ -293,15 +222,13 @@
     document.body.dataset.moving = "true";
     transportFrame = requestAnimationFrame(tick);
   }
-  function goToStation(index, instant = false, kind = "navigation") {
+  function goToStation(index, instant = false) {
     if (modalOpen()) return;
-    clearRelease();
     index = clamp(Math.round(index), 0, 4);
     targetProgress = index / 4;
     const distance = Math.abs(targetProgress - progress);
     navigation = {
       index,
-      kind,
       maxSpeed: Math.max(0.25, distance / (0.65 + 1.05 * distance)),
     };
     if (instant) {
@@ -311,22 +238,14 @@
     }
     followTarget();
   }
-  function takeOver(source) {
+  function takeOver() {
     if (modalOpen()) return;
-    if (source === "keyboard") interruptedDockPending = false;
-    modalDockPending = false;
-    clearTimeout(releaseTimer);
-    releaseTimer = 0;
-    releaseReady = false;
     if (!navigation) return;
-    interruptedDockPending = source === "pointer" || source === "touch";
     navigation = null;
-    velocity = 0;
     targetProgress = scrollProgress();
     followTarget();
   }
   function resize() {
-    clearRelease();
     // A viewport change can dispatch scroll before resize. Preserve controller state
     // before reading scroll coordinates in the new geometry.
     layout();
@@ -344,17 +263,13 @@
       return;
     }
     if (writtenScroll !== null && Math.abs(scrollY - writtenScroll) < 1) {
+      writtenScroll = null;
       return;
     }
     writtenScroll = null;
-    if (navigation) velocity = 0;
     navigation = null;
-    nativeScrollPending = true;
-    interruptedDockPending = false;
-    releaseReady = false;
     targetProgress = scrollProgress();
     followTarget();
-    deferRelease();
   }
   all("[data-station]").forEach((link) =>
     link.addEventListener("click", (event) => {
@@ -369,69 +284,25 @@
     }),
   );
   window.addEventListener("scroll", readScroll, { passive: true });
-  if (nativeScrollEnd)
-    document.addEventListener("scrollend", (event) => {
-      // Nested archive scrollers must never release the page controller.
-      if (event.target === document) releaseScroll();
-    });
-  window.addEventListener("wheel", takeOver, { passive: true });
-  window.addEventListener(
-    "pointerdown",
-    (event) => {
-      heldPointers.add(event.pointerId);
-      takeOver("pointer");
-    },
-    { passive: true },
-  );
-  ["pointerup", "pointercancel"].forEach((type) =>
-    window.addEventListener(
-      type,
-      (event) => {
-        heldPointers.delete(event.pointerId);
-        finishInput();
-      },
-      { passive: true },
-    ),
-  );
-  window.addEventListener(
-    "touchstart",
-    (event) => {
-      heldTouches = event.touches.length;
-      takeOver("touch");
-    },
-    { passive: true },
-  );
-  ["touchend", "touchcancel"].forEach((type) =>
-    window.addEventListener(
-      type,
-      (event) => {
-        heldTouches = event.touches.length;
-        finishInput();
-      },
-      { passive: true },
-    ),
+  ["wheel", "touchstart", "pointerdown"].forEach((type) =>
+    window.addEventListener(type, takeOver, { passive: true }),
   );
   window.addEventListener("keydown", (event) => {
     if (
-      scrollKeys.includes(event.key) &&
+      [
+        "ArrowDown",
+        "ArrowUp",
+        "PageDown",
+        "PageUp",
+        "Home",
+        "End",
+        " ",
+      ].includes(event.key) &&
       !event.target.closest(
         'input,select,textarea,[contenteditable]:not([contenteditable="false"])',
       )
-    ) {
-      heldKeys.add(event.key);
-      takeOver("keyboard");
-    }
-  });
-  window.addEventListener("keyup", (event) => {
-    heldKeys.delete(event.key);
-    finishInput();
-  });
-  window.addEventListener("blur", () => {
-    heldPointers.clear();
-    heldKeys.clear();
-    heldTouches = 0;
-    clearRelease();
-    takeOver();
+    )
+      takeOver();
   });
   window.addEventListener("resize", resize, { passive: true });
   window.addEventListener("hashchange", () => {
@@ -676,11 +547,6 @@
       document.body.classList.remove("dialog-open");
       const opener = openers.get(dialog);
       if (opener && opener.isConnected) opener.focus({ preventScroll: true });
-      // Resume from the paused position, not the old navigation destination.
-      // Reuse the held-input gate without waiting for a new native scrollend.
-      // Docking never changes focus; queued duplicate close events are ignored.
-      modalDockPending = true;
-      releaseScroll();
     }
   }
   function closeDialog(dialog) {
@@ -753,15 +619,6 @@
       velocity,
       frameTime: lastFrameTime,
       navigating: Boolean(navigation),
-      transportKind: navigation ? navigation.kind : null,
-      release: {
-        source: nativeScrollEnd ? "scrollend" : "debounce",
-        pending: nativeScrollPending,
-        modalDockPending,
-        interruptedDockPending,
-        ready: releaseReady,
-        held: inputHeld(),
-      },
       moving: Boolean(transportFrame),
       archive: {
         loaded: Boolean(catalogue),
