@@ -1,0 +1,51 @@
+{
+  "sheetsById": {
+    "operations": {
+      "staticOverrides": {
+        "byObject": {
+          "Scene": {
+            "preset": "prod-7-operations"
+          },
+          "Camera": {
+            "fov": 50,
+            "scrollDrift": {
+              "back": 0.3,
+              "up": 0.25,
+              "backgroundVolumeScrollScrub": -0.1
+            },
+            "positionOffset": {
+              "x": 0.1
+            }
+          },
+          "ForegroundLightVolume": {
+            "visible": false
+          }
+        }
+      },
+      "sequence": {
+        "subUnitsPerUnit": 30,
+        "length": 10,
+        "type": "PositionalSequence",
+        "tracksByObject": {
+          "Camera": {
+            "trackData": {},
+            "trackIdByPropPath": {}
+          }
+        }
+      }
+    }
+  },
+  "definitionVersion": "0.4.0",
+  "revisionHistory": [
+    "Mjtc1l7OTcJesmb2",
+    "Gdm7LYgjPoJ7AuTU",
+    "5l3_Powy4GSVD8Rz",
+    "QlNyYhiZc7DDap7r",
+    "Q1GuzweBR3su7WVY",
+    "H1rt-z_rqa8ptWzZ",
+    "0oN0SLA0C0mzyIDN",
+    "YTewFDFRgxNezxzn",
+    "MSESANKaj1g_PEzW",
+    "jwVzygJMof3xwDZy"
+  ]
+}

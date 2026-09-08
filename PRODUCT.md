@@ -30,7 +30,7 @@ Three.js r160 随仓库本地提供。金属门架、轨道、输送带、滚轮
 
 ## 馆藏与数据边界
 
-canonical 是 `teardowns/_gallery/catalogue.js`，当前共 **17** 项。初始 featured 固定为六项，顺序为 `latrix,chatgpt,easycode,gemini,notion,shopify-editions`。featured 的全部字段和总数从 canonical 确定性派生；维护命令及数量同步见 [README](README.md#维护馆藏)。
+canonical 是 `teardowns/_gallery/catalogue.js`，当前共 **19** 项。初始 featured 固定为六项，顺序为 `shopify-editions,pear,shopify-editions-spring26,moonshot,comet,latrix`。featured 的全部字段和总数从 canonical 确定性派生；维护命令及数量同步见 [README](README.md#维护馆藏)。
 
 Latrix 的 canonical 分类是 **Web · Digital identity**。其《出处与方法》记录原站关于数字生命与 AI Beings 的自述。EasyCode 的 canonical 分类是 **Web · Learning product**，研究对象是 imlagom.com/projects/easycode/ 的练习、指导与反馈页面；其《设计解构》和《出处与方法》是本轮事实依据。ChatGPT 研究的是 OpenAI overview 页面，Gemini 研究的是归档的签出状态入口，均不扩大到未捕获的应用状态。
 

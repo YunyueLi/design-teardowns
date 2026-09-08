@@ -1,0 +1,974 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-color-mode="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#090909">
+<title>Shopify Editions Spring ’26 拆解 · Everywhere</title>
+<style>
+/* ============ 真字体：本目录 real-assets/fonts 下的原文件 ============ */
+@font-face{font-family:National2;src:url(real-assets/fonts/e80d9c_9cfbc7721dcccb956b85f632f175962a.woff2) format("woff2"),url(real-assets/fonts/1986b3_c22ab11abbfde87dc8a66a1d0e97c4bb.ttf) format("truetype");font-weight:400;font-style:normal;font-display:swap;font-feature-settings:"ss01" 1}
+@font-face{font-family:ShopifyInter;src:url(real-assets/fonts/9b44f8_b0f3be75aaf69a9c184619c9091d33b1.woff2) format("woff2"),url(real-assets/fonts/abb977_47f310faf7749ece996890ac191d90a5.ttf) format("truetype");font-weight:400;font-style:normal;font-display:swap}
+@font-face{font-family:Inter-Variable;src:url(real-assets/fonts/17e851_5949cd393a8375a896fd0a9b74307666.woff2) format("woff2");font-weight:100 900;font-style:normal;font-display:swap}
+
+/* ============ 真 token ============ */
+:root{
+  --bg:#090909;
+  --w100:#fff; --w90:#ffffffe6; --w70:#ffffffb3; --w60:#fff9; --w20:#fff3; --w10:#ffffff1a;
+  --g2:#f4f4f4; --g4:#c9c9c9; --g5:#8c8c8c; --g6:#2a2a2a;
+  --focus:#0062d3; --error:#e21c1c; --portal:#adf0ff;
+  --font-display:National2,Helvetica,Arial,sans-serif;
+  --font-text:ShopifyInter,Helvetica,Arial,sans-serif;
+  --font-label:Inter-Variable,Helvetica,sans-serif;
+  --ease-snappy:cubic-bezier(.16,1,.3,1);
+  --ease-out-cubic:cubic-bezier(.215,.61,.355,1);
+  --ease-pill-open:cubic-bezier(.32,.72,0,1);
+  --ease-ring-intro:cubic-bezier(.2,.9,.3,.986);
+  --container:105rem; --gm:16px; --gm-sm:32px; --gm-lg:120px; --gg:16px; --gg-sm:32px;
+  --page:min(1240px,90vw);
+}
+@property --scroll-reveal{syntax:"<number>";inherits:true;initial-value:0}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth;color-scheme:only dark}
+body{background:var(--bg);color:var(--w90);font:400 16px/1.5 var(--font-text);
+  -webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;overflow-x:clip}
+::selection{background:var(--w100);color:var(--bg)}
+img,canvas{display:block;max-width:100%}
+a{color:var(--w100);text-decoration:none;background-image:linear-gradient(var(--w60),var(--w60));
+  background-size:100% 1px;background-repeat:no-repeat;background-position:0 100%;padding-bottom:2px;
+  transition:background-image .2s linear}
+a:hover{background-image:linear-gradient(var(--w100),var(--w100))}
+:focus-visible{outline:2px solid var(--focus);outline-offset:2px}
+
+/* ============ 原站的滚动揭示：animation-timeline: view() ============ */
+@keyframes scroll-reveal-trigger{to{--scroll-reveal:1}}
+.sr{animation:step-start both scroll-reveal-trigger;animation-timeline:view();animation-range:entry 75% 100%}
+.sr > *{opacity:calc(var(--scroll-reveal));
+  translate:0 calc((1 - var(--scroll-reveal)) * 1rem);
+  transition:opacity .5s linear, translate 1s var(--ease-out-cubic);
+  transition-delay:calc(var(--scroll-reveal-index, 0) * .1s)}
+@supports not (animation-timeline: view()){ .sr > *{opacity:1;translate:none} }
+@media (prefers-reduced-motion:reduce){ .sr > *{opacity:1;translate:none;transition:none} }
+
+/* ============ 版心 ============ */
+.wrap{width:var(--page);margin:0 auto}
+.t1,.t2,.t3,.hero-t1{text-box:trim-both cap alphabetic}
+.t1{font:400 clamp(2.6rem,34.158px + 5.96125vw,7.5rem)/.96 var(--font-display);letter-spacing:-.08em;
+  text-wrap:balance;color:var(--w100)}
+.t2{font:400 clamp(2rem,27.3264px + 4.769vw,6rem)/.96 var(--font-display);letter-spacing:-.06em;
+  text-wrap:balance;color:var(--w100)}
+.t3{font:400 clamp(1.7rem,12.4948px + 3.57675vw,4rem)/.96 var(--font-display);letter-spacing:-.04em;
+  text-wrap:balance;color:var(--w100)}
+.t4{font:400 16px/1.1 var(--font-text);color:var(--w100)}
+.t5{font:400 14px/1.3 var(--font-text)}
+.lb{font:500 11px/1 var(--font-label);letter-spacing:.06em;text-transform:uppercase;color:var(--w60)}
+p{font:400 15px/1.55 var(--font-text);color:var(--w60);max-width:62ch;margin-top:14px}
+p.lead{color:var(--w90);font-size:17px;max-width:56ch}
+ul,ol{margin:14px 0 0 1.15em;max-width:62ch}
+li{font:400 15px/1.5 var(--font-text);color:var(--w60);margin-top:7px}
+li::marker{color:var(--w20)}
+code{font:400 .86em/1 ui-monospace,SFMono-Regular,Menlo,monospace;background:var(--w10);
+  padding:.16em .38em;border-radius:3px;color:var(--w90)}
+strong{font-weight:400;color:var(--w100)}
+h3{font:400 clamp(19px,1.5vw,26px)/1.14 var(--font-display);letter-spacing:-.02em;color:var(--w100);margin:clamp(28px,3.6vw,46px) 0 4px}
+h4{font:500 11px/1 var(--font-label);letter-spacing:.1em;text-transform:uppercase;color:var(--w60);margin:26px 0 8px}
+
+/* ============ 首屏：Everywhere 字环 ============ */
+header.hero{position:relative;min-height:clamp(600px,92svh,940px);display:flex;flex-direction:column;
+  align-items:center;justify-content:center;gap:clamp(18px,3.4vh,44px);overflow:hidden;
+  border-bottom:1px solid var(--w10);padding:clamp(56px,8vh,90px) 0 clamp(40px,6vh,64px)}
+.ring-wrap{position:relative;width:100%;height:clamp(230px,38vh,420px);flex:0 0 auto;
+  display:grid;place-items:center;perspective:5400px;pointer-events:none}
+.hero-ring{--ring-tilt:18deg;--ring-from:102deg;--ring-to:-295deg;--intro-duration:4.5s;--ambient-duration:150s;
+  --hero-ring-radius:min(23vmin,196px);
+  position:relative;width:0;height:0;transform-style:preserve-3d;
+  transform:rotateX(var(--ring-tilt)) rotateY(var(--ring-from));
+  animation:hero-ring-intro var(--intro-duration) var(--ease-ring-intro) forwards,
+            hero-ring-ambient var(--ambient-duration) linear var(--intro-duration) infinite;
+  will-change:transform}
+@keyframes hero-ring-intro{0%{transform:rotateX(var(--ring-tilt)) rotateY(var(--ring-from))}
+  to{transform:rotateX(var(--ring-tilt)) rotateY(var(--ring-to))}}
+@keyframes hero-ring-ambient{0%{transform:rotateX(var(--ring-tilt)) rotateY(var(--ring-to))}
+  to{transform:rotateX(var(--ring-tilt)) rotateY(calc(var(--ring-to) - 360deg))}}
+.hero-ring b{position:absolute;left:0;top:0;font:400 calc(var(--hero-ring-radius) * .35)/1 var(--font-display);
+  letter-spacing:-.08em;color:var(--w100);white-space:pre;
+  transform:var(--lf);clip-path:inset(0 100% 0 0);
+  animation:ring-letter-in .65s var(--ease-snappy) var(--ld) forwards,
+            ring-letter-wipe .3s linear var(--rd) forwards}
+@keyframes ring-letter-in{to{transform:var(--lt)}}
+@keyframes ring-letter-wipe{to{clip-path:inset(0 0 0 0)}}
+@media (prefers-reduced-motion:reduce){
+  .hero-ring{animation:none;transform:rotateX(18deg) rotateY(60deg)}
+  .hero-ring b{animation:none;transform:var(--lt);clip-path:none}
+}
+.hero-in{position:relative;z-index:2;text-align:center;padding:0 16px;flex:0 0 auto}
+.hero-t1{font:400 clamp(1.9rem,13px + 2.7vw,3.4rem)/.98 var(--font-display);letter-spacing:-.05em;
+  color:var(--w100);text-wrap:balance;max-width:20ch;margin:0 auto}
+.hero-sub{font:400 clamp(1rem,9.1237px + .894188vw,1.375rem)/1.3 var(--font-text);color:var(--w60);
+  margin-top:22px;max-width:46ch;margin-inline:auto}
+.hero-meta{display:flex;flex-wrap:wrap;justify-content:center;gap:8px 26px;margin-top:34px}
+.hero-meta span{font:500 11px/1 var(--font-label);letter-spacing:.08em;text-transform:uppercase;color:var(--w20)}
+.hero-meta b{font-weight:500;color:var(--w70)}
+
+/* ============ 章节 ============ */
+section.ch{padding-top:clamp(70px,12vh,140px);scroll-margin-top:20px}
+.kick{display:flex;align-items:baseline;gap:14px;border-top:1px solid var(--w10);padding-top:12px;margin-bottom:clamp(20px,3vw,34px)}
+.kick .n{font:500 11px/1 var(--font-label);letter-spacing:.1em;color:var(--w20)}
+.kick .t{font:500 11px/1 var(--font-label);letter-spacing:.1em;text-transform:uppercase;color:var(--w70)}
+.kick .r{margin-left:auto;font:500 11px/1 var(--font-label);letter-spacing:.08em;color:var(--w20)}
+.cols{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:0 var(--gg-sm)}
+.cols .head{grid-column:span 7}
+.cols .intro{grid-column:8 / span 5}
+@media (max-width:900px){.cols{grid-template-columns:repeat(6,minmax(0,1fr));gap:0 var(--gg)}
+  .cols .head,.cols .intro{grid-column:span 6}.cols .intro{margin-top:18px}}
+
+/* ============ 表 ============ */
+.tbl{width:100%;overflow-x:auto;margin-top:22px;border-top:1px solid var(--w10)}
+table{width:100%;border-collapse:collapse;min-width:560px}
+th,td{text-align:left;padding:9px 16px 9px 0;border-bottom:1px solid var(--w10);vertical-align:top;
+  font:400 13px/1.42 var(--font-text);color:var(--w60)}
+th{font:500 10px/1 var(--font-label);letter-spacing:.1em;text-transform:uppercase;color:var(--w20);
+  padding-top:12px;padding-bottom:12px;white-space:nowrap}
+td:first-child{color:var(--w100)}
+td.num,th.num{font-variant-numeric:tabular-nums}
+th.sortable{cursor:pointer;user-select:none;transition:color .2s linear}
+th.sortable:hover{color:var(--w70)}
+th.sortable[aria-sort]:not([aria-sort=none]){color:var(--w100)}
+th.sortable::after{content:"";display:inline-block;width:0;height:0;margin-left:6px;vertical-align:middle;
+  border-left:3px solid transparent;border-right:3px solid transparent}
+th.sortable[aria-sort=ascending]::after{border-bottom:4px solid currentColor}
+th.sortable[aria-sort=descending]::after{border-top:4px solid currentColor}
+.lv{font:500 9px/1 var(--font-label);letter-spacing:.08em;text-transform:uppercase;padding:3px 6px;border-radius:2px;white-space:nowrap}
+.lv.f{background:var(--w10);color:var(--w90)}
+.lv.g{background:#ffffff0a;color:var(--w20)}
+
+/* ============ 装置外壳 ============ */
+.dev{margin-top:clamp(28px,4vw,52px);border:1px solid var(--w10);border-radius:3px;background:#ffffff05;overflow:hidden}
+.dev-h{display:flex;align-items:baseline;gap:14px;padding:13px 18px;border-bottom:1px solid var(--w10);flex-wrap:wrap}
+.dev-h .id{font:500 10px/1 var(--font-label);letter-spacing:.12em;text-transform:uppercase;color:var(--w70)}
+.dev-h .nm{font:400 16px/1 var(--font-display);letter-spacing:-.02em;color:var(--w100)}
+.dev-h .src{margin-left:auto;font:500 9.5px/1.4 var(--font-label);letter-spacing:.08em;text-transform:uppercase;color:var(--w20)}
+.dev-b{padding:18px}
+.dev-note{padding:12px 18px 15px;border-top:1px solid var(--w10);font:400 12.5px/1.55 var(--font-text);color:var(--w60);max-width:none}
+.ctl{display:flex;flex-wrap:wrap;gap:14px 24px;align-items:center;margin-top:15px}
+.ctl label{display:flex;align-items:center;gap:9px;font:500 10px/1 var(--font-label);letter-spacing:.08em;text-transform:uppercase;color:var(--w60)}
+.ctl input[type=range]{-webkit-appearance:none;appearance:none;width:140px;height:1px;background:var(--w20);outline:none}
+.ctl input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:11px;height:11px;border-radius:50%;background:var(--w100);cursor:pointer}
+.ctl input[type=range]::-moz-range-thumb{width:11px;height:11px;border:0;border-radius:50%;background:var(--w100);cursor:pointer}
+.ctl output{font:500 11px/1 var(--font-label);color:var(--w100);min-width:4.4em;font-variant-numeric:tabular-nums}
+.btn{font:500 10px/1 var(--font-label);letter-spacing:.1em;text-transform:uppercase;padding:8px 14px;
+  border:1px solid var(--w20);background:transparent;color:var(--w100);border-radius:999px;cursor:pointer;
+  transition:background-color .2s linear,border-color .2s linear}
+.btn:hover{background:var(--w10);border-color:var(--w60)}
+.btn[aria-pressed=true]{background:var(--w100);color:var(--bg);border-color:var(--w100)}
+.read{display:grid;grid-template-columns:repeat(auto-fit,minmax(116px,1fr));gap:12px 22px;margin-top:16px}
+.read div{font:500 9.5px/1 var(--font-label);letter-spacing:.1em;text-transform:uppercase;color:var(--w20)}
+.read b{display:block;font:400 15px/1.2 var(--font-text);color:var(--w100);margin-top:5px;
+  font-variant-numeric:tabular-nums;letter-spacing:0;text-transform:none}
+.cloud{position:relative;aspect-ratio:16/9;background:#050505;border-radius:2px;overflow:hidden}
+.cloud canvas{width:100%;height:100%;cursor:grab}
+.cloud canvas:active{cursor:grabbing}
+.cloud .hint{position:absolute;left:12px;bottom:10px;font:500 9.5px/1.5 var(--font-label);letter-spacing:.08em;
+  text-transform:uppercase;color:var(--w20);pointer-events:none}
+.pipe{display:grid;grid-template-columns:repeat(auto-fit,minmax(112px,1fr));gap:8px;margin-top:14px}
+.pipe i{display:block;border:1px solid var(--w10);border-radius:2px;padding:9px 10px;font-style:normal}
+.pipe i em{display:block;font:500 9px/1 var(--font-label);letter-spacing:.1em;text-transform:uppercase;color:var(--w20);font-style:normal}
+.pipe i b{display:block;font:400 13px/1.3 var(--font-text);color:var(--w100);margin-top:5px;font-variant-numeric:tabular-nums}
+/* 时间轴 */
+.tl{position:relative;border:1px solid var(--w10);border-radius:2px;background:#ffffff05;overflow:hidden}
+.tl-rows{max-height:296px;overflow-y:auto}
+.tl-row{display:grid;grid-template-columns:186px minmax(0,1fr) 62px;align-items:center;gap:10px;
+  padding:0 12px;height:24px;border-bottom:1px solid #ffffff0d}
+.tl-row:last-child{border-bottom:0}
+.tl-row .nm{font:500 9px/1 var(--font-label);letter-spacing:.05em;color:var(--w60);
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tl-row .lane{position:relative;height:100%}
+.tl-row .kf{position:absolute;top:50%;width:7px;height:7px;margin:-3.5px 0 0 -3.5px;background:var(--w20);
+  transform:rotate(45deg);border-radius:1px}
+.tl-row .seg{position:absolute;top:50%;height:1px;margin-top:-.5px;background:var(--w10)}
+.tl-row .vv{font:400 11px/1 var(--font-text);color:var(--w100);text-align:right;font-variant-numeric:tabular-nums}
+.tl-head{position:absolute;top:0;bottom:0;width:1px;background:var(--w100);pointer-events:none;z-index:3;left:0}
+.tl-ruler{display:grid;grid-template-columns:186px minmax(0,1fr) 62px;gap:10px;padding:6px 12px;
+  border-bottom:1px solid var(--w10)}
+.tl-ruler .lane{position:relative;height:11px}
+.tl-ruler .lane span{position:absolute;top:0;font:500 8.5px/1 var(--font-label);color:var(--w20);transform:translateX(-50%)}
+@media (max-width:720px){.tl-row,.tl-ruler{grid-template-columns:104px minmax(0,1fr) 52px}}
+
+.shots{display:grid;grid-template-columns:repeat(auto-fill,minmax(212px,1fr));gap:12px;margin-top:24px}
+.shots figure{margin:0}
+.shots img{width:100%;aspect-ratio:16/10;object-fit:cover;border-radius:2px;background:#050505;border:1px solid var(--w10)}
+.shots figcaption{font:500 9.5px/1.4 var(--font-label);letter-spacing:.08em;text-transform:uppercase;color:var(--w20);margin-top:7px}
+.sws{display:grid;grid-template-columns:repeat(auto-fill,minmax(126px,1fr));gap:10px;margin-top:22px}
+.sw{border:1px solid var(--w10);border-radius:2px;overflow:hidden}
+.sw i{display:block;height:50px}
+.sw .l{padding:8px 9px;font:500 9px/1.55 var(--font-label);letter-spacing:.06em;color:var(--w20)}
+.sw .l b{display:block;color:var(--w100);font-weight:500;text-transform:uppercase;letter-spacing:.1em;font-size:8.5px}
+.typerow{border-top:1px solid var(--w10);padding:18px 0;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:16px;align-items:baseline}
+.typerow .spec{font:500 9.5px/1.6 var(--font-label);letter-spacing:.08em;color:var(--w20);text-align:right;white-space:nowrap}
+
+footer{margin-top:clamp(80px,14vh,150px);border-top:1px solid var(--w10);padding:26px 0 64px;
+  display:flex;flex-wrap:wrap;gap:12px 30px;font:500 10px/1.6 var(--font-label);letter-spacing:.09em;text-transform:uppercase;color:var(--w20)}
+footer a{color:var(--w60)}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="ring-wrap" aria-hidden="true"><div class="hero-ring" id="ring"></div></div>
+  <div class="hero-in">
+    <h1 class="hero-t1">十章、219 张卡、一团点云与一个环</h1>
+    <p class="hero-sub">Shopify Editions Spring ’26 拆解：CMS 下发 13 份场景预设与 13 份 Theatre 状态，前端只是解释器。</p>
+    <div class="hero-meta">
+      <span>对象 <b>shopify.com/editions/spring2026</b></span>
+      <span>主题 <b>Everywhere</b></span>
+      <span>精读 <b>32 个 chunk / 30,775 行</b></span>
+      <span>点云 <b>MDPC-2 真解码</b></span>
+    </div>
+  </div>
+</header>
+
+<div class="wrap">
+
+<section class="ch" id="s1">
+  <div class="kick"><span class="n">I</span><span class="t">定位</span><span class="r">Everywhere</span></div>
+  <div class="cols sr">
+    <div class="head"><h2 class="t3">首屏没有标题句，只有一个把 Everywhere 写了三遍的环</h2></div>
+    <div class="intro" style="--scroll-reveal-index:1"><p class="lead">Editions 是 Shopify 半年一届的产品发布会站点，每届自建一个世界观。上一届 Winter ’26 是「文艺复兴」，这届的关键词只有一个：<strong>Everywhere</strong>。</p></div>
+  </div>
+  <p>十章对应十条产品线（Agentic、Sidekick、Online、Retail、Marketing、Operations、Shop app、Payments、Finance、Developer），CMS 计 <strong>219 张产品卡</strong>——HTML 里 <code>&lt;article&gt;</code> 正则计数 219，loaderData 里 24 个 products 数组求和也是 219，两路独立复算一致。宣传口径写「150+ updates」，而 shopInfo 的 description 里还留着上一版的「100+ updates」。三个数字并存，本拆解全部保留，不混用。</p>
+  <h4>视觉母题（推断，证据充分）</h4>
+  <ol>
+    <li><strong>点彩的世界</strong>：每章的场景不是模型渲染，而是一团点云。源文件是 65,536（256²）或 262,144（512²）个彩色点，开启 <code>densityFill</code> 后再画一遍带抖动的副本，各章渲染上限落在 16.1 万到 62.9 万之间。树林、拱廊、地球、门店——像修拉的点彩画被搬进三维。「无处不在」被翻译成「由无数点组成」。</li>
+    <li><strong>一个环</strong>：Everywhere 三次首尾相接绕成环，环在鼠标接近时被推开、随滚动自转、把粒子也推开（它同时是一个 SDF 环）。它是标题、导航起点和控制台彩蛋。</li>
+    <li><strong>黑底白字的克制</strong>：系统色只有 <code>#090909</code> 与白的透明度阶梯，所有彩色都在点云与产品图里。</li>
+  </ol>
+</section>
+
+<section class="ch" id="s2">
+  <div class="kick"><span class="n">II</span><span class="t">技术栈</span><span class="r">分级标注</span></div>
+  <h2 class="t3">Hydrogen 在边缘，three.js 在前台，Theatre.js 在 CMS 里</h2>
+  <div class="tbl"><table>
+    <thead><tr><th>结论</th><th>依据</th><th>级别</th></tr></thead>
+    <tbody>
+      <tr><td>Hydrogen（React Router v7）+ Oxygen 边缘托管</td><td>响应头 <code>powered-by: Shopify, Oxygen, Hydrogen</code>；<code>window.__reactRouterContext</code>；后端店铺 editions-spring-2026.myshopify.com</td><td><span class="lv f">实锤</span></td></tr>
+      <tr><td>Vite + rolldown 打包，React 19</td><td><code>rolldown-runtime</code> chunk、<code>__vite__mapDeps</code></td><td><span class="lv f">实锤</span></td></tr>
+      <tr><td>Tailwind CSS v4.3.3</td><td>样式表头注释</td><td><span class="lv f">实锤</span></td></tr>
+      <tr><td>three.js + react-three-fiber，Theatre.js 编排</td><td><code>three.core</code>（371,210 B）、r3f chunk、13 份 <code>*-prod-*.json</code> sheet 状态</td><td><span class="lv f">实锤</span></td></tr>
+      <tr><td>Lenis 平滑滚动，仅桌面细指针</td><td>路由 chunk <code>new Fi({duration:1, easing:1.001−2^(−10t), smoothWheel:true, wheelMultiplier:1})</code> 与三条守卫</td><td><span class="lv f">实锤</span></td></tr>
+      <tr><td>zustand 状态；detect-gpu 分级；KTX2 loader；Rive；View Transitions API</td><td>对应 chunk 与 CSS <code>::view-transition-*</code></td><td><span class="lv f">实锤</span></td></tr>
+      <tr><td>自定义点云格式 MDPC-2 + Worker 解码</td><td>SdfRegistry chunk 内联 worker 源码；本页装置一按同一算法真解码</td><td><span class="lv f">实锤</span></td></tr>
+      <tr><td>National 2 出自 Klim Type Foundry；ShopifyInter 为 Inter 的定制版</td><td>字族名与字形特征</td><td><span class="lv g">推断 中高</span></td></tr>
+      <tr><td><code>x_mj-10-pointcloud</code> 系列部分来自 AI 生成图像的三维化</td><td>文件名中的 <code>mj</code> 与编号形态</td><td><span class="lv g">推断 中</span></td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<section class="ch" id="s3">
+  <div class="kick"><span class="n">III</span><span class="t">色彩与字体</span><span class="r">一底、两阶透明度、一支焦点蓝</span></div>
+  <h2 class="t3">系统色里没有彩色，彩色全在点云与产品图里</h2>
+  <div class="sws">
+    <div class="sw"><i style="background:#090909;border-bottom:1px solid #ffffff1a"></i><div class="l"><b>bg</b>#090909</div></div>
+    <div class="sw"><i style="background:#fff"></i><div class="l"><b>w100</b>#ffffff</div></div>
+    <div class="sw"><i style="background:#ffffffe6"></i><div class="l"><b>w90</b>标题</div></div>
+    <div class="sw"><i style="background:#fff9"></i><div class="l"><b>w60</b>正文</div></div>
+    <div class="sw"><i style="background:#fff3"></i><div class="l"><b>w20</b>次级</div></div>
+    <div class="sw"><i style="background:#ffffff1a"></i><div class="l"><b>w10</b>分隔线</div></div>
+    <div class="sw"><i style="background:#2a2a2a"></i><div class="l"><b>g6</b>#2a2a2a</div></div>
+    <div class="sw"><i style="background:#0062d3"></i><div class="l"><b>focus</b>#0062d3</div></div>
+    <div class="sw"><i style="background:#e21c1c"></i><div class="l"><b>error</b>#e21c1c</div></div>
+    <div class="sw"><i style="background:#adf0ff"></i><div class="l"><b>portal</b>#adf0ff 彩蛋门户</div></div>
+  </div>
+  <p>词频：<code>#fff</code> 27、<code>#090909</code> 13、<code>#000</code> 10、<code>#f4f4f4</code> 与 <code>#2a2a2a</code> 与 <code>#0062d3</code> 各 4。<code>#0094d5</code>、<code>#eaf4ff</code>、<code>#cdfed4</code>、<code>#fefdcd</code> 各 2 次，属产品卡内嵌图形色，不是品牌色。主题切换用 <code>data-color-mode</code>：html 上是 dark，「Get notified」白卡局部 light，视频弹窗 dark。</p>
+
+  <h3>字体</h3>
+  <div class="typerow"><div class="t1" style="font-size:clamp(38px,5.4vw,86px)">Everywhere</div><div class="spec">t1 · National2 400（ss01）<br>clamp(5rem, 34.16px + 5.961vw, 7.5rem)<br>lh .96 · ls −.08em</div></div>
+  <div class="typerow"><div class="t3">十章对应十条产品线</div><div class="spec">t3 · National2 400<br>clamp(2.5rem, 12.49px + 3.577vw, 4rem)<br>lh .96 · ls −.04em</div></div>
+  <div class="typerow"><div style="font:400 14px/1.3 var(--font-text);color:var(--w60);max-width:52ch">t5 是卡片正文：ShopifyInter 400，桌面 14px / 行高 1.3（手机 15px）。全系带 <code>text-box: trim-both cap alphabetic</code> 与 <code>text-wrap: pretty</code>。</div><div class="spec">t5 · ShopifyInter 400<br>14px / lh 1.3</div></div>
+  <div class="typerow"><div class="lb">Label · nav · pill · search</div><div class="spec">label-4-uc · Inter Variable 500<br>11px 大写</div></div>
+  <div class="tbl"><table>
+    <thead><tr><th>字族</th><th>字重</th><th class="num">文件字节</th><th>角色</th></tr></thead>
+    <tbody>
+      <tr><td>National2</td><td>400（<code>ss01</code>）</td><td class="num">woff2 35,180 · ttf 44,860</td><td>hero-t1、t1–t3 大标题、body 默认</td></tr>
+      <tr><td>ShopifyInter</td><td>400</td><td class="num">woff2 21,872 · ttf 21,848</td><td>t4–t6 正文与卡片、hero-t2</td></tr>
+      <tr><td>Inter Variable</td><td>100–900</td><td class="num">woff2 67,188</td><td>text-label-*、全局导航、搜索</td></tr>
+    </tbody>
+  </table></div>
+  <p style="font-size:12.5px;color:var(--w20)">落盘 6 个文件，但 Inter Variable 那支被两个前缀各存了一份（同一 hash），实为 5 个不同文件：3 个 woff2 + 2 个 ttf 兜底。日文以 <code>:lang(ja)</code> 切 NotoSansJP。</p>
+</section>
+
+<section class="ch" id="s4">
+  <div class="kick"><span class="n">IV</span><span class="t">点云</span><span class="r">签名之一 · MDPC-2</span></div>
+  <div class="cols sr">
+    <div class="head"><h2 class="t3">130 KB 装 6.5 万个点，浏览器原生就能解</h2></div>
+    <div class="intro" style="--scroll-reveal-index:1"><p class="lead">MDPC-2 是 Shopify 自造的格式，头里那行 <code>encoder: mdpc-lab.quick.shopify.io</code> 说明它出自内部工具链。它刻意只用 deflate——因为 <code>DecompressionStream</code> 是浏览器原生的，零依赖。</p></div>
+  </div>
+
+  <div class="dev">
+    <div class="dev-h"><span class="id">装置一</span><span class="nm">MDPC-2 真解码</span><span class="src">forest-1024-v3-moretrees-256 · 原 worker 算法</span></div>
+    <div class="dev-b">
+      <div class="cloud"><canvas id="cloudCv"></canvas><div class="hint" id="cloudHint">拖动可旋转</div></div>
+      <div class="pipe" id="pipe">
+        <i><em>文件</em><b>—</b></i>
+        <i><em>JSON 头</em><b>—</b></i>
+        <i><em>位置流</em><b>—</b></i>
+        <i><em>Y / Cb / Cr</em><b>—</b></i>
+        <i><em>解出点数</em><b>—</b></i>
+        <i><em>解码耗时</em><b>—</b></i>
+      </div>
+      <div class="ctl">
+        <label>点尺寸 <input type="range" id="cloudPS" min="3" max="50" step="1" value="14"><output id="cloudPSO">1.4</output></label>
+        <label>自转 <input type="range" id="cloudSpin" min="0" max="100" step="1" value="26"><output id="cloudSpinO">.26</output></label>
+        <button class="btn" id="cloudReset">回正</button>
+      </div>
+    </div>
+    <div class="dev-note">这不是截图，也不是重新导出的模型：页面下载 <code>real-assets/pointcloud/forest-1024-v3-moretrees-256_2.mdpc</code>（137,491 B），按原 worker 的算法解——读 4 字节头长与 JSON 头，四段 <code>DecompressionStream('deflate')</code> 解压，位置走 <strong>varint 增量 → 前缀和 → Morton 解交织 → 12 位反量化</strong>，颜色走 <strong>Y 全分辨率 + Cb/Cr 按 <code>chromaSub 8</code> 子采样 → YCbCr 转 RGB</strong>，最后把 65,536 个点交给 WebGL 画成 splat。上面六格是这次解码的真实读数。</div>
+  </div>
+
+  <div class="dev">
+    <div class="dev-h"><span class="id">装置二</span><span class="nm">SDF 环推开粒子</span><span class="src">hero torus R .34 · r .14 · 强度 .35 · 衰减 .5</span></div>
+    <div class="dev-b">
+      <div class="cloud"><canvas id="sdfCv"></canvas><div class="hint">同一份解码点云 · 环为 hero 的 SDF 形状</div></div>
+      <div class="ctl">
+        <label>强度 <input type="range" id="sdfS" min="0" max="150" step="1" value="35"><output id="sdfSO">.35</output></label>
+        <label>衰减 <input type="range" id="sdfF" min="10" max="200" step="1" value="50"><output id="sdfFO">.50</output></label>
+        <label>大环 R <input type="range" id="sdfR" min="10" max="90" step="1" value="34"><output id="sdfRO">.34</output></label>
+        <label>小环 r <input type="range" id="sdfr" min="3" max="40" step="1" value="14"><output id="sdfrO">.14</output></label>
+        <button class="btn" id="sdfShow" aria-pressed="true">显示环</button>
+      </div>
+    </div>
+    <div class="dev-note">点着色器最多接 8 个 SDF 形状，枚举是 <code>sphere 1 / box 2 / torus 3 / cylinder 4 / octahedron 5 / dodecahedron 6</code>，每个带逆矩阵、强度、衰减、梯度与极性。hero 里那个把粒子推开的形状就是一个 torus——也就是 Everywhere 字环本人。此处沿 SDF 梯度做位移，取原站的四个参数为默认值；原站还叠了流体位移与呼吸抖动，本装置未加，以便只看环的作用。</div>
+  </div>
+
+  <h3>点着色器的尺寸链（原文）</h3>
+  <p>原站在这里留了一段注释解释为什么要除 <code>uRenderScale</code>：<code>ps</code> 是渲染目标像素，会随 renderScale 缩小，而片元里的最小尺寸剔除是<strong>屏幕</strong>阈值；不归一化的话，缩放动画进行时剔除会越收越紧，半透明的弱点会成片消失。片元丢弃阈值是投影小于 .55px。</p>
+  <div class="tbl"><table>
+    <thead><tr><th>环节</th><th>做法</th></tr></thead>
+    <tbody>
+      <tr><td>尺寸</td><td><code>uPointSize × mix(.6,1.6,rand⁴) × (1+.3(splat−1)) × 距离尺寸 × 流生命 × 不透明度 × densityFill 缩放 × DPR × 120/dist</code>，上限 <code>uMaxPointSize × renderScale</code></td></tr>
+      <tr><td>位置扰动</td><td><code>uRandomize</code>、密度填充抖动、<code>sin(t·.18 + rand·12)·.006</code> 的呼吸、转场上浮 <code>uTransitionYOffset × rand^pow</code></td></tr>
+      <tr><td>流场</td><td>curl 噪声漂移或 rise 上升；布局枚举九种（off / dots / xLines / yLines / zLines / floorGrid / sphere / ripple / spokes），但 13 份预设只用到 <code>dots</code> 与 <code>off</code>；另有传送带</td></tr>
+      <tr><td>SDF 碰撞</td><td>最多 8 个形状，见装置二</td></tr>
+      <tr><td>流体位移</td><td>在视空间读 <code>uFluidVelocity</code> 纹理，<code>× influence × .02 × 1/(1 + .3z)</code></td></tr>
+      <tr><td>颜色</td><td>曝光 <code>exp2(uExposure)</code>、九段选择性 HSL 校色、锚点辉光（8 个位置，四次方衰减）、可选焦散</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<section class="ch" id="s5">
+  <div class="kick"><span class="n">V</span><span class="t">13 份场景预设</span><span class="r">内容即数据</span></div>
+  <h2 class="t3">前端只是解释器：这张表就是这届的美术指导</h2>
+  <p>13 份预设由 CMS 下发，每份给相机、环境、点云、流场、流体、焦散、校色、后处理、体积光。下表是逐份读出的原值，可点表头排序。注意点云的复用：<strong>Finance、Marketing、Payments、Developer、merch 五章共用同一个通用点云 <code>minipointcloud</code></strong>，靠 pointSize、flow 与后处理拉开差别；另有 5 份在 512 与 256 两个槽位填的是同一个文件，即实际只有一档。</p>
+  <div class="dev">
+    <div class="dev-h"><span class="id">装置三</span><span class="nm">预设对照表</span><span class="src">loaderData scenePresets · 13 份全字段</span></div>
+    <div class="dev-b" style="padding:0">
+      <div class="tbl" style="margin-top:0;border-top:0">
+        <table id="pTbl">
+          <thead><tr>
+            <th class="sortable" data-k="n">章</th>
+            <th class="sortable num" data-k="fov">fov</th>
+            <th class="sortable num" data-k="ps">pointSize</th>
+            <th class="sortable num" data-k="mps">maxPointSize</th>
+            <th class="sortable num" data-k="maxp">maxPoints</th>
+            <th class="sortable" data-k="hdr">HDR</th>
+            <th class="sortable" data-k="src">点云源</th>
+            <th class="sortable" data-k="flow">flow</th>
+            <th class="sortable num" data-k="curl">curl</th>
+            <th class="sortable num" data-k="pr">pressure</th>
+            <th class="sortable num" data-k="sr">splatR</th>
+            <th class="sortable num" data-k="bi">bloom</th>
+          </tr></thead>
+          <tbody id="pBody"></tbody>
+        </table>
+      </div>
+    </div>
+    <div class="dev-note">流体库默认是 <code>curl 30 · dissipation .97/.98 · pressure .8 · simSize 128 · dyeSize 256 · pressureIterations 10</code>，但 13 份预设全部覆写。逐份取极值后的真实区间：curl 1.5–6、velocityDissipation .96–.965、densityDissipation .9–.98、pressure .6–.9、splatRadius .25–1、splatForce .125–.5、influence .25–1、fov 50–120、bloom intensity .0949–1.4873、threshold 0–.557。空白的 HDR 表示该章不给环境贴图（Finance、Operations、Developer 三章）。</div>
+  </div>
+</section>
+
+<section class="ch" id="s6">
+  <div class="kick"><span class="n">VI</span><span class="t">Everywhere 字环</span><span class="r">签名之二 · 一个环三种实现</span></div>
+  <h2 class="t3">GPU 矢量字形、CSS 3D、SVG 控制台——共享哪几个常量</h2>
+  <p class="lead">本页顶上那个环就是 CSS 版，用的是原站的 <code>rotateX(18deg) rotateY(102deg)</code> 起手、<code>--ring-to: -295deg</code> 落点、4.5s <code>cubic-bezier(.2,.9,.3,.986)</code> 入场接 150s 环境自转，字母延迟 = 词序 × 600ms + 字母序 × 55ms，就位 .65s、擦入 .3s（<code>clip-path: inset(0 100% 0 0)</code>）。</p>
+  <h4>WebGL 版：Slug 式矢量字形</h4>
+  <p>原站不用 SDF 也不用贴图，而是把 National2 的<strong>二次贝塞尔控制点直接烘进 Float32 纹理</strong>，片元里按带（band）做光线求交算覆盖率。字形数据就在 bundle 里：<code>curvesData</code> 扁平坐标数组、<code>bandHeaders</code>、<code>bandRefs</code>，每个字形带 <code>bandCount 16</code>、<code>bandDimX/Y</code>、<code>bandsTexCoordX</code>（横向 32 步进），字体度量 <code>ascender 983 / descender −263</code>。</p>
+  <p>一个容易错过的细节：字形缓存里只有 <strong>7 个真字形加一个空字形</strong>——<code>E v e r y w h</code>。因为「Everywhere」只用到这七个字母，多一个都不烘。</p>
+  <div class="tbl"><table>
+    <thead><tr><th>常量</th><th class="num">WebGL（Theatre 覆写）</th><th class="num">CSS 兜底</th><th>共用？</th></tr></thead>
+    <tbody>
+      <tr><td>倾角</td><td class="num">18°</td><td class="num">18°</td><td>共用</td></tr>
+      <tr><td>起始角</td><td class="num">100°（默认 102°）</td><td class="num">102°</td><td>默认共用</td></tr>
+      <tr><td>落点角</td><td class="num">−130°（spin 轨 −242°）</td><td class="num">−295°</td><td>各自一套</td></tr>
+      <tr><td>半径</td><td class="num">radiusVmin 45</td><td class="num">37vmin</td><td>各自一套</td></tr>
+      <tr><td>字号</td><td class="num">.35 × 半径</td><td class="num">.35 × 半径</td><td>共用</td></tr>
+      <tr><td>入场时长</td><td class="num">3500ms（ease .36,.17,.2,.99）</td><td class="num">4.5s（ease .2,.9,.3,.986）</td><td>各自一套</td></tr>
+      <tr><td>词错位</td><td class="num">550ms</td><td class="num">600ms</td><td>近似</td></tr>
+      <tr><td>字母错位</td><td class="num">55ms</td><td class="num">55ms</td><td>共用</td></tr>
+      <tr><td>擦入扫角</td><td class="num">revealSweepDeg 14</td><td class="num">14°（<code>--letter-from</code> 偏移）</td><td>共用</td></tr>
+      <tr><td>透视</td><td class="num">5400px</td><td class="num">5400px</td><td>共用</td></tr>
+    </tbody>
+  </table></div>
+  <h4>只在 WebGL 版存在的</h4>
+  <ul>
+    <li>滚动自转 <code>.08°/px</code> 并下沉 <code>.025/px</code>；</li>
+    <li>鼠标排斥：强度 1、半径 1、衰减 5、阻尼 10、保持 131ms；X 轴随鼠标倾斜 30°（阻尼 5）；</li>
+    <li>深度裁切 182° 弧、前向 55°——背面的字母根本不画；</li>
+    <li>环向流体借位移，同时作为 SDF torus 反过来推开粒子。</li>
+  </ul>
+  <p style="font-size:12.5px;color:var(--w20)">诚实记录一处未定论：同一份 hero state 里同时存在 <code>Ring / Animation</code> 的扁平键（强度 1、半径 1、衰减 5、阻尼 10、保持 131ms）与 <code>Ring / Animation / Pointer Repulse</code> 的嵌套对象（强度 .08、半径 2、阻尼 6、保持 500ms、衰减 4）。两组数值不同且都在文件里，本拆解未能判定运行时读的是哪一层，因此两组都列出，不择一。</p>
+</section>
+
+<section class="ch" id="s7">
+  <div class="kick"><span class="n">VII</span><span class="t">hero 时间轴</span><span class="r">Theatre state 原值回放</span></div>
+  <h2 class="t3">10 个单位、27 条轨、50 个关键帧，设计师改 JSON 就改了整场序曲</h2>
+  <div class="dev">
+    <div class="dev-h"><span class="id">装置四</span><span class="nm">hero sheet 回放</span><span class="src">hero-prod-2026-06-23T06-22-06.json 全量内嵌</span></div>
+    <div class="dev-b">
+      <div class="tl">
+        <div class="tl-ruler"><span></span><div class="lane" id="tlRuler"></div><span></span></div>
+        <div class="tl-rows" id="tlRows"></div>
+        <div class="tl-head" id="tlHead"></div>
+      </div>
+      <div class="ctl">
+        <label>时间 <input type="range" id="tlT" min="0" max="1000" step="1" value="0"><output id="tlTO">0.00</output></label>
+        <button class="btn" id="tlPlay" aria-pressed="false">播放</button>
+      </div>
+      <div class="read">
+        <div>序曲进度<b id="tlIntro">0.000</b></div>
+        <div>背景压暗<b id="tlDark">0.920</b></div>
+        <div>粒子曝光<b id="tlExp">−3.000</b></div>
+        <div>字环不透明<b id="tlRing">0.000</b></div>
+        <div>相机 x / y<b id="tlCam">—</b></div>
+      </div>
+    </div>
+    <div class="dev-note">27 条轨里有 <strong>21 条是数值轨、共 44 个关键帧</strong>，全部内嵌于本页并按 Theatre 的贝塞尔手柄逐帧求值；其余 6 条为复合或字符串轨，不参与回放。读一遍就能看出这场序曲的结构：<strong>前 4 个单位是加载序曲</strong>（场景变换从 (.594, −.09, .028) 与旋转 (.2, .726, −.132) 归零、背景压暗 .92 → 0、粒子曝光 −3 → 0、光体淡入、幕布 0 → .6、字环 0 → 1）；<strong>5 到 10 单位由滚动驱动</strong>（相机 x .3798 → .2998、y −.4951 → −.6551，字环 1 → 0，hero wipe 位移 y 0 → −.076）。</div>
+  </div>
+  <h4>入场转场（Intro Transition）</h4>
+  <p>像素溶解 <code>progress</code> 从 0 到 1（.033 → 2.933），像素 14、点半径最大 .75、羽化 150、混合 160、底色 <code>#040404 → #000</code>、中心 y .52。</p>
+  <h4>后处理 heroBottomGradient</h4>
+  <p>高 .34、宽 .38、圆 1、模糊 .371、色 <code>#090909</code>（state 里存的是 rgb(.0353, .0353, .0353)，×255 = 9），随进度 .1 到 1 淡出。</p>
+</section>
+
+<section class="ch" id="s8">
+  <div class="kick"><span class="n">VIII</span><span class="t">滚动与转场</span><span class="r">CSS 承担了滚动编排</span></div>
+  <h2 class="t3">整站的进场没有一行 IntersectionObserver</h2>
+  <p class="lead">本页你正在看的每一次进场，用的就是原站那四条规则——不是仿写：</p>
+  <div class="tbl" style="max-width:none"><table style="min-width:0">
+    <tbody>
+      <tr><td colspan="2"><code>@property --scroll-reveal{syntax:"&lt;number&gt;";inherits:true;initial-value:0}</code></td></tr>
+      <tr><td colspan="2"><code>@keyframes scroll-reveal-trigger{to{--scroll-reveal:1}}</code></td></tr>
+      <tr><td colspan="2"><code>.scroll-reveal-trigger{animation:step-start both scroll-reveal-trigger;animation-timeline:view();animation-range:entry 75% 100%}</code></td></tr>
+    </tbody>
+  </table></div>
+  <p><code>inherits:true</code> 是关键：触发器挂在容器上，属性沿树往下传，子元素不必各自带时间轴，只用普通 transition（opacity .5s linear，translate 1s <code>cubic-bezier(.215,.61,.355,1)</code>），再按 <code>--scroll-reveal-index</code> 每级延迟 .1s。<code>step-start</code> 让属性只有 0 和 1 两态，真正的缓动交给 transition，于是回滚时也能平滑倒放。手机端的背景视差同样是 <code>view-timeline</code>。</p>
+  <h3>Lenis 只在该出现的时候出现</h3>
+  <p>仅在「非移动导航、非触屏、非粗指针」时实例化。更细的一手：页面先以 capture 监听 <strong>10 个 wheel 事件</strong>，算出事件率；超过 <strong>50/s</strong> 判为触控板，把 duration 降到 <code>.1</code>，否则 <code>.75</code>；2000ms 内没凑够 10 个就按超时结算，一个也没有则判 false。一个 duration 伺候不了滚轮和触控板两种硬件——这是少见的、把输入设备差异写进代码的处理。</p>
+  <h3>章间转场的失谐 π</h3>
+  <div class="tbl" style="max-width:none"><table style="min-width:0"><tbody><tr><td><code>float scrollBendY(float x){ float t = clamp(x, 0.0, 1.0); float arch = sin(t * 3.14159265); return (arch + sin(t * 3.1431853) * 2.0) * uScrollBendVUv; }</code></td></tr></tbody></table></div>
+  <p>第二个常数刻意比 π 大一丝（<strong>3.1431853</strong>），两条正弦缓慢错拍，切边因此不是对称拱形而是带轻微偏斜的活拱。源码注释明确要求它与 knockoutShader 的 <code>scrollBendY</code> 逐字一致，否则切边会与挖空层的边错开——两处改任何一边都会露馅。四种 pass：swipe（默认方向 (−1, 0)）、crossfade、zoomBlur（柔度 .25、边缘辉光 .4、推进 .08）、hero 专用 wipe。转场读两层深度纹理，近者优先。</p>
+</section>
+
+<section class="ch" id="s9">
+  <div class="kick"><span class="n">IX</span><span class="t">十章实拍</span><span class="r">tier 3 WebGL 与 tier 0 兜底</span></div>
+  <h2 class="t3">同一份内容的两个层级</h2>
+  <p>分级：<code>?tier=0–3</code> 覆写；默认桌面 3、手机 0、无 WebGL2 为 0；detect-gpu 结果限制在 0 到 3，手机最高 1；加载超时触发 <code>__S26_FORCE_TIER_0__</code>；运行时可逐级降，但 <code>downgradeTier</code> 只在探测来源不是 default、且无 <code>?tier=</code> 覆写、且当前不为 0 时才生效——防止用户在 3 和 2 之间反复摔。tier 0 每章换成 2000 宽的静帧 webp，环换 CSS。</p>
+  <h4>tier 3（WebGL 点云场景）</h4>
+  <div class="shots">
+    <figure><img src="assets/screens-webgl/02-hero-ring-settled.jpg" loading="lazy" alt="hero 字环就位"><figcaption>Hero · 字环就位</figcaption></figure>
+    <figure><img src="assets/screens-webgl/05-agentic-scene.jpg" loading="lazy" alt="Agentic 场景"><figcaption>Agentic · 点 .005</figcaption></figure>
+    <figure><img src="assets/screens-webgl/07-sidekick-scene.jpg" loading="lazy" alt="Sidekick 场景"><figcaption>Sidekick · 拱廊废墟</figcaption></figure>
+    <figure><img src="assets/screens-webgl/11-retail-scene.jpg" loading="lazy" alt="Retail 场景"><figcaption>Retail · 点 .2（最大）</figcaption></figure>
+    <figure><img src="assets/screens-webgl/15-operations-scene.jpg" loading="lazy" alt="Operations 场景"><figcaption>Operations · globecomp 地球</figcaption></figure>
+    <figure><img src="assets/screens-webgl/19-payments-scene.jpg" loading="lazy" alt="Payments 场景"><figcaption>Payments · fov 120 · bloom 1.49</figcaption></figure>
+    <figure><img src="assets/screens-webgl/23-developer-scene.jpg" loading="lazy" alt="Developer 场景"><figcaption>Developer · fov 75.4 · rise .94</figcaption></figure>
+    <figure><img src="assets/screens-webgl/26-developer-key-hover.jpg" loading="lazy" alt="Developer 门户悬停"><figcaption>Developer · 门户悬停 #adf0ff</figcaption></figure>
+  </div>
+  <h4>tier 0（静帧兜底与页面机件）</h4>
+  <div class="shots">
+    <figure><img src="assets/screens/00-hero-loading.jpg" loading="lazy" alt="加载首帧"><figcaption>SSR 首帧遮罩</figcaption></figure>
+    <figure><img src="assets/screens/24-pill-open.jpg" loading="lazy" alt="药丸导航展开"><figcaption>药丸导航展开</figcaption></figure>
+    <figure><img src="assets/screens/26-video-modal.jpg" loading="lazy" alt="视频弹窗"><figcaption>视频灯箱 · View Transitions</figcaption></figure>
+    <figure><img src="assets/screens/27-editions-menu.jpg" loading="lazy" alt="Editions 下拉"><figcaption>Editions 下拉 · 九届</figcaption></figure>
+  </div>
+</section>
+
+<section class="ch" id="s10">
+  <div class="kick"><span class="n">X</span><span class="t">药丸、卡片与媒体</span><span class="r">0fr → 1fr</span></div>
+  <h2 class="t3">高度动画不需要测量</h2>
+  <p><strong>药丸</strong>（≥940px）：固定底部居中，宽 190px，闭合高 <strong>35px</strong>、圆角 17.5px、1px <code>#0000001a</code> 描边环、白底；摘要行显示当前章名与更新数。展开 <code>grid-template-rows: 0fr → 1fr</code> <strong>.24s</strong> <code>cubic-bezier(.32,.72,0,1)</code>，收起 <strong>.18s</strong> ease-out 延迟 <strong>90ms</strong>；十项以 <strong>34ms 倒序</strong>错位淡入，下划线 <code>scale(0 1) → 1</code> .32s；壳体 .36s 出 .26s 收（<code>--ease-snappy</code>）。merch 面板打开时药丸隐藏。</p>
+  <p style="font-size:12.5px;color:var(--w20)">复刻注意：<code>0fr → 1fr</code> 需要子元素 <code>min-height: 0</code> 加 <code>overflow: hidden</code>，否则内容会在收起时溢出。</p>
+  <p><strong>卡片</strong>：无边框、无卡底，靠 <code>grid-cols-subgrid</code> 对齐标题与正文行，行距 44 / 40；纯文字卡组 48 / 64。标题带 <code>link-underline</code>（1px 底线，悬停变 3px 间距虚线并以 .6s <code>link-march</code> 行进）；媒体 <code>aspect-4/3 → sm:aspect-video</code>。<code>knockout</code> 卡（CMS 布尔）加入 <code>LayerKnockoutPass</code>，让三维层与 DOM 媒体互相挖空合成（机制实锤，效果为推断）。</p>
+  <p><strong>视频</strong>：每条媒体给 mov、webm、mp4（av01 / hvc1 / avc1）三格式五路 source，按 <code>(max-width: 767px)</code> 与 <code>(min-width: 768px)</code> 双档、桌面 W500/W1000/W1250/W2500、手机 W720/W1440 宽档；<code>preload=metadata</code>，视口外移除 <code>&lt;source&gt;</code> 并 <code>load()</code> 卸载；播放键 48 → 80px，环与箭头 .7s <code>cubic-bezier(.215,.61,.355,1)</code>，意图延迟 .15s；灯箱走 View Transitions（<code>video-container</code> 旧 contain 新 cover）。</p>
+  <p><strong>Rive</strong>：Retail 的 POS 演示 <code>u28_pos_6_15_v3.riv</code>，状态机 <code>State Machine 1</code>，四个触发 goToAddProduct / goToAddDiscount / goToAddCustomer / goToSplitPayment，配 4 张兜底图；平板模型 <code>Tablet_Simplified_v3_silver5.glb</code>，材质 metalness .55 roughness .61 envMap .4。</p>
+  <p><strong>Merch</strong>：Retail 场景按钮「Get the Everywhere Cap」打开面板：<code>perspective 900px</code>，卡 <code>rotateY(−90deg) translate(18px) scale(.98)</code> 到位 .56s、媒体 .46s 延迟 .12s、四段文案 .15/.19/.24/.285s；价格来自 Storefront，加购走 <code>https://{store}/cart/{variantId}:{qty}</code>；场景切到黑白的 merch 预设。</p>
+</section>
+
+<section class="ch" id="s11">
+  <div class="kick"><span class="n">XI</span><span class="t">隐藏章</span><span class="r">Developer 的门户与赛道</span></div>
+  <h2 class="t3">跨窗 WebRTC：主窗把画面推给弹窗，弹窗把车速推回来</h2>
+  <p>沿用 Winter ’26 的双窗装置思路，但换成一辆车。Developer 场景里有一块 1.65×.92 的门户平面（位置 (.8, −.2, 1.2)，缩放 .7），着色器画 <code>#adf0ff</code> 的柔边框、1.2Hz 脉冲、噪声呼吸；悬停变实心，鼠标变手形。</p>
+  <ul>
+    <li>点击 → <code>window.open('/editions/spring2026/drive', 'spring_car_popup')</code>，弹窗尺寸 <code>min(vw, vh) × .424</code>、4:3、边距 24px、居中于点击点；URL 带 drive-scene、drive-section、drive-session。</li>
+    <li>主窗用 <code>canvas.captureStream(60)</code> 通过 WebRTC 把画面推给弹窗（信令走 BroadcastChannel <code>spring-webrtc-signaling</code>，STUN stun.l.google.com:19302）。</li>
+    <li>消息通道 <code>spring-popup-sync</code> 定义 12 种消息：CANVAS_RECT、MAIN_WINDOW、ACTIVE_SECTION、POPUP_POSITION、POPUP_CENTER、POPUP_CLOSED、WHEEL_EVENT、NAVIGATE_TO_SECTION、WEBRTC_READY、DRIVE_STATE、DRIVE_SCENE_REVEAL、KEY_ANIMATED_OUT。</li>
+    <li>弹窗回传 <code>DRIVE_STATE</code>（速度、最大速度、视线 x、时间倍率、镜头偏移、速度线设置）；主窗按速度开启 <code>ScrollerSpeedLinesEffect</code>（阈值 .08）、把场景时间倍率拨到 −8 到 12（750ms 无消息复位）、用视线偏移外部指针，并以 700ms 揭示、760ms 退出把 Developer 场景切到 <code>race-track</code> 预设（fov 70、移动 fov 75）。</li>
+    <li>开关：CMS <code>driveEasterEggEnabled: true</code>、<code>easterEggKillswitch: false</code>。</li>
+  </ul>
+  <p style="color:var(--w70)"><strong>本轮未打开弹窗实测。</strong>以上全部自源码读出。上一届 Winter ’26 的 <code>/key</code> 是以无头双窗完整走通并留下实录的，这一届没有——这是本次拆解相对上一届最明确的缺口，不掩饰。</p>
+</section>
+
+<section class="ch" id="s12">
+  <div class="kick"><span class="n">XII</span><span class="t">工艺细节</span><span class="r">六条</span></div>
+  <h2 class="t3">看不见的部分</h2>
+  <ol>
+    <li><strong>SSR 首帧遮罩</strong>：内联脚本立即插入 <code>#ssr-paint-cover</code>（<code>#090909</code>），等 Tailwind 样式表从 <code>media=print</code> 换回 <code>all</code> 后再撕掉，1500ms / 8000ms 双兜底。</li>
+    <li><strong>SEO 与可访问性</strong>：hero 文案有 <code>sr-only</code> 全文，拆字 span 全部 <code>aria-hidden</code>；hero 退场后整块 <code>inert</code>；<code>forced-colors</code> 与 <code>prefers-reduced-motion</code> 分别覆盖（前者关自绘图形，后者关运动，写成一条会让高对比度用户失去内容）；焦点环 <code>#0062d3</code>。</li>
+    <li><strong>逐字打字机</strong>：每个字符 <code>--show-char-delay</code> 递增 18ms、隐藏 9ms，通过 <code>step-end</code> 的 1ms 过渡实现；桌面入场延迟 2700ms，手机 1000ms。滚过 200px 的探针后 <code>data-hero-exited</code>，药丸导航从底部升起。</li>
+    <li><strong>Editions 下拉</strong>：九届并列，各带一词主题（Everywhere、Renaissance、Horizons、Boring、Unified、Foundations、Imagine My Business、Built to Last、Connect to Consumer）。</li>
+    <li><strong>控制台</strong>：非 Safari 打印 SVG 字环（内嵌子集字体 Spring2026ConsoleNational2，120s 自转），Safari 改打 ASCII 大字。</li>
+    <li><strong>导航明暗</strong>：由 IntersectionObserver 判定——任一 <code>[data-nav-trigger]</code>（章标题）进入且无 <code>[data-nav-transparent]</code> 时导航转 <code>isSolid</code>；移动导航则简化为 <code>scrollY &gt; 0</code>。</li>
+  </ol>
+</section>
+
+<section class="ch" id="s13">
+  <div class="kick"><span class="n">XIII</span><span class="t">关键发现与对照</span><span class="r">五条 · 与 Winter ’26</span></div>
+  <h2 class="t3">为什么这个站值得拆</h2>
+  <ol>
+    <li><strong>内容即数据</strong>：13 份 Theatre 状态、13 份场景预设、219 张卡、视频五路 source 全部由 CMS 下发，前端只是解释器。</li>
+    <li><strong>点云是这届的画笔</strong>：自定义 MDPC-2 把一朵点云压到 130 KB，配流体、SDF、流场与后处理，让「粒子」成为品牌质感。</li>
+    <li><strong>一个环，三种实现</strong>：GPU 矢量字形、CSS 3D 兜底、SVG 控制台，共享 .35 字号比例、18° 倾角与 102° 起始角。</li>
+    <li><strong>CSS 承担了滚动编排</strong>：<code>animation-timeline: view()</code> 加 <code>@property</code> 的 step-start 触发器让整站的滚动揭示不需要 IntersectionObserver。</li>
+    <li><strong>彩蛋是产品能力的展示</strong>：跨窗 WebRTC 与 BroadcastChannel 装置由 CMS 开关控制，与 Winter ’26 的钥匙一脉相承。</li>
+  </ol>
+  <h3>与 Winter ’26 的对照</h3>
+  <div class="tbl"><table>
+    <thead><tr><th>维度</th><th>Winter ’26（Renaissance）</th><th>Spring ’26（Everywhere）</th></tr></thead>
+    <tbody>
+      <tr><td>底色</td><td>暖纸 <code>#f7f7ee</code> 与橄榄墨 <code>#292919</code></td><td><code>#090909</code> 与白阶</td></tr>
+      <tr><td>字体</td><td>NeueMontreal、HWCigars、ImperialScript</td><td>National2、ShopifyInter、Inter</td></tr>
+      <tr><td>场景</td><td>多层 KTX2 图像平面立体书</td><td>MDPC 点云 + 流体 + SDF</td></tr>
+      <tr><td>编排</td><td>Theatre.js（13 份 state）</td><td>Theatre.js（13 份 state）</td></tr>
+      <tr><td>导航</td><td>达·芬奇手稿侧栏 + 罗马数字目录</td><td>底部药丸 + 逐字打字机</td></tr>
+      <tr><td>彩蛋</td><td>/key 钥匙、锁孔、金币雨、涂鸦</td><td>Developer 门户、/drive 赛车、速度线</td></tr>
+      <tr><td>商品</td><td>Beanie（$14.52，罗马数字价签）</td><td>Everywhere Cap（3D 翻卡面板）</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<section class="ch" id="s14">
+  <div class="kick"><span class="n">XIV</span><span class="t">出处与局限</span><span class="r">哪些实锤，哪些没拿到</span></div>
+  <h2 class="t3">抽取链路与八条局限</h2>
+  <p>本页数值来自：Playwright 计算样式探针（1440×900 @1.5x）；tailwind-vOc3OfBK.css（118,403 B）与 fonts-latin（716 B）；index.html（937,555 B，含内联 SSR 数据）；HTML 引用 <strong>85</strong> 个 JS chunk，下载并美化 <strong>32</strong> 个共 <strong>30,775</strong> 行逐行通读（其中 22 个来自那 85 个，另 10 个是路由清单按需加载的 popup / drive / RendererPipeline 等）；CMS loaderData、scenePresets、content、articles；13 份 Theatre 状态用 Python 解析；3 份 <code>.mdpc</code> 按格式头自行解析；两轮逐章截图。</p>
+  <div class="tbl"><table>
+    <thead><tr><th class="num">#</th><th>没拿到什么</th></tr></thead>
+    <tbody>
+      <tr><td class="num">1</td><td>JS 未全量读：85 个引用 chunk 读了 22 个，另读 10 个动态 chunk。未读的多为 three.js/r3f 运行时、通用组件与 polyfill；场景、转场、字环、彩蛋、分级、滚动六条主线均已覆盖。</td></tr>
+      <tr><td class="num">2</td><td>彩蛋未实测：Developer 门户与 <code>/drive</code> 弹窗的跨窗 WebRTC 装置全部自源码读出，本轮未打开弹窗实跑。</td></tr>
+      <tr><td class="num">3</td><td>点云只抽 3 份：13 份预设引用的 <code>.mdpc</code> 只落盘 3 份，用于验证格式头与体量；其余按 URL 记录未下载。</td></tr>
+      <tr><td class="num">4</td><td>KTX2 未解码：18 个帧纹理只记录 URL、命名与尺寸档，用途仍是推断。</td></tr>
+      <tr><td class="num">5</td><td>软渲染截图：tier 3 一轮走 SwiftShader，只用于核验画面正确性，不用来评价帧率或流体的鼠标响应。</td></tr>
+      <tr><td class="num">6</td><td>手机与真机未实测：<code>mobileFov</code>、移动端 tier 上限 1、手机视差均来自源码。</td></tr>
+      <tr><td class="num">7</td><td>Storefront 未下单：merch 面板的价格来源与加购 URL 自源码读出，未发起真实购买。</td></tr>
+      <tr><td class="num">8</td><td>未启用外部研究通道：无奖项、访谈或制作团队信息核验。</td></tr>
+    </tbody>
+  </table></div>
+  <p>核查中改正九处漂移，其中三处改变了结论的量级或性质：JS 精读规模（无出处的「102 个 chunk」→ 可复算的 85/32/22/10）、粒子数口径（源点数 vs 渲染上限）、流体六项参数区间（原区间取自部分预设）。全部留痕于《事实核查》。</p>
+  <p style="margin-top:26px"><a href="设计解构.md">设计解构</a> · <a href="复刻指南.md">复刻指南</a> · <a href="出处与方法.md">出处与方法</a> · <a href="事实核查.md">事实核查</a> · <a href="设计评审.md">设计评审</a> · <a href="tokens.json">tokens.json</a> · <a href="design-tokens.css">design-tokens.css</a></p>
+</section>
+
+<footer>
+  <span>Design teardown</span>
+  <span>对象 <a href="https://www.shopify.com/editions/spring2026" rel="noreferrer noopener" target="_blank">shopify.com/editions/spring2026</a></span>
+  <span>抽取日期 2026-09-08</span>
+  <span>字体、点云与截图为原站资产，仅作研究引用</span>
+</footer>
+</div>
+
+<script id="presetData" type="application/json">
+[{"k":"prod-1-hero","n":"Hero","fov":55,"mfov":null,"ps":0.034,"mps":2.759,"maxp":629000,"hdr":"park","src":"forest-1024-v3-moretrees-512_3","same":false,"flow":"rise","layout":"off","df":true,"curl":3,"vd":0.96,"dd":0.98,"pr":0.9,"sr":0.6,"sf":0.3,"inf":0.4,"bi":0.33,"bt":0.31},{"k":"prod-2-agentic","n":"Agentic","fov":50,"mfov":null,"ps":0.005,"mps":2,"maxp":169001,"hdr":"apartment","src":"1ea414f2be20f9c91d05f0ba3cc1fa70-df9","same":true,"flow":"rise","layout":"dots","df":false,"curl":1.5,"vd":0.965,"dd":0.9,"pr":0.6,"sr":0.25,"sf":0.125,"inf":0.6,"bi":0.222,"bt":0},{"k":"prod-3-sidekick","n":"Sidekick","fov":50,"mfov":90,"ps":0.015,"mps":1.804,"maxp":230000,"hdr":"autumnField","src":"0521_Submerged_Arches_and_Verdant_Ruins-512-df9","same":false,"flow":"curl","layout":"off","df":true,"curl":1.5,"vd":0.965,"dd":0.9,"pr":0.6,"sr":0.25,"sf":0.125,"inf":0.6,"bi":0.886,"bt":0.358},{"k":"prod-4-online-3","n":"Online","fov":60,"mfov":null,"ps":0.0106,"mps":3,"maxp":274000,"hdr":"park","src":"x_mj-10-pointcloud-512_2","same":false,"flow":"curl","layout":"off","df":true,"curl":1.5,"vd":0.965,"dd":0.9,"pr":0.6,"sr":0.25,"sf":0.125,"inf":0.5,"bi":0.342,"bt":0.171},{"k":"prod-5-retail","n":"Retail","fov":50,"mfov":null,"ps":0.2,"mps":2.688,"maxp":241000,"hdr":"studio","src":"retaila-512_2_d822ff50-b555-475c-a34a-52d453fa5653-df9","same":false,"flow":"curl","layout":"off","df":true,"curl":1.5,"vd":0.965,"dd":0.9,"pr":0.6,"sr":0.25,"sf":0.125,"inf":0.5,"bi":0.424,"bt":0.08},{"k":"prod-6-marketing","n":"Marketing","fov":50,"mfov":null,"ps":0.0346,"mps":2,"maxp":252000,"hdr":"autumnField","src":"minipointcloud-256-df9","same":true,"flow":"rise","layout":"dots","df":false,"curl":1.5,"vd":0.965,"dd":0.9,"pr":0.6,"sr":0.25,"sf":0.125,"inf":0.6,"bi":0.158,"bt":0},{"k":"prod-7-operations","n":"Operations","fov":50,"mfov":null,"ps":0.0096,"mps":2.286,"maxp":null,"hdr":"","src":"globecomp-512-df9","same":false,"flow":"curl","layout":"off","df":true,"curl":1.5,"vd":0.965,"dd":0.9,"pr":0.6,"sr":0.25,"sf":0.125,"inf":0.4,"bi":0.57,"bt":0},{"k":"prod-8-shopapp","n":"Shop app","fov":50,"mfov":null,"ps":0.118,"mps":2.125,"maxp":161001,"hdr":"shopapp-office","src":"shopappb-256-df9","same":true,"flow":"curl","layout":"off","df":false,"curl":3,"vd":0.96,"dd":0.98,"pr":0.9,"sr":1,"sf":0.3,"inf":0.4,"bi":0.4,"bt":0},{"k":"prod-9-payments","n":"Payments","fov":120,"mfov":null,"ps":0.006,"mps":2,"maxp":207001,"hdr":"shopapp-office","src":"minipointcloud-512-df9","same":false,"flow":"rise","layout":"dots","df":false,"curl":1.5,"vd":0.965,"dd":0.9,"pr":0.6,"sr":0.25,"sf":0.125,"inf":0.5,"bi":1.487,"bt":0.557},{"k":"prod-10-finance","n":"Finance","fov":50,"mfov":null,"ps":0.068,"mps":1.804,"maxp":284001,"hdr":"","src":"minipointcloud-512-df9","same":false,"flow":"curl","layout":"dots","df":false,"curl":3,"vd":0.96,"dd":0.98,"pr":0.9,"sr":0.7,"sf":0.3,"inf":0.8,"bi":0.095,"bt":0},{"k":"prod-11-dev","n":"Developer","fov":75.44,"mfov":null,"ps":0.02,"mps":1.5,"maxp":240001,"hdr":"","src":"minipointcloud-512-df9","same":false,"flow":"rise","layout":"dots","df":true,"curl":3,"vd":0.96,"dd":0.98,"pr":0.9,"sr":0.6,"sf":0.3,"inf":0.6,"bi":1.066,"bt":0},{"k":"prod-12-merch","n":"Merch","fov":75.44,"mfov":null,"ps":0.007,"mps":1.2,"maxp":null,"hdr":"night","src":"minipointcloud-256-df9","same":true,"flow":"rise","layout":"dots","df":true,"curl":3,"vd":0.96,"dd":0.98,"pr":0.9,"sr":0.7,"sf":0.3,"inf":1,"bi":1.066,"bt":0},{"k":"race-track","n":"Race track","fov":70,"mfov":75,"ps":0.0151,"mps":5,"maxp":null,"hdr":"apartment","src":"1ea414f2be20f9c91d05f0ba3cc1fa70","same":true,"flow":"curl","layout":"off","df":false,"curl":6,"vd":0.96,"dd":0.95,"pr":0.8,"sr":0.4,"sf":0.5,"inf":0.25,"bi":1.316,"bt":0}]
+</script>
+<script id="heroTl" type="application/json">
+{"length":10,"sub":30,"tracks":[{"o":"Backdrop","p":"opacity","kf":[{"p":0.667,"v":0,"h":[0.5,1,0.5,0]},{"p":3.833,"v":0.6,"h":[0.5,1,0.5,0]}]},{"o":"Camera","p":"position.x","kf":[{"p":5,"v":0.3798174788465585,"h":[0.5,1,0.5,0]},{"p":10,"v":0.2998174788465584,"h":[0.5,1,0.5,0]}]},{"o":"Camera","p":"position.y","kf":[{"p":5,"v":-0.4951388823914396,"h":[0.5,1,0.5,0]},{"p":10,"v":-0.6551388823914397,"h":[0.5,1,0.5,0]}]},{"o":"Intro Transition","p":"progress","kf":[{"p":0.033,"v":0,"h":[0.5,1,0.385,0.016]},{"p":2.933,"v":1,"h":[0.171,0.826,0.5,0]}]},{"o":"Mobile Content","p":"opacity","kf":[{"p":3.833,"v":1,"h":[0.5,1,0.5,0]},{"p":4.767,"v":0,"h":[0.5,1,0.5,0]}]},{"o":"Ring / Transform","p":"opacity","kf":[{"p":1.3,"v":0,"h":[0.5,1,0.5,0]},{"p":2.633,"v":1,"h":[0.5,1,0.5,0]},{"p":7.933,"v":1,"h":[0.5,1,0.5,0]},{"p":9.067,"v":0,"h":[0.5,1,0.5,0]}]},{"o":"Scene","p":"background.darken","kf":[{"p":1.7,"v":0.92,"h":[0.5,1,0.5,0]},{"p":3.867,"v":0,"h":[0.5,1,0.5,0]}]},{"o":"Scene","p":"lightVolumes.backgroundOpacity","kf":[{"p":0.467,"v":0,"h":[0.5,1,0.5,0]},{"p":3.067,"v":1,"h":[0.5,1,0.5,0]}]},{"o":"Scene","p":"lightVolumes.foregroundOpacity","kf":[{"p":0,"v":0,"h":[0.5,1,0.5,0]},{"p":4.133,"v":1,"h":[0.5,1,0.5,0]}]},{"o":"Scene","p":"particle.exposure","kf":[{"p":0.433,"v":-3,"h":[0.5,1,0.5,0]},{"p":3.3,"v":0,"h":[0.5,1,0.5,0]}]},{"o":"Scene","p":"particle.randomize.x","kf":[{"p":0,"v":0,"h":[0.5,1,0.583,0.114]},{"p":3.833,"v":0,"h":[0.448,0.99,0.5,0]}]},{"o":"Scene","p":"particle.randomize.y","kf":[{"p":0,"v":0.06,"h":[0.5,1,0.583,0.114]},{"p":3.833,"v":0,"h":[0.448,0.99,0.5,0]}]},{"o":"Scene","p":"particle.randomize.z","kf":[{"p":0,"v":0,"h":[0.5,1,0.583,0.114]},{"p":3.833,"v":0,"h":[0.448,0.99,0.5,0]}]},{"o":"Scene","p":"sceneTransform.position.x","kf":[{"p":0,"v":0.5940000000000003,"h":[0.5,1,0.241,0.269]},{"p":3.867,"v":0,"h":[0.056,0.98,0.5,0]}]},{"o":"Scene","p":"sceneTransform.position.y","kf":[{"p":0,"v":-0.08999999999999998,"h":[0.5,1,0.241,0.269]},{"p":3.867,"v":0,"h":[0.056,0.98,0.5,0]}]},{"o":"Scene","p":"sceneTransform.position.z","kf":[{"p":0,"v":0.02799999999999986,"h":[0.5,1,0.241,0.269]},{"p":3.867,"v":0,"h":[0.056,0.98,0.5,0]}]},{"o":"Scene","p":"sceneTransform.rotation.x","kf":[{"p":0,"v":0.20000000000000007,"h":[0.5,1,0.241,0.269]},{"p":3.867,"v":0,"h":[0.056,0.98,0.5,0]}]},{"o":"Scene","p":"sceneTransform.rotation.y","kf":[{"p":0,"v":0.7260000000000004,"h":[0.5,1,0.241,0.269]},{"p":3.867,"v":0,"h":[0.056,0.98,0.5,0]}]},{"o":"Scene","p":"sceneTransform.rotation.z","kf":[{"p":0,"v":-0.1319999999999999,"h":[0.5,1,0.241,0.269]},{"p":3.867,"v":0,"h":[0.056,0.98,0.5,0]}]},{"o":"Section","p":"hero.wipe.translate.x","kf":[{"p":6.8,"v":0,"h":[0.5,1,0.417,0.465]},{"p":7.967,"v":0,"h":[0.665,0.669,0.5,0]}]},{"o":"Section","p":"hero.wipe.translate.y","kf":[{"p":6.8,"v":0,"h":[0.5,1,0.417,0.465]},{"p":7.967,"v":-0.07599999999999991,"h":[0.665,0.669,0.5,0]}]}],"total":27,"totalKf":50}
+</script>
+<script>
+(function(){
+"use strict";
+const RM=matchMedia('(prefers-reduced-motion: reduce)').matches;
+const clamp=(v,a,b)=>v<a?a:v>b?b:v;
+const $=id=>document.getElementById(id);
+
+/* ---------- Everywhere 字环（CSS 版，原站常量） ---------- */
+(function ring(){
+  const el=$('ring'); if(!el) return;
+  const WORDS=['Everywhere','Everywhere','Everywhere'];
+  const N=WORDS.join('').length;            // 30 个字形位
+  const STEP=360/N, R='var(--hero-ring-radius)';
+  let i=0;
+  WORDS.forEach((w,wi)=>{
+    [...w].forEach((ch,ci)=>{
+      const b=document.createElement('b');
+      const th=i*STEP;
+      b.textContent=ch;
+      b.style.setProperty('--lf',`translate(-50%,-50%) rotateY(${(th-14).toFixed(2)}deg) translateZ(${R})`);
+      b.style.setProperty('--lt',`translate(-50%,-50%) rotateY(${th.toFixed(2)}deg) translateZ(${R})`);
+      b.style.setProperty('--ld',`${wi*600+ci*55}ms`);
+      b.style.setProperty('--rd',`${wi*600+ci*55+120}ms`);
+      el.appendChild(b); i++;
+    });
+  });
+})();
+
+/* ---------- 共用：MDPC-2 解码（原 worker 算法逐步移植） ---------- */
+const MDPC = (async function(){
+  const url='real-assets/pointcloud/forest-1024-v3-moretrees-256_2.mdpc';
+  const t0=performance.now();
+  const buf=await (await fetch(url)).arrayBuffer();
+  const u8=new Uint8Array(buf);
+  const headLen=new DataView(buf,0,4).getUint32(0,true);
+  const meta=JSON.parse(new TextDecoder().decode(u8.subarray(4,4+headLen)));
+  if(!String(meta.format||'').startsWith('mdpc-')) throw new Error('Unsupported MDPC: '+meta.format);
+  let o=4+headLen;
+  const cut=n=>{ const s=u8.subarray(o,o+n); o+=n; return s; };
+  const posRaw=cut(meta.posLen), yRaw=cut(meta.yLen), cbRaw=cut(meta.cbLen), crRaw=cut(meta.crLen);
+  const inflate=async s=>{
+    const c=new Uint8Array(s.byteLength); c.set(s);
+    const st=new Blob([c.buffer]).stream().pipeThrough(new DecompressionStream('deflate'));
+    return new Uint8Array(await new Response(st).arrayBuffer());
+  };
+  const [pos,Y,Cb,Cr]=await Promise.all([inflate(posRaw),inflate(yRaw),inflate(cbRaw),inflate(crRaw)]);
+
+  // 位置：varint 增量 → 前缀和 → Morton 解交织 → 反量化
+  const [bx0,by0,bz0,bx1,by1,bz1]=meta.bbox;
+  const q=(1<<meta.qpPos)-1, sx=(bx1-bx0)/q, sy=(by1-by0)/q, sz=(bz1-bz0)/q;
+  const P=new Float32Array(meta.N*3);
+  let code=0n, p=0;
+  for(let n=0;n<meta.N;n++){
+    let d=0n, sh=0n;
+    for(;;){ const b=pos[p++]??0; d|=BigInt(b&127)<<sh; if(!(b&128)) break; sh+=7n; }
+    code+=d;
+    let X=0,Yq=0,Z=0;
+    for(let k=0;k<meta.qpPos;k++){
+      if((code>>BigInt(k*3))&1n)   X|=1<<k;
+      if((code>>BigInt(k*3+1))&1n) Yq|=1<<k;
+      if((code>>BigInt(k*3+2))&1n) Z|=1<<k;
+    }
+    P[n*3]=bx0+X*sx; P[n*3+1]=by0+Yq*sy; P[n*3+2]=bz0+Z*sz;
+  }
+  // header 另给一组 fitBounds：把 bbox 线性映射进去，得到场景放置用的归一空间
+  const fb=meta.fitBounds;
+  if(Array.isArray(fb)&&fb.length===6){
+    const k=[(fb[3]-fb[0])/(bx1-bx0),(fb[4]-fb[1])/(by1-by0),(fb[5]-fb[2])/(bz1-bz0)];
+    for(let n=0;n<meta.N;n++){
+      P[n*3]  =fb[0]+(P[n*3]  -bx0)*k[0];
+      P[n*3+1]=fb[1]+(P[n*3+1]-by0)*k[1];
+      P[n*3+2]=fb[2]+(P[n*3+2]-bz0)*k[2];
+    }
+  }
+  // 颜色：Y 全分辨率 + Cb/Cr 按 chromaSub 子采样 → RGB
+  const C=new Float32Array(meta.N*3), sub=meta.chromaSub||1;
+  const cl=v=>v<0?0:v>1?1:v;
+  for(let n=0;n<meta.N;n++){
+    const yv=Y[n]??0, i=Math.min(Cb.length-1,Math.floor(n/sub));
+    const cb=(Cb[i]??128)-128, cr=(Cr[Math.min(Cr.length-1,Math.floor(n/sub))]??128)-128;
+    C[n*3]=cl((yv+1.402*cr)/255);
+    C[n*3+1]=cl((yv-0.344136*cb-0.714136*cr)/255);
+    C[n*3+2]=cl((yv+1.772*cb)/255);
+  }
+  return {meta,P,C,bytes:buf.byteLength,headLen,
+    inflated:{pos:pos.length,y:Y.length,cb:Cb.length,cr:Cr.length},
+    ms:performance.now()-t0};
+})();
+
+/* ---------- 点云 WebGL 渲染器（装置一与装置二共用） ---------- */
+function makeCloud(canvas, opts){
+  const gl=canvas.getContext('webgl',{antialias:true,alpha:false,premultipliedAlpha:false});
+  if(!gl) return null;
+  const VS=`
+attribute vec3 aPos; attribute vec3 aCol;
+uniform mat4 uMVP; uniform float uPS, uDPR, uSizeK;
+uniform float uSdfOn, uStrength, uFalloff, uBigR, uSmallR;
+varying vec3 vCol; varying float vFade;
+// torus SDF：hero 用的就是这一支
+float sdTorus(vec3 p, float R, float r){ vec2 q=vec2(length(p.xz)-R, p.y); return length(q)-r; }
+vec3 sdTorusGrad(vec3 p, float R, float r){
+  float e=0.004;
+  return normalize(vec3(
+    sdTorus(p+vec3(e,0,0),R,r)-sdTorus(p-vec3(e,0,0),R,r),
+    sdTorus(p+vec3(0,e,0),R,r)-sdTorus(p-vec3(0,e,0),R,r),
+    sdTorus(p+vec3(0,0,e),R,r)-sdTorus(p-vec3(0,0,e),R,r)) + vec3(1e-6));
+}
+void main(){
+  vec3 p=aPos;
+  float d=sdTorus(p,uBigR,uSmallR);
+  float push=exp(-max(d,0.0)/max(uFalloff,0.001));
+  p += sdTorusGrad(p,uBigR,uSmallR) * push * uStrength * uSdfOn;
+  vFade = mix(1.0, 1.0 - push*0.45*uSdfOn, 1.0);
+  vCol=aCol;
+  vec4 mv=uMVP*vec4(p,1.0);
+  gl_Position=mv;
+  float dist=max(abs(mv.w),0.1);
+  gl_PointSize=clamp(uPS*uDPR*(uSizeK/dist),0.8,16.0);
+}`;
+  const FS=`precision mediump float; varying vec3 vCol; varying float vFade;
+void main(){ vec2 c=gl_PointCoord-0.5; if(dot(c,c)>0.25) discard;
+  gl_FragColor=vec4(vCol*vFade,1.0); }`;
+  function sh(t,src){ const s=gl.createShader(t); gl.shaderSource(s,src); gl.compileShader(s);
+    if(!gl.getShaderParameter(s,gl.COMPILE_STATUS)){ console.warn(gl.getShaderInfoLog(s)); return null; } return s; }
+  const vs=sh(gl.VERTEX_SHADER,VS), fs=sh(gl.FRAGMENT_SHADER,FS);
+  if(!vs||!fs) return null;
+  const pr=gl.createProgram(); gl.attachShader(pr,vs); gl.attachShader(pr,fs); gl.linkProgram(pr);
+  if(!gl.getProgramParameter(pr,gl.LINK_STATUS)){ console.warn(gl.getProgramInfoLog(pr)); return null; }
+  gl.useProgram(pr);
+  gl.enable(gl.DEPTH_TEST); gl.clearColor(.02,.02,.02,1);
+
+  const bp=gl.createBuffer(), bc=gl.createBuffer();
+  const aPos=gl.getAttribLocation(pr,'aPos'), aCol=gl.getAttribLocation(pr,'aCol');
+  const U=n=>gl.getUniformLocation(pr,n);
+  const u={mvp:U('uMVP'),ps:U('uPS'),dpr:U('uDPR'),sk:U('uSizeK'),on:U('uSdfOn'),st:U('uStrength'),
+           fo:U('uFalloff'),R:U('uBigR'),r:U('uSmallR')};
+  let count=0, center=[0,0,0], span=1;
+
+  function setData(P,C){
+    gl.bindBuffer(gl.ARRAY_BUFFER,bp); gl.bufferData(gl.ARRAY_BUFFER,P,gl.STATIC_DRAW);
+    gl.enableVertexAttribArray(aPos); gl.vertexAttribPointer(aPos,3,gl.FLOAT,false,0,0);
+    gl.bindBuffer(gl.ARRAY_BUFFER,bc); gl.bufferData(gl.ARRAY_BUFFER,C,gl.STATIC_DRAW);
+    gl.enableVertexAttribArray(aCol); gl.vertexAttribPointer(aCol,3,gl.FLOAT,false,0,0);
+    count=P.length/3;
+  }
+  function setBounds(b){
+    center=[(b[0]+b[3])/2,(b[1]+b[4])/2,(b[2]+b[5])/2];
+    span=Math.max(b[3]-b[0],b[4]-b[1],b[5]-b[2]);
+  }
+  function size(){
+    const b=canvas.parentElement.getBoundingClientRect();
+    const dpr=Math.min(devicePixelRatio||1,1.75);
+    canvas.width=Math.max(2,Math.round(b.width*dpr));
+    canvas.height=Math.max(2,Math.round(b.height*dpr));
+    gl.viewport(0,0,canvas.width,canvas.height);
+  }
+  function mul(a,b){ const o=new Float32Array(16);
+    for(let i=0;i<4;i++)for(let j=0;j<4;j++){let s=0;for(let k=0;k<4;k++)s+=a[k*4+j]*b[i*4+k];o[i*4+j]=s;} return o; }
+  function persp(fovy,asp,n,f){ const t=1/Math.tan(fovy/2); return new Float32Array(
+    [t/asp,0,0,0, 0,t,0,0, 0,0,(f+n)/(n-f),-1, 0,0,2*f*n/(n-f),0]); }
+  function draw(state){
+    if(!count) return;
+    gl.clear(gl.COLOR_BUFFER_BIT|gl.DEPTH_BUFFER_BIT);
+    const asp=canvas.width/canvas.height;
+    const P=persp(55*Math.PI/180,asp,.05,120);
+    const ry=state.yaw, rx=state.pitch, dist=span*state.zoom;
+    const cy=Math.cos(ry),sy=Math.sin(ry),cx=Math.cos(rx),sx2=Math.sin(rx);
+    const Ry=new Float32Array([cy,0,-sy,0, 0,1,0,0, sy,0,cy,0, 0,0,0,1]);
+    const Rx=new Float32Array([1,0,0,0, 0,cx,sx2,0, 0,-sx2,cx,0, 0,0,0,1]);
+    const T=new Float32Array([1,0,0,0, 0,1,0,0, 0,0,1,0, -center[0],-center[1],-center[2],1]);
+    const V=new Float32Array([1,0,0,0, 0,1,0,0, 0,0,1,0, 0,0,-dist,1]);
+    const mvp=mul(P,mul(V,mul(Rx,mul(Ry,T))));
+    gl.useProgram(pr);
+    gl.uniformMatrix4fv(u.mvp,false,mvp);
+    gl.uniform1f(u.ps,state.ps); gl.uniform1f(u.dpr,Math.min(devicePixelRatio||1,1.75));
+    gl.uniform1f(u.sk,span*1.15);
+    gl.uniform1f(u.on,state.sdf?1:0); gl.uniform1f(u.st,state.strength);
+    gl.uniform1f(u.fo,state.falloff); gl.uniform1f(u.R,state.bigR); gl.uniform1f(u.r,state.smallR);
+    gl.drawArrays(gl.POINTS,0,count);
+  }
+  return {gl,setData,setBounds,size,draw,get count(){return count}};
+}
+
+/* ---------- 装置一：解码 + 渲染；装置二：SDF 环 ---------- */
+(function clouds(){
+  const c1=$('cloudCv'), c2=$('sdfCv');
+  const fail=msg=>{ [c1,c2].forEach(c=>{ if(c) c.parentElement.innerHTML=
+    '<div style="padding:34px;font:400 12.5px/1.7 var(--font-text);color:var(--w60)">'+msg+'</div>'; }); };
+  if(!c1||!c2) return;
+  if(typeof DecompressionStream==='undefined'){
+    fail('此浏览器不提供 <code>DecompressionStream</code>，无法按原算法解码 MDPC-2。格式与算法见上文与《复刻指南》二之 4。'); return; }
+  const A=makeCloud(c1), B=makeCloud(c2);
+  if(!A||!B){ fail('此浏览器未提供 WebGL 上下文，点云装置无法运行。'); return; }
+
+  const sA={yaw:.55,pitch:.30,zoom:.50,ps:1.4,sdf:false,strength:0,falloff:.5,bigR:.34,smallR:.14};
+  const sB={yaw:.55,pitch:.34,zoom:.82,ps:1.4,sdf:true,strength:.35,falloff:.5,bigR:.34,smallR:.14};
+  let spin=.26, ready=false;
+
+  MDPC.then(d=>{
+    ready=true;
+    const bb=(Array.isArray(d.meta.fitBounds)&&d.meta.fitBounds.length===6)?d.meta.fitBounds:d.meta.bbox;
+    A.setData(d.P,d.C); A.setBounds(bb);
+    B.setData(d.P,d.C); B.setBounds(bb);
+    const kb=n=>n>=1024?(n/1024).toFixed(1)+' KB':n+' B';
+    const cells=$('pipe').querySelectorAll('i b');
+    cells[0].textContent=kb(d.bytes);
+    cells[1].textContent=d.headLen+' B';
+    cells[2].textContent=kb(d.inflated.pos)+' ← '+kb(d.meta.posLen);
+    cells[3].textContent=[d.inflated.y,d.inflated.cb,d.inflated.cr].map(kb).join(' / ');
+    cells[4].textContent=d.meta.N.toLocaleString('en-US');
+    cells[5].textContent=Math.round(d.ms)+' ms';
+    A.size(); B.size();
+  }).catch(e=>{ console.warn(e); fail('MDPC 解码失败：'+e.message+'。若以 file:// 打开，请改用本地服务器（fetch 受同源策略限制）。'); });
+
+  // 拖拽旋转
+  function drag(cv,st){
+    let on=false,px=0,py=0;
+    cv.addEventListener('pointerdown',e=>{on=true;px=e.clientX;py=e.clientY;cv.setPointerCapture(e.pointerId);});
+    cv.addEventListener('pointermove',e=>{ if(!on) return;
+      st.yaw+=(e.clientX-px)*.006; st.pitch=clamp(st.pitch+(e.clientY-py)*.005,-1.2,1.2);
+      px=e.clientX; py=e.clientY; });
+    ['pointerup','pointercancel','pointerleave'].forEach(t=>cv.addEventListener(t,()=>{on=false;}));
+    cv.addEventListener('wheel',e=>{ e.preventDefault(); st.zoom=clamp(st.zoom*(1+Math.sign(e.deltaY)*.09),.24,4); },{passive:false});
+  }
+  drag(c1,sA); drag(c2,sB);
+
+  const bind=(id,out,fmt,fn)=>{ const el=$(id),o=$(out); if(!el) return;
+    const s=()=>{ o.textContent=fmt(+el.value); fn(+el.value); }; el.addEventListener('input',s); s(); };
+  bind('cloudPS','cloudPSO',v=>(v/10).toFixed(1),v=>{sA.ps=v/10;});
+  bind('cloudSpin','cloudSpinO',v=>(v/100).toFixed(2),v=>{spin=v/100;});
+  bind('cloudPS','cloudPSO',v=>(v/10).toFixed(1),v=>{sB.ps=v/10;});
+  bind('sdfS','sdfSO',v=>(v/100).toFixed(2),v=>{sB.strength=v/100;});
+  bind('sdfF','sdfFO',v=>(v/100).toFixed(2),v=>{sB.falloff=v/100;});
+  bind('sdfR','sdfRO',v=>(v/100).toFixed(2),v=>{sB.bigR=v/100;});
+  bind('sdfr','sdfrO',v=>(v/100).toFixed(2),v=>{sB.smallR=v/100;});
+  $('cloudReset').addEventListener('click',()=>{ sA.yaw=.55; sA.pitch=.30; sA.zoom=.50; });
+  const showBtn=$('sdfShow');
+  showBtn.addEventListener('click',()=>{ sB.sdf=!sB.sdf; showBtn.setAttribute('aria-pressed',sB.sdf); });
+
+  let v1=false,v2=false;
+  new IntersectionObserver(es=>{v1=es[0].isIntersecting;},{threshold:.02}).observe(c1);
+  new IntersectionObserver(es=>{v2=es[0].isIntersecting;},{threshold:.02}).observe(c2);
+  addEventListener('resize',()=>{ clearTimeout(clouds._t);
+    clouds._t=setTimeout(()=>{A.size();B.size();},140); });
+  A.size(); B.size();
+  let last=performance.now();
+  (function loop(t){
+    requestAnimationFrame(loop);
+    const dt=Math.min((t-last)/1000,.05); last=t;
+    if(!ready) return;
+    if(!RM){ sA.yaw+=spin*dt*.5; sB.yaw+=spin*dt*.28; }
+    if(v1) A.draw(sA);
+    if(v2) B.draw(sB);
+  })(last);
+})();
+
+/* ---------- 装置三：13 份预设对照表 ---------- */
+(function presets(){
+  const data=JSON.parse($('presetData').textContent);
+  const body=$('pBody'), ths=[...document.querySelectorAll('#pTbl th.sortable')];
+  const fmt={
+    n:r=>r.n,
+    fov:r=>r.fov+(r.mfov?` <span style="color:var(--w20)">/ ${r.mfov}</span>`:''),
+    ps:r=>r.ps, mps:r=>r.mps,
+    maxp:r=>r.maxp?r.maxp.toLocaleString('en-US'):'—',
+    hdr:r=>r.hdr||'—',
+    src:r=>`<span title="${r.src}">${r.src.replace(/-(512|256).*$/,'').slice(0,22)}</span>`+(r.same?' <span style="color:var(--w20)">单档</span>':''),
+    flow:r=>`${r.flow} / ${r.layout}`+(r.df?' <span style="color:var(--w20)">+fill</span>':''),
+    curl:r=>r.curl, pr:r=>r.pr, sr:r=>r.sr,
+    bi:r=>r.bi==null?'—':r.bi
+  };
+  const NUM=new Set(['fov','ps','mps','maxp','curl','pr','sr','bi']);
+  let order=null, dir=1;
+  function render(){
+    const rows=[...data];
+    if(order) rows.sort((a,b)=>{
+      const x=a[order], y=b[order];
+      if(x==null) return 1; if(y==null) return -1;
+      return (NUM.has(order)? x-y : String(x).localeCompare(String(y)))*dir;
+    });
+    body.innerHTML=rows.map(r=>'<tr>'+ths.map(th=>{
+      const k=th.dataset.k;
+      return `<td class="${NUM.has(k)?'num':''}">${fmt[k](r)}</td>`;
+    }).join('')+'</tr>').join('');
+    ths.forEach(th=>th.setAttribute('aria-sort',
+      th.dataset.k===order?(dir>0?'ascending':'descending'):'none'));
+  }
+  ths.forEach(th=>{
+    th.tabIndex=0; th.setAttribute('aria-sort','none');
+    const go=()=>{ const k=th.dataset.k;
+      if(order===k) dir=-dir; else { order=k; dir=NUM.has(k)?-1:1; }
+      render(); };
+    th.addEventListener('click',go);
+    th.addEventListener('keydown',e=>{ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); go(); } });
+  });
+  render();
+})();
+
+/* ---------- 装置四：hero 时间轴回放 ---------- */
+(function timeline(){
+  const D=JSON.parse($('heroTl').textContent);
+  const rows=$('tlRows'), head=$('tlHead'), ruler=$('tlRuler');
+  const L=D.length;
+  for(let u=0;u<=L;u+=2){ const s=document.createElement('span');
+    s.style.left=(u/L*100)+'%'; s.textContent=u; ruler.appendChild(s); }
+  const els=D.tracks.map(t=>{
+    const row=document.createElement('div'); row.className='tl-row';
+    const nm=document.createElement('div'); nm.className='nm';
+    nm.textContent=t.o+' · '+t.p; nm.title=t.o+' · '+t.p;
+    const lane=document.createElement('div'); lane.className='lane';
+    for(let i=0;i<t.kf.length-1;i++){
+      const seg=document.createElement('i'); seg.className='seg';
+      seg.style.left=(t.kf[i].p/L*100)+'%';
+      seg.style.width=((t.kf[i+1].p-t.kf[i].p)/L*100)+'%';
+      lane.appendChild(seg);
+    }
+    t.kf.forEach(k=>{ const d=document.createElement('i'); d.className='kf';
+      d.style.left=(k.p/L*100)+'%'; lane.appendChild(d); });
+    const vv=document.createElement('div'); vv.className='vv';
+    row.append(nm,lane,vv); rows.appendChild(row);
+    return {t,vv};
+  });
+  // Theatre 的三次贝塞尔求值：handles = [rx, ry, lx, ly]
+  function bez(x,x1,y1,x2,y2){
+    let a=0,b=1,t=x;
+    for(let i=0;i<18;i++){
+      const mt=1-t, cx=3*mt*mt*t*x1+3*mt*t*t*x2+t*t*t;
+      if(cx<x) a=t; else b=t;
+      t=(a+b)/2;
+    }
+    const mt=1-t; return 3*mt*mt*t*y1+3*mt*t*t*y2+t*t*t;
+  }
+  function valueAt(t,time){
+    const kf=t.kf;
+    if(time<=kf[0].p) return kf[0].v;
+    if(time>=kf[kf.length-1].p) return kf[kf.length-1].v;
+    for(let i=0;i<kf.length-1;i++){
+      const a=kf[i], b=kf[i+1];
+      if(time>=a.p && time<=b.p){
+        const u=(time-a.p)/(b.p-a.p);
+        const h=a.h||[.5,1,.5,0];
+        const e=bez(u,h[0],h[1],h[2],h[3]);
+        return a.v+(b.v-a.v)*e;
+      }
+    }
+    return kf[kf.length-1].v;
+  }
+  const pick=(o,p)=>D.tracks.find(t=>t.o===o&&t.p===p);
+  const tIntro=pick('Intro Transition','progress'), tDark=pick('Scene','background.darken'),
+        tExp=pick('Scene','particle.exposure'), tRing=pick('Ring / Transform','opacity'),
+        tCx=pick('Camera','position.x'), tCy=pick('Camera','position.y');
+  const oI=$('tlIntro'),oD=$('tlDark'),oE=$('tlExp'),oR=$('tlRing'),oC=$('tlCam');
+  const T=$('tlT'), TO=$('tlTO'), play=$('tlPlay');
+  function render(time){
+    TO.textContent=time.toFixed(2);
+    head.style.left=`calc(186px + 12px + (100% - 186px - 62px - 34px) * ${time/L})`;
+    els.forEach(({t,vv})=>{ vv.textContent=valueAt(t,time).toFixed(3); });
+    const f=(el,tr,d=3)=>{ if(el&&tr) el.textContent=valueAt(tr,time).toFixed(d).replace('-','−'); };
+    f(oI,tIntro); f(oD,tDark); f(oE,tExp); f(oR,tRing);
+    if(oC&&tCx&&tCy) oC.textContent=valueAt(tCx,time).toFixed(3)+' / '+valueAt(tCy,time).toFixed(3).replace('-','−');
+  }
+  let raf=0,t0=0;
+  function halt(){ if(raf){cancelAnimationFrame(raf);raf=0;} play.setAttribute('aria-pressed',false); }
+  function step(t){
+    if(!raf) return;
+    const time=clamp((t-t0)/1000*1.2,0,L);
+    T.value=Math.round(time/L*1000); render(time);
+    if(time<L) raf=requestAnimationFrame(step); else halt();
+  }
+  T.addEventListener('input',()=>{ halt(); render(+T.value/1000*L); });
+  play.addEventListener('click',()=>{
+    if(raf) return halt();
+    const from=(+T.value/1000*L)>=L?0:(+T.value/1000*L);
+    t0=performance.now()-from/1.2*1000;
+    play.setAttribute('aria-pressed',true); raf=requestAnimationFrame(step);
+  });
+  addEventListener('resize',()=>render(+T.value/1000*L));
+  render(0);
+})();
+})();
+</script>
+</body>
+</html>

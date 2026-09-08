@@ -1,0 +1,44 @@
+{
+  "sheetsById": {
+    "finance": {
+      "staticOverrides": {
+        "byObject": {
+          "Scene": {
+            "preset": "prod-10-finance"
+          },
+          "ForegroundLightVolume": {
+            "visible": false
+          },
+          "Camera": {
+            "scrollDrift": {
+              "backgroundVolumeScrollScrub": 3,
+              "foregroundVolumeScrollScrub": 3,
+              "up": 0.5,
+              "back": 0.25
+            },
+            "positionOffset": {
+              "x": -0.08699999999999983,
+              "z": 0.019000000000000086,
+              "y": 0.018999999999999996
+            },
+            "rotationOffset": {
+              "y": 0.183
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitionVersion": "0.4.0",
+  "revisionHistory": [
+    "sD0TIHveIcKUJ8-t",
+    "Xy_ebso9S4RyX0l7",
+    "YWIT-AM_dntUiYml",
+    "4GTGyny_5PwVZn32",
+    "OuD6xp1s6IeJK-k8",
+    "k8yu8ZEYL4IUhjoX",
+    "Xitbmlm4S0zDlNBf",
+    "VkgiWCLRV7K0mBCR",
+    "cJ0e47SDeP1kWinQ"
+  ]
+}

@@ -12,6 +12,10 @@ import { existsSync } from "node:fs";
 import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { homedir } from "node:os";
+import {
+  featuredSlugs,
+  readGalleryData,
+} from "./build-gallery-featured.mjs";
 const require = createRequire(import.meta.url);
 const candidates = process.env.PLAYWRIGHT_ROOT
   ? [process.env.PLAYWRIGHT_ROOT]
@@ -140,6 +144,34 @@ for (const path of [
     .update(await readFile(join(repo, path)))
     .digest("hex");
 }
+// Expectations derive from the repository-owned catalogue so adding a study
+// updates them here too; the fixed featured order stays asserted explicitly.
+const canonicalStudies = (
+  await readGalleryData("teardowns/_gallery/catalogue.js", repo)
+).DESIGN_TEARDOWNS;
+const featuredRank = new Map(featuredSlugs.map((slug, index) => [slug, index]));
+// Mirrors the controller's curated comparator: featured first in their fixed
+// order, everything else stable in catalogue order.
+function curatedTitles(category = "all", limit = 6) {
+  return canonicalStudies
+    .filter((item) => category === "all" || item.category === category)
+    .map((item, index) => ({ item, index }))
+    .sort(
+      (a, b) =>
+        (featuredRank.get(a.item.slug) ?? featuredSlugs.length) -
+          (featuredRank.get(b.item.slug) ?? featuredSlugs.length) ||
+        a.index - b.index,
+    )
+    .slice(0, limit)
+    .map(({ item }) => item.title);
+}
+const expectedCuratedFirstPage = featuredSlugs.map((slug) => {
+  const item = canonicalStudies.find((record) => record.slug === slug);
+  assert.ok(item, `Featured slug is missing from catalogue: ${slug}`);
+  return item.title;
+});
+assert.deepEqual(curatedTitles(), expectedCuratedFirstPage);
+
 const cases = [];
 function test(name, fn, options = {}) {
   cases.push({ name, fn, options });
@@ -1023,14 +1055,7 @@ test("curated-stays-stable-through-load-and-filters", async ({ page }) => {
   const initial = await page
     .locator("#archive-results .archive-item b")
     .allTextContents();
-  assert.deepEqual(initial, [
-    "Shopify Editions Winter ’26",
-    "Moonshot AI",
-    "Comet",
-    "Latrix",
-    "ChatGPT",
-    "EasyCode",
-  ]);
+  assert.deepEqual(initial, expectedCuratedFirstPage);
   await page.locator('[data-dialog="archive-dialog"]').click();
   await expect(page.locator("#archive-results .archive-item b")).toHaveText(
     initial,
@@ -1044,24 +1069,14 @@ test("curated-stays-stable-through-load-and-filters", async ({ page }) => {
     initial,
   );
   await page.locator("#archive-category").selectOption("agent");
-  await expect(page.locator("#archive-results .archive-item b")).toHaveText([
-    "Moonshot AI",
-    "ChatGPT",
-    "tutti",
-    "OJO",
-    "Converge AI",
-    "Notion",
-  ]);
+  await expect(page.locator("#archive-results .archive-item b")).toHaveText(
+    curatedTitles("agent"),
+  );
   await page.locator("#archive-category").selectOption("all");
   await page.getByRole("button", { name: "第 2 页", exact: true }).click();
-  await expect(page.locator("#archive-results .archive-item b")).toHaveText([
-    "Arknights: Endfield",
-    "Linear",
-    "JourneyPilot",
-    "tutti",
-    "OJO",
-    "Converge AI",
-  ]);
+  await expect(page.locator("#archive-results .archive-item b")).toHaveText(
+    curatedTitles("all", 12).slice(6),
+  );
   await page.locator("#archive-sort").selectOption("title");
   await expect(page.locator("#archive-results .archive-item b")).toHaveText([
     "Arknights: Endfield",
@@ -1083,7 +1098,9 @@ test("gallery-filters-pager-empty-and-focus", async ({ page }) => {
     "Notion",
   ]);
   await page.locator("#archive-search").fill("");
-  await expect(page.getByRole("status")).toHaveText("17 份拆解，第 1–6 项。");
+  await expect(page.getByRole("status")).toHaveText(
+    `${canonicalStudies.length} 份拆解，第 1–6 项。`,
+  );
   const page2 = page.getByRole("button", { name: "第 2 页", exact: true });
   await page2.focus();
   await page.keyboard.press("Enter");

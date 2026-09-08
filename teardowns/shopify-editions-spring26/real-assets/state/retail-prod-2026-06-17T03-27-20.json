@@ -1,0 +1,230 @@
+{
+  "sheetsById": {
+    "retail": {
+      "staticOverrides": {
+        "byObject": {
+          "Scene": {
+            "preset": "prod-5-retail",
+            "fboDpr": {
+              "background": 0.15,
+              "foreground": 0.15
+            }
+          },
+          "Camera": {
+            "dollyDistance": 3,
+            "clickDollyDistance": 0.6,
+            "scrollDrift": {
+              "backgroundVolumeScrollScrub": 0.1,
+              "foregroundVolumeScrollScrub": -0.5
+            }
+          },
+          "POS": {
+            "scale": {
+              "x": 1,
+              "y": 1,
+              "z": 1
+            },
+            "rotation": {
+              "y": 0,
+              "x": 0,
+              "z": 0
+            },
+            "sdf": {
+              "showHelper": false,
+              "scale": {
+                "y": 1,
+                "z": 3,
+                "x": 1
+              },
+              "size": 0.1,
+              "invert": false,
+              "shape": "cube",
+              "falloff": 1,
+              "position": {
+                "z": 0.13,
+                "x": 0,
+                "y": 0
+              },
+              "strength": 0.25,
+              "gradient": 1,
+              "enabled": true,
+              "roundness": 0.3100000000000003,
+              "rotation": {
+                "y": 0,
+                "x": 90
+              }
+            },
+            "position": {
+              "z": 0,
+              "x": 0,
+              "y": 0
+            },
+            "size": 0.9100000000000003
+          },
+          "Hotspot": {
+            "position": {
+              "z": 0.1270000000000043,
+              "y": -0.6940000000000052,
+              "x": -0.16399999999999865
+            },
+            "repulsionRadius": 0.02,
+            "orbOpacity": 0,
+            "orbRadius": 0.067,
+            "hatScale": 1.3680000000000012,
+            "scrollOutAt": 0.3,
+            "scrollInAt": 0.15,
+            "rotation": {
+              "y": 0,
+              "z": 0,
+              "x": 0
+            },
+            "scale": {
+              "y": 1,
+              "z": 1,
+              "x": 1
+            },
+            "glowColor": {
+              "r": 1,
+              "g": 0.9098039215686274,
+              "b": 0.796078431372549,
+              "a": 1
+            },
+            "fillOpacity": 0.58,
+            "glowOpacity": 0,
+            "hoverBoost": 3,
+            "wireOpacity": 0,
+            "boxSize": {
+              "z": 0.3600000000000001
+            },
+            "pulseSpeed": 1.2,
+            "edgeBlur": 0.099,
+            "opacity": 0.25,
+            "windowA": {
+              "position": {
+                "x": -0.03199999999999999,
+                "y": -0.006999999999999997
+              },
+              "rotation": {
+                "y": -1.32,
+                "z": 0.03999999999999992
+              },
+              "scale": {
+                "y": 1.4810000000000008,
+                "x": 1.4909999999999997
+              },
+              "edgeFade": {
+                "left": 0.8600000000000003,
+                "right": 0.03
+              }
+            },
+            "windowB": {
+              "position": {
+                "x": 0.3299999999999996,
+                "y": -0.005000000000000028,
+                "z": 0.19099999999999992
+              },
+              "rotation": {
+                "y": -2.955999999999996,
+                "z": 0.02200000000000003,
+                "x": -0.07100000000000001
+              },
+              "scale": {
+                "x": 1.8860000000000003,
+                "y": 1.4610000000000074
+              },
+              "edgeFade": {
+                "left": 1,
+                "right": 0.25
+              }
+            },
+            "middleFade": 0.7099999999999997,
+            "fluidDistortion": 0.05,
+            "scrollScaleDamping": 1,
+            "hitbox": {
+              "rotation": {
+                "y": -1.3400000000000007
+              },
+              "position": {
+                "z": -0.30700000000000005,
+                "x": 0.4470000000000003,
+                "y": -0.013000000000000005
+              },
+              "scale": {
+                "y": 0.2940000000000001,
+                "x": 0.48599999999999977,
+                "z": 0.6600000000000001
+              },
+              "debug": false
+            },
+            "merchTransition": {
+              "easing": {
+                "x1": 0.29,
+                "y1": 0.19,
+                "x2": 0.24,
+                "y2": 0.99
+              },
+              "durationMs": 1000
+            },
+            "noiseAmount": 0.2,
+            "noiseScale": 4,
+            "noiseSpeed": 0.5
+          },
+          "Section": {
+            "hero": {
+              "retailEntryScaleAmount": 1
+            }
+          }
+        }
+      },
+      "sequence": {
+        "subUnitsPerUnit": 30,
+        "length": 10,
+        "type": "PositionalSequence",
+        "tracksByObject": {
+          "Camera": {
+            "trackData": {
+              "A5papK4GdC": {
+                "type": "BasicKeyframedTrack",
+                "__debugName": "Camera:[\"rotationOffset\",\"x\"]",
+                "keyframes": []
+              },
+              "0fLpiKvJV3": {
+                "type": "BasicKeyframedTrack",
+                "__debugName": "Camera:[\"rotationOffset\",\"y\"]",
+                "keyframes": []
+              },
+              "ROf-joiePN": {
+                "type": "BasicKeyframedTrack",
+                "__debugName": "Camera:[\"rotationOffset\",\"z\"]",
+                "keyframes": []
+              }
+            },
+            "trackIdByPropPath": {
+              "[\"rotationOffset\",\"x\"]": "A5papK4GdC",
+              "[\"rotationOffset\",\"y\"]": "0fLpiKvJV3",
+              "[\"rotationOffset\",\"z\"]": "ROf-joiePN"
+            }
+          },
+          "POS": {
+            "trackData": {},
+            "trackIdByPropPath": {}
+          }
+        }
+      }
+    }
+  },
+  "definitionVersion": "0.4.0",
+  "revisionHistory": [
+    "bf2JnX9lHYS86oZe",
+    "z4TdpXgnL7lbciZU",
+    "T0qZrRkcaHWxgRf2",
+    "yrmGlPIhKojxV5hm",
+    "JArcG1abJuqlBRod",
+    "bg9-Pf3onqaVQuHL",
+    "0tChXzWw76CCTyoa",
+    "6BDWnKvyAVKQOJH7",
+    "sMkHZwBB7GJcsr3z",
+    "Sa4RxbUgz-Bs3gyq",
+    "XYdidWld1V6Fa_0o"
+  ]
+}

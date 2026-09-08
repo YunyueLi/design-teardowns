@@ -1,0 +1,53 @@
+/* Shopify Editions Spring ’26（Everywhere）设计 token —— 全部来自线上样式表、脚本与 Theatre 状态原文，实锤 */
+/* 源：https://www.shopify.com/editions/spring2026 · tailwind-vOc3OfBK.css · fonts-latin-Hwnc9bw-.css · 2026-09-08 */
+:root{
+  /* 底与灰阶 */
+  --bg:#090909;              /* html/body 与 data-color-mode=dark 底 */
+  --g1:#fff; --g2:#f4f4f4; --g3:#ececec; --g4:#c9c9c9; --g5:#8c8c8c; --g6:#2a2a2a; --g7:#000;
+  --w10:#ffffff1a; --w20:#fff3; --w60:#fff9; --w70:#ffffffb3; --w90:#ffffffe6; --w100:#fff;
+  --b5:#0909090d; --b10:#0909091a; --b20:#09090933; --b40:#09090966; --b60:#09090999; --b80:#090909cc; --b90:#090909e6; --b100:#090909;
+  /* 语义（暗色主题；亮色主题为黑白对换） */
+  --color-theme-heading:#ffffffe6; --color-theme-body:#fff9; --color-theme-link:#fff;
+  --color-link-underline:#fff9; --color-link-underline-hover:#fff;
+  --color-theme-cta-bg:#fff; --color-theme-cta-bg-hover:#ffffffe6; --color-theme-cta-bg-pressed:#fffc; --color-theme-cta-bg-disabled:#fff3;
+  --color-theme-cta-text:#090909; --color-theme-cta-text-disabled:#fff6;
+  --color-theme-focus-ring:#0062d3; --color-theme-cta-focus-ring:#0062d3; --color-theme-error:#e21c1c;
+  --portal:#adf0ff;          /* Developer 彩蛋门户 */
+  /* 字 */
+  --font-display:National2,Helvetica,Arial,sans-serif;
+  --font-text:ShopifyInter,Helvetica,Arial,sans-serif;
+  --font-label:Inter-Variable,Helvetica,sans-serif;
+  /* 字阶（桌面 ≥48rem 取 clamp 上限） */
+  --hero-t1:clamp(4rem,27.3264px + 4.769vw,6rem);   /* lh .9  ls -.08em */
+  --t1:clamp(5rem,34.158px + 5.96125vw,7.5rem);     /* lh .96 ls -.08em */
+  --t2:clamp(4rem,27.3264px + 4.769vw,6rem);        /* lh .96 ls -.06em */
+  --t3:clamp(2.5rem,12.4948px + 3.57675vw,4rem);    /* lh .96 ls -.04em */
+  --t4:16px; --t5:14px; --t6:10px;                  /* ShopifyInter；lh 1.1 / 1.3 / 1.2 */
+  --hero-t2:clamp(1rem,9.1237px + .894188vw,1.375rem);
+  /* 栅格 */
+  --container:105rem; --spacing-grid-margin:16px; --spacing-grid-margin-sm:32px; --spacing-grid-margin-lg:120px;
+  --spacing-grid-gutter:16px; --spacing-grid-gutter-sm:32px; --hero-scroll:160lvh;
+  /* 缓动 */
+  --ease-snappy:cubic-bezier(.16,1,.3,1);
+  --ease-out-cubic:cubic-bezier(.215,.61,.355,1);
+  --ease-pill-open:cubic-bezier(.32,.72,0,1);
+  --ease-ring-intro:cubic-bezier(.2,.9,.3,.986);
+  --ease-scene-text-in:cubic-bezier(.14,1,.34,1);
+  --ease-scene-text-out:cubic-bezier(.66,0,.86,0);
+  --ease-modal:cubic-bezier(.33,1,.68,1);
+  --ease-in-out:cubic-bezier(.4,0,.2,1);
+  /* 环 */
+  --ring-tilt:18deg; --ring-from:102deg; --ring-to:-295deg; --intro-duration:4.5s; --ambient-duration:150s;
+  --hero-ring-radius:37vmin; --hero-ring-letter-size:calc(var(--hero-ring-radius) * .35); --hero-ring-perspective:5400px;
+  /* 药丸导航 */
+  --pill-closed-h:35px; --pill-open-duration:.24s; --pill-close-duration:.18s; --pill-close-delay:90ms; --pill-item-stagger:34ms;
+  --pill-shell-show-duration:.36s; --pill-shell-hide-duration:.26s;
+  /* 圆角 */
+  --radius-sm:.25rem; --radius-lg:.5rem; --radius-xl:.75rem; --radius-nav:4px; --radius-modal:3px;
+}
+[data-color-mode=light]{
+  --color-theme-heading:#090909e6; --color-theme-body:#09090999; --color-theme-link:#090909e6;
+  --color-link-underline:#09090966; --color-link-underline-hover:#090909;
+  --color-theme-cta-bg:#090909; --color-theme-cta-bg-hover:#090909e6; --color-theme-cta-bg-pressed:#090909cc; --color-theme-cta-bg-disabled:#09090933;
+  --color-theme-cta-text:#fff; --color-theme-cta-text-disabled:#09090966;
+}
