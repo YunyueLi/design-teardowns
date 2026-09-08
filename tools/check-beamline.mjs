@@ -1024,12 +1024,12 @@ test("curated-stays-stable-through-load-and-filters", async ({ page }) => {
     .locator("#archive-results .archive-item b")
     .allTextContents();
   assert.deepEqual(initial, [
+    "Shopify Editions Winter ’26",
+    "Moonshot AI",
+    "Comet",
     "Latrix",
     "ChatGPT",
     "EasyCode",
-    "Gemini",
-    "Notion",
-    "Shopify Editions Winter ’26",
   ]);
   await page.locator('[data-dialog="archive-dialog"]').click();
   await expect(page.locator("#archive-results .archive-item b")).toHaveText(
@@ -1045,22 +1045,22 @@ test("curated-stays-stable-through-load-and-filters", async ({ page }) => {
   );
   await page.locator("#archive-category").selectOption("agent");
   await expect(page.locator("#archive-results .archive-item b")).toHaveText([
-    "ChatGPT",
-    "Gemini",
-    "Notion",
     "Moonshot AI",
+    "ChatGPT",
     "tutti",
     "OJO",
+    "Converge AI",
+    "Notion",
   ]);
   await page.locator("#archive-category").selectOption("all");
   await page.getByRole("button", { name: "第 2 页", exact: true }).click();
   await expect(page.locator("#archive-results .archive-item b")).toHaveText([
     "Arknights: Endfield",
-    "Comet",
     "Linear",
-    "Moonshot AI",
     "JourneyPilot",
     "tutti",
+    "OJO",
+    "Converge AI",
   ]);
   await page.locator("#archive-sort").selectOption("title");
   await expect(page.locator("#archive-results .archive-item b")).toHaveText([

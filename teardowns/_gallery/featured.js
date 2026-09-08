@@ -2,6 +2,49 @@
 window.DESIGN_TEARDOWNS_TOTAL = 17;
 window.DESIGN_TEARDOWNS_FEATURED = Object.freeze([
   {
+    "slug": "shopify-editions",
+    "title": "Shopify Editions Winter ’26",
+    "subtitle": "The Renaissance Edition",
+    "category": "reference",
+    "kind": "Web · Launch system",
+    "cover": "_gallery/covers/shopify-editions.jpg",
+    "href": "shopify-editions/teardown.html",
+    "accent": [
+      "#292919",
+      "#f7f7ee",
+      "#bf9852"
+    ]
+  },
+  {
+    "slug": "moonshot",
+    "title": "Moonshot AI",
+    "titleZh": "月之暗面",
+    "subtitle": "The dark side of the moon",
+    "category": "agent",
+    "kind": "Web · AI platform",
+    "cover": "_gallery/covers/moonshot.jpg",
+    "href": "moonshot/teardown.html",
+    "accent": [
+      "#000000",
+      "#737373",
+      "#ffffff"
+    ]
+  },
+  {
+    "slug": "comet",
+    "title": "Comet",
+    "subtitle": "Perplexity's native browser",
+    "category": "product",
+    "kind": "Desktop · AI browser",
+    "cover": "_gallery/covers/comet.jpg",
+    "href": "comet/teardown.html",
+    "accent": [
+      "#091717",
+      "#21808d",
+      "#1fb8cd"
+    ]
+  },
+  {
     "slug": "latrix",
     "title": "Latrix",
     "subtitle": "We create digital lives",
@@ -41,48 +84,6 @@ window.DESIGN_TEARDOWNS_FEATURED = Object.freeze([
       "#ffffff",
       "#b3402a",
       "#1c1b18"
-    ]
-  },
-  {
-    "slug": "gemini",
-    "title": "Gemini",
-    "subtitle": "Google Gemini",
-    "category": "agent",
-    "kind": "Web · AI product",
-    "cover": "_gallery/covers/gemini.jpg",
-    "href": "gemini/teardown.html",
-    "accent": [
-      "#1f1f1f",
-      "#0b57d0",
-      "#a8c7fa"
-    ]
-  },
-  {
-    "slug": "notion",
-    "title": "Notion",
-    "subtitle": "The AI workspace",
-    "category": "agent",
-    "kind": "Web · AI workspace",
-    "cover": "_gallery/covers/notion.jpg",
-    "href": "notion/teardown.html",
-    "accent": [
-      "#ffffff",
-      "#03c1ba",
-      "#1a73e8"
-    ]
-  },
-  {
-    "slug": "shopify-editions",
-    "title": "Shopify Editions Winter ’26",
-    "subtitle": "The Renaissance Edition",
-    "category": "reference",
-    "kind": "Web · Launch system",
-    "cover": "_gallery/covers/shopify-editions.jpg",
-    "href": "shopify-editions/teardown.html",
-    "accent": [
-      "#292919",
-      "#f7f7ee",
-      "#bf9852"
     ]
   }
 ]);

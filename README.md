@@ -20,12 +20,12 @@
 
 | 作品                                                                    | 研究对象                               |
 | ----------------------------------------------------------------------- | -------------------------------------- |
+| [Shopify Editions Winter ’26](teardowns/shopify-editions/teardown.html) | The Renaissance Edition 的发布系统     |
+| [Moonshot AI](teardowns/moonshot/teardown.html)                         | 月之暗面的 AI 平台品牌页面             |
+| [Comet](teardowns/comet/teardown.html)                                  | Perplexity 的 AI 浏览器                |
 | [Latrix](teardowns/latrix/teardown.html)                                | AI Beings 品牌页面的古典排版与字母螺旋 |
 | [ChatGPT](teardowns/chatgpt/teardown.html)                              | OpenAI overview 页面的留白与产品叙事   |
 | [EasyCode](teardowns/easycode/teardown.html)                            | 编程练习、指导与反馈页面               |
-| [Gemini](teardowns/gemini/teardown.html)                                | 捕获时的签出状态入口与柔光界面         |
-| [Notion](teardowns/notion/teardown.html)                                | 英文首页的团队与 Agent 协作叙事        |
-| [Shopify Editions Winter ’26](teardowns/shopify-editions/teardown.html) | The Renaissance Edition 的发布系统     |
 
 完整目录见 [catalogue.js](teardowns/_gallery/catalogue.js)。点击作品进入对应研究页，三维台车中的示例固定为 Latrix。
 
