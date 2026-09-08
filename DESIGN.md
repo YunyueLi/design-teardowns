@@ -8,7 +8,7 @@
 
 光束线用同一台仪器表达 Capture、Measure、Reconstruct、Verify、Archive 五步研究流程。左侧是标题、方法说明与研究入口，中间是带样本的仪器，右侧是有界馆藏面板，下方是五站导航。五座等距固定三维门架对应五站流程，数量不随馆藏增长。
 
-桌面组合画布为 1586×992，按 `min(innerWidth / 1586, innerHeight / 992)` 等比缩放。`experience` 高度为 460svh，`stage` 为 100svh 的 sticky 区域，常规最小高度为 480px，手机为 560px；短横屏取消最小高度约束，将五站导航保留在视口内。
+桌面组合画布为 1586×992，按 `min(innerWidth / 1586, innerHeight / 992)` 等比缩放。`experience` 高度为 460svh，`stage` 为固定在视口的 100svh 区域，页面根元素与 body 使用 `overscroll-behavior: none` 关闭系统边界回弹，弹窗保留独立滚动。常规最小高度为 480px，手机为 560px；短横屏取消最小高度约束，将五站导航保留在视口内。
 
 当前 CSS 的主要色值：
 

@@ -835,6 +835,59 @@ test("webgl-real-loss-restore-before-image-load", async ({ page, note }) => {
     releaseImage();
   }
 });
+for (const [label, viewport] of [
+  ["desktop", { width: 1440, height: 900 }],
+  ["phone", { width: 390, height: 844 }],
+])
+  test(
+    `viewport-boundaries-${label}`,
+    async ({ page, note }) => {
+      await start(page);
+      await page.mouse.move(viewport.width / 2, viewport.height / 2);
+      for (const edge of [0, 1]) {
+        await nativeScroll(page, edge);
+        await settled(page, edge);
+        const before = await page.locator(".stage").boundingBox();
+        await page.mouse.wheel(0, edge ? 1600 : -1600);
+        await page.evaluate(
+          () =>
+            new Promise((resolve) =>
+              requestAnimationFrame(() => requestAnimationFrame(resolve)),
+            ),
+        );
+        const boundary = await page.evaluate(() => {
+          const rect = document.querySelector(".stage").getBoundingClientRect();
+          return {
+            top: rect.top,
+            bottom: rect.bottom,
+            viewport: innerHeight,
+            scroll: scrollY,
+            range:
+              document.querySelector("#experience").offsetHeight - innerHeight,
+            rootOverscroll: getComputedStyle(document.documentElement)
+              .overscrollBehaviorY,
+            bodyOverscroll: getComputedStyle(document.body).overscrollBehaviorY,
+          };
+        });
+        assert.equal(boundary.top, 0);
+        assert.equal(boundary.bottom, boundary.viewport);
+        assert.equal(before.y, boundary.top);
+        assert.equal(boundary.rootOverscroll, "none");
+        assert.equal(boundary.bodyOverscroll, "none");
+        assert.ok(Math.abs(boundary.scroll - boundary.range * edge) < 2);
+        note(boundary);
+      }
+      await page.locator('[data-station="2"]').click();
+      await settled(page, 0.5);
+      assert.equal((await page.locator(".stage").boundingBox()).y, 0);
+      await page.locator('[data-dialog="archive-dialog"]').click();
+      await expect(page.locator("#archive-dialog")).toBeVisible();
+      await page.keyboard.press("Escape");
+      await expect(page.locator("#archive-dialog")).toBeHidden();
+      await settled(page, 0.5);
+    },
+    { viewport },
+  );
 try {
   for (const entry of cases.filter(
     (t) =>

@@ -35,12 +35,14 @@
   box-sizing: border-box;
 }
 html {
+  overscroll-behavior: none;
   background: var(--ground);
   scrollbar-width: thin;
   scrollbar-color: #555d58 var(--ground);
   scroll-behavior: auto;
 }
 body {
+  overscroll-behavior: none;
   margin: 0;
   background: var(--ground);
   color: var(--ink);
@@ -147,8 +149,8 @@ select {
   height: 460svh;
 }
 .stage {
-  position: sticky;
-  top: 0;
+  position: fixed;
+  inset: 0;
   height: 100svh;
   min-height: 480px;
   overflow: hidden;
@@ -703,6 +705,7 @@ select {
   transform: translateY(-2px) rotate(-45deg);
 }
 dialog {
+  overscroll-behavior: contain;
   color: var(--ink);
   border: 1px solid #6c756b;
   background: #101411;
