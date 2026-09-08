@@ -8,7 +8,7 @@ import { Script } from 'node:vm';
 
 export const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 export const featuredSlugs = Object.freeze([
-  'latrix', 'chatgpt', 'easycode', 'gemini', 'notion', 'shopify-editions',
+  'shopify-editions', 'moonshot', 'comet', 'latrix', 'chatgpt', 'easycode',
 ]);
 const expectedCountNodes = 1; // One panel is moved between the page and dialog.
 
