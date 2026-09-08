@@ -1,91 +1,108 @@
-design-teardowns -- NOTICE
-==========================
+Design Teardowns — NOTICE
+=========================
 
-This repository (the "Project") is an independent educational and research
-project. It analyzes the visual and interaction design of publicly available
-product landing pages and publishes the results as a gallery of design
-teardowns. Everything published here is intended to be publishable material:
-factual design observations, original written analysis and commentary, CSS
-reimplemented by the Project's contributors, and low-resolution screenshots
-used for the purpose of commentary and illustration.
+本项目是独立的设计教育与研究档案，分析真实网页和原生应用界面的视觉及交互。
+仓库中既有原创分析与实现，也有用于核对的第三方研究材料。文件已经落盘或存在
+于历史发布中，不等于已确认其可以公开或再次分发。
 
-1. Independent project; no affiliation.
-   The Project is not affiliated with, endorsed by, or sponsored by any of the
-   companies, products, or brands it analyzes. All analysis is the independent
-   work of the Project's contributors and represents their own observations and
-   opinions.
+1. 独立性与原站归属
 
-2. Trademarks and product names.
-   All product names, company names, logos, and trademarks referenced in this
-   repository are the property of their respective owners. They are used only
-   nominatively, that is, to identify the subject of analysis and for the
-   purposes of commentary, criticism, education, and research. No ownership of
-   any third-party mark is claimed or implied, and their appearance here does
-   not indicate any endorsement, sponsorship, or partnership.
+本项目与被研究的公司、产品或品牌没有隶属、赞助或背书关系。产品名称、标识、
+商标及原站内容归各自权利人所有；本项目使用它们标识研究对象，不主张其权利。
+每份研究的原站地址、捕获方式和限制以 teardowns/<study>/出处与方法.md、
+设计解构.md 及 real-assets/manifest.json 中已有的来源记录为准。
 
-3. Research materials and third-party assets.
-   In addition to publishable material -- factual design tokens (such as color
-   values, font-family names, easing curves, durations, and corner radii),
-   original transformative analysis and commentary, CSS reimplemented by the
-   Project's contributors, and screenshots used for commentary -- this
-   repository archives, under each teardown's real-assets/ directory, copies of
-   third-party materials referenced during the underlying analysis (such as
-   webfonts, media files, production source bundles, and captured geometry).
-   These are retained solely for design research, verification, and comparison
-   -- so that every claim in the teardowns remains checkable against its
-   primary source. They are the property of their respective owners, are NOT
-   covered by this Project's licenses (see section 4), and are not offered for
-   reuse. If you need any such asset, obtain it from the rights holder at its
-   original source, which each teardown's provenance document identifies.
+2. 项目许可的范围
 
-4. Licensing.
-   The Project's code (the HTML, CSS, and JavaScript scaffolding, the gallery
-   engine, the extraction scripts, and the accompanying skill) is licensed under
-   the MIT License; see the file LICENSE-CODE. The Project's original content
-   (teardown documentation, the extracted token values as compiled and expressed
-   here, and screenshots authored by the Project) is licensed under the Creative
-   Commons Attribution 4.0 International License; see the file LICENSE.
-   Third-party trademarks, logos, and any other third-party material are not
-   covered by, and are expressly excluded from, these grants. Your use of any
-   third-party material remains subject to the rights of its owner and to
-   applicable law.
+项目有权许可的原创代码按 LICENSE-CODE 中的 MIT License 授权。项目有权许可的
+原创研究文字、评论及整理表达的内容按 LICENSE 中的 CC BY 4.0 授权。两份许可
+文件的正文保持不变；本说明不增加项目对第三方材料的授权权利。
 
-5. Good-faith takedown.
-   The Project respects the rights of others and aims to stay within the bounds
-   of fair use and nominative use. If you are a rights holder and believe that
-   any material in this repository exceeds those bounds or should be removed,
-   please open an issue that identifies the specific material and describes your
-   concern. We will review it promptly and act in good faith.
+原站截图所包含的界面、美术与品牌内容，下载的媒体、字体、生产源码、模型、
+捕获数据中的第三方表达，以及其他第三方材料，不因项目下载、拍摄、裁切、缩小、
+重编码、重新编排或归档而被整体纳入上述许可。它们仍受原权利及各自许可约束。
 
------------------------------------------------------------------------------
-中文说明
------------------------------------------------------------------------------
+3. 研究材料的保留限制
 
-本仓库（下称「本项目」）是一个独立的教育与研究项目，针对公开可访问的产品落地页
-进行视觉与交互设计分析，并以设计拆解画廊的形式发布结果。此处发布的一切均为可公开
-材料：客观的设计观察、原创的文字分析与评论、由项目贡献者重新实现的 CSS，以及用于
-评论与说明的低分辨率截图。
+各研究的 real-assets/、screenshots/、assets/、keyframes/、recording/ 等目录可能
+保存第三方原始或派生材料，用于设计研究、事实核对和对照。材料的原始 URL 与
+本地对应关系应随出处记录保留。需要复用时，应查明原始来源和适用的授权条件，
+不能把本仓库的代码或原创内容许可当成这些材料的再分发许可。
 
-一、独立项目，无隶属关系。本项目与其所分析的任何公司、产品或品牌均无隶属、背书或
-赞助关系。全部分析均为项目贡献者的独立成果，代表其本人的观察与观点。
+现有 skills/design-teardown/references/method.md 与
+teardowns/latrix/出处与方法.md 明确保留了受版权素材仅供内部比对、仓库须私有
+等限制。本次重建不解除这些限制，也不声明现有归档或历史公开范围已经
+符合它们。未进行法律研究、逐项权利审计或公开再分发许可核实；不能仅以教育、
+评论或研究目的断言全部使用均获授权。
 
-二、商标与产品名称。本仓库涉及的所有产品名称、公司名称、标识与商标均归各自权利人
-所有，此处仅作指名性使用，即用于标识分析对象，并服务于评论、批评、教育与研究目的；
-不主张也不暗示对任何第三方标识的所有权，其出现不代表任何背书、赞助或合作关系。
+4. 画廊图像出处
 
-三、研究素材与第三方资产。除可公开材料（客观设计标记、原创分析与评论、贡献者重新
-实现的 CSS、用于评论的截图）外，本仓库在各拆解的 real-assets/ 目录下存档了分析过程
-中引用的第三方素材副本（如网页字体、媒体文件、生产源码包、捕获的几何数据）。这些
-素材仅为设计研究、核验与比对而保留——使拆解中的每一个结论都能对回第一手来源。它们
-的权利归各自所有者，不在本项目的开源许可范围内（见第四条），亦不供复用。如需此类
-素材，请按各拆解《出处与方法》所载的原始出处向权利人获取。
+Latrix 既有封面 teardowns/_gallery/covers/latrix.jpg 是归档真实截图的缩小预览；
+来源可对照 teardowns/latrix/screenshots/hero.jpg 与该研究的出处与方法.md。
+原站为 https://latrix.ai/，图中文字 WE CREATE DIGITAL LIVES 及
+DEFINING THE SYSTEM THAT SUSTAINS AI LIFE 与出处记录的数字生命定位相符。
+本轮保留原封面，仅校正目录元数据。
+三维样本纹理也引用同一 hero.jpg，并在运行时作灰度处理。缩小或灰度处理不转移
+原站内容的版权，不授予第三方素材的独立复用许可。
 
-四、许可。本项目的代码（HTML、CSS、JavaScript 脚手架、画廊引擎、提取脚本及配套
-技能）依 MIT 许可证授权，见 LICENSE-CODE 文件；本项目的原创内容（拆解文档、此处
-整理并表达的标记数值，以及由项目自行拍摄或生成的截图）依「知识共享 署名 4.0 国际」
-许可证授权，见 LICENSE 文件。第三方商标、标识及任何其他第三方材料均不在上述授权
-范围内，并被明确排除；对任何第三方材料的使用仍受其权利人权利及适用法律的约束。
+其他研究封面与图像应结合对应研究的出处记录使用，不据文件名推定内容正确或
+权利完整。README 预览图保存在 teardowns/_gallery/beamline-readme.jpg；即使
+截图由项目自行捕获，其中展示的第三方研究内容仍保留原有权利。
 
-五、善意撤下。本项目尊重他人权利，力求不逾越合理使用与指名性使用的边界。若您为
-权利人，认为本仓库中的某项材料逾越了上述边界或应予移除，请提交 issue，指明具体
-材料并说明您的关切；我们将及时审阅并本着善意处理。
+5. 内置 Three.js 与字体
+
+画廊本地运行时 teardowns/_gallery/vendor/three.min.js 为 Three.js r160，采用
+MIT License。版权声明为 Copyright © 2010–2023 three.js authors。完整许可文本
+位于 teardowns/_gallery/vendor/THREE-LICENSE.txt，分发时应保留。
+
+以下字体的 SIL Open Font License 1.1 文本随仓库保存：
+
+- Oswald：Copyright 2016 The Oswald Project Authors。
+  teardowns/_gallery/fonts/Oswald-OFL.txt
+- IBM Plex Mono：Copyright © 2017 IBM Corp.，保留字体名为 Plex。
+  teardowns/_gallery/fonts/IBMPlexMono-OFL.txt
+- Noto Serif SC：随附文本载明 Copyright 2017–2024 Adobe。
+  teardowns/_gallery/fonts/NotoSerifSC-OFL.txt
+  当前画廊通过 GallerySerifSC-400.woff2 子集及 CSS 别名 GallerySerif 使用。
+
+保留随附版权、许可及字体名条款。以上列出当前画廊相关依赖，不表示已审计仓库
+中所有历史字体或研究页面的字体；各研究另行归档的字体不自动获得相同许可。
+本轮核对了随附许可文本，未对字体二进制元数据、子集制作或全部资产逐项审计。
+
+6. 权利问题反馈
+
+如权利人认为具体材料的保留、使用或公开范围存在问题，可通过项目 issue 指明
+文件、来源及关切。项目将核对相关记录并处理；此反馈途径不替代所需授权。
+
+English summary
+---------------
+
+This independent educational and research archive contains original analysis
+and implementation alongside third-party research materials. Product names,
+marks, source interfaces, artwork, fonts, media and archived production code
+remain subject to their owners' rights and applicable licenses. Their presence
+in this repository or a historical publication does not establish permission
+to redistribute them.
+
+LICENSE-CODE (MIT) and LICENSE (CC BY 4.0) apply only to material the Project
+has authority to license. Capturing, resizing or transforming third-party
+material does not bring its underlying rights under these grants. Existing
+study-specific restrictions, including internal-comparison-only and private-
+repository notes, are not lifted by this rebuild. No legal
+research, asset-by-asset rights audit or redistribution clearance was performed.
+
+The existing Latrix cover is a reduced preview of the archived real screenshot
+at teardowns/latrix/screenshots/hero.jpg, sourced from https://latrix.ai/.
+Its digital-life wording is consistent with the archived source. The original
+cover is retained; this rebuild corrects metadata rather than replacing it.
+The live 3D specimen also uses that screenshot. Neither use claims ownership
+of the source content.
+The README preview is stored at teardowns/_gallery/beamline-readme.jpg;
+third-party content visible in it retains its underlying rights.
+
+Bundled Three.js r160 is MIT-licensed; its full license is retained at
+teardowns/_gallery/vendor/THREE-LICENSE.txt. The accompanying Oswald, IBM Plex
+Mono and Noto Serif SC license texts are SIL OFL 1.1 and reside in
+teardowns/_gallery/fonts/. Preserve their copyright and license notices and
+applicable reserved-font-name terms. These notices do not constitute a license
+audit of other fonts or archived assets in the repository.
