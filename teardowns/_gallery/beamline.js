@@ -148,6 +148,9 @@
       $("#readout-word").textContent = meta.title;
       $("#archive-heading").textContent =
         station === 4 ? "Archive" : "Select study";
+      all(".collection-count").forEach((node) => {
+        node.textContent = String(station === 4 ? count : featured.length);
+      });
       $("#archive-scope").textContent = station === 4 ? " studies" : " featured / " + count;
       all("[data-station]").forEach((link) => {
         if (Number(link.dataset.station) === station)
