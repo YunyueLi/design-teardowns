@@ -879,7 +879,7 @@
       };
       image.onerror = () => {
         if (request !== this.sampleRequest) return;
-        if (fallbackSource && source !== fallbackSource) {
+        if (fallbackSource && item.slug !== "latrix" && source !== fallbackSource) {
           source = fallbackSource;
           image.src = source;
           return;
