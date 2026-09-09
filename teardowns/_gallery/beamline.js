@@ -138,10 +138,17 @@
       const meta = stations[station];
       $("#station-number").textContent = pad(station + 1);
       $("#station-word").textContent = meta.title.toUpperCase();
-      $("#station-line").textContent = meta.line;
-      $("#station-description").textContent = meta.description;
+      $("#station-line").textContent =
+        station === 0 && selectedStudy ? selectedStudy.subtitle : meta.line;
+      $("#station-description").textContent =
+        station === 0 && selectedStudy
+          ? "以 " + selectedStudy.title + " 为对象，先记录真实界面。"
+          : meta.description;
       $("#readout-index").textContent = pad(station + 1) + " / 05";
       $("#readout-word").textContent = meta.title;
+      $("#archive-heading").textContent =
+        station === 4 ? "Archive" : "Select study";
+      $("#archive-scope").textContent = station === 4 ? " studies" : " featured / " + count;
       all("[data-station]").forEach((link) => {
         if (Number(link.dataset.station) === station)
           link.setAttribute("aria-current", "step");
