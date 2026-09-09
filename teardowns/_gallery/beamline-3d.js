@@ -58,12 +58,13 @@
       this.renderer.shadowMap.enabled = !this.gpu.software;
       this.renderer.shadowMap.type = T.PCFSoftShadowMap;
       this.scene = new T.Scene();
-      this.scene.background = new T.Color(0x050606);
-      this.scene.fog = new T.FogExp2(0x050606, 0.013);
+      this.scene.background = new T.Color(0x020813);
+      this.scene.fog = new T.FogExp2(0x061326, 0.011);
       this.camera = new T.PerspectiveCamera(32, 1586 / 992, 0.1, 180);
       this.world = new T.Group();
       this.world.name = "optical-instrument";
       this.scene.add(this.world);
+      this.makeAtmosphere();
       this.makeEnvironment();
       this.makeMaterials();
       this.makeFloor();
@@ -165,10 +166,14 @@
       // A studio environment provides broad, physically based reflections on the metal.
       // These meshes are baked into an environment map; they are not a backdrop image.
       const studio = new T.Scene();
-      studio.background = new T.Color(0.06, 0.065, 0.07);
+      studio.background = new T.Color(0.006, 0.014, 0.035);
       const softbox = (x, y, z, w, h, intensity) => {
         const material = new T.MeshBasicMaterial({
-          color: new T.Color(intensity, intensity, intensity),
+          color: new T.Color(
+            intensity * 0.62,
+            intensity * 0.78,
+            intensity,
+          ),
           side: T.DoubleSide,
         });
         const mesh = new T.Mesh(new T.PlaneGeometry(w, h), material);
@@ -190,6 +195,56 @@
           o.material.dispose();
         }
       });
+    }
+    makeAtmosphere() {
+      // The backdrop is deliberately simple and static: depth comes from the
+      // blue fog while the instrument keeps its real geometry and shadows.
+      const backdrop = new T.Mesh(
+        new T.PlaneGeometry(180, 100),
+        new T.MeshBasicMaterial({
+          color: 0x06172d,
+          transparent: true,
+          opacity: 0.58,
+          depthWrite: false,
+          fog: false,
+          side: T.DoubleSide,
+        }),
+      );
+      backdrop.position.set(0, 24, -88);
+      backdrop.renderOrder = -10;
+      this.scene.add(backdrop);
+
+      const count = 96;
+      const positions = new Float32Array(count * 3);
+      let seed = 18431;
+      const random = () => {
+        seed = (seed * 1664525 + 1013904223) >>> 0;
+        return seed / 4294967296;
+      };
+      for (let i = 0; i < count; i++) {
+        const angle = random() * Math.PI * 2;
+        const radius = Math.sqrt(random()) * 0.26;
+        positions[i * 3] = Math.cos(angle) * radius;
+        positions[i * 3 + 1] = Math.sin(angle) * radius;
+        positions[i * 3 + 2] = random();
+      }
+      const geometry = new T.BufferGeometry();
+      geometry.setAttribute("position", new T.BufferAttribute(positions, 3));
+      this.dustMaterial = new T.PointsMaterial({
+        color: 0x8dc8ff,
+        size: 0.06,
+        sizeAttenuation: true,
+        transparent: true,
+        opacity: 0.16,
+        depthWrite: false,
+        blending: T.AdditiveBlending,
+      });
+      this.dustGroup = new T.Group();
+      this.dustGroup.name = "beam-atmosphere-dust";
+      this.dustGroup.frustumCulled = false;
+      this.dustGroup.renderOrder = 2;
+      this.dustGroup.add(new T.Points(geometry, this.dustMaterial));
+      this.scene.add(this.dustGroup);
     }
     makeMaterials() {
       const size = 512,
@@ -226,7 +281,7 @@
       albedo.needsUpdate = true;
       this.grain = grain;
       this.metal = new T.MeshStandardMaterial({
-        color: 0x9ba19c,
+        color: 0x8398b0,
         map: albedo,
         metalness: 0.88,
         roughness: 0.57,
@@ -236,7 +291,7 @@
         envMapIntensity: 1.25,
       });
       this.dark = new T.MeshStandardMaterial({
-        color: 0x161c19,
+        color: 0x0c1524,
         metalness: 0.8,
         roughness: 0.5,
         bumpMap: grain,
@@ -244,18 +299,18 @@
         envMapIntensity: 0.8,
       });
       this.edge = new T.MeshStandardMaterial({
-        color: 0x9ca5a0,
+        color: 0xb2c8df,
         metalness: 0.95,
         roughness: 0.32,
         envMapIntensity: 0.85,
       });
       this.bolt = new T.MeshStandardMaterial({
-        color: 0x171c19,
+        color: 0x080e19,
         metalness: 0.88,
         roughness: 0.28,
       });
       this.paper = new T.MeshStandardMaterial({
-        color: 0xf4f2ea,
+        color: 0xf4f5ef,
         metalness: 0,
         roughness: 0.8,
       });
@@ -365,10 +420,10 @@
         this.box(w, h, 0.18, x, y, 0.73, this.edge, group),
       );
       const luminous = new T.MeshStandardMaterial({
-        color: 0xe4e9e5,
-        emissive: 0xd9e5dd,
-        emissiveIntensity: 2.2,
-        roughness: 0.4,
+        color: 0xd8e7f7,
+        emissive: 0x6daeff,
+        emissiveIntensity: 2.05,
+        roughness: 0.34,
       });
       [
         [0, 3.77, 3.57, 0.045],
@@ -429,7 +484,7 @@
       );
       plate.position.set(-0.35, 4.3, 0.839);
       group.add(plate);
-      const light = new T.PointLight(0xe3eee5, 9, 6, 2);
+      const light = new T.PointLight(0x8dc9ff, 8, 6, 2);
       light.position.set(0, 3.35, 1.03);
       group.add(light);
       group.userData.light = luminous;
@@ -513,7 +568,7 @@
       this.treads = new T.InstancedMesh(
         new T.BoxGeometry(2.72, 0.14, 0.58),
         new T.MeshStandardMaterial({
-          color: 0x303b34,
+          color: 0x1b344d,
           metalness: 0.65,
           roughness: 0.54,
           roughnessMap: this.grain,
@@ -574,7 +629,7 @@
     }
     makeFloor() {
       const material = new T.MeshStandardMaterial({
-        color: 0x101311,
+        color: 0x080e18,
         metalness: 0.38,
         roughness: 0.72,
         bumpMap: this.grain,
@@ -623,7 +678,7 @@
       this.emitter.add(nozzle);
       const lens = new T.Mesh(
         new T.CircleGeometry(0.235, 48),
-        new T.MeshBasicMaterial({ color: 0xebfff2 }),
+        new T.MeshBasicMaterial({ color: 0x8fe2ff }),
       );
       lens.rotation.y = Math.PI;
       lens.position.z = -3.3;
@@ -638,11 +693,11 @@
         depthTest: true,
         blending: T.AdditiveBlending,
         side: T.DoubleSide,
-        uniforms: { color: { value: new T.Color(0.82, 0.9, 0.86) } },
+        uniforms: { color: { value: new T.Color(0.38, 0.78, 1.0) } },
         vertexShader:
           "varying vec2 vUv;varying vec3 vNormal;varying vec3 vPosition;void main(){vUv=uv;vNormal=normalMatrix*normal;vec4 mv=modelViewMatrix*vec4(position,1.);vPosition=mv.xyz;gl_Position=projectionMatrix*mv;}",
         fragmentShader:
-          "varying vec2 vUv;varying vec3 vNormal;varying vec3 vPosition;uniform vec3 color;void main(){float edge=pow(abs(dot(normalize(vNormal),normalize(-vPosition))),2.);float fade=smoothstep(0.,.025,vUv.y)*smoothstep(1.,.9,vUv.y);gl_FragColor=vec4(color,edge*fade*.36);}",
+          "varying vec2 vUv;varying vec3 vNormal;varying vec3 vPosition;uniform vec3 color;void main(){float edge=pow(abs(dot(normalize(vNormal),normalize(-vPosition))),2.);float fade=smoothstep(0.,.025,vUv.y)*smoothstep(1.,.9,vUv.y);gl_FragColor=vec4(color,edge*fade*.42);}",
       });
       this.beam = new T.Mesh(
         new T.CylinderGeometry(0.055, 0.13, 1, 32, 1, true),
@@ -652,7 +707,7 @@
       this.beamCore = new T.Mesh(
         new T.CylinderGeometry(0.016, 0.013, 1, 12, 1, true),
         new T.MeshBasicMaterial({
-          color: new T.Color(5.0, 5.3, 5.05),
+          color: new T.Color(2.4, 4.5, 7.0),
           transparent: true,
           opacity: 0.93,
           depthWrite: false,
@@ -660,7 +715,7 @@
         }),
       );
       this.scene.add(this.beamCore);
-      this.hitLight = new T.PointLight(0xcfe8d6, 2.2, 3, 2);
+      this.hitLight = new T.PointLight(0x63d7ff, 2.6, 3.4, 2);
       this.scene.add(this.hitLight);
     }
     makeSpecimen() {
@@ -702,7 +757,7 @@
       this.specimen.add(this.surface);
       const backing = new T.Mesh(
         new T.PlaneGeometry(width, height),
-        new T.MeshStandardMaterial({ color: 0x323934, roughness: 0.6 }),
+        new T.MeshStandardMaterial({ color: 0x142237, roughness: 0.58 }),
       );
       backing.rotation.y = Math.PI;
       backing.position.z = -0.022;
@@ -739,7 +794,7 @@
       const glass = new T.Mesh(
         new T.PlaneGeometry(4.25, 2.7),
         new T.MeshPhysicalMaterial({
-          color: 0xc7d8ce,
+          color: 0xb8d7f0,
           roughness: 0.22,
           metalness: 0,
           transparent: true,
@@ -759,7 +814,7 @@
         new T.LineSegments(
           new T.BufferGeometry().setFromPoints(gridPoints),
           new T.LineBasicMaterial({
-            color: 0xced8d0,
+            color: 0xa8c8e8,
             transparent: true,
             opacity: 0.13,
           }),
@@ -771,7 +826,7 @@
       this.reticle.position.set(0.15, 1.15, -1.8);
       this.carriage.add(this.reticle);
       const reticleMaterial = new T.LineBasicMaterial({
-        color: 0xd3ded5,
+        color: 0xc4dcf4,
         transparent: true,
         opacity: 0.63,
         depthWrite: false,
@@ -861,7 +916,9 @@
           imageAspect > targetW / targetH
             ? image.height
             : (image.width * targetH) / targetW;
-        ctx.filter = "grayscale(1)";
+        // Preserve the captured page's full color; the sample is the visual
+        // reference the rest of the instrument is built to inspect.
+        ctx.filter = "none";
         ctx.drawImage(image, 0, 0, sw, sh, 48, 110, targetW, targetH);
         this.sampleTexture?.dispose();
         this.sampleTexture = new T.CanvasTexture(canvas);
@@ -891,8 +948,8 @@
       image.src = source;
     }
     makeLighting() {
-      this.scene.add(new T.HemisphereLight(0xc5d5ca, 0x242a21, 1.2));
-      const key = new T.DirectionalLight(0xf2f2e9, 1.65);
+      this.scene.add(new T.HemisphereLight(0x25558e, 0x030711, 1.15));
+      const key = new T.DirectionalLight(0xfff5e5, 1.8);
       key.position.set(-4, 13, 10);
       key.castShadow = true;
       key.shadow.mapSize.set(1024, 1024);
@@ -908,10 +965,10 @@
       key.shadow.normalBias = 0.018;
       key.shadow.radius = 4;
       this.scene.add(key);
-      const fill = new T.DirectionalLight(0xc5cfc8, 0.75);
+      const fill = new T.DirectionalLight(0x4f87c6, 0.72);
       fill.position.set(10, 4, -18);
       this.scene.add(fill);
-      const emitterLight = new T.SpotLight(0xd8e1da, 95, 26, 0.65, 0.85, 2);
+      const emitterLight = new T.SpotLight(0x9adfff, 112, 26, 0.65, 0.85, 2);
       emitterLight.position.set(-5, 8, 13);
       emitterLight.target.position.set(0, 0, 9);
       this.scene.add(emitterLight, emitterLight.target);
@@ -1153,6 +1210,21 @@
         );
       if (hits.length) end.copy(hits[0].point);
       this.hitLight.position.copy(end);
+      // Keep the dust suspended around the live optical path. It is updated
+      // with the existing scene redraws, so an idle canvas remains idle.
+      if (this.dustGroup) {
+        const beamVector = end.clone().sub(start);
+        this.dustGroup.position.copy(start);
+        this.dustGroup.quaternion.setFromUnitVectors(
+          new T.Vector3(0, 0, 1),
+          beamVector.clone().normalize(),
+        );
+        this.dustGroup.scale.set(1, 1, Math.max(0.001, beamVector.length()));
+        const stationDistance = Math.abs(raw - Math.round(raw));
+        this.dustMaterial.opacity =
+          (this.reduced.matches ? 0.12 : 0.16) +
+          (1 - stationDistance) * 0.07;
+      }
       [this.beam, this.beamCore].forEach((mesh) => {
         const d = end.clone().sub(start);
         mesh.position.copy(start).add(end).multiplyScalar(0.5);
