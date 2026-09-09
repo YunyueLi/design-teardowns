@@ -708,51 +708,6 @@
       backing.position.z = -0.022;
       this.specimen.add(backing);
       this.sampleReady = false;
-      const image = new Image();
-      image.decoding = "async";
-      image.onload = () => {
-        const canvas = document.createElement("canvas");
-        canvas.width = 1536;
-        canvas.height = 968;
-        const ctx = canvas.getContext("2d");
-        ctx.fillStyle = "#e9e9e2";
-        ctx.fillRect(0, 0, 1536, 968);
-        ctx.fillStyle = "#272d28";
-        ctx.font = "32px Georgia,serif";
-        ctx.fillText("Latrix", 48, 68);
-        ctx.font = "16px monospace";
-        ctx.fillText("DESIGN TEARDOWNS / 01", 1175, 63);
-        const imageAspect = image.width / image.height;
-        const targetW = 1440,
-          targetH = 808;
-        const sw =
-          imageAspect > targetW / targetH
-            ? (image.height * targetW) / targetH
-            : image.width;
-        const sh =
-          imageAspect > targetW / targetH
-            ? image.height
-            : (image.width * targetH) / targetW;
-        ctx.filter = "grayscale(1)";
-        ctx.drawImage(image, 0, 0, sw, sh, 48, 110, targetW, targetH);
-        this.sampleTexture = new T.CanvasTexture(canvas);
-        this.sampleTexture.colorSpace = T.SRGBColorSpace;
-        this.sampleTexture.anisotropy = this.gpu.software
-          ? 1
-          : Math.min(8, this.renderer.capabilities.getMaxAnisotropy());
-        this.surfaceMaterial.map = this.sampleTexture;
-        this.surfaceMaterial.needsUpdate = true;
-        this.sampleReady = true;
-        this.onFallback(this.lost);
-        if (!this.lost) this.resize();
-        this.requestRender();
-      };
-      image.onerror = () => {
-        this.sampleReady = false;
-        this.sampleError = true;
-        this.onFallback(true);
-      };
-      image.src = "latrix/screenshots/hero.jpg";
       this.registration = new T.Group();
       this.registration.position.set(0.15, 1.15, -1.28);
       this.carriage.add(this.registration);
@@ -873,6 +828,67 @@
         [width / 2, -height / 2],
         [-width / 2, -height / 2],
       ].map(([x, y]) => new T.Vector3(x, y, 0.025));
+      this.setSample({ title: "Latrix", sceneCover: "latrix/screenshots/hero.jpg" });
+    }
+    setSample(item) {
+      if (!item?.sceneCover) return;
+      const image = new Image();
+      const request = (this.sampleRequest = (this.sampleRequest || 0) + 1);
+      let source = item.sceneCover;
+      const fallbackSource = item.cover;
+      image.decoding = "async";
+      image.onload = () => {
+        if (request !== this.sampleRequest) return;
+        const canvas = document.createElement("canvas");
+        canvas.width = 1536;
+        canvas.height = 968;
+        const ctx = canvas.getContext("2d");
+        ctx.fillStyle = "#e9e9e2";
+        ctx.fillRect(0, 0, 1536, 968);
+        ctx.fillStyle = "#272d28";
+        ctx.font = "32px Georgia,serif";
+        ctx.fillText(String(item.title || "Study").slice(0, 25), 48, 68);
+        ctx.font = "16px monospace";
+        ctx.fillText("DESIGN TEARDOWNS / 01", 1175, 63);
+        const imageAspect = image.width / image.height;
+        const targetW = 1440,
+          targetH = 808;
+        const sw =
+          imageAspect > targetW / targetH
+            ? (image.height * targetW) / targetH
+            : image.width;
+        const sh =
+          imageAspect > targetW / targetH
+            ? image.height
+            : (image.width * targetH) / targetW;
+        ctx.filter = "grayscale(1)";
+        ctx.drawImage(image, 0, 0, sw, sh, 48, 110, targetW, targetH);
+        this.sampleTexture?.dispose();
+        this.sampleTexture = new T.CanvasTexture(canvas);
+        this.sampleTexture.colorSpace = T.SRGBColorSpace;
+        this.sampleTexture.anisotropy = this.gpu.software
+          ? 1
+          : Math.min(8, this.renderer.capabilities.getMaxAnisotropy());
+        this.surfaceMaterial.map = this.sampleTexture;
+        this.surfaceMaterial.needsUpdate = true;
+        this.sampleReady = true;
+        this.sampleError = false;
+        this.onFallback(this.lost);
+        if (!this.lost) this.resize();
+        this.requestRender();
+      };
+      image.onerror = () => {
+        if (request !== this.sampleRequest) return;
+        if (fallbackSource && source !== fallbackSource) {
+          source = fallbackSource;
+          image.src = source;
+          return;
+        }
+        this.sampleReady = false;
+        this.sampleError = true;
+        this.onFallback(true);
+      };
+      image.src = source;
     }
     makeLighting() {
       this.scene.add(new T.HemisphereLight(0xc5d5ca, 0x242a21, 1.2));

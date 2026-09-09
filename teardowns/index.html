@@ -29,11 +29,11 @@
       type="font/woff2"
       crossorigin
     />
-    <link rel="stylesheet" href="_gallery/beamline.css?v=20260908" />
+    <link rel="stylesheet" href="_gallery/beamline.css?v=20260909" />
     <script defer src="_gallery/featured.js?v=20260908"></script>
     <script defer src="_gallery/vendor/three.min.js"></script>
-    <script defer src="_gallery/beamline-3d.js?v=20260908"></script>
-    <script defer src="_gallery/beamline.js?v=20260908"></script>
+    <script defer src="_gallery/beamline-3d.js?v=20260909"></script>
+    <script defer src="_gallery/beamline.js?v=20260909"></script>
   </head>
   <body>
     <!--
@@ -103,10 +103,16 @@
               <span><i class="measured"></i>Measured</span
               ><span><i class="inferred"></i>Inferred</span>
             </div>
+            <div class="selected-study" id="selected-study" aria-live="polite">
+              <span class="selected-study-label">Selected study</span>
+              <strong id="selected-study-title">Latrix</strong>
+              <small id="selected-study-kind">Web · Digital identity</small>
+            </div>
             <a
               class="primary-action"
               id="open-study"
               href="latrix/teardown.html"
+              aria-label="打开 Latrix 拆解"
               >Open study<svg><use href="#i-arrow" /></svg
             ></a>
           </section>

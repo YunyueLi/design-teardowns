@@ -71,6 +71,19 @@
   let archiveError = false;
   const count = Number(window.DESIGN_TEARDOWNS_TOTAL) || featured.length;
   const pageSize = 6;
+  const screenshotHeroSlugs = new Set([
+    "easycode",
+    "endfield",
+    "imlagom",
+    "journeypilot",
+    "latrix",
+    "pear",
+    "shopify-editions",
+    "shopify-editions-spring26",
+    "turtle-soup",
+  ]);
+  let selectedStudy =
+    featured.find((item) => item.slug === "latrix") || featured[0] || null;
   const panel = $("#archive-panel");
   const panelHome = document.createComment(
     "The archive panel returns here after its dialog closes.",
@@ -135,9 +148,52 @@
         else link.removeAttribute("aria-current");
       });
       document.body.dataset.station = stations[station].id;
+      const openStudy = $("#open-study");
+      if (openStudy)
+        openStudy.classList.toggle("is-complete", station === 4);
     }
     $("#track-progress").style.width = progress * 100 + "%";
     if (scene) scene.setProgress(progress);
+  }
+  function sampleSource(item) {
+    if (!item) return "";
+    return screenshotHeroSlugs.has(item.slug)
+      ? item.slug + "/screenshots/hero.jpg"
+      : item.slug + "/assets/actual-hero.jpg";
+  }
+  function updateSelectedStudy(item, { resetStage = true } = {}) {
+    if (!item) return;
+    const archiveDialog = $("#archive-dialog");
+    if (archiveDialog?.open) closeDialog(archiveDialog);
+    selectedStudy = item;
+    document.body.dataset.selectedStudy = item.slug;
+    $("#selected-study-title").textContent = item.title;
+    $("#selected-study-kind").textContent = item.kind;
+    const open = $("#open-study");
+    open.href = item.href;
+    open.setAttribute("aria-label", "打开 " + item.title + " 拆解");
+    open.classList.add("is-ready");
+    const access = $("#specimen-access");
+    access.href = item.href;
+    access.setAttribute("aria-label", "进入当前样本 " + item.title + " 拆解");
+    access.querySelector("span").textContent = "Open " + item.title;
+    const fallbackLink = $("#fallback-specimen a");
+    if (fallbackLink) {
+      fallbackLink.href = item.href;
+      fallbackLink.querySelector("img").src = item.cover;
+      fallbackLink.querySelector("img").alt = item.title + " 拆解";
+      fallbackLink.querySelector("span").firstChild.textContent =
+        "进入 " + item.title + " 拆解";
+    }
+    if (scene && typeof scene.setSample === "function")
+      scene.setSample({ ...item, sceneCover: sampleSource(item) });
+    all(".archive-item").forEach((card) => {
+      const active = card.dataset.slug === item.slug;
+      card.classList.toggle("is-selected", active);
+      if (active) card.setAttribute("aria-current", "true");
+      else card.removeAttribute("aria-current");
+    });
+    if (resetStage) goToStation(0);
   }
   function stopTransport() {
     cancelAnimationFrame(transportFrame);
@@ -394,6 +450,11 @@
     const a = document.createElement("a");
     a.className = "archive-item";
     a.href = item.href;
+    a.dataset.slug = item.slug;
+    if (item.slug === selectedStudy?.slug) {
+      a.setAttribute("aria-current", "true");
+      a.classList.add("is-selected");
+    }
     const image = document.createElement("img");
     image.src = item.cover;
     image.alt = "";
@@ -413,6 +474,10 @@
         item.title +
         " 拆解",
     );
+    a.addEventListener("click", (event) => {
+      event.preventDefault();
+      updateSelectedStudy(item);
+    });
     return a;
   }
   function showMessage(text, action, handler) {
@@ -623,6 +688,7 @@
     else $("#archive-search").focus({ preventScroll: true });
   });
   renderArchive();
+  updateSelectedStudy(selectedStudy, { resetStage: false });
   const parameter = new URLSearchParams(location.search).get("station");
   const fromHash = stations.findIndex((s) => "#" + s.id === location.hash);
   const initial =

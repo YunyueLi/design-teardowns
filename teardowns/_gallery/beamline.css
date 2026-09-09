@@ -304,7 +304,7 @@ select {
 .truth-legend {
   display: grid;
   gap: 8px;
-  margin: 24px 0 30px;
+  margin: 24px 0 18px;
   font: 13px/1.5 var(--mono);
 }
 .truth-legend span {
@@ -323,6 +323,26 @@ select {
 .inferred {
   background: #48d7d3;
 }
+.selected-study {
+  display: grid;
+  gap: 1px;
+  margin: 0 0 18px;
+  min-height: 44px;
+  padding: 8px 10px 7px;
+  border: 1px solid #353c37;
+  background: #0b0e0c99;
+}
+.selected-study-label,
+.selected-study small {
+  color: var(--muted);
+  font: 10px/1.35 var(--mono);
+}
+.selected-study strong {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font: 13px/1.35 var(--mono);
+}
 .primary-action {
   display: flex;
   align-items: center;
@@ -334,7 +354,19 @@ select {
   font: 13px var(--mono);
   transition:
     background 0.18s,
-    color 0.18s;
+    color 0.18s,
+    border-color 0.18s,
+    box-shadow 0.18s;
+}
+.primary-action.is-ready {
+  border-color: var(--signal);
+  box-shadow: 0 0 0 1px #80ed9522, 0 0 22px #80ed9512;
+}
+.primary-action.is-complete {
+  background: var(--signal);
+  color: var(--ground);
+  border-color: var(--signal);
+  box-shadow: 0 0 0 1px #80ed9566, 0 0 26px #80ed9530;
 }
 .primary-action:hover {
   background: var(--ink);
@@ -499,6 +531,18 @@ select {
 }
 .archive-item:hover {
   border-color: #c7d2c8;
+}
+.archive-item.is-selected {
+  border-color: var(--signal);
+  box-shadow: 0 0 0 1px #80ed9530;
+}
+.archive-item.is-selected > span::after {
+  content: "SELECTED";
+  display: block;
+  margin-top: 3px;
+  color: var(--signal);
+  font: 9px/1.2 var(--mono);
+  letter-spacing: 0.08em;
 }
 .archive-item img {
   width: 100%;
