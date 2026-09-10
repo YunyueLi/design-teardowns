@@ -1109,6 +1109,7 @@ test("gallery-filters-pager-empty-and-focus", async ({ page }) => {
   await page.locator("#archive-category").selectOption("product");
   await expect(page.locator("#archive-results .archive-item b")).toHaveText([
     "Comet",
+    "LoL Esports",
     "Linear",
   ]);
   await page.locator("#archive-search").fill("no-such-beamline-study");
