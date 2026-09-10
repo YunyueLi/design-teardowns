@@ -1,0 +1,763 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#050505">
+<title>LoL Esports（lolesports.com）拆解 · 一个默认藏起比分的赛程壳</title>
+<style>
+/* ===== 真字体：本目录 real-assets/fonts 下从线上抓回的原文件 =====
+   产品界面实测 337/363 个文本节点渲染为 inter。Beaufort、Transducer、
+   TT Norms 属商用授权字体，本页只列名不内嵌，理由见「字体系统」一节。 */
+@font-face{font-family:"inter";src:url(real-assets/fonts/2ee2d9_Inter_Regular-s.p.1plip2iltmmq0.woff2) format("woff2");font-weight:400;font-style:normal;font-display:swap}
+@font-face{font-family:"inter";src:url(real-assets/fonts/5e266b_Inter_SemiBold-s.p.3epffx5vs6bsi.woff2) format("woff2");font-weight:600;font-style:normal;font-display:swap}
+@font-face{font-family:"inter";src:url(real-assets/fonts/92570d_Inter_Bold-s.p.0q6si_uqyck6j.woff2) format("woff2");font-weight:700;font-style:normal;font-display:swap}
+
+/* ===== 真 token：全部来自线上计算样式与样式表原文 ===== */
+:root{
+  --black-102:#0f1519; --black-501:#0e0e0e; --black-502:#050505; --black-500:#1c1c1c;
+  --gray-500:#303030; --gray-501:#a3a3a3; --gray-502:#262626; --gray-506:#1c1c1c;
+  --gray-508:#d4d4d4; --gray-509:#fafafa; --white:#fff;
+  --cyan-100:#a5f7ff; --cyan-200:#62eefc; --cyan-300:#10e4f9; --cyan-400:#08becf;
+  --gold-300:#c79e57; --live:#de2b2b;
+  --brand:var(--cyan-300);
+  --f:"inter",Helvetica,Arial,sans-serif;
+  --e1:cubic-bezier(.8,0,1,1); --e2:cubic-bezier(0,0,.2,1); --e3:cubic-bezier(.215,.61,.355,1);
+  --r-xs:4px; --r-sm:8px; --r-md:12px; --r-full:100px;
+  --s-50:4px; --s-75:6px; --s-100:8px; --s-150:12px; --s-200:16px;
+  --s-300:24px; --s-400:32px; --s-500:40px; --s-800:64px;
+  --page:min(1120px,90vw);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth;color-scheme:only dark}
+body{background:var(--black-502);color:var(--white);font-family:var(--f);font-size:16px;line-height:1.5;
+  -webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;overflow-x:clip}
+::selection{background:var(--cyan-300);color:#000}
+img{display:block;max-width:100%}
+a{color:var(--cyan-300);text-decoration:none}
+a:hover{text-decoration:underline;text-underline-offset:.2em}
+:focus-visible{outline:2px solid var(--cyan-300);outline-offset:2px;border-radius:2px}
+
+.wrap{width:var(--page);margin:0 auto}
+
+/* ===== Hero：复制原站 80px 固定壳层 + 内容区自滚的结构 ===== */
+header.top{border-bottom:1px solid var(--gray-500);background:var(--black-102);
+  background-image:radial-gradient(120% 90% at 12% 0%,#10e4f914 0%,transparent 62%)}
+.bar{height:80px;display:flex;align-items:center;gap:var(--s-300);border-bottom:1px solid #ffffff14}
+.bar .mk{display:flex;align-items:center;gap:10px}
+.bar .mk svg{width:26px;height:26px}
+.bar .mk b{font-weight:700;font-size:14px;letter-spacing:.21px;text-transform:uppercase}
+.bar nav{display:none;gap:var(--s-300);margin-left:auto;
+  font-size:14px;font-weight:700;letter-spacing:.21px;text-transform:uppercase;color:#ffffffa6}
+.bar nav a{color:inherit}
+.bar nav a:hover{color:var(--white);text-decoration:none}
+@media(min-width:900px){.bar nav{display:flex}}
+header.top .hero{padding:clamp(48px,8vh,92px) 0 clamp(40px,7vh,76px)}
+h1{font-weight:600;font-size:clamp(30px,4.6vw,58px);line-height:1.06;letter-spacing:-.02em;text-wrap:balance;max-width:19ch}
+h1 em{font-style:normal;color:var(--cyan-300)}
+.sub{margin-top:var(--s-300);max-width:52ch;font-size:clamp(14px,1.3vw,18px);line-height:1.6;color:#ffffffb8}
+.chips{display:flex;flex-wrap:wrap;gap:var(--s-100);margin-top:var(--s-400)}
+.chip{display:inline-flex;align-items:center;gap:var(--s-100);background:var(--gray-506);
+  border:1px solid var(--gray-500);border-radius:var(--r-xs);padding:var(--s-100) var(--s-150);
+  font-size:12px;font-weight:700;letter-spacing:.18px;color:#ffffffd9}
+.chip i{width:8px;height:8px;border-radius:var(--r-full);background:var(--cyan-300);flex:none}
+.chip.red i{background:var(--live)}
+.chip.gold i{background:var(--gold-300)}
+.note{margin-top:var(--s-300);font-size:12px;font-weight:700;letter-spacing:.18px;
+  text-transform:uppercase;color:var(--gray-501)}
+
+/* ===== 章节 ===== */
+section.ch{padding-top:clamp(56px,9vh,104px);scroll-margin-top:16px}
+.kick{display:flex;align-items:baseline;gap:var(--s-150);border-top:1px solid var(--gray-500);
+  padding-top:var(--s-150);margin-bottom:var(--s-300)}
+.kick .n{font-size:12px;font-weight:700;letter-spacing:.18px;color:var(--cyan-300)}
+.kick .t{font-size:12px;font-weight:700;letter-spacing:.18px;text-transform:uppercase;color:var(--gray-501)}
+h2{font-weight:600;font-size:clamp(23px,2.9vw,36px);line-height:1.18;letter-spacing:-.015em;
+  text-wrap:balance;max-width:26ch}
+h3{font-weight:700;font-size:clamp(16px,1.5vw,20px);line-height:1.35;margin:var(--s-500) 0 var(--s-150)}
+h4{font-size:12px;font-weight:700;letter-spacing:.18px;text-transform:uppercase;
+  color:var(--gray-501);margin:var(--s-300) 0 var(--s-100)}
+p{margin-top:var(--s-150);max-width:60ch;color:#ffffffc4;line-height:1.65}
+p.lead{color:#fffffff2;font-size:clamp(15px,1.35vw,18px);max-width:56ch}
+ul,ol{margin:var(--s-150) 0 0 1.15em;max-width:60ch}
+li{margin-top:var(--s-100);color:#ffffffc4;line-height:1.6}
+strong{color:var(--white);font-weight:700}
+code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.87em;
+  background:#ffffff12;padding:.12em .38em;border-radius:3px;color:var(--cyan-100)}
+.tag{display:inline-block;font-size:11px;font-weight:700;letter-spacing:.165px;
+  padding:2px 6px;border-radius:var(--r-xs);vertical-align:.1em}
+.tag.m{background:#10e4f926;color:var(--cyan-200)}
+.tag.g{background:#c79e5726;color:#e8cd94}
+
+/* ===== 表 ===== */
+.tbl{width:100%;overflow-x:auto;margin-top:var(--s-300)}
+table{width:100%;border-collapse:collapse;font-size:14px;min-width:520px}
+th{text-align:left;font-weight:700;font-size:12px;letter-spacing:.18px;text-transform:uppercase;
+  color:var(--gray-501);padding:var(--s-100) var(--s-150);border-bottom:1px solid var(--gray-500);white-space:nowrap}
+td{padding:var(--s-150);border-bottom:1px solid #ffffff12;color:#ffffffc4;vertical-align:top}
+td b{color:var(--white);font-weight:700}
+td.mono,th.mono{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:13px}
+
+/* ===== 色板（点击复制） ===== */
+.pal{display:grid;grid-template-columns:repeat(auto-fill,minmax(148px,1fr));gap:var(--s-100);margin-top:var(--s-300)}
+.sw{border:1px solid var(--gray-500);border-radius:var(--r-xs);background:var(--gray-506);
+  padding:0;cursor:pointer;text-align:left;font-family:inherit;color:inherit;
+  transition:background .2s ease-out,border-color .2s ease-out}
+.sw:hover{background:var(--gray-500);border-color:#ffffff3d}
+.sw .c{height:52px;border-radius:3px 3px 0 0}
+.sw .m{padding:var(--s-100) var(--s-150) var(--s-150)}
+.sw .m b{display:block;font-size:12px;font-weight:700;letter-spacing:.18px}
+.sw .m span{display:block;margin-top:3px;font-family:ui-monospace,Menlo,monospace;
+  font-size:11px;color:var(--gray-501)}
+.sw .m em{display:block;margin-top:4px;font-style:normal;font-size:11px;color:#ffffff73;line-height:1.35}
+
+/* ===== demo 外壳 ===== */
+.demo{margin-top:var(--s-300);border:1px solid var(--gray-500);border-radius:var(--r-sm);
+  background:var(--black-501);overflow:hidden}
+.demo .hd{display:flex;align-items:center;gap:var(--s-150);flex-wrap:wrap;
+  padding:var(--s-150) var(--s-200);border-bottom:1px solid var(--gray-500);background:var(--black-502)}
+.demo .hd h4{margin:0;color:var(--white)}
+.demo .hd .sp{margin-left:auto;display:flex;gap:var(--s-100);flex-wrap:wrap}
+.demo .bd{padding:var(--s-300) var(--s-200)}
+.demo .bd>.sched,.demo .bd>.tdemo{margin-left:0}
+.btn{background:var(--gray-506);color:var(--white);border:1px solid var(--gray-500);
+  border-radius:var(--r-xs);padding:var(--s-100) var(--s-150);font-family:inherit;
+  font-size:12px;font-weight:700;letter-spacing:.18px;cursor:pointer;
+  transition:background .2s ease-out,border-color .2s ease-out,color .2s ease-out}
+.btn:hover{background:var(--gray-500)}
+.btn[aria-pressed="true"],.btn.on{background:var(--brand);color:#050505;border-color:var(--brand)}
+
+/* ===== 签名 demo 一：剧透闸门赛程卡 ===== */
+.sched{max-width:640px}
+.dayhd{display:flex;align-items:baseline;gap:var(--s-100);padding:0 0 var(--s-150)}
+.dayhd .dow{font-size:18px;font-weight:700;line-height:24px;color:var(--white)}
+.dayhd .dat{font-size:18px;font-weight:700;line-height:24px;color:var(--gray-501)}
+.grp{background:var(--black-501);padding:var(--s-75) var(--s-200);margin-bottom:var(--s-100);border-radius:var(--r-xs)}
+.card{position:relative;background:var(--gray-506);border:1px solid var(--gray-500);
+  border-radius:var(--r-xs);overflow:hidden;transition:background .2s ease-out}
+.card:hover{background:var(--gray-500)}
+.row{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:var(--s-200);padding:var(--s-200)}
+.side{display:flex;align-items:center;gap:var(--s-150);min-width:0}
+.side.r{flex-direction:row-reverse}
+.side .lg{width:32px;height:32px;border-radius:var(--r-full);flex:none;
+  display:grid;place-items:center;font-size:11px;font-weight:700;letter-spacing:.165px;color:#050505}
+.side .nm{font-size:18px;font-weight:700;line-height:24px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.score{display:flex;align-items:center;gap:var(--s-50);background:var(--gray-500);
+  border-radius:var(--r-xs);padding:var(--s-100) var(--s-150);
+  font-size:18px;font-weight:700;line-height:18px;white-space:nowrap}
+.foot{display:flex;align-items:center;gap:var(--s-100);padding:var(--s-100) var(--s-200);
+  border-top:1px solid #ffffff12;font-size:12px;font-weight:700;letter-spacing:.18px;color:var(--gray-501)}
+.foot .bo{margin-left:auto}
+/* 遮罩：与原站一致，绝对定位铺满，底 #262626 字 #a3a3a3 */
+.mask{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;gap:var(--s-200);
+  background:var(--gray-502);color:var(--gray-501);font-size:14px;font-weight:700;letter-spacing:.21px;
+  text-transform:uppercase;cursor:pointer;border:0;font-family:inherit;width:100%;
+  transition:background .2s ease-out,opacity .2s ease-out}
+.mask:hover{background:var(--gray-506)}
+.card.open .mask{opacity:0;pointer-events:none}
+.card .mask svg{width:20px;height:20px;flex:none}
+.livebadge{display:inline-flex;align-items:center;gap:5px;background:var(--live);color:#fff;
+  border-radius:var(--r-xs);padding:4px 6px;font-size:14px;font-weight:700;letter-spacing:.21px;line-height:14px}
+.livebadge i{width:6px;height:6px;border-radius:var(--r-full);background:#fff;animation:blip 2s var(--e2) infinite}
+@keyframes blip{0%,55%,100%{opacity:1}72%{opacity:.25}}
+@media (prefers-reduced-motion:reduce){.livebadge i{animation:none}}
+@media(max-width:560px){.row{grid-template-columns:auto auto;justify-content:start;gap:var(--s-150)}
+  .side.r{flex-direction:row}.side .nm{font-size:16px}}
+
+/* ===== 签名 demo 二：品牌主题切换 ===== */
+.theme-lol{--brand:#10e4f9;--brand-2:#62eefc;--live-c:#de2f2f}
+.theme-val{--brand:#dc3030;--brand-2:#eb5a5a;--live-c:#ff4655}
+.theme-tft{--brand:#ffb400;--brand-2:#ffce00;--live-c:#fb293a}
+.theme-rb{--brand:#ef7d00;--brand-2:#ff9a2b;--live-c:transparent}
+.tdemo{max-width:600px;border-left:2px solid var(--brand);
+  background:linear-gradient(90deg,color-mix(in srgb,var(--brand) 20%,transparent) 40.5%,transparent 100%);
+  padding:var(--s-200);border-radius:0 var(--r-xs) var(--r-xs) 0;transition:background .35s var(--e2),border-color .35s var(--e2)}
+.tdemo .eyebrow{font-size:14px;font-weight:700;letter-spacing:.21px;color:var(--gray-508)}
+.tdemo .ttl{font-size:18px;font-weight:700;line-height:18px;margin-top:var(--s-50);color:var(--brand);
+  transition:color .35s var(--e2)}
+.tdemo .rng{font-size:14px;font-weight:400;color:var(--gray-508);margin-top:var(--s-50)}
+.tswatch{display:flex;gap:var(--s-100);margin-top:var(--s-200);flex-wrap:wrap}
+.tswatch span{font-family:ui-monospace,Menlo,monospace;font-size:11px;color:var(--gray-501);
+  border:1px solid var(--gray-500);border-radius:var(--r-xs);padding:4px 8px}
+
+/* ===== 排版标度演示 ===== */
+.scale li{list-style:none;border-bottom:1px solid #ffffff12;padding:var(--s-150) 0;margin:0;
+  display:flex;align-items:baseline;gap:var(--s-200);flex-wrap:wrap}
+.scale .k{font-family:ui-monospace,Menlo,monospace;font-size:11px;color:var(--cyan-300);width:104px;flex:none}
+.scale .v{font-family:ui-monospace,Menlo,monospace;font-size:11px;color:var(--gray-501);margin-left:auto}
+
+/* ===== 结构图 ===== */
+.shell{margin-top:var(--s-300);border:1px solid var(--gray-500);border-radius:var(--r-sm);overflow:hidden;
+  font-size:12px;font-weight:700;letter-spacing:.18px}
+.shell .nav{height:56px;display:grid;place-items:center;background:var(--black-102);
+  border-bottom:1px solid var(--gray-500);color:var(--gray-501)}
+.shell .cols{display:grid;grid-template-columns:1fr 2.4fr 1fr;min-height:210px}
+.shell .col{padding:var(--s-150);color:var(--gray-501);display:flex;flex-direction:column;gap:var(--s-100)}
+.shell .col+.col{border-left:1px solid var(--gray-500)}
+.shell .col.mid{background:var(--black-501);color:var(--cyan-300)}
+.shell .col small{display:block;font-weight:400;letter-spacing:0;color:#ffffff73;font-size:11px;line-height:1.45}
+@media(max-width:640px){.shell .cols{grid-template-columns:1fr}.shell .col+.col{border-left:0;border-top:1px solid var(--gray-500)}}
+
+/* ===== 截图 ===== */
+figure{margin-top:var(--s-300)}
+figure img{border:1px solid var(--gray-500);border-radius:var(--r-sm)}
+figcaption{margin-top:var(--s-100);font-size:12px;color:var(--gray-501);line-height:1.5}
+
+/* ===== 代码块 ===== */
+pre{margin-top:var(--s-200);background:#0b0b0b;border:1px solid var(--gray-500);border-radius:var(--r-xs);
+  padding:var(--s-200);overflow-x:auto;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;
+  font-size:12.5px;line-height:1.7;color:#dcdcdc}
+pre .c{color:#6b7280}
+pre .p{color:var(--cyan-300)}
+pre .s{color:#c79e57}
+
+/* ===== 页脚 ===== */
+footer{margin-top:clamp(64px,10vh,112px);border-top:1px solid var(--gray-500);
+  padding:var(--s-400) 0 var(--s-800);font-size:12px;color:var(--gray-501);line-height:1.7}
+footer a{color:var(--gray-508)}
+.toast{position:fixed;left:50%;bottom:24px;transform:translate(-50%,14px);opacity:0;pointer-events:none;
+  background:var(--cyan-300);color:#050505;border-radius:var(--r-xs);padding:var(--s-100) var(--s-200);
+  font-size:12px;font-weight:700;letter-spacing:.18px;transition:opacity .2s ease-out,transform .2s ease-out;z-index:20}
+.toast.on{opacity:1;transform:translate(-50%,0)}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <div class="bar">
+      <span class="mk">
+        <svg viewBox="0 0 26 26" aria-hidden="true"><path d="M3 4h5l3 9 3-9h5l-5 18h-6z" fill="#10e4f9"/><path d="M21 4h2v18h-2z" fill="#10e4f9" opacity=".55"/></svg>
+        <b>拆解 · LoL Esports</b>
+      </span>
+      <nav>
+        <a href="#c1">定位</a><a href="#c3">色彩</a><a href="#c4">字体</a>
+        <a href="#c6">剧透闸门</a><a href="#c7">四品牌</a><a href="#c10">复刻</a>
+      </nav>
+    </div>
+    <div class="hero">
+      <h1>体育网站都把比分放最大。<br>它<em>默认把比分藏起来</em>。</h1>
+      <p class="sub">lolesports.com 没有营销首页：<code>/en-US</code> 打开就是赛程本身。整站是一层 80px 的固定壳加一个内部滚动的内容区，
+        赛程卡在你点击之前不显示胜负，而同一套代码用一个 <code>data-theme</code> 切换，还装着另外四个电竞品牌。</p>
+      <p class="sub">下面每个数值都来自 2026 年 9 月 10 日对线上页面的真实抽取，不是观感描述。</p>
+      <div class="chips">
+        <span class="chip"><i></i>品牌色 #10e4f9</span>
+        <span class="chip red"><i></i>LIVE #de2b2b</span>
+        <span class="chip gold"><i></i>金 #c79e57</span>
+        <span class="chip">界面字体 Inter</span>
+        <span class="chip">Panda CSS</span>
+        <span class="chip">样式表 471 KB</span>
+        <span class="chip">5 套品牌主题</span>
+      </div>
+      <p class="note">实锤 = 计算样式或样式表原文命中 · 推断 = 观察得出</p>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+
+<section class="ch" id="c1">
+  <div class="kick"><span class="n">01</span><span class="t">定位与设计意图</span></div>
+  <h2>它不是发布页，是一个每天要回来看的赛程工具</h2>
+  <p class="lead">拆之前先分清体裁。这个仓库里此前的多数研究对象是营销落地页：一屏一个卖点，滚动即叙事。lolesports 不是。
+    抓取时页面标题直接是 <code>LoL Esports | SCHEDULE</code><span class="tag m">实锤</span>，
+    <code>/en-US</code> 这个根路径本身就是赛程，没有独立的品牌首页做前置。</p>
+  <p>这个决定很重。它意味着产品团队认定用户来这里只有一件事要办：<strong>今天有没有比赛，几点，在哪看，打完了没有。</strong>
+    营销叙事被让给了 Riot 的其他站点，这里只留下功能。所以拆它的方法也要换：不该问「首屏怎么讲故事」，
+    该问「信息密度怎么排、状态怎么区分、默认值替谁做主」。</p>
+  <p>页面本身不滚动。实测 <code>document.body.scrollHeight</code> 等于 <code>window.innerHeight</code>（900 = 900）<span class="tag m">实锤</span>，
+    真正在滚的是一个高 <code>calc(100dvh - 80px)</code> 的内部容器，内容高 12730px<span class="tag m">实锤</span>。
+    这是应用壳层的做法，不是文档页的做法——顶栏永远在，左右两栏各自独立，只有中间那列跟着走。</p>
+  <div class="shell">
+    <div class="nav">grid-area: navigation　·　固定 80px</div>
+    <div class="cols">
+      <div class="col"><span>赛季导轨</span><small>七个赛段按时间纵排，当前赛段高亮。不随中列滚动。</small></div>
+      <div class="col mid"><span>赛程（唯一滚动区）</span><small>calc(100dvh − 80px)，内容 12730px。按日分组，每组一个日期头。</small></div>
+      <div class="col"><span>排名与新闻</span><small>独立滚动，用 SimpleBar 自定义滚动条。</small></div>
+    </div>
+  </div>
+  <p><code>main</code> 的实测值是 <code>display:grid; grid-template-rows:80px 1fr</code>，区域名 <code>"navigation" "content"</code><span class="tag m">实锤</span>。
+    到 390px 宽时列数塌成 1，两侧栏收起，中列全宽<span class="tag m">实锤</span>。</p>
+</section>
+
+<section class="ch" id="c2">
+  <div class="kick"><span class="n">02</span><span class="t">as-seen</span></div>
+  <h2>真实渲染，作为下面所有数值的对照物</h2>
+  <figure>
+    <img src="screenshots/hero.jpg" alt="lolesports.com 赛程页首屏真实截图：左侧赛季导轨，中间直播卡与赛程列表，右侧排名与新闻" loading="lazy">
+    <figcaption>2026 年 9 月 10 日抓取，1440×900，未经修饰。中列的直播卡下方那条比赛里，两队之间是一个划掉的眼睛图标——那就是被遮住的比分。</figcaption>
+  </figure>
+</section>
+
+<section class="ch" id="c3">
+  <div class="kick"><span class="n">03</span><span class="t">色彩系统</span></div>
+  <h2>三层 token：调色板、品牌主题、组件语义</h2>
+  <p class="lead">这套 CSS 由 Panda CSS 生成（样式表里留着 <code>--made-with-panda</code> 这个签名变量<span class="tag m">实锤</span>），
+    颜色分三层声明，复刻时该引用第三层。</p>
+  <h4>第一层 · 原始调色板</h4>
+  <p>命名是 <code>--colors-&lt;族&gt;-&lt;档&gt;</code>。中性色分两组：<code>black-1xx</code> 偏蓝（<code>#0f1519</code> 系），
+    <code>black-5xx</code> 是纯中性（<code>#050505</code>、<code>#0e0e0e</code>）。这两组不是冗余——前者给整站底色，
+    后者给赛程内容区，实测 body 背景是 <code>rgb(15, 21, 25)</code> 而卡片分组底是 <code>#0e0e0e</code><span class="tag m">实锤</span>。</p>
+  <div class="pal" id="pal"></div>
+  <p class="note">点色块复制色值</p>
+  <h4>第二层 · 品牌主题</h4>
+  <p>样式表里有五个 <code>[data-theme=…]</code> 块：<code>lol</code>、<code>val</code>、<code>wr</code>、<code>tft</code>、<code>rb</code><span class="tag m">实锤</span>。
+    每块重定义同一组语义名，其中 <code>--colors-surface-brand</code> 在 lol 下取青、在 val 下取 <code>#dc3030</code>、
+    在 tft 下取 <code>#ffb400</code>、在 rb 下取 <code>#ef7d00</code>。详见第 07 节。</p>
+  <h4>第三层 · 组件语义</h4>
+  <p>名字直接写组件和角色：<code>--colors-home-live</code>、<code>--colors-home-spoiler-text</code>、
+    <code>--colors-home-card-hover-bg</code>、<code>--colors-home-season-overview-accent-text</code><span class="tag m">实锤</span>。
+    这一层的好处在下一节的类名里体现得更直白。</p>
+  <div class="tbl">
+    <table>
+      <thead><tr><th>角色</th><th class="mono">语义 token</th><th class="mono">实测值</th><th>出处</th></tr></thead>
+      <tbody>
+        <tr><td><b>整站底</b></td><td class="mono">--colors-bg-primary</td><td class="mono">#0f1519</td><td>body 计算样式 <span class="tag m">实锤</span></td></tr>
+        <tr><td><b>内容区底</b></td><td class="mono">--colors-home-bg</td><td class="mono">#050505</td><td>样式表最高频色值 <span class="tag m">实锤</span></td></tr>
+        <tr><td><b>分组底</b></td><td class="mono">--colors-home-group</td><td class="mono">#0e0e0e</td><td>计算样式 <span class="tag m">实锤</span></td></tr>
+        <tr><td><b>卡片底</b></td><td class="mono">--colors-home-card-bg</td><td class="mono">#262626</td><td>token 定义 <span class="tag m">实锤</span></td></tr>
+        <tr><td><b>卡片描边</b></td><td class="mono">--colors-gray-500</td><td class="mono">#303030</td><td>计算样式 1px solid <span class="tag m">实锤</span></td></tr>
+        <tr><td><b>品牌主色</b></td><td class="mono">--colors-lol-cyan-300</td><td class="mono">#10e4f9</td><td>选中态文字计算色 <span class="tag m">实锤</span></td></tr>
+        <tr><td><b>LIVE</b></td><td class="mono">--colors-home-live</td><td class="mono">#de2b2b</td><td>徽标背景计算色 <span class="tag m">实锤</span></td></tr>
+        <tr><td><b>剧透文案</b></td><td class="mono">--colors-home-spoiler-text</td><td class="mono">#a3a3a3</td><td>遮罩文字计算色 <span class="tag m">实锤</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p>另有一组七档稀有度色 <code>--colors-lol-rarity-*</code>（标准绿、史诗青、传说红、神话紫、终极橙、超凡粉、殿堂黄）<span class="tag m">实锤</span>，
+    赛程页不用，属于奖励与藏品模块的配色，说明这套 token 供整个 lolesports 站群共用，不止赛程。</p>
+</section>
+
+<section class="ch" id="c4">
+  <div class="kick"><span class="n">04</span><span class="t">字体系统</span></div>
+  <h2>预加载了三十多支字，界面上只跑一支</h2>
+  <p class="lead">页面里有 27 个 <code>link rel=preload as=font</code><span class="tag m">实锤</span>，
+    <code>document.fonts</code> 报出四十余个字族名，包含 Beaufort for LoL、Tungsten、Transducer、TT Norms Pro Compact、
+    Riot Sans、Noto Sans 的日韩泰简繁六个文种版本<span class="tag m">实锤</span>。
+    但把可见文本节点逐个量一遍，答案很干脆：</p>
+  <div class="tbl">
+    <table>
+      <thead><tr><th>渲染字族</th><th class="mono">文本节点数</th><th>出现在哪</th></tr></thead>
+      <tbody>
+        <tr><td><b>inter</b></td><td class="mono">337</td><td>赛程页全部界面文字</td></tr>
+        <tr><td>Inter（另一支同名）</td><td class="mono">15</td><td>右栏第三方嵌入模块 <span class="tag g">推断</span></td></tr>
+        <tr><td>colfax</td><td class="mono">5</td><td>Riot 通用顶栏</td></tr>
+        <tr><td>Helvetica</td><td class="mono">4</td><td>Cookie 同意条</td></tr>
+        <tr><td>ui-sans-serif</td><td class="mono">2</td><td>未命中自定义字族的兜底</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p>也就是说，<strong>那些华丽的品牌展示体一个都没上场。</strong>它们属于设计系统里 <code>display/*</code> 和
+    <code>headline/*</code> 这两级排版 token，而赛程页从头到尾只用 <code>label/*</code> 和 <code>title/*</code>。
+    这是个很清醒的取舍：功能页不需要品牌嗓门，需要的是小字号下的可读性和数字对齐。</p>
+  <h3>语义排版标度：六族十八档</h3>
+  <p>不是按字号命名，是按用途命名——<code>display</code>、<code>headline</code>、<code>title</code>、<code>label</code>、<code>body</code>，
+    每族再分 xs 到 xl。同一个名字在不同品牌、不同文种下映射到不同字族，字号和行高保持不变。</p>
+  <ul class="scale">
+    <li><span class="k">display/lg</span><span style="font-size:clamp(28px,5vw,44px);font-weight:700;letter-spacing:-.02em">80px / 900 / −1.6px</span><span class="v">Beaufort，全大写</span></li>
+    <li><span class="k">headline/lg</span><span style="font-size:clamp(24px,3.4vw,32px);font-weight:600;line-height:40px">32px / 600</span><span class="v">Inter，页面主标题</span></li>
+    <li><span class="k">title/md</span><span style="font-size:18px;font-weight:700;line-height:24px">18px / 700</span><span class="v">赛季名、队名</span></li>
+    <li><span class="k">label/lg</span><span style="font-size:14px;font-weight:700;letter-spacing:.21px;line-height:14px">14px / 700 / +0.21px</span><span class="v">最高频，172 处</span></li>
+    <li><span class="k">label/md</span><span style="font-size:12px;font-weight:700;letter-spacing:.18px">12px / 700 / +0.18px</span><span class="v">联赛名、日期</span></li>
+    <li><span class="k">label/sm</span><span style="font-size:11px;font-weight:700;letter-spacing:.165px">11px / 700 / +0.165px</span><span class="v">徽标、角标</span></li>
+    <li><span class="k">body/md</span><span style="font-size:14px;font-weight:400;line-height:20px">14px / 400</span><span class="v">正文，仅 9 处</span></li>
+  </ul>
+  <p>字距的处理值得记：<code>label</code> 族全部<strong>正字距</strong>，且与字号成固定比例——14px 配 +0.21px、12px 配 +0.18px、
+    11px 配 +0.165px，都是字号的 1.5%<span class="tag m">实锤</span>。小字加正字距是为了在深底上拉开字形；
+    而 <code>headline</code> 和 <code>title</code> 族字距继承（即 0），字号一大就不再需要。这条比例关系是整套排版最可复用的一处工艺。</p>
+  <p>字号标度共 21 档，从 8px 到 80px：8、10、11、12、14、16、18、20、22、24、28、32、36、40、44、46、48、52、58、64、80<span class="tag m">实锤</span>。
+    小字段每档只差 1 到 2px，大字段跨度拉开——典型的信息密集型产品配置。</p>
+  <p class="note">本页只内嵌了 Inter（开源许可，且正是该站界面实际所用）。Beaufort for LoL、Tungsten、Transducer、TT Norms Pro 属商用授权字体，抓取文件仅留作对照，不随本页分发。</p>
+</section>
+
+<section class="ch" id="c5">
+  <div class="kick"><span class="n">05</span><span class="t">类名即 token</span></div>
+  <h2>DevTools 里能直接读出设计决策</h2>
+  <p class="lead">Panda CSS 生成原子类，类名把 token 名写在了上面。这是拆解这个站时最省力的一段——
+    不用猜，元素的 class 属性就是它的设计规格。</p>
+  <pre><span class="c">/* 比赛卡的真实 class，逐字抄自线上 DOM */</span>
+&lt;div class="<span class="p">bg-c_gray.506 bd-c_gray.500 bdr_4px</span> border-style_solid <span class="p">bd-w_1px</span> d_block w_100%"&gt;
+
+<span class="c">/* 读出来就是：底色 gray.506、描边色 gray.500、圆角 4px、描边 1px */</span>
+<span class="c">/* 计算样式核对：#1c1c1c / #303030 / 4px / 1px  —— 完全对上 */</span>
+
+<span class="c">/* 外层分组 */</span>
+&lt;div class="<span class="p">bg-c_black.501 px_200 py_75</span> <span class="s">[&amp;:has(+section)]:bdr-b_8px</span> ..."&gt;
+<span class="c">/* px_200 = 16px，py_75 = 6px，与间距标度 token÷12.5 吻合 */</span>
+<span class="c">/* 并且用上了 :has() 选择器做相邻兄弟判断，是线上生产代码 */</span></pre>
+  <p>间距标度的换算关系：<code>--spacing-100</code> 是 8px，<code>--spacing-200</code> 是 16px，<code>--spacing-75</code> 是 6px——
+    <strong>token 数字除以 12.5 得像素</strong><span class="tag m">实锤</span>。这种命名的用意是留出插值空间：
+    100 和 200 之间还能塞 150，不必改名。全套十四档：4、6、8、12、16、20、24、32、40、48、64、80、120、160。</p>
+  <p>圆角只有一档在用。样式表里定义了 xs 到 full 六档，但赛程页几乎全是 <code>4px</code>（<code>--radii-xs</code>），
+    容器级偶尔 8px<span class="tag m">实锤</span>。没有大圆角，没有胶囊——这是一个刻意保持方正的界面，
+    与「电竞广播图形」的气质一致。</p>
+</section>
+
+<section class="ch" id="c6">
+  <div class="kick"><span class="n">06</span><span class="t">签名交互 · 可运行</span></div>
+  <h2>剧透闸门：把结果藏起来，是这个站最重要的一次设计判断</h2>
+  <p class="lead">所有体育网站的默认动作是把比分做大。这个站反过来：<strong>比赛结束后，比分默认不显示</strong>，
+    卡片被一层 <code>#262626</code> 的遮罩盖住，只写「CLICK TO REVEAL」和一个划掉的眼睛。有些卡连队名一起藏。</p>
+  <p>原因不难理解，但少有团队真敢做：电竞观众和录播的时差很大，一个韩国赛区的比赛在欧美用户睡醒时早已打完。
+    如果首页替他把冠军剧透了，这个用户今天就不会去看回放了。<strong>这个默认值保护的是内容消费本身。</strong>
+    代价是每个想快速查分的用户都要多点一下——团队把这笔账算在了看回放的人头上。</p>
+  <div class="demo">
+    <div class="hd">
+      <h4>赛程卡三态</h4>
+      <div class="sp">
+        <button class="btn" id="reveal-all" type="button">全部揭示</button>
+        <button class="btn" id="hide-all" type="button">全部藏回</button>
+      </div>
+    </div>
+    <div class="bd">
+      <div class="sched">
+        <div class="dayhd"><span class="dow">星期四</span><span class="dat">9 月 10 日</span></div>
+
+        <div class="grp">
+          <div class="card" data-state="live">
+            <div class="row">
+              <div class="side">
+                <span class="lg" style="background:#10e4f9">AA</span>
+                <span class="nm">Team Alpha</span>
+              </div>
+              <span class="livebadge"><i></i>LIVE</span>
+              <div class="side r">
+                <span class="lg" style="background:#c79e57">BB</span>
+                <span class="nm">Team Bravo</span>
+              </div>
+            </div>
+            <div class="foot"><span>示例联赛 · 季后赛</span><span class="bo">Bo5</span></div>
+          </div>
+        </div>
+
+        <div class="grp">
+          <div class="card">
+            <div class="row">
+              <div class="side">
+                <span class="lg" style="background:#62eefc">CC</span>
+                <span class="nm">Team Charlie</span>
+              </div>
+              <span class="score">2 <span style="color:var(--gray-501)">–</span> 1</span>
+              <div class="side r">
+                <span class="lg" style="background:#fd8a7f">DD</span>
+                <span class="nm">Team Delta</span>
+              </div>
+            </div>
+            <div class="foot"><span>示例联赛 · 常规赛第 7 周</span><span class="bo">Bo3</span></div>
+            <button class="mask" type="button" aria-label="显示这场比赛的比分">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M3 3l18 18M10.6 10.6a2 2 0 002.8 2.8"/><path d="M9.4 5.2A9.5 9.5 0 0112 5c5 0 9 4.5 9 7a12 12 0 01-2.4 3.3M6.2 6.7A12.6 12.6 0 003 12c0 2.5 4 7 9 7a9.7 9.7 0 003.4-.6"/></svg>
+              点击揭示
+            </button>
+          </div>
+        </div>
+
+        <div class="grp">
+          <div class="card">
+            <div class="row">
+              <div class="side">
+                <span class="lg" style="background:#a5f7ff">EE</span>
+                <span class="nm">Team Echo</span>
+              </div>
+              <span class="score">0 <span style="color:var(--gray-501)">–</span> 3</span>
+              <div class="side r">
+                <span class="lg" style="background:#ffb400">FF</span>
+                <span class="nm">Team Foxtrot</span>
+              </div>
+            </div>
+            <div class="foot"><span>示例联赛 · 决赛</span><span class="bo">Bo5</span></div>
+            <button class="mask" type="button" aria-label="显示这场比赛的比分">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M3 3l18 18M10.6 10.6a2 2 0 002.8 2.8"/><path d="M9.4 5.2A9.5 9.5 0 0112 5c5 0 9 4.5 9 7a12 12 0 01-2.4 3.3M6.2 6.7A12.6 12.6 0 003 12c0 2.5 4 7 9 7a9.7 9.7 0 003.4-.6"/></svg>
+              点击揭示
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <p class="note">队名与比分为演示占位，非原站数据。遮罩的底色、字色、字号、字距、定位方式取自实测。</p>
+  <h3>三态之间的差别是怎么做出来的</h3>
+  <p>直播中的比赛不遮——正在打，没有结果可剧透，中间放 LIVE 徽标；已结束的遮住比分区；
+    有些整场遮住，队名也不给<span class="tag m">实锤，见 keyframes/scroll1 截图</span>。三态共用同一个卡片骨架，
+    只换中间那一格的内容，这是布局上的省力处：<code>grid-template-columns: 1fr auto 1fr</code>，两队各占一份，
+    中间那格随状态变成比分、LIVE 徽标或遮罩<span class="tag m">实锤</span>。</p>
+  <p>遮罩的实现是绝对定位盖在整张卡上（<code>position:absolute; inset:0</code>），不是替换 DOM<span class="tag m">实锤</span>。
+    好处是揭示时不触发重排，卡片高度稳定，一列几十张卡不会因为逐张揭示而跳动。</p>
+
+  <h3>整个设置菜单里只有这一项</h3>
+  <p>页面右上的齿轮展开后是一个 280×90 的下拉面板，里面<strong>只有一行</strong>：Spoiler Protection 加一个开关<span class="tag m">实锤</span>。
+    没有主题、没有时区、没有通知偏好——这个产品认为用户唯一需要调的就是「要不要替我藏结果」。
+    一个设置项的菜单，比任何设计说明都更能说明团队把什么当作核心。</p>
+  <figure>
+    <img src="screenshots/settings-spoiler.jpg" alt="lolesports 齿轮展开后的设置面板，仅含一项 Spoiler Protection 开关，默认开启" loading="lazy">
+    <figcaption>自行抓取。面板贴右边缘展开，阴影因此向左偏；开关默认开启，填充为品牌青。</figcaption>
+  </figure>
+  <div class="tbl">
+    <table>
+      <thead><tr><th>元素</th><th class="mono">实测规格</th></tr></thead>
+      <tbody>
+        <tr><td><b>面板</b></td><td class="mono">280×90 / 底 #1c1c1c / 圆角 4px / 内距 30px 20px<br>阴影 rgba(0,0,0,.4) −4px 4px 4px 0</td></tr>
+        <tr><td><b>标签</b></td><td class="mono">textStyle_label/lg，inter 700 14px</td></tr>
+        <tr><td><b>开关开启</b></td><td class="mono">50×30 / 圆角 20px / 填充 #10e4f9 / 无描边 / aria-checked="true"</td></tr>
+        <tr><td><b>开关关闭</b></td><td class="mono">50×30 / 填充 #0f0f0f / 2px solid #404040 / aria-checked="false"</td></tr>
+        <tr><td><b>默认值</b></td><td class="mono">匿名用户即为开启</td></tr>
+        <tr><td><b>持久化</b></td><td class="mono">localStorage 键 <code>spoiler-protection</code>，刷新后保持</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p>三处细节值得记。其一，<strong>阴影是向左偏的</strong>（<code>-4px 4px</code>）——面板贴着视口右侧展开，
+    阴影朝左才落在内容上，朝右会落到视口外白费。其二，开关用了 <code>role="switch"</code> 与 <code>aria-checked</code>
+    而非 <code>input[type=checkbox]</code><span class="tag m">实锤</span>，屏幕阅读器会念成开关而非复选框，语义更准。
+    其三，关闭态不是简单地把填充换灰，而是<strong>换成描边式</strong>（底 <code>#0f0f0f</code> 加 2px 描边）——
+    开是实心、关是空心，在深色界面里这比明暗差更容易分辨。</p>
+  <p>偏好落在 <code>localStorage</code> 而非账号上<span class="tag m">实锤</span>，意味着换设备要重设一次。
+    对一个不强制登录的站点这是合理取舍：匿名用户占多数，本地存储零成本且即时生效。</p>
+</section>
+
+<section class="ch" id="c7">
+  <div class="kick"><span class="n">07</span><span class="t">签名系统 · 可运行</span></div>
+  <h2>一个 data-theme 属性，装下四个电竞品牌</h2>
+  <p class="lead">样式表里五个主题块并列：<code>lol</code>、<code>val</code>、<code>wr</code>、<code>tft</code>、<code>rb</code><span class="tag m">实锤</span>。
+    每块重定义同一组语义名，组件代码一行不用改。这解释了为什么会预加载三十多支字——
+    <strong>这不是 LoL 赛程页的样式表，是 Riot 电竞站群共用的那一套。</strong></p>
+  <div class="demo">
+    <div class="hd">
+      <h4>切换主题，看语义 token 怎么换值</h4>
+      <div class="sp">
+        <button class="btn on" data-theme="lol" type="button">lol</button>
+        <button class="btn" data-theme="val" type="button">val</button>
+        <button class="btn" data-theme="tft" type="button">tft</button>
+        <button class="btn" data-theme="rb" type="button">rb</button>
+      </div>
+    </div>
+    <div class="bd">
+      <div class="tdemo theme-lol" id="tdemo">
+        <div class="eyebrow">ALL REGIONS</div>
+        <div class="ttl">Regional Split</div>
+        <div class="rng">Jul – Oct</div>
+        <div class="tswatch">
+          <span>--colors-surface-brand: <b id="tv1">#10e4f9</b></span>
+          <span>--colors-stroke-brand: <b id="tv2">#10e4f9</b></span>
+          <span>--colors-live-primary: <b id="tv3">#de2f2f</b></span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <p>这个组件复刻的是左栏「当前赛段」的选中态。实测它的高亮不是给条目本身加背景，
+    而是在下面垫了一层绝对定位的元素：<code>position:absolute; inset:0; z-index:below</code>，
+    背景 <code>linear-gradient(90deg, rgba(16,228,249,.2) 40.5%, rgba(16,228,249,.01) 100%)</code>，
+    左边框 2px<span class="tag m">实锤</span>。渐变在 40.5% 处才开始衰减——前四成保持满强度，
+    保证文字所在区域的对比度不被渐变吃掉。这个百分比是调出来的，不是默认值。</p>
+  <div class="tbl">
+    <table>
+      <thead><tr><th>主题</th><th>产品</th><th class="mono">surface-brand</th><th class="mono">展示体</th><th>底色</th></tr></thead>
+      <tbody>
+        <tr><td class="mono"><b>lol</b></td><td>英雄联盟</td><td class="mono">#10e4f9</td><td class="mono">Beaufort for LoL</td><td>深</td></tr>
+        <tr><td class="mono"><b>val</b></td><td>无畏契约</td><td class="mono">#dc3030</td><td class="mono">Transducer</td><td>深</td></tr>
+        <tr><td class="mono"><b>tft</b></td><td>云顶之弈</td><td class="mono">#ffb400</td><td class="mono">TT Norms Pro Compact</td><td>深</td></tr>
+        <tr><td class="mono"><b>wr</b></td><td>激斗峡谷</td><td class="mono">未赋值</td><td class="mono">—</td><td>深</td></tr>
+        <tr><td class="mono"><b>rb</b></td><td>未确认 <span class="tag g">推断</span></td><td class="mono">#ef7d00</td><td class="mono">—</td><td><b>浅</b>（#fafafa）</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p>三点值得注意。其一，<code>wr</code> 主题里大量语义名被赋成 <code>--colors-clear</code>（即 <code>#0000</code>）<span class="tag m">实锤</span>——
+    这个主题声明了但没配色，多半是占位或已停用。其二，<code>rb</code> 是五个里唯一的浅色主题，
+    表面色是 <code>#fafafa</code>，说明这套语义层从一开始就没假设「一定是深色界面」。
+    其三，无论切到哪个主题，<code>--colors-scoring-correct</code> 这类竞猜判定色都固定引用 val 的绿与红<span class="tag m">实锤</span>——
+    对错是功能语义，不该跟着品牌变。这个例外划得很准。</p>
+</section>
+
+<section class="ch" id="c8">
+  <div class="kick"><span class="n">08</span><span class="t">动效系统</span></div>
+  <h2>几乎不做动效，这是配得上它的选择</h2>
+  <p class="lead">整份 471 KB 样式表里只有三条 <code>cubic-bezier</code><span class="tag m">实锤</span>：</p>
+  <div class="tbl">
+    <table>
+      <thead><tr><th class="mono">曲线</th><th>性格</th><th>出现次数</th></tr></thead>
+      <tbody>
+        <tr><td class="mono">cubic-bezier(.8, 0, 1, 1)</td><td>极端缓入，末段陡然加速</td><td>1</td></tr>
+        <tr><td class="mono">cubic-bezier(0, 0, .2, 1)</td><td>标准缓出（Material 的 decelerate）</td><td>1</td></tr>
+        <tr><td class="mono">cubic-bezier(.215, .61, .355, 1)</td><td>easeOutCubic</td><td>1</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p>其余过渡全用关键字。实测高频组合是 <code>transform .2s ease-out</code>、<code>background .5s</code>、
+    <code>opacity .5s</code>、<code>all .2s ease-in-out</code><span class="tag m">实锤</span>。
+    时间尺度只有两档：<strong>交互反馈 .2s，状态切换 .5s</strong>。没有电影级的慢层，也没有编排复杂的入场序列。</p>
+  <p>自定义 <code>@keyframes</code> 只有六个：<code>spin</code>、<code>pulse</code>、<code>ping</code>、<code>bounce</code>、
+    <code>backgroundSwipe</code>、<code>diagonalSwipe</code><span class="tag m">实锤</span>。前四个是工具类框架自带的通用动画，
+    后两个是骨架屏的扫光，跑 <code>1.5s linear infinite</code>。真正属于这个产品自己的动效，就是加载中的那两道扫光。</p>
+  <p>这是对的。一个用户每天来查三次赛程的工具，动效是负担不是加分。<strong>把动效预算全花在骨架屏上</strong>——
+    数据要从后端拉，等待是这个页面唯一无法消除的体验缺口，扫光让等待可读。其余地方保持安静。</p>
+</section>
+
+<section class="ch" id="c9">
+  <div class="kick"><span class="n">09</span><span class="t">工艺细节</span></div>
+  <h2>几处不显眼但决定质感的处理</h2>
+  <h3>日期头是两行，不是一行</h3>
+  <p>「Sunday」和「Sep 6」拆成上下两行，同为 18px/700<span class="tag m">实锤</span>——星期在上、日期在下，
+    但字号权重完全一样。这与常见的「大日期 + 小星期」相反。原因大概是：在一条只能纵向扫读的长列表里，
+    星期几比几号更能定位「这是不是我要找的那天」，两者同权反而扫得快。</p>
+  <h3>291 张图，286 张懒加载</h3>
+  <p>实测首屏 DOM 里有 291 个 <code>img</code>，其中 286 个带 <code>loading="lazy"</code><span class="tag m">实锤</span>。
+    绝大多数是战队徽标 PNG。整页零 <code>video</code> 元素、零 <code>canvas</code>——
+    首屏那块直播画面是 iframe 嵌入的第三方播放器<span class="tag m">实锤</span>，
+    Riot 把直播播放的复杂度整个外包了出去，赛区不同则嵌不同平台。</p>
+  <h3>右栏用了自定义滚动条</h3>
+  <p>右侧排名与新闻那一列由 SimpleBar 接管（DOM 里有 <code>simplebar-content-wrapper</code>，
+    可滚高度 787px 对 720px 视口）<span class="tag m">实锤</span>。三栏各自独立滚动，
+    这是应用壳层布局必然要付的一笔代价：原生滚动条在深色窄栏里太丑，只能自己画。</p>
+  <h3>没有 backdrop-filter</h3>
+  <p>顶栏实测 <code>backdrop-filter: none</code><span class="tag m">实锤</span>。这几年被玻璃拟态占领的顶栏，
+    在这里是实心的。深底 + 实心 + 1px 描边，是广播图形的语言，不是消费类 App 的语言。</p>
+</section>
+
+<section class="ch" id="c10">
+  <div class="kick"><span class="n">10</span><span class="t">复刻</span></div>
+  <h2>可直接粘贴的 token 与关键代码</h2>
+  <p class="lead">完整版见同目录 <a href="design-tokens.css">design-tokens.css</a>，下面是最小可用子集。</p>
+  <pre><span class="c">/* ① 骨架：固定壳层 + 内部滚动，页面本身不滚 */</span>
+main{ display:grid; grid-template-rows:<span class="p">80px 1fr</span>;
+      grid-template-areas:"navigation" "content"; height:100dvh }
+.content{ height:<span class="p">calc(100dvh - 80px)</span>; overflow-y:auto }
+
+<span class="c">/* ② 剧透闸门：绝对定位遮罩，揭示时不重排 */</span>
+.card{ position:relative; background:<span class="s">#1c1c1c</span>;
+       border:1px solid <span class="s">#303030</span>; border-radius:<span class="s">4px</span> }
+.card .mask{ position:absolute; inset:0;
+       display:flex; align-items:center; justify-content:center; gap:16px;
+       background:<span class="s">#262626</span>; color:<span class="s">#a3a3a3</span>;
+       font:700 14px/14px inter, Helvetica, sans-serif;
+       letter-spacing:<span class="p">.21px</span>; text-transform:uppercase; cursor:pointer }
+.card[data-revealed] .mask{ opacity:0; pointer-events:none }
+
+<span class="c">/* ③ 比赛行：两队各一份，中间那格随状态换内容 */</span>
+.row{ display:grid; grid-template-columns:<span class="p">1fr auto 1fr</span>;
+      align-items:center; gap:16px; padding:16px }
+
+<span class="c">/* ④ 选中态：垫一层渐变，不给条目本身加背景 */</span>
+.season{ position:relative }
+.season[aria-current]::before{ content:""; position:absolute; inset:0; z-index:-1;
+      border-left:<span class="p">2px solid</span> var(--brand);
+      background:linear-gradient(90deg,
+        color-mix(in srgb, var(--brand) 20%, transparent) <span class="p">40.5%</span>,
+        transparent 100%) }
+
+<span class="c">/* ⑤ 小字正字距 = 字号 × 1.5%，这条比例整套排版都在用 */</span>
+.label-lg{ font-size:14px; letter-spacing:<span class="p">.21px</span>; font-weight:700; line-height:14px }
+.label-md{ font-size:12px; letter-spacing:<span class="p">.18px</span>; font-weight:700; line-height:12px }
+.label-sm{ font-size:11px; letter-spacing:<span class="p">.165px</span>; font-weight:700; line-height:11px }
+
+<span class="c">/* ⑥ 品牌主题层：组件只认语义名 */</span>
+[data-theme="lol"]{ --brand:<span class="s">#10e4f9</span>; --live:<span class="s">#de2f2f</span> }
+[data-theme="val"]{ --brand:<span class="s">#ff4655</span>; --live:<span class="s">#ff4655</span> }
+[data-theme="tft"]{ --brand:<span class="s">#e2ac57</span>; --live:<span class="s">#fb293a</span> }</pre>
+  <h3>三个容易做错的地方</h3>
+  <ul>
+    <li><strong>别把遮罩做成条件渲染。</strong>用 DOM 增删来切换会引起卡片高度跳动，长列表里逐张揭示时观感很差。原站用的是覆盖层加透明度。</li>
+    <li><strong>别给内容区用 <code>100vh</code>。</strong>原站用 <code>100dvh</code><span class="tag m">实锤</span>，移动端地址栏收起时才不会露出空白或产生双滚动条。</li>
+    <li><strong>别把品牌色写进组件。</strong>组件只引用 <code>--brand</code> 这类语义名，颜色由外层 <code>data-theme</code> 决定。这套系统能同时服务四个品牌，全靠这条纪律。</li>
+  </ul>
+</section>
+
+<section class="ch" id="c11">
+  <div class="kick"><span class="n">11</span><span class="t">出处与方法</span></div>
+  <h2>哪些是量出来的，哪些是看出来的</h2>
+  <p><strong>实锤</strong>来自两条链路：一是 Playwright 在真实浏览器里读 <code>getComputedStyle</code>，
+    二是服务端直取样式表原文（471 KB，三个文件）后做模式挖掘。两者冲突时以计算样式为准。
+    结构化结果在 <a href="tokens.json">tokens.json</a>，资产出处在 <a href="real-assets/manifest.json">real-assets/manifest.json</a>。</p>
+  <p><strong>推断</strong>共四处，均已在正文标出：<code>rb</code> 主题对应哪个产品；右栏那支大写 Inter 属于第三方模块；
+    <code>wr</code> 主题为占位或停用；日期头两行同权的意图。这四条没有直接证据支持，只是观察加常识。</p>
+  <p><strong>没拿到的</strong>：登录态之后的界面、移动端原生 App、各赛区直播平台的差异。
+    逐条说明见 <a href="出处与方法.md">出处与方法.md</a>，数值逐项核对见 <a href="事实核查.md">事实核查.md</a>。</p>
+</section>
+
+</main>
+
+<footer class="wrap">
+  <p>研究对象为 lolesports.com/en-US，抓取于 2026 年 9 月 10 日，视口 1440×900 与 390×844。
+    本页所有数值来自该次抓取，页面演示中的战队名称、比分与徽标均为占位，非原站数据。</p>
+  <p>League of Legends、LoL Esports、VALORANT、Teamfight Tactics 及相关标识为 Riot Games, Inc. 的商标。
+    本研究独立进行，与 Riot Games 无隶属、赞助或背书关系。抓取的第三方素材仅用于设计研究比对，
+    其权利归原权利人所有，使用边界见仓库 <a href="../../NOTICE">NOTICE</a>。</p>
+  <p><a href="../index.html">返回画廊</a></p>
+</footer>
+
+<div class="toast" id="toast" role="status" aria-live="polite">已复制</div>
+
+<script>
+(function(){
+  "use strict";
+
+  /* ---- 色板：数据来自实测 token ---- */
+  var PAL=[
+    {n:"black-102",v:"#0f1519",d:"整站底，body 计算色"},
+    {n:"black-502",v:"#050505",d:"内容区底，样式表最高频"},
+    {n:"black-501",v:"#0e0e0e",d:"赛程分组底"},
+    {n:"gray-506",v:"#1c1c1c",d:"比赛卡底"},
+    {n:"gray-502",v:"#262626",d:"剧透遮罩底"},
+    {n:"gray-500",v:"#303030",d:"卡片描边"},
+    {n:"gray-501",v:"#a3a3a3",d:"次级文字、剧透文案"},
+    {n:"gray-508",v:"#d4d4d4",d:"左栏赛季标题"},
+    {n:"lol-cyan-300",v:"#10e4f9",d:"品牌主色"},
+    {n:"lol-cyan-200",v:"#62eefc",d:"品牌浅阶"},
+    {n:"lol-cyan-400",v:"#08becf",d:"品牌深阶"},
+    {n:"lol-gold-300",v:"#c79e57",d:"金，赛事荣誉语境"},
+    {n:"red-500",v:"#de2b2b",d:"LIVE 徽标底"},
+    {n:"val-red-300",v:"#dc3030",d:"val 主题主色，供对照"},
+    {n:"tft-warm-200",v:"#ffb400",d:"tft 主题主色，供对照"},
+    {n:"rb-orange-100",v:"#ef7d00",d:"rb 主题主色，供对照"}
+  ];
+  var pal=document.getElementById("pal");
+  var toast=document.getElementById("toast"), tt=null;
+  function say(m){ toast.textContent=m; toast.classList.add("on");
+    clearTimeout(tt); tt=setTimeout(function(){toast.classList.remove("on");},1400); }
+  PAL.forEach(function(p){
+    var b=document.createElement("button");
+    b.type="button"; b.className="sw";
+    b.setAttribute("aria-label","复制 "+p.v);
+    b.innerHTML='<span class="c" style="background:'+p.v+'"></span>'+
+      '<span class="m"><b>'+p.n+'</b><span>'+p.v+'</span><em>'+p.d+'</em></span>';
+    b.addEventListener("click",function(){
+      if(navigator.clipboard&&navigator.clipboard.writeText){
+        navigator.clipboard.writeText(p.v).then(function(){say(p.v+" 已复制");},
+          function(){say(p.v);});
+      } else { say(p.v); }
+    });
+    pal.appendChild(b);
+  });
+
+  /* ---- 剧透闸门 ---- */
+  function bind(card){
+    var m=card.querySelector(".mask"); if(!m) return;
+    m.addEventListener("click",function(){ card.classList.add("open"); });
+  }
+  var cards=[].slice.call(document.querySelectorAll(".card"));
+  cards.forEach(bind);
+  document.getElementById("reveal-all").addEventListener("click",function(){
+    cards.forEach(function(c){ c.classList.add("open"); });
+  });
+  document.getElementById("hide-all").addEventListener("click",function(){
+    cards.forEach(function(c){ if(c.dataset.state!=="live") c.classList.remove("open"); });
+  });
+
+  /* ---- 品牌主题切换 ---- */
+  var VALS={
+    lol:["#10e4f9","#10e4f9","#de2f2f"],
+    val:["#dc3030","#dc3030","#ff4655"],
+    tft:["#ffb400","#ffb400","#fb293a"],
+    rb:["#ef7d00","#ef7d00","未赋值（clear）"]
+  };
+  var td=document.getElementById("tdemo");
+  var tv=[document.getElementById("tv1"),document.getElementById("tv2"),document.getElementById("tv3")];
+  [].slice.call(document.querySelectorAll("[data-theme]")).forEach(function(btn){
+    btn.addEventListener("click",function(){
+      var k=btn.getAttribute("data-theme");
+      [].slice.call(document.querySelectorAll("[data-theme]")).forEach(function(b){ b.classList.remove("on"); });
+      btn.classList.add("on");
+      td.className="tdemo theme-"+k;
+      for(var i=0;i<3;i++){ tv[i].textContent=VALS[k][i]; }
+    });
+  });
+})();
+</script>
+</body>
+</html>

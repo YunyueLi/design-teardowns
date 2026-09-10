@@ -1,0 +1,298 @@
+{
+  "site": "LoL Esports",
+  "url": "https://lolesports.com/en-US",
+  "fonts": [
+    {
+      "url": "https://lolesports.com/_next/static/media/Beatrice_Bold-s.p.2o76lox80lnro.ttf",
+      "file": "a4f4ff_Beatrice_Bold-s.p.2o76lox80lnro.ttf",
+      "bytes": 98636,
+      "type": "font/ttf"
+    },
+    {
+      "url": "https://lolesports.com/_next/static/media/Beatrice_BoldItalic-s.p.1tmncno_7j9lq.ttf",
+      "file": "83a2ee_Beatrice_BoldItalic-s.p.1tmncno_7j9lq.ttf",
+      "bytes": 101508,
+      "type": "font/ttf"
+    },
+    {
+      "url": "https://lolesports.com/_next/static/media/Beatrice_ExtraBold-s.p.3tdyt7l36h-u3.otf",
+      "file": "3bada1_Beatrice_ExtraBold-s.p.3tdyt7l36h-u3.otf",
+      "bytes": 132652,
+      "type": "font/otf"
+    },
+    {
+      "url": "https://lolesports.com/_next/static/media/Beatrice_ExtraBold_Italic-s.p.3bgu2-zgm0zwu.otf",
+      "file": "3bca20_Beatrice_ExtraBold_Italic-s.p.3bgu2-zgm0zwu.otf",
+      "bytes": 133772,
+      "type": "font/otf"
+    },
+    {
+      "url": "https://lolesports.com/_next/static/media/Beatrice_Medium-s.p.1cqpyshretbcn.ttf",
+      "file": "04ce9b_Beatrice_Medium-s.p.1cqpyshretbcn.ttf",
+      "bytes": 96440,
+      "type": "font/ttf"
+    },
+    {
+      "url": "https://lolesports.com/_next/static/media/Beatrice_MediumItalic-s.p.05u7-0lfatytx.ttf",
+      "file": "3b6ffc_Beatrice_MediumItalic-s.p.05u7-0lfatytx.ttf",
+      "bytes": 99228,
+      "type": "font/ttf"
+    },
+    {
+      "url": "https://lolesports.com/_next/static/media/BeaufortforLOL_Heavy-s.p.41qr5be4lep5g.woff2",
+      "file": "077676_BeaufortforLOL_Heavy-s.p.41qr5be4lep5g.woff2",
+      "bytes": 36128,
+      "type": "font/woff2"
+    },
+    {
+      "url": "https://lolesports.com/_next/static/media/BeaufortforLOL_Medium-s.p.3xw-bv4um3-1p.woff2",
+      "file": "110384_BeaufortforLOL_Medium-s.p.3xw-bv4um3-1p.woff2",
+      "bytes": 38040,
+      "type": "font/woff2"
+    },
+    {
+      "url": "https://lolesports.com/_next/static/media/BeaufortforLOL_Regular-s.p.296s5_hxm9tcy.woff2",
+      "file": "3d8359_BeaufortforLOL_Regular-s.p.296s5_hxm9tcy.woff2",
+      "bytes": 37196,
+      "type": "font/woff2"
+    },
+    {
+      "url": "https://lolesports.com/_next/static/media/ColfaxWebMedium-s.p.2e3rq8yel0qbw.woff2",
+      "file": "596e36_ColfaxWebMedium-s.p.2e3rq8yel0qbw.woff2",
+      "bytes": 34656,
+      "type": "font/woff2"
+    },
+    {
+      "url": "https://lolesports.com/_next/static/media/ColfaxWebRegular-s.p.2eyxt1bgg3r1-.woff2",
+      "file": "d8e6d8_ColfaxWebRegular-s.p.2eyxt1bgg3r1-.woff2",
+      "bytes": 34660,
+      "type": "font/woff2"
+    },
+    {
+      "url": "https://lolesports.com/_next/static/media/DINNextLTPro_Medium-s.p.1thui730gfctf.woff2",
+      "file": "aa4330_DINNextLTPro_Medium-s.p.1thui730gfctf.woff2",
+      "bytes": 41216,
+      "type": "font/woff2"
+    },
+    {
+      "url": "https://lolesports.com/_next/static/media/DINNextLTPro_Regular-s.p.3ap8g037se_j7.woff2",
+      "file": "bd886a_DINNextLTPro_Regular-s.p.3ap8g037se_j7.woff2",
+      "bytes": 41360,
+      "type": "font/woff2"
+    },
+    {
+      "url": "https://lolesports.com/_next/static/media/Inter_Bold-s.p.0q6si_uqyck6j.woff2",
+      "file": "92570d_Inter_Bold-s.p.0q6si_uqyck6j.woff2",
+      "bytes": 106140,
+      "type": "font/woff2"
+    },
+    {
+      "url": "https://lolesports.com/_next/static/media/Inter_Regular-s.p.1plip2iltmmq0.woff2",
+      "file": "2ee2d9_Inter_Regular-s.p.1plip2iltmmq0.woff2",
+      "bytes": 98868,
+      "type": "font/woff2"
+    },
+    {
+      "url": "https://lolesports.com/_next/static/media/Inter_SemiBold-s.p.3epffx5vs6bsi.woff2",
+      "file": "5e266b_Inter_SemiBold-s.p.3epffx5vs6bsi.woff2",
+      "bytes": 105804,
+      "type": "font/woff2"
+    },
+    {
+      "url": "https://lolesports.com/_next/static/media/Oswald_Bold-s.p.0bcealngk4nw7.woff2",
+      "file": "7d9eaf_Oswald_Bold-s.p.0bcealngk4nw7.woff2",
+      "bytes": 38628,
+      "type": "font/woff2"
+    },
+    {
+      "url": "https://lolesports.com/_next/static/media/RiotSans_Bold-s.p.21qq3lfrl3y_j.woff2",
+      "file": "e28117_RiotSans_Bold-s.p.21qq3lfrl3y_j.woff2",
+      "bytes": 53984,
+      "type": "font/woff2"
+    },
+    {
+      "url": "https://lolesports.com/_next/static/media/RiotSans_Regular-s.p.34y3e5meh055_.woff2",
+      "file": "73e33e_RiotSans_Regular-s.p.34y3e5meh055_.woff2",
+      "bytes": 51684,
+      "type": "font/woff2"
+    },
+    {
+      "url": "https://lolesports.com/_next/static/media/TTNormsProCompactBold-s.p.0v6picq5556f7.woff",
+      "file": "7f7a01_TTNormsProCompactBold-s.p.0v6picq5556f7.woff",
+      "bytes": 145824,
+      "type": "application/font-woff"
+    },
+    {
+      "url": "https://lolesports.com/_next/static/media/TTNormsProCompactExtraBold-s.p.3ql7-wx9wsy9f.woff",
+      "file": "bf28d7_TTNormsProCompactExtraBold-s.p.3ql7-wx9wsy9f.woff",
+      "bytes": 144112,
+      "type": "application/font-woff"
+    },
+    {
+      "url": "https://lolesports.com/_next/static/media/TTNormsProCompactMedium-s.p.1kadsm-ntouu1.woff",
+      "file": "95a383_TTNormsProCompactMedium-s.p.1kadsm-ntouu1.woff",
+      "bytes": 143216,
+      "type": "application/font-woff"
+    },
+    {
+      "url": "https://lolesports.com/_next/static/media/TTNormsProCompactRegular-s.p.2hynz_ppby4cd.woff",
+      "file": "800271_TTNormsProCompactRegular-s.p.2hynz_ppby4cd.woff",
+      "bytes": 144400,
+      "type": "application/font-woff"
+    },
+    {
+      "url": "https://lolesports.com/_next/static/media/Transducer_CondensedBlack-s.p.3pirbkpku-sej.woff2",
+      "file": "9fe84e_Transducer_CondensedBlack-s.p.3pirbkpku-sej.woff2",
+      "bytes": 34744,
+      "type": "font/woff2"
+    },
+    {
+      "url": "https://lolesports.com/_next/static/media/Transducer_ExtendedBlack-s.p.3bf4deffaz1bi.woff2",
+      "file": "9ed6d2_Transducer_ExtendedBlack-s.p.3bf4deffaz1bi.woff2",
+      "bytes": 35764,
+      "type": "font/woff2"
+    },
+    {
+      "url": "https://lolesports.com/_next/static/media/Transducer_Medium-s.p.1sro0ruph_2m5.otf",
+      "file": "f65f5e_Transducer_Medium-s.p.1sro0ruph_2m5.otf",
+      "bytes": 10316,
+      "type": "font/otf"
+    },
+    {
+      "url": "https://lolesports.com/_next/static/media/Tungsten_Bold-s.p.07zutwouhbeo6.woff2",
+      "file": "c70e5e_Tungsten_Bold-s.p.07zutwouhbeo6.woff2",
+      "bytes": 15796,
+      "type": "font/woff2"
+    }
+  ],
+  "video": [],
+  "audio": [],
+  "image": [
+    {
+      "url": "https://lolesports.com/-/lolesports/icon.png?icon.12wuvyb-udn4w.png",
+      "file": "e57da3_icon.png",
+      "bytes": 977,
+      "type": "image/png"
+    },
+    {
+      "url": "https://cmsassets.rgpub.io/sanity/images/dsfx7636/esports/ebb15a64be8b4703f7fac000f2efc5329a148da2-136x32.svg?accountingTag=lol_esports",
+      "file": "ade425_ebb15a64be8b4703f7fac000f2efc5329a148da2-136x32.svg",
+      "bytes": 6458,
+      "type": "image/svg+xml"
+    },
+    {
+      "url": "https://lolesports.com/_next/static/media/play.3l4my5g41hl7b.svg",
+      "file": "35a348_play.3l4my5g41hl7b.svg",
+      "bytes": 444,
+      "type": "image/svg+xml"
+    },
+    {
+      "url": "https://cmsassets.rgpub.io/sanity/images/dsfx7636/news_live/0915a6bcdfa9e919410a2f5b4174db0ba4425ee4-1600x900.jpg?accountingTag=lol_esports&auto=format&fit=max&w=384",
+      "file": "a26057_0915a6bcdfa9e919410a2f5b4174db0ba4425ee4-1600x900.jpg",
+      "bytes": 7466,
+      "type": "image/avif"
+    },
+    {
+      "url": "https://cmsassets.rgpub.io/sanity/images/dsfx7636/news_live/6985d15de9b96ca5e91b1fc7d7b9023a26a04cd8-4096x2304.jpg?accountingTag=lol_esports&auto=format&fit=max&w=384",
+      "file": "406ed5_6985d15de9b96ca5e91b1fc7d7b9023a26a04cd8-4096x2304.jpg",
+      "bytes": 8522,
+      "type": "image/avif"
+    },
+    {
+      "url": "https://cmsassets.rgpub.io/sanity/images/dsfx7636/news_live/07d600f96537922ad8b08a53c9be9418ab9f76dd-1920x1080.jpg?accountingTag=lol_esports&auto=format&fit=max&w=384",
+      "file": "c26ada_07d600f96537922ad8b08a53c9be9418ab9f76dd-1920x1080.jpg",
+      "bytes": 4599,
+      "type": "image/avif"
+    },
+    {
+      "url": "https://lolesports.com/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Friot-logo.2z6d334p2if2w.png&w=256&q=75",
+      "file": "ffc259_image",
+      "bytes": 3583,
+      "type": "image/png"
+    },
+    {
+      "url": "https://lolesports.com/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Flol-logo.3l3euas8usg8p.png&w=256&q=75",
+      "file": "775a43_image",
+      "bytes": 3065,
+      "type": "image/png"
+    },
+    {
+      "url": "https://am-a.akamaihd.net/image?resize=96:&f=http%3A%2F%2Fstatic.lolesports.com%2Fteams%2FT1-FullonDark.png",
+      "file": "8f06ce_image",
+      "bytes": 2924,
+      "type": "image/png"
+    },
+    {
+      "url": "https://am-a.akamaihd.net/image?resize=96:&f=http%3A%2F%2Fstatic.lolesports.com%2Fteams%2F1673259409468_DPlusKIALOGO1.png",
+      "file": "7756ab_image",
+      "bytes": 1586,
+      "type": "image/png"
+    },
+    {
+      "url": "https://am-a.akamaihd.net/image?resize=96:&f=http%3A%2F%2Fstatic.lolesports.com%2Fteams%2F1674657011011_pain_logo_white.png",
+      "file": "19092c_image",
+      "bytes": 1726,
+      "type": "image/png"
+    },
+    {
+      "url": "https://am-a.akamaihd.net/image?resize=96:&f=http%3A%2F%2Fstatic.lolesports.com%2Fteams%2F1736924120254_C9Kia_IconBlue_Transparent_2000x2000.png",
+      "file": "da0974_image",
+      "bytes": 3681,
+      "type": "binary/octet-stream"
+    },
+    {
+      "url": "https://am-a.akamaihd.net/image?resize=96:&f=http%3A%2F%2Fstatic.lolesports.com%2Fteams%2F1767769784669_Sentinels_2020_Icon.png",
+      "file": "9f7e2a_image",
+      "bytes": 2024,
+      "type": "binary/octet-stream"
+    },
+    {
+      "url": "https://am-a.akamaihd.net/image?resize=96:&f=http%3A%2F%2Fstatic.lolesports.com%2Fteams%2F1769357207762_TLAlienware_Minimal_Bug-White.png",
+      "file": "5bec5d_image",
+      "bytes": 4885,
+      "type": "binary/octet-stream"
+    },
+    {
+      "url": "https://am-a.akamaihd.net/image?resize=96:&f=http%3A%2F%2Fstatic.lolesports.com%2Fteams%2FDIG-FullonDark.png",
+      "file": "ed070f_image",
+      "bytes": 4134,
+      "type": "image/png"
+    },
+    {
+      "url": "https://am-a.akamaihd.net/image?resize=96:&f=http%3A%2F%2Fstatic.lolesports.com%2Fteams%2F1673413831349_fl.png",
+      "file": "ed2967_image",
+      "bytes": 1749,
+      "type": "image/png"
+    },
+    {
+      "url": "https://am-a.akamaihd.net/image?resize=96:&f=http%3A%2F%2Fstatic.lolesports.com%2Fteams%2F1771324815499_nm_full_color_onW.png",
+      "file": "c4d1d4_image",
+      "bytes": 5253,
+      "type": "binary/octet-stream"
+    },
+    {
+      "url": "https://am-a.akamaihd.net/image?resize=96:&f=http%3A%2F%2Fstatic.lolesports.com%2Fteams%2F1634762917340_300px-Invictus_Gaming_logo.png",
+      "file": "90b850_image",
+      "bytes": 9595,
+      "type": "image/png"
+    }
+  ],
+  "lottie": [],
+  "source": [
+    {
+      "url": "https://lolesports.com/_next/static/chunks/2kjy3oooi5p3s.css",
+      "file": "b3c037_2kjy3oooi5p3s.css",
+      "bytes": 8836
+    },
+    {
+      "url": "https://lolesports.com/_next/static/chunks/3rwir_n157vr_.css",
+      "file": "77f41a_3rwir_n157vr_.css",
+      "bytes": 467286
+    },
+    {
+      "url": "https://lolesports.com/_next/static/chunks/3htam2fzsoq-l.css",
+      "file": "570e7e_3htam2fzsoq-l.css",
+      "bytes": 6358
+    }
+  ]
+}

@@ -1,0 +1,136 @@
+/* ===========================================================================
+   LoL Esports (lolesports.com/en-US) · 真实抽取的设计 token
+   来源：线上计算样式 + 样式表原文（tokens.json、real-assets/source/*.css）
+   抽取日期：2026-09-10   视口：1440×900   区域：en-US
+
+   说明：本文件只收录核对过的值。站点样式表由 Panda CSS 生成，token 分三层：
+   ① 原始调色板 --colors-<族>-<档>   ② 品牌主题层 [data-theme=lol|val|wr|tft|rb]
+   ③ 组件语义层 --colors-home-<组件>-<角色>
+   复刻时应引用第 ③ 层，不要直接写死第 ① 层的十六进制值。
+   =========================================================================== */
+
+:root{
+  /* --- ① 原始调色板：中性 ------------------------------------------------ */
+  --colors-black-100:#0f1923;   /* Riot 通用深蓝黑 */
+  --colors-black-101:#15171a;
+  --colors-black-102:#0f1519;   /* 实测 body 背景 rgb(15,21,25) */
+  --colors-black-103:#0a0e13;
+  --colors-black-104:#000;
+  --colors-black-500:#1c1c1c;
+  --colors-black-501:#0e0e0e;   /* 赛程分组底 */
+  --colors-black-502:#050505;   /* 内容区底，样式表最高频色值 */
+  --colors-black-503:#0f0f0f;
+  --colors-black-504:#060606;
+  --colors-gray-500:#303030;    /* 卡片描边 */
+  --colors-gray-501:#a3a3a3;    /* 次级文字、剧透文案 */
+  --colors-gray-502:#262626;    /* 剧透遮罩底 */
+  --colors-gray-504:#525252;
+  --colors-gray-505:#404040;
+  --colors-gray-506:#1c1c1c;    /* 比赛卡底 */
+  --colors-gray-508:#d4d4d4;    /* 左栏赛季标题 */
+  --colors-gray-509:#fafafa;
+  --colors-white-100:#fff;
+
+  /* --- ① 原始调色板：LoL 品牌 -------------------------------------------- */
+  --colors-lol-cyan-100:#a5f7ff;
+  --colors-lol-cyan-200:#62eefc;
+  --colors-lol-cyan-300:#10e4f9;  /* 品牌主色，实测选中态文字 rgb(16,228,249) */
+  --colors-lol-cyan-400:#08becf;
+  --colors-lol-gold-100:#c5b174;
+  --colors-lol-gold-200:#fdd691;
+  --colors-lol-gold-300:#c79e57;
+  --colors-lol-red-100:#fd8a7f;
+  --colors-lol-red-200:#f64f3e;
+  --colors-lol-red-300:#ef1b06;
+  --colors-red-500:#de2b2b;       /* LIVE 徽标底，实测 rgb(222,43,43) */
+
+  /* --- ① 同代码库内的其余三个电竞品牌主色（用于对照，非本页配色）-------- */
+  --colors-val-red-300:#dc3030;   /* VALORANT 品牌表面色。注意别与 --colors-red-100:#ff4655 混淆，后者是 val 的 LIVE 色 */
+  --colors-tft-warm-200:#ffb400;
+  --colors-rb-orange-100:#ef7d00;
+
+  /* --- ② 品牌主题层：本页为 [data-theme=lol] ----------------------------- */
+  --colors-surface-brand:var(--colors-lol-cyan-300);
+  --colors-stroke-brand:var(--colors-lol-cyan-300);
+  --colors-icon-brand:var(--colors-lol-cyan-300);
+  --colors-text-primary:var(--colors-white-100);
+  --colors-bg-primary:var(--colors-black-102);
+  --colors-live-primary:#de2f2f;   /* --colors-red-102 */
+
+  /* --- ③ 组件语义层：赛程页实际引用的名字 -------------------------------- */
+  --colors-home-bg:var(--colors-black-502);
+  --colors-home-group:var(--colors-black-501);
+  --colors-home-card-bg:var(--colors-gray-502);
+  --colors-home-card-hover-bg:var(--colors-gray-500);
+  --colors-home-live:var(--colors-red-500);
+  --colors-home-spoiler-text:var(--colors-gray-501);
+  --colors-home-spoiler-wins-bg:var(--colors-gray-500);
+  --colors-home-spoiler-wins-bg-hover:var(--colors-gray-506);
+  --colors-home-season-overview-title-text:var(--colors-gray-509);
+  --colors-home-season-overview-accent-text:#10e4f9;  /* lol 主题下取 --colors-blue-501 */
+  --colors-home-season-overview-completed-text:var(--colors-gray-508);
+  --colors-home-news-text:var(--colors-gray-501);
+
+  /* --- 字族：产品界面实测 337/363 个文本节点渲染为 inter ------------------ */
+  --fonts-inter:"inter","inter Fallback",Helvetica,sans-serif;
+  --fonts-beaufort-for-l-o-l:"beaufortForLol";   /* LoL 展示体，商用授权 */
+  --fonts-transducer:"transducer";               /* VALORANT 展示体 */
+  --fonts-tt-norms-pro-compact:"ttNormsProCompact";  /* TFT 展示体 */
+  --fonts-riot-sans:"riotSans";
+  --fonts-noto-sans-j-p:"notoSansJP";
+  --fonts-noto-sans-k-r:"notoSansKR";
+  --fonts-noto-sans-t-c:"Noto Sans TC";
+  --fonts-noto-sans-t-h:"notoSansTH";
+
+  /* --- 字号标度：21 档，8 到 80px ---------------------------------------- */
+  --font-sizes-8:8px;    --font-sizes-10:10px;  --font-sizes-11:11px;
+  --font-sizes-12:12px;  --font-sizes-14:14px;  --font-sizes-16:16px;
+  --font-sizes-18:18px;  --font-sizes-20:20px;  --font-sizes-22:22px;
+  --font-sizes-24:24px;  --font-sizes-28:28px;  --font-sizes-32:32px;
+  --font-sizes-36:36px;  --font-sizes-40:40px;  --font-sizes-44:44px;
+  --font-sizes-46:46px;  --font-sizes-48:48px;  --font-sizes-52:52px;
+  --font-sizes-58:58px;  --font-sizes-64:64px;  --font-sizes-80:80px;
+
+  /* --- 间距标度：token 名 ÷ 12.5 = 像素 ---------------------------------- */
+  --spacing-50:4px;    --spacing-75:6px;    --spacing-100:8px;
+  --spacing-150:12px;  --spacing-200:16px;  --spacing-250:20px;
+  --spacing-300:24px;  --spacing-400:32px;  --spacing-500:40px;
+  --spacing-600:48px;  --spacing-800:64px;  --spacing-1000:80px;
+  --spacing-1500:120px; --spacing-2000:160px;
+
+  /* --- 圆角：语义别名指向数值档 ------------------------------------------ */
+  --radii-xs:4px;   --radii-sm:8px;   --radii-md:12px;
+  --radii-lg:16px;  --radii-xl:24px;  --radii-full:100px;
+  --radii-radius-button:var(--radii-xs);
+  --radii-radius-container:var(--radii-sm);
+  --radii-radius-pill:var(--radii-full);
+
+  /* --- 断点 -------------------------------------------------------------- */
+  --breakpoints-xs:0px;     --breakpoints-sm:640px;   --breakpoints-md:768px;
+  --breakpoints-lg:1024px;  --breakpoints-xl:1280px;  --breakpoints-xxl:1536px;
+  --breakpoints-p-xxxl:2040px;
+
+  /* --- 缓动与时长：样式表原文仅出现三条 cubic-bezier ---------------------- */
+  --ease-1:cubic-bezier(.8,0,1,1);
+  --ease-2:cubic-bezier(0,0,.2,1);
+  --ease-3:cubic-bezier(.215,.61,.355,1);
+  /* 界面过渡以关键字缓动为主，实测高频：
+     transform .2s ease-out；background .5s；opacity .5s；all .2s ease-in-out */
+}
+
+/* ===========================================================================
+   实测组件规格（可直接照抄的数值，全部来自计算样式）
+   --------------------------------------------------------------------------
+   LIVE 徽标      背景 #de2b2b / 字 #fff / inter 700 14px / 字距 .21px
+                  行高 14px / 圆角 4px / 内距 4px 6px
+   比赛卡         背景 #1c1c1c / 描边 1px solid #303030 / 圆角 4px
+   卡外分组       背景 #0e0e0e / 内距 6px 16px
+   剧透遮罩       背景 #262626 / 字 #a3a3a3 / inter 700 14px / 字距 .21px
+                  全大写 / 绝对定位铺满 inset:0
+   左栏选中态     文字 #10e4f9 / inter 700 18px
+                  底层 linear-gradient(90deg,#10e4f966 40.5%,#10e4f903 100%)
+                  左边框 2px solid（品牌色）/ 该层 position:absolute;inset:0
+   顶部壳层       main 为 grid，grid-template-rows:80px 1fr
+                  区域名 "navigation" / "content"
+   滚动容器       高 calc(100dvh - 80px)，页面本身不滚
+   =========================================================================== */
