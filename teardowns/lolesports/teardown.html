@@ -231,8 +231,8 @@ footer a{color:var(--gray-508)}
         <b>拆解 · LoL Esports</b>
       </span>
       <nav>
-        <a href="#c1">定位</a><a href="#c3">色彩</a><a href="#c4">字体</a>
-        <a href="#c6">剧透闸门</a><a href="#c7">四品牌</a><a href="#c10">复刻</a>
+        <a href="#c1">定位</a><a href="#c2">功能</a><a href="#c4">色彩</a><a href="#c5">字体</a>
+        <a href="#c7">剧透闸门</a><a href="#c8">四品牌</a><a href="#c11">复刻</a>
       </nav>
     </div>
     <div class="hero">
@@ -281,7 +281,91 @@ footer a{color:var(--gray-508)}
 </section>
 
 <section class="ch" id="c2">
-  <div class="kick"><span class="n">02</span><span class="t">as-seen</span></div>
+  <div class="kick"><span class="n">02</span><span class="t">功能与架构</span></div>
+  <h2>十一类页面，三层功能，一个只服务于「今天看什么」的中栏</h2>
+  <p class="lead">设计系统只是一半。把路由逐个走一遍，能看出这个产品把功能分成了三层：
+    <strong>核心层</strong>只有赛程，<strong>周边层</strong>是排名、新闻、赛事页、手册、回放、其他联赛，
+    <strong>账号层</strong>只有竞猜和奖励两项——也正是唯二能给你东西的两项。</p>
+  <div class="tbl">
+    <table>
+      <thead><tr><th class="mono">路由</th><th>功能</th><th>实测特征</th></tr></thead>
+      <tbody>
+        <tr><td class="mono">/en-US</td><td><b>赛程</b></td><td>根路径即此页，没有独立首页</td></tr>
+        <tr><td class="mono">/en-US/gpr</td><td>全球战力排名</td><td>跳 <code>/gpr/2026/current</code>，年份分档，带更新时间戳</td></tr>
+        <tr><td class="mono">/en-US/pickems</td><td>赛事竞猜</td><td>按赛事分卡，有 ENDED 状态</td></tr>
+        <tr><td class="mono">/rewards</td><td>观赛奖励</td><td><b>唯一强制登录</b>，未登录直接跳 Riot 账号页</td></tr>
+        <tr><td class="mono">/en-US/news</td><td>新闻</td><td>LOAD MORE 增量加载</td></tr>
+        <tr><td class="mono">/en-US/tickets</td><td>门票</td><td>不是商城，是资格窗口，抓取时为 CLOSED</td></tr>
+        <tr><td class="mono">/en-US/results</td><td>其他联赛</td><td>二级联赛排名，横向切联赛</td></tr>
+        <tr><td class="mono">/en-US/tournament/&lt;id&gt;</td><td>赛事页</td><td>跳 <code>/overview</code>，赛程、排名、战队</td></tr>
+        <tr><td class="mono">/en-US/season/&lt;id&gt;/handbook</td><td>联赛手册</td><td>赛制规则</td></tr>
+        <tr><td class="mono">/vod/&lt;matchId&gt;/&lt;game&gt;</td><td>录像回放</td><td>按「比赛 + 第几局」定位，首页一屏挂了三十余个</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>三栏各管一件事</h3>
+  <p>左栏是<strong>纵深导航</strong>，把赛季时间轴当目录，回答「我要看哪个赛事」；
+    中栏是<strong>产品本体</strong>，全站唯一的主滚动区，回答「现在有什么可看」；
+    右栏是<strong>别处功能的橱窗</strong>——排名和新闻各露三条就跳走，它不承担任何自身完整的功能，
+    职责是把流量导向周边层。</p>
+  <p>移动端三栏塌成一栏，左右两栏直接收起，中栏内容顺序不变<span class="tag m">实锤</span>。
+    这说明<strong>中栏本来就是自足的</strong>，两侧是增强而非必需。</p>
+
+  <h3>赛程的取数逻辑：三条并发查询</h3>
+  <p>全站数据走同一个 GraphQL 端点 <code>/api/gql</code>。首页加载时并发三条 <code>homeEvents</code><span class="tag m">实锤</span>：</p>
+  <div class="tbl">
+    <table>
+      <thead><tr><th>用途</th><th class="mono">时间窗</th><th class="mono">状态筛选</th><th class="mono">页大小</th></tr></thead>
+      <tbody>
+        <tr><td>今日前后</td><td class="mono">前 2 天 → 当日结束</td><td class="mono">completed, unstarted</td><td class="mono">300</td></tr>
+        <tr><td><b>直播中</b></td><td class="mono"><b>不限时间</b></td><td class="mono">inProgress</td><td class="mono">300</td></tr>
+        <tr><td>未来赛程</td><td class="mono">当日 → 60 天后</td><td class="mono">unstarted</td><td class="mono">40</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p><strong>直播那条不带任何日期参数。</strong>一场比赛可能跨零点，也可能因加赛拖出窗口，用日期筛会漏——
+    状态比时间可靠，所以直播单独按状态查。这是三条里最见功力的一条。</p>
+
+  <h3>向未来用日期窗，向过去用游标</h3>
+  <p>点 Load More 触发的是第四种形状：不带日期，改带一个 <code>pageToken</code><span class="tag m">实锤</span>。
+    这个 token 做 base64 解码是：</p>
+  <pre><span class="c">/* 线上原值 */</span>
+pageToken: "b2xkZXI6OjExNTU2NDc5NzE2MzgyMTE3NQ=="
+
+<span class="c">/* base64 解码后 */</span>
+<span class="p">older</span>::<span class="s">115564797163821175</span>
+
+<span class="c">/* 即「比这个事件 ID 更早的一批」 */</span></pre>
+  <p>两个方向两套策略，不是不一致，是各自选了对的工具：未来的赛程已排定且稀疏，按日期切最自然；
+    历史比赛密集且无限延伸，游标翻页才不会因为某几天没有比赛而翻空。</p>
+  <p>另外两点：<strong>联赛筛选在前端做</strong>，操作面板不产生任何新请求<span class="tag m">实锤</span>——
+    首屏已经把 300 条拉进内存，没必要回服务端。<strong>日期切换不改 URL</strong>，
+    切完地址栏仍是 <code>/en-US</code><span class="tag m">实锤</span>，日期是客户端状态而非路由。
+    代价是没法把某一天的赛程发给别人，也没法用后退键回上一天——对一个高频分享赛果的社群产品，这个取舍不小。</p>
+
+  <h3>剧透逻辑是贯穿全栈的，不只是一层遮罩</h3>
+  <ul>
+    <li><b>请求层</b>：<code>vodType: ["recap"]</code> 跟着「今日前后」那条一起要，结果与回放是一起拉的。</li>
+    <li><b>界面层</b>：已结束的比赛遮住比分，粒度分两级——只遮比分，或整张卡连队名一起遮。</li>
+    <li><b>状态层</b>：<code>inProgress</code> 不遮，正在打没有结果可剧透。</li>
+    <li><b>偏好层</b>：齿轮里唯一的开关，匿名默认开启，存 <code>localStorage</code>。</li>
+  </ul>
+  <p>由此才能理解<strong>赛程为什么排成「直播 → 今日 → 更早」而不是按时间倒序</strong>：
+    直播不需要保护放最前，今日的已结束比赛需要保护但用户最想看，更早的保护价值递减往下沉。
+    这个排序本身就是按「剧透风险乘以关注度」排的。</p>
+
+  <h3>它的边界比看上去小</h3>
+  <p>三处证据指向同一个结论：这不是 LoL 专用的站，是 Riot 电竞站群的一套壳。数据层的 <code>sport</code> 参数、
+    样式层的五个 <code>data-theme</code>、字体层的 27 支预加载<span class="tag m">实锤</span>，是同一件事在三层的映射。</p>
+  <p>而且它自己负责的部分比看上去小：<strong>顶栏不属于它</strong>（Riot 跨产品共用组件，内容清单从另一个 CDN 单独拉），
+    <strong>直播播放器不属于它</strong>（iframe 嵌第三方平台），<strong>登录不属于它</strong>（跳 Riot 账号）。
+    它真正拥有的，是三栏壳层加赛程逻辑。</p>
+  <p>完整的路由表、查询变量与局限见 <a href="功能与架构.md">功能与架构.md</a>。</p>
+</section>
+
+<section class="ch" id="c3">
+  <div class="kick"><span class="n">03</span><span class="t">as-seen</span></div>
   <h2>真实渲染，作为下面所有数值的对照物</h2>
   <figure>
     <img src="screenshots/hero.jpg" alt="lolesports.com 赛程页首屏真实截图：左侧赛季导轨，中间直播卡与赛程列表，右侧排名与新闻" loading="lazy">
@@ -289,8 +373,8 @@ footer a{color:var(--gray-508)}
   </figure>
 </section>
 
-<section class="ch" id="c3">
-  <div class="kick"><span class="n">03</span><span class="t">色彩系统</span></div>
+<section class="ch" id="c4">
+  <div class="kick"><span class="n">04</span><span class="t">色彩系统</span></div>
   <h2>三层 token：调色板、品牌主题、组件语义</h2>
   <p class="lead">这套 CSS 由 Panda CSS 生成（样式表里留着 <code>--made-with-panda</code> 这个签名变量<span class="tag m">实锤</span>），
     颜色分三层声明，复刻时该引用第三层。</p>
@@ -327,8 +411,8 @@ footer a{color:var(--gray-508)}
     赛程页不用，属于奖励与藏品模块的配色，说明这套 token 供整个 lolesports 站群共用，不止赛程。</p>
 </section>
 
-<section class="ch" id="c4">
-  <div class="kick"><span class="n">04</span><span class="t">字体系统</span></div>
+<section class="ch" id="c5">
+  <div class="kick"><span class="n">05</span><span class="t">字体系统</span></div>
   <h2>预加载了三十多支字，界面上只跑一支</h2>
   <p class="lead">页面里有 27 个 <code>link rel=preload as=font</code><span class="tag m">实锤</span>，
     <code>document.fonts</code> 报出四十余个字族名，包含 Beaufort for LoL、Tungsten、Transducer、TT Norms Pro Compact、
@@ -369,8 +453,8 @@ footer a{color:var(--gray-508)}
   <p class="note">本页只内嵌了 Inter（开源许可，且正是该站界面实际所用）。Beaufort for LoL、Tungsten、Transducer、TT Norms Pro 属商用授权字体，抓取文件仅留作对照，不随本页分发。</p>
 </section>
 
-<section class="ch" id="c5">
-  <div class="kick"><span class="n">05</span><span class="t">类名即 token</span></div>
+<section class="ch" id="c6">
+  <div class="kick"><span class="n">06</span><span class="t">类名即 token</span></div>
   <h2>DevTools 里能直接读出设计决策</h2>
   <p class="lead">Panda CSS 生成原子类，类名把 token 名写在了上面。这是拆解这个站时最省力的一段——
     不用猜，元素的 class 属性就是它的设计规格。</p>
@@ -392,8 +476,8 @@ footer a{color:var(--gray-508)}
     与「电竞广播图形」的气质一致。</p>
 </section>
 
-<section class="ch" id="c6">
-  <div class="kick"><span class="n">06</span><span class="t">签名交互 · 可运行</span></div>
+<section class="ch" id="c7">
+  <div class="kick"><span class="n">07</span><span class="t">签名交互 · 可运行</span></div>
   <h2>剧透闸门：把结果藏起来，是这个站最重要的一次设计判断</h2>
   <p class="lead">所有体育网站的默认动作是把比分做大。这个站反过来：<strong>比赛结束后，比分默认不显示</strong>，
     卡片被一层 <code>#262626</code> 的遮罩盖住，只写「CLICK TO REVEAL」和一个划掉的眼睛。有些卡连队名一起藏。</p>
@@ -512,8 +596,8 @@ footer a{color:var(--gray-508)}
     对一个不强制登录的站点这是合理取舍：匿名用户占多数，本地存储零成本且即时生效。</p>
 </section>
 
-<section class="ch" id="c7">
-  <div class="kick"><span class="n">07</span><span class="t">签名系统 · 可运行</span></div>
+<section class="ch" id="c8">
+  <div class="kick"><span class="n">08</span><span class="t">签名系统 · 可运行</span></div>
   <h2>一个 data-theme 属性，装下四个电竞品牌</h2>
   <p class="lead">样式表里五个主题块并列：<code>lol</code>、<code>val</code>、<code>wr</code>、<code>tft</code>、<code>rb</code><span class="tag m">实锤</span>。
     每块重定义同一组语义名，组件代码一行不用改。这解释了为什么会预加载三十多支字——
@@ -565,8 +649,8 @@ footer a{color:var(--gray-508)}
     对错是功能语义，不该跟着品牌变。这个例外划得很准。</p>
 </section>
 
-<section class="ch" id="c8">
-  <div class="kick"><span class="n">08</span><span class="t">动效系统</span></div>
+<section class="ch" id="c9">
+  <div class="kick"><span class="n">09</span><span class="t">动效系统</span></div>
   <h2>几乎不做动效，这是配得上它的选择</h2>
   <p class="lead">整份 471 KB 样式表里只有三条 <code>cubic-bezier</code><span class="tag m">实锤</span>：</p>
   <div class="tbl">
@@ -589,8 +673,8 @@ footer a{color:var(--gray-508)}
     数据要从后端拉，等待是这个页面唯一无法消除的体验缺口，扫光让等待可读。其余地方保持安静。</p>
 </section>
 
-<section class="ch" id="c9">
-  <div class="kick"><span class="n">09</span><span class="t">工艺细节</span></div>
+<section class="ch" id="c10">
+  <div class="kick"><span class="n">10</span><span class="t">工艺细节</span></div>
   <h2>几处不显眼但决定质感的处理</h2>
   <h3>日期头是两行，不是一行</h3>
   <p>「Sunday」和「Sep 6」拆成上下两行，同为 18px/700<span class="tag m">实锤</span>——星期在上、日期在下，
@@ -610,8 +694,8 @@ footer a{color:var(--gray-508)}
     在这里是实心的。深底 + 实心 + 1px 描边，是广播图形的语言，不是消费类 App 的语言。</p>
 </section>
 
-<section class="ch" id="c10">
-  <div class="kick"><span class="n">10</span><span class="t">复刻</span></div>
+<section class="ch" id="c11">
+  <div class="kick"><span class="n">11</span><span class="t">复刻</span></div>
   <h2>可直接粘贴的 token 与关键代码</h2>
   <p class="lead">完整版见同目录 <a href="design-tokens.css">design-tokens.css</a>，下面是最小可用子集。</p>
   <pre><span class="c">/* ① 骨架：固定壳层 + 内部滚动，页面本身不滚 */</span>
@@ -658,8 +742,8 @@ main{ display:grid; grid-template-rows:<span class="p">80px 1fr</span>;
   </ul>
 </section>
 
-<section class="ch" id="c11">
-  <div class="kick"><span class="n">11</span><span class="t">出处与方法</span></div>
+<section class="ch" id="c12">
+  <div class="kick"><span class="n">12</span><span class="t">出处与方法</span></div>
   <h2>哪些是量出来的，哪些是看出来的</h2>
   <p><strong>实锤</strong>来自两条链路：一是 Playwright 在真实浏览器里读 <code>getComputedStyle</code>，
     二是服务端直取样式表原文（471 KB，三个文件）后做模式挖掘。两者冲突时以计算样式为准。
