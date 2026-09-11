@@ -1103,6 +1103,145 @@ color *= <span class="n">1.</span> - sin(uExit*<span class="n">3.14159265</span>
       <p><span class="tag soft">推断</span> 这个双份实现（DOM 版 + WebGL 版）是刻意的降级路径：
         <code>[data-scene-error]</code> 一挂，CSS 立刻把 <code>.platter</code>
         改回居中的方形、把唱片架的入场位移全部清零——<b>三维挂了，站还能听</b>。</p>
+      <h3 class="sub">三维唱机：三种材质，一条样条，真实 33⅓</h3>
+      <p><span class="tag hard">实锤</span> 场景由 <code>spatial-deck.C_Ps8k2h.js</code> 搭建。
+        第一个值得注意的对比藏在渲染器设置里——它和首屏那台月亮渲染器的取向<b>完全相反</b>：</p>
+    </div>
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th></th><th>首屏月景</th><th>唱机</th><th>为什么</th></tr></thead>
+        <tbody>
+          <tr><td><code>powerPreference</code></td><td><code>high-performance</code></td><td><code>low-power</code></td><td>月亮要跑 17 万粒子；唱机只有几十个网格</td></tr>
+          <tr><td><code>toneMapping</code></td><td><code>NoToneMapping</code></td><td><code>ACESFilmic</code>，曝光 <code>.86</code></td><td>水墨要平；金属要有胶片般的高光滚降</td></tr>
+          <tr><td>像素比上限</td><td><code>1.75</code> / <code>1.25</code></td><td><code>1.65</code></td><td>唱机始终占满屏，边缘更需要抗锯齿</td></tr>
+          <tr><td>相机</td><td>FOV 38，距离按视口算</td><td>FOV 34，固定在 <code>(.25, 5.9, 5.5)</code></td><td>唱机是静物，构图写死；月景要随视口铺开</td></tr>
+          <tr><td>环境光照</td><td>无（自写水墨着色）</td><td><code>RoomEnvironment</code> 经 PMREM 烘焙</td><td>金属没有环境反射就是一块死灰</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="prose">
+      <p><span class="tag hard">实锤</span> 那间「房」是代码里手搭的：一盏
+        <code>PointLight(0xffffff, 900, 28, 2)</code> 加六块发光面板
+        （<code>emissiveIntensity</code> 分别是 <code>50 / 50 / 17 / 43 / 20 / 100</code>），
+        用 <code>PMREMGenerator.fromScene(room, .025)</code> 烘成一张环境贴图后，
+        <b>房间当场 <code>dispose()</code></b>——只留下那张反射贴图。
+        场景里另有两盏方向光：暖白 <code>#fffcf6</code> 强度 <code>2.4</code> 在
+        <code>(-3, 5, 3)</code>，冷白 <code>#e9eef2</code> 强度 <code>1.7</code> 在
+        <code>(4, 2, -3)</code>，再加一盏 <code>0.25</code> 的环境光。
+        <span class="tag soft">推断</span> 一暖一冷夹光，是产品摄影棚的标准布光。</p>
+
+      <h4 class="sub2">整台机器只用三种材质</h4>
+    </div>
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th>材质</th><th>色</th><th>metalness</th><th>roughness</th><th>用在哪</th></tr></thead>
+        <tbody>
+          <tr><td>金属</td><td><code>#55595b</code></td><td><code>.86</code></td><td><code>.38</code></td><td>转盘、唱臂、配重、主轴、底板</td></tr>
+          <tr><td>琴箱</td><td><code>#090a0b</code></td><td><code>.12</code></td><td><code>.58</code></td><td>机身、唱头壳、唱臂座（<code>envMapIntensity .18</code> 压住反射）</td></tr>
+          <tr><td>哑光</td><td><code>#080809</code></td><td><code>.08</code></td><td><code>.58</code></td><td>脚垫、唱片胶体、转盘垫</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="prose">
+      <p>三种材质、一张环境贴图，就把一台唱机做出来了。
+        <span class="tag soft">推断</span> 这是很克制的选法——大多数人会给每个零件配一种材质。</p>
+
+      <h4 class="sub2">几何：唱臂是一条样条</h4>
+      <p><span class="tag hard">实锤</span> 最见功夫的一处：唱臂不是圆柱拼的，
+        是一条穿过四个控制点的 <code>CatmullRomCurve3</code>，再用
+        <code>TubeGeometry(curve, 40, .026, 12)</code> 扫出来——
+        <b>所以它是 S 形的，和真唱臂一样</b>。</p>
+    </div>
+
+<pre><code><span class="c">// spatial-deck.C_Ps8k2h.js —— 唱臂曲线，原文</span>
+<span class="k">new</span> CatmullRomCurve3([
+  <span class="k">new</span> Vector3(<span class="n">0</span>,     <span class="n">0</span>,     <span class="n">-.32</span>),   <span class="c">// 配重端</span>
+  <span class="k">new</span> Vector3(<span class="n">0</span>,     <span class="n">0</span>,     <span class="n">.3</span>),     <span class="c">// 过枢轴</span>
+  <span class="k">new</span> Vector3(<span class="n">-.025</span>, <span class="n">-.015</span>, <span class="n">1.48</span>),   <span class="c">// 开始外弯并微微下垂</span>
+  <span class="k">new</span> Vector3(<span class="n">-.13</span>,  <span class="n">-.025</span>, <span class="n">1.97</span>)    <span class="c">// 唱头壳</span>
+])</code></pre>
+
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th>零件</th><th>几何</th><th>位置</th></tr></thead>
+        <tbody>
+          <tr><td>机身</td><td><code>RoundedBoxGeometry(4.05, .26, 3.3, 3, .08)</code></td><td><code>y = -.12</code></td></tr>
+          <tr><td>底板</td><td><code>RoundedBoxGeometry(4.07, .05, 3.32, 2, .035)</code></td><td><code>y = -.22</code></td></tr>
+          <tr><td>四个脚垫</td><td><code>Cylinder(.19, .16, .18, 32)</code></td><td><code>x = ±1.45, z = ±1.12</code></td></tr>
+          <tr><td>转盘</td><td><code>Cylinder(1.43, 1.43, .13, 128)</code></td><td>唱片组整体 <code>x = -.35</code></td></tr>
+          <tr><td>转盘垫</td><td><code>Cylinder(1.405, 1.405, .055, 128)</code></td><td><code>y = .185</code></td></tr>
+          <tr><td>唱片胶体</td><td><code>Cylinder(1.38, 1.38, .025, 128)</code></td><td><code>y = .235</code></td></tr>
+          <tr><td>纹面</td><td><code>Circle(1.377, 160)</code> + 自写着色器</td><td><code>y = .249</code></td></tr>
+          <tr><td>标签</td><td><code>Circle(.45, 80)</code>，贴真实封面</td><td><code>y = .252</code></td></tr>
+          <tr><td>主轴</td><td><code>Cylinder(.035, .041, .11, 24)</code></td><td><code>y = .285</code></td></tr>
+          <tr><td>唱臂枢轴</td><td><code>Sphere(.11, 24, 16)</code></td><td><code>(1.35, .43, -1.05)</code></td></tr>
+          <tr><td>配重</td><td><code>Cylinder(.13, .13, .23, 40)</code></td><td>臂尾 <code>z = -.32</code></td></tr>
+          <tr><td>唱头壳</td><td><code>RoundedBoxGeometry(.16, .08, .29, 2, .018)</code></td><td><code>z = 1.98</code></td></tr>
+          <tr><td>唱针</td><td><code>Cylinder(.008, .003, .1, 8)</code></td><td><code>z = 2.055</code>，朝下</td></tr>
+          <tr><td>指示灯</td><td><code>Circle(.019, 20)</code>，<code>#a74832</code></td><td><code>(-1.4, .025, 1.31)</code></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="prose">
+      <p><span class="tag hard">实锤</span> 唱纹是<b>真的一圈一圈画出来</b>的：从半径 <code>.52</code> 起，
+        步进 <code>.0088</code>，共 <b>94 圈</b>，每圈 160 段线；
+        并且跳过第 <b>31、32、65</b> 三圈——<b>那是曲目之间的分轨间隙</b>。
+        线材质 <code>#62676a</code>，不透明度 <code>.13</code>。
+        <span class="tag soft">推断</span> 这个细节不会有人看得出来，但它在那儿。</p>
+
+      <h4 class="sub2">纹面着色器：一条 22 次方的掠光</h4>
+    </div>
+
+<pre><code><span class="c">// 纹面片元着色器，原文</span>
+<span class="k">vec2</span>  p       = vUv-<span class="n">.5</span>;
+<span class="k">float</span> radius  = length(p);
+<span class="k">vec2</span>  radial  = normalize(vRadial.xz+<span class="k">vec2</span>(<span class="n">.00001</span>));
+<span class="k">float</span> sheen   = pow(abs(dot(radial,normalize(<span class="k">vec2</span>(<span class="n">-.72</span>,<span class="n">-.44</span>)))),<span class="n">22.</span>);
+<span class="k">float</span> grooves = texture2D(uGrooves,vUv).r;
+<span class="k">float</span> rim     = smoothstep(<span class="n">.486</span>,<span class="n">.499</span>,radius)*<span class="n">.022</span>;
+<span class="k">float</span> light   = <span class="n">.0045</span>+grooves*<span class="n">.035</span>+sheen*(<span class="n">.018</span>+grooves*<span class="n">.16</span>)+rim;
+gl_FragColor    = <span class="k">vec4</span>(<span class="k">vec3</span>(light)*<span class="k">vec3</span>(<span class="n">.97</span>,<span class="n">.99</span>,<span class="n">1.</span>),<span class="n">1.</span>);</code></pre>
+
+    <div class="prose">
+      <p>这段是整台唱机里最聪明的十行。黑胶之所以「像黑胶」，
+        靠的不是纹理贴图，而是<b>各向异性的掠光</b>——光沿唱纹方向被拉成一道弧。
+        它用 <code>vRadial.xz</code> 拿到每个片元的径向方向，
+        和固定光向 <code>(-.72, -.44)</code> 点乘后取 <b>22 次方</b>，
+        得到一道极窄的高光带；再让唱纹自身把这道光调制一次
+        （<code>sheen * (.018 + grooves*.16)</code>）——<b>有纹的地方更亮，无纹的地方更暗</b>。
+        <code>rim</code> 把最外圈 <code>.486–.499</code> 挑亮一点当唱片边。
+        最后整体乘 <code>vec3(.97, .99, 1.)</code>，让黑色偏冷<b>一点点</b>。</p>
+
+      <h4 class="sub2">动态：这台是真的 33⅓ 转</h4>
+      <p><span class="tag hard">实锤</span> DOM 版是写意的 <code>4.6s</code> 一圈（约 13 rpm），
+        三维版则是 <code>Math.PI * 2 * 33.333 / 60</code>——<b>一分钟 33⅓ 圈，真实转速</b>。
+        所有状态都不用过渡曲线，而用指数阻尼 <code>MathUtils.damp(当前, 目标, λ, dt)</code>：</p>
+    </div>
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th>量</th><th>λ</th><th>目标</th><th>效果</th></tr></thead>
+        <tbody>
+          <tr><td>转速</td><td><code>3.3</code></td><td>播放时 33⅓ rpm，否则 0</td><td>起转与刹车都要一会儿</td></tr>
+          <tr><td>换片抬起</td><td><code>13</code> 升 / <code>8</code> 落</td><td><code>y = .42</code>，同时 <code>rotation.z = y × -.17</code></td><td><b>抬起快、放下慢</b>，且带一点歪</td></tr>
+          <tr><td>唱臂角</td><td><code>4.5</code></td><td><code>-.42 - 播放进度 × .19</code></td><td>臂随播放进度向内走</td></tr>
+          <tr><td>唱头俯仰</td><td><code>9</code></td><td>到位后才 <code>0</code>，否则 <code>-.075</code></td><td>「到位」判据 <code>|Δ| &lt; .045</code></td></tr>
+          <tr><td>指针视差</td><td><code>5</code></td><td><code>-.1 + x × .065</code>、<code>y × .026</code></td><td>整机跟着鼠标微转</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="prose">
+      <p>第三行才是真本事：<b>唱臂角不是动画，是从 <code>&lt;audio&gt;</code> 的
+        <code>currentTime / duration</code> 算出来的</b>。30 秒试听走完，
+        臂从 <code>-.42</code> 弧度走到 <code>-.61</code>——<b>你听到哪儿，针就在哪儿</b>。
+        而唱头只有在臂已经到位时才落平，没到位就一直微微翘着。
+        这两条加起来，才是「这台机器真的在放唱片」的来源。</p>
+      <p><span class="tag hard">实锤</span> 性能上同样克制：渲染<b>限帧 30fps</b>
+        （<code>e - last &lt; 1000/30</code> 就跳过），任何变化后只多跑 <code>1800ms</code> 就停摆；
+        <code>IntersectionObserver</code> 的 <code>rootMargin</code> 是 <code>80px</code>；
+        <code>prefers-reduced-motion</code> 下转速直接归零、阻尼换成直接赋值、视差关闭；
+        封面贴图从 DOM 的 <code>&lt;img&gt;</code> 的 <code>currentSrc</code> 取，
+        并用一个自增令牌挡住竞态——<b>连切两张唱片不会贴错封面</b>。</p>
+
       <h3 class="sub">DOM 版唱机，逐值复刻</h3>
       <p>下面这台是把站点 <code>.music .platter</code> 那组规则原样搬来的结果，
         连毛毡遮罩 <code>/music/felt.png</code> 与黑胶纹理 <code>/music/vinyl-grooves.jpg</code>
