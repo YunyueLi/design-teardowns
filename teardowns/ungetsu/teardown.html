@@ -1254,7 +1254,7 @@ color *= <span class="n">1.</span> - sin(uExit*<span class="n">3.14159265</span>
           <tr><td>渲染像素预算</td><td><code>min( max(2, dpr), √(5 000 000 / 屏幕像素) )</code></td><td><b>总渲染像素封顶 500 万</b>，屏幕越大像素比越低</td></tr>
           <tr><td>后处理</td><td><code>EffectComposer</code> + <code>HalfFloat</code> RT，<code>samples: 4</code></td><td>4× MSAA，另挂输出 pass 与 FXAA pass</td></tr>
           <tr><td>色调映射</td><td>曝光 <code>.9</code></td><td>比简版的 <code>.86</code> 稍亮</td></tr>
-          <tr><td>阴影</td><td>PCFSoft，<code>1024²</code>，<code>autoUpdate = false</code></td><td>只在尺寸变化时手动更新一次</td></tr>
+          <tr><td>阴影</td><td>PCF（<code>PCFShadowMap</code>），<code>1024²</code>，<code>autoUpdate = false</code></td><td>只在尺寸变化时手动更新一次</td></tr>
           <tr><td>阴影相机</td><td>正交 <code>±4</code>，<code>near .1 / far 14</code>，<code>normalBias .009</code>，<code>bias -1e-4</code></td><td>贴着场景收紧，换取分辨率</td></tr>
           <tr><td>主光</td><td>3 盏矩形面光：<code>#f5f8ff</code> 7、<code>#dbeaf9</code> 9、<code>#fff4e5</code> 2.5</td><td>两冷一暖，各自 <code>lookAt</code> 不同焦点</td></tr>
           <tr><td>定向光</td><td><code>#f0f4ff</code>，强度 <code>.5</code>，投影</td><td>只负责那道硬阴影</td></tr>
@@ -1270,6 +1270,36 @@ color *= <span class="n">1.</span> - sin(uExit*<span class="n">3.14159265</span>
         而不是设备像素比这个间接量。在 4K 屏上会自动把像素比压到 1 出头，
         在小窗口里又允许它上到 2——<b>预算恒定，画质自适应</b>。</p>
 
+      <h3 class="sub">可跑 demo：把这台唱机重建出来</h3>
+      <p>下面这台是用真实数值重建的：机身那个三角形的三个顶点、三个脚垫的位置、
+        转盘与皮带、玻璃转盘的车削轮廓、唱片的三片几何、玻璃棱锥的六层轮廓、
+        整支唱臂（臂管样条、配重、唱头壳、唱针、<b>四根接线</b>、循迹力刻度盘、防滑锤）、
+        三盏主面光加一盏投影定向光、<b>六盏彩虹矩形面光</b>、
+        黑胶的各向异性材质与三张真实唱纹贴图、
+        像素预算与两条 centripetal 镜头样条——全部照抄。</p>
+    </div>
+
+    <div class="demo">
+      <div class="demo-stage" id="deck3d" style="aspect-ratio:16/10"></div>
+      <div class="demo-bar">
+        <label>镜头推轨 <input type="range" id="deck3dDolly" min="0" max="1" step="0.001" value="0.93"></label>
+        <button class="demo-btn" type="button" id="deck3dPlay" aria-pressed="false">上针播放</button>
+        <button class="demo-btn" type="button" id="deck3dRainbow" aria-pressed="true">彩虹灯 on</button>
+        <span class="readout" id="deck3dRead">—</span>
+      </div>
+      <p class="demo-note" id="deck3dNote">拖动滑块走镜头样条；点「上针播放」会以<b>真实 33⅓ 转</b>转起来，
+        唱臂按余弦定理逆解出角度、随落针半径从 1.44 走到 0.59。
+        关掉彩虹灯就能看见：那六道有颜色的反光是真的灯打上去的，不是贴图。
+        <b>与原站的三处差别，都在这里说清</b>：一，玻璃棱锥用 three.js 内置的屏幕空间
+        transmission，原站是自带 BVH 的光线追踪 pass；二，为了让内置 transmission
+        与金属读得出来，这里就地烘了一张极简影棚环境贴图，<b>原站没有这一层</b>
+        （它靠光追直接采场景）；三，唱片标签是自绘的，原站贴的是当期专辑封面，
+        第三方封面图不搬进来。除此之外，几何尺寸、材质参数、灯光色与强度、
+        唱臂逆解、镜头样条、像素预算都是真实值。
+        用的是本仓库已有的 three.js r160（原站 r185）。</p>
+    </div>
+
+    <div class="prose">
       <h3 class="sub">简版唱机（唱片架页）</h3>
       <p>作为对照，<code>/music</code> 那台 8.6KB 的简版走的是完全不同的取舍：
         <code>powerPreference: "low-power"</code>、<code>ACESFilmic</code> 曝光 <code>.86</code>、
@@ -1717,6 +1747,10 @@ color *= <span class="n">1.</span> - sin(uExit*<span class="n">3.14159265</span>
   </div>
   <div class="curtain-corners"><span>DESIGN TEARDOWNS</span><span>UNGETSU · 雲月</span></div>
 </footer>
+
+<script src="../_gallery/vendor/three.min.js"></script>
+<script src="real-assets/vendor/RectAreaLightUniformsLib.js"></script>
+<script src="deck3d.js" defer></script>
 
 <script>
 (function(){
