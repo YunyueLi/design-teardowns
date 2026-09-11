@@ -14,7 +14,7 @@
 
 画廊把这五个阶段做成一条可探索的光束线。滚动或点击阶段，传送带、滚轮和案例预览同步移动，相机跟随预览前进。滚动停止后保留当前位置，点击阶段才精确停靠；阶段文字在预览实际到站后切换。场景由本地 Three.js 实时渲染；金属、灯光、光束和预览拥有共同的空间与遮挡关系。它是研究过程的视觉表达，具体结论仍由各案例中的证据与分析完成。
 
-案例档案库目前有 **20 份设计拆解**。首页展示六个精选案例，支持搜索、分类、排序和分页；打开 Case archive 可以继续浏览。案例增加时，五阶段流程和每页六项的布局保持不变。手机、横屏、键盘访问和减弱动态偏好均有对应路径；三维场景不可用时仍可通过静态入口进入案例页面。
+案例档案库目前有 **21 份设计拆解**。首页展示六个精选案例，支持搜索、分类、排序和分页；打开 Case archive 可以继续浏览。案例增加时，五阶段流程和每页六项的布局保持不变。手机、横屏、键盘访问和减弱动态偏好均有对应路径；三维场景不可用时仍可通过静态入口进入案例页面。
 
 ## 当前展览
 
@@ -26,6 +26,7 @@
 | [Latrix](teardowns/latrix/teardown.html)                                | AI Beings 品牌页面的古典排版与字母螺旋 |
 | [ChatGPT](teardowns/chatgpt/teardown.html)                              | OpenAI overview 页面的留白与产品叙事   |
 | [EasyCode](teardowns/easycode/teardown.html)                            | 编程练习、指导与反馈页面               |
+| [ungetsu · 雲月](teardowns/ungetsu/teardown.html)                       | 会消解成尘的月亮与摄影个人站           |
 
 完整目录见 [catalogue.js](teardowns/_gallery/catalogue.js)。点击案例进入对应设计拆解页，三维台车中的默认预览为 Shopify Editions Winter ’26。
 
