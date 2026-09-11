@@ -224,6 +224,28 @@ select {
   color: var(--faint);
   font: 10px var(--mono);
 }
+.github-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-left: 28px;
+  color: var(--muted);
+  font: 11px var(--mono);
+  text-transform: uppercase;
+  white-space: nowrap;
+  transition: color 160ms ease;
+}
+.github-link:hover,
+.github-link:focus-visible {
+  color: var(--ink);
+}
+.github-link svg {
+  width: 17px;
+  height: 17px;
+  fill: currentColor;
+  stroke: none;
+  stroke-width: 0;
+}
 .status-dot {
   display: inline-block;
   width: 8px;
@@ -1096,6 +1118,16 @@ body.compact .fallback-specimen {
   .site-header nav {
     margin-left: auto;
     gap: 18px;
+  }
+  .github-link {
+    min-width: 44px;
+    min-height: 44px;
+    justify-content: center;
+    margin-left: auto;
+    margin-right: 0;
+  }
+  .github-link span {
+    display: none;
   }
   .site-header nav a {
     display: none;
