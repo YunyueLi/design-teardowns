@@ -1093,14 +1093,13 @@ color *= <span class="n">1.</span> - sin(uExit*<span class="n">3.14159265</span>
   <div class="shell">
     <h2 class="sec-label"><span class="en">RECORDS</span><span class="jp">唱片厅 · 一台会被推近的唱机</span></h2>
     <div class="prose">
-      <p class="lede">唱片这一节是全站第二个 WebGL 场景，长 690svh。</p>
+      <p class="lede">唱片这一节是全站第二个 WebGL 场景，长 690svh——也是技术密度最高的一段。</p>
       <p><span class="tag hard">实锤</span> <code>#dv-music[data-cinematic] .music-presentation</code>
         高 <code>690svh</code>、宽 <code>100vw - 32px</code>，里面的 <code>.deck</code>
         <code>position:sticky; top:0; height:100svh</code>——
         又是一段「把一个场景钉住、用滚动当镜头推轨」的编排。
-        唱机本身由一个独立的 <code>spatial-deck</code> canvas 渲染，
-        DOM 版的转盘在场景就位后整组 <code>display:none</code>。</p>
-      <p><span class="tag soft">推断</span> 这个双份实现（DOM 版 + WebGL 版）是刻意的降级路径：
+        三维场景就位后，DOM 版的转盘整组 <code>display:none</code> 让位。</p>
+      <p><span class="tag soft">推断</span> 保留那套 DOM 转盘是刻意的降级路径：
         <code>[data-scene-error]</code> 一挂，CSS 立刻把 <code>.platter</code>
         改回居中的方形、把唱片架的入场位移全部清零——<b>三维挂了，站还能听</b>。</p>
       <h3 class="sub">先分清：站上有两台唱机</h3>
