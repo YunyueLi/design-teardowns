@@ -336,11 +336,15 @@ select {
   letter-spacing: .01em;
   margin-top: 6px;
   color: #bbbeba;
+  /* Reserve two lines so a longer stage statement does not push the
+     evidence legend, case metadata, or CTA during station changes. */
+  min-height: 2.7em;
 }
 .station-description {
   margin-top: 8px;
   font: 13px/1.7 var(--cn);
   color: var(--muted);
+  min-height: 3.4em;
 }
 .truth-legend {
   display: grid;
@@ -1115,6 +1119,9 @@ body.compact .fallback-specimen {
     padding-right: 0;
     border: 0;
   }
+  .selected-study {
+    height: 76px;
+  }
   .site-header nav {
     margin-left: auto;
     gap: 18px;
@@ -1471,6 +1478,10 @@ body.compact .fallback-specimen {
     font-size: 9px;
   }
 }
+@media (max-height: 500px) and (min-width: 480px) {
+  /* Keep the CTA above the fixed station rail on very short landscapes. */
+  body.compact .station-copy { top: 31%; }
+}
 @media (max-height: 560px) and (max-width: 600px) {
   .archive-dialog .archive-panel {
     min-height: 505px;
@@ -1602,10 +1613,21 @@ body.compact .fallback-specimen {
 .primary-action { font-size: 14px; font-weight: 500; }
 .truth-legend { display: flex; gap: 22px; margin: 20px 0; font-size: 11px; }
 .truth-legend span { gap: 8px; }
-.selected-study { background: none; border: 0; padding: 0; margin-bottom: 22px; }
-.selected-study strong { font: 500 16px/1.4 var(--ui); white-space: normal; }
+.selected-study { background: none; border: 0; padding: 0; margin-bottom: 22px; height: 60px; box-sizing: border-box; }
+.selected-study strong {
+  font: 500 16px/1.4 var(--ui);
+  white-space: normal;
+  display: -webkit-box;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
 .selected-study small { font: 12px/1.5 var(--ui); }
 .selected-study-label { margin-bottom: 4px; }
+
+@media (max-width: 600px) {
+  .selected-study { height: 76px; }
+}
 
 /* Inline selection is a readable shelf, not six posters compressed into the
    space left by form controls. The full archive dialog retains large posters. */
