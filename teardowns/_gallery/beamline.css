@@ -33,7 +33,8 @@
   --display: Oswald, "Arial Narrow", sans-serif;
   --mono: Plex, monospace;
   --ui: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", sans-serif;
-  --serif: GallerySerif, "Songti SC", serif;
+  --cn: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+  --serif: "Songti SC", "Noto Serif SC", "STSong", serif;
   --scale: 1;
   --frame-width: 1586px;
   --frame-height: 992px;
@@ -56,7 +57,7 @@ body {
     radial-gradient(circle at 20% 82%, #0b1f2c 0, transparent 38%),
     var(--ground);
   color: var(--ink);
-  font: 16px/1.6 var(--serif);
+  font: 16px/1.6 var(--cn);
 }
 body.dialog-open {
   overflow: hidden;
@@ -278,7 +279,8 @@ select {
   text-wrap: balance;
 }
 .hero-copy > p {
-  font: 26px/1.35 EBGaramond, var(--serif);
+  font: 500 26px/1.35 var(--cn);
+  letter-spacing: 0.03em;
   margin-top: 13px;
 }
 .editorial-rule {
@@ -308,13 +310,14 @@ select {
   font-size: 32px;
 }
 .station-line {
-  font: 21px/1.35 EBGaramond, var(--serif);
+  font: 500 20px/1.35 var(--cn);
+  letter-spacing: .01em;
   margin-top: 6px;
   color: #bbbeba;
 }
 .station-description {
   margin-top: 8px;
-  font: 12px/1.7 var(--serif);
+  font: 13px/1.7 var(--cn);
   color: var(--muted);
 }
 .truth-legend {
@@ -847,7 +850,7 @@ dialog::backdrop {
   margin-bottom: 22px;
 }
 .dialog-header h2 {
-  font: 400 36px/1.25 var(--serif);
+  font: 500 34px/1.25 var(--cn);
 }
 .icon-button {
   border: 1px solid #7b8879;
@@ -864,7 +867,7 @@ dialog::backdrop {
   padding: 34px 40px;
 }
 .text-dialog > p {
-  font-size: 17px;
+  font: 16px/1.9 var(--cn);
   line-height: 1.9;
   margin: 20px 0;
   color: #d1d6cf;
@@ -890,7 +893,7 @@ dialog::backdrop {
   font: 13px/1.8 var(--mono);
 }
 .method-list span {
-  font-size: 14px;
+  font: 14px/1.8 var(--cn);
   color: #bac5b7;
 }
 .inline-link {
@@ -1503,7 +1506,7 @@ body.compact .fallback-specimen {
     font-size: clamp(38px, 3vw, 54px);
   }
   .station-line {
-    font-size: clamp(20px, 1.55vw, 26px);
+    font-size: clamp(18px, 1.3vw, 22px);
   }
   .station-description {
     font-size: clamp(12px, 0.9vw, 15px);

@@ -8,32 +8,32 @@
     {
       id: "capture",
       title: "Capture",
-      line: "Real interface first.",
-      description: "先记录真实界面，再下结论。",
+      line: "Start with the real interface.",
+      description: "先记录真实界面，再形成判断。",
     },
     {
       id: "measure",
       title: "Measure",
-      line: "Every detail, measured.",
-      description: "读取字体、间距、色彩与动效。",
+      line: "Measure the system, not the surface.",
+      description: "测量字体、间距、色彩与动效参数。",
     },
     {
       id: "reconstruct",
       title: "Reconstruct",
-      line: "Rebuilt from evidence.",
-      description: "用原作的设计语言，重建关键体验。",
+      line: "Reconstruct from evidence.",
+      description: "基于原作的设计语言，重建关键体验。",
     },
     {
       id: "verify",
       title: "Verify",
-      line: "Every number traceable.",
-      description: "区分实测与推断，让结论回到出处。",
+      line: "Every claim is traceable.",
+      description: "区分实测与推断，让每个结论回到证据出处。",
     },
     {
       id: "archive",
       title: "Archive",
-      line: "A growing body of knowledge.",
-      description: "藏品持续增加，五站旅程保持不变。",
+      line: "A living archive of design evidence.",
+      description: "案例持续加入，五阶段流程保持稳定。",
     },
   ];
   const experience = $("#experience"),
@@ -138,20 +138,22 @@
       const meta = stations[station];
       $("#station-number").textContent = pad(station + 1);
       $("#station-word").textContent = meta.title.toUpperCase();
-      $("#station-line").textContent =
-        station === 0 && selectedStudy ? selectedStudy.subtitle : meta.line;
+      // Stage copy describes the research method; the selected case is named
+      // separately below so a source site's marketing tagline never replaces
+      // the gallery's own explanation.
+      $("#station-line").textContent = meta.line;
       $("#station-description").textContent =
         station === 0 && selectedStudy
-          ? "以 " + selectedStudy.title + " 为对象，先记录真实界面。"
+          ? "当前案例为 " + selectedStudy.title + "。先记录真实界面，再形成判断。"
           : meta.description;
       $("#readout-index").textContent = pad(station + 1) + " / 05";
       $("#readout-word").textContent = meta.title;
       $("#archive-heading").textContent =
-        station === 4 ? "Archive" : "Select study";
+        station === 4 ? "Case archive" : "Select a case";
       all(".collection-count").forEach((node) => {
         node.textContent = String(station === 4 ? count : featured.length);
       });
-      $("#archive-scope").textContent = station === 4 ? " studies" : " featured / " + count;
+      $("#archive-scope").textContent = station === 4 ? " case studies" : " featured · " + count + " total";
       all("[data-station]").forEach((link) => {
         if (Number(link.dataset.station) === station)
           link.setAttribute("aria-current", "step");
@@ -179,21 +181,24 @@
     document.body.dataset.selectedStudy = item.slug;
     $("#selected-study-title").textContent = item.title;
     $("#selected-study-kind").textContent = item.kind;
+    if (activeStation === 0)
+      $("#station-description").textContent =
+        "当前案例为 " + item.title + "。先记录真实界面，再形成判断。";
     const open = $("#open-study");
     open.href = item.href;
-    open.setAttribute("aria-label", "打开 " + item.title + " 拆解");
+    open.setAttribute("aria-label", "查看 " + item.title + " 设计拆解");
     open.classList.add("is-ready");
     const access = $("#specimen-access");
     access.href = item.href;
-    access.setAttribute("aria-label", "进入当前样本 " + item.title + " 拆解");
-    access.querySelector("span").textContent = "Open " + item.title;
+    access.setAttribute("aria-label", "查看当前案例：" + item.title);
+    access.querySelector("span").textContent = "View " + item.title + " teardown";
     const fallbackLink = $("#fallback-specimen a");
     if (fallbackLink) {
       fallbackLink.href = item.href;
       fallbackLink.querySelector("img").src = item.cover;
-      fallbackLink.querySelector("img").alt = item.title + " 拆解";
+      fallbackLink.querySelector("img").alt = item.title + " 设计拆解";
       fallbackLink.querySelector("span").firstChild.textContent =
-        "进入 " + item.title + " 拆解";
+        "查看 " + item.title + " 设计拆解";
     }
     if (scene && typeof scene.setSample === "function")
       scene.setSample({ ...item, sceneCover: sampleSource(item) });
@@ -479,10 +484,10 @@
     a.append(image, label);
     a.setAttribute(
       "aria-label",
-      "进入 " +
+      "View " +
         (item.titleZh ? item.titleZh + " / " : "") +
         item.title +
-        " 拆解",
+        " teardown",
     );
     a.addEventListener("click", (event) => {
       event.preventDefault();
@@ -537,18 +542,18 @@
     $("#archive-results").hidden = !visible.length;
     $("#archive-message").hidden = true;
     if (!visible.length)
-      showMessage("没有匹配的作品。", "清除筛选", clearFilters);
+      showMessage("No case studies match these filters.", "Clear filters", clearFilters);
     $("#archive-status").textContent =
       total +
-      " 份拆解，" +
+      " case studies · " +
       (visible.length
-        ? "第 " +
+        ? "showing " +
           (page * pageSize + 1) +
           "–" +
           (page * pageSize + visible.length) +
-          " 项"
-        : "暂无匹配") +
-      "。";
+          ""
+        : "no matches") +
+      ".";
     $("#page-prev").disabled = page === 0;
     $("#page-next").disabled = page >= pages - 1;
     const numbers = [];
@@ -558,7 +563,7 @@
       const button = document.createElement("button");
       button.type = "button";
       button.textContent = String(i + 1);
-      button.setAttribute("aria-label", "第 " + (i + 1) + " 页");
+      button.setAttribute("aria-label", "Page " + (i + 1));
       if (i === page) button.setAttribute("aria-current", "page");
       button.addEventListener("click", () => {
         page = i;
@@ -588,8 +593,8 @@
     } catch (error) {
       if (sequence !== requestSequence) return;
       archiveError = true;
-      showMessage("完整馆藏暂时无法加载，请重试。", "重新加载", refreshArchive);
-      $("#archive-status").textContent = "完整馆藏加载失败。";
+      showMessage("The case archive is unavailable. Try again.", "Retry", refreshArchive);
+      $("#archive-status").textContent = "The case archive failed to load.";
     } finally {
       if (sequence === requestSequence) panel.removeAttribute("aria-busy");
     }

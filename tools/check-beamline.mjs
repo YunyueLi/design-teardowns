@@ -1073,7 +1073,7 @@ test("curated-stays-stable-through-load-and-filters", async ({ page }) => {
     curatedTitles("agent"),
   );
   await page.locator("#archive-category").selectOption("all");
-  await page.getByRole("button", { name: "第 2 页", exact: true }).click();
+  await page.getByRole("button", { name: "Page 2", exact: true }).click();
   await expect(page.locator("#archive-results .archive-item b")).toHaveText(
     curatedTitles("all", 12).slice(6),
   );
@@ -1099,9 +1099,9 @@ test("gallery-filters-pager-empty-and-focus", async ({ page }) => {
   ]);
   await page.locator("#archive-search").fill("");
   await expect(page.getByRole("status")).toHaveText(
-    `${canonicalStudies.length} 份拆解，第 1–6 项。`,
+    `${canonicalStudies.length} case studies · showing 1–6.`,
   );
-  const page2 = page.getByRole("button", { name: "第 2 页", exact: true });
+  const page2 = page.getByRole("button", { name: "Page 2", exact: true });
   await page2.focus();
   await page.keyboard.press("Enter");
   await expect(page2).toHaveAttribute("aria-current", "page");
@@ -1114,7 +1114,7 @@ test("gallery-filters-pager-empty-and-focus", async ({ page }) => {
   ]);
   await page.locator("#archive-search").fill("no-such-beamline-study");
   await expect(page.locator("#archive-results")).toBeHidden();
-  await page.getByRole("button", { name: "清除筛选", exact: true }).click();
+  await page.getByRole("button", { name: "Clear filters", exact: true }).click();
   await expect(page.locator("#archive-search")).toBeFocused();
   await expect(page.locator("#archive-results .archive-item")).toHaveCount(6);
 });
@@ -1128,9 +1128,9 @@ test("catalogue-network-failure-retry", async ({ page }) => {
   await start(page);
   await page.locator("#archive-search").fill("Notion");
   await expect(
-    page.getByRole("button", { name: "重新加载", exact: true }),
+    page.getByRole("button", { name: "Retry", exact: true }),
   ).toBeVisible();
-  await page.getByRole("button", { name: "重新加载", exact: true }).click();
+  await page.getByRole("button", { name: "Retry", exact: true }).click();
   await expect(page.locator("#archive-results .archive-item b")).toHaveText([
     "Notion",
   ]);

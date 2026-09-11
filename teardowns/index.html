@@ -9,15 +9,15 @@
     <meta name="theme-color" content="#050606" />
     <meta
       name="description"
-      content="把优秀界面拆成可验证、可复用的设计知识。进入 Design Teardowns 空间画廊，探索真实界面的捕获、测量、重构、验证与归档。"
+      content="从真实界面出发，捕获、测量、重构并验证可追溯的设计证据。浏览 Design Teardowns 案例档案库。"
     />
-    <meta property="og:title" content="Design Teardowns — 拆解画廊" />
+    <meta property="og:title" content="Design Teardowns — 设计拆解案例库" />
     <meta
       property="og:description"
-      content="把界面送上光束线。每个数字，都能回到证据。"
+      content="从真实界面出发，重建可验证的设计证据。"
     />
     <meta property="og:image" content="_gallery/beamline-readme.jpg" />
-    <title>Design Teardowns — 拆解画廊</title>
+    <title>Design Teardowns — 设计拆解案例库</title>
     <link
       rel="icon"
       href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect width='24' height='24' fill='%23050606'/%3E%3Ccircle cx='12' cy='12' r='4' fill='none' stroke='white'/%3E%3Cpath d='M12 1v6M12 17v6M1 12h6M17 12h6' stroke='white'/%3E%3C/svg%3E"
@@ -29,11 +29,11 @@
       type="font/woff2"
       crossorigin
     />
-    <link rel="stylesheet" href="_gallery/beamline.css?v=20260909-r3" />
+    <link rel="stylesheet" href="_gallery/beamline.css?v=20260911-copy-r1" />
     <script defer src="_gallery/featured.js?v=20260908"></script>
     <script defer src="_gallery/vendor/three.min.js"></script>
-    <script defer src="_gallery/beamline-3d.js?v=20260909-r3"></script>
-    <script defer src="_gallery/beamline.js?v=20260909-r2"></script>
+    <script defer src="_gallery/beamline-3d.js?v=20260911-copy-r1"></script>
+    <script defer src="_gallery/beamline.js?v=20260911-copy-r1"></script>
   </head>
   <body>
     <!--
@@ -41,7 +41,7 @@
   OWN-WORLD: Beamline C, graphite metal, machined edges, white optical light, quiet serif voice.
   STORY: Explore five operations, inspect an actual specimen, enter a growing but bounded archive.
   FIRST VIEWPORT: Left editorial column; full-depth bench from lower left to upper right;
-  specimen at center; six-study archive at right; calibrated station navigation below.
+  current case at center; featured case shelf at right; calibrated stage navigation below.
   FORM: User-approved beamline-c; one live Three.js world and one continuous transport state.
   FINISH: Real browser review, interaction checks, responsive evidence, updated DESIGN.md.
   -->
@@ -65,7 +65,7 @@
         </symbol>
       </defs>
     </svg>
-    <a class="skip-link" href="#archive-panel">跳到作品馆藏</a>
+    <a class="skip-link" href="#archive-panel">跳转到案例档案库</a>
     <main id="experience" class="experience">
       <div class="stage" id="stage">
         <header class="site-header">
@@ -76,18 +76,18 @@
             <button type="button" data-dialog="about-dialog">About</button>
           </nav>
           <span class="header-note"
-            >An interface, examined.<i class="status-dot" aria-hidden="true"></i
+            >Interfaces, examined.<i class="status-dot" aria-hidden="true"></i
           ></span>
         </header>
         <div class="composition" id="composition">
           <canvas
             id="beamline-3d"
-            aria-label="光束线三维场景：网页样本经过捕获、测量、重构、验证与归档。"
+            aria-label="三维光束线场景：网页案例依次经过捕获、测量、重构、验证与归档。"
           ></canvas>
           <div class="scene-shade" aria-hidden="true"></div>
           <div class="hero-copy">
             <h1>Design Teardowns</h1>
-            <p>把界面送上光束线。</p>
+            <p>从真实界面出发，重建可验证的设计证据。</p>
             <span class="editorial-rule" aria-hidden="true"></span>
           </div>
           <section class="station-copy" aria-labelledby="station-title">
@@ -95,16 +95,16 @@
               <span id="station-number">01</span><span class="slash">/</span
               ><span id="station-word">CAPTURE</span>
             </h2>
-            <p class="station-line" id="station-line">Real interface first.</p>
+            <p class="station-line" id="station-line">Start with the real interface.</p>
             <p class="station-description" id="station-description">
-              先记录真实界面，再下结论。
+              先记录真实界面，再形成判断。
             </p>
             <div class="truth-legend">
               <span><i class="measured"></i>Measured</span
               ><span><i class="inferred"></i>Inferred</span>
             </div>
             <div class="selected-study" id="selected-study" aria-live="polite">
-              <span class="selected-study-label">Selected study</span>
+              <span class="selected-study-label">Current case</span>
               <strong id="selected-study-title">Latrix</strong>
               <small id="selected-study-kind">Web · Digital identity</small>
             </div>
@@ -112,30 +112,30 @@
               class="primary-action"
               id="open-study"
               href="latrix/teardown.html"
-              aria-label="打开 Latrix 拆解"
-              >Open study<svg><use href="#i-arrow" /></svg
+              aria-label="查看 Latrix 设计拆解"
+              >View teardown<svg><use href="#i-arrow" /></svg
             ></a>
           </section>
           <a
             class="specimen-access"
             id="specimen-access"
             href="latrix/teardown.html"
-            aria-label="进入当前样本 Latrix 拆解"
-            ><span>Open Latrix</span></a
+            aria-label="查看当前案例：Latrix"
+            ><span>View Latrix teardown</span></a
           >
           <div class="fallback-specimen" id="fallback-specimen" hidden>
             <a href="latrix/teardown.html"
-              ><img src="_gallery/covers/latrix.jpg" alt="Latrix 拆解" /><span
-                >进入 Latrix 拆解<svg><use href="#i-arrow" /></svg></span
+            ><img src="_gallery/covers/latrix.jpg" alt="Latrix 设计拆解" /><span
+                >查看 Latrix 设计拆解<svg><use href="#i-arrow" /></svg></span
             ></a>
-            <p>三维场景暂不可用，作品与馆藏仍可浏览。</p>
+            <p>三维场景暂时不可用；案例与档案库仍可正常浏览。</p>
           </div>
           <button
             class="archive-launch"
             type="button"
             data-dialog="archive-dialog"
           >
-            Archive<svg><use href="#i-archive" /></svg>
+            Browse cases<svg><use href="#i-archive" /></svg>
           </button>
           <section
             class="archive-panel"
@@ -143,30 +143,30 @@
             aria-labelledby="archive-heading"
           >
             <div class="archive-heading">
-              <h2 id="archive-heading">Archive</h2>
-              <span><b class="collection-count">20</b><span id="archive-scope"> studies</span></span>
+              <h2 id="archive-heading">Case archive</h2>
+              <span><b class="collection-count">20</b><span id="archive-scope"> case studies</span></span>
             </div>
             <label class="search-field"
-              ><span class="sr-only">搜索馆藏</span
+              ><span class="sr-only">Search case studies</span
               ><input
                 id="archive-search"
                 type="search"
-                placeholder="Search studies"
+                placeholder="Search case studies"
                 autocomplete="off" /><svg><use href="#i-search" /></svg
             ></label>
             <div class="archive-filters">
               <label
-                ><span class="sr-only">作品分类</span
+                ><span class="sr-only">Filter by category</span
                 ><select id="archive-category">
-                  <option value="all">All disciplines</option>
-                  <option value="reference">References</option>
-                  <option value="agent">AI agents</option>
+                  <option value="all">All categories</option>
+                  <option value="reference">Reference sites</option>
+                  <option value="agent">AI systems</option>
                   <option value="product">Products</option>
-                  <option value="independent">Independent</option>
+                  <option value="independent">Independent work</option>
                 </select></label
               >
               <label
-                ><span class="sr-only">作品排序</span
+                ><span class="sr-only">Sort case studies</span
                 ><select id="archive-sort">
                   <option value="curated">Curated order</option>
                   <option value="title">Title A–Z</option>
@@ -176,14 +176,14 @@
             <div class="archive-results" id="archive-results"></div>
             <div class="archive-message" id="archive-message" hidden>
               <p></p>
-              <button type="button">重试加载</button>
+              <button type="button">Retry</button>
             </div>
             <footer class="archive-footer">
               <button
                 class="page-arrow previous"
                 id="page-prev"
                 type="button"
-                aria-label="上一页"
+                aria-label="Previous page"
               >
                 <svg><use href="#i-chevron" /></svg>
               </button>
@@ -192,7 +192,7 @@
                 class="page-arrow"
                 id="page-next"
                 type="button"
-                aria-label="下一页"
+                aria-label="Next page"
               >
                 <svg><use href="#i-chevron" /></svg>
               </button>
@@ -204,7 +204,7 @@
               aria-live="polite"
             ></p>
           </section>
-          <nav class="station-track" aria-label="五站拆解流程">
+          <nav class="station-track" aria-label="五阶段拆解流程">
             <div class="track-line" aria-hidden="true">
               <span id="track-progress"></span>
             </div>
@@ -225,12 +225,12 @@
             >
           </nav>
           <div class="station-readout" aria-hidden="true">
-            <p>Station <span id="readout-index">01 / 05</span></p>
+            <p>Stage <span id="readout-index">01 / 05</span></p>
             <strong id="readout-word">Capture</strong><i class="status-dot"></i
-            ><span class="readout-caption">Evidence into knowledge.</span>
+            ><span class="readout-caption">From evidence to knowledge.</span>
           </div>
           <p class="scroll-cue">
-            Scroll to explore<span aria-hidden="true"></span>
+            Scroll to advance<span aria-hidden="true"></span>
           </p>
         </div>
       </div>
@@ -241,12 +241,12 @@
       class="archive-dialog"
     >
       <header class="dialog-header">
-        <h2 id="expanded-title">馆藏索引</h2>
+        <h2 id="expanded-title">案例档案库</h2>
         <button
           class="icon-button"
           type="button"
           data-close
-          aria-label="关闭馆藏"
+          aria-label="关闭案例档案库"
         >
           <svg><use href="#i-close" /></svg>
         </button>
@@ -259,42 +259,41 @@
       class="text-dialog"
     >
       <header class="dialog-header">
-        <h2 id="method-title">每个数字，都有出处。</h2>
+        <h2 id="method-title">每个结论，都有出处。</h2>
         <button
           class="icon-button"
           type="button"
           data-close
-          aria-label="关闭拆解方法"
+          aria-label="Close method"
         >
           <svg><use href="#i-close" /></svg>
         </button>
       </header>
-      <p>从真实界面出发，留下可验证、可复用的设计知识。</p>
+      <p>从真实界面出发，将观察沉淀为可验证、可复用的设计知识。</p>
       <ol class="method-list">
         <li><b>01 / Capture</b><span>记录真实页面、资产和交互状态。</span></li>
         <li>
-          <b>02 / Measure</b><span>读取字体、颜色、布局与动效参数。</span>
+          <b>02 / Measure</b><span>测量字体、色彩、布局与动效参数。</span>
         </li>
         <li>
-          <b>03 / Reconstruct</b><span>用原作的设计语言重建关键体验。</span>
+          <b>03 / Reconstruct</b><span>基于原作的设计语言，重建关键体验。</span>
         </li>
         <li>
-          <b>04 / Verify</b><span>对照原作，区分实测与推断，保留出处。</span>
+          <b>04 / Verify</b><span>对照原作，区分实测与推断，并保留证据出处。</span>
         </li>
         <li>
-          <b>05 / Archive</b><span>归档互动页、设计解构、复刻指南与证据。</span>
+          <b>05 / Archive</b><span>归档交互页面、设计分析、复刻指南与证据链。</span>
         </li>
       </ol>
       <p class="text-note">
-        Measured 表示可追溯的实测；Inferred
-        表示明确披露的推断。场景中的红青套准线演示这一方法，不代表自动计算的像素差。
+        Measured 表示可追溯的直接观测；Inferred 表示基于证据、并明确标注的推断。场景中的红青叠合线用于示意该方法，不代表系统自动计算出的像素差异。
       </p>
       <a
         class="inline-link"
         href="https://github.com/YunyueLi/design-teardowns/tree/main/skills/design-teardown"
         target="_blank"
         rel="noopener"
-        >查看 design-teardown Skill<svg><use href="#i-arrow" /></svg
+        >查看 Design Teardown 技能<svg><use href="#i-arrow" /></svg
       ></a>
     </dialog>
     <dialog id="about-dialog" aria-labelledby="about-title" class="text-dialog">
@@ -310,9 +309,9 @@
         </button>
       </header>
       <p>
-        一座持续积累设计知识的拆解画廊。作品可以不断增加，首页的五站旅程保持不变。
+        一个持续更新的设计拆解案例档案库。案例会持续加入，首页的五阶段流程保持稳定。
       </p>
-      <p>每份研究包含真实界面证据、互动重构、设计解构、复刻指南与事实核查。</p>
+      <p>每份案例包含真实界面证据、交互重构、设计分析、复刻指南与事实核查。</p>
       <a
         class="inline-link"
         href="https://github.com/YunyueLi/design-teardowns"
@@ -327,8 +326,8 @@
     </dialog>
     <noscript
       ><section class="noscript">
-        <h2>浏览拆解作品</h2>
-        <p>开启 JavaScript 可体验三维画廊；也可直接进入作品。</p>
+        <h2>浏览设计拆解</h2>
+        <p>启用 JavaScript 可体验三维画廊，也可直接打开案例页面。</p>
         <a href="shopify-editions/teardown.html">Shopify Editions</a
         ><a href="moonshot/teardown.html">Moonshot AI</a
         ><a href="comet/teardown.html">Comet</a
@@ -337,7 +336,7 @@
         ><a href="notion/teardown.html">Notion</a
         ><a
           href="https://github.com/YunyueLi/design-teardowns/tree/main/teardowns"
-          >完整馆藏目录</a
+          >查看全部案例</a
         >
       </section></noscript
     >
