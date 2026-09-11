@@ -82,8 +82,8 @@
     "shopify-editions-spring26",
     "turtle-soup",
   ]);
-  let selectedStudy =
-    featured.find((item) => item.slug === "latrix") || featured[0] || null;
+  // Keep the initial preview aligned with the first visible curated card.
+  let selectedStudy = featured[0] || null;
   const panel = $("#archive-panel");
   const panelHome = document.createComment(
     "The archive panel returns here after its dialog closes.",

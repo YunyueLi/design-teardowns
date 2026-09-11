@@ -27,7 +27,7 @@
 | [ChatGPT](teardowns/chatgpt/teardown.html)                              | OpenAI overview 页面的留白与产品叙事   |
 | [EasyCode](teardowns/easycode/teardown.html)                            | 编程练习、指导与反馈页面               |
 
-完整目录见 [catalogue.js](teardowns/_gallery/catalogue.js)。点击案例进入对应设计拆解页，三维台车中的默认预览为 Latrix。
+完整目录见 [catalogue.js](teardowns/_gallery/catalogue.js)。点击案例进入对应设计拆解页，三维台车中的默认预览为 Shopify Editions Winter ’26。
 
 ## 本地运行
 

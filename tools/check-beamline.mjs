@@ -1138,7 +1138,7 @@ test("catalogue-network-failure-retry", async ({ page }) => {
   assert.equal(requests, 2);
 });
 test("scene-image-failure-visible-fallback", async ({ page, note }) => {
-  await page.route("**/latrix/screenshots/hero.jpg", (route) =>
+  await page.route("**/shopify-editions/screenshots/hero.jpg", (route) =>
     route.abort("failed"),
   );
   // This test intentionally prevents sampleReady; exercise the fallback directly.
@@ -1255,7 +1255,7 @@ test("webgl-real-loss-restore-before-image-load", async ({ page, note }) => {
   const imageGate = new Promise((resolve) => {
     releaseImage = resolve;
   });
-  await page.route("**/latrix/screenshots/hero.jpg", async (route) => {
+  await page.route("**/shopify-editions/screenshots/hero.jpg", async (route) => {
     requests++;
     await imageGate;
     await route.continue();
