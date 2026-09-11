@@ -1,0 +1,2 @@
+const __vite__mapDeps=(i,m=__vite__mapDeps,d=(m.f||(m.f=["_astro/mini-lunar.BPSIzzC5.js","_astro/three.module.DBLrAFqm.js","_astro/moon-material.D6ghfIzk.js","_astro/moon-phases.CGCNapzt.js"])))=>i.map(i=>d[i]);
+import{_ as n}from"./preload-helper.BlTxHScW.js";const i=()=>n(async()=>{const{initMiniLunar:t}=await import("./mini-lunar.BPSIzzC5.js");return{initMiniLunar:t}},__vite__mapDeps([0,1,2,3])).then(({initMiniLunar:t})=>t());i();document.addEventListener("astro:page-load",i);

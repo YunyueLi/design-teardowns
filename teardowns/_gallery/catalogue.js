@@ -1,4 +1,5 @@
 window.DESIGN_TEARDOWNS = Object.freeze([
+  { slug: "ungetsu", title: "ungetsu", titleZh: "雲月", subtitle: "A moon that dissolves into dust", category: "independent", kind: "Web · Photographic gallery", cover: "_gallery/covers/ungetsu.jpg", href: "ungetsu/teardown.html", accent: ["#121212", "#cf5f45", "#d9d7d0"] },
   { slug: "lolesports", title: "LoL Esports", subtitle: "The schedule that hides the score", category: "product", kind: "Web · Esports schedule", cover: "_gallery/covers/lolesports.jpg", href: "lolesports/teardown.html", accent: ["#050505", "#10e4f9", "#c79e57"] },
   { slug: "shopify-editions", title: "Shopify Editions Winter ’26", subtitle: "The Renaissance Edition", category: "reference", kind: "Web · Launch system", cover: "_gallery/covers/shopify-editions.jpg", href: "shopify-editions/teardown.html", accent: ["#292919", "#f7f7ee", "#bf9852"] },
   { slug: "pear", title: "Pear", subtitle: "Pear makes you appear", category: "independent", kind: "Web · Scroll film", cover: "_gallery/covers/pear.jpg", href: "pear/teardown.html", accent: ["#0b0a09", "#f2f1ed", "#015186"] },

@@ -1,0 +1,1 @@
+const r=[.28,1.08,2.18,-1.12,-2.32,2.62];function s(e){const t=e.replace(/^\/(en|ja)(?=\/|$)/,"");return/^\/(photos|vault)(\/|$)/.test(t)?0:/^\/films(\/|$)/.test(t)?1:/^\/music(\/|$)/.test(t)?2:/^\/projects(\/|$)/.test(t)?3:/^\/posts(\/|$)/.test(t)?4:/^\/about(\/|$)/.test(t)?5:0}export{r as M,s as m};

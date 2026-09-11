@@ -1,0 +1,419 @@
+{
+  "site": "ungetsu",
+  "url": "https://ungetsu.net/",
+  "probe": {
+    "title": "ungetsu · 雲月",
+    "lang": "zh-CN",
+    "body": {
+      "background-color": "rgb(18, 18, 18)",
+      "color": "rgb(217, 215, 208)",
+      "font-family": "\"EB Garamond\", \"Noto Serif SC\", \"Songti SC\", STSong, SimSun, serif"
+    },
+    "h1": {
+      "text": "<style>.signature-ink { mask:none!important; }</style> function q(){document.querySelectorAll(\"[data-handwriting]\").forE",
+      "font-family": "\"EB Garamond\", \"Noto Serif SC\", \"Songti SC\", STSong, SimSun, serif",
+      "font-size": "31.4035px",
+      "font-weight": "400",
+      "letter-spacing": "2.51228px",
+      "line-height": "31.4035px",
+      "font-style": "normal",
+      "color": "rgb(232, 230, 224)"
+    },
+    "nav": {
+      "background-color": "rgba(0, 0, 0, 0)",
+      "backdrop-filter": "none",
+      "font-family": "\"EB Garamond\", \"Noto Serif SC\", \"Songti SC\", STSong, SimSun, serif"
+    },
+    "btn": {
+      "background-color": "rgba(0, 0, 0, 0)",
+      "color": "rgb(217, 215, 208)",
+      "border-radius": "0px",
+      "transition": "all",
+      "font-family": "\"EB Garamond\", \"Noto Serif SC\", \"Songti SC\", STSong, SimSun, serif"
+    },
+    "accentGuess": "#cf5f45",
+    "libs": [],
+    "scriptHints": [],
+    "media": {
+      "video": 0,
+      "canvas": 2,
+      "svg": 22,
+      "img": 57,
+      "preloadVideo": 0,
+      "preloadFont": 0
+    },
+    "fontsLoaded": [
+      "EB Garamond",
+      "Noto Serif JP",
+      "Noto Serif SC"
+    ]
+  },
+  "tokens": {
+    "customProps": {
+      "--strip-h": "clamp(96px, 10vw, 136px)",
+      "--record-size": "clamp(104px,10vw,156px)",
+      "--shelf-bottom": "40px",
+      "--scene-bleed": "min(24svh,200px)",
+      "--ge-p": "0",
+      "--ge-cloud": "#555653",
+      "--ge-moon-light": "#f6f4ef",
+      "--ge-moon-shade": "#555653",
+      "--ge-particle": "#555653",
+      "--ge-exit-span": "clamp(1350px,180svh,2250px)",
+      "--ge-exhibition-share": ".28",
+      "--dv-gutter": "clamp(26px, 6.3vw, 120px)",
+      "--dv-progress": "0",
+      "--font-serif": "\"EB Garamond\", \"Noto Serif SC\", \"Songti SC\", \"STSong\", \"SimSun\", serif",
+      "--font-latin": "\"EB Garamond\", Georgia, \"Times New Roman\", serif",
+      "--font-mono": "ui-monospace, SFMono-Regular, Menlo, Consolas, \"Liberation Mono\", monospace",
+      "--font-meta": "\"EB Garamond\", \"Noto Serif SC\", serif",
+      "--font-ja": "\"EB Garamond\", \"Noto Serif JP\", \"Noto Serif SC\", \"Songti SC\", serif",
+      "--space-1": ".25rem",
+      "--space-2": ".5rem",
+      "--space-3": ".75rem",
+      "--space-4": "1rem",
+      "--space-6": "1.5rem",
+      "--space-8": "2rem",
+      "--space-12": "3rem",
+      "--space-16": "4rem",
+      "--space-24": "6rem",
+      "--shell-max": "1120px",
+      "--prose-max": "42em",
+      "--ease": "cubic-bezier(.19, 1, .22, 1)",
+      "--ease-out": "cubic-bezier(0, 0, .2, 1)",
+      "--t-ui": ".25s",
+      "--t-content": ".8s",
+      "--bg": "#f6f4ef",
+      "--text": "#2d2d2d",
+      "--head": "#1c1c1c",
+      "--muted": "#777570",
+      "--line": "#e3e0d7",
+      "--wash": "#edeae1",
+      "--accent": "#b13a25",
+      "--accent-soft": "rgba(177, 58, 37, .1)",
+      "--gold": "#9c7a2c",
+      "--moon-disc": "#edebe0",
+      "--moon-phase": "11px",
+      "--img-bleed": "clamp(0px, (100vw - 920px) * .2, 180px)",
+      "--curtain-h": "min(620px, 88svh)",
+      "--mat-w": "12px",
+      "--moon-width": "max(102.5vw, calc(var(--curtain-h) * 1.5))",
+      "--drifted": "hover .wm-dot",
+      "--dm-bleed": "clamp(0px, calc((100vw - 1120px)/2 - 1rem) , 180px)",
+      "--rec-w": "178px",
+      "--crate-bleed": "clamp(0px, calc((100vw - 1120px)/2 - 1rem) , 180px)",
+      "--crate-fade": "5.5%",
+      "--from": "translate(0, 0) scale(.4)",
+      "--photo-width": "1440px"
+    },
+    "topHex": [
+      {
+        "hex": "#000",
+        "n": 20
+      },
+      {
+        "hex": "#f3f1ea",
+        "n": 6
+      },
+      {
+        "hex": "#f6f4ef",
+        "n": 5
+      },
+      {
+        "hex": "#f4f2ec",
+        "n": 4
+      },
+      {
+        "hex": "#555653",
+        "n": 3
+      },
+      {
+        "hex": "#232327",
+        "n": 3
+      },
+      {
+        "hex": "#777a76",
+        "n": 2
+      },
+      {
+        "hex": "#d2d5cf",
+        "n": 2
+      },
+      {
+        "hex": "#252b29",
+        "n": 2
+      },
+      {
+        "hex": "#1c1c1c",
+        "n": 2
+      },
+      {
+        "hex": "#d9d7d0",
+        "n": 2
+      },
+      {
+        "hex": "#e8e6e0",
+        "n": 2
+      },
+      {
+        "hex": "#101012",
+        "n": 2
+      },
+      {
+        "hex": "#faf8f3",
+        "n": 2
+      },
+      {
+        "hex": "#fff",
+        "n": 2
+      },
+      {
+        "hex": "#4a4a50",
+        "n": 2
+      },
+      {
+        "hex": "#bdc0b8",
+        "n": 1
+      },
+      {
+        "hex": "#2d2d2d",
+        "n": 1
+      },
+      {
+        "hex": "#777570",
+        "n": 1
+      },
+      {
+        "hex": "#e3e0d7",
+        "n": 1
+      },
+      {
+        "hex": "#edeae1",
+        "n": 1
+      },
+      {
+        "hex": "#b13a25",
+        "n": 1
+      },
+      {
+        "hex": "#9c7a2c",
+        "n": 1
+      },
+      {
+        "hex": "#edebe0",
+        "n": 1
+      }
+    ],
+    "cubicBezier": [
+      {
+        "v": "cubic-bezier(.16,1,.3,1)",
+        "n": 1
+      },
+      {
+        "v": "cubic-bezier(.19, 1, .22, 1)",
+        "n": 1
+      },
+      {
+        "v": "cubic-bezier(0, 0, .2, 1)",
+        "n": 1
+      },
+      {
+        "v": "cubic-bezier(.34,1.5,.64,1)",
+        "n": 1
+      }
+    ],
+    "fontFamily": [
+      {
+        "v": "\"Noto Serif JP\"",
+        "n": 248
+      },
+      {
+        "v": "\"Noto Serif SC\"",
+        "n": 202
+      },
+      {
+        "v": "var(--font-meta)",
+        "n": 55
+      },
+      {
+        "v": "var(--font-serif)",
+        "n": 49
+      },
+      {
+        "v": "EB Garamond",
+        "n": 21
+      },
+      {
+        "v": "var(--font-latin)",
+        "n": 15
+      },
+      {
+        "v": "inherit",
+        "n": 3
+      },
+      {
+        "v": "var(--font-ja)",
+        "n": 2
+      },
+      {
+        "v": "var(--font-mono, monospace)",
+        "n": 1
+      }
+    ],
+    "durations": [
+      {
+        "v": "4s",
+        "n": 10
+      },
+      {
+        "v": "9s",
+        "n": 9
+      },
+      {
+        "v": "3s",
+        "n": 7
+      },
+      {
+        "v": "2s",
+        "n": 6
+      },
+      {
+        "v": "45s",
+        "n": 6
+      },
+      {
+        "v": "25s",
+        "n": 5
+      },
+      {
+        "v": "01s",
+        "n": 5
+      },
+      {
+        "v": "5s",
+        "n": 4
+      },
+      {
+        "v": "6s",
+        "n": 4
+      },
+      {
+        "v": "01ms",
+        "n": 3
+      },
+      {
+        "v": "0s",
+        "n": 3
+      },
+      {
+        "v": "1.1s",
+        "n": 2
+      },
+      {
+        "v": "1.8s",
+        "n": 2
+      },
+      {
+        "v": "7s",
+        "n": 2
+      },
+      {
+        "v": "55s",
+        "n": 2
+      },
+      {
+        "v": "18s",
+        "n": 2
+      }
+    ],
+    "radii": [
+      {
+        "v": "50%",
+        "n": 28
+      },
+      {
+        "v": "4px",
+        "n": 5
+      },
+      {
+        "v": "2px",
+        "n": 4
+      },
+      {
+        "v": "3px",
+        "n": 3
+      },
+      {
+        "v": "999px",
+        "n": 2
+      },
+      {
+        "v": "22px",
+        "n": 1
+      },
+      {
+        "v": "5px",
+        "n": 1
+      },
+      {
+        "v": "7px/4px",
+        "n": 1
+      },
+      {
+        "v": "2px 2px 3px 3px",
+        "n": 1
+      },
+      {
+        "v": "0",
+        "n": 1
+      }
+    ],
+    "keyframes": [
+      {
+        "v": "vt-lift",
+        "n": 1
+      },
+      {
+        "v": "vt-settle",
+        "n": 1
+      },
+      {
+        "v": "read-progress",
+        "n": 1
+      },
+      {
+        "v": "img-drift",
+        "n": 1
+      },
+      {
+        "v": "rise",
+        "n": 1
+      },
+      {
+        "v": "arc-flow",
+        "n": 1
+      },
+      {
+        "v": "hero-kenburns",
+        "n": 1
+      },
+      {
+        "v": "hero-cue",
+        "n": 1
+      },
+      {
+        "v": "g-reveal",
+        "n": 1
+      },
+      {
+        "v": "wm-ping",
+        "n": 1
+      },
+      {
+        "v": "m-spin",
+        "n": 1
+      }
+    ],
+    "cssBytes": 536907
+  }
+}

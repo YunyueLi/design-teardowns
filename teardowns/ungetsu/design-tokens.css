@@ -1,0 +1,107 @@
+/* ungetsu · 雲月 — 真实设计 token
+   源：https://ungetsu.net/_astro/index.BKu8iCnB.css（:root 与两个 :root[data-theme] 块原文）
+   与 index.BiYKfXdb.css（.gallery-entrance 场景色）。抓取于 2026-09-11。
+   全部为实锤：直接抄自样式表原文，未做任何观感改写。
+   注意：站点首次访问强制深色（内联脚本），深色是默认态。 */
+
+:root{
+  /* 字族 */
+  --font-serif:"EB Garamond","Noto Serif SC","Songti SC","STSong","SimSun",serif;
+  --font-latin:"EB Garamond",Georgia,"Times New Roman",serif;
+  --font-sans:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans SC",sans-serif; /* 定义了但全站无人消费 */
+  --font-mono:ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;
+  --font-meta:"EB Garamond","Noto Serif SC",serif;
+  --font-ja:"EB Garamond","Noto Serif JP","Noto Serif SC","Songti SC",serif;
+
+  /* 间距梯 */
+  --space-1:.25rem;  --space-2:.5rem;   --space-3:.75rem;
+  --space-4:1rem;    --space-6:1.5rem;  --space-8:2rem;
+  --space-12:3rem;   --space-16:4rem;   --space-24:6rem;
+
+  /* 版心 */
+  --shell-max:1120px;
+  --prose-max:42em;
+  --dv-gutter:clamp(26px, 6.3vw, 120px);
+
+  /* 缓动与时长 */
+  --ease:cubic-bezier(.19, 1, .22, 1);    /* 主缓动，全站复用 */
+  --ease-out:cubic-bezier(0, 0, .2, 1);
+  --t-ui:.25s;        /* UI 反馈 */
+  --t-content:.8s;    /* 内容入场 */
+
+  /* 画框与幕布 */
+  --mat-w:12px;                        /* 窄屏 7px */
+  --curtain-h:min(620px, 88svh);       /* 窄屏 min(440px, 82svh) */
+}
+
+:root[data-theme=light]{
+  color-scheme:light;
+  --bg:#f6f4ef;      /* 暖白，不是纯白 */
+  --text:#2d2d2d;
+  --head:#1c1c1c;
+  --muted:#777570;
+  --line:#e3e0d7;
+  --wash:#edeae1;
+  --accent:#b13a25;                     /* 朱砂 */
+  --accent-soft:rgba(177, 58, 37, .1);
+  --gold:#9c7a2c;                       /* 只服务隐藏入口 */
+  --moon-disc:#edebe0;
+  --moon-phase:4px;                     /* 主题图标的月相位移 */
+}
+
+:root[data-theme=dark]{
+  color-scheme:dark;
+  --bg:#121212;
+  --text:#d9d7d0;
+  --head:#e8e6e0;                       /* 比正文亮一档，深色底立骨架的关键 */
+  --muted:#8e8c85;
+  --line:#262626;
+  --wash:#1c1c1c;
+  --accent:#cf5f45;
+  --accent-soft:rgba(207, 95, 69, .14);
+  --gold:#cba24a;
+  --moon-disc:#181818;
+  --moon-phase:11px;
+}
+
+/* 场景色：独立于 UI 色的一层，换主题时可以不跟着走。
+   着色器里的明暗判据是 uDark = paper.r < .1，不看主题名。 */
+.gallery-entrance{
+  --ge-p:0;
+  --ge-cloud:#555653;
+  --ge-moon-light:#f6f4ef;
+  --ge-moon-shade:#555653;
+  --ge-particle:#555653;
+  --ge-exhibition-share:.28;            /* 窄屏 .3 */
+  --ge-exit-span:clamp(1350px,180svh,2250px);
+}
+:root[data-theme=dark] .gallery-entrance{
+  --ge-cloud:#777a76;
+  --ge-moon-light:#d2d5cf;
+  --ge-moon-shade:#252b29;
+  --ge-particle:#bdc0b8;
+}
+
+/* 首屏滚动编排（桌面）：视口 + 变形 + 驻留 + 退场
+   1440 × 900 实测：总高 6084px，可滚 5184px，
+   变形 2657 / 驻留 324 / 展陈 907 / 退场 1620 */
+.ge-animated{
+  height:calc(100svh
+    + clamp(2600px,360svh,4200px)
+    + clamp(240px,36svh,440px)
+    + clamp(1350px,180svh,2250px));
+}
+@media(max-width:700px){
+  .ge-animated{
+    --ge-exhibition-share:.3;
+    height:calc(100svh
+      + clamp(1800px,320svh,2800px)
+      + clamp(180px,32svh,320px)
+      + clamp(1080px,165svh,1650px));
+  }
+}
+
+/* 其余出现在样式表里的具名缓动（各声明一次）
+   cubic-bezier(.16,1,.3,1)    胶片墙落位 1.1s，每格延迟 index × .1s
+   cubic-bezier(.34,1.5,.64,1) 唯一一条会过冲的曲线
+   cubic-bezier(.22,.61,.36,1) 逐字点亮，单字 1150ms（写在 JS 里） */

@@ -1,5 +1,5 @@
 // Generated from catalogue.js by tools/build-gallery-featured.mjs. Do not edit metadata here.
-window.DESIGN_TEARDOWNS_TOTAL = 20;
+window.DESIGN_TEARDOWNS_TOTAL = 21;
 window.DESIGN_TEARDOWNS_FEATURED = Object.freeze([
   {
     "slug": "shopify-editions",
