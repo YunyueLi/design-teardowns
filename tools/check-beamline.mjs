@@ -1141,9 +1141,12 @@ test("scene-image-failure-visible-fallback", async ({ page, note }) => {
   await page.route("**/shopify-editions/screenshots/hero.jpg", (route) =>
     route.abort("failed"),
   );
+  await page.route("**/_gallery/covers/shopify-editions.jpg", (route) =>
+    route.abort("failed"),
+  );
   // This test intentionally prevents sampleReady; exercise the fallback directly.
-  await page.goto(url("verify"));
-  await settled(page, 0.75);
+  await page.goto(url("capture"));
+  await settled(page, 0);
   await expect(page.locator("#fallback-specimen")).toBeVisible();
   await expect(page.locator("#beamline-3d")).toBeHidden();
   await page.locator('[data-dialog="archive-dialog"]').click();
@@ -1261,8 +1264,8 @@ test("webgl-real-loss-restore-before-image-load", async ({ page, note }) => {
     await route.continue();
   });
   try {
-    await page.goto(url("verify"), { waitUntil: "domcontentloaded" });
-    await settled(page, 0.75);
+    await page.goto(url("capture"), { waitUntil: "domcontentloaded" });
+    await settled(page, 0);
     await expect.poll(() => requests).toBe(1);
     assert.equal((await state(page)).diagnostics.scene.sampleReady, false);
     const extension = await page.evaluateHandle(() => {
