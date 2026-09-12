@@ -140,3 +140,7 @@ the folder convention is followed, the gallery is regenerated, the page opens
 under `file://`, no commercial fonts, video, audio, or proprietary source were
 added, the license of any added material is declared, and screenshots are
 attached.
+
+## 自动检查与发布
+
+改动分流、完整验收复用和报告保留规则见 [检查与发布规则](tools/ci/README.md)。工程文档与工作流修改不触发网站发布；研究正文和网站输入仍受完整检查保护。

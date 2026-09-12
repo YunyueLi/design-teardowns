@@ -25,3 +25,7 @@ __pycache__/
 
 # Local browser acceptance screenshots, traces and measurements.
 /artifacts/
+
+# Isolated CI tooling dependencies.
+/tools/ci/node_modules/
+/tools/browser/node_modules/
