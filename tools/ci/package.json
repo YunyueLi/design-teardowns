@@ -1,0 +1,7 @@
+{
+  "name": "design-teardowns-ci-policy",
+  "private": true,
+  "type": "module",
+  "scripts": { "test": "node --test *.test.mjs" },
+  "devDependencies": { "yaml": "2.9.1" }
+}

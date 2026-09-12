@@ -4,60 +4,92 @@ on:
   pull_request:
     types: [opened, synchronize, reopened, ready_for_review]
   workflow_call:
+    outputs:
+      publish:
+        description: Whether published site inputs changed.
+        value: ${{ jobs.gallery.outputs.publish }}
 
 permissions:
   contents: read
+  pull-requests: read
+  actions: read
 
 jobs:
   gallery:
+    name: all-checks
     if: github.event_name != 'pull_request' || github.event.pull_request.draft == false
     runs-on: ubuntu-latest
     timeout-minutes: 15
-    strategy:
-      fail-fast: false
-      matrix:
-        shard: [1, 2, 3]
-    # A newer revision replaces the same PR's checks, without cancelling sibling shards.
+    outputs:
+      publish: ${{ steps.scope.outputs.publish }}
+    # Replace older PR checks; a docs push must not cancel a site's main validation.
     concurrency:
-      group: ${{ github.workflow }}-gallery-${{ github.event.pull_request.number || github.ref }}-${{ matrix.shard }}
+      group: ${{ github.workflow }}-gallery-${{ github.event.pull_request.number || github.run_id }}
       cancel-in-progress: true
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
         with:
-          node-version: '22'
+          # The reuse proof must name the tree actually checked, not an implicit merge ref.
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: '22.21.1'
+      - name: Validate workflow policy
+        run: |
+          npm ci --ignore-scripts --prefix tools/ci
+          npm test --prefix tools/ci
+          bash tools/ci/lint-workflows.sh
+      - name: Select checks and reuse exact PR evidence
+        id: scope
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: node tools/ci/plan.mjs
       - uses: actions/setup-python@v5
+        if: steps.scope.outputs.catalogue == 'true' && steps.scope.outputs.reused != 'true'
         with:
           python-version: '3.12'
       - name: Validate catalogue and maintenance
+        if: steps.scope.outputs.catalogue == 'true' && steps.scope.outputs.reused != 'true'
         run: |
           node tools/build-gallery-featured.mjs --check
           node tools/check-gallery.mjs
           node tools/test-gallery-maintenance.mjs
           python3 tools/generate_index.py --check
       - name: Install isolated browser test dependencies
+        if: steps.scope.outputs.browser == 'true' && steps.scope.outputs.reused != 'true'
         run: |
-          npm install --prefix "$RUNNER_TEMP/beamline-devtest" playwright@1.62.1
-          node "$RUNNER_TEMP/beamline-devtest/node_modules/playwright/cli.js" install --with-deps chromium
+          npm ci --ignore-scripts --prefix tools/browser
+          node tools/browser/node_modules/playwright/cli.js install --with-deps chromium
       - name: Check browser interactions
+        if: steps.scope.outputs.browser == 'true' && steps.scope.outputs.reused != 'true'
         env:
-          PLAYWRIGHT_ROOT: ${{ runner.temp }}/beamline-devtest/node_modules/playwright
+          PLAYWRIGHT_ROOT: ${{ github.workspace }}/tools/browser/node_modules/playwright
           BEAMLINE_ARTIFACT_DIR: artifacts/ci
-          BEAMLINE_SHARD: ${{ matrix.shard }}/3
+          BEAMLINE_SHARD: 1/1
         run: |
           python3 -m http.server 4174 --bind 127.0.0.1 > "$RUNNER_TEMP/beamline-server.log" 2>&1 &
           server_pid=$!
-          trap 'kill "$server_pid"' EXIT
+          trap 'kill "$server_pid" 2>/dev/null || true' EXIT
           for attempt in {1..30}; do
+            kill -0 "$server_pid" || { cat "$RUNNER_TEMP/beamline-server.log"; exit 1; }
             if curl --fail --silent http://127.0.0.1:4174/teardowns/index.html > /dev/null; then break; fi
             sleep 1
           done
+          curl --fail --silent http://127.0.0.1:4174/teardowns/index.html > /dev/null
           node tools/check-beamline.mjs
-      - name: Save browser acceptance evidence
+      - name: Save lightweight acceptance results
         if: ${{ !cancelled() }}
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         with:
-          name: beamline-acceptance-${{ matrix.shard }}
-          path: artifacts/ci/
+          name: beamline-results
+          path: artifacts/ci/**/*.json
           if-no-files-found: ignore
           retention-days: 3
+      - name: Save failure diagnostics
+        if: ${{ failure() && !cancelled() }}
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: beamline-failure-diagnostics
+          path: artifacts/ci/
+          if-no-files-found: ignore
+          retention-days: 1

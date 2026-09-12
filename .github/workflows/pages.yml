@@ -8,27 +8,30 @@ on:
 # Least-privilege permissions required to publish to GitHub Pages.
 permissions:
   contents: read
+  pull-requests: read
+  actions: read
   pages: write
   id-token: write
-
-# Allow only one concurrent deployment; cancel an in-progress run when a newer
-# commit lands on main.
-concurrency:
-  group: pages
-  cancel-in-progress: true
 
 jobs:
   validate:
     uses: ./.github/workflows/validate.yml
   deploy:
     needs: validate
+    if: needs.validate.outputs.publish == 'true'
+    timeout-minutes: 10
+    # Only actual site releases join this group. The latest pending full site
+    # contains earlier changes; documentation pushes never interrupt deployment.
+    concurrency:
+      group: pages
+      cancel-in-progress: false
     runs-on: ubuntu-latest
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
 
       - name: Configure Pages
         uses: actions/configure-pages@v5
