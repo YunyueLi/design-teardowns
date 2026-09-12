@@ -2,6 +2,7 @@ name: Validate gallery
 
 on:
   pull_request:
+    types: [opened, synchronize, reopened, ready_for_review]
   workflow_call:
 
 permissions:
@@ -9,12 +10,17 @@ permissions:
 
 jobs:
   gallery:
+    if: github.event_name != 'pull_request' || github.event.pull_request.draft == false
     runs-on: ubuntu-latest
     timeout-minutes: 15
     strategy:
       fail-fast: false
       matrix:
         shard: [1, 2, 3]
+    # A newer revision replaces the same PR's checks, without cancelling sibling shards.
+    concurrency:
+      group: ${{ github.workflow }}-gallery-${{ github.event.pull_request.number || github.ref }}-${{ matrix.shard }}
+      cancel-in-progress: true
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -48,10 +54,10 @@ jobs:
           done
           node tools/check-beamline.mjs
       - name: Save browser acceptance evidence
-        if: always()
+        if: ${{ !cancelled() }}
         uses: actions/upload-artifact@v4
         with:
           name: beamline-acceptance-${{ matrix.shard }}
           path: artifacts/ci/
           if-no-files-found: ignore
-          retention-days: 14
+          retention-days: 3
