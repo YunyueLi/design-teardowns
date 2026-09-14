@@ -29,3 +29,6 @@ __pycache__/
 # Isolated CI tooling dependencies.
 /tools/ci/node_modules/
 /tools/browser/node_modules/
+
+# Generated Pages publication directory.
+/_site/

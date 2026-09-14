@@ -38,6 +38,7 @@ jobs:
         run: |
           npm ci --ignore-scripts --prefix tools/ci
           npm test --prefix tools/ci
+          python3 -m unittest discover -s tools/pages -p 'test_*.py'
           bash tools/ci/lint-workflows.sh
       - name: Select checks and reuse exact PR evidence
         id: scope
@@ -60,6 +61,9 @@ jobs:
         run: |
           npm ci --ignore-scripts --prefix tools/browser
           node tools/browser/node_modules/playwright/cli.js install --with-deps chromium
+      - name: Build publication directory
+        if: steps.scope.outputs.browser == 'true' && steps.scope.outputs.reused != 'true'
+        run: python3 tools/pages/package.py --output _site
       - name: Check browser interactions
         if: steps.scope.outputs.browser == 'true' && steps.scope.outputs.reused != 'true'
         env:
@@ -67,7 +71,7 @@ jobs:
           BEAMLINE_ARTIFACT_DIR: artifacts/ci
           BEAMLINE_SHARD: 1/1
         run: |
-          python3 -m http.server 4174 --bind 127.0.0.1 > "$RUNNER_TEMP/beamline-server.log" 2>&1 &
+          python3 -m http.server 4174 --bind 127.0.0.1 --directory _site > "$RUNNER_TEMP/beamline-server.log" 2>&1 &
           server_pid=$!
           trap 'kill "$server_pid" 2>/dev/null || true' EXIT
           for attempt in {1..30}; do

@@ -77,3 +77,52 @@ test('test permissions remain read-only even when called by publishing workflow'
 test('PR checks execute the exact head tree used by the reuse proof', () => {
   assert.equal(steps[0].with.ref, '${{ github.event.pull_request.head.sha || github.sha }}');
 });
+
+test('acceptance runs against the exact publication directory', () => {
+  const build = steps.findIndex(step => step.name === 'Build publication directory');
+  const browser = steps.findIndex(step => step.name === 'Check browser interactions');
+  assert.ok(build < browser);
+  assert.match(steps[build].run, /tools\/pages\/package.py --output _site/);
+  assert.match(steps[browser].run, /http.server.*--directory _site/);
+  const upload = pages.jobs.deploy.steps.find(step => step.id === 'upload');
+  assert.equal(upload.with.path, '_site');
+  assert.equal(upload.with['retention-days'], 1);
+});
+
+test('cleanup only runs after successful deployment and has isolated write permission', () => {
+  assert.equal(pages.jobs.cleanup.needs, 'deploy');
+  assert.equal(pages.jobs.cleanup.if, "needs.deploy.result == 'success' && needs.deploy.outputs.artifact_id != ''");
+  assert.deepEqual(pages.jobs.cleanup.permissions, { actions: 'write' });
+  assert.equal(pages.permissions.actions, 'read');
+  assert.equal(pages.jobs.deploy.outputs.artifact_id, '${{ steps.upload.outputs.artifact_id }}');
+});
+
+const cleanupScript = pages.jobs.cleanup.steps[0].with.script;
+const AsyncFunction = Object.getPrototypeOf(async function () {}).constructor;
+async function cleanupFixture({ id = '123', artifact = { name: 'github-pages', workflow_run: { id: 456 } }, status } = {}) {
+  const calls = [];
+  const actions = {
+    getArtifact: async args => { calls.push(['get', args]); if (status) throw Object.assign(new Error('API failure'), { status }); return { data: artifact }; },
+    deleteArtifact: async args => { calls.push(['delete', args]); },
+  };
+  await new AsyncFunction('github', 'context', 'core', 'process', cleanupScript)(
+    { rest: { actions } }, { repo: { owner: 'fixture', repo: 'site' }, runId: 456 },
+    { info() {} }, { env: { ARTIFACT_ID: id } });
+  return calls;
+}
+test('cleanup deletes only the verified artifact ID from this run', async () => {
+  assert.deepEqual(await cleanupFixture(), [
+    ['get', { owner: 'fixture', repo: 'site', artifact_id: 123 }],
+    ['delete', { owner: 'fixture', repo: 'site', artifact_id: 123 }],
+  ]);
+});
+test('cleanup refuses malformed IDs, other runs, and other artifact types', async () => {
+  for (const id of ['', 'NaN', '1;delete', '9007199254740992']) await assert.rejects(cleanupFixture({ id }));
+  await assert.rejects(cleanupFixture({ artifact: { name: 'github-pages', workflow_run: { id: 999 } } }));
+  await assert.rejects(cleanupFixture({ artifact: { name: 'test-report', workflow_run: { id: 456 } } }));
+  await assert.rejects(cleanupFixture({ artifact: { name: 'github-pages' } }));
+});
+test('already removed packages are harmless; other API failures stay visible', async () => {
+  assert.equal((await cleanupFixture({ status: 404 })).length, 1);
+  await assert.rejects(cleanupFixture({ status: 403 }));
+});
