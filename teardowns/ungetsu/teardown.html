@@ -1670,9 +1670,11 @@ color *= <span class="n">1.</span> - sin(uExit*<span class="n">3.14159265</span>
           页脚长按彩蛋的用途。以上均已在正文就地标注。</p>
         <h4 class="sub2">局限</h4>
         <p>未取到 <code>three.module.js</code> 的完整逐行分析（体量过大，只读了被引用的导出）；
-          未进入需要长按解锁的隐藏页；唱机 WebGL 场景的几何与材质未做逐值还原；
+          未进入需要长按解锁的隐藏页；唱机场景里「滚动进度到镜头样条参数」的逐帧插值未逐行读；
+          <code>three-mesh-bvh</code> 的求交算法本身未拆（第三方库，不是本站设计）；
           日文与英文版页面未做对照抽取；
-          本页三个 demo 是 Canvas 2D 重写，<b>公式相同、实现不同</b>，不能当作原站性能参考。</p>
+          本页月相、落款、显影三个 demo 是 Canvas 2D 重写，<b>公式相同、实现不同</b>，不能当作原站性能参考；
+          三维唱机 demo 的玻璃棱锥用的是 three.js 内置 transmission，不是原站的 BVH 光追。</p>
       </div>
     </div>
     <div class="prose">
