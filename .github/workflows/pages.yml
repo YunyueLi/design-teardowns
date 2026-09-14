@@ -26,6 +26,8 @@ jobs:
       group: pages
       cancel-in-progress: false
     runs-on: ubuntu-latest
+    outputs:
+      artifact_id: ${{ steps.upload.outputs.artifact_id }}
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
@@ -36,18 +38,52 @@ jobs:
       - name: Configure Pages
         uses: actions/configure-pages@v5
 
-      # Serve the site as-is. The .nojekyll file disables Jekyll processing so
-      # that files and folders beginning with an underscore are published.
-      - name: Disable Jekyll processing
-        run: touch .nojekyll
+      - name: Build publication directory
+        run: python3 tools/pages/package.py --output _site
 
-      # Upload the whole repository as the site. The root index.html redirects
-      # to teardowns/index.html.
       - name: Upload artifact
+        id: upload
         uses: actions/upload-pages-artifact@v3
         with:
-          path: .
+          path: _site
+          retention-days: 1
 
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
+
+  cleanup:
+    needs: deploy
+    if: needs.deploy.result == 'success' && needs.deploy.outputs.artifact_id != ''
+    runs-on: ubuntu-latest
+    timeout-minutes: 2
+    # Only this post-deployment job can delete Actions artifacts. It checks no code out.
+    permissions:
+      actions: write
+    steps:
+      - name: Delete this successfully deployed package
+        uses: actions/github-script@f28e40c7f34bde8b3046d885e986cb6290c5673b # v7
+        env:
+          ARTIFACT_ID: ${{ needs.deploy.outputs.artifact_id }}
+        with:
+          script: |
+            const raw = process.env.ARTIFACT_ID;
+            if (!/^[1-9][0-9]*$/.test(raw)) throw new Error('Invalid artifact ID');
+            const artifact_id = Number(raw);
+            if (!Number.isSafeInteger(artifact_id)) throw new Error('Invalid artifact ID');
+            const args = { ...context.repo, artifact_id };
+            let artifact;
+            try {
+              ({ data: artifact } = await github.rest.actions.getArtifact(args));
+            } catch (error) {
+              if (error.status === 404) {
+                core.info('Package already expired or removed.');
+                return;
+              }
+              throw error;
+            }
+            if (artifact.name !== 'github-pages' || artifact.workflow_run?.id !== context.runId) {
+              throw new Error('Refusing to delete a package from a different run');
+            }
+            await github.rest.actions.deleteArtifact(args);
+            core.info(`Deleted this run's deployed package ${artifact_id}.`);

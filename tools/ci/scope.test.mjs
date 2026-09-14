@@ -11,7 +11,9 @@ const quiet = { catalogue: false, browser: false, publish: false };
 const tests = { catalogue: true, browser: true, publish: false };
 const full = { catalogue: true, browser: true, publish: true };
 for (const [name, paths, expected] of [
-  ['workflow-only', ['.github/workflows/pages.yml'], quiet],
+  ['deployment workflow', ['.github/workflows/pages.yml'], full],
+  ['publication packaging', ['tools/pages/package.py'], full],
+  ['validation workflow-only', ['.github/workflows/validate.yml'], quiet],
   ['policy and engineering docs', ['tools/ci/scope.mjs', 'tools/ci/package-lock.json', 'CONTRIBUTING.md', '.gitignore'], quiet],
   ['browser dependency change', ['tools/browser/package-lock.json'], tests],
   ['browser test', ['tools/check-beamline.mjs'], tests],

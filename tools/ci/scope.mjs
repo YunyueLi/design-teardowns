@@ -10,6 +10,10 @@ export function planChanges(paths, { forceFull = false } = {}) {
         path.split('/').some(part => !part || part === '.' || part === '..')) {
       throw new Error('Invalid repository-relative changed path');
     }
+    if (path === '.github/workflows/pages.yml' || path.startsWith('tools/pages/')) {
+      plan.catalogue = plan.browser = plan.publish = true;
+      continue;
+    }
     if (/^(\.github\/|tools\/ci\/)/.test(path) || documentation.has(path)) continue;
     // Tools are not site inputs. Generated site changes are classified separately.
     if (path.startsWith('tools/')) {
