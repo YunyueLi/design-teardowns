@@ -16,6 +16,21 @@ window.DESIGN_TEARDOWNS_FEATURED = Object.freeze([
     ]
   },
   {
+    "slug": "ungetsu",
+    "title": "ungetsu",
+    "titleZh": "雲月",
+    "subtitle": "A moon that dissolves into dust",
+    "category": "independent",
+    "kind": "Web · Photographic gallery",
+    "cover": "_gallery/covers/ungetsu.jpg",
+    "href": "ungetsu/teardown.html",
+    "accent": [
+      "#121212",
+      "#cf5f45",
+      "#d9d7d0"
+    ]
+  },
+  {
     "slug": "pear",
     "title": "Pear",
     "subtitle": "Pear makes you appear",
@@ -70,20 +85,6 @@ window.DESIGN_TEARDOWNS_FEATURED = Object.freeze([
       "#091717",
       "#21808d",
       "#1fb8cd"
-    ]
-  },
-  {
-    "slug": "latrix",
-    "title": "Latrix",
-    "subtitle": "We create digital lives",
-    "category": "independent",
-    "kind": "Web · Digital identity",
-    "cover": "_gallery/covers/latrix.jpg",
-    "href": "latrix/teardown.html",
-    "accent": [
-      "#1a1815",
-      "#e8dfd3",
-      "#e07a00"
     ]
   }
 ]);

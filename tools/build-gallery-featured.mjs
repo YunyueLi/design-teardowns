@@ -8,7 +8,7 @@ import { Script } from 'node:vm';
 
 export const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 export const featuredSlugs = Object.freeze([
-  'shopify-editions', 'pear', 'shopify-editions-spring26', 'moonshot', 'comet', 'latrix',
+  'shopify-editions', 'ungetsu', 'pear', 'shopify-editions-spring26', 'moonshot', 'comet',
 ]);
 const expectedCountNodes = 1; // One panel is moved between the page and dialog.
 
