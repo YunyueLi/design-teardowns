@@ -2,7 +2,7 @@
 
 ## 实现范围
 
-本说明对应 `teardowns/index.html`、`_gallery/beamline.js`、`beamline-3d.js`、`beamline.css` 与 canonical `catalogue.js`。产品行为见 [PRODUCT](PRODUCT.md)，交付状态和验证记录统一见 [README](README.md#验证与交付)。
+本说明对应 `teardowns/index.html`、`_gallery/beamline.js`、`beamline-3d.js`、`beamline.css` 与 canonical `catalogue.js`。产品行为见 [PRODUCT](PRODUCT.md)，交付状态和验证记录统一见 [README](README.md#verification-and-delivery)。
 
 ## 构图与视觉语言
 
@@ -47,17 +47,17 @@
 
 ## 一个归档面板
 
-canonical `catalogue.js` 当前包含 **20** 项。初始 `featured.js` 固定顺序为 `shopify-editions,pear,shopify-editions-spring26,moonshot,comet,latrix`，每项由 canonical 全字段派生。生成与检查命令、数量同步的维护方式见 [README](README.md#维护案例档案库)。
+canonical `catalogue.js` 当前包含 **21** 项。初始 `featured.js` 固定顺序为 `shopify-editions,ungetsu,pear,shopify-editions-spring26,moonshot,comet`，每项由 canonical 全字段派生。生成与检查命令、数量同步的维护方式见 [README](README.md#maintain-the-archive)。
 
 `ensureCatalogue()` 通过动态 script 加载 `_gallery/catalogue.js`，缓存已加载数据和进行中的 Promise。打开 Archive 弹窗，或操作搜索、分类、排序、分页会触发加载；滚动到第五阶段只改变站点。失败会清理加载 Promise，并提供可重试错误状态。
 
 `renderArchive()` 先用六项 featured 展示初始展览。完整目录加载后，Curated order 仍按 featured 的 slug 顺序取 canonical 中的六项，再追加 catalogue 中其余项目，保留其原序；元数据始终取自 canonical。默认第一页因此在初始加载、完整目录载入及面板展开之间保持一致。标题排序是单独选项，按标题字母顺序排列全部匹配项。
 
-搜索覆盖标题、中文标题、简介、类型和类别，分类及搜索变化重置到第一页。`pageSize = 6`，只为当前页创建结果节点，页码最多五个；20 项无筛选时为 6、6、6、2 四页。首页长度固定，完整目录数据的下载量、内存和筛选计算仍随案例档案库增长。
+搜索覆盖标题、中文标题、简介、类型和类别，分类及搜索变化重置到第一页。`pageSize = 6`，只为当前页创建结果节点，页码最多五个；21 项无筛选时为 6、6、6、3 四页。首页长度固定，完整目录数据的下载量、内存和筛选计算仍随案例档案库增长。
 
 原位 `#archive-panel` 与弹窗内的面板是同一个元素。打开时将它移入 `#archive-slot`，关闭时通过原位置的注释锚点放回；query、category、sort、page 都由同一控制器持有。使用原生 dialog，支持关闭按钮、对话框外点击、初始焦点与关闭后焦点回归。
 
-桌面原位面板采用三列两行，平板原位面板与手机弹窗采用两列三行，每页最多六项。Latrix 与 EasyCode 的类型分别采用 canonical 的 `Web · Digital identity` 和 `Web · Learning product`，研究依据见 README 表格。
+桌面原位面板采用三列两行，平板原位面板与手机弹窗采用两列三行，每页最多六项。Latrix 与 EasyCode 的类型分别采用 canonical 的 `Web · Digital identity` 和 `Web · Learning product`，研究依据见 [PRODUCT](PRODUCT.md#案例档案库与数据边界)。
 
 ## 响应式、减弱动态与静态 fallback
 
