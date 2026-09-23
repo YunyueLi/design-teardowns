@@ -46,8 +46,9 @@ DEFINING THE SYSTEM THAT SUSTAINS AI LIFE 与出处记录的数字生命定位�
 原站内容的版权，不授予第三方素材的独立复用许可。
 
 其他研究封面与图像应结合对应研究的出处记录使用，不据文件名推定内容正确或
-权利完整。README 预览图保存在 teardowns/_gallery/beamline-readme.jpg；即使
-截图由项目自行捕获，其中展示的第三方研究内容仍保留原有权利。
+权利完整。README 预览图保存在 teardowns/_gallery/beamline-readme.jpg，README
+动图与研究页缩略图保存在 .github/readme/；即使截图由项目自行捕获，其中展示的
+第三方研究内容仍保留原有权利。
 
 5. 内置 Three.js 与字体
 
@@ -97,8 +98,9 @@ Its digital-life wording is consistent with the archived source. The original
 cover is retained; this rebuild corrects metadata rather than replacing it.
 The live 3D specimen also uses that screenshot. Neither use claims ownership
 of the source content.
-The README preview is stored at teardowns/_gallery/beamline-readme.jpg;
-third-party content visible in it retains its underlying rights.
+The README preview is stored at teardowns/_gallery/beamline-readme.jpg, and
+the README loop and study thumbnails in .github/readme/; third-party content
+visible in them retains its underlying rights.
 
 Bundled Three.js r160 is MIT-licensed; its full license is retained at
 teardowns/_gallery/vendor/THREE-LICENSE.txt. The accompanying Oswald, IBM Plex

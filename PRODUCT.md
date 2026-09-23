@@ -12,7 +12,7 @@ web
 
 项目将真实网页和原生应用界面的观察整理为可追溯的研究：互动拆解、样式与动效参数、实现证据、复刻指南和事实核查。访客可以进入案例研究页体验复现，再回到出处判断哪些结论来自实测，哪些属于推断。
 
-本文描述当前产品行为。交付状态与验证记录统一见 [README](README.md#验证与交付)。
+本文描述当前产品行为。交付状态与验证记录统一见 [README](README.md#verification-and-delivery)。
 
 ## 五阶段画廊
 
@@ -30,13 +30,13 @@ Three.js r160 随仓库本地提供。金属门架、轨道、输送带、滚轮
 
 ## 案例档案库与数据边界
 
-canonical 是 `teardowns/_gallery/catalogue.js`，当前共 **20** 项。初始 featured 固定为六项，顺序为 `shopify-editions,pear,shopify-editions-spring26,moonshot,comet,latrix`。featured 的全部字段和总数从 canonical 确定性派生；维护命令及数量同步见 [README](README.md#维护案例档案库)。
+canonical 是 `teardowns/_gallery/catalogue.js`，当前共 **21** 项。初始 featured 固定为六项，顺序为 `shopify-editions,ungetsu,pear,shopify-editions-spring26,moonshot,comet`。featured 的全部字段和总数从 canonical 确定性派生；维护命令及数量同步见 [README](README.md#maintain-the-archive)。
 
 Latrix 的 canonical 分类是 **Web · Digital identity**。其《出处与方法》记录原站关于数字生命与 AI Beings 的自述。EasyCode 的 canonical 分类是 **Web · Learning product**，研究对象是 imlagom.com/projects/easycode/ 的练习、指导与反馈页面；其《设计解构》和《出处与方法》是本轮事实依据。ChatGPT 研究的是 OpenAI overview 页面，Gemini 研究的是归档的签出状态入口，均不扩大到未捕获的应用状态。
 
 初始加载只读 featured；打开 Archive 弹窗或操作原位面板的搜索、分类、排序、分页才按需加载完整 catalogue。仅滚动到 Archive 站不会自动打开弹窗。默认 Curated order 将 featured 六项按指定顺序置前，再接上 catalogue 中剩余项目的原始顺序。因此初始展览与加载完整目录后的默认第一页一致，展开面板不会换掉这六项。
 
-搜索覆盖标题、中文标题、简介、类型与分类。分类选项为 reference、agent、product、independent；排序支持上述 Curated order 和标题字母顺序。每页最多六项，最多显示五个页码按钮，当前无筛选时为 6、6、6、2 四页。页面长度与结果节点数量不会随全部案例档案库直接增长；完整 catalogue 下载、内存占用和客户端筛选成本仍随数据量增长。
+搜索覆盖标题、中文标题、简介、类型与分类。分类选项为 reference、agent、product、independent；排序支持上述 Curated order 和标题字母顺序。每页最多六项，最多显示五个页码按钮，当前无筛选时为 6、6、6、3 四页。页面长度与结果节点数量不会随全部案例档案库直接增长；完整 catalogue 下载、内存占用和客户端筛选成本仍随数据量增长。
 
 同一个 `archive-panel` 在页面原位与原生 dialog 之间移动，保留搜索词、分类、排序与当前页。加载完整目录保持默认展示顺序；主动搜索或切换分类会重新筛选并回到第一页。代码提供忙碌标记、无结果提示、清除筛选、加载失败提示与重试。
 
