@@ -1529,7 +1529,12 @@ body.compact .fallback-specimen {
   .hero-copy {
     left: clamp(36px, 5vw, 88px);
     top: clamp(84px, 12vh, 136px);
-    width: min(520px, 38vw);
+    /* The tagline is one Chinese line whose ink grows with the viewport
+       (clamp(22px, 1.7vw, 29px) below), so it needs 574px at 1920px and above.
+       At 520px the last two characters dropped to a second line from 1586px
+       up. The heading keeps its own 490px measure; this only widens the box
+       the tagline sits in. */
+    width: min(600px, 40vw);
   }
   .hero-copy h1 {
     font-size: clamp(64px, 5.5vw, 92px);
