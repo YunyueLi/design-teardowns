@@ -1434,6 +1434,42 @@ for (const [label, viewport] of [
     },
     { viewport },
   );
+// The hero tagline is one Chinese sentence whose ink grows with the viewport,
+// so the desktop box has to be wide enough for it at every desktop size. It
+// used to be capped at 520px and orphaned its last two characters from 1586px.
+for (const width of [1440, 1586, 1920, 2560])
+  test(
+    `hero-tagline-single-line-${width}`,
+    async ({ page, note }) => {
+      await start(page);
+      assert.ok(
+        await page.locator("body").evaluate((el) => !el.classList.contains("compact")),
+        "Expected the desktop composition at this width",
+      );
+      const tagline = await page.evaluate(() => {
+        const paragraph = document.querySelector(".hero-copy > p");
+        const range = document.createRange();
+        range.selectNodeContents(paragraph);
+        const lines = [...range.getClientRects()].map((rect) =>
+          Math.round(rect.width),
+        );
+        return {
+          lines,
+          box: Math.round(
+            paragraph.parentElement.getBoundingClientRect().width,
+          ),
+          text: Math.round(range.getBoundingClientRect().width),
+        };
+      });
+      assert.equal(
+        tagline.lines.length,
+        1,
+        `Hero tagline wrapped at ${width}px: ${tagline.lines.join("+")} of ${tagline.text}px in a ${tagline.box}px box`,
+      );
+      note(tagline);
+    },
+    { viewport: { width, height: Math.round(width * 0.625) } },
+  );
 try {
   for (const entry of cases
     .filter(
